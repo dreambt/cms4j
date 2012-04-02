@@ -112,7 +112,7 @@
             });
         };
         $(".pagination").click(function () {
-            PageClick(1, ${total}, 5)
+            PageClick(1, ${total}, 5);
         });
     });
 </script>

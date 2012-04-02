@@ -2,10 +2,10 @@ package cn.edu.sdufe.cms.common.entity.account;
 
 import cn.edu.sdufe.cms.common.entity.IdEntity;
 import cn.edu.sdufe.cms.common.entity.article.Article;
-import cn.edu.sdufe.cms.utilities.ip.IPEncodes;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import cn.edu.sdufe.cms.utilities.IPEncodes;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Fetch;

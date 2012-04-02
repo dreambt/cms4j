@@ -105,7 +105,7 @@
     <!-- Cache Control Header Filter -->
     <filter>
         <filter-name>cacheControlHeaderFilter</filter-name>
-        <filter-class>org.springside.examples.showcase.web.CacheControlHeaderFilter</filter-class>
+        <filter-class>cn.edu.sdufe.cms.web.CacheControlHeaderFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>cacheControlHeaderFilter</filter-name>

@@ -1,9 +1,9 @@
 package cn.edu.sdufe.cms.common.entity.article;
 
 import cn.edu.sdufe.cms.common.entity.IdEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Fetch;

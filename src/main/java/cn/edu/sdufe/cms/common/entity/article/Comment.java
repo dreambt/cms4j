@@ -1,7 +1,7 @@
 package cn.edu.sdufe.cms.common.entity.article;
 
 import cn.edu.sdufe.cms.common.entity.IdEntity;
-import cn.edu.sdufe.cms.utilities.ip.IPEncodes;
+import cn.edu.sdufe.cms.utilities.IPEncodes;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
