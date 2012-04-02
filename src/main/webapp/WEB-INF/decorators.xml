@@ -15,7 +15,7 @@
         <pattern>/article/list/*</pattern>
         <pattern>/article/content/*</pattern>
         <pattern>/article/digest/*</pattern>
-        <pattern>/archive/list</pattern>
+        <pattern>/archive/list*</pattern>
     </decorator>
 
     <decorator name="dashboard" page="dashboard/default.jsp">
