@@ -60,13 +60,13 @@ public class ArticleManager {
     }
 
     /**
-     * 获取分类id下面的文章数量
+     * 获取分类categoryId下面的文章数量
      *
-     * @param id 分类编号
+     * @param categoryId 分类编号
      * @return
      */
-    public Long getCount(Long id) {
-        return articleDao.count(id);
+    public Long getCount(Long categoryId) {
+        return articleDao.count(categoryId);
     }
 
     /**

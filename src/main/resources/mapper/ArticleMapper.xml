@@ -8,9 +8,9 @@
          获取文章数量
      -->
     <select id="getArticleCount" parameterType="Long" resultType="Long">
-        select count(article_id)
-        from cms_category_article
-        where category_id=#{id}
+        select count(id)
+        from cms_article
+        where id in (select article_id from cms_category_article where category_id=#{categoryId}) and status=1 and deleted=0
         limit 1
 	</select>
 
@@ -70,7 +70,6 @@
         from cms_article
         where id in (select article_id from cms_category_article where category_id=#{categoryId}) and deleted=0
         order by top desc
-        limit 10
 	</select>
 
     <!--
@@ -81,7 +80,6 @@
         from cms_article
         where id in (select article_id from cms_category_article where category_id=#{categoryId}) and deleted=0
         order by top desc
-        limit 10
 	</select>
 
     <!--

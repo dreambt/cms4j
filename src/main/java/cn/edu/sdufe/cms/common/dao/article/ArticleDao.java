@@ -78,11 +78,12 @@ public class ArticleDao extends SqlSessionDaoSupport {
     /**
      * 获取文章数量
      *
+     * @param categoryId
      * @return
      */
     @Cacheable(value = "article_num")
-    public Long count(Long id) {
-        return getSqlSession().selectOne("CMS.getArticleCount", id);
+    public Long count(Long categoryId) {
+        return getSqlSession().selectOne("CMS.getArticleCount", categoryId);
     }
 
     /**
