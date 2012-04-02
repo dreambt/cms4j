@@ -137,3 +137,5 @@ span .red-text{color: #9e253b}
 .box .block ul.full_width li{
     margin: 0px;
 }
+/*--------归档列表的样式-------------------*/
+ul#documentA li{margin: 10px;}
