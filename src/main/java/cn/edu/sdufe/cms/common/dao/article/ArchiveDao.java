@@ -17,6 +17,11 @@ import java.util.List;
 @Repository
 public class ArchiveDao extends SqlSessionDaoSupport {
 
+    /**
+     * 获得前十条归类信息
+     *
+     * @return
+     */
     public List<Archive> getTopTen() {
         return getSqlSession().selectList("CMS.getTopTen");
     }

@@ -14,15 +14,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>归档列表</title>
+    <title>存档分类</title>
 </head>
 <body>
 <!-- BEGIN PAGE TITLE -->
 <div id="page-title">
     <div class="title"><!-- your title page -->
-        <h2 class="cufon">归档列表</h2>
+        <h2 class="cufon">存档分类列表</h2>
     </div>
-    <div class="desc">描述</div>
+    <div class="desc"></div>
 </div>
 <!-- END OF PAGE TITLE -->
 <div id="content-inner">
@@ -30,14 +30,9 @@
     <div id="content-left">
         <div class="maincontent" id="article_load">
             <ul id="documentA">
-                <li><a href="list.jsp">2012-04 (4)</a></li>
-                <li><a href="list.jsp">2012-04 (4)</a></li>
-                <li><a href="list.jsp">2012-04 (4)</a></li>
-                <li><a href="list.jsp">2012-04 (4)</a></li>
-                <li><a href="list.jsp">2012-04 (4)</a></li>
-                <li><a href="list.jsp">2012-04 (4)</a></li>
-                <li><a href="list.jsp">2012-04 (4)</a></li>
-                <li><a href="list.jsp">2012-04 (4)</a></li>
+                <c:forEach items="${archives}" var="archive" begin="0" step="1" >
+                    <li><a href="${ctx}/archive/list/${archive.id}"> ${archive.title}&nbsp;(${archive.articleCount})</a></li>
+                </c:forEach>
             </ul>
         </div>
     </div>

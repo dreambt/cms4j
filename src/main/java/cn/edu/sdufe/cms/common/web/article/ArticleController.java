@@ -80,6 +80,7 @@ public class ArticleController {
         model.addAttribute("category", categoryManager.getCategory(id));
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("archives",archiveManager.getTopTenArchive());
+        model.addAttribute("newArticles",articleManager.getTopTenArticle());
         model.addAttribute("total", articleManager.getCount(id));
         return "article/list";
     }
@@ -111,6 +112,7 @@ public class ArticleController {
         model.addAttribute("category", categoryManager.getCategory(id));
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("archives",archiveManager.getTopTenArchive());
+        model.addAttribute("newArticles",articleManager.getTopTenArticle());
         model.addAttribute("total", articleManager.getCount(id));
         return "article/digest";
     }

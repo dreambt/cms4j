@@ -13,19 +13,18 @@
     <div class="maincontent">
         <h2>最新文章</h2>
         <ul class="blog-list">
-            <li><a href="#">Blog Categories 1</a></li>
-            <li><a href="#">Blog Categories 2</a></li>
-            <li><a href="#">Blog Categories 3</a></li>
-            <li><a href="#">Blog Categories 4</a></li>
+            <c:forEach items="${newArticles}" var="newArticle" begin="0" step="1">
+            <li><a href="${ctx}/article/content/${newArticle.id}">${fn:substring(newArticle.subject,0,20)}</a></li>
+            </c:forEach>
         </ul>
     </div>
     <div class="maincontent">
         <h2>存档分类</h2>
         <ul class="blog-list">
             <c:forEach items="${archives}" var="archive" begin="0" step="1" >
-            <li><a href="${ctx}/archive/listByArchiveId/${archive.id}">${archive.title}</a></li>
+            <li><a href="${ctx}/archive/list/${archive.id}">${archive.title}&nbsp;(${archive.articleCount})</a></li>
             </c:forEach>
-            <li><a href="${ctx}/archive/listAll">更多存档</a></li>
+            <li><a href="${ctx}/archive/list">更多存档...</a></li>
         </ul>
     </div>
     <div class="maincontent">

@@ -1,6 +1,7 @@
 package cn.edu.sdufe.cms.common.web.article;
 
 import cn.edu.sdufe.cms.common.service.article.ArchiveManager;
+import cn.edu.sdufe.cms.common.service.article.ArticleManager;
 import cn.edu.sdufe.cms.common.service.article.CategoryManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * 归类功能
@@ -24,6 +24,8 @@ public class ArchiveController {
 
     private CategoryManager categoryManager;
 
+    private ArticleManager articleManager;
+
     /**
      * 显示所有归类信息
      *
@@ -33,12 +35,18 @@ public class ArchiveController {
     @RequestMapping(value = "list")
     public String articleListOfArchive(Model model) {
         model.addAttribute("archives", archiveManager.getAllArchive());
+        model.addAttribute("categories", categoryManager.getNavCategory());
+        model.addAttribute("newArticles",articleManager.getTopTenArticle());
         return "article/archives";
     }
 
     @RequestMapping(value = "list/{id}")
     public String articleListByArchiveId(Model model, @PathVariable("id") Long id) {
+        model.addAttribute("archives", archiveManager.getAllArchive());
         model.addAttribute("archive", archiveManager.getArchiveByArchiveId(id));
+        model.addAttribute("articles", archiveManager.getArchiveByArchiveId(id).getArticleList());
+        model.addAttribute("categories", categoryManager.getNavCategory());
+        model.addAttribute("newArticles",articleManager.getTopTenArticle());
         return "article/list";
     }
 
@@ -52,4 +60,8 @@ public class ArchiveController {
         this.categoryManager = categoryManager;
     }
 
+    @Autowired
+    public void setArticleManager(@Qualifier("articleManager") ArticleManager articleManager) {
+        this.articleManager = articleManager;
+    }
 }

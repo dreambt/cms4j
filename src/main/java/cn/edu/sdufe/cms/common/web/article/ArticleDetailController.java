@@ -46,6 +46,7 @@ public class ArticleDetailController {
         //model.addAttribute("comments", commentManager.getCommentByArticleId(id))
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("archives",archiveManager.getTopTenArchive());
+        model.addAttribute("newArticles",articleManager.getTopTenArticle());
         return "article/content";
     }
 

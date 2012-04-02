@@ -82,6 +82,15 @@ public class ArticleManager {
     }
 
     /**
+     * 获得最新的10篇文章
+     *
+     * @return
+     */
+    public List<Article> getTopTenArticle() {
+        return articleDao.getTopTenArticle();
+    }
+
+    /**
      * 加载Lazy属性
      *
      * @return

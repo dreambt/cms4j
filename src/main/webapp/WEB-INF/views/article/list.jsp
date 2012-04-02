@@ -19,7 +19,7 @@
 <!-- BEGIN PAGE TITLE -->
 <div id="page-title">
     <div class="title"><!-- your title page -->
-        <h2 class="cufon">${category.categoryName}</h2>
+        <h2 class="cufon"><c:choose><c:when test="${category!=null}">${category.categoryName}</c:when><c:otherwise>${archive.title}</c:otherwise></c:choose></h2>
     </div>
     <div class="desc">${category.description}</div>
 </div>

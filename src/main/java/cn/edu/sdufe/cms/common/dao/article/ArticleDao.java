@@ -31,6 +31,16 @@ public class ArticleDao extends SqlSessionDaoSupport {
     }
 
     /**
+     * 获得最新的10篇文章
+     *
+     * @return
+     */
+    @Cacheable(value = "topTenArticle")
+    public List<Article> getTopTenArticle() {
+        return getSqlSession().selectList("CMS.getTopTenArticle");
+    }
+
+    /**
      * 获取分类id的文章
      *
      * @param categoryId

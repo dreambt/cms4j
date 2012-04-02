@@ -48,9 +48,19 @@
     <select id="getMonthArticle" parameterType="Date" resultType="Article">
         select id,subject,author,category_name as categoryname,rate,rate_times as ratetimes,views,count,top,status,deleted,cms_article.create_time as createtime,cms_article.modify_time as modifytime
         from cms_article
-        where deleted = 0 and year(create_time)=year(#{create_time}) and month(create_time)=month(#{create_time})
+        where deleted=0 and year(create_time)=year(#{create_time}) and month(create_time)=month(#{create_time})
         order by create_time desc
 	</select>
+
+    <!--
+        获取top 10 文章
+    -->
+    <select id="getTopTenArticle" resultType="Article">
+        select top 10 id,subject,author,category_name as categoryname,rate,rate_times as ratetimes,views,count,top,status,deleted,cms_article.create_time as createtime,cms_article.modify_time as modifytime
+        from cms_article
+        where deleted=0
+        order by create_time desc
+    </select>
 
     <!--
          通过分类id获取文章

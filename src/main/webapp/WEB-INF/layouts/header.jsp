@@ -18,7 +18,6 @@
     <div id="bottom-header">
         <div id="nav-menu">
             <ul class="sf-menu">
-                <%--<li class="current"><a href="${ctx}/index" class="cufon">首页</a></li>--%>
                 <c:forEach items="${categories}" var="category" begin="0" step="1">
                     <c:choose>
                         <c:when test="${category.showType eq 'NONE'}"><li><a href="${ctx}/${category.url}" class="cufon">${category.categoryName}</a></c:when>
