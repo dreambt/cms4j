@@ -1,4 +1,4 @@
-package cn.edu.sdufe.cms.utilities.ip;
+package cn.edu.sdufe.cms.utilities;
 
 import org.junit.Before;
 import org.junit.Test;
