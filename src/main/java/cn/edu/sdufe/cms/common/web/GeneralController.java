@@ -79,17 +79,6 @@ public class GeneralController {
     }
 
     /**
-     * 获取导航栏
-     *
-     * @return
-     */
-    @RequestMapping(value = "/nav", method = RequestMethod.GET)
-    @ResponseBody
-    public List<Category> nav() {
-        return categoryManager.getAllFatherCategory();
-    }
-
-    /**
      * 跨域名Mashup
      *
      * @return

@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Time: 下午17:59
  */
 @Controller
-@RequestMapping(value = "/gallery")
-public class GalleryController {
+@RequestMapping(value = "/album")
+public class AlbumController {
 
     private CategoryManager categoryManager;
 
@@ -31,10 +31,10 @@ public class GalleryController {
     public String list(@PathVariable("id") Long id, Model model) {
         model.addAttribute("categories", categoryManager.getAllFatherCategory());
         // TODO 获取菜单编号为id的所有图片
-        return "gallery";
+        return "album";
     }
 
-    @Autowired
+    @Autowired(required = false)
     public void setCategoryManager(@Qualifier("categoryManager") CategoryManager categoryManager) {
         this.categoryManager = categoryManager;
     }
