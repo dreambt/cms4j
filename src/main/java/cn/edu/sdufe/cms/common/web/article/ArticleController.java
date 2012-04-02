@@ -114,15 +114,6 @@ public class ArticleController {
         model.addAttribute("total", articleManager.getCount(id));
         return "article/digest";
     }
-   /**
-     * 获取所有归档列表
-     * @param model
-     * @return
-     */
-    @RequestMapping(value = "documentList", method = RequestMethod.GET)
-    public String documentOfArticle( Model model) {
-        return "article/documentList";
-    }
 
     /**
      * 获取菜单编号为id的所有文章摘要
