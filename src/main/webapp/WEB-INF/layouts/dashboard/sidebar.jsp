@@ -41,7 +41,12 @@
         </li>
         </shiro:hasPermission>
         <shiro:hasPermission name="user:list">
-        <li><a href="${ctx}/account/user/list"><img src="${ctx}/static/dashboard/images/icons/small/grey/Users.png"/>用户管理</a></li>
+        <li><a href="" class="top_level"><img src="${ctx}/static/dashboard/images/icons/small/grey/Users.png"/>用户管理</a>
+            <ul class="drawer">
+                <li><a href="${ctx}/account/user/create">添加用户</a></li>
+                <li><a href="${ctx}/account/user/list">查看所有用户</a></li>
+            </ul>
+        </li>
         </shiro:hasPermission>
         <shiro:hasPermission name="comment:list">
         <li><a href="${ctx}/comment/listAll"><img src="${ctx}/static/dashboard/images/icons/small/grey/SpeechBubbles2.png"/>评论管理</a></li>
