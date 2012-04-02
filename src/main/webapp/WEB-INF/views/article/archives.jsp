@@ -20,7 +20,7 @@
 <!-- BEGIN PAGE TITLE -->
 <div id="page-title">
     <div class="title"><!-- your title page -->
-        <h2 class="cufon">存档分类列表</h2>
+        <h2 class="cufon">存档分类</h2>
     </div>
     <div class="desc"></div>
 </div>
