@@ -193,3 +193,19 @@ article_id INT(10) NOT NULL,
 FOREIGN KEY (archive_id) REFERENCES cms_archive(id),
 FOREIGN KEY (article_id) REFERENCES cms_article(id)
 );
+
+-- -----------------------------------------------------
+-- Table `cms_gallery`
+-- -----------------------------------------------------
+
+DROP TABLE IF EXISTS cms_image;
+
+CREATE TABLE cms_image(
+id INT(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+title VARCHAR(50) NOT NULL,
+image_url VARCHAR(30) NOT NULL,
+description VARCHAR(1000),
+deleted TINYINT(3) NOT NULL,
+create_time TIMESTAMP(23,10) NOT NULL,
+modify_time TIMESTAMP(23,10) NOT NULL,
+);

@@ -261,8 +261,11 @@
     <!-- 归档 测试数据-->
     <cms_archive ID="1" TITLE="2012年03月" ARTICLE_COUNT="2" CREATE_TIME="1987-06-01 00:00:00" MODIFY_TIME="1987-06-01 00:00:00"/>
 
-    <!-- 归档-文章 链接表 -->
+    <!-- 归档-文章 链接表 测试数据-->
     <cms_archive_article ARTICLE_ID="1" ARCHIVE_ID="1" />
     <cms_archive_article ARTICLE_ID="2" ARCHIVE_ID="1" />
+
+    <!-- 图片 测试数据 -->
+    <cms_image ID="1" TITLE="金融活动" IMAGE_URL="20120401" DESCRIPTION="金融活动" DELETED="0" CREATE_TIME="1987-06-01 00:00:00" MODIFY_TIME="1987-06-01 00:00:00" />
 
 </dataset>
