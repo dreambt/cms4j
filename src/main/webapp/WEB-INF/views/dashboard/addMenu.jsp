@@ -25,7 +25,7 @@
 </div>
 <div class="main_container container_16 clearfix">
     <div class="box grid_16round_all">
-        <h2 class="box_head grad_colour round_top">Form Validation</h2>
+        <h2 class="box_head grad_colour round_top">添加菜单</h2>
         <a href="#" class="grabber">&nbsp;</a>
         <a href="#" class="toggle">&nbsp;</a>
 

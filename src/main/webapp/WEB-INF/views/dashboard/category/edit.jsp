@@ -21,12 +21,12 @@
     <div class="flat_area grid_16">
         <h2>添加菜单</h2>
 
-        <p>Try it out and you'll see how <strong>powerful yet easy to use</strong> it is.</p>
+        <p>请认真按照要求填写菜单信息</p>
     </div>
 </div>
 <div class="main_container container_16 clearfix">
     <div class="box grid_16round_all">
-        <h2 class="box_head grad_colour round_top">Form Validation</h2>
+        <h2 class="box_head grad_colour round_top">添加&修改菜单</h2>
         <a href="#" class="grabber">&nbsp;</a>
         <a href="#" class="toggle">&nbsp;</a>
 
