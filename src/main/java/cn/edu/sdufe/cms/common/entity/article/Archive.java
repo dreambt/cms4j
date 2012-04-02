@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 类功能
+ * 归类功能
  * User: pengfei.dongpf@gmail.com
  * Date: 12-3-31
  * Time: 下午3:59
