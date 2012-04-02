@@ -24,5 +24,6 @@
         <pattern>/comment/*</pattern>
         <pattern>/category/*</pattern>
         <pattern>/account/*</pattern>
+        <pattern>/image/*</pattern>
     </decorator>
 </decorators>
