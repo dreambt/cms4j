@@ -40,12 +40,12 @@
                     <th>选择</th>
                     <th>标题</th>
                     <th>作者</th>
+                    <th>类别</th>
                     <th>评分</th>
                     <th>浏览</th>
                     <th>创建时间</th>
                     <th>最后修改</th>
                     <th>审核</th>
-                    <th>置顶</th>
                     <th>评论</th>
                     <th>操作</th>
                 </tr>
@@ -56,14 +56,15 @@
                         <td><input type="checkbox" name="isSelected" value="${article.id}"></td>
                         <td><a href="${ctx}/article/content/${article.id}" target="_blank">${article.subject}</a></td>
                         <td>${article.author}</td>
+                        <td>校内新闻</td>
                         <td>${article.rate}</td>
                         <td>${article.count}</td>
                         <td><fmt:formatDate value="${article.createTime}" type="date"/></td>
                         <td><fmt:formatDate value="${article.modifyTime}" type="date"/></td>
                         <td><a href="${ctx}/article/audit/${article.id}"><c:choose><c:when test="${article.status}">【反审核】</a></c:when><c:otherwise>【审核】</c:otherwise></c:choose></a></td>
-                        <td><a href="${ctx}/article/top/${article.id}"><c:choose><c:when test="${article.top}">【取消】</c:when><c:otherwise>【置顶】</c:otherwise></c:choose></a></td>
+
                         <td><a href="${ctx}/article/allow/${article.id}"><c:choose><c:when test="${article.allowComment}">【不允许】</c:when><c:otherwise>【允许】</c:otherwise></c:choose></a></td>
-                        <td><a href="${ctx}/article/edit/${article.id}">【编辑】</a> <a href="${ctx}/article/delete/${article.id}"><c:choose><c:when test="${article.deleted}">【恢复】</c:when><c:otherwise><span class="red-text">【删除】</span></c:otherwise></c:choose></a></td>
+                        <td><a href="${ctx}/article/edit/${article.id}">【编辑】</a><a href="${ctx}/article/top/${article.id}"><c:choose><c:when test="${article.top}">【取消】</c:when><c:otherwise>【置顶】</c:otherwise></c:choose></a> <a href="${ctx}/article/delete/${article.id}"><c:choose><c:when test="${article.deleted}">【恢复】</c:when><c:otherwise><span class="red-text">【删除】</span></c:otherwise></c:choose></a></td>
                     </tr>
                 </c:forEach>
                 </tbody>
