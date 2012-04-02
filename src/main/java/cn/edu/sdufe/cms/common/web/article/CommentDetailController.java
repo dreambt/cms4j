@@ -45,7 +45,7 @@ public class CommentDetailController {
     public String auditComment(@PathVariable("id") Long id, @ModelAttribute("comment") Comment comment, RedirectAttributes redirectAttributes) {
         comment.setStatus(!comment.isStatus());
         if (null == commentManager.update(comment)) {
-            redirectAttributes.addFlashAttribute("error", "审核评论 " + id + " 失败.");
+            redirectAttributes.addFlashAttribute("error", "操作评论 " + id + " 失败.");
             return "redirect:/comment/listAll";
         }
         if (comment.isStatus()) {
