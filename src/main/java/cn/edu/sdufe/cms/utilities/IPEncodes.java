@@ -1,4 +1,4 @@
-package cn.edu.sdufe.cms.utilities.ip;
+package cn.edu.sdufe.cms.utilities;
 
 /**
  * 实现IP与Long互转
