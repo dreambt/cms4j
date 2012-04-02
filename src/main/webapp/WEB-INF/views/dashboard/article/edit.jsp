@@ -25,7 +25,6 @@
     <div class="flat_area grid_16">
         <h2>编辑文章</h2>
         <p>请选择 <strong>文章分类</strong> <strong>是否置顶</strong> <strong>是否允许评论</strong> , 并填写 <strong>文章标题</strong> 和 <strong>文章内容</strong>.</p>
-        <p>请注意：<strong>文章标题请尽量简要，字数不要超过20！</strong></p>
         <c:if test="${not empty info}">
             <div id="message" class="alert alert_blue">
                 <img height="24" width="24" src="${ctx}/static/dashboard/images/icons/small/white/Locked2.png"><strong>${info}</strong>
@@ -46,8 +45,8 @@
         <div class="block">
         <input type="hidden" name="id" value="${article.id}"/>
         <label>文章分类</label> <form:select path="categoryId">
-        <c:forEach items="${categories}" var="val" varStatus="stat">
-            <option value="${categories[stat.index].ID}" selected="${val.ID eq Category.id}">${categories[stat.index].CATEGORY_NAME}</option>
+        <c:forEach items="${categories}" begin="0" step="1" var="categorie" varStatus="stat">
+            <option value="${categorie.ID}" <c:if test="${categorie.ID eq article.category.id}">selected="selected"</c:if>>${categorie.CATEGORY_NAME}</option>
         </c:forEach></form:select>
         <label>是否置顶</label> <input type="checkbox" name="top" <c:if test="${article.top}">checked="checked"</c:if> />
         <label>允许评论</label> <input type="checkbox" name="allowComment" <c:if test="${article.allowComment || empty article.author}">checked="checked"</c:if> /><br />
