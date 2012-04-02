@@ -41,6 +41,7 @@
             </ul>
         </div>
     </div>
+    <!--sidebox-->
     <%@include file="/WEB-INF/layouts/sidebar.jsp" %>
 </div>
 </body>
