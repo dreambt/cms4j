@@ -10,7 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 /**
  * 分类控制器
@@ -69,6 +72,17 @@ public class CategoryController {
         model.addAttribute("category", new Category());
         model.addAttribute("fatherCategories", categoryManager.getAllFatherCategory());
         return "dashboard/category/edit";
+    }
+
+    /**
+     * 获取导航栏
+     *
+     * @return
+     */
+    @RequestMapping(value = "nav", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Category> nav() {
+        return categoryManager.getNavCategory();
     }
 
     @Autowired
