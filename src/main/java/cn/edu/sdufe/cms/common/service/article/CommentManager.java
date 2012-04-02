@@ -125,7 +125,7 @@ public class CommentManager {
         Comment comment = null;
         for (String id : ids) {
             comment = this.getComment(Long.parseLong(id));
-            comment.setStatus(false);
+            comment.setStatus(true);
             this.update(comment);
         }
     }

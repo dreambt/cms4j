@@ -66,7 +66,7 @@
         <div id="commentList">
             <div id="commentList-title"><h4>相关评论</h4></div>
             <c:forEach items="${article.commentList}" var="comment" begin="0" step="1" varStatus="stat">
-                <c:if test="${comment.status > comment.deleted}">
+                <c:if test="${comment.status&&!comment.deleted}">
                 <div class="commentList-item-wrapper">
                     <h4><a href="#">${comment.username}</a> 于 <fmt:formatDate value="${comment.createTime}" pattern="yyyy-MM-dd"/> 发表评论：</h4>
                         ${comment.message}
