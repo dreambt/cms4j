@@ -1,0 +1,6 @@
+<html>
+<head>您在CMS4j的用户账号信息已修改成功</head>
+<body>
+	<h1>用户【$username】的账号信息被修改.</h1>
+</body>
+</html>

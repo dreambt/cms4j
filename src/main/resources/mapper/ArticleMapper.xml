@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CMS">
+
+    <!--
+         获取文章数量
+     -->
+    <select id="getArticleCount" parameterType="Long" resultType="Long">
+        select count(article_id)
+        from cms_category_article
+        where category_id=#{id}
+        limit 1
+	</select>
+
+    <!--
+         获取已标记为删除的文章id
+     -->
+    <select id="getDeletedArticleId" resultType="Long">
+        select id
+        from cms_article
+        where deleted=1
+	</select>
+
+    <!--
+         获取文章正文
+     -->
+    <select id="getArticle" parameterType="int" resultType="Article">
+        select id,subject,message,digest,keyword,author,category_name as categoryname,rate,rate_times as ratetimes,top,status,allow_comment as allowcomment,views,count,cms_article.create_time as createtime,cms_article.modify_time as modifytime
+        from cms_article
+        where id=#{id}
+        limit 1
+	</select>
+
+    <!--
+         获取所有文章where deleted=0
+     -->
+    <select id="getAllArticle" parameterType="map" resultType="Article">
+        select id,subject,author,category_name as categoryname,rate,rate_times as ratetimes,views,count,top,allow_comment as allowcomment,status,deleted,cms_article.create_time as createtime,cms_article.modify_time as modifytime
+        from cms_article
+        order by ${Sort} ${Direction}
+	</select>
+
+    <!--
+        获取本月的所有文章
+    -->
+    <select id="getMonthArticle" parameterType="Date" resultType="Article">
+        select id,subject,author,category_name as categoryname,rate,rate_times as ratetimes,views,count,top,status,deleted,cms_article.create_time as createtime,cms_article.modify_time as modifytime
+        from cms_article
+        where deleted = 0 and year(create_time)=year(#{create_time}) and month(create_time)=month(#{create_time})
+        order by create_time desc
+	</select>
+
+    <!--
+         通过分类id获取文章
+     -->
+    <select id="getArticleListByCategoryId" parameterType="int" resultType="Article">
+        select id,subject,author,category_name as categoryname,rate,rate_times as ratetimes,top,status,allow_comment as allowcomment,views,count,create_time as createtime,modify_time as modifytime
+        from cms_article
+        where id in (select article_id from cms_category_article where category_id=#{categoryId}) and deleted=0
+        order by top desc
+        limit 10
+	</select>
+
+    <!--
+         通过分类id获取文章
+     -->
+    <select id="getArticleDigestByCategoryId" parameterType="int" resultType="Article">
+        select id,subject,digest,author,category_name as categoryname,rate,rate_times as ratetimes,views,count,create_time as createtime,modify_time as modifytime,top,status
+        from cms_article
+        where id in (select article_id from cms_category_article where category_id=#{categoryId}) and deleted=0
+        order by top desc
+        limit 10
+	</select>
+
+    <!--
+         查询文章
+     -->
+    <select id="searchArticle" parameterType="map" resultType="Article">
+        select *
+        from cms_article
+        <where>
+            <if test="author != null">
+                author=#{author}
+            </if>
+            <if test="top != null">
+                and top=#{top}
+            </if>
+            <if test="status != null">
+                and status=#{status}
+            </if>
+            <if test="keyword != null">
+                and keyword=#{keyword}
+            </if>
+        </where>
+        order by ${Sort} ${Direction}
+    </select>
+
+    <!-- 更新文章 -->
+    <update id="updateArticle" parameterType="Article">
+        update cms_article
+        set author=#{author},category_name=#{categoryName},subject=#{subject},message=#{message},digest=#{digest},
+        keyword=#{keyword},top=#{top},status=#{status},rate=#{rate},rate_times=#{rateTimes},deleted=#{deleted},
+        allow_comment=#{allowComment},count=#{count},modify_time = now()
+        where id = #{id}
+	</update>
+</mapper>

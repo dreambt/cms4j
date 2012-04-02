@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ACCOUNT">
+
+    <!--
+         获取用户组数量
+     -->
+    <select id="getGroupCount" resultType="int">
+        select count(id)
+        from cms_group
+        limit 1
+	</select>
+
+    <!--
+        获取用户组
+    -->
+    <select id="getGroup" parameterType="int" resultType="Group">
+        select id,group_name as groupname
+        from cms_group
+        where id=#{id}
+        limit 1
+	</select>
+
+    <!--
+        获取用户组
+    -->
+    <select id="getGroupByUserId" parameterType="int" resultType="Group">
+        select group_id as id,group_name as groupname
+        from cms_user_group,cms_group
+        where cms_user_group.group_id=cms_group.id and user_id=#{id}
+        limit 3
+	</select>
+
+    <!--
+        获取用户组
+    -->
+    <select id="getAllGroup" resultType="Group">
+        select id,group_name as groupname
+        from cms_group
+	</select>
+
+    <!-- 查询用户,演示: 1.输入用map传入多个参数 2.<where>语句, 智能添加where和and关键字 3.输出直接映射对象 -->
+    <select id="searchGroup" parameterType="map" resultType="ArrayList">
+        select *
+        from cms_group
+        <where>
+            <if test="id != null">
+                id=#{id}
+            </if>
+            <if test="groupName != null">
+                and groupname=#{groupName}
+            </if>
+        </where>
+        order by ${Sort} ${Direction}
+    </select>
+
+</mapper>

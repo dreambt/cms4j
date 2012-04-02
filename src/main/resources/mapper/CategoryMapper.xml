@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CMS">
+
+    <!--
+         获取分类: 输出直接映射到对象, login_name列要"as loginName"以方便映射 department_id as "department.id"创建department对象并赋值
+     -->
+    <select id="getCategory" parameterType="int" resultType="Category">
+        select id,father_category_id as fathercategoryid,category_name categoryname,allow_comment as allowcomment,display_order as displayorder,
+          url,deleted,show_nav as shownav,description,allow_publish as allowpublish,show_type as showtype,create_time as createtime,modify_time as modifytime
+        from cms_category
+        where id=#{id}
+        limit 1
+	</select>
+
+    <!--
+        获取顶级分类: 输出直接映射到对象, login_name列要"as loginName"以方便映射 department_id as "department.id"创建department对象并赋值
+    -->
+    <select id="getNavCategory" resultType="Category">
+        select id, father_category_id as fathercategoryid, category_name as categoryname, display_order as displayorder, url, deleted, show_nav as shownav, show_type as showtype
+        from cms_category
+        where deleted = 0 and show_nav = 1 and id>0
+        order by display_order asc
+	</select>
+
+    <!--
+         获取所有可发表评论的分类列表
+     -->
+    <select id="getAllowPublishCategory" resultType="HashMap">
+        select id,category_name
+        from cms_category
+        where allow_publish=1 and deleted=0 and id>0
+	</select>
+
+    <!--
+         获取分类id的所有子分类
+     -->
+    <select id="getSubCategory" parameterType="int" resultType="Category">
+        select *
+        from cms_category
+        where father_category_id=#{id}
+	</select>
+
+    <!--
+         获取子分类数目
+     -->
+    <select id="getCategoryCount" parameterType="int" resultType="Long">
+		select count(id)
+		from cms_category
+		where father_category_id=#{id}
+		limit 1
+	</select>
+
+    <!-- 查询分类,演示: 1.输入用map传入多个参数 2.<where>语句, 智能添加where和and关键字 3.输出直接映射对象 -->
+    <select id="searchCategory" parameterType="map" resultType="Category">
+        select *
+        from cms_category
+        <where>
+            <if test="categoryName != null">
+                category_name=#{categoryName}
+            </if>
+            <if test="showNav != null">
+                and show_nav=#{showNav}
+            </if>
+            <if test="allowComment != null">
+                and allow_comment=#{allowComment}
+            </if>
+            <if test="deleted != null">
+                and deleted=#{deleted}
+            </if>
+            <if test="showType != null">
+                and show_type=#{showType}
+            </if>
+        </where>
+        order by ${Sort} ${Direction}
+    </select>
+
+    <!-- 插入分类 -->
+    <insert id="saveCategory" parameterType="Category" useGeneratedKeys="true" keyProperty="id">
+		insert into cms_category (
+		father_category_id, category_name, allow_comment, display_order,
+		 url, deleted, show_nav, description, keyword, allow_publish, show_type, create_time, modify_time)
+		values (#{fatherCategoryId}, #{categoryName}, #{allowComment}, #{displayOrder},
+		 #{url}, #{deleted}, #{showNav}, #{description},
+		 #{keyWord}, #{allowPublish}, #{showType}, #{createTime}, #{modifyTime})
+	</insert>
+
+    <!-- 删除分类 -->
+    <delete id="deleteCategory" parameterType="int">
+		delete from cms_category
+		where catid=#{id}
+	</delete>
+
+</mapper>

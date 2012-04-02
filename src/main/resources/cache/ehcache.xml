@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache>
+
+    <diskStore path="java.io.tmpdir/hibernate/CMS4j"/>
+
+    <!-- DefaultCache setting. -->
+    <defaultCache maxElementsInMemory="10000" memoryStoreEvictionPolicy="LRU" eternal="false"
+                  timeToIdleSeconds="300" timeToLiveSeconds="300" overflowToDisk="false" diskPersistent="false"/>
+
+    <!-- Special objects setting. -->
+    <cache name="cn.edu.sdufe.cms.common.entity.account.User" maxElementsInMemory="10000"
+           memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true"
+           maxElementsOnDisk="1000000"/>
+    <cache name="cn.edu.sdufe.cms.common.entity.account.User.groupList" maxElementsInMemory="10000"
+           memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true"
+           maxElementsOnDisk="1000000"/>
+    <cache name="cn.edu.sdufe.cms.common.entity.account.User.articleList" maxElementsInMemory="10000"
+           memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true"
+           maxElementsOnDisk="1000000"/>
+    <cache name="cn.edu.sdufe.cms.common.entity.account.Group" maxElementsInMemory="10000"
+           memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true"
+           maxElementsOnDisk="1000000"/>
+    <cache name="cn.edu.sdufe.cms.common.entity.account.Group.permissionList" maxElementsInMemory="10000"
+           memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true"
+           maxElementsOnDisk="1000000"/>
+
+    <cache name="cn.edu.sdufe.cms.common.entity.article.Article" maxElementsInMemory="10000"
+           memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true"
+           maxElementsOnDisk="1000000"/>
+    <cache name="cn.edu.sdufe.cms.common.entity.article.Article.commentList" maxElementsInMemory="10000"
+           memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true"
+           maxElementsOnDisk="1000000"/>
+
+    <cache name="cn.edu.sdufe.cms.common.entity.article.Archive" maxElementsInMemory="10000"
+           memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true"
+           maxElementsOnDisk="1000000"/>
+    <cache name="cn.edu.sdufe.cms.common.entity.article.Archive.articleList" maxElementsInMemory="10000"
+           memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true"
+           maxElementsOnDisk="1000000"/>
+
+    <cache name="cn.edu.sdufe.cms.common.entity.article.Category" maxElementsInMemory="10000"
+           memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true"
+           maxElementsOnDisk="1000000"/>
+    <cache name="cn.edu.sdufe.cms.common.entity.article.Category.subCategories" maxElementsInMemory="10000"
+           memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true"
+           maxElementsOnDisk="1000000"/>
+    <cache name="cn.edu.sdufe.cms.common.entity.article.Category.articleList" maxElementsInMemory="10000"
+           memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true"
+           maxElementsOnDisk="1000000"/>
+
+    <cache name="cn.edu.sdufe.cms.common.entity.article.Comment" maxElementsInMemory="10000"
+           memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true"
+           maxElementsOnDisk="1000000"/>
+
+    <cache name="cn.edu.sdufe.cms.common.entity.ManageLog" maxElementsInMemory="10000"
+           memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true"
+           maxElementsOnDisk="1000000"/>
+
+
+    <!-- Refresh ContentInfoCache every hour. -->
+    <cache name="contentInfoCache" overflowToDisk="false" eternal="false" diskPersistent="false"
+           timeToLiveSeconds="3600" timeToIdleSeconds="3600" maxElementsInMemory="10000"
+           memoryStoreEvictionPolicy="LRU"/>
+</ehcache>

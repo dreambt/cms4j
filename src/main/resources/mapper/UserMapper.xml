@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ACCOUNT">
+
+    <!--
+         获取用户数量
+     -->
+    <select id="getUserCount" resultType="Long">
+        select count(id)
+        from cms_user
+        limit 1
+	</select>
+
+    <!-- 查询用户,演示: 1.输入用map传入多个参数 2.<where>语句, 智能添加where和and关键字 3.输出直接映射对象 -->
+    <select id="getUser" parameterType="long" resultType="User">
+        select id,email,username,password,salt,status,email_status as emailstatus,avatar_status as avatarstatus,deleted,photourl,
+        time_offset as timeoffset,regip,lastip,last_time as lasttime,last_act_time as lastacttime,
+        create_time as createtime,modify_time as modifytime
+        from cms_user
+        where id=#{id}
+    </select>
+
+    <!--
+         获取所有用户
+     -->
+    <select id="getAllUser" resultType="User">
+        select id,email,username,status,email_status as emailstatus,avatar_status as avatarstatus,deleted,photourl,
+        time_offset as timeoffset,regip,lastip,last_time as lasttime,last_act_time as lastacttime,
+        create_time as createtime,modify_time as modifytime
+        from cms_user
+    </select>
+
+    <!--
+         获取已标记为删除的文章id
+     -->
+    <select id="getDeletedUserId" resultType="Long">
+        select id
+        from cms_user
+        where deleted=1
+	</select>
+
+    <!-- 查询用户,演示: 1.输入用map传入多个参数 2.<where>语句, 智能添加where和and关键字 3.输出直接映射对象 -->
+    <select id="searchUser" parameterType="map" resultType="User">
+        select *
+        from cms_user
+        <where>
+            <if test="email != null">
+                email=#{email}
+            </if>
+            <if test="username != null">
+                and username=#{username}
+            </if>
+            <if test="status != null">
+                and status=#{status}
+            </if>
+            <if test="emailStatus != null">
+                and emailstatus=#{emailStatus}
+            </if>
+        </where>
+        order by ${Sort} ${Direction}
+    </select>
+
+</mapper>

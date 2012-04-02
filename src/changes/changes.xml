@@ -1,0 +1,10 @@
+<document>
+    <properties>
+        <title>Changes ct-website</title>
+    </properties>
+    <body>
+        <release version="0.1.0" date="2011-11-22" description="init ct-website">
+            <action dev="baitao.jibt" type="init"></action>
+        </release>
+    </body>
+</document>

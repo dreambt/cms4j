@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <typeAliases>
+        <typeAlias alias="User" type="cn.edu.sdufe.cms.common.entity.account.User"/>
+        <typeAlias alias="Group" type="cn.edu.sdufe.cms.common.entity.account.Group"/>
+        <typeAlias alias="Article" type="cn.edu.sdufe.cms.common.entity.article.Article"/>
+        <typeAlias alias="Category" type="cn.edu.sdufe.cms.common.entity.article.Category"/>
+        <typeAlias alias="Comment" type="cn.edu.sdufe.cms.common.entity.article.Comment"/>
+        <typeAlias alias="ManageLog" type="cn.edu.sdufe.cms.common.entity.ManageLog"/>
+        <typeAlias alias="Archive" type="cn.edu.sdufe.cms.common.entity.article.Archive"/>
+    </typeAliases>
+</configuration>

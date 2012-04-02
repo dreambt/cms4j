@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CMS">
+
+    <!--
+         编号为id的评论
+         select cid,aid,username,INET_NTOA(postip) as postip,FROM_UNIXTIME(posttime, 'YYYY-MM-DD HH:MM:SS') as posttime,status,message,FROM_UNIXTIME(createtime, 'YYYY-MM-DD HH:MM:SS') as createtime,FROM_UNIXTIME(modifytime, 'YYYY-MM-DD HH:MM:SS') as modifytime
+        from cms_commnet
+        where aid=#{id}
+        limit 1
+     -->
+    <select id="getComment" parameterType="int" resultType="Comment">
+        select id,username,postip,posttime,status,message,createtime,modifytime
+        from cms_commnet
+        where id=#{id}
+        limit 1
+	</select>
+
+    <!--
+        获取最新10条评论
+    -->
+    <select id="getCommentRecent" resultType="ArrayList">
+        select cid,aid,username,postip,posttime,status,message,createtime,modifytime
+        from cms_commnet
+        where status=1
+        limit 10
+	</select>
+
+    <!--
+         获取评论数目
+     -->
+    <select id="getCommentCount" resultType="Long">
+		select count(id)
+		from cms_commnet
+	</select>
+
+    <!-- 查询评论,演示: 1.输入用map传入多个参数 2.<where>语句, 智能添加where和and关键字 3.输出直接映射对象 -->
+    <select id="searchComment" parameterType="map" resultType="ArrayList">
+        select id, name, email,
+        login_name as loginName,
+        department_id as "department.id"
+        from acct_user
+        <where>
+            <if test="loginName != null">
+                login_name=#{loginName}
+            </if>
+            <if test="name != null">
+                and name=#{name}
+            </if>
+        </where>
+        order by ${Sort} ${Direction}
+    </select>
+
+    <!-- 插入评论 -->
+    <insert id="saveComment" parameterType="Comment" useGeneratedKeys="true" keyProperty="id">
+		insert into cms_commnet (
+		cid,aid,username,postip,posttime,status,message,createtime,modifytime)
+		values (#{id}, #{articleId}, #{username},#{postIP},#{postTime},#{status},#{message},now(),now())
+	</insert>
+
+    <!-- 删除评论 -->
+    <delete id="deleteComment" parameterType="int">
+		delete from acct_user
+		where id=#{id}
+	</delete>
+
+</mapper>

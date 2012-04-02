@@ -1,0 +1,230 @@
+/*----------------------------------------------------
+                 Agivee - CSS File
+------------------------------------------------------*/
+
+
+/* Global
+------------------------------------------------------*/
+html,body{height:100%}
+body{
+font-family:Tahoma, Arial, Verdana;
+font-size:12px;
+margin:0 auto;
+padding:0;
+background-image:url(../images/bg-body.jpg);
+background-repeat:repeat;
+color:#6f6f6f;
+height:100%;
+}
+*{
+margin:0;
+padding:0;
+}
+*:focus{
+outline:none; /* removes ugly dotted border but may make template more unsuable, up to you
+				 if you want to keep it! */
+}
+.clr{clear:both}
+form{margin:0; padding:0;}
+hr{
+border:0;
+color:#dedede;
+background-color: #dedede;
+height: 1px;
+margin:10px 0px 6px 0px;
+padding:0px;
+}
+
+
+/* Default Element Styles
+------------------------------------------------------*/
+/* heading */
+h1, h2, h3, h4, h5{margin-bottom:15px; font-family:Tahoma, Arial, Verdana; font-weight:normal; color:#444444;}
+h1{font-size:32px; line-height:30px;}
+h2{font-size:22px; line-height:28px;}
+h3{font-size:18px; line-height:20px;}
+h4{font-size:16px; line-height:18px; font-weight:bold;}
+h5{font-size:12px; margin:3px 0px; padding:0px;letter-spacing:1px;}
+
+/* links */
+a{color:#ff4e00; text-decoration:none;}
+a:visited{color:#ff4e00; text-decoration:none;}
+a:hover{color:#ff9566;}
+a img{border:none}
+.imgleft{float:left; padding:5px 12px 0px 0px;}
+.imgright{float:right; padding-left:12px;}
+
+/* lists, blockquotes and paragraphs */
+p, ul, ol, blockquote{
+font-size:12px;
+line-height:18px;
+margin-bottom:14px;
+color:#6f6f6f;
+}
+ul, ol{
+margin:10px 0 35px 40px;
+}
+li ol, li ul{
+font-size:1.0em;
+list-style:square;
+margin-bottom:0;
+margin-top:0;
+}
+li ol{list-style:decimal;}
+blockquote{
+font-style:italic;
+margin:0px;
+color:#6f6f6f;
+padding:2px 4px 2px 38px;
+background-image:url(../images/quote.gif);
+background-position:0px 5px;
+background-repeat:no-repeat;
+}
+
+/* code */
+code{
+font-family:Tahoma, Arial, Verdana;
+letter-spacing:1px;
+margin:25px 0 25px 0px;
+display:block;
+font-size:0.9em;
+border-left:4px solid #dddddd;
+padding:15px 10px;
+}
+
+
+/* Container
+------------------------------------------------------*/
+#page-container{width:988px; margin:0 auto;}
+.page-container-inner{width:988px; background-image:url(../images/bg-container.png); float:left;}
+.frame{width:920px; margin:0 auto;}
+
+
+/* Header
+------------------------------------------------------*/
+#header{height:139px; width:920px; background-image:url(../images/top-shadow.jpg); background-position:center 46px;  background-repeat:no-repeat;}
+#top-header{height:108px; background-image:url(../images/strip-line.gif); background-position:top; background-repeat:repeat-x;}
+#bottom-header{width:920px; border-bottom:1px solid #969696; float:left;}
+.logo{width:620px; padding:38px 0px 0px 20px; float:left;display:inline}
+.logo h1{display:inline;padding:17px 0 17px 0}
+.phone{font-size:18px; padding:50px 20px 0px 0px; float:right;}
+.phone-get{font-size:14px; color:#ff4e00;}
+
+/* Search styling */
+.search-fieldset{border:none;padding:0;height:24px;}
+#search-box{padding-bottom:6px; float:left; height:23px;}
+#search{float:right; width:auto;height:24px;}
+#s{font:12px Tahoma, Arial, Verdana; font-size:11px; color:#c8c9be;margin:0; padding:4px 30px 4px 3px; background-color:#fff; border:1px solid #d3d2d2; width:185px;}
+#s:focus{border:1px solid #adacac; color:#adacac;}
+#search .go{position:absolute; margin:3px 0 0 -26px;}
+
+/* Top Navigation bar menu styling */
+#nav-menu {width:680px; float:left; margin:5px 0px 5px 0px; list-style-type:none;}
+#nav {margin:0px; padding:0px 0px 0px 0px; float:left;}
+#nav ul{padding:0;margin:0;width:auto;list-style: none;height:30px;position: relative;}
+#nav li{list-style:none;float:left;text-align:center;padding:0;font:normal 11px Tahoma, Arial, Verdana;line-height:26px;}
+#nav li a {z-index: 10;display: block;float: left;height: 30px;position: relative;overflow: hidden;padding: 0 20px;color:#ffdbcd;text-decoration:none;}
+#nav li a:hover {display: block;float: left;height: 30px;position: relative;overflow: hidden;padding: 0 20px;color: #535353;}
+/* 干嘛用的？baitao.jibt */
+#nav .buttonStyle{
+    background-color: #ccc;
+    border: 1px solid #ccc;
+}
+
+/*  Homepage Slider
+------------------------------------------------------*/
+#slideshow{
+background-color:#202020;
+width:920px;
+height:283px; 
+margin:15px 0px 0px 0px;
+float:left;
+}
+#slideshow-threed{
+width:920px;
+height:283px; 
+margin:15px 0px 0px 0px;
+float:left;
+}
+#box-nav-slider{
+background-image:url(../images/strip-line.gif);
+background-position:bottom;
+background-repeat:repeat-x;
+width:920px;
+height:17px;
+float:left;
+}
+#slideshow-navigation a{
+background: url(../images/slide.png) no-repeat scroll 50% 50%;
+display:block;
+float:left;
+font-size:0px;
+width:9px;
+height:9px;
+margin:2px;
+outline-style:none;
+outline-width:medium;
+padding:2px;
+}
+#slideshow-navigation{float:right; padding-right:10px}
+#slideshow-navigation .activeSlide {background: url(../images/slide.png) no-repeat scroll 0% 50%;}
+.slidehalf { margin-top:0px; margin-right:20px; float:left;} /* Editable Slider Image Position */
+.slidehalf2 { margin-top:0px; margin-right:0px; float:left;} /* Editable Slider Image Position */
+.slide-text h1{color:#FFF; padding:50px 20px 0px 0px}
+.slide-text p{font-size:12px; color:#b5b5b5; line-height:22px; padding-right:20px;}
+.slide-text a.read_more{color:#ff4e00; font-size:12px;}
+.flash-img {text-align:center; display:block; margin:100px auto 0 auto;}
+
+
+/* Content
+------------------------------------------------------*/
+#content{width:920px; padding:20px 0px 20px 0px; float:left;}
+.imgleft{float:left; padding-right:15px;}
+.imgright{float:right; padding-left:15px;}
+.imgleft-box{float:left; border:solid 1px #cfd4c3; padding:6px; margin-right:15px; background-color:#f9fbf4;}
+.imgright-box{float:right; border:solid 1px #cfd4c3; padding:6px; margin-left:15px; background-color:#f9fbf4;}
+#content1{float:left; width:284px;}
+#content2{float:left; width:284px; margin-left:34px;}
+#content3{float:left; width:284px; margin-left:34px;}
+.orange{color:#ff4e00;}
+
+ul.content-list {margin:0px; padding:0px; list-style-type:none;}
+ul.content-list li {background-image:url(../images/arrow.gif); background-position:0px 6px; background-repeat:no-repeat; padding:0px 0px 12px 17px; line-height:18px;}
+ul.content-list li a {text-decoration:none;}
+ul.content-list li a:hover {text-decoration:underline;}
+
+/* Featured Project */
+#featured{margin-top:3px; height:380px;}
+.bg-featured{background-image:url(../images/strip-line.gif); background-repeat:repeat; width:275px; height:157px; padding:5px 5px;}
+.featured-text{padding-top:5px;}
+
+/* Bottom Box */
+.imgleft-bottom{width:88px; height:90px; float:left; margin-right:15px;}
+#bottom-box{width:908px; margin-top:5px; padding:5px; border:1px solid #e5e6e2; float:left;}
+#bottom-box-inner{background-image:url(../images/strip-line.gif); background-repeat:repeat; width:908px; line-height:16px; float:left;}
+#bottom-box-inner h4{padding-top:8px; margin-bottom:8px; color:#ff4e00;}
+.box1{width:437px; font-size:11px; padding:10px 0px 10px 10px; float:left;}
+.box2{width:437px; margin-left:10px; font-size:11px; padding:10px 0px; float:left;}
+
+
+/* Footer
+------------------------------------------------------*/
+#footer{width:920px; height:142px; font-size:11px; margin:0px auto; color:#686868; background-color:#202020; line-height:18px; float:left;}
+#footer a, #footer a:visited{color:#686868; text-decoration:none;}
+#footer p{font-size:11px; color:#686868;}
+.footer1{width:269px; float:left; margin-left:20px; padding-top:15px;}
+.footer2{width:269px; float:left; margin-left:37px; padding-top:21px;}
+.footer2 ul{margin:0px; padding:0px; font-size:11px; list-style-type:none;}
+.footer2 ul li{list-style:none;	border-bottom:solid 1px #686868; line-height:24px; text-align:right;}
+.footer3{width:269px; float:left; margin-left:37px; padding-top:15px;}
+.footer3 h3{color:#686868;}
+.twitter{padding-right:5px; float:left;}
+#social span{background:url(../images/social-icon.jpg); float:left; width:16px; height:16px; margin:4px 5px 0 0;}
+#fb-icon span{background-position:0px 0;}
+#fb-icon a:hover span{background-position: 0px -16px;}
+#twit-icon span{background-position:-16px 0;}
+#twit-icon a:hover span{background-position: -16px -16px;}
+#flic-icon span{background-position:-32px 0;}
+#flic-icon a:hover span{background-position: -32px -16px;}
+#rss-icon span{background-position:-48px 0;}
+#rss-icon a:hover span{background-position: -48px -16px;}

@@ -1,0 +1,21 @@
+/*----------------------------------------------------
+         Agivee - CSS - Exclusively for IE6
+------------------------------------------------------*/
+
+
+/* Search styling */
+#search-box{padding-bottom:4px; float:left; height:23px;}
+#search{float:left; width:auto;}
+
+/* Blog */
+.blog-posted-inner{background-image:url(../images/strip-line.gif); background-repeat:repeat; width:592px; padding:5px; margin:5px 0px 14px 0px; font-size:11px; float:left;}
+
+/* Bottom Box */
+#bottom-box{width:908px; margin-top:5px; padding:5px 5px 0px 5px; border:1px solid #e5e6e2; float:left;}
+#bottom-box-inner{background-image:url(../images/strip-line.gif); background-repeat:repeat; width:908px; line-height:16px; float:left;}
+
+/* Footer */
+#footer{width:920px; height:142px; font-size:11px; margin:0px auto; color:#686868; background-color:#202020; line-height:18px; float:none;}
+.footer1{width:269px; float:left; margin-left:9px; padding-top:15px;}
+.footer2{width:269px; float:left; margin-left:35px; padding-top:21px;}
+.footer3{width:269px; float:left; margin-left:35px; padding-top:15px;}
