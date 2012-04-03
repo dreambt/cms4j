@@ -65,6 +65,7 @@
         <c:if test="${article.allowComment}">
         <div id="commentList">
             <div id="commentList-title"><h4>相关评论</h4></div>
+            <c:choose><c:when test="${fn:length(article.commentList) > 0}">
             <c:forEach items="${article.commentList}" var="comment" begin="0" step="1" varStatus="stat">
                 <c:if test="${comment.status&&!comment.deleted}">
                 <div class="commentList-item-wrapper">
@@ -73,6 +74,7 @@
                 </div>
                 </c:if>
             </c:forEach>
+            </c:when><c:otherwise><div class="commentList-item-wrapper"><h4>暂时没有, 发表一下您的观点吧</h4></div></c:otherwise></c:choose>
         </div>
         <div id="comment">
             <form:form id="commentForm" modelAttribute="comment" action="${ctx}/comment/create" method="post">
