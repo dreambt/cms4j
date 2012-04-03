@@ -68,7 +68,7 @@
                     <td><input type="checkbox" name="isSelected"  value="${image.id}"></td>
                     <td><a href="#" rel="fancybox-thumb" class="fancy_box"><img src="${ctx}/static/uploads/gallery/${image.imageUrl}" width="50px"/></a></td>
                     <td>${image.title}</td>
-                    <td><a href="#">点击查看</a> </td>
+                    <td><a href="#" class="opener" value="test">点击查看</a> </td>
                     <td>${image.imageUrl}</td>
                     <td>${image.createTime}</td>
                     <td><a href="${ctx}/image/edit/${image.id}">【编辑】</a>
@@ -83,6 +83,7 @@
                                                           src="${ctx}/static/dashboard/images/icons/small/white/BendedArrowRight.png"/><span>批量删除</span>
         </button>
     </form>
+    <div id="dialog" title="描述详情"></div>
 </div>
     <script type="text/javascript">
             $(document).ready(function() {
@@ -119,7 +120,27 @@
                         return false;
                     }
                 });
-
+                //提示信息
+                $(".alert").delay(1500).fadeOut("slow");
+                //查看详细描述
+                $( "#dialog" ).dialog({
+                    autoOpen: false,
+                    width:600,
+                    maxWidth: 800,
+                    maxHeight:600,
+                    show: "fade",
+                    hide: "fade",
+                    buttons: {
+                        Ok: function() {
+                            $( this ).dialog( "close" );
+                        }
+                    },
+                    modal: true
+                });
+                $( ".opener" ).click(function() {
+                    $( "#dialog" ).html($(this).attr("value")).dialog( "open" );
+                    return false;
+                });
             });
 </script>
 </body>
