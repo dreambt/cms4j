@@ -70,7 +70,7 @@
                     <td>1.2M</td>
                     <td>qqq.html?id=1q</td>
                     <td>just for test</td>
-                    <td><a href="#">【编辑】</a><a href="#">【删除】</a></td>
+                    <td><a href="${ctx}/image/create">【编辑】</a><a href="#">【删除】</a></td>
                 </tr>
                 <tr>
                     <td><input type="checkbox" name="picName" value="2"></td>
@@ -79,7 +79,7 @@
                     <td>1.2M</td>
                     <td>qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq.html?id=1</td>
                     <td>just for test</td>
-                    <td><a href="#">【编辑】</a><a href="#">【删除】</a></td>
+                    <td><a href="${ctx}/image/create">【编辑】</a><a href="#">【删除】</a></td>
                 </tr>
                 </tbody>
             </table>

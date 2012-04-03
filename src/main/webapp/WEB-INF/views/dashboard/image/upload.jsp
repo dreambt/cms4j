@@ -35,7 +35,16 @@
     </form>
 </div>
 <script type="text/javascript">
-    var editor_a = new baidu.editor.ui.Editor();
+    var editor_a = new baidu.editor.ui.Editor({
+        toolbars:[['InsertImage', 'Undo', 'Redo']],
+        //focus时自动清空初始化时的内容
+        autoClearinitialContent:true,
+        //关闭字数统计
+        wordCount:false,
+        //关闭elementPath
+        elementPathEnabled:false
+        //更多其他参数，请参考editor_config.js中的配置项
+    });
     editor_a.render( 'myEditor' );
 </script>
     </body>
