@@ -22,6 +22,9 @@ import java.util.Map;
  * MIME邮件服务类.
  * <p/>
  * 演示由Freemarker引擎生成的的html格式邮件, 并带有附件.
+ * User: baitao.jibt@gmail.com
+ * Date: 12-4-2
+ * Time: 下午23:53
  */
 public class MimeMailService {
 
@@ -36,23 +39,23 @@ public class MimeMailService {
     /**
      * 发送MIME格式的用户修改通知邮件.
      */
-    public void sendNotificationMail(String username) {
+    public void sendNotificationMail(String email, String username) {
         try {
             MimeMessage msg = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(msg, true, DEFAULT_ENCODING);
 
-            helper.setTo("springside3.demo@gmail.com");
-            helper.setFrom("springside3.demo@gmail.com");
-            helper.setSubject("用户修改通知");
+            helper.setTo(email);
+            helper.setFrom("baitao.jibt@gmail.com");
+            helper.setSubject("用户信息修改通知");
 
             String content = generateContent(username);
             helper.setText(content, true);
 
-            File attachment = generateAttachment();
-            helper.addAttachment("mailAttachment.txt", attachment);
+            //File attachment = generateAttachment();
+            //helper.addAttachment("mailAttachment.txt", attachment);
 
             mailSender.send(msg);
-            logger.info("HTML版邮件已发送至springside3.demo@gmail.com");
+            logger.info("HTML版邮件已发送至 " + email);
         } catch (MessagingException e) {
             logger.error("构造邮件失败", e);
         } catch (Exception e) {
@@ -102,6 +105,6 @@ public class MimeMailService {
      */
     public void setFreemarkerConfiguration(Configuration freemarkerConfiguration) throws IOException {
         //根据freemarkerConfiguration的templateLoaderPath载入文件.
-        template = freemarkerConfiguration.getTemplate("mailTemplate.ftl", DEFAULT_ENCODING);
+        template = freemarkerConfiguration.getTemplate("mailTemplate.vm", DEFAULT_ENCODING);
     }
 }

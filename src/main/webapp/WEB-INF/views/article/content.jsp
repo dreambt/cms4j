@@ -92,8 +92,8 @@
                     });
                     editor.render("myEditor");
                 </script>
-                <label>邮箱: </label><input type="text" id="subject" name="username" class="input required email" value="<shiro:principal property="loginName"/>" />
-                <label>验证码: </label><input type="text" id="code" name="code" class="input" />
+                <label>邮箱: </label><input type="text" id="subject" name="username" class="required email" value="<shiro:principal property="loginName"/>" />
+                <label>验证码: </label><input type="text" id="code" name="code" />
                 <label>评分: </label> <div id="rating"></div>
                 <input type="submit" class="input-submit" value=" 提 交 " />
             </div>

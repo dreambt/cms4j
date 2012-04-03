@@ -1,6 +1,6 @@
 package cn.edu.sdufe.cms.jms;
 
-import cn.edu.sdufe.cms.utilities.email.SimpleMailService;
+import cn.edu.sdufe.cms.utilities.email.MimeMailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class NotifyMessageListener implements MessageListener {
     private static Logger logger = LoggerFactory.getLogger(NotifyMessageListener.class);
 
     @Autowired(required = false)
-    private SimpleMailService simpleMailService;
+    private MimeMailService mimeMailService;
 
     /**
      * MessageListener回调函数.
@@ -37,8 +37,8 @@ public class NotifyMessageListener implements MessageListener {
                     + ", ObjectType:" + mapMessage.getStringProperty("objectType"));
 
             //发送邮件
-            if (simpleMailService != null) {
-                simpleMailService.sendNotificationMail(mapMessage.getString("username"));
+            if (mimeMailService != null) {
+                mimeMailService.sendNotificationMail(mapMessage.getString("email"), mapMessage.getString("username"));
             }
         } catch (Exception e) {
             logger.error("处理消息时发生异常.", e);

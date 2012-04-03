@@ -7,6 +7,7 @@ import cn.edu.sdufe.cms.common.service.ServiceException;
 import cn.edu.sdufe.cms.jms.NotifyMessageProducer;
 import cn.edu.sdufe.cms.security.ShiroDbRealm;
 import cn.edu.sdufe.cms.security.ShiroDbRealm.HashPassword;
+import cn.edu.sdufe.cms.utilities.RandomString;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springside.modules.orm.jpa.Jpas;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -135,7 +137,6 @@ public class UserManager {
      */
     public User findUserByEmail(String email) {
         User user = userJpaDao.findByEmail(email);
-        Jpas.initLazyProperty(user.getGroupList());
         return user;
     }
 
@@ -147,7 +148,6 @@ public class UserManager {
      */
     public User findUserByUsername(String username) {
         User user = userJpaDao.findByUsername(username);
-        Jpas.initLazyProperty(user.getGroupList());
         return user;
     }
 
@@ -162,6 +162,24 @@ public class UserManager {
     }
 
     /**
+     * 创建新用户
+     *
+     * @param user
+     */
+    @Transactional(readOnly = false)
+    public void saveUser(User user) {
+        user.setPlainPassword(RandomString.get(8));
+        user.setSalt(RandomString.get(16));
+        user.setPhotoURL("default.jpg");
+        user.setLastIP(134744072L);
+        user.setTimeOffset("0800");
+        user.setLastTime(new Date());
+        user.setLastActTime(new Date());
+        user.setCreateTime(new Date());
+        this.updateUser(user);
+    }
+
+    /**
      * 保存用户.
      * 在保存用户时,发送用户修改通知消息, 由消息接收者异步进行较为耗时的通知邮件发送.
      * 如果企图修改超级用户,取出当前操作员用户,打印其信息然后抛出异常.
@@ -169,7 +187,7 @@ public class UserManager {
      * @param user
      */
     @Transactional(readOnly = false)
-    public void saveUser(User user) {
+    public void updateUser(User user) {
         if (isSupervisor(user)) {
             logger.warn("操作员{}尝试修改超级管理员用户", SecurityUtils.getSubject().getPrincipal());
             throw new ServiceException("不能修改超级管理员用户");
@@ -182,6 +200,7 @@ public class UserManager {
             user.setPassword(hashPassword.getPassword());
         }
 
+        user.setModifyTime(new Date());
         userJpaDao.save(user);
 
         if (shiroRealm != null) {
@@ -194,7 +213,7 @@ public class UserManager {
     /**
      * 发送用户变更消息.
      * <p/>
-     * 同时发送只有一个消费者的Queue消息与发布订阅模式有多个消费者的Topic消息.
+     * 发送只有一个消费者的Queue消息
      *
      * @param user
      */
@@ -202,7 +221,6 @@ public class UserManager {
         if (notifyProducer != null) {
             try {
                 notifyProducer.sendQueue(user);
-                notifyProducer.sendTopic(user);
             } catch (Exception e) {
                 logger.error("消息发送失败", e);
             }

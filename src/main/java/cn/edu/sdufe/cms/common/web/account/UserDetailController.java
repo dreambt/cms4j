@@ -25,7 +25,7 @@ import java.util.List;
  * Time: 下午8:57
  */
 @Controller
-@RequestMapping(value = "/dashboard/account/user/")
+@RequestMapping(value = "/account/user/")
 public class UserDetailController {
 
     private UserManager userManager;

@@ -139,7 +139,7 @@ public class ArticleController {
      */
     @RequiresPermissions("article:create")
     @RequestMapping(value = "create", method = RequestMethod.GET)
-    public String editArticle(Model model) {
+    public String createArticle(Model model) {
         // 不用报错，Neither BindingResult nor plain target object for bean name 'article' available as request attribute
         model.addAttribute("article", new Article());
         model.addAttribute("categories", categoryManager.getAllowPublishCategory());

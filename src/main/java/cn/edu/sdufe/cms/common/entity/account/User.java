@@ -60,11 +60,7 @@ public class User extends IdEntity {
 
     private List<Article> articleList = Lists.newArrayList();
 
-    private Long regIP;
-
     private Long lastIP;
-
-    private String registerIP;
 
     private String lastLoginIP;
 
@@ -169,29 +165,12 @@ public class User extends IdEntity {
         this.timeOffset = timeOffset;
     }
 
-    public Long getRegIP() {
-        return regIP;
-    }
-
-    public void setRegIP(Long regIP) {
-        this.regIP = regIP;
-    }
-
     public Long getLastIP() {
         return lastIP;
     }
 
     public void setLastIP(Long lastIP) {
         this.lastIP = lastIP;
-    }
-
-    @Transient
-    public String getRegisterIP() {
-        return IPEncodes.longToIp(regIP);
-    }
-
-    public void setRegisterIP(String registerIP) {
-        this.regIP = IPEncodes.ipToLong(registerIP);
     }
 
     @Transient
@@ -245,11 +224,11 @@ public class User extends IdEntity {
     }
 
     //多对多定义
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @ManyToMany
     //中间表定义,表名采用默认命名规则
     @JoinTable(name = "cms_user_group", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "group_id")})
     //Fecth策略定义
-    @Fetch(FetchMode.SELECT)
+    @Fetch(FetchMode.SUBSELECT)
     //集合按id排序
     @OrderBy("id ASC")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -261,9 +240,9 @@ public class User extends IdEntity {
         this.groupList = groupList;
     }
 
-    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToMany
     @JoinTable(name = "cms_user_article", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "article_id")})
-    @Fetch(FetchMode.SELECT)
+    @Fetch(FetchMode.SUBSELECT)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     public List<Article> getArticleList() {
         return articleList;

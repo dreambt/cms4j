@@ -49,21 +49,19 @@
                 <li><label for="username" class="field">用户名: </label><input id="username" name="username" value="${user.username}" class="input_info"></li>
                 <li><label class="field">用户组: </label><form:checkboxes path="groupList" items="${allGroups}" itemLabel="groupName" itemValue="id" /></li>
                 <li><label class="field">用户注册时间: </label><span id="regtime"><fmt:formatDate value="${user.createTime}" type="both"/></span></li>
-                <li><label class="field">用户注册 IP : </label><span id="regip">${user.registerIP}</span></li>
                 <li><label class="field">最后登录时间: </label><span id="lasttime">${user.lastActTime}</span></li>
                 <li><label class="field">最后登录 IP : </label><span id="lastip">${user.lastLoginIP}</span></li>
                 <li><label class="field">最后修改时间: </label><span id="lastmodefied">${user.modifyTime}</span></li>
                 <li>
-                    <button type="submit" id="create" value="修改"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/User2.png"><span>创建用户</span></button>
-                    <button type="submit" id="modify" value="修改"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/Listw_Image.png"><span>修改资料</span></button>
-                    <button type="submit" id="audit" value="修改"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/Listw_Image.png"><span>审核</span></button>
-                    <button type="submit" id="delete" value="修改"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/LoadingBar.png"><span>删除用户</span></button>
-                    <button type="submit" id="repass" value="修改"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/Refresh.png"><span>重置密码</span></button>
+                    <button type="submit" id="create"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/User2.png"><span>创建用户</span></button>
+                    <button type="submit" id="modify"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/Listw_Image.png"><span>保存</span></button>
+                    <button type="submit" id="audit"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/Listw_Image.png"><span>审核</span></button>
+                    <button type="submit" id="delete"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/LoadingBar.png"><span>删除用户</span></button>
+                    <button type="submit" id="repass"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/Refresh.png"><span>重置密码</span></button>
                 </li>
             </ul>
         </form:form>
     </div>
-</div>
 </div>
 <script type="text/javascript">
     function ChangeDateFormat(cellval) {
@@ -74,13 +72,19 @@
     }
 
     $(function () {
-        $('#modify').hide();
+        $('#create').hide();
         $('#audit').hide();
         $('#delete').hide();
         $('#repass').hide();
 
+        // 创建用户
+        $('#create').click(function () {
+            $("#userInfo").attr("action", "${ctx}/account/user/list").submit();
+        });
+
+        // 选择用户
         $('.sliderClick').click(function () {
-            $('#modify').show();
+            $('#create').show();
             $('#audit').show();
             $('#delete').show();
             $('#repass').show();

@@ -16,7 +16,7 @@
     <!-- 查询用户,演示: 1.输入用map传入多个参数 2.<where>语句, 智能添加where和and关键字 3.输出直接映射对象 -->
     <select id="getUser" parameterType="long" resultType="User">
         select id,email,username,password,salt,status,email_status as emailstatus,avatar_status as avatarstatus,deleted,photourl,
-        time_offset as timeoffset,regip,lastip,last_time as lasttime,last_act_time as lastacttime,
+        time_offset as timeoffset,lastip,last_time as lasttime,last_act_time as lastacttime,
         create_time as createtime,modify_time as modifytime
         from cms_user
         where id=#{id}
@@ -27,7 +27,7 @@
      -->
     <select id="getAllUser" resultType="User">
         select id,email,username,status,email_status as emailstatus,avatar_status as avatarstatus,deleted,photourl,
-        time_offset as timeoffset,regip,lastip,last_time as lasttime,last_act_time as lastacttime,
+        time_offset as timeoffset,lastip,last_time as lasttime,last_act_time as lastacttime,
         create_time as createtime,modify_time as modifytime
         from cms_user
     </select>

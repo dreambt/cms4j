@@ -57,7 +57,7 @@
                 }
             }
         %>
-        <label class="fields"><strong>用户名</strong><input type="text" id="username" name="username" value="${username}" class="indent round_all required email"></label>
+        <label class="fields"><strong>用户名</strong><input type="text" id="username" name="username" value="${username}" class="indent round_all required email2 email"></label>
         <label class="fields"><strong>密码</strong><input type="password" id="password" name="password" class="indent round_all required"></label>
         <button type="submit" class="button_colour round_all"><img width="24" height="24" src="${ctx}/static/dashboard/images/icons/small/white/Locked2.png"><span> 登  录</span></button>
         <div id="bar" class="round_bottom">

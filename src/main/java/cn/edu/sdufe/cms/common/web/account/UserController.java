@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -43,6 +44,12 @@ public class UserController {
         b.registerCustomEditor(List.class, "groupList", groupListEditor);
     }
 
+    /**
+     * 显示所有用户
+     *
+     * @param model
+     * @return
+     */
     @RequiresPermissions("user:view")
     @RequestMapping(value = {"list", ""})
     public String list(Model model) {
@@ -52,6 +59,12 @@ public class UserController {
         return "dashboard/account/user/list";
     }
 
+    /**
+     * 获取编号为id的用户AJAX
+     *
+     * @param id
+     * @return
+     */
     @RequiresPermissions("user:view")
     @RequestMapping(value = "get")
     @ResponseBody
@@ -59,37 +72,66 @@ public class UserController {
         return userManager.getUser(id);
     }
 
-    @RequiresPermissions("user:save")
+    /**
+     * 添加用户
+     *
+     * @param model
+     * @return
+     */
+    @RequiresPermissions("user:create")
     @RequestMapping(value = "create")
     public String createForm(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("allGroups", groupManager.getAllGroup());
-        return "dashboard/account/userForm";
+        return "dashboard/account/user/edit";
     }
 
+    /**
+     * 保存新建用户
+     *
+     * @param user
+     * @param redirectAttributes
+     * @return
+     */
     @RequiresPermissions("user:save")
     @RequestMapping(value = "save")
-    public String save(User user, RedirectAttributes redirectAttributes) {
-        userManager.saveUser(user);
-        redirectAttributes.addFlashAttribute("message", "创建用户" + user.getEmail() + "成功");
-        return "redirect:/dashboard/account/user/";
+    public String save(User user, RedirectAttributes redirectAttributes, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return createForm(model);
+        }
+
+        try {
+            userManager.saveUser(user);
+            redirectAttributes.addFlashAttribute("message", "创建用户" + user.getEmail() + "成功, 密码已邮件的方式发送到" + user.getEmail() + ".");
+            return "redirect:/account/user/list";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", "创建用户" + user.getEmail() + "失败");
+            return "dashboard/account/user/edit";
+        }
     }
 
-    @RequiresPermissions("user:save")
+    /**
+     * 删除指定id的用户
+     *
+     * @param id
+     * @param redirectAttributes
+     * @return
+     */
+    @RequiresPermissions("user:delete")
     @RequestMapping(value = "delete/{id}")
     public String delete(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         userManager.deleteUser(id);
         redirectAttributes.addFlashAttribute("message", "删除用户成功");
-        return "redirect:/dashboard/account/user/";
+        return "redirect:/account/user/list";
     }
 
-    @RequestMapping(value = "checkLoginName")
+    @RequestMapping(value = "checkEmail")
     @ResponseBody
-    public String checkLoginName(@RequestParam("oldLoginName") String oldLoginName,
-                                 @RequestParam("loginName") String loginName) {
-        if (loginName.equals(oldLoginName)) {
+    public String checkEmail(@RequestParam("oldEmail") String oldEmail,
+                             @RequestParam("email") String email) {
+        if (email.equals(oldEmail)) {
             return "true";
-        } else if (userManager.findUserByEmail(loginName) == null) {
+        } else if (userManager.findUserByEmail(email) == null) {
             return "true";
         }
 
@@ -110,4 +152,5 @@ public class UserController {
     public void setGroupListEditor(@Qualifier("groupListEditor") GroupListEditor groupListEditor) {
         this.groupListEditor = groupListEditor;
     }
+
 }
