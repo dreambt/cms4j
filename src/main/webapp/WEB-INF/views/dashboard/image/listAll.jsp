@@ -68,7 +68,7 @@
                     <td><input type="checkbox" name="isSelected"  value="${image.id}"></td>
                     <td><a href="#" rel="fancybox-thumb" class="fancy_box"><img src="${ctx}/static/uploads/gallery/${image.imageUrl}" width="50px"/></a></td>
                     <td>${image.title}</td>
-                    <td><a href="#" class="opener" value="test">点击查看</a> </td>
+                    <td><a href="#" class="opener" value="${image.description}">点击查看</a> </td>
                     <td>${image.imageUrl}</td>
                     <td>${image.createTime}</td>
                     <td><a href="${ctx}/image/edit/${image.id}">【编辑】</a>

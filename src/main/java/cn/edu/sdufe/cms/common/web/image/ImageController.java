@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * image控制器
  * User: pengfei.dongpf@gmail.com
@@ -41,17 +43,19 @@ public class ImageController {
      */
     @RequestMapping(value = "list")
     public String listImage(Model model) {
-        model.addAttribute("images", imageManager.getAllImage());
+        model.addAttribute("images", imageManager.getAllImageByDeleted());
         return "image/list";
     }
 
     /**
-     * test
+     * 打开新建image的页面
+     *
      * @return
      */
     @RequestMapping(value = "create")
-    public String create() {
-        return "dashboard/image/upload";
+    public String create(Model model) {
+        model.addAttribute("image", new Image());
+        return "dashboard/image/edit";
     }
 
     /**
@@ -64,11 +68,29 @@ public class ImageController {
     @RequestMapping(value = "save", method = RequestMethod.POST)
     public String save(Image image, RedirectAttributes redirectAttributes) {
         if(null == imageManager.save(image)) {
-            redirectAttributes.addFlashAttribute("error", "图片信息添加失败");
+            redirectAttributes.addFlashAttribute("error", "添加" + image.getId() + "图片信息失败");
         } else {
-            redirectAttributes.addFlashAttribute("info", "图片信息添加成功");
+            redirectAttributes.addFlashAttribute("info", "添加" + image.getId() + "图片信息成功");
         }
-        return "dashboard/image/listAll";
+        return "redirect:/image/listAll";
+    }
+
+    /**
+     * 批量删除
+     *
+     * @return
+     */
+    @RequestMapping(value = "batchDelete", method = RequestMethod.POST)
+    public String batchDeleteComment(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        String[] isSelected = request.getParameterValues("isSelected");
+        if (isSelected == null) {
+            redirectAttributes.addFlashAttribute("error", "请选择要删除的评论.");
+            return "redirect:/image/listAll";
+        } else {
+            imageManager.batchDelete(isSelected);
+            redirectAttributes.addFlashAttribute("info", "批量删除评论成功.");
+            return "redirect:/image/listAll";
+        }
     }
 
     @Autowired
