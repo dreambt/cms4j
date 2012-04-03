@@ -28,7 +28,7 @@
 <div id="content-left">
     <div class="maincontent" id="article_load">
         <c:forEach items="${articles}" var="article" begin="0" step="1" varStatus="stat">
-        <div class="blog-post" id="digest">
+        <div class="blog-post digest">
             <img src="${ctx}/static/images/blog-pic1.jpg" alt="" class="imgleft"/>
             <h2><a href="${ctx}/article/content/${article.id}"><c:if test="${article.top}"><img src="${ctx}/static/images/top.gif" /></c:if>${article.subject}</a></h2>
             <div class="blog-posted">
@@ -41,9 +41,7 @@
     <div class="blog-pagination"><!-- page pagination -->
         Page&nbsp;:&nbsp;
         <span class="blog-button-page-selected pagination">1</span>
-        <span class="blog-button-page pagination">2</span>
-        <span class="blog-button-page pagination">3</span>
-        <span class="blog-button-page pagination">4</span>
+
     </div>
 </div>
 <!--sidebox-->
@@ -75,9 +73,9 @@
                     //加载文章
                     $.each(data, function (index, content) {
 if(content.top)
-                        articles.append($("<div class='blog-post'><img src='${ctx}/static/images/blog-pic1.jpg' class='imgleft'/><h2><img src='${ctx}/static/images/top.gif' /><a href='${ctx}/article/content/" + content.id + "'>"+ content.subject +"</a></h2><div class='blog-posted'>作者: " + content.author + " &nbsp; | &nbsp; 发表时间: "+ChangeDateFormat(content.createTime)+" &nbsp; | &nbsp; 浏览次数: " + content.views + " &nbsp; | &nbsp; 评论数: " + content.count + "</div><p>"+content.digest+"</p></div>"));
+                        articles.append($("<div class='blog-post digest'><img src='${ctx}/static/images/blog-pic1.jpg' class='imgleft'/><h2><img src='${ctx}/static/images/top.gif' /><a href='${ctx}/article/content/" + content.id + "'>"+ content.subject +"</a></h2><div class='blog-posted'>作者: " + content.author + " &nbsp; | &nbsp; 发表时间: "+ChangeDateFormat(content.createTime)+" &nbsp; | &nbsp; 浏览次数: " + content.views + " &nbsp; | &nbsp; 评论数: " + content.count + "</div><p>"+content.digest+"</p></div>"));
 else
-articles.append($("<div class='blog-post'><img src='${ctx}/static/images/blog-pic1.jpg' class='imgleft'/><h2><a href='${ctx}/article/content/" + content.id + "'>"+ content.subject +"</a></h2><div class='blog-posted'>作者: " + content.author + " &nbsp; | &nbsp; 发表时间: "+ChangeDateFormat(content.createTime)+" &nbsp; | &nbsp; 浏览次数: " + content.views + " &nbsp; | &nbsp; 评论数: " + content.count + "</div><p>"+content.digest+"</p></div>"));
+articles.append($("<div class='blog-post digest'><img src='${ctx}/static/images/blog-pic1.jpg' class='imgleft'/><h2><a href='${ctx}/article/content/" + content.id + "'>"+ content.subject +"</a></h2><div class='blog-posted'>作者: " + content.author + " &nbsp; | &nbsp; 发表时间: "+ChangeDateFormat(content.createTime)+" &nbsp; | &nbsp; 浏览次数: " + content.views + " &nbsp; | &nbsp; 评论数: " + content.count + "</div><p>"+content.digest+"</p></div>"));
                     });
 
                     $(".blog-pagination").html("Page&nbsp;:&nbsp;");
