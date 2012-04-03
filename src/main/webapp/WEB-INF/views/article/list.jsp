@@ -73,7 +73,11 @@
 
                     //加载文章
                     $.each(data, function (index, content) {
-                        articles.append($("<div class='art-list'><strong><a href='${ctx}/article/content/" + content.id + "'>" + content.subject + "</a></strong><span class='art-attr'>作者: " + content.author + " &nbsp;•&nbsp; 发表时间: " + ChangeDateFormat(content.createTime) + " &nbsp;•&nbsp; 浏览次数: " + content.views + " &nbsp;•&nbsp; 评论数: " + content.count + "</span></div>"));
+                        if(content.top)
+                            articles.append($("<div class='art-list'><strong><img src='${ctx}/static/images/top.gif' /><a href='${ctx}/article/content/" + content.id + "'>" + content.subject + "</a></strong><span class='art-attr'>作者: " + content.author + " &nbsp;•&nbsp; 发表时间: " + ChangeDateFormat(content.createTime) + " &nbsp;•&nbsp; 浏览次数: " + content.views + " &nbsp;•&nbsp; 评论数: " + content.count + "</span></div>"));
+                        else
+                            articles.append($("<div class='art-list'><strong><a href='${ctx}/article/content/" + content.id + "'>" + content.subject + "</a></strong><span class='art-attr'>作者: " + content.author + " &nbsp;•&nbsp; 发表时间: " + ChangeDateFormat(content.createTime) + " &nbsp;•&nbsp; 浏览次数: " + content.views + " &nbsp;•&nbsp; 评论数: " + content.count + "</span></div>"));
+
                     });
 
                     $(".blog-pagination").html("Page&nbsp;:&nbsp;");
@@ -112,7 +116,7 @@
             });
         };
         $(".pagination").click(function () {
-            PageClick(1, ${total}, 5);
+            PageClick($(this).text(), ${total}, 5);
         });
     });
 </script>

@@ -74,7 +74,10 @@
 
                     //加载文章
                     $.each(data, function (index, content) {
-                        articles.append($("<div class='blog-post'><img src='${ctx}/static/images/blog-pic1.jpg' class='imgleft'/><h2><a href='${ctx}/article/content/" + content.id + "'>"+ content.subject +"</a></h2><div class='blog-posted'>作者: " + content.author + " &nbsp; | &nbsp; 发表时间: "+ChangeDateFormat(content.createTime)+" &nbsp; | &nbsp; 浏览次数: " + content.views + " &nbsp; | &nbsp; 评论数: " + content.count + "</div><p>"+content.digest+"</p></div>"));
+if(content.top)
+                        articles.append($("<div class='blog-post'><img src='${ctx}/static/images/blog-pic1.jpg' class='imgleft'/><h2><img src='${ctx}/static/images/top.gif' /><a href='${ctx}/article/content/" + content.id + "'>"+ content.subject +"</a></h2><div class='blog-posted'>作者: " + content.author + " &nbsp; | &nbsp; 发表时间: "+ChangeDateFormat(content.createTime)+" &nbsp; | &nbsp; 浏览次数: " + content.views + " &nbsp; | &nbsp; 评论数: " + content.count + "</div><p>"+content.digest+"</p></div>"));
+else
+articles.append($("<div class='blog-post'><img src='${ctx}/static/images/blog-pic1.jpg' class='imgleft'/><h2><a href='${ctx}/article/content/" + content.id + "'>"+ content.subject +"</a></h2><div class='blog-posted'>作者: " + content.author + " &nbsp; | &nbsp; 发表时间: "+ChangeDateFormat(content.createTime)+" &nbsp; | &nbsp; 浏览次数: " + content.views + " &nbsp; | &nbsp; 评论数: " + content.count + "</div><p>"+content.digest+"</p></div>"));
                     });
 
                     $(".blog-pagination").html("Page&nbsp;:&nbsp;");
@@ -113,7 +116,7 @@
             });
         };
         $(".pagination").click(function () {
-            PageClick(1, ${total}, 5)
+            PageClick($(this).text(), ${total}, 5);
         });
     });
 </script>
