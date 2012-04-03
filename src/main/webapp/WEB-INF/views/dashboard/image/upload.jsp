@@ -27,11 +27,19 @@
 </div>
 <div class="main_container container_16 clearfix">
     <form method="get" action="#">
-        <div class="box grid_16 round_all">
-            <script type="text/plain" id="myEditor" name="myEditor"style="width:1000px">
-                <p>这里我可以写一些输入提示<img src="#" alt=""></p>
-            </script>
+        <div class="box grid_16">
+            <h2 class="box_head grad_colour round_top">上传活动图片</h2>
+            <div class="toggle_container">
+            <div style="float: left;">
+                <script type="text/plain" id="myEditor" name="myEditor"style="width:300px">
+            </script></div>
+            <div class="info" style="float:left;margin-left:5%;margin-top: 5%;">
+                图片标题：<br/><input type="text" name="picTitle" size="52"> <br/> <br/>
+                描述：<br/><textarea type="text" name="desc" cols="55" rows="5"></textarea>  <br/><br/>
+                <button type="submit">提交</button>
+            </div>
         </div>
+       </div>
     </form>
 </div>
 <script type="text/javascript">
@@ -39,6 +47,10 @@
         toolbars:[['InsertImage', 'Undo', 'Redo']],
         //focus时自动清空初始化时的内容
         autoClearinitialContent:true,
+        compressSide:0,
+        maxImageSideLength:50000,
+        catchRemoteImageEnable:false,
+        autoHeightEnabled:false,
         //关闭字数统计
         wordCount:false,
         //关闭elementPath
