@@ -92,7 +92,7 @@ public class ArticleDetailController {
      * @param id
      * @return
      */
-    @RequiresPermissions("article:top")
+    @RequiresPermissions("article:edit")
     @RequestMapping(value = "top/{id}")
     public String topArticle(@PathVariable("id") Long id, @ModelAttribute("article") Article article, RedirectAttributes redirectAttributes) {
         article.setTop(!article.isTop());
@@ -117,7 +117,7 @@ public class ArticleDetailController {
      * @param id
      * @return
      */
-    @RequiresPermissions("article:allow")
+    @RequiresPermissions("article:edit")
     @RequestMapping(value = "allow/{id}")
     public String allowArticle(@PathVariable("id") Long id, @ModelAttribute("article") Article article, RedirectAttributes redirectAttributes) {
         article.setAllowComment(!article.isAllowComment());
@@ -140,7 +140,7 @@ public class ArticleDetailController {
      * @param id
      * @return
      */
-    @RequiresPermissions("article:audit")
+    @RequiresPermissions("article:edit")
     @RequestMapping(value = "audit/{id}")
     public String auditArticle(@PathVariable("id") Long id, @ModelAttribute("article") Article article, RedirectAttributes redirectAttributes) {
         article.setStatus(!article.isStatus());

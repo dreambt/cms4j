@@ -123,9 +123,6 @@ table.menu_sec input{float: left;}
     margin-top:5px;
 }
 
-/* ------------列表提示字体设置-------------- */
-span .green-text{color: #277423}
-span .red-text{color: #9e253b}
 /*-------------后台首页日历-------------------*/
 .ui-datepicker table{
     margin: 0 0em;

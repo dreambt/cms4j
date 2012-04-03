@@ -13,6 +13,8 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -50,26 +52,11 @@ public class UserController {
      * @param model
      * @return
      */
-    @RequiresPermissions("user:view")
+    @RequiresPermissions("user:list")
     @RequestMapping(value = {"list", ""})
     public String list(Model model) {
-        model.addAttribute("users", userManager.getAllUser());
-        model.addAttribute("user", new User());
-        model.addAttribute("allGroups", groupManager.getAllGroup());
+        model.addAttribute("users", userManager.getAll());
         return "dashboard/account/user/list";
-    }
-
-    /**
-     * 获取编号为id的用户AJAX
-     *
-     * @param id
-     * @return
-     */
-    @RequiresPermissions("user:view")
-    @RequestMapping(value = "get")
-    @ResponseBody
-    public User get(@RequestParam("id") Long id) {
-        return userManager.getUser(id);
     }
 
     /**
@@ -101,28 +88,61 @@ public class UserController {
         }
 
         try {
-            userManager.saveUser(user);
-            redirectAttributes.addFlashAttribute("message", "创建用户" + user.getEmail() + "成功, 密码已邮件的方式发送到" + user.getEmail() + ".");
+            userManager.save(user);
+            redirectAttributes.addFlashAttribute("info", "创建用户" + user.getEmail() + "成功, 密码已邮件的方式发送到" + user.getEmail() + ".");
             return "redirect:/account/user/list";
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("message", "创建用户" + user.getEmail() + "失败");
+            redirectAttributes.addFlashAttribute("error", "创建用户" + user.getEmail() + "失败");
             return "dashboard/account/user/edit";
         }
     }
 
     /**
-     * 删除指定id的用户
+     * 密码找回
      *
      * @param id
      * @param redirectAttributes
      * @return
      */
+    @RequiresPermissions("user:edit")
+    @RequestMapping(value = "repass/{id}")
+    public String repass(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        try {
+            userManager.repass(id);
+            redirectAttributes.addFlashAttribute("info", "重置密码成功, 新密码已邮件的方式通知对方.");
+            return "redirect:/account/user/list";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "重置密码失败.");
+            return "dashboard/account/user/edit";
+        }
+    }
+
+    @RequiresPermissions("user:edit")
+    @RequestMapping(value = "auditAll")
+    public String batchAuditUser(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        String[] isSelected = request.getParameterValues("isSelected");
+        if (isSelected == null) {
+            redirectAttributes.addFlashAttribute("error", "请选择要审核的用户.");
+            return "redirect:/account/user/listAll";
+        } else {
+            userManager.batchAudit(isSelected);
+            redirectAttributes.addFlashAttribute("info", "批量审核用户成功.");
+            return "redirect:/account/user/listAll";
+        }
+    }
+
     @RequiresPermissions("user:delete")
-    @RequestMapping(value = "delete/{id}")
-    public String delete(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
-        userManager.deleteUser(id);
-        redirectAttributes.addFlashAttribute("message", "删除用户成功");
-        return "redirect:/account/user/list";
+    @RequestMapping(value = "deleteAll")
+    public String batchDeleteUser(HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        String[] isSelected = request.getParameterValues("isSelected");
+        if (isSelected == null) {
+            redirectAttributes.addFlashAttribute("error", "请选择要删除的用户.");
+            return "redirect:/account/user/listAll";
+        } else {
+            userManager.batchDelete(isSelected);
+            redirectAttributes.addFlashAttribute("info", "批量删除用户成功.");
+            return "redirect:/account/user/listAll";
+        }
     }
 
     @RequestMapping(value = "checkEmail")

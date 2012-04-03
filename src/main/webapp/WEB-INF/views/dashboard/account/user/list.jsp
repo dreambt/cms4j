@@ -1,8 +1,8 @@
 <%--
-   后台用户管理
-  User: Deng Xiaolan (824688439@qq.com)
-  Date: 12-3-24
-  Time: 上午10:39
+  查看所有用户
+  User: baitao.jibt@gmail.com
+  Date: 12-4-3
+  Time: 下午15:32
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
@@ -12,120 +12,81 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-    <title>用户管理 - 后台管理</title>
+    <title>用户列表</title>
 </head>
 <body>
 <div id="main_container" class="main_container container_16 clearfix">
     <div class="flat_area grid_16">
-        <h2>用户管理</h2>
-        <p>您可以在左边选择现有用户进行管理, 添加新用户请点击 <a href="${ctx}/account/user/list"><strong>添加新用户</strong></a>.</p>
-        <div id="messageBox" class="error" style="display:none">输入有误，请先更正。</div>
+        <h2>用户列表</h2>
+        <p>下面列出了所有用户, 您可以对用户进行 <strong>修改</strong> <strong>重置密码</strong> <strong>审核</strong> 和 <strong>删除</strong>.</p>
+        <c:if test="${not empty info}">
+            <div id="message" class="alert alert_blue">
+                <img height="24" width="24" src="${ctx}/static/dashboard/images/icons/small/white/Locked2.png"><strong>${info}</strong>
+            </div>
+        </c:if>
+        <c:if test="${not empty error}">
+            <div id="message" class="alert alert_red">
+                <img height="24" width="24" src="${ctx}/static/dashboard/images/icons/small/white/Locked2.png"><strong>${error}</strong>
+            </div>
+        </c:if>
     </div>
 </div>
 <div class="main_container container_16 clearfix">
-    <div class="box clearfix grid_6">
-        <h2 class="box_head grad_colour round_top">用户列表</h2>
-        <div id="slider_list">
-            <div class="slider-content">
-                <ul>
-                    <li id="a"><a name="a" class="title">A</a>
-                        <ul>
-                            <c:forEach items="${users}" var="user" begin="0" step="1" varStatus="stat">
-                            <li><a class="sliderClick" value="${user.id}">${user.username}</a></li>
-                            </c:forEach>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
+    <form:form modelAttribute="article" id="articleForm" method="post">
+        <div class="box grid_16 round_all">
+            <table class="display table">
+                <thead>
+                <tr>
+                    <th>选择</th>
+                    <th>用户名</th>
+                    <th>邮箱</th>
+                    <th>用户组</th>
+                    <th>创建时间</th>
+                    <th>最后登录时间</th>
+                    <th>最后登录IP</th>
+                    <th>审核</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${users}" var="user" begin="0" step="1" varStatus="stat">
+                    <tr class="gradeA">
+                        <td><input type="checkbox" name="isSelected" value="${user.id}"></td>
+                        <td>${user.username}</td>
+                        <td>${user.email} <c:choose><c:when test="${user.emailStatus}"><img src="${ctx}/static/jquery-validation/1.9.0/images/checked.gif" /></c:when><c:otherwise><img src="${ctx}/static/jquery-validation/1.9.0/images/unchecked.gif" /></c:otherwise></c:choose></td>
+                        <td><c:forEach items="${user.groupList}" begin="0" step="1" var="group">${group.groupName} </c:forEach></td>
+                        <td><fmt:formatDate value="${user.createTime}" type="both"/></td>
+                        <td><fmt:formatDate value="${user.lastTime}" type="both"/></td>
+                        <td>${user.lastLoginIP}</td>
+                        <td><a href="${ctx}/account/user/audit/${user.id}"><c:choose><c:when test="${user.status}">【反审核】</c:when><c:otherwise>【审核】</c:otherwise></c:choose></a></td>
+                        <td><a href="${ctx}/account/user/repass/${user.id}">【密码找回】</a> <a href="${ctx}/account/user/edit/${user.id}">【编辑】</a> <a href="${ctx}/account/user/delete/${user.id}"><c:choose><c:when test="${article.deleted}">【恢复】</c:when><c:otherwise>【删除】</c:otherwise></c:choose></a></td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
         </div>
-    </div>
-    <div class="flat_area grid_10">
-        <h2>用户信息</h2>
-        <form:form id="userInfo" modelAttribute="user" action="${ctx}/account/user/save/${user.id}" method="post">
-            <img id="profile" alt="头像" src="${ctx}/static/uploads/Avatar/default.jpg"/>
-            <input type="hidden" id="user_id" name="id" value="${user.id}"/>
-            <ul>
-                <li><label for="email" class="field">邮  箱: </label><input id="email" name="email" value="${user.email}" class="input_info"> <img id="emailstatus" src="${ctx}/static/images/clear.gif" /></li>
-                <li><label for="username" class="field">用户名: </label><input id="username" name="username" value="${user.username}" class="input_info"></li>
-                <li><label class="field">用户组: </label><form:checkboxes path="groupList" items="${allGroups}" itemLabel="groupName" itemValue="id" /></li>
-                <li><label class="field">用户注册时间: </label><span id="regtime"><fmt:formatDate value="${user.createTime}" type="both"/></span></li>
-                <li><label class="field">最后登录时间: </label><span id="lasttime">${user.lastActTime}</span></li>
-                <li><label class="field">最后登录 IP : </label><span id="lastip">${user.lastLoginIP}</span></li>
-                <li><label class="field">最后修改时间: </label><span id="lastmodefied">${user.modifyTime}</span></li>
-                <li>
-                    <button type="submit" id="create"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/User2.png"><span>创建用户</span></button>
-                    <button type="submit" id="modify"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/Listw_Image.png"><span>保存</span></button>
-                    <button type="submit" id="audit"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/Listw_Image.png"><span>审核</span></button>
-                    <button type="submit" id="delete"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/LoadingBar.png"><span>删除用户</span></button>
-                    <button type="submit" id="repass"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/Refresh.png"><span>重置密码</span></button>
-                </li>
-            </ul>
-        </form:form>
-    </div>
+        <button class="button_colour" id="auditAll"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/BendedArrowRight.png" /><span>批量审核</span></button>
+        <button class="button_colour" id="deleteAll"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/BendedArrowRight.png" /><span>批量删除</span></button>
+    </form:form>
 </div>
-<script type="text/javascript">
-    function ChangeDateFormat(cellval) {
-        var date = new Date(parseInt(cellval + 3600000, 10));
-        var month = date.getMonth() + 1;
-        var currentDate = date.getDate();
-        return date.getFullYear() + "-" + month + "-" + currentDate;
-    }
+<script>
+    $(function() {
+        $(".alert").delay(1500).fadeOut("slow");
 
-    $(function () {
-        $('#create').hide();
-        $('#audit').hide();
-        $('#delete').hide();
-        $('#repass').hide();
-
-        // 创建用户
-        $('#create').click(function () {
-            $("#userInfo").attr("action", "${ctx}/account/user/list").submit();
+        $('#auditAll').click(function () {
+            if (confirm("确定批量审核吗？")) {
+                $("#articleForm").attr("action", "${ctx}/account/user/auditAll").submit();
+            } else {
+                return false;
+            }
         });
 
-        // 选择用户
-        $('.sliderClick').click(function () {
-            $('#create').show();
-            $('#audit').show();
-            $('#delete').show();
-            $('#repass').show();
-            $('#groupList1').attr("checked", true);
-            var user_id = $(this).attr('value');
-            $.ajax({
-                url:"${ctx}/account/user/get?id=" + user_id,
-                timeout:3000,
-                success:function (data) {
-                    $('#profile').attr("src", "${ctx}/static/uploads/Avatar/" + data.photoURL);
-                    $('#email').attr("value", data.email);
-                    $('#username').attr("value", data.username);
-                    $('#regip').text(data.registerIP);
-                    $('#regtime').text(ChangeDateFormat(data.createTime));
-                    $('#lastip').text(data.lastLoginIP);
-                    $('#lasttime').text(ChangeDateFormat(data.lastTime));
-                    $('#lastmodefied').text(ChangeDateFormat(data.modifyTime));
-
-                    if(data.emailStatus)
-                        $('#emailstatus').attr("src","${ctx}/static/jquery-validation/1.9.0/images/checked.gif");
-                    else
-                        $('#emailstatus').attr("src", "${ctx}/static/jquery-validation/1.9.0/images/unchecked.gif");
-
-                    if (data.status) {
-                        $('#audit').show().text("反审核");
-                    }
-                    else {
-                        $('#audit').show().text("审核");
-                    }
-
-                    // 多选框
-                    $.each(data.groupList, function (index, content) {
-                        $('#groupList' + content.id).attr("checked", true);
-                    });
-
-                    $('#create').remove();
-                },
-                error:function (xmlHttpRequest, error) {
-                    console.log(xmlHttpRequest, error);
-                }
-            });
+        $('#deleteAll').click(function () {
+            if (confirm("确定批量删除吗？")) {
+                $("#articleForm").attr("action", "${ctx}/account/user/deleteAll").submit();
+            } else {
+                return false;
+            }
         });
     });
 </script>

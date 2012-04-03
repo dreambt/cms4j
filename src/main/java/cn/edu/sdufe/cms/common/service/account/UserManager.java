@@ -3,6 +3,7 @@ package cn.edu.sdufe.cms.common.service.account;
 import cn.edu.sdufe.cms.common.dao.account.UserDao;
 import cn.edu.sdufe.cms.common.dao.account.UserJpaDao;
 import cn.edu.sdufe.cms.common.entity.account.User;
+import cn.edu.sdufe.cms.common.entity.article.Article;
 import cn.edu.sdufe.cms.common.service.ServiceException;
 import cn.edu.sdufe.cms.jms.NotifyMessageProducer;
 import cn.edu.sdufe.cms.security.ShiroDbRealm;
@@ -51,8 +52,10 @@ public class UserManager {
      * @param id
      * @return
      */
-    public User getUser(Long id) {
-        return userJpaDao.findOne(id);
+    public User get(Long id) {
+        User user = userJpaDao.findOne(id);
+        //Jpas.initLazyProperty(user.getGroupList());
+        return user;
     }
 
     /**
@@ -60,8 +63,8 @@ public class UserManager {
      *
      * @return
      */
-    public List<User> getAllUser() {
-        return userDao.getAllUser();
+    public List<User> getAll() {
+        return (List<User>) userJpaDao.findAll();
     }
 
     /**
@@ -69,7 +72,7 @@ public class UserManager {
      *
      * @return
      */
-    public Long getUserCount() {
+    public Long getCount() {
         return userDao.count();
     }
 
@@ -78,7 +81,7 @@ public class UserManager {
      *
      * @return
      */
-    public List<User> getAllUserInitialized() {
+    public List<User> getAllInitialized() {
         List<User> result = (List<User>) userJpaDao.findAll();
         for (User user : result) {
             Jpas.initLazyProperty(user.getGroupList());
@@ -92,7 +95,7 @@ public class UserManager {
      * @param parameters
      * @return
      */
-    public List<User> searchUser(Map<String, Object> parameters) {
+    public List<User> search(Map<String, Object> parameters) {
         return (List<User>) userDao.search(parameters);
     }
 
@@ -102,7 +105,7 @@ public class UserManager {
      * @return
      */
     @Transactional(readOnly = false)
-    public int deleteUser() throws InterruptedException {
+    public int delete() throws InterruptedException {
         List<Long> list = userDao.getDeletedId();
         int count = list.size();
         while (list.size() > 0) {
@@ -120,8 +123,8 @@ public class UserManager {
      * @param id
      */
     @Transactional(readOnly = false)
-    public void deleteUser(Long id) {
-        User user = getUser(id);
+    public void delete(Long id) {
+        User user = get(id);
         if (isSupervisor(user)) {
             logger.warn("操作员{}尝试删除超级管理员用户", SecurityUtils.getSubject().getPrincipal());
             throw new ServiceException("不能删除超级管理员用户");
@@ -167,7 +170,7 @@ public class UserManager {
      * @param user
      */
     @Transactional(readOnly = false)
-    public void saveUser(User user) {
+    public void save(User user) {
         user.setPlainPassword(RandomString.get(8));
         user.setSalt(RandomString.get(16));
         user.setPhotoURL("default.jpg");
@@ -176,7 +179,56 @@ public class UserManager {
         user.setLastTime(new Date());
         user.setLastActTime(new Date());
         user.setCreateTime(new Date());
-        this.updateUser(user);
+        this.update(user);
+    }
+
+    /**
+     * 重置密码
+     *
+     * @param id
+     */
+    @Transactional(readOnly = false)
+    public void repass(Long id) {
+        User user = this.get(id);
+        user.setPlainPassword(RandomString.get(8));
+        user.setSalt(RandomString.get(16));
+        this.update(user);
+    }
+
+    /**
+     * 批量审核用户
+     *
+     * @param ids
+     */
+    @Transactional(readOnly = false)
+    public void batchAudit(String[] ids) {
+        User user = null;
+        for (String id : ids) {
+            if (id.length() == 0) {
+                continue;
+            }
+            user = this.get(Long.parseLong(id));
+            user.setStatus(false);
+            this.update(user);
+        }
+    }
+
+    /**
+     * 批量改变用户的删除标志
+     *
+     * @param ids
+     */
+    @Transactional(readOnly = false)
+    public void batchDelete(String[] ids) {
+        User user = null;
+        for (String id : ids) {
+            if (id.length() == 0) {
+                continue;
+            }
+            user = this.get(Long.parseLong(id));
+            user.setDeleted(true);
+            this.update(user);
+        }
     }
 
     /**
@@ -187,7 +239,7 @@ public class UserManager {
      * @param user
      */
     @Transactional(readOnly = false)
-    public void updateUser(User user) {
+    public void update(User user) {
         if (isSupervisor(user)) {
             logger.warn("操作员{}尝试修改超级管理员用户", SecurityUtils.getSubject().getPrincipal());
             throw new ServiceException("不能修改超级管理员用户");

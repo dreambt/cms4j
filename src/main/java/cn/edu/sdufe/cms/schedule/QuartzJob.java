@@ -25,7 +25,7 @@ public class QuartzJob {
      */
     public void execute() {
         // 查询当前系统用户数
-        Long userCount = userManager.getUserCount();
+        Long userCount = userManager.getCount();
         logger.info("There are {} user in database, printed by quartz local job.", userCount);
 
         // 删除标记为deleted的记录

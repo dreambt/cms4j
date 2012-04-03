@@ -58,11 +58,11 @@ public class UserManagerTest {
         user.setModifyTime(new Date());
 
         //正常保存用户
-        userManager.saveUser(user);
+        userManager.save(user);
 
         //保存超级管理用户抛出异常
         try {
-            userManager.saveUser(admin);
+            userManager.save(admin);
             fail("expected ServicExcepton not be thrown");
         } catch (ServiceException se) {
             //expected exception

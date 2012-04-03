@@ -3,6 +3,7 @@ package cn.edu.sdufe.cms.common.web.account;
 import cn.edu.sdufe.cms.common.entity.account.User;
 import cn.edu.sdufe.cms.common.service.account.UserManager;
 import com.google.common.collect.Lists;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -44,14 +45,54 @@ public class UserDetailController {
             return updateForm(model);
         }
 
-        userManager.saveUser(user);
+        userManager.save(user);
         redirectAttributes.addFlashAttribute("message", "保存用户成功");
         return "redirect:/dashboard/account/user/";
     }
 
+    /**
+     * 审核编号为id的文章
+     *
+     * @param id
+     * @return
+     */
+    @RequiresPermissions("user:edit")
+    @RequestMapping(value = "audit/{id}")
+    public String auditArticle(@PathVariable("id") Long id, @ModelAttribute("user") User user, RedirectAttributes redirectAttributes) {
+        user.setStatus(!user.isStatus());
+        userManager.update(user);
+
+        if (user.isStatus()) {
+            redirectAttributes.addFlashAttribute("info", "审核用户 " + id + " 成功.");
+        } else {
+            redirectAttributes.addFlashAttribute("info", "反审核用户 " + id + " 成功.");
+        }
+        return "redirect:/account/user/list";
+    }
+
+    /**
+     * 删除编号为id的文章
+     *
+     * @param id
+     * @return
+     */
+    @RequiresPermissions("user:delete")
+    @RequestMapping(value = "delete/{id}")
+    public String deleteArticle(@PathVariable("id") Long id, @ModelAttribute("user") User user, RedirectAttributes redirectAttributes) {
+        user.setDeleted(!user.isDeleted());
+        userManager.update(user);
+
+        if (user.isDeleted()) {
+            redirectAttributes.addFlashAttribute("info", "删除用户 " + id + " 成功.");
+        } else {
+            redirectAttributes.addFlashAttribute("info", "恢复用户 " + id + " 成功.");
+        }
+        return "redirect:/account/user/list";
+    }
+
     @ModelAttribute("user")
     public User getAccount(@PathVariable("id") Long id) {
-        return userManager.getUser(id);
+        return userManager.get(id);
     }
 
     @Autowired

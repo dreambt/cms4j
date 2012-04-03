@@ -46,7 +46,7 @@ public class ArticleController {
      * @param model
      * @return
      */
-    @RequiresPermissions("article:listAll")
+    @RequiresPermissions("article:list")
     @RequestMapping(value = {"listAll", ""})
     public String listAllArticle(Model model) {
         model.addAttribute("articles", articleManager.getAllArticle(0, ARTICLE_NUM));
@@ -60,7 +60,7 @@ public class ArticleController {
      * @param limit
      * @return
      */
-    @RequiresPermissions("article:listAll")
+    @RequiresPermissions("article:list")
     @RequestMapping(value = "listAll/ajax")
     @ResponseBody
     public List<Article> ajaxAllArticle(@RequestParam("offset") int offset, @RequestParam("limit") int limit) {
@@ -161,7 +161,7 @@ public class ArticleController {
         article.setAuthor(shiroUser.getName());
 
         // 文章作者
-        User user = userManager.getUser(shiroUser.getId());
+        User user = userManager.get(shiroUser.getId());
         article.setUser(user);
 
         article.setCreateTime(new Date());
@@ -176,7 +176,7 @@ public class ArticleController {
         }
     }
 
-    @RequiresPermissions("article:audit")
+    @RequiresPermissions("article:edit")
     @RequestMapping(value = "auditAll")
     public String batchAuditArticle(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         String[] isSelected = request.getParameterValues("isSelected");

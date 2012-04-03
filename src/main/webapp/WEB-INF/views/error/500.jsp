@@ -49,13 +49,10 @@
     <script src="${ctx}/static/js/modernizr-1.7.min.js"></script>
 </head>
 <body class="error-page">
-
 <article class="error-wrapper">
-
     <div class="error-code">
         <h1>500<span>Whoops! Server error&#8230;</span></h1>
     </div>
-
     <div class="error-content">
         <p>Sorry, it appears the page you were looking for doesn't exist anymore or might have been moved. If the problem persists, please contact our support at <a href="#">dreambt@gmail.com</a> or try searching:</p>
         <form>
@@ -63,9 +60,6 @@
             <button type="submit">Search</button> ro <a href="${ctx}"><button type="submit">返回首页</button></a>
         </form>
     </div>
-
 </article>
-
-
 </body>
 </html>
