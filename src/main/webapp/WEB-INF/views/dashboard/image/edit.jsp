@@ -32,7 +32,7 @@
 
             <div class="toggle_container">
                 <div style="float: left;width: 200px;margin-left:20%;margin-top: 15px;">
-                    <input type="file"> <br>
+                    <input type="file" id="upload"><br>
                     <img src="#" width="190px">
                 </div>
                 <div class="info" style="float:left;margin-left: 5%;margin-top: 15px;">
@@ -44,5 +44,12 @@
         </div>
     </form>
 </div>
+<script type="text/javascript">
+    $(function(){
+        $('#upload').live('change',function(){
+            alert('aa');
+        });
+    })
+</script>
 </body>
 </html>
