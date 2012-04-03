@@ -52,6 +52,10 @@
            memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true"
            maxElementsOnDisk="1000000"/>
 
+    <cache name="cn.edu.sdufe.cms.common.entity.image.Image" maxElementsInMemory="10000"
+           memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true"
+           maxElementsOnDisk="1000000"/>
+
     <cache name="cn.edu.sdufe.cms.common.entity.ManageLog" maxElementsInMemory="10000"
            memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true"
            maxElementsOnDisk="1000000"/>
