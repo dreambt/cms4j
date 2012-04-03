@@ -2,10 +2,16 @@ package cn.edu.sdufe.cms.common.service.image;
 
 import cn.edu.sdufe.cms.common.dao.image.ImageJpaDao;
 import cn.edu.sdufe.cms.common.entity.image.Image;
+import cn.edu.sdufe.cms.utilities.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -35,7 +41,7 @@ public class ImageManager {
      * @return
      */
     public List<Image> getAllImage() {
-        return (List<Image>)imageJpaDao.findAll();
+        return (List<Image>)imageJpaDao.findAll(new Sort(Sort.Direction.DESC, "createTime"));
     }
 
     /**
@@ -55,11 +61,51 @@ public class ImageManager {
      * @return
      */
     @Transactional(readOnly = false)
-    public Image save(Image image) {
+    public Image save(MultipartFile file, HttpServletRequest request, Image image) {
+        // 转型为MultipartHttpRequest：
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+        //上传路径
+        String path = multipartRequest.getSession().getServletContext().getRealPath("static/uploads/gallery");
+        //原文件名
+        String imageName = file.getOriginalFilename();
+        String ext = imageName.substring(imageName.lastIndexOf("."),imageName.length());
+        //判断是否为图片
+        if(!isPic(ext)) {
+            return null;
+        }
+        //服务器上的文件名
+        String fileName = new Date().getTime() + RandomString.get(6) + ext;
+        File targetFile = new File(path, fileName);
+        if(!targetFile.exists()){
+            targetFile.mkdirs();
+        }
+        //保存
+        image.setImageUrl(fileName);
+        try {
+            file.transferTo(targetFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         image.setDeleted(false);
         image.setCreateTime(new Date());
         image.setModifyTime(new Date());
         return (Image)imageJpaDao.save(image);
+    }
+
+    /**
+     * 判断是否为图片
+     *
+     * @return
+     */
+    public boolean isPic(String ext) {
+        boolean flag = false;
+        String[] exts = {".jpg", "jpeg", ".gif", ".bmp", ".png"};
+        for(String e: exts) {
+            if(ext.equals(e)) {
+                flag = true;
+            }
+        }
+        return flag;
     }
 
     /**
