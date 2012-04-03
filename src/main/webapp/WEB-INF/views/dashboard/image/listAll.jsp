@@ -47,40 +47,35 @@
     </div>
 </div>
 <div class="main_container container_16 clearfix">
-    <form method="get" action="#">
+    <form id="imageList" name="imageList" method="post">
         <div class="box grid_16 round_all">
             <table class="display table">
                 <thead>
                 <tr>
                     <th>选择</th>
                     <th>缩略图</th>
-                    <th>名称</th>
-                    <th>名称</th>
-                    <th>名称</th>
-                    <th>名称</th>
-                    <th>名称</th>
+                    <th>标题</th>
+                    <th>描述</th>
+                    <th>URL</th>
+                    <th>上传时间</th>
+                    <th>操作</th>
 
                 </tr>
                 </thead>
                 <tbody>
+                <c:forEach items="${images}" var="image" begin="0" step="1">
                 <tr>
-                    <td><input type="checkbox" name="picName" value="1"></td>
-                    <td><a href="${ctx}/static/uploads/gallery/test1.jpg" rel="fancybox-thumb" class="fancy_box"><img src="${ctx}/static/uploads/gallery/test1.jpg" width="50px"/></a></td>
-                    <td>aa.jpg</td>
-                    <td>1.2M</td>
-                    <td>qqq.html?id=1q</td>
-                    <td>just for test</td>
-                    <td><a href="${ctx}/image/create">【编辑】</a><a href="#">【删除】</a></td>
+                    <td><input type="checkbox" name="isSelected"  value="${image.id}"></td>
+                    <td><a href="#" rel="fancybox-thumb" class="fancy_box"><img src="${ctx}/static/uploads/gallery/${image.imageUrl}" width="50px"/></a></td>
+                    <td>${image.title}</td>
+                    <td><a href="#">点击查看</a> </td>
+                    <td>${image.imageUrl}</td>
+                    <td>${image.createTime}</td>
+                    <td><a href="${ctx}/image/edit/${image.id}">【编辑】</a>
+                        <c:choose><c:when test="${image.deleted}"><a href="${ctx}/image/delete/${image.id}">【恢复】</a></c:when>
+                            <c:otherwise><a href="${ctx}/image/delete/${image.id}" id="delete">【删除】</a></c:otherwise></c:choose></td>
                 </tr>
-                <tr>
-                    <td><input type="checkbox" name="picName" value="2"></td>
-                    <td><a href="${ctx}/static/uploads/gallery/test2.jpg" rel="fancybox-thumb"  class="fancy_box"><img src="${ctx}/static/uploads/gallery/test2.jpg" width="50px"/></a></td>
-                    <td>aa.jpg</td>
-                    <td>1.2M</td>
-                    <td>qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq.html?id=1</td>
-                    <td>just for test</td>
-                    <td><a href="${ctx}/image/create">【编辑】</a><a href="#">【删除】</a></td>
-                </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>
@@ -110,8 +105,14 @@
                         }
                     }
                 });
-
-                $('#deleteAll').click(function(){
+                $('#deleteAll').click(function () {
+                    if (confirm("确定批量删除吗？")) {
+                        $("#imageList").attr("action", "${ctx}/image/batchDelete").submit();
+                    } else {
+                        return false;
+                    }
+                });
+                $('#delete').click(function(){
                     if(confirm('确定删除？')){
                         return true;
                     }else{
