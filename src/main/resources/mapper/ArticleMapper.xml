@@ -68,7 +68,7 @@
     <select id="getArticleListByCategoryId" parameterType="int" resultType="Article">
         select id,subject,author,category_name as categoryname,rate,rate_times as ratetimes,top,status,allow_comment as allowcomment,views,count,create_time as createtime,modify_time as modifytime
         from cms_article
-        where id in (select article_id from cms_category_article where category_id=#{categoryId}) and deleted=0
+        where id in (select article_id from cms_category_article where category_id=#{categoryId}) and status=1 and deleted=0
         order by top desc
 	</select>
 
@@ -78,7 +78,7 @@
     <select id="getArticleDigestByCategoryId" parameterType="int" resultType="Article">
         select id,subject,digest,author,category_name as categoryname,rate,rate_times as ratetimes,views,count,create_time as createtime,modify_time as modifytime,top,status
         from cms_article
-        where id in (select article_id from cms_category_article where category_id=#{categoryId}) and deleted=0
+        where id in (select article_id from cms_category_article where category_id=#{categoryId}) and status=1 and deleted=0
         order by top desc
 	</select>
 
