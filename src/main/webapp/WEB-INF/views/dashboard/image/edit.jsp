@@ -47,15 +47,15 @@
 <script type="text/javascript">
     $(function () {
         $('#upload').live('change', function () {
-            var aa = $(this).value.split('. ');
-            if (aa[aa.length - 1] == 'gif ' || aa[aa.length - 1] == 'jpg ') {
-                alert('*.jpg   or   *.gif ')
-            } else {
-                alert('Not   *.jpg   or   *.gif ')
+            var b= $(this).val();
+            var c=(b.substr(b.length -5)).substr((b.substr(b.length -5)).indexOf('.')+1).toLowerCase();
+            if(c=='gif'||c=='jpg'||c=='png'||c=="bmp"){
+               return true;
+            }else{
+                alert("不能上传非gif、jpg、png、bmp类型的文件！请重新选择要上传的图片文件！");
             }
-            ;
         });
-    })
+    });
 </script>
 </body>
 </html>
