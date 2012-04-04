@@ -31,13 +31,13 @@
         <div class="toggle_container">
             <div class="block">
             <input type="hidden" id="user_id" name="id" value="${user.id}"/>
-            <label for="email" class="field">邮  箱: </label><input id="email" name="email" class="required email" size="40" value="${user.email}" /><br />
+            <label for="email" class="field">邮  箱: </label><c:choose><c:when test="${user.id > 0}">${user.email}</c:when><c:otherwise><input id="email" name="email" class="required email" size="40" /></c:otherwise></c:choose><br />
             <label for="username" class="field">用户名: </label><input id="username" name="username" class="required" size="40" minlength="2" value="${user.username}" /><br />
             <label class="field">用户组: </label><form:radiobuttons path="groupList" items="${allGroups}" itemLabel="groupName" itemValue="id" />
             </div>
         </div>
     </div>
-    <button type="submit" id="create"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/User2.png"><span>创建用户</span></button>
+    <button type="submit" id="create"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/white/User2.png"><span>保存修改</span></button>
 </form:form>
 </div>
 <script>

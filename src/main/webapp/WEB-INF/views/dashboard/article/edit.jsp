@@ -27,12 +27,12 @@
         <p>请选择 <strong>文章分类</strong> <strong>是否置顶</strong> <strong>是否允许评论</strong> , 并填写 <strong>文章标题</strong> 和 <strong>文章内容</strong>.</p>
         <c:if test="${not empty info}">
             <div id="message" class="alert alert_blue">
-                <img height="24" width="24" src="${ctx}/static/dashboard/images/icons/small/white/Locked2.png"><strong>${info}</strong>
+                <img height="24" width="24" src="${ctx}/static/dashboard/images/icons/white/Locked2.png"><strong>${info}</strong>
             </div>
         </c:if>
         <c:if test="${not empty error}">
             <div id="message" class="alert alert_red">
-                <img height="24" width="24" src="${ctx}/static/dashboard/images/icons/small/white/Locked2.png"><strong>${error}</strong>
+                <img height="24" width="24" src="${ctx}/static/dashboard/images/icons/white/Locked2.png"><strong>${error}</strong>
             </div>
         </c:if>
     </div>
@@ -62,8 +62,8 @@
         </div>
     </div>
 </div>
-<button class="button_colour" id="publish" type="submit"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/BendedArrowRight.png"><span>发 布</span></button>
-<button class="button_colour" type="reset"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/BendedArrowRight.png"><span>草 稿</span></button>
+<button class="button_colour" id="publish" type="submit"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/white/BendedArrowRight.png"><span>发 布</span></button>
+<button class="button_colour" type="reset"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/white/BendedArrowRight.png"><span>草 稿</span></button>
 </form:form>
 </div>
 <script type="text/javascript">

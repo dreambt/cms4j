@@ -33,7 +33,7 @@
     </select>
 
     <!--
-         获取已标记为删除的文章id
+         获取已标记为删除的用户id
      -->
     <select id="getDeletedUserId" resultType="Long">
         select id
@@ -68,7 +68,7 @@
         set email=#{email},username=#{username},password=#{password},salt=#{salt},status=#{status},
         email_status=#{email_status},avatar_status=#{avatar_status},deleted=#{deleted},photourl=#{photourl},
         time_offset=#{time_offset},lastip=#{lastip},
-        last_time=#{last_time},last_act_time=#{last_act_time},modify_time = now()
+        last_time=#{last_time},last_act_time=#{last_act_time}
         where id = #{id}
 	</update>
 </mapper>

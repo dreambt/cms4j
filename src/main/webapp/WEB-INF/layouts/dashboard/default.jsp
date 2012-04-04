@@ -22,8 +22,7 @@
     <link rel="apple-touch-icon" href="${ctx}/static/dashboard/images/iOS_icon.png">
     <link rel="stylesheet" type="text/css" href="${ctx}/static/dashboard/css/all.css" media="screen">
     <link rel="stylesheet" type="text/css" href="${ctx}/static/dashboard/css/ui.totop.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="${ctx}/static/CMS.css" media="screen">
-    <!--<link rel="stylesheet" type="text/css" href="${ctx}/static/CMS.css" media="screen">-->
+    <link rel="stylesheet" type="text/css" href="${ctx}/static/CMS.min.css" media="screen">
     <!--[if IE 6]><link rel="stylesheet" type="text/css" href="${ctx}/static/dashboard/css/ie6.css" media="screen"/><![endif]-->
     <!--[if IE 7]><link rel="stylesheet" type="text/css" href="${ctx}/static/dashboard/css/ie.css" media="screen"/><![endif]-->
     <script type="text/javascript" src="${ctx}/static/jquery/1.7.1/jquery.min.js"></script>
@@ -31,18 +30,13 @@
     <!-- Load Interface Plugins -->
     <script type="text/javascript" src="${ctx}/static/dashboard/js/plugins.js"></script>
     <script type="text/javascript" src="${ctx}/static/js/fancyBox/jquery.fancybox.js"></script>
-    <!--<script type="text/javascript" src="${ctx}/static/dashboard/js/quicksand/jquery.quicksand.js"></script>
-    <script type="text/javascript" src="${ctx}/static/dashboard/js/quicksand/custom_sorter.js"></script>
-    <script type="text/javascript" src="${ctx}/static/dashboard/js/quicksand/dash_sorter.js"></script>
-    <script type="text/javascript" src="${ctx}/static/dashboard/js/quicksand/jquery-css-transform.js"></script>
-    <script type="text/javascript" src="${ctx}/static/dashboard/js/quicksand/jquery-animate-css-rotate-scale.js"></script>-->
     <script type="text/javascript" src="${ctx}/static/js/jqueryFileTree/jqueryFileTree.js"></script>
     <script type="text/javascript" src="${ctx}/static/jquery/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="${ctx}/static/dashboard/js/slidernav/slidernav.js"></script>
 
     <!-- This file configures the various jQuery plugins for Adminica. Contains links to help pages for each plugin.-->
     <script type="text/javascript" src="${ctx}/static/dashboard/js/adminica_ui.js"></script>
-    <title>CMS后台管理系统 - <sitemesh:title/></title>
+    <title>CMS后台管理系统<sitemesh:title/></title>
     <sitemesh:head/>
 </head>
 <body>

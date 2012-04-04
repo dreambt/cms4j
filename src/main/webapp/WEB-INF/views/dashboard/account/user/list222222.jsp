@@ -53,11 +53,11 @@
                 <li><label class="field">最后登录 IP : </label><span id="lastip">${user.lastLoginIP}</span></li>
                 <li><label class="field">最后修改时间: </label><span id="lastmodefied">${user.modifyTime}</span></li>
                 <li>
-                    <button type="submit" id="create"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/User2.png"><span>创建用户</span></button>
-                    <button type="submit" id="modify"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/Listw_Image.png"><span>保存</span></button>
-                    <button type="submit" id="audit"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/Listw_Image.png"><span>审核</span></button>
-                    <button type="submit" id="delete"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/LoadingBar.png"><span>删除用户</span></button>
-                    <button type="submit" id="repass"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/Refresh.png"><span>重置密码</span></button>
+                    <button type="submit" id="create"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/white/User2.png"><span>创建用户</span></button>
+                    <button type="submit" id="modify"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/white/Listw_Image.png"><span>保存</span></button>
+                    <button type="submit" id="audit"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/white/Listw_Image.png"><span>审核</span></button>
+                    <button type="submit" id="delete"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/white/LoadingBar.png"><span>删除用户</span></button>
+                    <button type="submit" id="repass"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/white/Refresh.png"><span>重置密码</span></button>
                 </li>
             </ul>
         </form:form>

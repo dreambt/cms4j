@@ -24,8 +24,7 @@
     </div>
 </div>
 <div class="main_container container_16 clearfix">
-    <form:form id="category" modelAttribute="category" action="${ctx}/category/save/${category.id}"
-               method="post">
+    <form:form id="category" modelAttribute="category" action="${ctx}/category/save/${category.id}" method="post">
         <div class="box gird_16">
             <h2 class="box_head grad_colour round_top">添加&修改菜单</h2>
 
@@ -69,8 +68,7 @@
                 </div>
             </div>
         </div>
-        <button type="submit" class="button_colour"><img height="24" width="24" alt="Bended Arrow Right"
-                                                         src="${ctx}/static/dashboard/images/icons/small/white/Listw_Image.png"><span>提交</span>
+        <button type="submit" class="button_colour"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/white/Listw_Image.png"><span>提交</span>
         </button>
     </form:form>
 </div>
