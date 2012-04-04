@@ -14,7 +14,7 @@
     <div class="user_box round_all clearfix">
         <img src="${ctx}/static/dashboard/images/profile.jpg" width="55" alt="ProfilePic"/>
         <h2><shiro:principal property="groupName"/></h2>
-        <h3><a class="text_shadow" href="#"><shiro:principal property="name"/></a></h3>
+        <h3><a class="text_shadow" href="${ctx}/account/user/edit/<shiro:principal property="id"/>"><shiro:principal property="name"/></a></h3>
         <ul>
             <li><a href="${ctx}/dashboard/personSetting">个人设置</a><span class="divider">|</span><a href="${ctx}/logout">退出</a></li>
         </ul>
