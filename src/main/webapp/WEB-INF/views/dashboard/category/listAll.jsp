@@ -31,9 +31,9 @@
             <ul class="block content_accordion">
                 <c:forEach items="${categories}" var="category" begin="0" step="1">
                     <li>
-                        <button type="submit"><a class="amodify" href="${ctx}/category/edit/${category.id}"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/Listw_Image.png"><span>修改</span></a></button>
-                        <button id="d" class="deleteSingle" type="submit"><a class="amodify" href="${ctx}/category/delete/${category.id}"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/Listw_Image.png"><span>删除</span></a></button>
-                        <h3 class="bar" id="1" title="显示顺序: ${category.displayOrder}">${category.categoryName}&nbsp;&nbsp;&nbsp;子菜单数量：${fn:length(category.subCategories)}</h3>
+
+                        <h3 class="bar" id="1" title="点击展开">${category.categoryName} [${fn:length(category.subCategories)}]&nbsp;顺序：${category.displayOrder}&nbsp;<a class="amodify" href="${ctx}/category/edit/${category.id}"><span>【修改】</span></a>
+                            <a class="amodify" href="${ctx}/category/delete/${category.id}"><span>【删除】</span></a></h3>
                         <c:if test="${fn:length(category.subCategories) > 0}">
                             <div class="content">
                                     <table class="display menu_sec">
