@@ -32,7 +32,7 @@
         <div class="art-list">
             <strong><c:if test="${article.top}"><img src="${ctx}/static/images/top.gif" /></c:if><a href="${ctx}/article/content/${article.id}">${article.subject}</a></strong>
             <span class="art-attr">
-                作者: ${article.author} &nbsp;•&nbsp; 发表时间: <fmt:formatDate value="${article.createTime}" pattern="yyyy-MM-dd"/> &nbsp;•&nbsp; 浏览次数: ${article.views} &nbsp;•&nbsp; 评论数: ${article.count}
+                作者: ${article.author} &nbsp;•&nbsp; 发表时间: <fmt:formatDate value="${article.createTime}" pattern="yyyy-MM-dd"/> &nbsp;•&nbsp; 浏览次数: ${article.views} &nbsp;•&nbsp; 评论数: ${fn:length(article.count)}
             </span>
         </div>
         </c:forEach>
