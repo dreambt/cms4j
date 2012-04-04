@@ -16,6 +16,8 @@
     <link rel="stylesheet" type="text/css" href="${ctx}/static/jquery-validation/1.9.0/validate.min.css">
     <script type="text/javascript" src="${ctx}/static/Ueditor/editor_config.js"></script>
     <script type="text/javascript" src="${ctx}/static/Ueditor/editor_all.js"></script>
+    <script type="text/javascript" src="${ctx}/static/jquery-validation/1.9.0/jquery.validate.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="${ctx}/static/jquery-validation/1.9.0/messages_cn.js" charset="utf-8"></script>
 </head>
 <body>
 <div id="main_container" class="main_container container_16 clearfix">
@@ -26,16 +28,17 @@
     </div>
 </div>
 <div class="main_container container_16 clearfix">
-    <form:form id="image" modelAttribute="image" action="${ctx}/gallery/save/${image.id}" method="post" enctype="multipart/form-data">
+    <form:form id="image" modelAttribute="image" action="${ctx}/image/save/${image.id}" method="post"
+               enctype="multipart/form-data">
         <div class="box grid_16">
             <h2 class="box_head grad_colour round_top">上传活动图片</h2>
 
             <div class="toggle_container">
                 <div class="info" style="float:left;margin-left: 15%;margin-top: 15px;">
                     <input type="hidden" name="id" value="${image.id}" />
-                    <input type="file" id="upload" name="file"><br> <br>
-                    图片标题：<br/><input type="text" name="title" size="52" value="${image.title}"> <br/> <br/>
-                    描述：<br/><textarea type="text" name="description" cols="55" rows="5">${image.description}</textarea>
+                    <input type="file" class="required" id="upload" name="file"><br> <br>
+                    图片标题：<br/><input type="text" class="required" name="title" size="52" value="${image.title}"> <br/> <br/>
+                    描述：<br/><textarea type="text" class="required" name="description" cols="55" rows="5">${image.description}</textarea>
                     <br/><br/>
                     <!--<img src="#" style="display: block;float: left;">-->
                 </div>
@@ -53,8 +56,12 @@
                return true;
             }else{
                 alert("不能上传非gif、jpg、png、bmp类型的文件！请重新选择要上传的图片文件！");
+                return false;
             }
         });
+       $('form#image').validate({
+            event:'submit'
+       });
     });
 </script>
 </body>
