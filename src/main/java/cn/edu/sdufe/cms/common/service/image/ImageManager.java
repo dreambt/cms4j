@@ -62,8 +62,12 @@ public class ImageManager {
      */
     @Transactional(readOnly = false)
     public Image save(MultipartFile file, HttpServletRequest request, Image image) {
-        String fileName = this.upload(file, request);
-        image.setImageUrl(fileName);
+        if(file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
+            String fileName = this.upload(file, request);
+            image.setImageUrl(fileName);
+        } else {
+            image.setImageUrl("");
+        }
         image.setDeleted(false);
         image.setCreateTime(new Date());
         image.setModifyTime(new Date());
@@ -85,10 +89,6 @@ public class ImageManager {
         //原文件名
         String imageName = file.getOriginalFilename();
         String ext = imageName.substring(imageName.lastIndexOf("."),imageName.length());
-        //判断是否为图片
-        if(!isPic(ext)) {
-            return null;
-        }
         //服务器上的文件名
         String fileName = new Date().getTime() + RandomString.get(6) + ext;
         File targetFile = new File(path, fileName);
@@ -105,22 +105,6 @@ public class ImageManager {
     }
 
     /**
-     * 判断是否为图片
-     *
-     * @return
-     */
-    public boolean isPic(String ext) {
-        boolean flag = false;
-        String[] exts = {".jpg", "jpeg", ".gif", ".bmp", ".png"};
-        for(String e: exts) {
-            if(ext.equals(e)) {
-                flag = true;
-            }
-        }
-        return flag;
-    }
-
-    /**
      * 修改image
      * @param file
      * @param request
@@ -132,8 +116,10 @@ public class ImageManager {
         // TODO 删除原有图片
         // this.deletePic(image.getImageUrl());
         //实现上传
-        String fileName = this.upload(file, request);
-        image.setImageUrl(fileName);
+        if(file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
+            String fileName = this.upload(file, request);
+            image.setImageUrl(fileName);
+        }
         image.setModifyTime(new Date());
         return (Image)imageJpaDao.save(image);
     }
