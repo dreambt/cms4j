@@ -25,6 +25,12 @@
 		<property name="freemarkerConfiguration" ref="freemarkerConfiguration"/>
 	</bean>
 
+    <!-- 用户密码MIME邮件服务类 -->
+    <bean id="userRecoveryMailService" class="cn.edu.sdufe.cms.utilities.email.UserRecoveryMailService">
+        <property name="mailSender" ref="mailSender" />
+        <property name="freemarkerConfiguration" ref="freemarkerConfiguration"/>
+    </bean>
+
 	<!-- 用于生成HTML邮件内容的Freemarker配置 -->
 	<bean id="freemarkerConfiguration" class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
 		<property name="templateLoaderPath" value="classpath:/email" />

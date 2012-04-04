@@ -1,6 +1,7 @@
 package cn.edu.sdufe.cms.jms;
 
 import cn.edu.sdufe.cms.utilities.email.MimeMailService;
+import cn.edu.sdufe.cms.utilities.email.UserRecoveryMailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class NotifyMessageListener implements MessageListener {
     @Autowired(required = false)
     private MimeMailService mimeMailService;
 
+    @Autowired(required = false)
+    private UserRecoveryMailService userRecoveryMailService;
+
     /**
      * MessageListener回调函数.
      */
@@ -38,10 +42,15 @@ public class NotifyMessageListener implements MessageListener {
 
             //发送邮件
             if (mimeMailService != null) {
-                mimeMailService.sendNotificationMail(mapMessage.getString("email"), mapMessage.getString("username"));
+                String plainPassword = mapMessage.getString("plainPassword");
+                if (plainPassword.length() > 0)
+                    userRecoveryMailService.sendNotificationMail(mapMessage.getString("email"), mapMessage.getString("username"), plainPassword);
+                else
+                    mimeMailService.sendNotificationMail(mapMessage.getString("email"), mapMessage.getString("username"));
             }
         } catch (Exception e) {
             logger.error("处理消息时发生异常.", e);
         }
     }
+
 }
