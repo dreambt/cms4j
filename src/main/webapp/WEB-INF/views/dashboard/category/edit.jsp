@@ -24,15 +24,14 @@
     </div>
 </div>
 <div class="main_container container_16 clearfix">
-    <div class="box grid_16round_all">
-        <h2 class="box_head grad_colour round_top">添加&修改菜单</h2>
-        <a href="#" class="grabber">&nbsp;</a>
-        <a href="#" class="toggle">&nbsp;</a>
+    <form:form id="category" modelAttribute="category" action="${ctx}/category/save/${category.id}"
+               method="post">
+        <div class="box gird_16">
+            <h2 class="box_head grad_colour round_top">添加&修改菜单</h2>
 
-        <div class="toggle_container">
-            <div class="block">
-                <form:form id="category" modelAttribute="category" action="${ctx}/category/save/${category.id}"
-                           method="post">
+            <div class="toggle_container">
+                <div class="block">
+
                     <input type="hidden" name="id" value="${category.id}">
                     <input type="hidden" name="id" value="${category.fatherCategoryId}">
                     <label class="menuLbl">菜单名:</label><input name="categoryName" type="text"
@@ -52,11 +51,11 @@
                     <strong>显示类型</strong>
                     <form:select path="showType" items="${showTypes}" itemLabel="displayName"
                                  itemValue="value"></form:select>
-                    <%--<select name="showType">--%>
-                    <%--<c:forEach items="${showTypes}" var="showType" begin="0" step="1" >--%>
-                    <%--<option value="${showType.value}" <c:if test="${showType.value==category.showType.value}">selected="selected"</c:if>>${showType.displayName}</option>--%>
-                    <%--</c:forEach>--%>
-                    <%--</select> <br><br>--%>
+                        <%--<select name="showType">--%>
+                        <%--<c:forEach items="${showTypes}" var="showType" begin="0" step="1" >--%>
+                        <%--<option value="${showType.value}" <c:if test="${showType.value==category.showType.value}">selected="selected"</c:if>>${showType.displayName}</option>--%>
+                        <%--</c:forEach>--%>
+                        <%--</select> <br><br>--%>
                     <strong>允许评论</strong>
                     <input name="allowComment" type="checkbox" class="menuLbl"
                            <c:if test="${category.allowComment==true}">checked="checked"</c:if> >
@@ -66,13 +65,14 @@
                     <label class="menuLbl">描述信息:</label><br>
                     <textarea name="description" style="width:530px" cols="30"
                               rows="50">${category.description}</textarea>
-                    <button type="submit"><img height="24" width="24" alt="Bended Arrow Right"
-                                               src="${ctx}/static/dashboard/images/icons/small/white/Listw_Image.png"><span>提交</span>
-                    </button>
-                </form:form>
+
+                </div>
             </div>
         </div>
-    </div>
+        <button type="submit" class="button_colour"><img height="24" width="24" alt="Bended Arrow Right"
+                                                         src="${ctx}/static/dashboard/images/icons/small/white/Listw_Image.png"><span>提交</span>
+        </button>
+    </form:form>
 </div>
 </body>
 </html>

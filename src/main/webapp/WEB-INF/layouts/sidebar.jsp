@@ -4,11 +4,22 @@
   Date: 12-3-18
   Time: 下午5:09
 --%>
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="sitemesh" uri="http://www.opensymphony.com/sitemesh/decorator" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<script src="${ctx}/static/js/jquery.cycle.all.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#sponsors').cycle({
+            timeout:5000, // milliseconds between slide transitions (0 to disable auto advance)
+            fx:'fade', // choose your transition type, ex: fade, scrollUp, shuffle, etc...
+            pause:0, // true to enable "pause on hover"
+            pauseOnPagerHover:0 // true to pause when hovering over pager link
+        });
+    });
+</script>
 <div id="side-box">
     <div class="maincontent">
         <h2>最新文章</h2>
