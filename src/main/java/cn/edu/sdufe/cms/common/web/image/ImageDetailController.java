@@ -34,7 +34,7 @@ public class ImageDetailController {
     @RequestMapping(value = "edit/{id}")
     public String edit(@PathVariable Long id, Model model) {
         model.addAttribute("image", imageManager.getImage(id));
-        return "dashboard/gallery/edit";
+        return "dashboard/image/edit";
     }
 
     /**

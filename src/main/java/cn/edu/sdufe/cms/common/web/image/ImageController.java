@@ -34,7 +34,7 @@ public class ImageController {
     @RequestMapping(value = "listAll")
     public String listAllImage(Model model) {
         model.addAttribute("images", imageManager.getAllImage());
-        return "dashboard/gallery/listAll";
+        return "dashboard/image/listAll";
     }
 
     /**
@@ -46,7 +46,7 @@ public class ImageController {
     @RequestMapping(value = "list")
     public String listImage(Model model) {
         model.addAttribute("images", imageManager.getAllImageByDeleted());
-        return "gallery/list";
+        return "gallery";
     }
 
     /**
@@ -57,7 +57,7 @@ public class ImageController {
     @RequestMapping(value = "create")
     public String create(Model model) {
         model.addAttribute("image", new Image());
-        return "dashboard/gallery/edit";
+        return "dashboard/image/edit";
     }
 
     /**
