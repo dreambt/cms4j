@@ -13,12 +13,10 @@
 <head>
     <title>附件管理 - 后台管理</title>
 </head>
-
 <body>
 <div id="main_container" class="main_container container_16 clearfix">
     <div class="flat_area grid_16">
         <h2>附件列表</h2>
-
         <p>下面列出了所有文章列表, 您可以对附件进行<strong>修改</strong> <strong>审核</strong> 和 <strong>删除</strong>.</p>
     </div>
 </div>
@@ -65,12 +63,11 @@
                     <td class="center">否</td>
                     <td class="center"><a href="#">【审核】</a><a href="#">【删除】</a></td>
                 </tr>
-
                 </tbody>
             </table>
     </div>
-    <button class="button_colour" id="check_attachemnt" type="submit">批量审核</button>
-    <button class="button_colour" id="del">批量删除</button>
+    <button class="button_colour" id="check_attachemnt" type="submit"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/BendedArrowRight.png"/>批量审核</button>
+    <button class="button_colour" id="del"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/BendedArrowRight.png"/>批量删除</button>
     </form>
 </div>
 </body>

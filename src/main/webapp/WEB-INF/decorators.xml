@@ -10,7 +10,7 @@
     <decorator name="default" page="default.jsp">
         <pattern>/*</pattern>
         <pattern>/gallery/album*</pattern>
-        <pattern>/gallery/list*</pattern>
+        <pattern>/gallery/photo*</pattern>
     </decorator>
 
     <decorator name="article" page="article.jsp">
@@ -21,11 +21,12 @@
     </decorator>
 
     <decorator name="dashboard" page="dashboard/default.jsp">
-        <pattern>/dashboard/*</pattern>
-        <pattern>/article/*</pattern>
-        <pattern>/comment/*</pattern>
-        <pattern>/category/*</pattern>
-        <pattern>/account/*</pattern>
-        <pattern>/gallery/*</pattern>
+        <pattern>/dashboard*</pattern>
+        <pattern>/article*</pattern>
+        <pattern>/comment*</pattern>
+        <pattern>/category*</pattern>
+        <pattern>/attachment*</pattern>
+        <pattern>/account*</pattern>
+        <pattern>/gallery*</pattern>
     </decorator>
 </decorators>
