@@ -27,7 +27,7 @@ public class ArticleDao extends SqlSessionDaoSupport {
      */
     @Cacheable(value = "allArticle")
     public List<Article> getAll(Map<String, Object> parameters, RowBounds rowBounds) {
-        return getSqlSession().selectList("CMS.getAllArticle", parameters, rowBounds);
+        return getSqlSession().selectList("Article.getAllArticle", parameters, rowBounds);
     }
 
     /**
@@ -36,8 +36,8 @@ public class ArticleDao extends SqlSessionDaoSupport {
      * @return
      */
     @Cacheable(value = "topTenArticle")
-    public List<Article> getTopTenArticle() {
-        return getSqlSession().selectList("CMS.getTopTenArticle");
+    public List<Article> getTopTen() {
+        return getSqlSession().selectList("Article.getTopTenArticle");
     }
 
     /**
@@ -49,7 +49,7 @@ public class ArticleDao extends SqlSessionDaoSupport {
      */
     @Cacheable(value = "articleList")
     public List<Article> getListByCategoryId(Long categoryId, RowBounds rowBounds) {
-        return getSqlSession().selectList("CMS.getArticleListByCategoryId", categoryId, rowBounds);
+        return getSqlSession().selectList("Article.getArticleListByCategoryId", categoryId, rowBounds);
     }
 
     /**
@@ -61,7 +61,7 @@ public class ArticleDao extends SqlSessionDaoSupport {
      */
     @Cacheable(value = "articleDigest")
     public List<Article> getDigestByCategoryId(Long categoryId, RowBounds rowBounds) {
-        return getSqlSession().selectList("CMS.getArticleDigestByCategoryId", categoryId, rowBounds);
+        return getSqlSession().selectList("Article.getArticleDigestByCategoryId", categoryId, rowBounds);
     }
 
     /**
@@ -72,7 +72,7 @@ public class ArticleDao extends SqlSessionDaoSupport {
      */
     @Cacheable(value = "article")
     public Article get(Long id) {
-        return getSqlSession().selectOne("CMS.getArticle", id);
+        return getSqlSession().selectOne("Article.getArticle", id);
     }
 
     /**
@@ -83,7 +83,7 @@ public class ArticleDao extends SqlSessionDaoSupport {
      */
     @Cacheable(value = "article_num")
     public Long count(Long categoryId) {
-        return getSqlSession().selectOne("CMS.getArticleCount", categoryId);
+        return getSqlSession().selectOne("Article.getArticleCount", categoryId);
     }
 
     /**
@@ -92,7 +92,7 @@ public class ArticleDao extends SqlSessionDaoSupport {
      * @return
      */
     public List<Long> getDeletedId() {
-        return getSqlSession().selectList("CMS.getDeletedArticleId");
+        return getSqlSession().selectList("Article.getDeletedArticleId");
     }
 
     /**
@@ -101,9 +101,8 @@ public class ArticleDao extends SqlSessionDaoSupport {
      * @param article
      * @return
      */
-    @Deprecated
     public void update(Article article) {
-        getSqlSession().update("CMS.updateArticle", article);
+        getSqlSession().update("Article.updateArticle", article);
     }
 
     /**
@@ -113,7 +112,7 @@ public class ArticleDao extends SqlSessionDaoSupport {
      * @return
      */
     public List<Article> search(Map<String, Object> parameters) {
-        return getSqlSession().selectList("CMS.searchArticle", parameters);
+        return getSqlSession().selectList("Article.searchArticle", parameters);
     }
 
     /**
@@ -123,7 +122,7 @@ public class ArticleDao extends SqlSessionDaoSupport {
      */
     @Cacheable(value = "monthArticle")
     public List<Article> getMonthArticle(Date month) {
-        return getSqlSession().selectList("CMS.getMonthArticle", month);
+        return getSqlSession().selectList("Article.getMonthArticle", month);
     }
 
 }

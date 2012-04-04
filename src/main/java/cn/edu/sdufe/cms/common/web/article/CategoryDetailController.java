@@ -36,10 +36,10 @@ public class CategoryDetailController {
      */
     @RequiresPermissions("category:edit")
     @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
-    public String editCategory(@PathVariable Long id, Model model) {
-        model.addAttribute("category", categoryManager.getCategory(id));
+    public String edit(@PathVariable Long id, Model model) {
+        model.addAttribute("category", categoryManager.get(id));
         model.addAttribute("showTypes", ShowTypeEnum.values());
-        model.addAttribute("fatherCategories", categoryManager.getAllFatherCategory());
+        model.addAttribute("fatherCategories", categoryManager.getNavCategory());
         return "dashboard/category/edit";
     }
 
@@ -88,7 +88,7 @@ public class CategoryDetailController {
 
     @ModelAttribute("category")
     public Category getCategory(@PathVariable("id") Long id) {
-        return categoryManager.getCategory(id);
+        return categoryManager.get(id);
     }
 
     @Autowired

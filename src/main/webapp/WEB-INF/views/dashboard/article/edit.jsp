@@ -46,7 +46,7 @@
         <input type="hidden" name="id" value="${article.id}"/>
         <label>文章分类</label> <form:select path="categoryId">
         <c:forEach items="${categories}" begin="0" step="1" var="categorie" varStatus="stat">
-            <option value="${categorie.ID}" <c:if test="${categorie.ID eq article.category.id}">selected="selected"</c:if>>${categorie.CATEGORY_NAME}</option>
+            <option value="${categorie.id}" <c:if test="${categorie.id eq article.category.id}">selected="selected"</c:if>>${categorie.categoryName}</option>
         </c:forEach></form:select>
         <label>是否置顶</label> <input type="checkbox" name="top" <c:if test="${article.top}">checked="checked"</c:if> />
         <label>允许评论</label> <input type="checkbox" name="allowComment" <c:if test="${article.allowComment || empty article.author}">checked="checked"</c:if> /><br />

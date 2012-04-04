@@ -54,9 +54,14 @@ public class ArticleManager {
      * @return
      */
     public Article getArticle(Long id) {
+        Article article = articleJpaDao.findOne(id);
+
+        // 记录文章访问次数
+        article.setViews(article.getViews() + 1);
+
         //Dao不取相关连接表中的内容，比如评论
         //return articleDao.getArticle(id);
-        return articleJpaDao.findOne(id);
+        return updateArticle(article);
     }
 
     /**
@@ -87,7 +92,7 @@ public class ArticleManager {
      * @return
      */
     public List<Article> getTopTenArticle() {
-        return articleDao.getTopTenArticle();
+        return articleDao.getTopTen();
     }
 
     /**
@@ -167,11 +172,9 @@ public class ArticleManager {
             article.setKeyword("");
 
             // 文章分类
-            Category category = categoryDao.getCategory(article.getCategoryId());
+            Category category = categoryDao.get(article.getCategoryId());
             article.setCategory(category);
             article.setCategoryName(category.getCategoryName());
-
-            article.setModifyTime(new Date());
 
             //使用Hibernate Validator校验请求参数
             Validate.notNull(article, "文章参数为空");
@@ -255,7 +258,6 @@ public class ArticleManager {
      */
     @Transactional(readOnly = false)
     public Article updateArticle(Article article) {
-        article.setModifyTime(new Date());
         return articleJpaDao.save(article);
     }
 

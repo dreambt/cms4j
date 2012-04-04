@@ -53,8 +53,6 @@
                     <%--</select> <br><br>--%>
                     <strong>允许评论</strong>
                     <input name="allowComment" type="checkbox" class="menuLbl" <c:if test="${category.allowComment==true}">checked="checked"</c:if> >
-                    <strong>允许在导航显示</strong>
-                    <input name="showNav" type="checkbox" class="menuLbl" <c:if test="${category.showNav==true}">checked="checked"</c:if> >
                     <strong>允许发表</strong>
                     <input name="allowPublish" type="checkbox" class="menuLbl" <c:if test="${category.allowPublish==true}">checked="checked"</c:if>><br><br>
                     <label class="menuLbl">描述信息:</label><br>

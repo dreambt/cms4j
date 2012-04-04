@@ -1,7 +1,7 @@
-package cn.edu.sdufe.cms.common.dao.account;
+package cn.edu.sdufe.cms.common.dao.article;
 
-import cn.edu.sdufe.cms.common.entity.account.User;
-import cn.edu.sdufe.cms.data.UserData;
+import cn.edu.sdufe.cms.common.entity.article.Comment;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,16 +13,16 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- * UserDao的测试用例, 测试ORM映射及特殊的DAO操作. 默认在每个测试函数后进行回滚.
+ * CommentDao的测试用例, 测试ORM映射及特殊的DAO操作. 默认在每个测试函数后进行回滚.
  * User: baitao.jibt (dreambt@gmail.com)
  * Date: 12-3-21
- * Time: 下午7:01
+ * Time: 下午6:53
  */
 @ContextConfiguration(locations = {"/applicationContext.xml"})
-public class UserJpaDaoTest extends SpringTxTestCase {
+public class CommentDaoTest extends SpringTxTestCase {
 
     @Autowired
-    private UserJpaDao userJpaDao;
+    private CommentJpaDao commentJpaDao;
 
     @PersistenceContext
     private EntityManager em;
@@ -33,13 +33,10 @@ public class UserJpaDaoTest extends SpringTxTestCase {
     }
 
     @Test
-    public void crudEntityWithUser() throws Exception {
-        //新建并保存带权限组的用户
-        User user = UserData.getRandomUserWithGroup();
-        userJpaDao.save(user);
+    public void testGetCount() throws Exception {
+        Long count = commentJpaDao.count();
         em.flush();
-
-        // 获取
-
+        Assert.assertTrue(count > 0);
     }
+
 }

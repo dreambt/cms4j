@@ -10,6 +10,7 @@ import java.util.Map;
 
 /**
  * 分类Dao
+ * <p />
  * User: baitao.jibt (dreambt@gmail.com)
  * Date: 12-3-20
  * Time: 下午20:40
@@ -18,23 +19,14 @@ import java.util.Map;
 public class CategoryDao extends SqlSessionDaoSupport {
 
     /**
-     * 获取导航栏
-     *
-     * @return
-     */
-    public List<Category> getNavCategory() {
-        return getSqlSession().selectList("CMS.getNavCategory");
-    }
-
-    /**
      * 获取编号为id的分类
      *
      * @param id
      * @return
      */
     @Cacheable(value = "category")
-    public Category getCategory(Long id) {
-        return (Category) getSqlSession().selectOne("CMS.getCategory", id);
+    public Category get(Long id) {
+        return (Category) getSqlSession().selectOne("Category.getCategory", id);
     }
 
     /**
@@ -44,7 +36,7 @@ public class CategoryDao extends SqlSessionDaoSupport {
      */
     @Cacheable(value = "allowPublishCategory")
     public List<Category> getAllowPublishCategory() {
-        return getSqlSession().selectList("CMS.getAllowPublishCategory");
+        return getSqlSession().selectList("Category.getAllowPublishCategory");
     }
 
     /**
@@ -55,16 +47,26 @@ public class CategoryDao extends SqlSessionDaoSupport {
      */
     @Cacheable(value = "subCategory")
     public List<Category> getSubCategory(Long id) {
-        return getSqlSession().selectList("CMS.getSubCategory", id);
+        return getSqlSession().selectList("Category.getSubCategory", id);
     }
 
     /**
-     * 获取子分类数量
+     * 获取分类的数量
      *
      * @return
      */
-    public Long getCount(Long id) {
-        return getSqlSession().selectOne("CMS.getCategoryCount", id);
+    public Long count() {
+        return getSqlSession().selectOne("Category.getCategoryCount");
+    }
+
+    /**
+     * 获取分类id的子分类数量
+     *
+     * @param id
+     * @return
+     */
+    public Long count(Long id) {
+        return getSqlSession().selectOne("Category.getCountByFatherCategoryId", id);
     }
 
     /**
@@ -74,7 +76,7 @@ public class CategoryDao extends SqlSessionDaoSupport {
      * @return
      */
     public Category search(Map<String, Object> parameters) {
-        return getSqlSession().selectOne("CMS.searchCategory", parameters);
+        return getSqlSession().selectOne("Category.searchCategory", parameters);
     }
 
     /**
@@ -83,7 +85,7 @@ public class CategoryDao extends SqlSessionDaoSupport {
      * @return
      */
     public Category save(Category category) {
-        getSqlSession().insert("CMS.saveCategory", category);
+        getSqlSession().insert("Category.saveCategory", category);
         return category;
     }
 
@@ -93,7 +95,7 @@ public class CategoryDao extends SqlSessionDaoSupport {
      * @return
      */
     public Category update(Category category) {
-        getSqlSession().update("CMS.updateCategory", category);
+        getSqlSession().update("Category.updateCategory", category);
         return category;
     }
 
@@ -104,6 +106,6 @@ public class CategoryDao extends SqlSessionDaoSupport {
      * @return
      */
     public int delete(Long id) {
-        return getSqlSession().delete("CMS.deleteCategory", id);
+        return getSqlSession().delete("Category.deleteCategory", id);
     }
 }

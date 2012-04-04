@@ -42,8 +42,6 @@ public class ArticleDetailController {
      */
     @RequestMapping(value = "content/{id}", method = RequestMethod.GET)
     public String contextOfArticle(@PathVariable("id") Long id, Model model) {
-        //model.addAttribute("article", articleManager.getArticle(id));
-        //model.addAttribute("comments", commentManager.getCommentByArticleId(id))
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("archives",archiveManager.getTopTenArchive());
         model.addAttribute("newArticles",articleManager.getTopTenArticle());

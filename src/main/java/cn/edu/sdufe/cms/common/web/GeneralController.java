@@ -25,8 +25,6 @@ public class GeneralController {
 
     private CategoryManager categoryManager;
 
-    private ArchiveManager archiveManager;
-
     /**
      * 首页显示菜单，静态+动态
      *
@@ -36,7 +34,6 @@ public class GeneralController {
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index(Model model) {
         model.addAttribute("categories", categoryManager.getNavCategory());
-        model.addAttribute("archives",archiveManager.getTopTenArchive());
         return "index";
     }
 
@@ -47,7 +44,7 @@ public class GeneralController {
      */
     @RequestMapping(value = "/contact", method = RequestMethod.GET)
     public String contactUs(Model model) {
-        model.addAttribute("categories", categoryManager.getAllFatherCategory());
+        model.addAttribute("categories", categoryManager.getNavCategory());
         return "contact";
     }
 
@@ -58,7 +55,7 @@ public class GeneralController {
      */
     @RequestMapping(value = "/services", method = RequestMethod.GET)
     public String services(Model model) {
-        model.addAttribute("categories", categoryManager.getAllFatherCategory());
+        model.addAttribute("categories", categoryManager.getNavCategory());
         return "services";
     }
 
@@ -69,7 +66,7 @@ public class GeneralController {
      */
     @RequestMapping(value = "/about", method = RequestMethod.GET)
     public String ahoutUs(Model model) {
-        model.addAttribute("categories", categoryManager.getAllFatherCategory());
+        model.addAttribute("categories", categoryManager.getNavCategory());
         return "about";
     }
 
@@ -93,8 +90,4 @@ public class GeneralController {
         this.categoryManager = categoryManager;
     }
 
-    @Autowired(required = false)
-    public void setArchiveManager(@Qualifier("archiveManager") ArchiveManager archiveManager) {
-        this.archiveManager = archiveManager;
-    }
 }

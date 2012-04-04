@@ -24,7 +24,7 @@ public class UserDao extends SqlSessionDaoSupport {
      * @return
      */
     @Cacheable(value = "user")
-    public User getUser(Long id) {
+    public User get(Long id) {
         return getSqlSession().selectOne("ACCOUNT.getUser", id);
     }
 
@@ -34,7 +34,7 @@ public class UserDao extends SqlSessionDaoSupport {
      * @return
      */
     @Cacheable(value = "all_user")
-    public List<User> getAllUser() {
+    public List<User> getAll() {
         return getSqlSession().selectList("ACCOUNT.getAllUser");
     }
 
@@ -55,6 +55,16 @@ public class UserDao extends SqlSessionDaoSupport {
      */
     public List<Long> getDeletedId() {
         return getSqlSession().selectList("ACCOUNT.getDeletedUserId");
+    }
+
+    /**
+     * 更新用户
+     *
+     * @param user
+     * @return
+     */
+    public void update(User user) {
+        getSqlSession().update("ACCOUNT.updateUser", user);
     }
 
     /**

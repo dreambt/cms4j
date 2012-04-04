@@ -57,7 +57,7 @@
                     <td><a class="opener" href="#" value='${comment.message}'>点击查看</a></td>
                     <td>${comment.postHostIp}</td>
                     <td><fmt:formatDate value="${comment.createTime}" type="both"></fmt:formatDate></td>
-                    <td><a href="${ctx}/comment/audit/${comment.id}"><c:choose><c:when test="${comment.status}">【反审核】</c:when><c:otherwise>【审核】</c:otherwise></c:choose></a></td>
+                    <td><a href="${ctx}/comment/audit/${comment.id}"><c:choose><c:when test="${comment.status}">【已审核】</c:when><c:otherwise>【未审核】</c:otherwise></c:choose></a></td>
                     <td><a href="${ctx}/comment/delete/${comment.id}"><c:choose><c:when test="${comment.deleted}">【恢复】</c:when><c:otherwise>【删除】</c:otherwise></c:choose></a></td>
                 </tr>
                 </c:forEach>

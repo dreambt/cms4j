@@ -3,7 +3,6 @@ package cn.edu.sdufe.cms.common.service.account;
 import cn.edu.sdufe.cms.common.dao.account.UserDao;
 import cn.edu.sdufe.cms.common.dao.account.UserJpaDao;
 import cn.edu.sdufe.cms.common.entity.account.User;
-import cn.edu.sdufe.cms.common.entity.article.Article;
 import cn.edu.sdufe.cms.common.service.ServiceException;
 import cn.edu.sdufe.cms.jms.NotifyMessageProducer;
 import cn.edu.sdufe.cms.security.ShiroDbRealm;

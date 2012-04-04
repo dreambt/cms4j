@@ -76,9 +76,6 @@
                                                     <input type="checkbox" name="allowComment" class="menu" <c:if test="${subCategory.allowComment}">checked="checked"</c:if>>
                                                 </td>
                                                 <td>
-                                                    <input type="checkbox" class="menu" name="showNav" <c:if test="${subCategory.showNav}">checked="checked"</c:if>>
-                                                </td>
-                                                <td>
                                                     <input type="checkbox" class="menu" name="allowPublish" <c:if test="${subCategory.allowPublish}">checked="checked"</c:if>>
                                                 </td>
                                                 <td>

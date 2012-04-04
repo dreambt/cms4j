@@ -62,4 +62,13 @@
         order by ${Sort} ${Direction}
     </select>
 
+    <!-- 更新用户 -->
+    <update id="updateUser" parameterType="User">
+        update cms_user
+        set email=#{email},username=#{username},password=#{password},salt=#{salt},status=#{status},
+        email_status=#{email_status},avatar_status=#{avatar_status},deleted=#{deleted},photourl=#{photourl},
+        time_offset=#{time_offset},lastip=#{lastip},
+        last_time=#{last_time},last_act_time=#{last_act_time},modify_time = now()
+        where id = #{id}
+	</update>
 </mapper>

@@ -61,10 +61,10 @@
                         <td>${article.count}</td>
                         <td><fmt:formatDate value="${article.createTime}" type="date"/></td>
                         <td><fmt:formatDate value="${article.modifyTime}" type="date"/></td>
-                        <td><a href="${ctx}/article/audit/${article.id}"><c:choose><c:when test="${article.status}">【反审核】</a></c:when><c:otherwise>【审核】</c:otherwise></c:choose></a></td>
+                        <td><a href="${ctx}/article/audit/${article.id}"><c:choose><c:when test="${article.status}">【已审核】</a></c:when><c:otherwise>【未审核】</c:otherwise></c:choose></a></td>
 
-                        <td><a href="${ctx}/article/allow/${article.id}"><c:choose><c:when test="${article.allowComment}">【不允许】</c:when><c:otherwise>【允许】</c:otherwise></c:choose></a></td>
-                        <td><a href="${ctx}/article/edit/${article.id}">【编辑】</a><a href="${ctx}/article/top/${article.id}"><c:choose><c:when test="${article.top}">【取消】</c:when><c:otherwise>【置顶】</c:otherwise></c:choose></a> <a href="${ctx}/article/delete/${article.id}"><c:choose><c:when test="${article.deleted}">【恢复】</c:when><c:otherwise>【删除】</c:otherwise></c:choose></a></td>
+                        <td><a href="${ctx}/article/allow/${article.id}"><c:choose><c:when test="${article.allowComment}">【允许】</c:when><c:otherwise>【不允许】</c:otherwise></c:choose></a></td>
+                        <td><a href="${ctx}/article/edit/${article.id}">【编辑】</a><a href="${ctx}/article/top/${article.id}"><c:choose><c:when test="${article.top}">【置顶】</c:when><c:otherwise>【未置顶】</c:otherwise></c:choose></a> <a href="${ctx}/article/delete/${article.id}"><c:choose><c:when test="${article.deleted}">【恢复】</c:when><c:otherwise>【删除】</c:otherwise></c:choose></a></td>
                     </tr>
                 </c:forEach>
                 </tbody>

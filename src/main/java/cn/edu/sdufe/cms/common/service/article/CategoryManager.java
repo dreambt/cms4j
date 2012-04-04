@@ -36,8 +36,8 @@ public class CategoryManager {
      * @param id
      * @return
      */
-    public Category getCategory(Long id) {
-        return (Category) categoryJpaDao.findOne(id);
+    public Category get(Long id) {
+        return categoryJpaDao.findOne(id);
     }
 
     /**
@@ -47,20 +47,7 @@ public class CategoryManager {
      * @return
      */
     public List<Category> getSubCategory(Long id) {
-        if (id.equals(0L)) {
-            return (List<Category>) this.getAllFatherCategory();
-        } else {
-            return (List<Category>) categoryJpaDao.findByFatherCategoryIdAndDeletedAndIdGreaterThanOrderByDisplayOrderAsc(id, false,0L);
-        }
-    }
-
-    /**
-     * 获得顶级分类
-     *
-     * @return
-     */
-    public List<Category> getAllFatherCategory() {
-        return (List<Category>) categoryJpaDao.findByFatherCategoryIdAndDeletedAndIdGreaterThanOrderByDisplayOrderAsc(0L, false, 0L);
+        return categoryDao.getSubCategory(id);
     }
 
     /**
@@ -69,7 +56,8 @@ public class CategoryManager {
      * @return
      */
     public List<Category> getNavCategory() {
-        return categoryJpaDao.findByShowNavAndFatherCategoryId(true,0L);
+        //return categoryDao.getSubCategory(1L);
+        return categoryJpaDao.findByIdGreaterThanAndFatherCategoryIdAndDeletedOrderByDisplayOrderAsc(1L, 1L, false);
     }
 
     /**
@@ -82,12 +70,12 @@ public class CategoryManager {
     }
 
     /**
-     * 查找允许评论的分类
+     * 获得所有分类数量
      *
      * @return
      */
-    public List<Category> getAllowCommentCategory() {
-        return (List<Category>) categoryJpaDao.findByAllowComment(true);
+    public Long count() {
+        return categoryDao.count();
     }
 
     /**
@@ -96,8 +84,8 @@ public class CategoryManager {
      * @param id
      * @return
      */
-    public Long getCount(Long id) {
-        return (Long) categoryJpaDao.count();
+    public Long count(Long id) {
+        return categoryDao.count(id);
     }
 
     /**
@@ -110,7 +98,6 @@ public class CategoryManager {
     public Category save(Category category) {
         category.setDeleted(false);
         category.setCreateTime(new Date());
-        category.setModifyTime(new Date());
         categoryJpaDao.save(category);
         return category;
     }
@@ -123,7 +110,6 @@ public class CategoryManager {
      */
     @Transactional(readOnly = false)
     public Category update(Category category) {
-        category.setModifyTime(new Date());
         return categoryJpaDao.save(category);
     }
 

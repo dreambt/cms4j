@@ -42,8 +42,6 @@ public class Category extends IdEntity {
 
     private boolean deleted;
 
-    private boolean showNav;
-
     private String description;
 
     private boolean allowPublish;
@@ -127,14 +125,6 @@ public class Category extends IdEntity {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
-    }
-
-    public boolean isShowNav() {
-        return showNav;
-    }
-
-    public void setShowNav(boolean showNav) {
-        this.showNav = showNav;
     }
 
     public String getDescription() {

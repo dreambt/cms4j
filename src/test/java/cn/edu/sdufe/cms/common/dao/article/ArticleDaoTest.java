@@ -1,7 +1,7 @@
 package cn.edu.sdufe.cms.common.dao.article;
 
-import cn.edu.sdufe.cms.common.entity.article.Comment;
-import org.junit.Assert;
+import cn.edu.sdufe.cms.common.entity.article.Article;
+import cn.edu.sdufe.cms.data.ArticleData;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,16 +13,16 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- * CommentDao的测试用例, 测试ORM映射及特殊的DAO操作. 默认在每个测试函数后进行回滚.
+ * ArticleDao的测试用例, 测试ORM映射及特殊的DAO操作. 默认在每个测试函数后进行回滚.
  * User: baitao.jibt (dreambt@gmail.com)
  * Date: 12-3-21
- * Time: 下午6:53
+ * Time: 下午6:44
  */
 @ContextConfiguration(locations = {"/applicationContext.xml"})
-public class CommentJpaDaoTest extends SpringTxTestCase {
+public class ArticleDaoTest extends SpringTxTestCase {
 
     @Autowired
-    private CommentJpaDao commentJpaDao;
+    private ArticleDao articleDao;
 
     @PersistenceContext
     private EntityManager em;
@@ -33,10 +33,13 @@ public class CommentJpaDaoTest extends SpringTxTestCase {
     }
 
     @Test
-    public void testGetCount() throws Exception {
-        Long count = commentJpaDao.count();
+    public void crudEntityWithArticle() throws Exception {
+        //新建并保存带权限组的用户
+        Article article = ArticleData.getRandomArticle();
+        articleDao.update(article);
         em.flush();
-        Assert.assertTrue(count > 0);
-    }
 
+        // 获取
+
+    }
 }

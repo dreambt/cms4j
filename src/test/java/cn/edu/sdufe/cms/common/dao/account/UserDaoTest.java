@@ -1,7 +1,7 @@
-package cn.edu.sdufe.cms.common.dao.article;
+package cn.edu.sdufe.cms.common.dao.account;
 
-import cn.edu.sdufe.cms.common.entity.article.Article;
-import cn.edu.sdufe.cms.data.ArticleData;
+import cn.edu.sdufe.cms.common.entity.account.User;
+import cn.edu.sdufe.cms.data.UserData;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,16 +13,16 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- * ArticleDao的测试用例, 测试ORM映射及特殊的DAO操作. 默认在每个测试函数后进行回滚.
+ * UserDao的测试用例, 测试ORM映射及特殊的DAO操作. 默认在每个测试函数后进行回滚.
  * User: baitao.jibt (dreambt@gmail.com)
  * Date: 12-3-21
- * Time: 下午6:44
+ * Time: 下午7:01
  */
 @ContextConfiguration(locations = {"/applicationContext.xml"})
-public class ArticleJpaDaoTest extends SpringTxTestCase {
+public class UserDaoTest extends SpringTxTestCase {
 
     @Autowired
-    private ArticleJpaDao articleJpaDao;
+    private UserDao userDao;
 
     @PersistenceContext
     private EntityManager em;
@@ -33,10 +33,10 @@ public class ArticleJpaDaoTest extends SpringTxTestCase {
     }
 
     @Test
-    public void crudEntityWithArticle() throws Exception {
+    public void crudEntityWithUser() throws Exception {
         //新建并保存带权限组的用户
-        Article article = ArticleData.getRandomArticle();
-        articleJpaDao.save(article);
+        User user = UserData.getRandomUserWithGroup();
+        userDao.update(user);
         em.flush();
 
         // 获取

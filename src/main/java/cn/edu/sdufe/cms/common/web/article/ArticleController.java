@@ -77,7 +77,7 @@ public class ArticleController {
     @RequestMapping(value = "list/{id}", method = RequestMethod.GET)
     public String listOfArticle(@PathVariable("id") Long id, Model model) {
         model.addAttribute("articles", articleManager.getArticleListByCategoryId(id, 0, 10));
-        model.addAttribute("category", categoryManager.getCategory(id));
+        model.addAttribute("category", categoryManager.get(id));
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("archives",archiveManager.getTopTenArchive());
         model.addAttribute("newArticles",articleManager.getTopTenArticle());
@@ -109,7 +109,7 @@ public class ArticleController {
     @RequestMapping(value = "digest/{id}", method = RequestMethod.GET)
     public String digestOfArticle(@PathVariable("id") Long id, Model model) {
         model.addAttribute("articles", articleManager.getArticleDigestByCategoryId(id, 0, 10));
-        model.addAttribute("category", categoryManager.getCategory(id));
+        model.addAttribute("category", categoryManager.get(id));
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("archives",archiveManager.getTopTenArchive());
         model.addAttribute("newArticles",articleManager.getTopTenArticle());

@@ -35,9 +35,9 @@ public class CategoryController {
      */
     @RequiresPermissions("category:list")
     @RequestMapping(value = "listAll", method = RequestMethod.GET)
-    public String listOfCategory(Model model) {
+    public String list(Model model) {
         model.addAttribute("showTypes", ShowTypeEnum.values());
-        model.addAttribute("categories", categoryManager.getSubCategory(0L));
+        model.addAttribute("categories", categoryManager.getSubCategory(1L));
         return "dashboard/category/listAll";
     }
 
@@ -67,10 +67,10 @@ public class CategoryController {
      */
     @RequiresPermissions("category:create")
     @RequestMapping(value = "create", method = RequestMethod.GET)
-    public String createCategory(Model model) {
+    public String create(Model model) {
         model.addAttribute("showTypes", ShowTypeEnum.values());
         model.addAttribute("category", new Category());
-        model.addAttribute("fatherCategories", categoryManager.getAllFatherCategory());
+        model.addAttribute("fatherCategories", categoryManager.getNavCategory());
         return "dashboard/category/edit";
     }
 

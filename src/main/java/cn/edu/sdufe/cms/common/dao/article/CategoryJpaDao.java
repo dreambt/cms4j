@@ -20,7 +20,7 @@ public interface CategoryJpaDao extends PagingAndSortingRepository<Category, Lon
      * @param fatherCategoryId
      * @return
      */
-    List<Category> findByFatherCategoryIdAndDeletedAndIdGreaterThanOrderByDisplayOrderAsc(Long fatherCategoryId, boolean deleted,Long id);
+    List<Category> findByIdGreaterThanAndFatherCategoryIdAndDeletedOrderByDisplayOrderAsc(Long id, Long fatherCategoryId, boolean deleted);
 
     /**
      * 查找在导航栏显示的分类
@@ -28,7 +28,7 @@ public interface CategoryJpaDao extends PagingAndSortingRepository<Category, Lon
      * @param showNav
      * @return
      */
-    List<Category> findByShowNavAndFatherCategoryId(boolean showNav, Long fatherCategoryId);
+    List<Category> findByFatherCategoryId(boolean showNav, Long fatherCategoryId);
 
     /**
      * 查找允许发表文章的分类
