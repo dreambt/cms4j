@@ -26,13 +26,13 @@
     </div>
 </div>
 <div class="main_container container_16 clearfix">
-    <form:form id="image" modelAttribute="image" action="${ctx}/image/save/${image.id}" method="post"
-               enctype="multipart/form-data">
+    <form:form id="image" modelAttribute="image" action="${ctx}/gallery/save/${image.id}" method="post" enctype="multipart/form-data">
         <div class="box grid_16">
             <h2 class="box_head grad_colour round_top">上传活动图片</h2>
 
             <div class="toggle_container">
                 <div class="info" style="float:left;margin-left: 15%;margin-top: 15px;">
+                    <input type="hidden" name="id" value="${image.id}" />
                     <input type="file" id="upload" name="file"><br> <br>
                     图片标题：<br/><input type="text" name="title" size="52" value="${image.title}"> <br/> <br/>
                     描述：<br/><textarea type="text" name="description" cols="55" rows="5">${image.description}</textarea>

@@ -86,17 +86,17 @@ public class ImageController {
      * @return
      */
     @RequestMapping(value = "save", method = RequestMethod.POST)
-    public String save(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request, Image image, RedirectAttributes redirectAttributes) {
-        if (file == null) {
-            redirectAttributes.addFlashAttribute("error", "请选择上传的图片");
-        }
-
+    public String save(@RequestParam(value = "file", required = false) MultipartFile file,
+                       HttpServletRequest request, Image image, RedirectAttributes redirectAttributes) {
+       if(file == null) {
+           redirectAttributes.addFlashAttribute("error", "请选择上传的图片");
+       }
         //redirectAttributes.addAttribute("imageUrl", request.getContextPath()+"/upload/"+fileName);
         Image img = imageManager.save(file, request, image);
         if (null == img) {
             redirectAttributes.addFlashAttribute("error", "添加图片信息失败");
         } else {
-            redirectAttributes.addFlashAttribute("info", "添加图片信息成功");
+            redirectAttributes.addFlashAttribute("info", "添加" + image.getId() + "图片信息成功");
         }
         return "redirect:/gallery/listAll";
     }

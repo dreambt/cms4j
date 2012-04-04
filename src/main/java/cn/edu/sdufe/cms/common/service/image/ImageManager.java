@@ -62,6 +62,22 @@ public class ImageManager {
      */
     @Transactional(readOnly = false)
     public Image save(MultipartFile file, HttpServletRequest request, Image image) {
+        String fileName = this.upload(file, request);
+        image.setImageUrl(fileName);
+        image.setDeleted(false);
+        image.setCreateTime(new Date());
+        image.setModifyTime(new Date());
+        return (Image)imageJpaDao.save(image);
+    }
+
+    /**
+     * 上传文件
+     *
+     * @param file
+     * @param request
+     * @return
+     */
+    public String upload(MultipartFile file, HttpServletRequest request) {
         // 转型为MultipartHttpRequest：
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         //上传路径
@@ -80,16 +96,12 @@ public class ImageManager {
             targetFile.mkdirs();
         }
         //保存
-        image.setImageUrl(fileName);
         try {
             file.transferTo(targetFile);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        image.setDeleted(false);
-        image.setCreateTime(new Date());
-        image.setModifyTime(new Date());
-        return (Image)imageJpaDao.save(image);
+        return fileName;
     }
 
     /**
@@ -110,7 +122,24 @@ public class ImageManager {
 
     /**
      * 修改image
-     *
+     * @param file
+     * @param request
+     * @param image
+     * @return
+     */
+    @Transactional(readOnly = false)
+    public Image update(MultipartFile file, HttpServletRequest request, Image image) {
+        // TODO 删除原有图片
+        // this.deletePic(image.getImageUrl());
+        //实现上传
+        String fileName = this.upload(file, request);
+        image.setImageUrl(fileName);
+        image.setModifyTime(new Date());
+        return (Image)imageJpaDao.save(image);
+    }
+
+    /**
+     * 修改image
      * @param image
      * @return
      */
@@ -158,12 +187,24 @@ public class ImageManager {
     }
 
     /**
-     * 真正删除image
+     * 真正删除记录
      *
      * @param id
      */
-    public void deleteImage(Long id) {
+    /*public void deleteImage(Long id) {
+        deletePic();
         imageJpaDao.delete(id);
+    }*/
+
+    /**
+     * 真正删除上传的图片
+     * @param fileName
+     */
+    public void deletePic(String fileName) {
+        //上传路径
+        String path = this.getClass().getClassLoader().getResource(fileName).getPath(); // TODO 获得图片绝对路径
+        System.out.println(path);
+        new File(path, fileName).delete();
     }
 
     @Autowired
