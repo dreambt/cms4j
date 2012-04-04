@@ -28,7 +28,7 @@
             <ul class="drawer">
                 <li><a href="${ctx}/article/create">发表文章</a></li>
                 <li><a href="${ctx}/article/listAll">查看所有文章</a></li>
-                <li><a href="${ctx}/attachment/listAll">附件管理</a></li>
+                <li><a href="${ctx}/attachment/list">附件管理</a></li>
             </ul>
         </li>
         </shiro:hasPermission>

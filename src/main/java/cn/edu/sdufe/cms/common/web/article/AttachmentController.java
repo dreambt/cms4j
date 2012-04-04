@@ -6,11 +6,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * 功能
+ * 附件管理
  * <p/>
  * User: baitao.jibt@gmail.com
- * Date: 12-3-30
- * Time: 上午11:22
+ * Date: 12-4-4
+ * Time: 上午11:52
  */
 @Controller
 @RequestMapping(value = "/attachment")
@@ -22,7 +22,7 @@ public class AttachmentController {
      * @param model
      * @return
      */
-    @RequiresPermissions("attachment:listAll")
+    @RequiresPermissions("attachment:list")
     @RequestMapping(value = {"list", ""})
     public String listAllArticle(Model model) {
         // TODO
