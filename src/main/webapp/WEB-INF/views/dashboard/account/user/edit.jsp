@@ -37,7 +37,7 @@
             </div>
         </div>
     </div>
-    <button type="submit" id="create"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/User2.png"><span>保存修改</span></button>
+    <button type="submit" id="create"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/User2.png"><span>保存修改</span></button>
 </form:form>
 </div>
 <script>

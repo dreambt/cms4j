@@ -66,8 +66,8 @@
                 </tbody>
             </table>
     </div>
-    <button class="button_colour" id="check_attachemnt" type="submit"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/BendedArrowRight.png"/>批量审核</button>
-    <button class="button_colour" id="del"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/BendedArrowRight.png"/>批量删除</button>
+    <button class="button_colour" id="check_attachemnt" type="submit"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/BendedArrowRight.png"/>批量审核</button>
+    <button class="button_colour" id="del"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/BendedArrowRight.png"/>批量删除</button>
     </form>
 </div>
 </body>

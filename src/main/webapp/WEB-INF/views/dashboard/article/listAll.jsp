@@ -23,13 +23,13 @@
         <c:if test="${not empty info}">
             <div id="message" class="alert alert_blue">
                 <img height="24" width="24"
-                     src="${ctx}/static/dashboard/images/icons/small/white/Locked2.png"><strong>${info}</strong>
+                     src="${ctx}/static/dashboard/images/icons/Locked2.png"><strong>${info}</strong>
             </div>
         </c:if>
         <c:if test="${not empty error}">
             <div id="message" class="alert alert_red">
                 <img height="24" width="24"
-                     src="${ctx}/static/dashboard/images/icons/small/white/Locked2.png"><strong>${error}</strong>
+                     src="${ctx}/static/dashboard/images/icons/Locked2.png"><strong>${error}</strong>
             </div>
         </c:if>
     </div>
@@ -72,8 +72,8 @@
                 </tbody>
             </table>
         </div>
-        <button class="button_colour" id="auditAll"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/BendedArrowRight.png"/><span>批量审核</span></button>
-        <button class="button_colour" id="deleteAll"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/BendedArrowRight.png"/><span>批量删除</span></button>
+        <button class="button_colour" id="auditAll"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/BendedArrowRight.png"/><span>批量审核</span></button>
+        <button class="button_colour" id="deleteAll"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/BendedArrowRight.png"/><span>批量删除</span></button>
     </form:form>
 </div>
 <script>
