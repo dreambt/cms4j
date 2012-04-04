@@ -1,6 +1,7 @@
 package cn.edu.sdufe.cms.common.web.image;
 
 import cn.edu.sdufe.cms.common.entity.image.Image;
+import cn.edu.sdufe.cms.common.service.article.CategoryManager;
 import cn.edu.sdufe.cms.common.service.image.ImageManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,7 +24,10 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping(value = "/gallery")
 public class ImageController {
+
     private ImageManager imageManager;
+
+    private CategoryManager categoryManager;
 
     /**
      * 后台显示所有图片
@@ -31,7 +35,7 @@ public class ImageController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "listAll")
+    @RequestMapping(value = "listAll", method = RequestMethod.GET)
     public String listAllImage(Model model) {
         model.addAttribute("images", imageManager.getAllImage());
         return "dashboard/image/listAll";
@@ -43,9 +47,23 @@ public class ImageController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "list")
-    public String listImage(Model model) {
+    @RequestMapping(value = "album", method = RequestMethod.GET)
+    public String album(Model model) {
         model.addAttribute("images", imageManager.getAllImageByDeleted());
+        model.addAttribute("categories", categoryManager.getNavCategory());
+        return "album";
+    }
+
+    /**
+     * 前台显示图片
+     *
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "gallery", method = RequestMethod.GET)
+    public String gallery(Model model) {
+        model.addAttribute("images", imageManager.getAllImageByDeleted());
+        model.addAttribute("categories", categoryManager.getNavCategory());
         return "gallery";
     }
 
@@ -54,7 +72,7 @@ public class ImageController {
      *
      * @return
      */
-    @RequestMapping(value = "create")
+    @RequestMapping(value = "create", method = RequestMethod.GET)
     public String create(Model model) {
         model.addAttribute("image", new Image());
         return "dashboard/image/edit";
@@ -105,4 +123,10 @@ public class ImageController {
     public void setImageManager(@Qualifier("imageManager") ImageManager imageManager) {
         this.imageManager = imageManager;
     }
+
+    @Autowired
+    public void setCategoryManager(@Qualifier("categoryManager") CategoryManager categoryManager) {
+        this.categoryManager = categoryManager;
+    }
+
 }
