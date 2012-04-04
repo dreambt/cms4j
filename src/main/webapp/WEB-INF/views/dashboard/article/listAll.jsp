@@ -59,7 +59,7 @@
                         <td><input type="checkbox" name="isSelected" value="${article.id}"></td>
                         <td><a href="${ctx}/article/content/${article.id}" target="_blank">${article.subject}</a></td>
                         <td>${article.author}</td>
-                        <td>校内新闻</td>
+                        <td>${article.categoryName}</td>
                         <td>${article.rate}</td>
                         <td>${article.views}</td>
                         <td><fmt:formatDate value="${article.createTime}" type="date"/></td>
