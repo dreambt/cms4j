@@ -60,11 +60,11 @@ public class ImageController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "gallery", method = RequestMethod.GET)
+    @RequestMapping(value = "list", method = RequestMethod.GET)
     public String gallery(Model model) {
         model.addAttribute("images", imageManager.getAllImageByDeleted());
         model.addAttribute("categories", categoryManager.getNavCategory());
-        return "gallery";
+        return "list";
     }
 
     /**

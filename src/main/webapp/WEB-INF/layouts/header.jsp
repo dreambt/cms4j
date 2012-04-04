@@ -25,8 +25,8 @@
                         <c:when test="${category.showType eq 'CONTENT'}"><li><a href="${ctx}/article/content/${category.url}" class="cufon">${category.categoryName}</a></c:when>
                         <c:when test="${category.showType eq 'LIST'}"><li><a href="${ctx}/article/list/${category.id}" class="cufon">${category.categoryName}</a></c:when>
                         <c:when test="${category.showType eq 'DIGEST'}"><li><a href="${ctx}/article/digest/${category.id}" class="cufon">${category.categoryName}</a></c:when>
-                        <c:when test="${category.showType eq 'GALLERY'}"><li><a href="${ctx}/gallery/album/${category.url}" class="cufon">${category.categoryName}</a></c:when>
-                        <c:when test="${category.showType eq 'ALBUM'}"><li><a href="${ctx}/gallery/gallery/${category.url}" class="cufon">${category.categoryName}</a></c:when>
+                        <c:when test="${category.showType eq 'GALLERY'}"><li><a href="${ctx}/gallery/list/${category.url}" class="cufon">${category.categoryName}</a></c:when>
+                        <c:when test="${category.showType eq 'ALBUM'}"><li><a href="${ctx}/gallery/album/${category.url}" class="cufon">${category.categoryName}</a></c:when>
                     </c:choose>
                     <c:if test="${fn:length(category.subCategories) > 0}">
                         <ul>
@@ -36,8 +36,8 @@
                                     <c:when test="${subCategory.showType eq 'CONTENT'}"><li><a href="${ctx}/article/content/${subCategory.url}" class="cufon">${subCategory.categoryName}</a></li></c:when>
                                     <c:when test="${subCategory.showType eq 'LIST'}"><li><a href="${ctx}/article/list/${subCategory.id}" class="cufon">${subCategory.categoryName}</a></li></c:when>
                                     <c:when test="${subCategory.showType eq 'DIGEST'}"><li><a href="${ctx}/article/digest/${subCategory.id}" class="cufon">${subCategory.categoryName}</a></li></c:when>
-                                    <c:when test="${subCategory.showType eq 'GALLERY'}"><li><a href="${ctx}/gallery/${subCategory.url}" class="cufon">${subCategory.categoryName}</a></li></c:when>
-                                    <c:when test="${subCategory.showType eq 'ALBUM'}"><li><a href="${ctx}/album/${subCategory.url}" class="cufon">${subCategory.categoryName}</a></li></c:when>
+                                    <c:when test="${subCategory.showType eq 'GALLERY'}"><li><a href="${ctx}/gallery/list/${subCategory.url}" class="cufon">${subCategory.categoryName}</a></li></c:when>
+                                    <c:when test="${subCategory.showType eq 'ALBUM'}"><li><a href="${ctx}/gallery/album/${subCategory.url}" class="cufon">${subCategory.categoryName}</a></li></c:when>
                                 </c:choose>
                             </c:forEach>
                         </ul>
