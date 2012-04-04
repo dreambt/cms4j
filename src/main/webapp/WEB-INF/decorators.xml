@@ -9,6 +9,7 @@
 
     <decorator name="default" page="default.jsp">
         <pattern>/*</pattern>
+        <pattern>/gallery/gallery*</pattern>
     </decorator>
 
     <decorator name="article" page="article.jsp">
@@ -24,6 +25,6 @@
         <pattern>/comment/*</pattern>
         <pattern>/category/*</pattern>
         <pattern>/account/*</pattern>
-        <pattern>/image/*</pattern>
+        <pattern>/gallery/*</pattern>
     </decorator>
 </decorators>
