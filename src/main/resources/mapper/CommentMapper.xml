@@ -11,7 +11,7 @@
         where aid=#{id}
         limit 1
      -->
-    <select id="getComment" parameterType="int" resultType="Comment">
+    <select id="getComment" parameterType="Long" resultType="Comment">
         select id,username,postip,posttime,status,message,createtime,modifytime
         from cms_commnet
         where id=#{id}
@@ -31,9 +31,23 @@
     <!--
          获取评论数目
      -->
-    <select id="getCommentCount" resultType="Long">
+    <select id="getCount" resultType="Long">
 		select count(id)
 		from cms_commnet
+		where deleted=0 and status=1
+		order by id ASC
+		limit 1
+	</select>
+
+    <!--
+         获取评论数目
+     -->
+    <select id="getCountByArticleId" parameterType="Long" resultType="Long">
+		select count(id)
+		from cms_commnet
+		where article_id=#{id} and deleted=0 and status=1
+		order by id ASC
+		limit 1
 	</select>
 
     <!-- 查询评论,演示: 1.输入用map传入多个参数 2.<where>语句, 智能添加where和and关键字 3.输出直接映射对象 -->

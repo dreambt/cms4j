@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
  * Time: 下午8:10
  */
 @Controller
-@RequestMapping(value = "/image")
+@RequestMapping(value = "/gallery")
 public class ImageController {
     private ImageManager imageManager;
 
@@ -68,14 +68,14 @@ public class ImageController {
      * @return
      */
     @RequestMapping(value = "save", method = RequestMethod.POST)
-    public String save(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request,Image image, RedirectAttributes redirectAttributes) {
-       if(file == null) {
-           redirectAttributes.addFlashAttribute("error", "请选择上传的图片");
-       }
+    public String save(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request, Image image, RedirectAttributes redirectAttributes) {
+        if (file == null) {
+            redirectAttributes.addFlashAttribute("error", "请选择上传的图片");
+        }
 
         //redirectAttributes.addAttribute("imageUrl", request.getContextPath()+"/upload/"+fileName);
         Image img = imageManager.save(file, request, image);
-        if(null == img) {
+        if (null == img) {
             redirectAttributes.addFlashAttribute("error", "添加图片信息失败");
         } else {
             redirectAttributes.addFlashAttribute("info", "添加图片信息成功");

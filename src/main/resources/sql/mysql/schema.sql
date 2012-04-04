@@ -42,8 +42,7 @@ CREATE  TABLE IF NOT EXISTS `cms4j`.`cms_article` (
   `top` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '是否是首贴' ,
   `rate` SMALLINT(6) NOT NULL DEFAULT 0 COMMENT '评分分数' ,
   `rate_times` TINYINT(3) NOT NULL DEFAULT 0 COMMENT '评分次数' ,
-  `views` TINYINT(3) NOT NULL ,
-  `count` TINYINT(3) NOT NULL DEFAULT 0 COMMENT '浏览次数' ,
+  `views` TINYINT(3) NOT NULL DEFAULT 0 COMMENT '浏览次数' ,
   `allow_comment` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '是否存在点评' ,
   `status` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '帖子审核状态' ,
   `modify_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后修改时间' ,
@@ -318,6 +317,7 @@ INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (67,3,
 INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (68,3,"article:save");
 INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (70,3,"article:list");
 
+
 -- -----------------------------------------------------
 -- 分类测试数据
 -- -----------------------------------------------------
@@ -329,4 +329,30 @@ INSERT INTO `cms_category`(`id`, `father_category_id`, `category_name`, `display
 INSERT INTO `cms_category`(`id`, `father_category_id`, `category_name`, `display_order`, `show_type`, `url`, `description`, `allow_comment`, `allow_publish`, `modify_time`, `create_time`, `deleted`) VALUES (6,1,'活动相册',30,'GALLERY','','活动相册',0,1,'2012-03-22 23:58:00','2012-03-22 23:58:00',0);
 INSERT INTO `cms_category`(`id`, `father_category_id`, `category_name`, `display_order`, `show_type`, `url`, `description`, `allow_comment`, `allow_publish`, `modify_time`, `create_time`, `deleted`) VALUES (7,1,'关于我们',40,'NONE','about','关于我们',0,0,'2012-03-22 23:58:00','2012-03-22 23:58:00',0);
 
+
+-- -----------------------------------------------------
+-- 文章测试数据
+-- -----------------------------------------------------
+INSERT INTO `cms_article` (`id`, `author`, `category_name`, `subject`, `message`, `digest`, `keyword`, `top`, `rate`, `rate_times`, `views`, `allow_comment`, `status`, `modify_time`, `create_time`, `deleted`) VALUES
+(1, '纪柏涛', '培训课程', '关于证书培训', '<p><span style="font-size:16px">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="font-size:16px">山东金融信息技术培训中心依托山东财经大学的资源优势，以培养高层次水平与国际化视野的金融财务和投资理财专业人才，进一步推动中国金融资本市场的发展为办学目标，为全国各地的有志青年提供高标准的金融培训课程，权威的备考资料和周到的考试服务。</span></p><p><span style="font-size:16px">&nbsp;</span></p><p><span style="font-size:16px">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="font-size:16px">随着国</span><span style="font-size:16px">内金融理财市场的蓬勃发展和对于高端金融人才的强劲需求，我们开设特许金融分析师（</span><span style="font-size:16px">CFA</span><span style="font-size:16px">）、金融风险管理师（</span><span style="font-size:16px">FRM</span><span style="font-size:16px">）、国家理财规划师（</span><span style="font-size:16px">ChFP</span><span style="font-size:16px">）、期货从业资格、银行从业资格、保荐代表人等一系列国内外权威的金融投资职业资格顶尖课程。同时，我们还为国内外知名银行、保险、基金、证券等金融投资机构提供各种有针对性的企业内训课程</span><span style="font-size:16px">和职业发展课程，并建立起长期战略合作关系。</span></p><p><span style="font-size:16px">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="font-size:16px">我们的优势：完善的课程体系，强大的师资队伍，独特的教学方法，一流的学习环境在广大学员中有口皆碑。</span></p><p style="line-height:24px;text-autospace:ideograph-other"><span style="font-size:16px">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="font-size:16px">我们的目标：帮助每一位考生顺利地通过金融投资领域相关考试，打造金融培训领域的新标杆。</span></p><p style="line-height:24px;text-autospace:ideograph-other"><span style="font-size:16px">　　我们的学员：全国各大银行、证券、保险类等公司机构金融行业从业人员；　　　　　　　　全国各地高校金融类相关专业学生；国内其他有志于从事金融行业的各界人士</span></p><p style="line-height:24px;text-autospace:ideograph-other"><span style="font-size:16px">　　我们的团队：管理队伍为80%以上拥有硕士以上学位的金融界精英及业内资深教授，核心成员来自山东财经大学。</span></p><p style="line-height:24px;text-autospace:ideograph-other"><span style="font-size:16px">　　我们的理念：您的成功是我们最大的心愿！</span></p><p><br /></p><ul style="list-style-type:disc"><li><span style="font-size:16px">报名及详情咨询</span></li></ul><p><span style="font-size:16px">联系人：张老师</span><span style="font-size:16px">&nbsp;&nbsp;</span><span style="font-size:16px">赵老师</span></p><p><span style="font-size:16px">电话：</span><span style="font-size:16px">0531-82917317&nbsp;82917318</span></p><p><span style="font-size:16px">传真：</span><span style="font-size:16px">0531-82917319</span></p><span style="font-size:16px;font-family:&#39;times new roman&#39;,&#39;serif&#39;">Email:<span style="color:#000"><a href="mailto:jrgc@sdfi.edu.cn">jrgc@sdfi.edu.cn</a></span></span>', '    山东金融信息技术培训中心依托山东财经大学的资源优势，以培养高层次水平与国际化视野的金融财务和投资理财专业人才，进一步推动中国金融资本市场的发展为办学目标，为全国各地的有志青年提供高标准的金融培训课程，权威的备考资料和周到的考试服务。       随着国内金融理财市场的蓬勃发展和对于高端金融人', '', 0, 0, 7, 0, 1, 1, '2012-04-04 01:58:23', '2012-04-04 01:58:18', 0);
+
+
+-- -----------------------------------------------------
+-- 文章-分类测试数据
+-- -----------------------------------------------------
+INSERT INTO `cms_category_article` (`category_id`, `article_id`) VALUES
+(5, 1);
+
+-- -----------------------------------------------------
+-- 文章-作者测试数据
+-- -----------------------------------------------------
+INSERT INTO `cms_user_article` (`user_id`, `article_id`) VALUES
+(1, 1);
+
+-- -----------------------------------------------------
+-- 评论测试数据
+-- -----------------------------------------------------
+INSERT INTO `cms_comment` (`id`, `article_id`, `username`, `message`, `post_ip`, `status`, `modify_time`, `create_time`, `deleted`) VALUES
+(1, 1, 'dreambt@126.com', '<p><img src="http://img.baidu.com/hi/jx2/j_0002.gif" border="0" hspace="0" vspace="0" />美文~<br /></p>', 2130706433, 0, '2012-04-04 02:11:45', '2012-04-04 02:11:45', 0),
+(2, 1, 'dreambt@126.com', '<p>拜读~<img src="http://img.baidu.com/hi/jx2/j_0008.gif" border="0" hspace="0" vspace="0" /><br /></p>', 2130706433, 0, '2012-04-04 02:11:55', '2012-04-04 02:11:55', 0);
 

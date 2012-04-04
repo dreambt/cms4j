@@ -4,20 +4,20 @@
 
 <mapper namespace="Category">
     <resultMap id="categoryDetailMap" type="Category">
-        <id property="id" column="id" />
-        <result property="fatherCategoryId" column="father_category_id" />
-        <result property="categoryName" column="category_name" />
-        <result property="displayOrder" column="display_order" />
-        <result property="showType" column="show_type" />
-        <result property="url" column="url" />
-        <result property="description" column="description" />
-        <result property="allowComment" column="allow_comment" />
-        <result property="allowPublish" column="allow_publish" />
-        <result property="modifyTime" column="modify_time" />
-        <result property="createTime" column="create_time" />
-        <result property="deleted" column="deleted" />
-        <collection property="subCategories" javaType="Category" />
-        <collection property="articleList" javaType="Article" />
+        <id property="id" column="id"/>
+        <result property="fatherCategoryId" column="father_category_id"/>
+        <result property="categoryName" column="category_name"/>
+        <result property="displayOrder" column="display_order"/>
+        <result property="showType" column="show_type"/>
+        <result property="url" column="url"/>
+        <result property="description" column="description"/>
+        <result property="allowComment" column="allow_comment"/>
+        <result property="allowPublish" column="allow_publish"/>
+        <result property="modifyTime" column="modify_time"/>
+        <result property="createTime" column="create_time"/>
+        <result property="deleted" column="deleted"/>
+        <collection property="subCategories" javaType="Category"/>
+        <collection property="articleList" javaType="Article"/>
     </resultMap>
 
     <!--
@@ -97,10 +97,10 @@
     <insert id="saveCategory" parameterType="Category" useGeneratedKeys="true" keyProperty="id">
 		insert into cms_category (
 		father_category_id, category_name, allow_comment, display_order,
-		 url, deleted, description, keyword, allow_publish, show_type, create_time, modify_time)
+		 url, deleted, description, keyword, allow_publish, show_type, create_time)
 		values (#{fatherCategoryId}, #{categoryName}, #{allowComment}, #{displayOrder},
 		 #{url}, #{deleted}, #{description},
-		 #{keyWord}, #{allowPublish}, #{showType}, #{createTime}, #{modifyTime})
+		 #{keyWord}, #{allowPublish}, #{showType}, #{createTime})
 	</insert>
 
     <!-- 删除分类 -->

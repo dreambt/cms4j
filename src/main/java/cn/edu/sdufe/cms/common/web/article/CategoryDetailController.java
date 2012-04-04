@@ -64,14 +64,13 @@ public class CategoryDetailController {
     /**
      * 删除分类
      *
-     * @param id
      * @param category
      * @param redirectAttributes
      * @return
      */
     @RequiresPermissions("category:delete")
     @RequestMapping(value = "delete/{id}", method = RequestMethod.GET)
-    public String delete(@PathVariable Long id, @Valid @ModelAttribute("category") Category category, RedirectAttributes redirectAttributes) {
+    public String delete(@Valid @ModelAttribute("category") Category category, RedirectAttributes redirectAttributes) {
         if (category.getArticleList().size() <= 0) {
             category.setDeleted(!category.isDeleted());
         } else {

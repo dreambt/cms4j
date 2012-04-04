@@ -42,11 +42,12 @@ public class NotifyMessageListener implements MessageListener {
 
             //发送邮件
             if (mimeMailService != null) {
-                String plainPassword = mapMessage.getString("plainPassword");
-                if (plainPassword.length() > 0)
-                    userRecoveryMailService.sendNotificationMail(mapMessage.getString("email"), mapMessage.getString("username"), plainPassword);
-                else
+                String plainPassword = mapMessage.getString("password");
+                if (null == plainPassword || plainPassword.length() == 0) {
                     mimeMailService.sendNotificationMail(mapMessage.getString("email"), mapMessage.getString("username"));
+                } else {
+                    userRecoveryMailService.sendNotificationMail(mapMessage.getString("email"), mapMessage.getString("username"), plainPassword);
+                }
             }
         } catch (Exception e) {
             logger.error("处理消息时发生异常.", e);

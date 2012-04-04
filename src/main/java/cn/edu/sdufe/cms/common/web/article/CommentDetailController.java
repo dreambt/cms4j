@@ -80,7 +80,7 @@ public class CommentDetailController {
 
     @ModelAttribute("comment")
     public Comment getComment(@PathVariable("id") Long id) {
-        return commentManager.getComment(id);
+        return commentManager.get(id);
     }
 
     @Autowired

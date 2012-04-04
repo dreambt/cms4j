@@ -39,6 +39,7 @@ public class NotifyMessageProducer {
                 MapMessage message = session.createMapMessage();
                 message.setString("username", user.getUsername());
                 message.setString("email", user.getEmail());
+                message.setString("password", user.getPlainPassword());
 
                 message.setStringProperty("objectType", "user");
 

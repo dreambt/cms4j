@@ -2,12 +2,14 @@ package cn.edu.sdufe.cms.common.dao.article;
 
 import cn.edu.sdufe.cms.common.entity.article.Comment;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
 /**
  * 评论Dao
+ * <p/>
  * User: baitao.jibt (dreambt@gmail.com)
  * Date: 12-3-20
  * Time: 下午20:37
@@ -20,7 +22,8 @@ public class CommentDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    /*public List<Comment> getRecentComment() {
+    /*@Cacheable(value = "commentRecent")
+    public List<Comment> getRecentComment() {
         return (List<Comment>)getSqlSession().selectList("Article.getCommentRecent");
     }*/
 
@@ -29,8 +32,18 @@ public class CommentDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    public Long getCount() {
-        return (Long) getSqlSession().selectOne("Article.getCommentCount");
+    @Cacheable(value = "commentCount")
+    public Long count() {
+        return (Long) getSqlSession().selectOne("Article.getCount");
+    }
+
+    /**
+     * 获取编号为id的文章的评论数量
+     *
+     * @return
+     */
+    public Long count(Long id) {
+        return (Long) getSqlSession().selectOne("Article.getCountByArticleId", id);
     }
 
     /**

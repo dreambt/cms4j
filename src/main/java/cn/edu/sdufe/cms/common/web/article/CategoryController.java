@@ -37,7 +37,7 @@ public class CategoryController {
     @RequestMapping(value = "listAll", method = RequestMethod.GET)
     public String list(Model model) {
         model.addAttribute("showTypes", ShowTypeEnum.values());
-        model.addAttribute("categories", categoryManager.getSubCategory(1L));
+        model.addAttribute("categories", categoryManager.getNavCategory());
         return "dashboard/category/listAll";
     }
 

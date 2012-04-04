@@ -58,8 +58,6 @@ public class Article extends IdEntity {
 
     private int views;
 
-    private int count;
-
     private Date createTime;
 
     private Date modifyTime;
@@ -201,14 +199,6 @@ public class Article extends IdEntity {
 
     public void setViews(int views) {
         this.views = views;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
     }
 
     /**

@@ -14,20 +14,17 @@
 <head>
     <title>显示所有菜单 - 后台管理</title>
 </head>
-
 <body>
 <div id="main_container" class="main_container container_16 clearfix">
     <div class="flat_area grid_16">
         <h2>显示所有菜单</h2>
 
-        <p>Try it out and you'll see how <strong>powerful yet easy to use</strong> it is.</p>
+        <p>这里可以管理 <strong>顶级菜单</strong> 和相应的 <strong>二级菜单</strong> .</p>
     </div>
 </div>
 <div class="main_container container_16 clearfix fullsize">
     <div class="box grid_16">
-        <h2 class="box_head grad_colour">
-            一级菜单
-        </h2>
+        <h2 class="box_head grad_colour">顶级菜单</h2>
         <a href="#" class="grabber">&nbsp;</a>
         <a href="#" class="toggle">&nbsp;</a>
 
@@ -37,11 +34,15 @@
                     <li>
                         <form>
                             <a href="#" class="handle">&nbsp;</a>
-                            <input id="Mname" type="text" name="name" value="${category.categoryName}" readonly="yes" class="menu">
-                            <button type="submit"><a class="amodify" href="${ctx}/category/edit/${category.id}">修改</a></button>
-                            <button id="d" class="deleteSingle" type="submit"><span><a class="amodify" href="${ctx}/category/delete/${category.id}">删除</a></span></button>
+                            <input id="Mname" type="text" name="name" value="${category.categoryName}" readonly="yes"
+                                   class="menu">
+                            <button type="submit"><a class="amodify" href="${ctx}/category/edit/${category.id}">修改</a>
+                            </button>
+                            <button id="d" class="deleteSingle" type="submit"><span><a class="amodify"
+                                                                                       href="${ctx}/category/delete/${category.id}">删除</a></span>
+                            </button>
                         </form>
-                        <h3 class="bar" id="1" title="${category.displayOrder+1}">
+                        <h3 class="bar" id="1" title="显示顺序: ${category.displayOrder}">
                             &nbsp;&nbsp;&nbsp;子菜单数量：${fn:length(category.subCategories)}
                         </h3>
                         <c:if test="${fn:length(category.subCategories) > 0}">
@@ -61,40 +62,36 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <c:forEach items="${category.subCategories}" var="subCategory" begin="0" step="1">
+                                        <c:forEach items="${category.subCategories}" var="subCategory" begin="0"
+                                                   step="1">
                                             <tr>
-                                                <td>
-                                                    <input type="text" name="categoryName" value="${subCategory.categoryName}" class="menu">
+                                                <td><input type="text" name="categoryName"
+                                                           value="${subCategory.categoryName}" class="menu"></td>
+                                                <td><input type="text" name="displayOrder"
+                                                           value="${subCategory.displayOrder}" class="menu"></td>
+                                                <td><input type="text" name="url" size="20px" class="menu"
+                                                           value="${subCategory.url}"></td>
+                                                <td><input type="checkbox" name="allowComment" class="menu"
+                                                           <c:if test="${subCategory.allowComment}">checked="checked"</c:if>>
                                                 </td>
-                                                <td>
-                                                    <input type="text" name="displayOrder" value="${subCategory.displayOrder}" class="menu">
+                                                <td><input type="checkbox" class="menu" name="allowPublish"
+                                                           <c:if test="${subCategory.allowPublish}">checked="checked"</c:if>>
                                                 </td>
-                                                <td>
-                                                    <input type="text" name="url" size="20px" class="menu" value="${subCategory.url}">
-                                                </td>
-                                                <td>
-                                                    <input type="checkbox" name="allowComment" class="menu" <c:if test="${subCategory.allowComment}">checked="checked"</c:if>>
-                                                </td>
-                                                <td>
-                                                    <input type="checkbox" class="menu" name="allowPublish" <c:if test="${subCategory.allowPublish}">checked="checked"</c:if>>
-                                                </td>
-                                                <td>
-                                                    <select name="showType">
-                                                        <c:forEach items="${showTypes}" var="showType" begin="0" step="1" >
-                                                            <option value="${showType.value}" <c:if test="${showType.value==subCategory.showType.value}">selected="selected"</c:if>>${showType.displayName}</option>
-                                                        </c:forEach>
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <a href="${ctx}/category/edit/${subCategory.id}" type="submit">【修改】</a>
-                                                    <a href="${ctx}/category/delete/${subCategory.id}" type="submit">【删除】</a>
+                                                <td><select name="showType"><c:forEach items="${showTypes}"
+                                                                                       var="showType" begin="0"
+                                                                                       step="1">
+                                                    <option value="${showType.value}"
+                                                            <c:if test="${showType.value==subCategory.showType.value}">selected="selected"</c:if>>${showType.displayName}</option>
+                                                </c:forEach></select></td>
+                                                <td><a href="${ctx}/category/edit/${subCategory.id}"
+                                                       type="submit">【修改】</a> <a
+                                                        href="${ctx}/category/delete/${subCategory.id}" type="submit">【删除】</a>
                                                 </td>
                                             </tr>
                                         </c:forEach>
                                         </tbody>
                                     </table>
                                 </form>
-
                             </div>
                         </c:if>
                     </li>

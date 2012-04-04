@@ -62,8 +62,7 @@ public class UserRecoveryMailService {
      */
     private String generateContent(String username, String plainPassword) throws MessagingException {
         try {
-            Map context = Collections.singletonMap("username", username);
-            context.put("password", plainPassword);
+            Map context = Collections.singletonMap("password", plainPassword);
             return FreeMarkerTemplateUtils.processTemplateIntoString(template, context);
         } catch (IOException e) {
             logger.error("生成邮件内容失败, FreeMarker模板不存在", e);

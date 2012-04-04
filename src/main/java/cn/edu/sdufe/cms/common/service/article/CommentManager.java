@@ -1,5 +1,6 @@
 package cn.edu.sdufe.cms.common.service.article;
 
+import cn.edu.sdufe.cms.common.dao.article.CommentDao;
 import cn.edu.sdufe.cms.common.dao.article.CommentJpaDao;
 import cn.edu.sdufe.cms.common.entity.article.Comment;
 import org.slf4j.Logger;
@@ -9,7 +10,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
@@ -25,9 +25,9 @@ public class CommentManager {
 
     private static Logger logger = LoggerFactory.getLogger(CommentManager.class);
 
-    private CommentJpaDao commentJpaDao;
+    private CommentDao commentDao;
 
-    private HttpServletRequest request;
+    private CommentJpaDao commentJpaDao;
 
     /**
      * 获取编号为id的评论
@@ -35,7 +35,7 @@ public class CommentManager {
      * @param id
      * @return
      */
-    public Comment getComment(Long id) {
+    public Comment get(Long id) {
         return commentJpaDao.findOne(id);
     }
 
@@ -44,7 +44,7 @@ public class CommentManager {
      *
      * @return
      */
-    public List<Comment> getAllComment() {
+    public List<Comment> getAll() {
         return (List<Comment>) commentJpaDao.findAll();
     }
 
@@ -54,8 +54,8 @@ public class CommentManager {
      * @param id
      * @return
      */
-    public List<Comment> getCommentByArticleId(Long id) {
-        return (List<Comment>) commentJpaDao.findByArticleId(id);
+    public List<Comment> getByArticleId(Long id) {
+        return commentJpaDao.findByArticleId(id);
     }
 
     /**
@@ -64,8 +64,8 @@ public class CommentManager {
      * @param username
      * @return
      */
-    public List<Comment> getCommentByUsername(String username) {
-        return (List<Comment>) commentJpaDao.findByUsername(username);
+    public List<Comment> getByUsername(String username) {
+        return commentJpaDao.findByUsername(username);
     }
 
     /**
@@ -74,7 +74,7 @@ public class CommentManager {
      * @return
      */
     public List<Comment> getUnverifiedComment() {
-        return (List<Comment>) commentJpaDao.findByStatus(false);
+        return commentJpaDao.findByStatus(false);
     }
 
     /**
@@ -82,8 +82,8 @@ public class CommentManager {
      *
      * @return
      */
-    public Long getCommentCount(Long id) {
-        return Long.valueOf(commentJpaDao.findByArticleId(id).size());
+    public Long count(Long id) {
+        return commentDao.count(id);
     }
 
     /**
@@ -94,7 +94,6 @@ public class CommentManager {
      */
     @Transactional(readOnly = false)
     public Comment save(Comment comment) {
-        comment.setPostHostIp(request.getRemoteAddr());   //TODO 获得ip
         comment.setStatus(false);
         comment.setDeleted(false);
         comment.setCreateTime(new Date());
@@ -124,7 +123,7 @@ public class CommentManager {
     public void batchAudit(String[] ids) {
         Comment comment = null;
         for (String id : ids) {
-            comment = this.getComment(Long.parseLong(id));
+            comment = this.get(Long.parseLong(id));
             comment.setStatus(true);
             this.update(comment);
         }
@@ -139,7 +138,7 @@ public class CommentManager {
     public void batchDelete(String[] ids) {
         Comment comment = null;
         for (String id : ids) {
-            comment = this.getComment(Long.parseLong(id));
+            comment = this.get(Long.parseLong(id));
             comment.setDeleted(true);
             this.update(comment);
         }
@@ -156,7 +155,12 @@ public class CommentManager {
     public Comment delete(Comment comment, boolean deleted) {
         comment.setDeleted(!deleted);
         comment.setModifyTime(new Date());
-        return (Comment) commentJpaDao.save(comment);
+        return commentJpaDao.save(comment);
+    }
+
+    @Autowired
+    public void setCommentDao(@Qualifier("commentDao") CommentDao commentDao) {
+        this.commentDao = commentDao;
     }
 
     @Autowired
@@ -164,8 +168,4 @@ public class CommentManager {
         this.commentJpaDao = commentJpaDao;
     }
 
-    @Autowired(required = false)
-    public void setRequest(HttpServletRequest request) {
-        this.request = request;
-    }
 }

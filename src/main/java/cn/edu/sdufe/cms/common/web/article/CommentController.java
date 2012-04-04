@@ -26,6 +26,8 @@ public class CommentController {
 
     private CommentManager commentManager;
 
+    private HttpServletRequest request;
+
     /**
      * 添加评论
      *
@@ -36,6 +38,7 @@ public class CommentController {
     @RequiresPermissions("comment:create")
     @RequestMapping(value = "create", method = RequestMethod.POST)
     public String createComment(Comment comment, RedirectAttributes redirectAttributes) {
+        comment.setPostHostIp(request.getRemoteAddr());   //TODO 获得ip
         commentManager.save(comment);
         redirectAttributes.addFlashAttribute("info", "添加评论成功");
         return "redirect:/article/content/" + comment.getArticle().getId();
@@ -50,7 +53,7 @@ public class CommentController {
     @RequiresPermissions("comment:list")
     @RequestMapping(value = {"listAll", ""})
     public String listAllComment(Model model) {
-        List<Comment> comments = commentManager.getAllComment();
+        List<Comment> comments = commentManager.getAll();
         model.addAttribute("comments", comments);
         return "dashboard/comment/listAll";
     }
@@ -98,4 +101,10 @@ public class CommentController {
     public void setCommentManager(@Qualifier("commentManager") CommentManager commentManager) {
         this.commentManager = commentManager;
     }
+
+    @Autowired(required = false)
+    public void setRequest(HttpServletRequest request) {
+        this.request = request;
+    }
+
 }
