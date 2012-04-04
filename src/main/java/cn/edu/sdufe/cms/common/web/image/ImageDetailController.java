@@ -20,7 +20,7 @@ import javax.validation.Valid;
  * Time: 下午1:01
  */
 @Controller
-@RequestMapping(value = "/image")
+@RequestMapping(value = "/gallery/")
 public class ImageDetailController {
     private ImageManager imageManager;
 
@@ -34,7 +34,7 @@ public class ImageDetailController {
     @RequestMapping(value = "edit/{id}")
     public String edit(@PathVariable Long id, Model model) {
         model.addAttribute("image", imageManager.getImage(id));
-        return "dashboard/image/edit";
+        return "dashboard/gallery/edit";
     }
 
     /**
@@ -52,7 +52,7 @@ public class ImageDetailController {
         } else {
             redirectAttributes.addFlashAttribute("info", "修改" + id + "图片信息成功");
         }
-        return "redirect:/image/listAll";
+        return "redirect:/gallery/listAll";
     }
 
     /**
@@ -70,7 +70,7 @@ public class ImageDetailController {
         } else {
             redirectAttributes.addFlashAttribute("info", "恢复" + id + "图片信息成功");
         }
-        return "redirect:/image/listAll";
+        return "redirect:/gallery/listAll";
     }
 
     @ModelAttribute("image")
@@ -82,4 +82,5 @@ public class ImageDetailController {
     public void setImageManager(@Qualifier("imageManager") ImageManager imageManager) {
         this.imageManager = imageManager;
     }
+
 }

@@ -34,7 +34,7 @@ public class ImageController {
     @RequestMapping(value = "listAll")
     public String listAllImage(Model model) {
         model.addAttribute("images", imageManager.getAllImage());
-        return "dashboard/image/listAll";
+        return "dashboard/gallery/listAll";
     }
 
     /**
@@ -46,7 +46,7 @@ public class ImageController {
     @RequestMapping(value = "list")
     public String listImage(Model model) {
         model.addAttribute("images", imageManager.getAllImageByDeleted());
-        return "image/list";
+        return "gallery/list";
     }
 
     /**
@@ -57,7 +57,7 @@ public class ImageController {
     @RequestMapping(value = "create")
     public String create(Model model) {
         model.addAttribute("image", new Image());
-        return "dashboard/image/edit";
+        return "dashboard/gallery/edit";
     }
 
     /**
@@ -80,7 +80,7 @@ public class ImageController {
         } else {
             redirectAttributes.addFlashAttribute("info", "添加图片信息成功");
         }
-        return "redirect:/image/listAll";
+        return "redirect:/gallery/listAll";
     }
 
     /**
@@ -93,11 +93,11 @@ public class ImageController {
         String[] isSelected = request.getParameterValues("isSelected");
         if (isSelected == null) {
             redirectAttributes.addFlashAttribute("error", "请选择要删除的评论.");
-            return "redirect:/image/listAll";
+            return "redirect:/gallery/listAll";
         } else {
             imageManager.batchDelete(isSelected);
             redirectAttributes.addFlashAttribute("info", "批量删除评论成功.");
-            return "redirect:/image/listAll";
+            return "redirect:/gallery/listAll";
         }
     }
 

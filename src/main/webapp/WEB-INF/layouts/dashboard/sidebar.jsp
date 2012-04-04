@@ -53,8 +53,8 @@
         </shiro:hasPermission>
         <li><a href="#" class="top_level"><img src="${ctx}/static/dashboard/images/icons/small/grey/SpeechBubbles2.png"/>相册管理</a>
            <ul class="drawer">
-               <li><a href="${ctx}/image/create">上传活动图片</a></li>
-               <li><a href="${ctx}/image/listAll">活动图片列表</a></li>
+               <li><a href="${ctx}/gallery/create">上传活动图片</a></li>
+               <li><a href="${ctx}/gallery/listAll">活动图片列表</a></li>
            </ul>
         </li>
         <li><a href="${ctx}/dashboard/FAQs"><img src="${ctx}/static/dashboard/images/icons/small/grey/InfoAbout.png"/>文档 F&Q</a></li>
