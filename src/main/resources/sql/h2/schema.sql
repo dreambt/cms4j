@@ -29,7 +29,7 @@ DROP TABLE IF EXISTS `cms_group`;
 
 create table `cms_group` (
         id MEDIUMINT(8) UNSIGNED not null AUTO_INCREMENT,
-        group_name VARCHAR(255) NOT NULL ,
+        group_name VARCHAR(40) NOT NULL ,
         PRIMARY KEY (`id`)
 ) ;
 
@@ -71,7 +71,6 @@ CREATE  TABLE `cms_category` (
   `display_order` SMALLINT(6) NOT NULL DEFAULT 0 ,
   `url` VARCHAR(255) NOT NULL DEFAULT 0 ,
   `deleted` TINYINT(1) NOT NULL DEFAULT 0 ,
-  `show_nav` TINYINT(1) NOT NULL DEFAULT 0 ,
   `description` VARCHAR(255) NOT NULL ,
   `allow_publish` TINYINT(1) NOT NULL ,
   `show_type` VARCHAR(20) NOT NULL,
