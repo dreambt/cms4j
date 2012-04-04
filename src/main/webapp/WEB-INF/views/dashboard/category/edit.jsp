@@ -68,7 +68,7 @@
                 </div>
             </div>
         </div>
-        <button type="submit" class="button_colour"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/white/Listw_Image.png"><span>提交</span>
+        <button type="submit" class="button_colour"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/small/white/Listw_Image.png"><span>提交</span>
         </button>
     </form:form>
 </div>
