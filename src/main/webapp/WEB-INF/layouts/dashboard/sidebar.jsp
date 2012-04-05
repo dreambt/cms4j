@@ -51,12 +51,14 @@
         <shiro:hasPermission name="comment:list">
         <li><a href="${ctx}/comment/listAll"><img src="${ctx}/static/dashboard/images/icons/SpeechBubbles2.png"/>评论管理</a></li>
         </shiro:hasPermission>
+        <shiro:hasPermission name="gallery:list">
         <li><a href="#" class="top_level"><img src="${ctx}/static/dashboard/images/icons/Image2.png"/>相册管理</a>
            <ul class="drawer">
                <li><a href="${ctx}/gallery/create">上传活动图片</a></li>
                <li><a href="${ctx}/gallery/listAll">活动图片列表</a></li>
            </ul>
         </li>
+        </shiro:hasPermission>
         <li><a href="${ctx}/dashboard/FAQs"><img src="${ctx}/static/dashboard/images/icons/InfoAbout.png"/>文档 F&Q</a></li>
     </ul>
     <form id="search_side"><input class="round_all" type="text" value="Search..." onClick="value=''"></form>

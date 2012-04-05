@@ -2,6 +2,7 @@ package cn.edu.sdufe.cms.common.dao.article;
 
 import cn.edu.sdufe.cms.common.entity.article.Article;
 import cn.edu.sdufe.cms.data.ArticleData;
+import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class ArticleDaoTest extends SpringTxTestCase {
     public void crudEntityWithArticle() throws Exception {
         //新建并保存带权限组的用户
         Article article = ArticleData.getRandomArticle();
-        articleDao.update(article);
+        Assert.assertEquals(1, articleDao.update(article));
         em.flush();
 
         // 获取

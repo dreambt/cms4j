@@ -65,7 +65,7 @@ public class Archive extends IdEntity {
         this.modifyTime = modifyTime;
     }
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinTable(name = "cms_archive_article", joinColumns = @JoinColumn(name = "archive_id"), inverseJoinColumns = @JoinColumn(name = "article_id"))
     @Fetch(FetchMode.SUBSELECT)
     @OrderBy(value = "createTime ASC")

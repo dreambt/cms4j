@@ -21,7 +21,6 @@ import org.springside.modules.orm.jpa.Jpas;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -53,7 +52,20 @@ public class ArticleManager {
      * @param id
      * @return
      */
-    public Article getArticle(Long id) {
+    public Article get(Long id) {
+
+        //Dao不取相关连接表中的内容，比如评论
+        //return articleDao.getArticle(id);
+        return articleJpaDao.findOne(id);
+    }
+
+    /**
+     * 通过id获取文章
+     *
+     * @param id
+     * @return
+     */
+    public Article getForView(Long id) {
         Article article = articleJpaDao.findOne(id);
 
         // 记录文章访问次数
@@ -61,7 +73,7 @@ public class ArticleManager {
 
         //Dao不取相关连接表中的内容，比如评论
         //return articleDao.getArticle(id);
-        return updateArticle(article);
+        return update(article);
     }
 
     /**
@@ -70,7 +82,7 @@ public class ArticleManager {
      * @param categoryId 分类编号
      * @return
      */
-    public Long getCount(Long categoryId) {
+    public Long count(Long categoryId) {
         return articleDao.count(categoryId);
     }
 
@@ -79,7 +91,7 @@ public class ArticleManager {
      *
      * @return
      */
-    public List<Article> getAllArticle(int offset, int limit) {
+    public List<Article> getAll(int offset, int limit) {
         Map<String, Object> parameters = Maps.newHashMap();
         parameters.put("Direction", "DESC");
         parameters.put("Sort", "id");
@@ -91,7 +103,7 @@ public class ArticleManager {
      *
      * @return
      */
-    public List<Article> getTopTenArticle() {
+    public List<Article> getTopTen() {
         return articleDao.getTopTen();
     }
 
@@ -116,7 +128,7 @@ public class ArticleManager {
      * @return
      */
     @Deprecated
-    public List<Article> searchArticle(Map<String, Object> parameters) {
+    public List<Article> search(Map<String, Object> parameters) {
         return articleDao.search(parameters);
     }
 
@@ -126,7 +138,7 @@ public class ArticleManager {
      * @param categoryId
      * @return
      */
-    public List<Article> getArticleListByCategoryId(Long categoryId, int offset, int limit) {
+    public List<Article> getListByCategoryId(Long categoryId, int offset, int limit) {
         return articleDao.getListByCategoryId(categoryId, new RowBounds(offset, limit));
     }
 
@@ -136,7 +148,7 @@ public class ArticleManager {
      * @param categoryId
      * @return
      */
-    public List<Article> getArticleDigestByCategoryId(Long categoryId, int offset, int limit) {
+    public List<Article> getDigestByCategoryId(Long categoryId, int offset, int limit) {
         return articleDao.getDigestByCategoryId(categoryId, new RowBounds(offset, limit));
     }
 
@@ -147,7 +159,7 @@ public class ArticleManager {
      * @return
      */
     @Deprecated
-    public List<Article> getArticleByUserId(Long userId) {
+    public List<Article> getByUserId(Long userId) {
         return (List<Article>) articleJpaDao.findByUserId(userId);
     }
 
@@ -158,7 +170,7 @@ public class ArticleManager {
      * @return
      */
     @Transactional(readOnly = false)
-    public Article saveArticle(Article article) {
+    public Article save(Article article) {
         try {
             // 生成默认摘要
             String str = Jsoup.parse(article.getMessage()).text();
@@ -229,7 +241,7 @@ public class ArticleManager {
             }
             article = articleDao.get(Long.parseLong(id));
             article.setStatus(false);
-            this.updateArticle(article);
+            this.update(article);
         }
     }
 
@@ -247,7 +259,7 @@ public class ArticleManager {
             }
             article = articleDao.get(Long.parseLong(id));
             article.setDeleted(true);
-            this.updateArticle(article);
+            this.update(article);
         }
     }
 
@@ -257,7 +269,7 @@ public class ArticleManager {
      * @param article
      */
     @Transactional(readOnly = false)
-    public Article updateArticle(Article article) {
+    public Article update(Article article) {
         return articleJpaDao.save(article);
     }
 
@@ -267,16 +279,12 @@ public class ArticleManager {
      * @return
      */
     @Transactional(readOnly = false)
-    public int deleteArticle() {
-        List<Long> list = articleDao.getDeletedId();
-        int count = list.size();
-        while (list.size() > 0) {
-            try {
-                articleJpaDao.delete((Long) list.remove(0));
-                Thread.sleep(5000);// 每次都要休息一会儿
-            } catch (InterruptedException e) {
-                logger.info("在批量删除文章时发生异常.");
-            }
+    public int delete() {
+        List<Article> articleList = articleJpaDao.findByDeleted(true);
+        int count = articleList.size();
+        while (articleList.size() > 0) {
+            Article article = articleList.remove(0);
+            articleJpaDao.delete(article.getId());
         }
         return count;
     }

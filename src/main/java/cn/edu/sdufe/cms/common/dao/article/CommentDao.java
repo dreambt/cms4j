@@ -5,6 +5,7 @@ import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,10 +23,10 @@ public class CommentDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    /*@Cacheable(value = "commentRecent")
+    @Cacheable(value = "commentRecent")
     public List<Comment> getRecentComment() {
-        return (List<Comment>)getSqlSession().selectList("Article.getCommentRecent");
-    }*/
+        return getSqlSession().selectList("Comment.getCommentRecent");
+    }
 
     /**
      * 获取评论数量
@@ -34,7 +35,16 @@ public class CommentDao extends SqlSessionDaoSupport {
      */
     @Cacheable(value = "commentCount")
     public Long count() {
-        return (Long) getSqlSession().selectOne("Article.getCount");
+        return (Long) getSqlSession().selectOne("Comment.getCount");
+    }
+
+    /**
+     * 获取标记为删除的评论id
+     *
+     * @return
+     */
+    public List<Long> getDeletedId() {
+        return getSqlSession().selectList("Comment.getDeletedCommentId");
     }
 
     /**
@@ -43,7 +53,7 @@ public class CommentDao extends SqlSessionDaoSupport {
      * @return
      */
     public Long count(Long id) {
-        return (Long) getSqlSession().selectOne("Article.getCountByArticleId", id);
+        return (Long) getSqlSession().selectOne("Comment.getCountByArticleId", id);
     }
 
     /**
@@ -52,8 +62,8 @@ public class CommentDao extends SqlSessionDaoSupport {
      * @param parameters
      * @return
      */
-    public Comment search(Map<String, Object> parameters) {
-        return (Comment) getSqlSession().selectOne("Article.searchComment", parameters);
+    public List<Comment> search(Map<String, Object> parameters) {
+        return getSqlSession().selectOne("Comment.searchComment", parameters);
     }
 
 }

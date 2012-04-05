@@ -145,17 +145,22 @@ public class CommentManager {
     }
 
     /**
-     * 改变评论的删除标志
+     * 任务删除评论
      *
-     * @param comment
-     * @param deleted
      * @return
      */
     @Transactional(readOnly = false)
-    public Comment delete(Comment comment, boolean deleted) {
-        comment.setDeleted(!deleted);
-        comment.setModifyTime(new Date());
-        return commentJpaDao.save(comment);
+    public int delete() {
+        List<Long> commentList = commentDao.getDeletedId();
+        int count = commentList.size();
+        while (commentList.size() > 0) {
+            try {
+                commentJpaDao.delete(commentList.remove(0));
+            } catch (Exception e) {
+                logger.info("在批量删除评论时发生异常.");
+            }
+        }
+        return count;
     }
 
     @Autowired

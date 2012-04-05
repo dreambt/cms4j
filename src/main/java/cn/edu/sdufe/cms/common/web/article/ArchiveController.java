@@ -36,7 +36,7 @@ public class ArchiveController {
     public String articleListOfArchive(Model model) {
         model.addAttribute("archives", archiveManager.getAllArchive());
         model.addAttribute("categories", categoryManager.getNavCategory());
-        model.addAttribute("newArticles",articleManager.getTopTenArticle());
+        model.addAttribute("newArticles",articleManager.getTopTen());
         return "article/archives";
     }
 
@@ -46,7 +46,7 @@ public class ArchiveController {
         model.addAttribute("archive", archiveManager.getArchiveByArchiveId(id));
         model.addAttribute("articles", archiveManager.getArchiveByArchiveId(id).getArticleList());
         model.addAttribute("categories", categoryManager.getNavCategory());
-        model.addAttribute("newArticles",articleManager.getTopTenArticle());
+        model.addAttribute("newArticles",articleManager.getTopTen());
         return "article/list";
     }
 

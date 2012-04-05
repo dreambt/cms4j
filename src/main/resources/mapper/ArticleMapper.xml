@@ -21,6 +21,8 @@
         select id
         from cms_article
         where deleted=1
+        order by id ASC
+        limit 500
 	</select>
 
     <!--
@@ -87,7 +89,7 @@
          查询文章
      -->
     <select id="searchArticle" parameterType="map" resultType="Article">
-        select *
+        select id,subject,message,digest,author,category_name as categoryname,rate,rate_times as ratetimes,views,create_time as createtime,modify_time as modifytime,top,status
         from cms_article
         <where>
             <if test="author != null">
@@ -102,8 +104,12 @@
             <if test="keyword != null">
                 and keyword=#{keyword}
             </if>
+            <if test="deleted != null">
+                and deleted=#{deleted}
+            </if>
         </where>
         order by ${Sort} ${Direction}
+        limit 500
     </select>
 
     <!-- 更新文章 -->
@@ -114,4 +120,11 @@
         allow_comment=#{allowComment},modify_time = now()
         where id = #{id}
 	</update>
+
+    <!-- 删除文章 -->
+    <delete id="delete">
+        delete from cms_article
+        where deleted = 1
+        limit 500
+	</delete>
 </mapper>

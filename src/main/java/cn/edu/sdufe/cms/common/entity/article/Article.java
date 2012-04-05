@@ -226,7 +226,7 @@ public class Article extends IdEntity {
         this.modifyTime = modifyTime;
     }
 
-    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY) // 级联删除相关评论
+    @OneToMany(fetch = FetchType.LAZY) // 级联删除相关评论
     @JoinTable(name = "cms_comment", joinColumns = {@JoinColumn(name = "article_id")}, inverseJoinColumns = {@JoinColumn(name = "id")})
     @Fetch(FetchMode.SUBSELECT)
     @OrderBy("id DESC")

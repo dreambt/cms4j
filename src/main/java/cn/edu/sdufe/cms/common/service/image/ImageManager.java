@@ -3,6 +3,8 @@ package cn.edu.sdufe.cms.common.service.image;
 import cn.edu.sdufe.cms.common.dao.image.ImageJpaDao;
 import cn.edu.sdufe.cms.common.entity.image.Image;
 import cn.edu.sdufe.cms.utilities.RandomString;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
@@ -24,6 +26,9 @@ import java.util.List;
 @Component
 @Transactional(readOnly = true)
 public class ImageManager {
+
+    private static Logger logger = LoggerFactory.getLogger(ImageManager.class);
+
     private ImageJpaDao imageJpaDao;
 
     /**
@@ -32,7 +37,7 @@ public class ImageManager {
      * @return
      */
     public List<Image> getAllImageByDeleted() {
-        return (List<Image>)imageJpaDao.findByDeleted(false);
+        return imageJpaDao.findByDeleted(false);
     }
 
     /**
@@ -41,7 +46,7 @@ public class ImageManager {
      * @return
      */
     public List<Image> getAllImage() {
-        return (List<Image>)imageJpaDao.findAll(new Sort(Sort.Direction.DESC, "createTime"));
+        return (List<Image>) imageJpaDao.findAll(new Sort(Sort.Direction.DESC, "createTime"));
     }
 
     /**
@@ -51,7 +56,7 @@ public class ImageManager {
      * @return
      */
     public Image getImage(Long id) {
-        return (Image)imageJpaDao.findOne(id);
+        return imageJpaDao.findOne(id);
     }
 
     /**
@@ -62,7 +67,7 @@ public class ImageManager {
      */
     @Transactional(readOnly = false)
     public Image save(MultipartFile file, HttpServletRequest request, Image image) {
-        if(file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
+        if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
             String fileName = this.upload(file, request);
             image.setImageUrl(fileName);
         } else {
@@ -71,7 +76,7 @@ public class ImageManager {
         image.setDeleted(false);
         image.setCreateTime(new Date());
         image.setModifyTime(new Date());
-        return (Image)imageJpaDao.save(image);
+        return imageJpaDao.save(image);
     }
 
     /**
@@ -84,17 +89,22 @@ public class ImageManager {
     public String upload(MultipartFile file, HttpServletRequest request) {
         // 转型为MultipartHttpRequest：
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+
         //上传路径
         String path = multipartRequest.getSession().getServletContext().getRealPath("static/uploads/gallery");
+        System.out.println(path);
+
         //原文件名
         String imageName = file.getOriginalFilename();
-        String ext = imageName.substring(imageName.lastIndexOf("."),imageName.length());
+        String ext = imageName.substring(imageName.lastIndexOf("."), imageName.length());
+
         //服务器上的文件名
         String fileName = new Date().getTime() + RandomString.get(6) + ext;
         File targetFile = new File(path, fileName);
-        if(!targetFile.exists()){
+        if (!targetFile.exists()) {
             targetFile.mkdirs();
         }
+
         //保存
         try {
             file.transferTo(targetFile);
@@ -106,6 +116,7 @@ public class ImageManager {
 
     /**
      * 修改image
+     *
      * @param file
      * @param request
      * @param image
@@ -116,23 +127,24 @@ public class ImageManager {
         // TODO 删除原有图片
         // this.deletePic(image.getImageUrl());
         //实现上传
-        if(file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
+        if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
             String fileName = this.upload(file, request);
             image.setImageUrl(fileName);
         }
         image.setModifyTime(new Date());
-        return (Image)imageJpaDao.save(image);
+        return imageJpaDao.save(image);
     }
 
     /**
      * 修改image
+     *
      * @param image
      * @return
      */
     @Transactional(readOnly = false)
     public Image update(Image image) {
         image.setModifyTime(new Date());
-        return (Image)imageJpaDao.save(image);
+        return imageJpaDao.save(image);
     }
 
     /**
@@ -140,6 +152,7 @@ public class ImageManager {
      *
      * @param image
      */
+    @Deprecated
     @Transactional(readOnly = false)
     public Image delete(Image image) {
         image.setDeleted(!image.isDeleted());
@@ -173,22 +186,32 @@ public class ImageManager {
     }
 
     /**
-     * 真正删除记录
-     *
-     * @param id
+     * 任务删除图片
      */
-    /*public void deleteImage(Long id) {
-        deletePic();
-        imageJpaDao.delete(id);
-    }*/
+    @Transactional(readOnly = false)
+    public int delete() {
+         List<Image> list = imageJpaDao.findByDeleted(true);
+        int count = list.size();
+        while (list.size() > 0) {
+            try {
+                Image image = list.remove(0);
+                imageJpaDao.delete(image);
+                deletePic(image.getImageUrl());
+            } catch (Exception e) {
+                logger.info("在批量删除文章时发生异常.");
+            }
+        }
+        return count;
+    }
 
     /**
      * 真正删除上传的图片
+     *
      * @param fileName
      */
     public void deletePic(String fileName) {
         //上传路径
-        String path = this.getClass().getClassLoader().getResource(fileName).getPath(); // TODO 获得图片绝对路径
+        String path = this.getClass().getResource("/").getPath();
         System.out.println(path);
         new File(path, fileName).delete();
     }
@@ -197,4 +220,5 @@ public class ImageManager {
     public void setImageJpaDao(ImageJpaDao imageJpaDao) {
         this.imageJpaDao = imageJpaDao;
     }
+
 }

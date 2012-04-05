@@ -37,8 +37,23 @@ public class ArticleController {
     private CategoryManager categoryManager;
 
     private UserManager userManager;
-    
+
     private ArchiveManager archiveManager;
+
+    /**
+     * 获取菜单编号为id的所有文章正文
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "content/{id}", method = RequestMethod.GET)
+    public String contextOfArticle(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("article", articleManager.getForView(id));
+        model.addAttribute("categories", categoryManager.getNavCategory());
+        model.addAttribute("archives", archiveManager.getTopTenArchive());
+        model.addAttribute("newArticles", articleManager.getTopTen());
+        return "article/content";
+    }
 
     /**
      * 后台获取所有文章列表
@@ -49,7 +64,7 @@ public class ArticleController {
     @RequiresPermissions("article:list")
     @RequestMapping(value = {"listAll", ""})
     public String listAllArticle(Model model) {
-        model.addAttribute("articles", articleManager.getAllArticle(0, ARTICLE_NUM));
+        model.addAttribute("articles", articleManager.getAll(0, ARTICLE_NUM));
         return "dashboard/article/listAll";
     }
 
@@ -64,7 +79,7 @@ public class ArticleController {
     @RequestMapping(value = "listAll/ajax")
     @ResponseBody
     public List<Article> ajaxAllArticle(@RequestParam("offset") int offset, @RequestParam("limit") int limit) {
-        return articleManager.getAllArticle(offset, limit);
+        return articleManager.getAll(offset, limit);
     }
 
     /**
@@ -76,12 +91,12 @@ public class ArticleController {
      */
     @RequestMapping(value = "list/{id}", method = RequestMethod.GET)
     public String listOfArticle(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("articles", articleManager.getArticleListByCategoryId(id, 0, 10));
+        model.addAttribute("articles", articleManager.getListByCategoryId(id, 0, 10));
         model.addAttribute("category", categoryManager.get(id));
         model.addAttribute("categories", categoryManager.getNavCategory());
-        model.addAttribute("archives",archiveManager.getTopTenArchive());
-        model.addAttribute("newArticles",articleManager.getTopTenArticle());
-        model.addAttribute("total", articleManager.getCount(id));
+        model.addAttribute("archives", archiveManager.getTopTenArchive());
+        model.addAttribute("newArticles", articleManager.getTopTen());
+        model.addAttribute("total", articleManager.count(id));
         return "article/list";
     }
 
@@ -96,7 +111,7 @@ public class ArticleController {
     @RequestMapping(value = "list/ajax/{id}", method = RequestMethod.GET)
     @ResponseBody
     public List<Article> ajaxListOfArticle(@PathVariable("id") Long id, @RequestParam("offset") int offset, @RequestParam("limit") int limit) {
-        return articleManager.getArticleListByCategoryId(id, offset, limit);
+        return articleManager.getListByCategoryId(id, offset, limit);
     }
 
     /**
@@ -108,12 +123,12 @@ public class ArticleController {
      */
     @RequestMapping(value = "digest/{id}", method = RequestMethod.GET)
     public String digestOfArticle(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("articles", articleManager.getArticleDigestByCategoryId(id, 0, 10));
+        model.addAttribute("articles", articleManager.getDigestByCategoryId(id, 0, 10));
         model.addAttribute("category", categoryManager.get(id));
         model.addAttribute("categories", categoryManager.getNavCategory());
-        model.addAttribute("archives",archiveManager.getTopTenArchive());
-        model.addAttribute("newArticles",articleManager.getTopTenArticle());
-        model.addAttribute("total", articleManager.getCount(id));
+        model.addAttribute("archives", archiveManager.getTopTenArchive());
+        model.addAttribute("newArticles", articleManager.getTopTen());
+        model.addAttribute("total", articleManager.count(id));
         return "article/digest";
     }
 
@@ -128,7 +143,8 @@ public class ArticleController {
     @RequestMapping(value = "digest/ajax/{id}", method = RequestMethod.GET)
     @ResponseBody
     public List<Article> ajaxDigestOfArticle(@PathVariable("id") Long id, @RequestParam("offset") int offset, @RequestParam("limit") int limit) {
-        return articleManager.getArticleDigestByCategoryId(id, offset, limit);
+        List<Article> articleList = articleManager.getDigestByCategoryId(id, offset, limit);
+        return articleList;
     }
 
     /**
@@ -167,7 +183,7 @@ public class ArticleController {
         article.setCreateTime(new Date());
 
         // 保存
-        if (null == articleManager.saveArticle(article)) {
+        if (null == articleManager.save(article)) {
             redirectAttributes.addFlashAttribute("error", "创建文章失败");
             return "redirect:/article/create";
         } else {
@@ -218,6 +234,7 @@ public class ArticleController {
     public void setUserManager(@Qualifier("userManager") UserManager userManager) {
         this.userManager = userManager;
     }
+
     @Autowired
     public void setArchiveManager(@Qualifier("archiveManager") ArchiveManager archiveManager) {
         this.archiveManager = archiveManager;

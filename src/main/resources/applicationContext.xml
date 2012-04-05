@@ -41,9 +41,6 @@
     <!-- MyBatis配置 -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="transactionFactory">
-            <bean class="org.apache.ibatis.transaction.managed.ManagedTransactionFactory" />
-        </property>
         <property name="configLocation" value="classpath:/mapper/Configuration.xml"/>
         <property name="mapperLocations" value="classpath:/mapper/*Mapper.xml"/>
     </bean>

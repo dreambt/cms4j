@@ -96,13 +96,22 @@ public class ArticleDao extends SqlSessionDaoSupport {
     }
 
     /**
+     * 批量删除文章
+     *
+     * @return
+     */
+    public int delete() {
+        return getSqlSession().delete("Article.delete");
+    }
+
+    /**
      * 更新文章
      *
      * @param article
      * @return
      */
-    public void update(Article article) {
-        getSqlSession().update("Article.updateArticle", article);
+    public int update(Article article) {
+        return getSqlSession().update("Article.updateArticle", article);
     }
 
     /**

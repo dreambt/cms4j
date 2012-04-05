@@ -146,4 +146,5 @@ public class ArchiveManager {
     public void setArticleDao(@Qualifier("articleDao") ArticleDao articleDao) {
         this.articleDao = articleDao;
     }
+
 }

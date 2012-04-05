@@ -1,7 +1,6 @@
 package cn.edu.sdufe.cms.common.web.article;
 
 import cn.edu.sdufe.cms.common.entity.article.Article;
-import cn.edu.sdufe.cms.common.service.article.ArchiveManager;
 import cn.edu.sdufe.cms.common.service.article.ArticleManager;
 import cn.edu.sdufe.cms.common.service.article.CategoryManager;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -13,7 +12,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -31,22 +29,6 @@ public class ArticleDetailController {
     private ArticleManager articleManager;
 
     private CategoryManager categoryManager;
-
-    private ArchiveManager archiveManager;
-
-    /**
-     * 获取菜单编号为id的所有文章正文
-     *
-     * @param id
-     * @return
-     */
-    @RequestMapping(value = "content/{id}", method = RequestMethod.GET)
-    public String contextOfArticle(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("categories", categoryManager.getNavCategory());
-        model.addAttribute("archives",archiveManager.getTopTenArchive());
-        model.addAttribute("newArticles",articleManager.getTopTenArticle());
-        return "article/content";
-    }
 
     /**
      * 编辑文章
@@ -75,7 +57,7 @@ public class ArticleDetailController {
     @RequiresPermissions("article:save")
     @RequestMapping(value = "save/{id}")
     public String saveArticle(@PathVariable("id") Long id, @Valid @ModelAttribute("article") Article article, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
-        if (bindingResult.hasErrors() || null == articleManager.saveArticle(article)) {
+        if (bindingResult.hasErrors() || null == articleManager.save(article)) {
             redirectAttributes.addFlashAttribute("error", "保存文章失败");
             return "redirect:/article/edit/" + article.getId();
         } else {
@@ -96,12 +78,12 @@ public class ArticleDetailController {
         article.setTop(!article.isTop());
 
         if (article.isTop()) {
-            if (null == articleManager.updateArticle(article)) {
+            if (null == articleManager.update(article)) {
                 redirectAttributes.addFlashAttribute("error", "操作文章 " + id + " 失败.");
             }
             redirectAttributes.addFlashAttribute("info", "置顶文章 " + id + " 成功.");
         } else {
-            if (null == articleManager.updateArticle(article)) {
+            if (null == articleManager.update(article)) {
                 redirectAttributes.addFlashAttribute("error", "操作文章 " + id + " 失败.");
             }
             redirectAttributes.addFlashAttribute("info", "取消置顶文章 " + id + " 成功.");
@@ -119,7 +101,7 @@ public class ArticleDetailController {
     @RequestMapping(value = "allow/{id}")
     public String allowArticle(@PathVariable("id") Long id, @ModelAttribute("article") Article article, RedirectAttributes redirectAttributes) {
         article.setAllowComment(!article.isAllowComment());
-        if (null == articleManager.updateArticle(article)) {
+        if (null == articleManager.update(article)) {
             redirectAttributes.addFlashAttribute("error", "操作文章 " + id + " 失败.");
             return "redirect:/article/listAll";
         }
@@ -142,7 +124,7 @@ public class ArticleDetailController {
     @RequestMapping(value = "audit/{id}")
     public String auditArticle(@PathVariable("id") Long id, @ModelAttribute("article") Article article, RedirectAttributes redirectAttributes) {
         article.setStatus(!article.isStatus());
-        if (null == articleManager.updateArticle(article)) {
+        if (null == articleManager.update(article)) {
             redirectAttributes.addFlashAttribute("error", "操作文章 " + id + " 失败.");
             return "redirect:/article/listAll";
         }
@@ -165,7 +147,7 @@ public class ArticleDetailController {
     @RequestMapping(value = "delete/{id}")
     public String deleteArticle(@PathVariable("id") Long id, @ModelAttribute("article") Article article, RedirectAttributes redirectAttributes) {
         article.setDeleted(!article.isDeleted());
-        if (null == articleManager.updateArticle(article)) {
+        if (null == articleManager.update(article)) {
             redirectAttributes.addFlashAttribute("error", "操作文章 " + id + " 失败.");
             return "redirect:/article/listAll";
         }
@@ -180,7 +162,7 @@ public class ArticleDetailController {
 
     @ModelAttribute("article")
     public Article getArticle(@PathVariable("id") Long id) {
-        return articleManager.getArticle(id);
+        return articleManager.get(id);
     }
 
     @Autowired
@@ -192,9 +174,5 @@ public class ArticleDetailController {
     public void setCategoryManager(@Qualifier("categoryManager") CategoryManager categoryManager) {
         this.categoryManager = categoryManager;
     }
-    
-    @Autowired
-    public void setArchiveManager(@Qualifier("archiveManager") ArchiveManager archiveManager) {
-        this.archiveManager = archiveManager;
-    }
+
 }

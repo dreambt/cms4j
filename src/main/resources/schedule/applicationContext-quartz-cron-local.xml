@@ -26,8 +26,9 @@
 	<!-- Cron式Trigger定义 -->
 	<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 		<property name="jobDetail" ref="cronJobDetail" />
-		<!-- 周一至五,朝九晚五工作时间内每小时执行一次 -->
-		<property name="cronExpression" value="0 0/60 9-17 ? * MON-FRI" />
+		<!-- 周一至五,朝九晚五工作时间内每小时执行一次
+		<property name="cronExpression" value="0 0/60 9-17 ? * MON-FRI" /> -->
+        <property name="cronExpression" value="0 0 0 L * ?" /><!-- 每月最后一日 -->
 	</bean>
 
 	<!-- Cron JobDetajil, 基于MethodInvokingJobDetailFactoryBean调用普通Spring Bean -->
@@ -39,5 +40,5 @@
 	</bean>
 
 	<!-- 被Cron执行的普通Spring Bean -->
-	<bean id="cronJob" class="cn.edu.sdufe.cms.schedule.QuartzJob" />
+	<bean id="cronJob" class="cn.edu.sdufe.cms.schedule.DataCleanJob" />
 </beans>

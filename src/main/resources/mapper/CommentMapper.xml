@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="CMS">
+<mapper namespace="Comment">
 
     <!--
          编号为id的评论
@@ -40,6 +40,17 @@
 	</select>
 
     <!--
+         获取已标记为删除的评论id
+     -->
+    <select id="getDeletedCommentId" resultType="Long">
+        select id
+        from cms_comment
+        where deleted=1
+        order by id ASC
+        limit 500
+	</select>
+
+    <!--
          获取评论数目
      -->
     <select id="getCountByArticleId" parameterType="Long" resultType="Long">
@@ -50,8 +61,10 @@
 		limit 1
 	</select>
 
-    <!-- 查询评论,演示: 1.输入用map传入多个参数 2.<where>语句, 智能添加where和and关键字 3.输出直接映射对象 -->
-    <select id="searchComment" parameterType="map" resultType="ArrayList">
+    <!--
+        查询评论
+     -->
+    <select id="searchComment" parameterType="map" resultType="Comment">
         select id, name, email,
         login_name as loginName,
         department_id as "department.id"
@@ -68,16 +81,17 @@
     </select>
 
     <!-- 插入评论 -->
-    <insert id="saveComment" parameterType="Comment" useGeneratedKeys="true" keyProperty="id">
+    <insert id="save" parameterType="Comment" useGeneratedKeys="true" keyProperty="id">
 		insert into cms_commnet (
 		cid,aid,username,postip,posttime,status,message,createtime,modifytime)
 		values (#{id}, #{articleId}, #{username},#{postIP},#{postTime},#{status},#{message},now(),now())
 	</insert>
 
     <!-- 删除评论 -->
-    <delete id="deleteComment" parameterType="int">
-		delete from acct_user
-		where id=#{id}
+    <delete id="delete">
+		delete from cms_comment
+		where deleted = 1
+        limit 500
 	</delete>
 
 </mapper>

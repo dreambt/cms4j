@@ -240,7 +240,7 @@ public class User extends IdEntity {
         this.groupList = groupList;
     }
 
-    @OneToMany
+    @OneToMany(orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinTable(name = "cms_user_article", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "article_id")})
     @Fetch(FetchMode.SUBSELECT)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)

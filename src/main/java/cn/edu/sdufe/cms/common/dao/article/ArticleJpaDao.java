@@ -3,7 +3,6 @@ package cn.edu.sdufe.cms.common.dao.article;
 import cn.edu.sdufe.cms.common.entity.article.Article;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,7 +15,7 @@ import java.util.List;
 public interface ArticleJpaDao extends PagingAndSortingRepository<Article, Long> {
 
     /**
-     * 通过作者userId查找文章
+     * 通过作者userId查找
      *
      * @param userId
      * @return
@@ -24,28 +23,10 @@ public interface ArticleJpaDao extends PagingAndSortingRepository<Article, Long>
     Article findByUserId(Long userId);
 
     /**
-     * 查找置顶文章
+     * 通过删除标记查找
      *
-     * @param top
      * @return
      */
-    Article findByTop(boolean top);
-
-    /**
-     * 查找满足审核状态的文章
-     *
-     * @param status
-     * @return
-     */
-    Article findByStatus(boolean status);
-
-    /**
-     * 获得某一时间段的所有文章
-     *
-     * @param start
-     * @param end
-     * @return
-     */
-    List<Article> findByCreateTimeBetween(Date start, Date end);
+    List<Article> findByDeleted(boolean deleted);
 
 }
