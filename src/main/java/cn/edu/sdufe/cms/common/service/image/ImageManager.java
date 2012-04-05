@@ -1,11 +1,14 @@
 package cn.edu.sdufe.cms.common.service.image;
 
+import cn.edu.sdufe.cms.common.dao.image.ImageDao;
 import cn.edu.sdufe.cms.common.dao.image.ImageJpaDao;
 import cn.edu.sdufe.cms.common.entity.image.Image;
 import cn.edu.sdufe.cms.utilities.RandomString;
+import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,10 +29,22 @@ import java.util.List;
 @Component
 @Transactional(readOnly = true)
 public class ImageManager {
-
     private static Logger logger = LoggerFactory.getLogger(ImageManager.class);
 
     private ImageJpaDao imageJpaDao;
+
+    private ImageDao imageDao;
+
+    /**
+     * 获得分页的image
+     *
+     * @param offset
+     * @param limit
+     * @return
+     */
+    public List<Image> getPagedImage(int offset, int limit) {
+        return imageDao.getPagedImage(new RowBounds(offset, limit));
+    }
 
     /**
      * 获得所有没有删除的image
@@ -89,22 +104,17 @@ public class ImageManager {
     public String upload(MultipartFile file, HttpServletRequest request) {
         // 转型为MultipartHttpRequest：
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-
         //上传路径
         String path = multipartRequest.getSession().getServletContext().getRealPath("static/uploads/gallery");
-        System.out.println(path);
-
         //原文件名
         String imageName = file.getOriginalFilename();
-        String ext = imageName.substring(imageName.lastIndexOf("."), imageName.length());
-
+        String ext = imageName.substring(imageName.lastIndexOf("."),imageName.length());
         //服务器上的文件名
         String fileName = new Date().getTime() + RandomString.get(6) + ext;
         File targetFile = new File(path, fileName);
         if (!targetFile.exists()) {
             targetFile.mkdirs();
         }
-
         //保存
         try {
             file.transferTo(targetFile);
@@ -219,6 +229,11 @@ public class ImageManager {
     @Autowired
     public void setImageJpaDao(ImageJpaDao imageJpaDao) {
         this.imageJpaDao = imageJpaDao;
+    }
+
+    @Autowired
+    public void setImageDao(@Qualifier("imageDao") ImageDao imageDao) {
+        this.imageDao = imageDao;
     }
 
 }

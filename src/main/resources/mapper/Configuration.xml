@@ -11,5 +11,6 @@
         <typeAlias alias="Comment" type="cn.edu.sdufe.cms.common.entity.article.Comment"/>
         <typeAlias alias="ManageLog" type="cn.edu.sdufe.cms.common.entity.ManageLog"/>
         <typeAlias alias="Archive" type="cn.edu.sdufe.cms.common.entity.article.Archive"/>
+        <typeAlias alias="Image" type="cn.edu.sdufe.cms.common.entity.image.Image"/>
     </typeAliases>
 </configuration>

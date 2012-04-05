@@ -125,7 +125,7 @@ public class ArticleDao extends SqlSessionDaoSupport {
     }
 
     /**
-     * 获得本月的所有文章
+     * 获得指定月份的所有文章
      *
      * @return
      */

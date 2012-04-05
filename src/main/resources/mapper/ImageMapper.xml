@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Image">
+
+    <!--
+         获取分页显示的image
+     -->
+    <select id="getPagedImage" parameterType="int" resultType="Image">
+        select id, title, image_url as imageurl, description, create_time as createtime, modify_time as modifytime, deleted
+        from cms_image
+        where deleted=0
+        order by id DESC
+	</select>
+
+</mapper>

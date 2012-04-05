@@ -37,7 +37,7 @@ public class ArticleController {
     private CategoryManager categoryManager;
 
     private UserManager userManager;
-
+    
     private ArchiveManager archiveManager;
 
     /**
@@ -91,12 +91,18 @@ public class ArticleController {
      */
     @RequestMapping(value = "list/{id}", method = RequestMethod.GET)
     public String listOfArticle(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("articles", articleManager.getListByCategoryId(id, 0, 10));
+        int total = articleManager.count(id).intValue();
+        int limit = 10;
+        int pageCount = 1;
+        if (total % limit == 0) {pageCount = pageCount / limit;}
+        else {pageCount = total / limit + 1;}
+        model.addAttribute("articles", articleManager.getListByCategoryId(id, 0, limit));
         model.addAttribute("category", categoryManager.get(id));
         model.addAttribute("categories", categoryManager.getNavCategory());
-        model.addAttribute("archives", archiveManager.getTopTenArchive());
-        model.addAttribute("newArticles", articleManager.getTopTen());
+        model.addAttribute("archives",archiveManager.getTopTenArchive());
+        model.addAttribute("newArticles",articleManager.getTopTen());
         model.addAttribute("total", articleManager.count(id));
+        model.addAttribute("pageCount", pageCount);
         return "article/list";
     }
 

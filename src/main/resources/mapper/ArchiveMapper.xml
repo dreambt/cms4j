@@ -8,7 +8,7 @@
          获取文章数量
      -->
     <select id="getTopTen" resultType="Archive">
-        select id, title, article_count as articlecount, create_time as createtime, modify_time as createtime
+        select id, title, article_count as articlecount, create_time as createtime, modify_time as modifytime
         from cms_archive
         order by create_time desc
         limit 0,10

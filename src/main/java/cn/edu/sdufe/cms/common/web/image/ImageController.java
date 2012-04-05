@@ -11,10 +11,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * image控制器
@@ -51,9 +53,30 @@ public class ImageController {
      */
     @RequestMapping(value = "album", method = RequestMethod.GET)
     public String album(Model model) {
-        model.addAttribute("images", imageManager.getAllImageByDeleted());
+        int total = imageManager.getAllImageByDeleted().size();
+        int limit = 4;
+        int pageCount = 1;
+        if (total % limit == 0) pageCount = pageCount / limit;
+        else pageCount = total / limit + 1;
+        model.addAttribute("images", imageManager.getPagedImage(0,limit));
         model.addAttribute("categories", categoryManager.getNavCategory());
+        model.addAttribute("total", total);
+        model.addAttribute("pageCount", pageCount);
         return "album";
+    }
+
+    /**
+     * 获得分页image
+     *
+     * @param offset
+     * @param limit
+     * @return
+     */
+    @RequestMapping(value = "album/ajax", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Image> ajaxPaged(@RequestParam("offset") int offset, @RequestParam("limit") int limit) {
+        List<Image> images = imageManager.getPagedImage(offset, limit);
+        return images;
     }
 
     /**
