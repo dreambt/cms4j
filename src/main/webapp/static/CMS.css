@@ -136,3 +136,9 @@ table.menu_sec input{float: left;}
 }
 /*--------归档列表的样式-------------------*/
 ul#documentA li{margin: 10px;}
+
+/*--------album------*/
+#album_load{
+    margin: 0px;
+    float: left;
+}

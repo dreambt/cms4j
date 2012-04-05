@@ -44,7 +44,7 @@ ul.news-list li a:hover {text-decoration:underline;}
 .blog-posted-inner{background-image:url(../images/strip-line.gif); background-repeat:repeat; width:602px; padding:5px; margin:5px 0px 14px 0px; font-size:11px; float:left;}
 .blog-posted, .blog-posted-inner{color:#565656;}
 .blog-posted a, .blog-posted a:visited, .blog-posted-inner a, .blog-posted-inner a:visited{color:#565656;}
-.blog-pagination{height: 30px;background-color: #fff;margin:10px 0px 30px 0px;text-align: left;}
+.blog-pagination{height: 30px;background-color: #fff;margin:10px 0px 30px 0px;text-align: left;float: left;}
 .blog-button-page{border: 1px solid #e4e4e4;background-color:transparent;color:#000;font: normal 11px/28px Verdana;margin-left:4px!important;padding: 6px;cursor: pointer;}
 .blog-button-page-selected{border: 1px solid #e4e4e4;background-color: #e4e4e4;color:#ff4e00;font: normal 11px/28px Verdana;margin-left:4px!important;padding: 6px;cursor:default;}
 .blog-pagination a, .blog-pagination a:visited{color:#414141;}

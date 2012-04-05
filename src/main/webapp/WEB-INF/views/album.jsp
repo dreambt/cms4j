@@ -52,7 +52,7 @@
 
 <!-- BEGIN CONTENT -->
 <div id="content-inner-full">
-    <div class="maincontent" id="album_load">
+    <div id="album_load">
     <%--<c:out value="${fn:length(images)}"/>--%>
     <c:forEach items="${images}" var="image" begin="0" step="1" varStatus="var">
     <div class="portfolio-box"><!-- portfolio 1 -->
@@ -68,16 +68,16 @@
     </div>
 
     <div class="blog-pagination"><!-- page pagination -->
-        Page&nbsp;:&nbsp;<span class="blog-button-page-selected pagination">1</span>&nbsp;
+        Page&nbsp;:&nbsp;<span class="blog-button-page-selected pagination">1</span>
         <c:choose>
             <c:when test="${total <= 44}">
                 <c:forEach begin="1" end="${pageCount-1}" step="1" varStatus="var">
-                    <span class="blog-button-page pagination">${var.index+1}</span>&nbsp;
+                    <span class="blog-button-page pagination">${var.index+1}</span>
                 </c:forEach>
             </c:when>
             <c:otherwise>
                 <c:forEach begin="1" end="4" step="1" varStatus="var">
-                    <span class="blog-button-page pagination">${var.index+1}</span>&nbsp;
+                    <span class="blog-button-page pagination">${var.index+1}</span>
                 </c:forEach>
             </c:otherwise>
         </c:choose>
@@ -136,10 +136,10 @@
                     //生成页码
                     for (var j = start; j < end + 1; j++) {
                         if (j == intPageIndex) {
-                            var spanSelectd = $("<span class='blog-button-page-selected pagination'>" + j + "</span>&nbsp;");
+                            var spanSelectd = $("<span class='blog-button-page-selected pagination'>" + j + "</span>");
                             pager.append(spanSelectd);
                         } else {
-                            var a = $("<span class='blog-button-page pagination'>" + j + "</span>&nbsp;").click(function () {
+                            var a = $("<span class='blog-button-page pagination'>" + j + "</span>").click(function () {
                                 PageClick($(this).text(), total, spanInterval);
                             });
                             pager.append(a);
