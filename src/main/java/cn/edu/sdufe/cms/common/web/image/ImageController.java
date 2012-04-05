@@ -3,6 +3,7 @@ package cn.edu.sdufe.cms.common.web.image;
 import cn.edu.sdufe.cms.common.entity.image.Image;
 import cn.edu.sdufe.cms.common.service.article.CategoryManager;
 import cn.edu.sdufe.cms.common.service.image.ImageManager;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -35,6 +36,7 @@ public class ImageController {
      * @param model
      * @return
      */
+    @RequiresPermissions("gallery:list")
     @RequestMapping(value = "listAll", method = RequestMethod.GET)
     public String listAllImage(Model model) {
         model.addAttribute("images", imageManager.getAllImage());
@@ -72,6 +74,7 @@ public class ImageController {
      *
      * @return
      */
+    @RequiresPermissions("gallery:create")
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public String create(Model model) {
         model.addAttribute("image", new Image());
@@ -85,6 +88,7 @@ public class ImageController {
      * @param redirectAttributes
      * @return
      */
+    @RequiresPermissions("gallery:save")
     @RequestMapping(value = "save", method = RequestMethod.POST)
     public String save(@RequestParam(value = "file", required = false) MultipartFile file,
                        HttpServletRequest request, Image image, RedirectAttributes redirectAttributes) {
@@ -106,6 +110,7 @@ public class ImageController {
      *
      * @return
      */
+    @RequiresPermissions("gallery:edit")
     @RequestMapping(value = "batchDelete", method = RequestMethod.POST)
     public String batchDeleteComment(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         String[] isSelected = request.getParameterValues("isSelected");

@@ -52,6 +52,12 @@
                 /account/save/** = perms["user:save"]
                 /account/delete/** = perms["user:delete"]
                 /account/listAll = perms["user:list"]
+                <!-- 相册管理 -->
+                /gallery/create = perms["gallery:create"]
+                /gallery/edit/** = perms["gallery:edit"]
+                /gallery/save/** = perms["gallery:save"]
+                /gallery/delete/** = perms["gallery:delete"]
+                /gallery/listAll = perms["gallery:list"]
             </value>
         </property>
     </bean>

@@ -2,6 +2,7 @@ package cn.edu.sdufe.cms.common.web.image;
 
 import cn.edu.sdufe.cms.common.entity.image.Image;
 import cn.edu.sdufe.cms.common.service.image.ImageManager;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -34,6 +35,7 @@ public class ImageDetailController {
      * @param model
      * @return
      */
+    @RequiresPermissions("gallery:edit")
     @RequestMapping(value = "edit/{id}")
     public String edit(@PathVariable Long id, Model model) {
         model.addAttribute("image", imageManager.getImage(id));
@@ -49,6 +51,7 @@ public class ImageDetailController {
      * @param redirectAttributes
      * @return
      */
+    @RequiresPermissions("gallery:save")
     @RequestMapping(value = "save/{id}")
     public String save(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request,
                        @PathVariable Long id, @Valid @ModelAttribute("image") Image image, RedirectAttributes redirectAttributes) {
@@ -72,6 +75,7 @@ public class ImageDetailController {
      * @param redirectAttributes
      * @return
      */
+    @RequiresPermissions("gallery:edit")
     @RequestMapping(value = "delete/{id}")
     public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         Image image = imageManager.delete(id);
