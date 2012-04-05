@@ -129,12 +129,18 @@ public class ArticleController {
      */
     @RequestMapping(value = "digest/{id}", method = RequestMethod.GET)
     public String digestOfArticle(@PathVariable("id") Long id, Model model) {
+        int total = articleManager.count(id).intValue();
+        int limit = 10;
+        int pageCount = 1;
+        if (total % limit == 0) {pageCount = pageCount / limit;}
+        else {pageCount = total / limit + 1;}
         model.addAttribute("articles", articleManager.getDigestByCategoryId(id, 0, 10));
         model.addAttribute("category", categoryManager.get(id));
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("archives", archiveManager.getTopTenArchive());
         model.addAttribute("newArticles", articleManager.getTopTen());
         model.addAttribute("total", articleManager.count(id));
+        model.addAttribute("pageCount", pageCount);
         return "article/digest";
     }
 

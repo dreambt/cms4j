@@ -74,7 +74,7 @@ public class ImageController {
      */
     @RequestMapping(value = "album/ajax", method = RequestMethod.GET)
     @ResponseBody
-    public List<Image> ajaxPaged(@RequestParam("offset") int offset, @RequestParam("limit") int limit) {
+    public List<Image> ajaxAlbumPaged(@RequestParam("offset") int offset, @RequestParam("limit") int limit) {
         List<Image> images = imageManager.getPagedImage(offset, limit);
         return images;
     }
@@ -87,9 +87,30 @@ public class ImageController {
      */
     @RequestMapping(value = "photo", method = RequestMethod.GET)
     public String gallery(Model model) {
-        model.addAttribute("images", imageManager.getAllImageByDeleted());
+        int total = imageManager.getAllImageByDeleted().size();
+        int limit = 12;
+        int pageCount = 1;
+        if (total % limit == 0) pageCount = pageCount / limit;
+        else pageCount = total / limit + 1;
+        model.addAttribute("images", imageManager.getPagedImage(0,limit));
         model.addAttribute("categories", categoryManager.getNavCategory());
+        model.addAttribute("total", total);
+        model.addAttribute("pageCount", pageCount);
         return "photo";
+    }
+
+    /**
+     * 获得分页image
+     *
+     * @param offset
+     * @param limit
+     * @return
+     */
+    @RequestMapping(value = "photo/ajax", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Image> ajaxPhotoPaged(@RequestParam("offset") int offset, @RequestParam("limit") int limit) {
+        List<Image> images = imageManager.getPagedImage(offset, limit);
+        return images;
     }
 
     /**

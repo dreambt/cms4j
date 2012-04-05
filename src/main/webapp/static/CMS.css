@@ -141,4 +141,10 @@ ul#documentA li{margin: 10px;}
 #album_load{
     margin: 0px;
     float: left;
+    width: 920px;
+}
+#article_load{
+    margin: 0px;
+    float: left;
+
 }

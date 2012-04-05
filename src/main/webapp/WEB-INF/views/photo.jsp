@@ -66,59 +66,106 @@
 
 <!-- BEGIN CONTENT -->
 <div id="content-inner-full">
-    <div class="main-portfolio">
-        <h2>Our best works</h2>
+    <%--<h2>Our best works</h2>
 
-        <p>Architecto beatae vitae dicta sunt explicabo nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit
-            aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro
-            quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius
-            modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+    <p>Architecto beatae vitae dicta sunt explicabo nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit
+        aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro
+        quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius
+        modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>--%>
+    <div id="album_load">
 
+
+        <c:forEach items="${images}" var="image" begin="0" step="1" varStatus="var">
         <div class="pf-gall"><!-- portfolio 1 -->
-            <a href="${ctx}/static/images/portfolio-big/pf-alt-big1.jpg" rel="fancybox-thumb" class="fancybox-thumb" title="Portfolio 1"><img
-                    src="${ctx}/static/images/portfolio-thumb/pf-alt-thumb1.jpg" alt="" class="pf-img"/></a>
+            <a href="${ctx}/static/uploads/gallery/${image.imageUrl}" rel="fancybox-thumb" class="fancybox-thumb" title="${image.title}"><img
+                    src="${ctx}/static/uploads/gallery/${image.imageUrl}" width="200" height="122" alt="" class="pf-img"/></a>
         </div>
+            <%--<c:if test="${var.index%4==3}"><br/></c:if>--%>
+        </c:forEach>
 
-        <div class="pf-gall"><!-- portfolio 2 -->
-            <a href="${ctx}/static/images/portfolio-big/pf-alt-big2.jpg" rel="fancybox-thumb" class="fancybox-thumb" title="Portfolio 2"><img
-                    src="${ctx}/static/images/portfolio-thumb/pf-alt-thumb2.jpg" alt="" class="pf-img"/></a>
-        </div>
 
-        <div class="pf-gall"><!-- portfolio 3 -->
-            <a href="${ctx}/static/images/portfolio-big/pf-alt-big3.jpg" rel="fancybox-thumb" class="fancybox-thumb" title="Portfolio 3"><img
-                    src="${ctx}/static/images/portfolio-thumb/pf-alt-thumb3.jpg" alt="" class="pf-img"/></a>
-        </div>
-
-        <div class="pf-gall-nomargin"><!-- portfolio 4 -->
-            <a href="${ctx}/static/images/portfolio-big/pf-alt-big4.jpg" rel="fancybox-thumb" class="fancybox-thumb" title="Portfolio 4"><img
-                    src="${ctx}/static/images/portfolio-thumb/pf-alt-thumb4.jpg" alt="" class="pf-img"/></a>
-        </div>
-
-        <div class="pf-gall"><!-- portfolio 5 -->
-            <a href="${ctx}/static/images/portfolio-big/pf-alt-big5.jpg" rel="fancybox-thumb" class="fancybox-thumb" title="Portfolio 5"><img
-                    src="${ctx}/static/images/portfolio-thumb/pf-alt-thumb5.jpg" alt="" class="pf-img"/></a>
-        </div>
-
-        <div class="pf-gall"><!-- portfolio 6 -->
-            <a href="${ctx}/static/images/portfolio-big/pf-alt-big6.jpg" rel="fancybox-thumb" class="fancybox-thumb" title="Portfolio 6"><img
-                    src="${ctx}/static/images/portfolio-thumb/pf-alt-thumb6.jpg" alt="" class="pf-img"/></a>
-        </div>
-
-        <div class="pf-gall"><!-- portfolio 7 -->
-            <a href="${ctx}/static/images/portfolio-big/pf-alt-big7.jpg" rel="fancybox-thumb" class="fancybox-thumb" title="Portfolio 7"><img
-                    src="${ctx}/static/images/portfolio-thumb/pf-alt-thumb7.jpg" alt="" class="pf-img"/></a>
-        </div>
-
-        <div class="pf-gall-nomargin"><!-- portfolio 8 -->
-            <a href="${ctx}/static/images/portfolio-big/pf-alt-big8.jpg" rel="fancybox-thumb" class="fancybox-thumb" title="Portfolio 8"><img
-                    src="${ctx}/static/images/portfolio-thumb/pf-alt-thumb8.jpg" alt="" class="pf-img"/></a>
-        </div>
-        <div class="portfolio-pagination"><!-- navigation -->
-            <a href="#" class="portfolio-button-page">Prev</a>
-            <a href="#" class="portfolio-button-page">Next</a>
-        </div>
     </div>
+        <div class="blog-pagination"><!-- page pagination -->
+            Page&nbsp;:&nbsp;
+            <c:choose>
+                <c:when test="${total <= 44}">
+                    <c:forEach begin="1" end="${pageCount}" step="1" varStatus="var">
+                        <span class="blog-button-page pagination">${var.index}</span>&nbsp;
+                    </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    <c:forEach begin="1" end="5" step="1" varStatus="var">
+                        <span class="blog-button-page pagination">${var.index}</span>&nbsp;
+                    </c:forEach>
+                </c:otherwise>
+            </c:choose>
+        </div>
 </div>
 <!-- END OF CONTENT -->
+<script type="text/javascript">
+    $(function () {
+        var albums = $("#album_load");
+        var pager = $(".blog-pagination");
+        PageClick = function (pageIndex, total, spanInterval) {
+            //索引从1开始
+            //将当前页索引转为int类型
+            var intPageIndex = parseInt(pageIndex);
+            var limit = 12;//每页显示文章数量
+
+            $.ajax({
+                url:"${ctx}/gallery/photo/ajax?offset=" + (intPageIndex - 1) * limit + "&limit=" + limit,
+                timeout:3000,
+                success:function (data) {
+                    albums.html("");
+
+                    //加载文章
+                    $.each(data, function (index, content) {
+                        albums.append($("<div class='pf-gall'><!-- portfolio 1 -->" +
+                                "<a href='${ctx}/static/uploads/gallery/" + content.imageUrl + "' rel='fancybox-thumb'" +
+                                " class='fancybox-thumb' title='" + content.title + "'>" +
+                                "<img src='${ctx}/static/uploads/gallery/" + content.imageUrl + "' width='200' height='122'" +
+                                "alt='' class='pf-img'/></a></div>"));
+                    });
+
+                    $(".blog-pagination").html("Page&nbsp;:&nbsp;");
+
+                    //将总记录数结果 得到 总页码数
+                    var pageS = total;
+                    if (pageS % limit == 0) pageS = pageS / limit;
+                    else pageS = parseInt(total / limit) + 1;
+
+                    //设置分页的格式  这里可以根据需求完成自己想要的结果
+                    var interval = parseInt(spanInterval); //设置间隔
+                    var start = Math.max(1, intPageIndex - interval); //设置起始页
+                    var end = Math.min(intPageIndex + interval, pageS);//设置末页
+
+                    if (intPageIndex < interval + 1) {
+                        end = (2 * interval + 1) > pageS ? pageS : (2 * interval + 1);
+                    }
+
+                    if ((intPageIndex + interval) > pageS) {
+                        start = (pageS - 2 * interval) < 1 ? 1 : (pageS - 2 * interval);
+                    }
+
+                    //生成页码
+                    for (var j = start; j < end + 1; j++) {
+                        if (j == intPageIndex) {
+                            var spanSelectd = $("<span class='blog-button-page-selected pagination'>" + j + "</span>&nbsp;");
+                            pager.append(spanSelectd);
+                        } else {
+                            var a = $("<span class='blog-button-page pagination'>" + j + "</span>&nbsp;").click(function () {
+                                PageClick($(this).text(), total, spanInterval);
+                            });
+                            pager.append(a);
+                        } //else
+                    } //for
+                }
+            });
+        };
+        $(".pagination").click(function () {
+            PageClick($(this).text(), ${total}, 5);
+        });
+    });
+</script>
 </body>
 </html>

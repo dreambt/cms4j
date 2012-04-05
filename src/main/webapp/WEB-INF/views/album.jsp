@@ -68,16 +68,16 @@
     </div>
 
     <div class="blog-pagination"><!-- page pagination -->
-        Page&nbsp;:&nbsp;<span class="blog-button-page-selected pagination">1</span>
+        Page&nbsp;:&nbsp;
         <c:choose>
             <c:when test="${total <= 44}">
-                <c:forEach begin="1" end="${pageCount-1}" step="1" varStatus="var">
-                    <span class="blog-button-page pagination">${var.index+1}</span>
+                <c:forEach begin="1" end="${pageCount}" step="1" varStatus="var">
+                    <span class="blog-button-page pagination">${var.index}</span>&nbsp;
                 </c:forEach>
             </c:when>
             <c:otherwise>
-                <c:forEach begin="1" end="4" step="1" varStatus="var">
-                    <span class="blog-button-page pagination">${var.index+1}</span>
+                <c:forEach begin="1" end="5" step="1" varStatus="var">
+                    <span class="blog-button-page pagination">${var.index}</span>&nbsp;
                 </c:forEach>
             </c:otherwise>
         </c:choose>
@@ -111,6 +111,9 @@
                                 "<p>" + content.description + "</p>" +
                                 "</div>" +
                                 "</div>"));
+                        if (index%2 == 0) {
+                            albums.append($("<div class='spacer-pf'>&nbsp;</div>"));
+                        }
                     });
 
                     $(".blog-pagination").html("Page&nbsp;:&nbsp;");

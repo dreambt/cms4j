@@ -39,10 +39,18 @@
     </div>
     <div class="blog-pagination"><!-- page pagination -->
         Page&nbsp;:&nbsp;
-        <span class="blog-button-page-selected pagination">1</span>
-        <span class="blog-button-page pagination">2</span>
-        <span class="blog-button-page pagination">3</span>
-        <span class="blog-button-page pagination">4</span>
+        <c:choose>
+            <c:when test="${total <= 110}">
+                <c:forEach begin="1" end="${pageCount}" step="1" varStatus="var">
+                    <span class="blog-button-page pagination">${var.index}</span>&nbsp;
+                </c:forEach>
+            </c:when>
+            <c:otherwise>
+                <c:forEach begin="1" end="5" step="1" varStatus="var">
+                    <span class="blog-button-page pagination">${var.index}</span>&nbsp;
+                </c:forEach>
+            </c:otherwise>
+        </c:choose>
     </div>
 </div>
 <!--sidebox-->

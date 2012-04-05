@@ -26,7 +26,7 @@
 <!-- END OF PAGE TITLE -->
 <div id="content-inner">
 <div id="content-left">
-    <div class="maincontent" id="article_load">
+    <div id="article_load">
         <c:forEach items="${articles}" var="article" begin="0" step="1" varStatus="stat">
         <div class="blog-post digest">
             <img src="${ctx}/static/images/blog-pic1.jpg" alt="" class="imgleft"/>
@@ -40,10 +40,21 @@
     </div>
     <div class="blog-pagination"><!-- page pagination -->
         Page&nbsp;:&nbsp;
-        <span class="blog-button-page-selected pagination">1</span>
-
+        <c:choose>
+            <c:when test="${total <= 110}">
+                <c:forEach begin="1" end="${pageCount}" step="1" varStatus="var">
+                    <span class="blog-button-page pagination">${var.index}</span>&nbsp;
+                </c:forEach>
+            </c:when>
+            <c:otherwise>
+                <c:forEach begin="1" end="5" step="1" varStatus="var">
+                    <span class="blog-button-page pagination">${var.index}</span>&nbsp;
+                </c:forEach>
+            </c:otherwise>
+        </c:choose>
     </div>
 </div>
+
 <!--sidebox-->
 <%@include file="/WEB-INF/layouts/sidebar.jsp" %>
 </div>
