@@ -136,6 +136,7 @@ public class ImageManager {
     public Image update(MultipartFile file, HttpServletRequest request, Image image) {
         // TODO 删除原有图片
         // this.deletePic(image.getImageUrl());
+
         //实现上传
         if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
             String fileName = this.upload(file, request);
