@@ -148,3 +148,6 @@ ul#documentA li{margin: 10px;}
     float: left;
 
 }
+p.albumDesc{
+    width:405px;
+}
