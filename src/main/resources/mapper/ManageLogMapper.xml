@@ -43,8 +43,8 @@
     <!-- 插入管理日志： 1.由数据库生成id并赋值到user对象 2.输入用对象, 嵌套属性表达式#{department.id} -->
     <insert id="saveManageLog" parameterType="ManageLog" useGeneratedKeys="true" keyProperty="id">
 		insert into cms_manage_log (
-		uid, username, action, managetime, createtime, modifytime)
-		values (#{uid}, #{username}, #{action}, #{manageTime}, #{createtime}, #{modifytime})
+		uid, username, action, managetime, createddate, lastmodifieddate)
+		values (#{uid}, #{username}, #{action}, #{manageTime}, #{createddate}, #{lastmodifieddate})
 	</insert>
 
     <!-- 删除管理日志 -->

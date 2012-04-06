@@ -29,7 +29,7 @@
          获取文章正文
      -->
     <select id="getArticle" parameterType="int" resultType="Article">
-        select id,subject,message,digest,keyword,author,category_name as categoryname,rate,rate_times as ratetimes,top,status,allow_comment as allowcomment,views,cms_article.create_time as createtime,cms_article.modify_time as modifytime
+        select id,subject,message,digest,keyword,author,category_name as categoryname,rate,rate_times as ratetimes,top,status,allow_comment as allowcomment,views,cms_article.created_date as createddate,cms_article.last_modified_date as lastmodifieddate
         from cms_article
         where id=#{id}
         limit 1
@@ -39,7 +39,7 @@
          获取所有文章where deleted=0
      -->
     <select id="getAllArticle" parameterType="map" resultType="Article">
-        select id,subject,author,category_name as categoryname,rate,rate_times as ratetimes,views,top,allow_comment as allowcomment,status,deleted,cms_article.create_time as createtime,cms_article.modify_time as modifytime
+        select id,subject,author,category_name as categoryname,rate,rate_times as ratetimes,views,top,allow_comment as allowcomment,status,deleted,cms_article.created_date as createddate,cms_article.last_modified_date as lastmodifieddate
         from cms_article
         order by ${Sort} ${Direction}
 	</select>
@@ -48,20 +48,20 @@
         获取本月的所有文章
     -->
     <select id="getMonthArticle" parameterType="Date" resultType="Article">
-        select id,subject,author,category_name as categoryname,rate,rate_times as ratetimes,views,top,status,deleted,cms_article.create_time as createtime,cms_article.modify_time as modifytime
+        select id,subject,author,category_name as categoryname,rate,rate_times as ratetimes,views,top,status,deleted,cms_article.created_date as createddate,cms_article.last_modified_date as lastmodifieddate
         from cms_article
-        where deleted=0 and year(create_time)=year(#{create_time}) and month(create_time)=month(#{create_time})
-        order by create_time desc
+        where deleted=0 and year(created_date)=year(#{created_date}) and month(created_date)=month(#{created_date})
+        order by id desc
 	</select>
 
     <!--
         获取top 10 文章
     -->
     <select id="getTopTenArticle" resultType="Article">
-        select id,subject,author,category_name as categoryname,rate,rate_times as ratetimes,views,top,status,deleted,cms_article.create_time as createtime,cms_article.modify_time as modifytime
+        select id,subject,author,category_name as categoryname,rate,rate_times as ratetimes,views,top,status,deleted,cms_article.created_date as createddate,cms_article.last_modified_date as lastmodifieddate
         from cms_article
         where deleted=0
-        order by create_time desc
+        order by id desc
         limit 0,10
     </select>
 
@@ -69,7 +69,7 @@
          通过分类id获取文章
      -->
     <select id="getArticleListByCategoryId" parameterType="int" resultType="Article">
-        select id,subject,author,category_name as categoryname,rate,rate_times as ratetimes,top,status,allow_comment as allowcomment,views,create_time as createtime,modify_time as modifytime
+        select id,subject,author,category_name as categoryname,rate,rate_times as ratetimes,top,status,allow_comment as allowcomment,views,created_date as createddate,last_modified_date as lastmodifieddate
         from cms_article
         where id in (select article_id from cms_category_article where category_id=#{categoryId}) and status=1 and deleted=0
         order by top desc
@@ -79,7 +79,7 @@
          通过分类id获取文章
      -->
     <select id="getArticleDigestByCategoryId" parameterType="int" resultType="Article">
-        select id,subject,digest,author,category_name as categoryname,rate,rate_times as ratetimes,views,create_time as createtime,modify_time as modifytime,top,status
+        select id,subject,digest,author,category_name as categoryname,rate,rate_times as ratetimes,views,created_date as createddate,last_modified_date as lastmodifieddate,top,status
         from cms_article
         where id in (select article_id from cms_category_article where category_id=#{categoryId}) and status=1 and deleted=0
         order by top desc
@@ -89,7 +89,7 @@
          查询文章
      -->
     <select id="searchArticle" parameterType="map" resultType="Article">
-        select id,subject,message,digest,author,category_name as categoryname,rate,rate_times as ratetimes,views,create_time as createtime,modify_time as modifytime,top,status
+        select id,subject,message,digest,author,category_name as categoryname,rate,rate_times as ratetimes,views,created_date as createddate,last_modified_date as lastmodifieddate,top,status
         from cms_article
         <where>
             <if test="author != null">
@@ -117,7 +117,7 @@
         update cms_article
         set author=#{author},category_name=#{categoryName},subject=#{subject},message=#{message},digest=#{digest},
         keyword=#{keyword},top=#{top},status=#{status},rate=#{rate},rate_times=#{rateTimes},deleted=#{deleted},
-        allow_comment=#{allowComment},modify_time = now()
+        allow_comment=#{allowComment},last_modified_date = now()
         where id = #{id}
 	</update>
 

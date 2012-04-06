@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -96,9 +95,7 @@ public class CommentManager {
     public Comment save(Comment comment) {
         comment.setStatus(false);
         comment.setDeleted(false);
-        comment.setCreateTime(new Date());
-        comment.setModifyTime(new Date());
-        return commentJpaDao.save(comment);
+        return this.update(comment);
     }
 
     /**
@@ -109,7 +106,7 @@ public class CommentManager {
      */
     @Transactional(readOnly = false)
     public Comment update(Comment comment) {
-        comment.setModifyTime(new Date());
+        comment.setLastModifiedDate(null);
         return commentJpaDao.save(comment);
     }
 

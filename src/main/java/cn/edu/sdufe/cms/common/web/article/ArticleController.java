@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,7 +36,7 @@ public class ArticleController {
     private CategoryManager categoryManager;
 
     private UserManager userManager;
-    
+
     private ArchiveManager archiveManager;
 
     /**
@@ -50,7 +49,7 @@ public class ArticleController {
     public String contextOfArticle(@PathVariable("id") Long id, Model model) {
         model.addAttribute("article", articleManager.getForView(id));
         model.addAttribute("categories", categoryManager.getNavCategory());
-        model.addAttribute("archives", archiveManager.getTopTenArchive());
+        model.addAttribute("archives", archiveManager.getTopTen());
         model.addAttribute("newArticles", articleManager.getTopTen());
         return "article/content";
     }
@@ -99,8 +98,8 @@ public class ArticleController {
         model.addAttribute("articles", articleManager.getListByCategoryId(id, 0, limit));
         model.addAttribute("category", categoryManager.get(id));
         model.addAttribute("categories", categoryManager.getNavCategory());
-        model.addAttribute("archives",archiveManager.getTopTenArchive());
-        model.addAttribute("newArticles",articleManager.getTopTen());
+        model.addAttribute("archives", archiveManager.getTopTen());
+        model.addAttribute("newArticles", articleManager.getTopTen());
         model.addAttribute("total", articleManager.count(id));
         model.addAttribute("pageCount", pageCount);
         return "article/list";
@@ -137,7 +136,7 @@ public class ArticleController {
         model.addAttribute("articles", articleManager.getDigestByCategoryId(id, 0, 10));
         model.addAttribute("category", categoryManager.get(id));
         model.addAttribute("categories", categoryManager.getNavCategory());
-        model.addAttribute("archives", archiveManager.getTopTenArchive());
+        model.addAttribute("archives", archiveManager.getTopTen());
         model.addAttribute("newArticles", articleManager.getTopTen());
         model.addAttribute("total", articleManager.count(id));
         model.addAttribute("pageCount", pageCount);
@@ -191,8 +190,6 @@ public class ArticleController {
         // 文章作者
         User user = userManager.get(shiroUser.getId());
         article.setUser(user);
-
-        article.setCreateTime(new Date());
 
         // 保存
         if (null == articleManager.save(article)) {

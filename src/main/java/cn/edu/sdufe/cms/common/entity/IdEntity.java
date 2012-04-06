@@ -19,7 +19,7 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public abstract class IdEntity {
 
-    protected Long id;
+    private Long id;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,5 +29,36 @@ public abstract class IdEntity {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Entity of type %s with id: %s", this.getClass().getName(), getId());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (null == obj) {
+            return false;
+        }
+
+        if (this == obj) {
+            return true;
+        }
+
+        if (!getClass().equals(obj.getClass())) {
+            return false;
+        }
+
+        IdEntity that = (IdEntity) obj;
+
+        return null == this.getId() ? false : this.getId().equals(that.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        int hashCode = 17;
+        hashCode += null == getId() ? 0 : getId().hashCode() * 31;
+        return hashCode;
     }
 }

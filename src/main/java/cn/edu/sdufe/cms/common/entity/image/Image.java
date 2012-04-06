@@ -1,13 +1,12 @@
 package cn.edu.sdufe.cms.common.entity.image;
 
-import cn.edu.sdufe.cms.common.entity.IdEntity;
+import cn.edu.sdufe.cms.common.entity.PersistableEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.Date;
 
 /**
  * 图片功能
@@ -18,7 +17,7 @@ import java.util.Date;
 @Entity
 @Table(name = "cms_image")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Image extends IdEntity {
+public class Image extends PersistableEntity {
 
     private String title;
 
@@ -27,10 +26,6 @@ public class Image extends IdEntity {
     private String description;
 
     private boolean deleted;
-
-    private Date createTime;
-
-    private Date modifyTime;
 
     public String getTitle() {
         return title;
@@ -62,22 +57,6 @@ public class Image extends IdEntity {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getModifyTime() {
-        return modifyTime;
-    }
-
-    public void setModifyTime(Date modifyTime) {
-        this.modifyTime = modifyTime;
     }
 
     @Override

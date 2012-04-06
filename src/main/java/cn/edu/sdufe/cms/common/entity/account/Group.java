@@ -35,7 +35,7 @@ public class Group extends IdEntity {
     }
 
     public Group(Long id, String groupName) {
-        this.id = id;
+        super.setId(id);
         this.groupName = groupName;
     }
 

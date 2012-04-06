@@ -42,8 +42,7 @@
                 <h2>${article.subject}</h2>
 
                 <div class="blog-posted-inner">
-                    作者: ${article.author} &nbsp; | &nbsp; 发表时间: <fmt:formatDate value="${article.createTime}"
-                                                                                pattern="yyyy-MM-dd"/> &nbsp; | &nbsp;
+                    作者: ${article.author} &nbsp; | &nbsp; 发表时间: <fmt:formatDate value="${article.createdDate}" pattern="yyyy-MM-dd"/> &nbsp; | &nbsp;
                     浏览次数: ${article.views} &nbsp; | &nbsp; 评论数: ${fn:length(article.commentList)}
                 </div>
                 ${article.message}
@@ -72,8 +71,7 @@
                         <c:forEach items="${article.commentList}" var="comment" begin="0" step="1" varStatus="stat">
                             <c:if test="${comment.status&&!comment.deleted}">
                                 <div class="commentList-item-wrapper">
-                                    <h4><a href="#">${comment.username}</a> 于 <fmt:formatDate
-                                            value="${comment.createTime}" pattern="yyyy-MM-dd"/> 发表评论：</h4>
+                                    <h4><a href="#">${comment.username}</a> 于 <fmt:formatDate value="${comment.createdDate}" pattern="yyyy-MM-dd"/> 发表评论：</h4>
                                         ${comment.message}
                                 </div>
                             </c:if>

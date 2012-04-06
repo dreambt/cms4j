@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -97,8 +96,7 @@ public class CategoryManager {
     @Transactional(readOnly = false)
     public Category save(Category category) {
         category.setDeleted(false);
-        category.setCreateTime(new Date());
-        categoryJpaDao.save(category);
+        this.update(category);
         return category;
     }
 
@@ -110,6 +108,7 @@ public class CategoryManager {
      */
     @Transactional(readOnly = false)
     public Category update(Category category) {
+        category.setLastModifiedDate(null);
         return categoryJpaDao.save(category);
     }
 

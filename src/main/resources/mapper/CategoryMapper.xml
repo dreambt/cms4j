@@ -13,8 +13,8 @@
         <result property="description" column="description"/>
         <result property="allowComment" column="allow_comment"/>
         <result property="allowPublish" column="allow_publish"/>
-        <result property="modifyTime" column="modify_time"/>
-        <result property="createTime" column="create_time"/>
+        <result property="lastmodifieddate" column="last_modified_date"/>
+        <result property="createddate" column="created_date"/>
         <result property="deleted" column="deleted"/>
         <collection property="subCategories" javaType="Category"/>
         <collection property="articleList" javaType="Article"/>
@@ -25,7 +25,7 @@
      -->
     <select id="getCategory" parameterType="int" resultType="Category">
         select id,father_category_id as fathercategoryid,category_name categoryname,allow_comment as allowcomment,display_order as displayorder,
-          url,deleted,description,allow_publish as allowpublish,show_type as showtype,create_time as createtime,modify_time as modifytime
+          url,deleted,description,allow_publish as allowpublish,show_type as showtype,created_date as createddate,last_modified_date as lastmodifieddate
         from cms_category
         where id=#{id} and deleted=0
         order by id ASC
@@ -97,10 +97,10 @@
     <insert id="saveCategory" parameterType="Category" useGeneratedKeys="true" keyProperty="id">
 		insert into cms_category (
 		father_category_id, category_name, allow_comment, display_order,
-		 url, deleted, description, keyword, allow_publish, show_type, create_time)
+		 url, deleted, description, keyword, allow_publish, show_type, created_date)
 		values (#{fatherCategoryId}, #{categoryName}, #{allowComment}, #{displayOrder},
 		 #{url}, #{deleted}, #{description},
-		 #{keyWord}, #{allowPublish}, #{showType}, #{createTime})
+		 #{keyWord}, #{allowPublish}, #{showType}, #{createddate})
 	</insert>
 
     <!-- 删除分类 -->

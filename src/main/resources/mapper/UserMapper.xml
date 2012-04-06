@@ -17,7 +17,7 @@
     <select id="getUser" parameterType="long" resultType="User">
         select id,email,username,password,salt,status,email_status as emailstatus,avatar_status as avatarstatus,deleted,photourl,
         time_offset as timeoffset,lastip,last_time as lasttime,last_act_time as lastacttime,
-        create_time as createtime,modify_time as modifytime
+        created_date as createddate,last_modified_date as lastmodifieddate
         from cms_user
         where id=#{id}
     </select>
@@ -28,7 +28,7 @@
     <select id="getAllUser" resultType="User">
         select id,email,username,status,email_status as emailstatus,avatar_status as avatarstatus,deleted,photourl,
         time_offset as timeoffset,lastip,last_time as lasttime,last_act_time as lastacttime,
-        create_time as createtime,modify_time as modifytime
+        created_date as createddate,last_modified_date as lastmodifieddate
         from cms_user
     </select>
 

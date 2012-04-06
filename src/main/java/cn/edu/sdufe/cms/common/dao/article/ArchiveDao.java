@@ -3,7 +3,7 @@ package cn.edu.sdufe.cms.common.dao.article;
 
 import cn.edu.sdufe.cms.common.entity.article.Archive;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * Date: 12-4-1
  * Time: 下午6:53
  */
-@Repository
+@Component
 public class ArchiveDao extends SqlSessionDaoSupport {
 
     /**
@@ -23,6 +23,6 @@ public class ArchiveDao extends SqlSessionDaoSupport {
      * @return
      */
     public List<Archive> getTopTen() {
-        return getSqlSession().selectList("CMS.getTopTen");
+        return getSqlSession().selectList("Archive.getTopTen");
     }
 }

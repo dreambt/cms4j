@@ -61,7 +61,7 @@
                                 src="${ctx}/static/jquery-validation/1.9.0/images/unchecked.gif"/></c:otherwise></c:choose>
                         </td>
                         <td><c:forEach items="${user.groupList}" begin="0" step="1" var="group">${group.groupName} </c:forEach></td>
-                        <td><fmt:formatDate value="${user.createTime}" type="both"/></td>
+                        <td><fmt:formatDate value="${user.createdDate}" type="both"/></td>
                         <td><fmt:formatDate value="${user.lastTime}" type="both"/></td>
                         <td>${user.lastLoginIP}</td>
                         <td><a href="${ctx}/account/user/audit/${user.id}"><c:choose><c:when test="${user.status}">【已审核】</c:when><c:otherwise>【未审核】</c:otherwise></c:choose></a></td>

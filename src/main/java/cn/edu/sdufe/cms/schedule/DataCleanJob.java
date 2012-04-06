@@ -1,6 +1,7 @@
 package cn.edu.sdufe.cms.schedule;
 
 import cn.edu.sdufe.cms.common.service.account.UserManager;
+import cn.edu.sdufe.cms.common.service.article.ArchiveManager;
 import cn.edu.sdufe.cms.common.service.article.ArticleManager;
 import cn.edu.sdufe.cms.common.service.article.CommentManager;
 import cn.edu.sdufe.cms.common.service.image.ImageManager;
@@ -28,6 +29,9 @@ public class DataCleanJob {
     private CommentManager commentManager;
 
     @Autowired
+    private ArchiveManager archiveManager;
+
+    @Autowired
     private ImageManager imageManager;
 
     /**
@@ -39,10 +43,13 @@ public class DataCleanJob {
         logger.info("######### There are {} user in database. #########", userCount);
 
         // 删除标记为deleted的记录
-        logger.info("######### There are {} article was deleted. #########", articleManager.delete());
-        logger.info("######### There are {} comment was deleted. #########", commentManager.delete());
-        //logger.info("######### There are {} archive was deleted.", count);
-        logger.info("######### There are {} image was deleted. #########", imageManager.delete());
+        //logger.info("######### There are {} article was deleted. #########", articleManager.delete());
+        //logger.info("######### There are {} comment was deleted. #########", commentManager.delete());
+        //logger.info("######### There are {} image was deleted. #########", imageManager.delete());
+
+        // 归档
+        archiveManager.getAll();
+        logger.info("######### Archive was ready. #########");
 
         // 生成文章关键词
         //count = articleManager.genKeyword();

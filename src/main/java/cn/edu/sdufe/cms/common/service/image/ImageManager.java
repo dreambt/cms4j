@@ -61,7 +61,7 @@ public class ImageManager {
      * @return
      */
     public List<Image> getAllImage() {
-        return (List<Image>) imageJpaDao.findAll(new Sort(Sort.Direction.DESC, "createTime"));
+        return (List<Image>) imageJpaDao.findAll(new Sort(Sort.Direction.DESC, "id"));
     }
 
     /**
@@ -89,8 +89,7 @@ public class ImageManager {
             image.setImageUrl("");
         }
         image.setDeleted(false);
-        image.setCreateTime(new Date());
-        image.setModifyTime(new Date());
+        image.setLastModifiedDate(null);
         return imageJpaDao.save(image);
     }
 
@@ -108,7 +107,7 @@ public class ImageManager {
         String path = multipartRequest.getSession().getServletContext().getRealPath("static/uploads/gallery");
         //原文件名
         String imageName = file.getOriginalFilename();
-        String ext = imageName.substring(imageName.lastIndexOf("."),imageName.length());
+        String ext = imageName.substring(imageName.lastIndexOf("."), imageName.length());
         //服务器上的文件名
         String fileName = new Date().getTime() + RandomString.get(6) + ext;
         File targetFile = new File(path, fileName);
@@ -142,7 +141,7 @@ public class ImageManager {
             String fileName = this.upload(file, request);
             image.setImageUrl(fileName);
         }
-        image.setModifyTime(new Date());
+        image.setLastModifiedDate(null);
         return imageJpaDao.save(image);
     }
 
@@ -154,7 +153,6 @@ public class ImageManager {
      */
     @Transactional(readOnly = false)
     public Image update(Image image) {
-        image.setModifyTime(new Date());
         return imageJpaDao.save(image);
     }
 
@@ -201,7 +199,7 @@ public class ImageManager {
      */
     @Transactional(readOnly = false)
     public int delete() {
-         List<Image> list = imageJpaDao.findByDeleted(true);
+        List<Image> list = imageJpaDao.findByDeleted(true);
         int count = list.size();
         while (list.size() > 0) {
             try {

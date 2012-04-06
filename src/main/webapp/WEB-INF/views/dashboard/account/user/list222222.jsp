@@ -48,10 +48,10 @@
                 <li><label for="email" class="field">邮  箱: </label><input id="email" name="email" value="${user.email}" class="input_info"> <img id="emailstatus" src="${ctx}/static/images/clear.gif" /></li>
                 <li><label for="username" class="field">用户名: </label><input id="username" name="username" value="${user.username}" class="input_info"></li>
                 <li><label class="field">用户组: </label><form:checkboxes path="groupList" items="${allGroups}" itemLabel="groupName" itemValue="id" /></li>
-                <li><label class="field">用户注册时间: </label><span id="regtime"><fmt:formatDate value="${user.createTime}" type="both"/></span></li>
+                <li><label class="field">用户注册时间: </label><span id="regtime"><fmt:formatDate value="${user.createdDate}" type="both"/></span></li>
                 <li><label class="field">最后登录时间: </label><span id="lasttime">${user.lastActTime}</span></li>
                 <li><label class="field">最后登录 IP : </label><span id="lastip">${user.lastLoginIP}</span></li>
-                <li><label class="field">最后修改时间: </label><span id="lastmodefied">${user.modifyTime}</span></li>
+                <li><label class="field">最后修改时间: </label><span id="lastmodefied">${user.lastModifiedDate}</span></li>
                 <li>
                     <button type="submit" id="create"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/User2.png"><span>创建用户</span></button>
                     <button type="submit" id="modify"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/Listw_Image.png"><span>保存</span></button>
@@ -99,10 +99,10 @@
                     $('#email').attr("value", data.email);
                     $('#username').attr("value", data.username);
                     $('#regip').text(data.registerIP);
-                    $('#regtime').text(ChangeDateFormat(data.createTime));
+                    $('#regtime').text(ChangeDateFormat(data.createdDate));
                     $('#lastip').text(data.lastLoginIP);
                     $('#lasttime').text(ChangeDateFormat(data.lastTime));
-                    $('#lastmodefied').text(ChangeDateFormat(data.modifyTime));
+                    $('#lastmodefied').text(ChangeDateFormat(data.lastModifiedDate));
 
                     if(data.emailStatus)
                         $('#emailstatus').attr("src","${ctx}/static/jquery-validation/1.9.0/images/checked.gif");

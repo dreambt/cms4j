@@ -1,6 +1,6 @@
 package cn.edu.sdufe.cms.common.entity.article;
 
-import cn.edu.sdufe.cms.common.entity.IdEntity;
+import cn.edu.sdufe.cms.common.entity.PersistableEntity;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.Cache;
@@ -9,11 +9,11 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 
 /**
  * 归类功能
+ * <p/>
  * User: pengfei.dongpf@gmail.com
  * Date: 12-3-31
  * Time: 下午3:59
@@ -21,15 +21,11 @@ import java.util.List;
 @Entity
 @Table(name = "cms_archive")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Archive extends IdEntity {
+public class Archive extends PersistableEntity {
 
     private String title;
 
     private int articleCount;
-
-    private Date createTime;
-
-    private Date modifyTime;
 
     private List<Article> articleList = Lists.newArrayList();
 
@@ -49,26 +45,10 @@ public class Archive extends IdEntity {
         this.articleCount = articleCount;
     }
 
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getModifyTime() {
-        return modifyTime;
-    }
-
-    public void setModifyTime(Date modifyTime) {
-        this.modifyTime = modifyTime;
-    }
-
     @OneToMany(orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinTable(name = "cms_archive_article", joinColumns = @JoinColumn(name = "archive_id"), inverseJoinColumns = @JoinColumn(name = "article_id"))
     @Fetch(FetchMode.SUBSELECT)
-    @OrderBy(value = "createTime ASC")
+    @OrderBy(value = "id DESC")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     public List<Article> getArticleList() {
         return articleList;

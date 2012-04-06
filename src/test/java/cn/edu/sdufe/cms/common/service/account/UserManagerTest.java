@@ -11,8 +11,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springside.modules.test.support.ShiroTestHelper;
 
-import java.util.Date;
-
 import static org.junit.Assert.fail;
 
 /**
@@ -51,11 +49,9 @@ public class UserManagerTest {
     public void testSaveUser() throws Exception {
         User admin = new User();
         admin.setId(1L);
-        admin.setModifyTime(new Date());
 
         User user = new User();
         user.setId(2L);
-        user.setModifyTime(new Date());
 
         //正常保存用户
         userManager.save(user);

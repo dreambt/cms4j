@@ -192,7 +192,7 @@ public class ArticleManager {
             Validate.notNull(article, "文章参数为空");
             BeanValidators.validateWithException(validator, article);
 
-            return articleJpaDao.save(article);
+            return this.update(article);
         } catch (ConstraintViolationException cve) {
             logger.warn("操作员{}尝试发表文章, 缺少相关字段.", cve.getConstraintViolations().toString());
             return null;
@@ -270,6 +270,7 @@ public class ArticleManager {
      */
     @Transactional(readOnly = false)
     public Article update(Article article) {
+        article.setLastModifiedDate(null);
         return articleJpaDao.save(article);
     }
 

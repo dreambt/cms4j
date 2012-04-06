@@ -5,6 +5,7 @@ import cn.edu.sdufe.cms.common.dao.article.ArchiveJpaDao;
 import cn.edu.sdufe.cms.common.dao.article.ArticleDao;
 import cn.edu.sdufe.cms.common.entity.article.Archive;
 import cn.edu.sdufe.cms.common.entity.article.Article;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**
  * 归类业务逻辑层
- *
+ * <p/>
  * User: pengfei.dongpf@gmail.com
  * Date: 12-3-31
  * Time: 下午4:46
@@ -36,109 +35,94 @@ public class ArchiveManager {
     private ArticleDao articleDao;
 
     /**
-     * 获得所有归档信息
+     * 获得所有归档
      *
      * @return
      */
-    public List<Archive> getAllArchive(){
-        return (List<Archive>)archiveJpaDao.findAll();
+    public List<Archive> getAll() {
+        return (List<Archive>) archiveJpaDao.findAll();
     }
 
     /**
-     * 获得最新10条的归类信息
+     * 获得最新10条的归类
      *
      * @return
      */
-    public List<Archive> getTopTenArchive() {
+    public List<Archive> getTopTen() {
         return archiveDao.getTopTen();
     }
 
     /**
-     * 获取标题为title的归类信息
+     * 获取标题为title的归类
      *
      * @param title
      * @return
      */
-    public Archive getArchiveByTitle(String title) {
+    public Archive getByTitle(String title) {
         return archiveJpaDao.findByTitle(title);
     }
 
     /**
-     * 获取编号为id的归类信息
+     * 获取编号为id的归类
      *
      * @param id
      * @return
      */
-    public Archive getArchiveByArchiveId(Long id) {
+    public Archive getByArchiveId(Long id) {
         return archiveJpaDao.findOne(id);
     }
 
     /**
-     * 添加指定月份的归类记录
+     * 更新最近12个月份的归类
      */
     @Transactional(readOnly = false)
-    public void addArchive(Date archiveMonth) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(archiveMonth);
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH) + 1;
-        //获得指定月份的所有文章
-        List<Article> articles = articleDao.getMonthArticle(archiveMonth);
-        if(articles.size()<=0) {
-            return;
-        } else {
-            Archive archive = new Archive();
-            archive.setTitle(year + "年" + month + "月");
-            archive.setArticleCount(articles.size());
-            archive.setCreateTime(new Date());
-            archive.setModifyTime(new Date());
-            archive.setArticleList(articles);
-            archiveJpaDao.save(archive);
+    public void update() {
+        DateTime dateTime = new DateTime();
+        int count = 12;
+        while (count-- >= 0) {
+            this.save(dateTime);
+            dateTime.plusMonths(-1);
         }
     }
 
     /**
-     * 更新指定月份的归类信息
+     * 保存指定月份的归类
      *
-     * @param archiveMonth
+     * @param dateTime
      */
     @Transactional(readOnly = false)
-    public void updateArchive(Date archiveMonth){
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(archiveMonth);
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH)+1;
-        String title = String.valueOf(year).trim() + "年" + String.valueOf(month).trim() + "月";
-        Archive archive = this.getArchiveByTitle(title);
+    public void save(DateTime dateTime) {
+        int year = dateTime.getYear();
+        int month = dateTime.getMonthOfYear();
+        Archive archive = this.getByTitle(String.format("%04d年%02d月", year, month));
+
         //获得指定月份的所有文章
-        List<Article> articles = articleDao.getMonthArticle(archiveMonth);
-        if(articles.size()<=0) {
-            deleteArchive(archive.getId());
-        } else {
+        List<Article> articles = articleDao.getByMonth(dateTime.toDate());
+        if (articles.size() > 0 && articles.size() != archive.getArticleCount()) {
             archive.setArticleCount(articles.size());
-            archive.setModifyTime(new Date());
             archive.setArticleList(articles);
+            archive.setLastModifiedDate(null);
             archiveJpaDao.save(archive);
         }
     }
 
     /**
-     * 删除编号为id的归类记录
+     * 删除编号为id的归类
      *
      * @param id
      */
     @Transactional(readOnly = false)
-    public void deleteArchive(Long id) {
+    public void delete(Long id) {
         archiveJpaDao.delete(id);
     }
 
     @Autowired
-    public void setArchiveJpaDao(ArchiveJpaDao archiveJpaDao) {
+    public void setArchiveJpaDao(@Qualifier("archiveJpaDao") ArchiveJpaDao archiveJpaDao) {
         this.archiveJpaDao = archiveJpaDao;
     }
 
     @Autowired(required = false)
-    public void setArchiveDao(ArchiveDao archiveDao) {
+    public void setArchiveDao(@Qualifier("archiveDao") ArchiveDao archiveDao) {
         this.archiveDao = archiveDao;
     }
 

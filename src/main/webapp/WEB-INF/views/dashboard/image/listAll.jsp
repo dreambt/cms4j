@@ -70,7 +70,7 @@
                     <td>${image.title}</td>
                     <td><a href="${ctx}/static/uploads/gallery/${image.imageUrl}" class="opener" value="${image.description}">点击查看</a> </td>
                     <td>${image.imageUrl}</td>
-                    <td><fmt:formatDate value="${image.createTime}" type="both"></fmt:formatDate></td>
+                    <td><fmt:formatDate value="${image.createdDate}" type="both"></fmt:formatDate></td>
                     <td><a href="${ctx}/gallery/edit/${image.id}">【编辑】</a>
                         <c:choose><c:when test="${image.deleted}"><a href="${ctx}/gallery/delete/${image.id}">【恢复】</a></c:when>
                             <c:otherwise><a href="${ctx}/gallery/delete/${image.id}" id="delete">【删除】</a></c:otherwise></c:choose></td>

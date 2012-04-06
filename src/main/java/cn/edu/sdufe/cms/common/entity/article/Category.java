@@ -1,6 +1,6 @@
 package cn.edu.sdufe.cms.common.entity.article;
 
-import cn.edu.sdufe.cms.common.entity.IdEntity;
+import cn.edu.sdufe.cms.common.entity.PersistableEntity;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -11,7 +11,6 @@ import org.hibernate.annotations.FetchMode;
 import org.springside.modules.utils.Collections3;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,7 +23,7 @@ import java.util.List;
 @Entity
 @Table(name = "cms_category")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Category extends IdEntity {
+public class Category extends PersistableEntity {
 
     private Long fatherCategoryId;
 
@@ -47,10 +46,6 @@ public class Category extends IdEntity {
     private boolean allowPublish;
 
     private String showType;
-
-    private Date createTime;
-
-    private Date modifyTime;
 
     @Column(name = "father_category_id")
     public Long getFatherCategoryId() {
@@ -85,7 +80,7 @@ public class Category extends IdEntity {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "cms_category_article", joinColumns = @JoinColumn(name = "category_id"), inverseJoinColumns = @JoinColumn(name = "article_id"))
     @Fetch(FetchMode.SUBSELECT)
-    @OrderBy(value = "createTime DESC")
+    @OrderBy(value = "id DESC")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     public List<Article> getArticleList() {
         return articleList;
@@ -150,31 +145,6 @@ public class Category extends IdEntity {
 
     public void setShowType(ShowTypeEnum showType) {
         this.showType = showType.getValue();
-    }
-
-    /**
-     * 防止外部通过getter引用修改属性
-     *
-     * @return
-     */
-    public Date getCreateTime() {
-        if (null != this.createTime) {
-            return new Date(this.createTime.getTime());
-        } else {
-            return null;
-        }
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getModifyTime() {
-        return modifyTime;
-    }
-
-    public void setModifyTime(Date modifyTime) {
-        this.modifyTime = modifyTime;
     }
 
     @Transient

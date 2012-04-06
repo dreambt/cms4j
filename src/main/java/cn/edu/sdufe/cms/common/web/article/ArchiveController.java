@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * 归类功能
+ * <p/>
  * User: pengfei.dongpf@gmail.com
  * Date: 12-4-2
  * Time: 上午11:43
@@ -27,26 +28,32 @@ public class ArchiveController {
     private ArticleManager articleManager;
 
     /**
-     * 显示所有归类信息
+     * 显示所有归类
      *
      * @param model
      * @return
      */
     @RequestMapping(value = "list")
     public String articleListOfArchive(Model model) {
-        model.addAttribute("archives", archiveManager.getAllArchive());
+        model.addAttribute("archives", archiveManager.getAll());
         model.addAttribute("categories", categoryManager.getNavCategory());
-        model.addAttribute("newArticles",articleManager.getTopTen());
+        model.addAttribute("newArticles", articleManager.getTopTen());
         return "article/archives";
     }
 
+    /**
+     * 显示编号为id的归类
+     *
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "list/{id}")
     public String articleListByArchiveId(Model model, @PathVariable("id") Long id) {
-        model.addAttribute("archives", archiveManager.getAllArchive());
-        model.addAttribute("archive", archiveManager.getArchiveByArchiveId(id));
-        model.addAttribute("articles", archiveManager.getArchiveByArchiveId(id).getArticleList());
+        model.addAttribute("archives", archiveManager.getAll());
+        model.addAttribute("archive", archiveManager.getByArchiveId(id));
+        model.addAttribute("articles", archiveManager.getByArchiveId(id).getArticleList());
         model.addAttribute("categories", categoryManager.getNavCategory());
-        model.addAttribute("newArticles",articleManager.getTopTen());
+        model.addAttribute("newArticles", articleManager.getTopTen());
         return "article/list";
     }
 
@@ -64,4 +71,5 @@ public class ArchiveController {
     public void setArticleManager(@Qualifier("articleManager") ArticleManager articleManager) {
         this.articleManager = articleManager;
     }
+
 }

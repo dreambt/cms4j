@@ -59,7 +59,7 @@ Time: 下午9:03
                         <td>${comment.username}</td>
                         <td><a class="opener" href="#" value='${comment.message}'>点击查看</a></td>
                         <td>${comment.postHostIp}</td>
-                        <td><fmt:formatDate value="${comment.createTime}" type="both"></fmt:formatDate></td>
+                        <td><fmt:formatDate value="${comment.createdDate}" type="both"></fmt:formatDate></td>
                         <td><a href="${ctx}/comment/audit/${comment.id}"><c:choose><c:when
                                 test="${comment.status}">【已审核】</c:when><c:otherwise>【未审核】</c:otherwise></c:choose></a>
                         </td>

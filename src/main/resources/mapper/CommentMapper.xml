@@ -6,13 +6,13 @@
 
     <!--
          编号为id的评论
-         select cid,aid,username,INET_NTOA(postip) as postip,FROM_UNIXTIME(posttime, 'YYYY-MM-DD HH:MM:SS') as posttime,status,message,FROM_UNIXTIME(createtime, 'YYYY-MM-DD HH:MM:SS') as createtime,FROM_UNIXTIME(modifytime, 'YYYY-MM-DD HH:MM:SS') as modifytime
+         select cid,aid,username,INET_NTOA(postip) as postip,FROM_UNIXTIME(posttime, 'YYYY-MM-DD HH:MM:SS') as posttime,status,message,FROM_UNIXTIME(createddate, 'YYYY-MM-DD HH:MM:SS') as createddate,FROM_UNIXTIME(lastmodifieddate, 'YYYY-MM-DD HH:MM:SS') as lastmodifieddate
         from cms_commnet
         where aid=#{id}
         limit 1
      -->
     <select id="getComment" parameterType="Long" resultType="Comment">
-        select id,username,postip,posttime,status,message,createtime,modifytime
+        select id,username,postip,posttime,status,message,createddate,lastmodifieddate
         from cms_commnet
         where id=#{id}
         limit 1
@@ -22,7 +22,7 @@
         获取最新10条评论
     -->
     <select id="getCommentRecent" resultType="ArrayList">
-        select cid,aid,username,postip,posttime,status,message,createtime,modifytime
+        select cid,aid,username,postip,posttime,status,message,createddate,lastmodifieddate
         from cms_commnet
         where status=1
         limit 10
@@ -83,7 +83,7 @@
     <!-- 插入评论 -->
     <insert id="save" parameterType="Comment" useGeneratedKeys="true" keyProperty="id">
 		insert into cms_commnet (
-		cid,aid,username,postip,posttime,status,message,createtime,modifytime)
+		cid,aid,username,postip,posttime,status,message,createddate,lastmodifieddate)
 		values (#{id}, #{articleId}, #{username},#{postIP},#{postTime},#{status},#{message},now(),now())
 	</insert>
 

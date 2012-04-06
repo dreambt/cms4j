@@ -177,7 +177,6 @@ public class UserManager {
         user.setTimeOffset("0800");
         user.setLastTime(new Date());
         user.setLastActTime(new Date());
-        user.setCreateTime(new Date());
         this.update(user);
     }
 
@@ -251,7 +250,7 @@ public class UserManager {
             user.setPassword(hashPassword.getPassword());
         }
 
-        user.setModifyTime(new Date());
+        user.setLastModifiedDate(null);
         userJpaDao.save(user);
 
         if (shiroRealm != null) {

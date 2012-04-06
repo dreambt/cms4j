@@ -1,6 +1,6 @@
 package cn.edu.sdufe.cms.common.entity.article;
 
-import cn.edu.sdufe.cms.common.entity.IdEntity;
+import cn.edu.sdufe.cms.common.entity.PersistableEntity;
 import cn.edu.sdufe.cms.common.entity.account.User;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -11,7 +11,6 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,7 +23,7 @@ import java.util.List;
 @Entity
 @Table(name = "cms_article")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Article extends IdEntity {
+public class Article extends PersistableEntity {
 
     private Category category;
 
@@ -57,10 +56,6 @@ public class Article extends IdEntity {
     private boolean allowComment;
 
     private int views;
-
-    private Date createTime;
-
-    private Date modifyTime;
 
     private List<Comment> commentList = Lists.newArrayList();
 
@@ -199,31 +194,6 @@ public class Article extends IdEntity {
 
     public void setViews(int views) {
         this.views = views;
-    }
-
-    /**
-     * 防止外部通过getter引用修改属性
-     *
-     * @return
-     */
-    public Date getCreateTime() {
-        if (null != this.createTime) {
-            return new Date(this.createTime.getTime());
-        } else {
-            return null;
-        }
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getModifyTime() {
-        return modifyTime;
-    }
-
-    public void setModifyTime(Date modifyTime) {
-        this.modifyTime = modifyTime;
     }
 
     @OneToMany(fetch = FetchType.LAZY) // 级联删除相关评论

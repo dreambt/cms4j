@@ -129,8 +129,7 @@ public class ArticleDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    @Cacheable(value = "monthArticle")
-    public List<Article> getMonthArticle(Date month) {
+    public List<Article> getByMonth(Date month) {
         return getSqlSession().selectList("Article.getMonthArticle", month);
     }
 

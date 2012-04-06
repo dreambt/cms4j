@@ -1,6 +1,6 @@
 package cn.edu.sdufe.cms.common.entity.account;
 
-import cn.edu.sdufe.cms.common.entity.IdEntity;
+import cn.edu.sdufe.cms.common.entity.PersistableEntity;
 import cn.edu.sdufe.cms.common.entity.article.Article;
 import cn.edu.sdufe.cms.utilities.IPEncodes;
 import com.google.common.collect.Lists;
@@ -32,7 +32,7 @@ import java.util.List;
 @Table(name = "cms_user")
 //默认的缓存策略.
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class User extends IdEntity {
+public class User extends PersistableEntity {
 
     private String email;
 
@@ -67,10 +67,6 @@ public class User extends IdEntity {
     private Date lastTime;
 
     private Date lastActTime;
-
-    private Date createTime;
-
-    private Date modifyTime;
 
     @Email
     public String getEmail() {
@@ -198,39 +194,12 @@ public class User extends IdEntity {
         this.lastActTime = lastActTime;
     }
 
-    /**
-     * 防止外部通过getter引用修改属性
-     *
-     * @return
-     */
-    public Date getCreateTime() {
-        if (null != this.createTime) {
-            return new Date(this.createTime.getTime());
-        } else {
-            return null;
-        }
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getModifyTime() {
-        return modifyTime;
-    }
-
-    public void setModifyTime(Date modifyTime) {
-        this.modifyTime = modifyTime;
-    }
-
     //多对多定义
     @ManyToMany
     //中间表定义,表名采用默认命名规则
     @JoinTable(name = "cms_user_group", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "group_id")})
     //Fecth策略定义
     @Fetch(FetchMode.SUBSELECT)
-    //集合按id排序
-    @OrderBy("id ASC")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     public List<Group> getGroupList() {
         return groupList;
