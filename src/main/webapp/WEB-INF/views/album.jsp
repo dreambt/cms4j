@@ -59,7 +59,7 @@
         <div class="pf-title">${image.title}</div>
         <div class="pf-content">
             <a href="${ctx}/static/uploads/gallery/gallery-big/${image.imageUrl}" class="fancy_box" title="${image.title}">
-                <img src="${ctx}/static/uploads/gallery/gallery-big/${image.imageUrl}" alt="" width="218px" height="194px" /></a>
+                <img src="${ctx}/static/uploads/gallery/album-thumb/${image.imageUrl}" alt="" width="218px" height="194px" /></a>
             <p class="albumDesc">${image.description}</p>
 
         </div>
@@ -108,7 +108,7 @@
                                 "<div class='pf-title'>" + content.title + "</div>" +
                                 "<div class='pf-content'>" +
                                 "<a href='${ctx}/static/uploads/gallery/gallery-big/" + content.imageUrl + "' class='fancy_box' title='" + content.title + "'>" +
-                                "<img alt='' width='218px' height='194px' src='${ctx}/static/uploads/gallery/gallery-big/" + content.imageUrl + "' /></a>" +
+                                "<img alt='' width='218px' height='194px' src='${ctx}/static/uploads/gallery/album-thumb/" + content.imageUrl + "' /></a>" +
                                 "<p class='albumDesc'>" + content.description + "</p>" +
                                 "</div>" +
                                 "</div>"));

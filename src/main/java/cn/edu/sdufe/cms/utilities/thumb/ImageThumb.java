@@ -122,7 +122,6 @@ public class ImageThumb {
         double scaleH, scaleV;
         scaleH = (double) w / (double) width;
         scaleV = (double) h / (double) height;
-        // ��Ҫ�ж�һ��scaleH��scaleV�������Ŵ����
         if (scaleH >= 1.0 && scaleV >= 1.0) {
             return 1;
         }

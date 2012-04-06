@@ -86,14 +86,16 @@ public class ImageManager {
         if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
             String fileName = this.upload(file, request);
             image.setImageUrl(fileName);
-             //项目路径
-            String path = System.getProperty("user.dir");
+             //项目路径// TODO 迁移服务器需要修改
+            String path = System.getProperty("user.dir") + "\\src\\main\\webapp\\static\\uploads\\gallery\\";
             //图片来源路径
-            // TODO 迁移服务器需要修改
-            String fromPath = path + "\\src\\main\\webapp\\static\\uploads\\gallery\\gallery-big\\";
-            String toPath = path + "\\src\\main\\webapp\\static\\uploads\\gallery\\gallery-thumb\\";
+
+            ImageThumb imageThumb = new ImageThumb();
             try {
-                new ImageThumb().saveImageAsJpg(fromPath + fileName, toPath + fileName, 200, 175);
+                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "dashboard-thumb\\" + fileName, 50, 57);
+                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "photo-thumb\\" + fileName, 200, 122);
+                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "album-thumb\\" + fileName, 218, 194);
+
             } catch (Exception e) {
                 logger.info(e.getMessage());
             }
@@ -145,21 +147,25 @@ public class ImageManager {
      */
     @Transactional(readOnly = false)
     public Image update(MultipartFile file, HttpServletRequest request, Image image) {
-        // TODO 删除原有图片
-        // this.deletePic(image.getImageUrl());
+        this.deletePic("gallery-big\\" + image.getImageUrl());
+        this.deletePic("dashboard-thumb\\" + image.getImageUrl());
+        this.deletePic("photo-thumb\\" + image.getImageUrl());
+        this.deletePic("album-thumb\\" + image.getImageUrl());
 
         //实现上传
         if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
             String fileName = this.upload(file, request);
             image.setImageUrl(fileName);
-            //项目路径
-            String path = System.getProperty("user.dir");
+            //项目路径// TODO 迁移服务器需要修改
+            String path = System.getProperty("user.dir") + "\\src\\main\\webapp\\static\\uploads\\gallery\\";
             //图片来源路径
-            // TODO 迁移服务器需要修改
-            String fromPath = path + "\\src\\main\\webapp\\static\\uploads\\gallery\\gallery-big\\";
-            String toPath = path + "\\src\\main\\webapp\\static\\uploads\\gallery\\gallery-thumb\\";
+
+            ImageThumb imageThumb = new ImageThumb();
             try {
-                new ImageThumb().saveImageAsJpg(fromPath + fileName,toPath + fileName, 200,175);
+                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "dashboard-thumb\\" + fileName, 50, 57);
+                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "photo-thumb\\" + fileName, 200, 122);
+                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "album-thumb\\" + fileName, 218, 194);
+
             } catch (Exception e) {
                 logger.info(e.getMessage());
             }
@@ -243,9 +249,8 @@ public class ImageManager {
      */
     public void deletePic(String fileName) {
         //上传路径
-        String path = this.getClass().getResource("/").getPath();
-        System.out.println(path);
-        new File(path, fileName).delete();
+        String path = System.getProperty("user.dir");
+        new File(path + "\\src\\main\\webapp\\static\\uploads\\gallery\\", fileName).delete();
     }
 
     @Autowired

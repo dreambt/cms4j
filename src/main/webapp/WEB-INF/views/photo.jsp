@@ -78,7 +78,7 @@
         <c:forEach items="${images}" var="image" begin="0" step="1" varStatus="var">
         <div class="pf-gall"><!-- portfolio 1 -->
             <a href="${ctx}/static/uploads/gallery/gallery-big/${image.imageUrl}" rel="fancybox-thumb" class="fancybox-thumb" title="${image.title}"><img
-                    src="${ctx}/static/uploads/gallery/gallery-thumb/${image.imageUrl}" width="200" height="122" alt="" class="pf-img"/></a>
+                    src="${ctx}/static/uploads/gallery/photo-thumb/${image.imageUrl}" width="200" height="122" alt="" class="pf-img"/></a>
         </div>
             <%--<c:if test="${var.index%4==3}"><br/></c:if>--%>
         </c:forEach>
@@ -123,7 +123,7 @@
                         albums.append($("<div class='pf-gall'><!-- portfolio 1 -->" +
                                 "<a href='${ctx}/static/uploads/gallery/gallery-big/" + content.imageUrl + "' rel='fancybox-thumb'" +
                                 " class='fancybox-thumb' title='" + content.title + "'>" +
-                                "<img src='${ctx}/static/uploads/gallery/gallery-thumb/" + content.imageUrl + "' width='200' height='122'" +
+                                "<img src='${ctx}/static/uploads/gallery/photo-thumb/" + content.imageUrl + "' width='200' height='122'" +
                                 "alt='' class='pf-img'/></a></div>"));
                     });
 
