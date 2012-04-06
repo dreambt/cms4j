@@ -4,6 +4,7 @@ import cn.edu.sdufe.cms.common.dao.image.ImageDao;
 import cn.edu.sdufe.cms.common.dao.image.ImageJpaDao;
 import cn.edu.sdufe.cms.common.entity.image.Image;
 import cn.edu.sdufe.cms.utilities.RandomString;
+import cn.edu.sdufe.cms.utilities.thumb.ImageThumb;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,6 +86,17 @@ public class ImageManager {
         if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
             String fileName = this.upload(file, request);
             image.setImageUrl(fileName);
+             //项目路径
+            String path = System.getProperty("user.dir");
+            //图片来源路径
+            // TODO 迁移服务器需要修改
+            String fromPath = path + "\\src\\main\\webapp\\static\\uploads\\gallery\\gallery-big\\";
+            String toPath = path + "\\src\\main\\webapp\\static\\uploads\\gallery\\gallery-thumb\\";
+            try {
+                new ImageThumb().saveImageAsJpg(fromPath + fileName, toPath + fileName, 200, 175);
+            } catch (Exception e) {
+                logger.info(e.getMessage());
+            }
         } else {
             image.setImageUrl("");
         }
@@ -104,7 +116,7 @@ public class ImageManager {
         // 转型为MultipartHttpRequest：
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         //上传路径
-        String path = multipartRequest.getSession().getServletContext().getRealPath("static/uploads/gallery");
+        String path = multipartRequest.getSession().getServletContext().getRealPath("static/uploads/gallery/gallery-big");
         //原文件名
         String imageName = file.getOriginalFilename();
         String ext = imageName.substring(imageName.lastIndexOf("."), imageName.length());
@@ -140,6 +152,17 @@ public class ImageManager {
         if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
             String fileName = this.upload(file, request);
             image.setImageUrl(fileName);
+            //项目路径
+            String path = System.getProperty("user.dir");
+            //图片来源路径
+            // TODO 迁移服务器需要修改
+            String fromPath = path + "\\src\\main\\webapp\\static\\uploads\\gallery\\gallery-big\\";
+            String toPath = path + "\\src\\main\\webapp\\static\\uploads\\gallery\\gallery-thumb\\";
+            try {
+                new ImageThumb().saveImageAsJpg(fromPath + fileName,toPath + fileName, 200,175);
+            } catch (Exception e) {
+                logger.info(e.getMessage());
+            }
         }
         image.setLastModifiedDate(null);
         return imageJpaDao.save(image);

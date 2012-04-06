@@ -58,8 +58,8 @@
     <div class="portfolio-box"><!-- portfolio 1 -->
         <div class="pf-title">${image.title}</div>
         <div class="pf-content">
-            <a href="${ctx}/static/uploads/gallery/${image.imageUrl}" class="fancy_box" title="${image.title}">
-                <img src="${ctx}/static/uploads/gallery/${image.imageUrl}" alt="" width="406" height="300" /></a>
+            <a href="${ctx}/static/uploads/gallery/gallery-big/${image.imageUrl}" class="fancy_box" title="${image.title}">
+                <img src="${ctx}/static/uploads/gallery/gallery-big/${image.imageUrl}" alt="" width="306" height="300" /></a>
             <p>${image.description}</p>
         </div>
     </div>
@@ -106,8 +106,8 @@
                         albums.append($("<div class='portfolio-box'><!-- portfolio 1 -->" +
                                 "<div class='pf-title'>" + content.title + "</div>" +
                                 "<div class='pf-content'>" +
-                                "<a href='${ctx}/static/uploads/gallery/" + content.imageUrl + "' class='fancy_box' title='" + content.title + "'>" +
-                                "<img alt='' width='406' height='300' src='${ctx}/static/uploads/gallery/" + content.imageUrl + "' /></a>" +
+                                "<a href='${ctx}/static/uploads/gallery/gallery-big/" + content.imageUrl + "' class='fancy_box' title='" + content.title + "'>" +
+                                "<img alt='' width='406' height='300' src='${ctx}/static/uploads/gallery/gallery-big/" + content.imageUrl + "' /></a>" +
                                 "<p>" + content.description + "</p>" +
                                 "</div>" +
                                 "</div>"));

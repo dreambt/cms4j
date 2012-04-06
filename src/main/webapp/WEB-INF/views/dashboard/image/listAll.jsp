@@ -66,9 +66,9 @@
                 <c:forEach items="${images}" var="image" begin="0" step="1">
                 <tr>
                     <td><input type="checkbox" name="isSelected"  value="${image.id}"></td>
-                    <td><a href="${ctx}/static/uploads/gallery/${image.imageUrl}" rel="fancybox-thumb" class="fancy_box"><img src="${ctx}/static/uploads/gallery/${image.imageUrl}" width="50px"/></a></td>
+                    <td><a href="${ctx}/static/uploads/gallery/gallery-big/${image.imageUrl}" rel="fancybox-thumb" class="fancy_box"><img src="${ctx}/static/uploads/gallery/gallery-thumb/${image.imageUrl}" width="50px"/></a></td>
                     <td>${image.title}</td>
-                    <td><a href="${ctx}/static/uploads/gallery/${image.imageUrl}" class="opener" value="${image.description}">点击查看</a> </td>
+                    <td><a href="${ctx}/static/uploads/gallery/gallery-thumb/${image.imageUrl}" class="opener" value="${image.description}">点击查看</a> </td>
                     <td>${image.imageUrl}</td>
                     <td><fmt:formatDate value="${image.createdDate}" type="both"></fmt:formatDate></td>
                     <td><a href="${ctx}/gallery/edit/${image.id}">【编辑】</a>
