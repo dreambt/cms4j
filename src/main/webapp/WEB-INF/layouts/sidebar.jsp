@@ -39,6 +39,19 @@
         </ul>
     </div>
     <div class="maincontent">
+        <h2>友情链接</h2>
+        <ul class="blog-list">
+            <!--<c:forEach items="${archives}" var="archive" begin="0" step="1" >
+                <li><a href="${ctx}/archive/list/${archive.id}">${archive.title}&nbsp;(${archive.articleCount})</a></li>
+            </c:forEach>
+            -->
+            <li><a href="#">友情链接一</a></li>
+            <li><a href="#">友情链接一</a></li>
+            <li><a href="#">友情链接一</a></li>
+            <li><a href="#">友情链接一</a></li>
+        </ul>
+    </div>
+    <div class="maincontent">
         <h2>Sponsor</h2>
         <div id="sponsors">
             <div class="banner-img"><a href="#"><img src="${ctx}/static/images/sponsors/tf_260x120_v2.gif" alt=""/></a>

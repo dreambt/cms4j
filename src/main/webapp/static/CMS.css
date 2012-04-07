@@ -151,3 +151,27 @@ ul#documentA li{margin: 10px;}
 p.albumDesc{
     width:405px;
 }
+/*--友情链接--*/
+#fridendLink{
+    float: left;
+    width:890px;
+    margin-top:5px;
+    padding: 10px 15px 10px 15px;
+    background-color: #202020;
+    border-bottom: 1px solid #686868;
+}
+#fridendLink a{
+    color: #686868;
+    display: block;
+    float: left;
+    margin-right: 20px;
+}
+#fridendLink marquee{
+    width: 800px;
+    display: block;
+    float: left;
+}
+#fridendLink a:hover{
+    text-decoration: underline;
+}
+#fridendLink  a.t:hover{text-decoration: none;}
