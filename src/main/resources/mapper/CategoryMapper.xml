@@ -24,7 +24,7 @@
          获取分类: 输出直接映射到对象, login_name列要"as loginName"以方便映射 department_id as "department.id"创建department对象并赋值
      -->
     <select id="getCategory" parameterType="int" resultType="Category">
-        select id,father_category_id as fathercategoryid,category_name categoryname,allow_comment as allowcomment,display_order as displayorder,
+        select id,father_category_id as fathercategoryid,category_name as categoryname,allow_comment as allowcomment,display_order as displayorder,
           url,deleted,description,allow_publish as allowpublish,show_type as showtype,created_date as createddate,last_modified_date as lastmodifieddate
         from cms_category
         where id=#{id} and deleted=0

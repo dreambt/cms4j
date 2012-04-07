@@ -56,7 +56,7 @@ public class ImageController {
         int total = imageManager.getAllImageByDeleted().size();
         int limit = 4;
         int pageCount = 1;
-        if (total % limit == 0) pageCount = pageCount / limit;
+        if (total % limit == 0) pageCount = total / limit;
         else pageCount = total / limit + 1;
         model.addAttribute("images", imageManager.getPagedImage(0,limit));
         model.addAttribute("categories", categoryManager.getNavCategory());
@@ -90,7 +90,7 @@ public class ImageController {
         int total = imageManager.getAllImageByDeleted().size();
         int limit = 12;
         int pageCount = 1;
-        if (total % limit == 0) pageCount = pageCount / limit;
+        if (total % limit == 0) pageCount = total / limit;
         else pageCount = total / limit + 1;
         model.addAttribute("images", imageManager.getPagedImage(0,limit));
         model.addAttribute("categories", categoryManager.getNavCategory());

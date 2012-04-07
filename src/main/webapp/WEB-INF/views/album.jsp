@@ -77,7 +77,7 @@
                 </c:forEach>
             </c:when>
             <c:otherwise>
-                <c:forEach begin="1" end="5" step="1" varStatus="var">
+                <c:forEach begin="1" end="11" step="1" varStatus="var">
                     <span class="blog-button-page pagination">${var.index}</span>&nbsp;
                 </c:forEach>
             </c:otherwise>
