@@ -33,7 +33,7 @@
                     <li>
 
                         <h3 class="bar" id="1" title="点击展开">${category.categoryName} [${fn:length(category.subCategories)}]&nbsp;顺序：${category.displayOrder}&nbsp;<a class="amodify" href="${ctx}/category/edit/${category.id}"><span>【修改】</span></a>
-                            <a class="amodify" href="${ctx}/category/delete/${category.id}"><span>【删除】</span></a></h3>
+                            <a class="amodify" id="deleteFir" href="${ctx}/category/delete/${category.id}"><span>【删除】</span></a></h3>
                         <c:if test="${fn:length(category.subCategories) > 0}">
                             <div class="content">
                                     <table class="display menu_sec">
@@ -75,7 +75,7 @@
     </form:form>
 </div>
 <script type="text/javascript">
-    $('.amodify').click(function(){
+    $('#deleteFir').click(function(){
         if(confirm("删除一级菜单将连带删除其下属二级菜单，请您慎重！确定要删除吗？")){
             return true;
         } else{
