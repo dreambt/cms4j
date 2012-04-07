@@ -6,6 +6,18 @@
 --%>
 <%@ page language="java" pageEncoding="UTF-8" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<div id="fridendLink">
+    <a class="t"><strong>友情链接：</strong></a>
+    <marquee>
+        <a href="#">友情链接一</a>
+        <a href="#">友情链接一</a>
+        <a href="#">友情链接一</a>
+        <a href="#">友情链接一</a>
+        <a href="#">友情链接一</a>
+        <a href="#">友情链接一</a>
+        <a href="#">友情链接一</a>
+    </marquee>
+</div>
 <!-- BEGIN FOOTER -->
 <div id="footer">
     <div class="footer1">
