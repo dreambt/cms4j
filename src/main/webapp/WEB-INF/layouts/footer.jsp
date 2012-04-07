@@ -8,7 +8,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <div id="fridendLink">
     <a class="t"><strong>友情链接：</strong></a>
-    <marquee>
+    <marquee id="fri" scrollDelay="150" onmouseover="this.stop()" onmouseout="this.start()" loop='-1'>
         <a href="#">友情链接一</a>
         <a href="#">友情链接一</a>
         <a href="#">友情链接一</a>
