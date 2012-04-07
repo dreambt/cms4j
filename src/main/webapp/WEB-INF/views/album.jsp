@@ -104,7 +104,7 @@
 
                     //加载文章
                     $.each(data, function (index, content) {
-                        albums.append($("<div class='portfolio-box'><!-- portfolio 1 -->" +
+                        albums.append($("<div class='portfolio-box'>" +
                                 "<div class='pf-title'>" + content.title + "</div>" +
                                 "<div class='pf-content'>" +
                                 "<a href='${ctx}/static/uploads/gallery/gallery-big/" + content.imageUrl + "' class='fancy_box' title='" + content.title + "'>" +
@@ -117,7 +117,7 @@
                         }
                     });
 
-                    $(".blog-pagination").html("Page&nbsp;:&nbsp;");
+                    $(".blog-pagination").html("分页&nbsp;:&nbsp;");
 
                     //将总记录数结果 得到 总页码数
                     var pageS = total;
