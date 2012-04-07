@@ -44,7 +44,6 @@
                     </c:if>
                 </li>
                 </c:forEach>
-                <li class="last"><a href="${ctx}/login" class="cufon">后台登录</a></li>
             </ul>
         </div>
         <!-- end of nav -->
@@ -58,6 +57,10 @@
         <!-- end of search-box -->
     </div>
     <!-- end of nav -->
-
+<script type="text/javascript">
+    $(function(){
+       $("ul.sf-menu li:last").css("border-right","none");
+    });
+</script>
 </div>
 <!-- END OF HEADER -->
