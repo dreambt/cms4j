@@ -60,7 +60,7 @@
                                                     <option value="${showType.value}"
                                                             <c:if test="${showType.value==subCategory.showType.value}">selected="selected"</c:if>>${showType.displayName}</option>
                                                 </c:forEach></select></td>
-                                                <td><a href="${ctx}/category/edit/${subCategory.id}" type="submit">【修改】</a> <a href="${ctx}/category/delete/${subCategory.id}" type="submit">【删除】</a></td>
+                                                <td><a href="${ctx}/category/edit/${subCategory.id}" type="submit">【修改】</a> <a href="${ctx}/category/delete/${subCategory.id}" type="submit" class="deleteSec">【删除】</a></td>
                                             </tr>
                                         </c:forEach>
                                         </tbody>
@@ -74,5 +74,21 @@
     </div>
     </form:form>
 </div>
+<script type="text/javascript">
+    $('.amodify').click(function(){
+        if(confirm("删除一级菜单将连带删除其下属二级菜单，请您慎重！确定要删除吗？")){
+            return true;
+        } else{
+            return false;
+        }
+    });
+    $('.deleteSec').click(function(){
+        if(confirm("确定要删除吗？")){
+            return true;
+        } else{
+            return false;
+        }
+    });
+</script>
 </body>
 </html>
