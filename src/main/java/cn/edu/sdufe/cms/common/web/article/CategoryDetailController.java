@@ -71,33 +71,14 @@ public class CategoryDetailController {
     @RequiresPermissions("category:delete")
     @RequestMapping(value = "delete/{id}", method = RequestMethod.GET)
     public String delete(@Valid @ModelAttribute("category") Category category, RedirectAttributes redirectAttributes) {
-
-        if(category.getFatherCategoryId()!=1L) {
-            if (category.getArticleList().size() <= 0) {
-                category.setDeleted(!category.isDeleted());
-            } else {
-                redirectAttributes.addFlashAttribute("error", "该菜单非空，不能删除！");
-            }
-        } else {
-            if (category.getArticleList().size() <= 0) {
-                boolean flag = true;
-                for(Category subCategory:category.getSubCategories()) {
-                    if(subCategory.getArticleList().size() > 0) {
-                        flag = false;
-                    }
-                }
-                if(flag) {
-                    category.setDeleted(!category.isDeleted());
-                } else {
-                    redirectAttributes.addFlashAttribute("error", "该菜单下有子菜单非空，不能删除！");
-                }
-            } else {
-                redirectAttributes.addFlashAttribute("error", "该菜单非空，不能删除！");
-            }
-        }
+        int ret = categoryManager.delete(category);
         categoryManager.update(category);
-        if (category.isDeleted()) {
+        if(ret==0) {
             redirectAttributes.addFlashAttribute("info", "删除菜单成功");
+        } else if(ret==1) {
+            redirectAttributes.addFlashAttribute("error", "该菜单非空，不能删除！");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "该菜单下有子菜单非空，不能删除！");
         }
         return "redirect:/category/listAll";
     }

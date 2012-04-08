@@ -125,6 +125,42 @@ public class CategoryManager {
     }
 
     /**
+     * 删除某一个分类
+     * return 0 删除成功；1 该分类有文章，不能删除； 2 该分类的子分类有文章，不能删除；
+     *
+     * @param category
+     * @return
+     */
+    @Transactional(readOnly = false)
+    public int delete(Category category) {
+        if(category.getFatherCategoryId()!=1L) {
+            if (category.getArticleList().size() <= 0) {
+                category.setDeleted(!category.isDeleted());
+                return 0;
+            } else {
+                return 1;
+            }
+        } else {
+            if (category.getArticleList().size() <= 0) {
+                boolean flag = true;
+                for(Category subCategory:category.getSubCategories()) {
+                    if(subCategory.getArticleList().size() > 0) {
+                        flag = false;
+                    }
+                }
+                if(flag) {
+                    category.setDeleted(!category.isDeleted());
+                    return 0;
+                } else {
+                    return 2;
+                }
+            } else {
+                return 1;
+            }
+        }
+    }
+
+    /**
      * 批量删除
      *
      * @param categories
