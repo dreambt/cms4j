@@ -4,13 +4,14 @@ import cn.edu.sdufe.cms.common.entity.PersistableEntity;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.springside.modules.utils.Collections3;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
 import java.util.List;
 
 /**
@@ -67,6 +68,7 @@ public class Category extends PersistableEntity {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "cms_category", joinColumns = @JoinColumn(name = "father_category_id"), inverseJoinColumns = @JoinColumn(name = "id"))
     @Fetch(FetchMode.SUBSELECT)
+    @WhereJoinTable(clause = "deleted='false'")
     @OrderBy("displayOrder ASC")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     public List<Category> getSubCategories() {

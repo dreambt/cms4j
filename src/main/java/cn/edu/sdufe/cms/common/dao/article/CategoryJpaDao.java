@@ -23,14 +23,6 @@ public interface CategoryJpaDao extends PagingAndSortingRepository<Category, Lon
     List<Category> findByIdGreaterThanAndFatherCategoryIdAndDeletedOrderByDisplayOrderAsc(Long id, Long fatherCategoryId, boolean deleted);
 
     /**
-     * 查找在导航栏显示的分类
-     *
-     * @param showNav
-     * @return
-     */
-    List<Category> findByFatherCategoryId(boolean showNav, Long fatherCategoryId);
-
-    /**
      * 查找允许发表文章的分类
      *
      * @param allowPublish

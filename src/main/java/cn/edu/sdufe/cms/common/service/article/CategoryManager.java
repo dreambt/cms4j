@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -56,7 +57,7 @@ public class CategoryManager {
      */
     public List<Category> getNavCategory() {
         //return categoryDao.getSubCategory(1L);
-        return categoryJpaDao.findByIdGreaterThanAndFatherCategoryIdAndDeletedOrderByDisplayOrderAsc(1L, 1L, false);
+        return categoryJpaDao.findByIdGreaterThanAndFatherCategoryIdAndDeletedOrderByDisplayOrderAsc(1L,1L,false);
     }
 
     /**
@@ -108,7 +109,7 @@ public class CategoryManager {
      */
     @Transactional(readOnly = false)
     public Category update(Category category) {
-        category.setLastModifiedDate(null);
+        category.setLastModifiedDate(new Date());
         return categoryJpaDao.save(category);
     }
 
