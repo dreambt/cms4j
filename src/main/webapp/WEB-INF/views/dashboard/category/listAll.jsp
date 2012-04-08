@@ -63,15 +63,16 @@
                                         <tbody>
                                         <c:forEach items="${category.subCategories}" var="subCategory" begin="0" step="1">
                                             <tr>
-                                                <td><input type="text" name="categoryName" value="${subCategory.categoryName}" class="menu"></td>
-                                                <td><input type="text" name="displayOrder" value="${subCategory.displayOrder}" class="menu"></td>
-                                                <td><input type="text" name="url" size="20px" class="menu" value="${subCategory.url}"></td>
-                                                <td><input type="checkbox" name="allowComment" class="menu" <c:if test="${subCategory.allowComment}">checked="checked"</c:if>></td>
-                                                <td><input type="checkbox" class="menu" name="allowPublish" <c:if test="${subCategory.allowPublish}">checked="checked"</c:if>></td>
-                                                <td><select name="showType"><c:forEach items="${showTypes}" var="showType" begin="0" step="1">
-                                                    <option value="${showType.value}"
-                                                            <c:if test="${showType.value==subCategory.showType.value}">selected="selected"</c:if>>${showType.displayName}</option>
-                                                </c:forEach></select></td>
+                                                <td>${subCategory.categoryName}</td>
+                                                <td>${subCategory.displayOrder}</td>
+                                                <td>${subCategory.url}</td>
+                                                <td><c:choose> <c:when test="${subCategory.allowComment}"><img src="${ctx}/static/dashboard/images/success.png"/> </c:when><c:otherwise><img  src="${ctx}/static/dashboard/images/error.png"/> </c:otherwise></c:choose></td>
+                                                <td><c:choose> <c:when test="${subCategory.allowPublish}"><img src="${ctx}/static/dashboard/images/success.png"/> </c:when><c:otherwise><img src="${ctx}/static/dashboard/images/error.png"/> </c:otherwise></c:choose></td>
+                                                <td>
+                                                <c:forEach items="${showTypes}" var="showType" begin="0" step="1">
+                                                      <c:if test="${showType.value==subCategory.showType.value}">${showType.displayName}</c:if>
+                                                </c:forEach>
+                                                </td>
                                                 <td><a href="${ctx}/category/edit/${subCategory.id}" type="submit">【修改】</a> <a href="${ctx}/category/delete/${subCategory.id}" type="submit" class="deleteSec">【删除】</a></td>
                                             </tr>
                                         </c:forEach>
