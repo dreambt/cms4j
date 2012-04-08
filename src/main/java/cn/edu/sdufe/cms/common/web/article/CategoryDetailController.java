@@ -96,8 +96,6 @@ public class CategoryDetailController {
         categoryManager.update(category);
         if (category.isDeleted()) {
             redirectAttributes.addFlashAttribute("info", "删除菜单成功");
-        } else {
-            redirectAttributes.addFlashAttribute("error", "删除菜单失败");
         }
         return "redirect:/category/listAll";
     }
