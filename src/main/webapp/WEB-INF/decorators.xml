@@ -28,5 +28,6 @@
         <pattern>/attachment*</pattern>
         <pattern>/account*</pattern>
         <pattern>/gallery*</pattern>
+        <pattern>/link*</pattern>
     </decorator>
 </decorators>
