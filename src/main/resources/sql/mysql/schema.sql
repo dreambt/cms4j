@@ -241,6 +241,22 @@ CREATE  TABLE IF NOT EXISTS `cms4j`.`cms_image` (
 ENGINE = InnoDB
 DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 
+-- -----------------------------------------------------
+-- Table `cms4j`.`cms_link`
+-- -----------------------------------------------------
+
+DROP TABLE IF EXISTS 'cms4j'.'cms_link';
+
+CREATE TABLE IF NOT EXISTS 'cms4j'.'cms_link'(
+id INT(8) NOT NULL AUTO_INCREMENT,
+title VARCHAR(20) NOT NULL,
+url VARCHAR(80) NOT NULL,
+deleted TINYINT(1) NOT NULL,
+create_time TIMESTAMP,
+modify_time TIMESTAMP,
+PRIMARY KEY (id)
+);
+
 
 
 -- -----------------------------------------------------

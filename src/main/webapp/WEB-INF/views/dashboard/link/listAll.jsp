@@ -8,6 +8,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -52,14 +53,17 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td><input type="checkbox" value="" checked="checked"></td>
-                    <td>aa</td>
-                    <td>bb</td>
-                    <td>2012-04-08</td>
-                    <td>2012-04-08</td>
-                    <td><a href="#">【修改】</a><a href="#">【删除】</a></td>
-                </tr>
+                <c:forEach items="${links}" var="link" begin="0" step="1">
+                    <tr>
+                        <td><input type="checkbox" value="${link.id}" checked="checked"></td>
+                        <td>${link.title}</td>
+                        <td>${link.url}</td>
+                        <td><fmt:formatDate value="${createTime}" type="date"></fmt:formatDate></td>
+                        <td><fmt:formatDate value="${modifyTime}" type="date"></fmt:formatDate></td>
+                        <td><a href="#">【修改】</a><a href="#">【删除】</a></td>
+                    </tr>
+                </c:forEach>
+
                 </tbody>
             </table>
         </div>
