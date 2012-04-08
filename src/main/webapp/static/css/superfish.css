@@ -23,10 +23,10 @@
 .sf-menu li {
 	float:			left;
 	position:		relative;
-	border-right:	1px solid #8e8c8c;	
+	border-left:	1px solid #8e8c8c;
 }
-.sf-menu li.last {
-	border-right:none;
+.sf-menu li.first {
+	border-left:none;
 }
 .sf-menu li.current a {
 	color: #3F3F3F;	

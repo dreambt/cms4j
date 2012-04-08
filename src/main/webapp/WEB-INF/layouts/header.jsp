@@ -59,7 +59,7 @@
     <!-- end of nav -->
 <script type="text/javascript">
     $(function(){
-       $("ul.sf-menu li:last").css("border-right","none");
+       $("ul.sf-menu li:first").css('border-left','none');
     });
 </script>
 </div>
