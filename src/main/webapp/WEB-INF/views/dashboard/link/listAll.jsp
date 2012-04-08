@@ -23,7 +23,7 @@
 <div id="main_container" class="main_container container_16 clearfix">
     <div class="flat_area grid_10">
         <h2>友情管理列表</h2>
-        <p>下面列出了所有友情链接, 您可以对友情链接进行 <strong>修改</strong><strong>删除</strong>.</p>
+        <p>下面列出了所有友情链接, 您可以对友情链接进行 <strong>修改</strong><strong>删除</strong>.点击链接名称或URL可以直接进入相应的网站.</p>
         <c:if test="${not empty info}">
             <div id="message" class="alert alert_blue">
                 <img height="24" width="24"
@@ -56,8 +56,8 @@
                 <c:forEach items="${links}" var="link" begin="0" step="1">
                     <tr>
                         <td><input type="checkbox" name="isSelected" value="${link.id}" ></td>
-                        <td>${link.title}</td>
-                        <td>${link.url}</td>
+                        <td><a href="${link.title}">${link.title}</a></td>
+                        <td><a href="${link.url}">${link.url}</a> </td>
                         <td><fmt:formatDate value="${link.createTime}" type="both"></fmt:formatDate></td>
                         <td><fmt:formatDate value="${link.modifyTime}" type="both"></fmt:formatDate></td>
                         <td><a href="${ctx}/link/edit/${link.id}">【修改】</a>
