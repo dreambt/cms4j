@@ -10,14 +10,12 @@
     <a class="t"><strong>友情链接：</strong></a>
 
     <div id="scroll_div">
-        <c:forEach items="${links}" var="link" begin="0" step="1">
         <div id="scroll_begin" style="display: inline;">
-
+            <c:forEach items="${links}" var="link" begin="0" step="1">
                 <a href="${link.url}">${link.title}</a>
-
+            </c:forEach>
         </div>
         <div id="scroll_end" style="display: inline;"></div>
-        </c:forEach>
     </div>
 </div>
 <!-- BEGIN FOOTER -->
@@ -51,6 +49,7 @@
     var scroll_end =document.getElementById("scroll_end");
     var scroll_div = document.getElementById("scroll_div");
     scroll_end.innerHTML=scroll_begin.innerHTML;
+    scroll_begin.innerHTML="";
     function Marquee(){
         if(scroll_end.offsetWidth-scroll_div.scrollLeft<=0)
             scroll_div.scrollLeft-=scroll_begin.offsetWidth;
