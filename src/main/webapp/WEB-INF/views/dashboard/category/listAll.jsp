@@ -19,6 +19,18 @@
     <div class="flat_area grid_16">
         <h2>菜单管理</h2>
         <p>这里可以管理 <strong>顶级菜单</strong> 和相应的 <strong>二级菜单</strong> .</p>
+        <c:if test="${not empty info}">
+            <div id="message" class="alert alert_blue">
+                <img height="24" width="24"
+                     src="${ctx}/static/dashboard/images/icons/Locked2.png"><strong>${info}</strong>
+            </div>
+        </c:if>
+        <c:if test="${not empty error}">
+            <div id="message" class="alert alert_red">
+                <img height="24" width="24"
+                     src="${ctx}/static/dashboard/images/icons/Locked2.png"><strong>${error}</strong>
+            </div>
+        </c:if>
     </div>
 </div>
 <div class="main_container container_16 clearfix">
