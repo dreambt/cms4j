@@ -1,8 +1,7 @@
 package cn.edu.sdufe.cms.common.web;
 
-import cn.edu.sdufe.cms.common.entity.article.Category;
-import cn.edu.sdufe.cms.common.service.article.ArchiveManager;
 import cn.edu.sdufe.cms.common.service.article.CategoryManager;
+import cn.edu.sdufe.cms.common.service.link.LinkManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -10,9 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.List;
 
 /**
  * 通用控制器
@@ -25,6 +21,8 @@ public class GeneralController {
 
     private CategoryManager categoryManager;
 
+    private LinkManager linkManager;
+
     /**
      * 首页显示菜单，静态+动态
      *
@@ -34,6 +32,7 @@ public class GeneralController {
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index(Model model) {
         model.addAttribute("categories", categoryManager.getNavCategory());
+        model.addAttribute("links", linkManager.getAllLink());
         return "index";
     }
 
@@ -43,7 +42,7 @@ public class GeneralController {
      * @return
      */
     @RequestMapping(value = "/contact", method = RequestMethod.GET)
-    public String contactUs(Model model) {
+     public String contactUs(Model model) {
         model.addAttribute("categories", categoryManager.getNavCategory());
         return "contact";
     }
@@ -90,4 +89,8 @@ public class GeneralController {
         this.categoryManager = categoryManager;
     }
 
+    @Autowired
+    public void setLinkManager(@Qualifier("linkManager") LinkManager linkManager) {
+        this.linkManager = linkManager;
+    }
 }

@@ -79,7 +79,7 @@ public class ImageDetailController {
     @RequestMapping(value = "delete/{id}")
     public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         Image image = imageManager.delete(id);
-        if(image.isDeleted() == true) {
+        if(image.isDeleted()) {
             redirectAttributes.addFlashAttribute("info", "删除" + id + "图片信息成功");
         } else {
             redirectAttributes.addFlashAttribute("info", "恢复" + id + "图片信息成功");

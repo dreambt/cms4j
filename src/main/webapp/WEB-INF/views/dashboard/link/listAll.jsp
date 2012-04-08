@@ -39,7 +39,7 @@
     </div>
 </div>
 <div class="main_container container_16 clearfix">
-    <form action="#" id="LnkList">
+    <form action="${ctx}/link/batchDelete" id="LnkList" method="post">
         <div class="box grid_16 round_all">
             <table class="display table">
                 <thead>
@@ -55,19 +55,21 @@
                 <tbody>
                 <c:forEach items="${links}" var="link" begin="0" step="1">
                     <tr>
-                        <td><input type="checkbox" value="${link.id}" checked="checked"></td>
+                        <td><input type="checkbox" name="isSelected" value="${link.id}" ></td>
                         <td>${link.title}</td>
                         <td>${link.url}</td>
-                        <td><fmt:formatDate value="${createTime}" type="date"></fmt:formatDate></td>
-                        <td><fmt:formatDate value="${modifyTime}" type="date"></fmt:formatDate></td>
-                        <td><a href="#">【修改】</a><a href="#">【删除】</a></td>
+                        <td><fmt:formatDate value="${link.createTime}" type="both"></fmt:formatDate></td>
+                        <td><fmt:formatDate value="${link.modifyTime}" type="both"></fmt:formatDate></td>
+                        <td><a href="${ctx}/link/edit/${link.id}">【修改】</a>
+                            <a href="${ctx}/link/delete/${link.id}"><c:choose><c:when test="${!link.deleted}">【删除】</c:when><c:otherwise>【恢复】</c:otherwise></c:choose></a></td>
                     </tr>
                 </c:forEach>
 
                 </tbody>
             </table>
         </div>
-        <button class="button_colour" id="deleteAll"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/BendedArrowRight.png"/><span>批量删除</span>
+        <button class="button_colour" id="deleteAll"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/BendedArrowRight.png"/>
+            <span>批量删除</span>
         </button>
     </form>
 </div>
@@ -75,7 +77,7 @@
     $(function () {
         $('#deleteAll').click(function () {
             if (confirm("确定批量删除吗？")) {
-                $("#articleForm").attr("action", "${ctx}/article/deleteAll").submit();
+                //$("#articleForm").attr("action", "${ctx}/link/deleteAll").submit();
             } else {
                 return false;
             }

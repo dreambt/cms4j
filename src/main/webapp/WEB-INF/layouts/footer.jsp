@@ -10,20 +10,14 @@
     <a class="t"><strong>友情链接：</strong></a>
 
     <div id="scroll_div">
+        <c:forEach items="${links}" var="link" begin="0" step="1">
         <div id="scroll_begin" style="display: inline;">
-            <a href="#">友情链接1</a>
-            <a href="#">友情链接2</a>
-            <a href="#">友情链接3</a>
-            <a href="#">友情链接4</a>
-            <a href="#">友情链接5</a>
-            <a href="#">友情链接6</a>
-            <a href="#">友情链接7</a>
-            <a href="#">友情链接8</a>
-            <a href="#">友情链接9</a>
-            <a href="#">友情链接10</a>
-            <a href="#">友情链接11</a>
+
+                <a href="${link.url}">${link.title}</a>
+
         </div>
         <div id="scroll_end" style="display: inline;"></div>
+        </c:forEach>
     </div>
 </div>
 <!-- BEGIN FOOTER -->

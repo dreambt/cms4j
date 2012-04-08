@@ -24,20 +24,19 @@
     </div>
 </div>
 <div class="main_container container_16 clearfix">
-    <form action="#" id="LnkAdd">
+    <form:form modelAttribute="link" name="linkForm" action="${ctx}/link/save/${link.id}" id="LnkAdd">
         <div class="box gird_16">
             <h2 class="box_head grad_colour round_top">链接信息</h2>
             <div class="toggle_container">
                 <div class="block">
-                    <input type="hidden" id="user_id" name="id" value=""/>
-                    <label for="lnkName" class="field">链接名称: </label>
-                    <input id="lnkName" name="lnkName" class="required" size="40" /><br />
-                    <label for="URL" class="field">URL: </label><input id="URL" name="URL" class="required" size="40" value="" /><br />
+                    <input type="hidden" name="isSelected" value="${link.id}"/>
+                    <label for="lnkName" class="field">链接名称: </label><input id="lnkName" name="title" class="required" size="40" value="${link.title}"/><br />
+                    <label for="URL" class="field">URL: </label><input id="URL" name="url" class="required" size="40" value="${link.url}" /><br />
                 </div>
             </div>
         </div>
         <button type="submit" id="create"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/User2.png"><span>保存</span></button>
-    </form>
+    </form:form>
 </div>
 <script>
     $(function () {
