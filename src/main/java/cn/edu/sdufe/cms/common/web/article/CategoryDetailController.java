@@ -75,6 +75,8 @@ public class CategoryDetailController {
         if(category.getFatherCategoryId()!=1L) {
             if (category.getArticleList().size() <= 0) {
                 category.setDeleted(!category.isDeleted());
+            } else {
+                redirectAttributes.addFlashAttribute("error", "该菜单非空，不能删除！");
             }
         } else {
             if (category.getArticleList().size() <= 0) {
