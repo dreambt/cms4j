@@ -162,14 +162,18 @@ p.albumDesc{
 }
 #fridendLink a{
     color: #686868;
-    display: block;
-    float: left;
     margin-right: 20px;
 }
-#fridendLink marquee{
-    width: 800px;
+#fridendLink a strong{
     display: block;
     float: left;
+}
+#fridendLink #scroll_div{
+    width: 800px;
+    overflow: hidden;
+    height: 15px;
+    white-space: nowrap;
+    margin-right: 0px;
 }
 #fridendLink a:hover{
     text-decoration: underline;
