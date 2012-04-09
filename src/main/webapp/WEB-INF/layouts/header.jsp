@@ -20,57 +20,57 @@
                 <li><a href="${ctx}/" class="cufon">首页</a></li>
                 <li><a href="${ctx}/" class="cufon">新闻资讯</a>
                     <ul>
-                        <li><a href="#">新闻动态</a></li>
-                        <li><a href="#">行业资讯</a></li>
-                        <li><a href="#">学术交流</a></li>
+                        <li><a href="${ctx}/article/list/4">新闻动态</a></li>
+                        <li><a href="${ctx}/article/list/4">行业资讯</a></li>
+                        <li><a href="${ctx}/article/list/4">学术交流</a></li>
                     </ul>
                 </li>
                 <li><a href="${ctx}/" class="cufon">中心概况</a>
                     <ul>
-                        <li><a href="#">中心简介</a></li>
-                        <li><a href="#">组织结构</a></li>
+                        <li><a href="${ctx}/content/1">中心简介</a></li>
+                        <li><a href="${ctx}/content/1">组织结构</a></li>
                         <li><a href="#">运作机制</a>
                             <ul>
-                                <li><a href="#">规章制度</a></li>
+                                <li><a href="${ctx}/content/1">规章制度</a></li>
                             </ul>
                         </li>
-                        <li><a href="#">联系我们</a></li>
+                        <li><a href="${ctx}/contact">联系我们</a></li>
                     </ul>
                 </li>
                 <li><a href="${ctx}/" class="cufon">学术团队</a>
                     <ul>
-                        <li><a href="#">学术带头人</a></li>
-                        <li><a href="#">学术骨干</a></li>
-                        <li><a href="#">专家顾问</a></li>
+                        <li><a href="${ctx}/gallery/album">学术带头人</a></li>
+                        <li><a href="${ctx}/gallery/album">学术骨干</a></li>
+                        <li><a href="${ctx}/gallery/album">专家顾问</a></li>
                     </ul>
                 </li>
                 <li><a href="${ctx}/" class="cufon">学术研究</a>
                     <ul>
-                        <li><a href="#">研究方向</a></li>
-                        <li><a href="#">科研成果</a></li>
-                        <li><a href="#">科研项目</a></li>
+                        <li><a href="${ctx}/article/digest/2">研究方向</a></li>
+                        <li><a href="${ctx}/article/digest/2">科研成果</a></li>
+                        <li><a href="${ctx}/article/digest/2">科研项目</a></li>
                     </ul>
                 </li>
                 <li><a href="${ctx}/" class="cufon">资讯服务</a>
                     <ul>
-                        <li><a href="#">财政税务</a></li>
-                        <li><a href="#">中小银行</a></li>
-                        <li><a href="#">证券保险</a></li>
-                        <li><a href="#">政府决策</a></li>
+                        <li><a href="${ctx}/article/list/4">财政税务</a></li>
+                        <li><a href="${ctx}/article/list/3">中小银行</a></li>
+                        <li><a href="${ctx}/article/list/2">证券保险</a></li>
+                        <li><a href="${ctx}/article/list/1">政府决策</a></li>
                     </ul>
                 </li>
                 <li><a href="${ctx}/" class="cufon">教育培训</a></li>
                 <li><a href="${ctx}/" class="cufon">产学研合作</a>
                     <ul>
-                        <li><a href="#">成果转化</a></li>
-                        <li><a href="#">合作伙伴</a></li>
-                        <li><a href="#">对外交流</a></li>
+                        <li><a href="${ctx}/gallery/album">成果转化</a></li>
+                        <li><a href="${ctx}/gallery/photo">合作伙伴</a></li>
+                        <li><a href="${ctx}/gallery/album">对外交流</a></li>
                     </ul>
                 </li>
                 <li><a href="${ctx}/" class="cufon">网上办公</a>
                     <ul>
-                        <li><a href="#">办公系统</a></li>
-                        <li><a href="#">文件交换</a></li>
+                        <li><a href="http://oa.sdufe.edu.cn/">办公系统</a></li>
+                        <li><a href="http://filex.sdufe.edu.cn/">文件交换</a></li>
                     </ul>
                 </li>
             </ul>
