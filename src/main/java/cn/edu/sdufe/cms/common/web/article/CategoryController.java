@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -72,6 +73,29 @@ public class CategoryController {
         model.addAttribute("category", new Category());
         model.addAttribute("fatherCategories", categoryManager.getNavCategory());
         return "dashboard/category/edit";
+    }
+
+    /**
+     * 删除分类
+     *
+     * @param id
+     * @param redirectAttributes
+     * @return
+     */
+    @RequiresPermissions("category:delete")
+    @RequestMapping(value = "delete/{id}", method = RequestMethod.GET)
+    public String delete(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        int result = categoryManager.delete(id);
+        if (result == 0) {
+            redirectAttributes.addFlashAttribute("info", "删除菜单成功！");
+        } else if (result == 1) {
+            redirectAttributes.addFlashAttribute("error", "该菜单非空，不能删除！");
+        } else if (result == 2) {
+            redirectAttributes.addFlashAttribute("error", "该菜单下有子菜单非空，不能删除！");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "指定的菜单不存在！");
+        }
+        return "redirect:/category/listAll";
     }
 
     /**

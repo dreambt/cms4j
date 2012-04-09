@@ -10,7 +10,7 @@ import java.util.Map;
 
 /**
  * 分类Dao
- * <p />
+ * <p/>
  * User: baitao.jibt (dreambt@gmail.com)
  * Date: 12-3-20
  * Time: 下午20:40

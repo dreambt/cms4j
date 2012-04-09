@@ -61,28 +61,6 @@ public class CategoryDetailController {
         return "redirect:/category/listAll";
     }
 
-    /**
-     * 删除分类
-     *
-     * @param category
-     * @param redirectAttributes
-     * @return
-     */
-    @RequiresPermissions("category:delete")
-    @RequestMapping(value = "delete/{id}", method = RequestMethod.GET)
-    public String delete(@Valid @ModelAttribute("category") Category category, RedirectAttributes redirectAttributes) {
-        int ret = categoryManager.delete(category);
-        categoryManager.update(category);
-        if(ret==0) {
-            redirectAttributes.addFlashAttribute("info", "删除菜单成功");
-        } else if(ret==1) {
-            redirectAttributes.addFlashAttribute("error", "该菜单非空，不能删除！");
-        } else {
-            redirectAttributes.addFlashAttribute("error", "该菜单下有子菜单非空，不能删除！");
-        }
-        return "redirect:/category/listAll";
-    }
-
     @ModelAttribute("category")
     public Category getCategory(@PathVariable("id") Long id) {
         return categoryManager.get(id);

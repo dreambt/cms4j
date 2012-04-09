@@ -8,19 +8,19 @@
                   timeToIdleSeconds="300" timeToLiveSeconds="300" overflowToDisk="false" diskPersistent="false"/>
 
     <!-- Special objects setting. -->
-    <cache name="cn.edu.sdufe.cms.common.entity.account.User" maxElementsInMemory="10000"
+    <cache name="cn.edu.sdufe.cms.common.entity.account.User" maxElementsInMemory="500"
            memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true"
            maxElementsOnDisk="1000000"/>
-    <cache name="cn.edu.sdufe.cms.common.entity.account.User.groupList" maxElementsInMemory="10000"
+    <cache name="cn.edu.sdufe.cms.common.entity.account.User.groupList" maxElementsInMemory="500"
            memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true"
            maxElementsOnDisk="1000000"/>
     <cache name="cn.edu.sdufe.cms.common.entity.account.User.articleList" maxElementsInMemory="10000"
            memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true"
            maxElementsOnDisk="1000000"/>
-    <cache name="cn.edu.sdufe.cms.common.entity.account.Group" maxElementsInMemory="10000"
+    <cache name="cn.edu.sdufe.cms.common.entity.account.Group" maxElementsInMemory="10"
            memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true"
            maxElementsOnDisk="1000000"/>
-    <cache name="cn.edu.sdufe.cms.common.entity.account.Group.permissionList" maxElementsInMemory="10000"
+    <cache name="cn.edu.sdufe.cms.common.entity.account.Group.permissionList" maxElementsInMemory="500"
            memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true"
            maxElementsOnDisk="1000000"/>
 
@@ -31,20 +31,20 @@
            memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true"
            maxElementsOnDisk="1000000"/>
 
-    <cache name="cn.edu.sdufe.cms.common.entity.article.Archive" maxElementsInMemory="10000"
+    <cache name="cn.edu.sdufe.cms.common.entity.article.Archive" maxElementsInMemory="500"
            memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true"
            maxElementsOnDisk="1000000"/>
     <cache name="cn.edu.sdufe.cms.common.entity.article.Archive.articleList" maxElementsInMemory="10000"
            memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true"
            maxElementsOnDisk="1000000"/>
 
-    <cache name="cn.edu.sdufe.cms.common.entity.article.Category" maxElementsInMemory="10000"
+    <cache name="cn.edu.sdufe.cms.common.entity.article.Category" maxElementsInMemory="200"
            memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true"
            maxElementsOnDisk="1000000"/>
-    <cache name="cn.edu.sdufe.cms.common.entity.article.Category.subCategories" maxElementsInMemory="10000"
+    <cache name="cn.edu.sdufe.cms.common.entity.article.Category.subCategories" maxElementsInMemory="200"
            memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true"
            maxElementsOnDisk="1000000"/>
-    <cache name="cn.edu.sdufe.cms.common.entity.article.Category.articleList" maxElementsInMemory="10000"
+    <cache name="cn.edu.sdufe.cms.common.entity.article.Category.articleList" maxElementsInMemory="5000"
            memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true"
            maxElementsOnDisk="1000000"/>
 
@@ -52,11 +52,15 @@
            memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true"
            maxElementsOnDisk="1000000"/>
 
-    <cache name="cn.edu.sdufe.cms.common.entity.image.Image" maxElementsInMemory="10000"
+    <cache name="cn.edu.sdufe.cms.common.entity.image.Image" maxElementsInMemory="500"
            memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true"
            maxElementsOnDisk="1000000"/>
 
-    <cache name="cn.edu.sdufe.cms.common.entity.ManageLog" maxElementsInMemory="10000"
+    <cache name="cn.edu.sdufe.cms.common.entity.link.Link" maxElementsInMemory="500"
+           memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true"
+           maxElementsOnDisk="1000000"/>
+
+    <cache name="cn.edu.sdufe.cms.common.entity.ManageLog" maxElementsInMemory="500"
            memoryStoreEvictionPolicy="LRU" eternal="true" diskPersistent="false" overflowToDisk="true"
            maxElementsOnDisk="1000000"/>
 

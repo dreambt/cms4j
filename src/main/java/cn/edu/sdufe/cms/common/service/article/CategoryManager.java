@@ -3,6 +3,7 @@ package cn.edu.sdufe.cms.common.service.article;
 import cn.edu.sdufe.cms.common.dao.article.CategoryDao;
 import cn.edu.sdufe.cms.common.dao.article.CategoryJpaDao;
 import cn.edu.sdufe.cms.common.entity.article.Category;
+import net.sf.ehcache.CacheManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,8 +26,9 @@ public class CategoryManager {
 
     private static Logger logger = LoggerFactory.getLogger(CategoryManager.class);
 
-    private CategoryDao categoryDao;
+    private CacheManager ehcacheManager;
 
+    private CategoryDao categoryDao;
     private CategoryJpaDao categoryJpaDao;
 
     /**
@@ -57,7 +58,7 @@ public class CategoryManager {
      */
     public List<Category> getNavCategory() {
         //return categoryDao.getSubCategory(1L);
-        return categoryJpaDao.findByIdGreaterThanAndFatherCategoryIdAndDeletedOrderByDisplayOrderAsc(1L,1L,false);
+        return categoryJpaDao.findByIdGreaterThanAndFatherCategoryIdAndDeletedOrderByDisplayOrderAsc(1L, 1L, false);
     }
 
     /**
@@ -97,8 +98,7 @@ public class CategoryManager {
     @Transactional(readOnly = false)
     public Category save(Category category) {
         category.setDeleted(false);
-        this.update(category);
-        return category;
+        return update(category);
     }
 
     /**
@@ -109,66 +109,70 @@ public class CategoryManager {
      */
     @Transactional(readOnly = false)
     public Category update(Category category) {
-        category.setLastModifiedDate(new Date());
-        return categoryJpaDao.save(category);
+        // 更新数据，先更新数据避免生成旧数据缓存
+        category.setLastModifiedDate(null);
+        categoryJpaDao.save(category);
+
+        // 清理缓存
+        this.cleanCache();
+
+        return category;
     }
 
     /**
      * 删除编号为id的分类
      *
      * @param id
-     * @return
+     * @return 0 删除成功；1 该分类有文章，不能删除；2 该分类的子分类有文章，不能删除；3 指定菜单不存在
      */
-    @Transactional(readOnly = false)
-    public void delete(Long id) {
-        categoryJpaDao.delete(id);
+    public int delete(Long id) {
+        Category category = this.get(id);
+        return this.delete(category);
     }
 
     /**
-     * 删除某一个分类
-     * return 0 删除成功；1 该分类有文章，不能删除； 2 该分类的子分类有文章，不能删除；
+     * 删除指定分类
      *
      * @param category
-     * @return
+     * @return 0 删除成功；1 该分类有文章，不能删除；2 该分类的子分类有文章，不能删除；3 指定菜单不存在
      */
     @Transactional(readOnly = false)
     public int delete(Category category) {
-        if(category.getFatherCategoryId()!=1L) {
-            if (category.getArticleList().size() <= 0) {
-                category.setDeleted(!category.isDeleted());
-                return 0;
-            } else {
-                return 1;
+        // 指定的分类不存在
+        if (null == category) {
+            return 3;
+        }
+
+        // 检查该分类下面的文章，如果有文章则不能删除
+        if (category.getArticleList().size() > 0) {
+            return 1;
+        }
+
+        // 检查该分类下面的子分类
+        boolean flag = true;
+        for (Category subCategory : category.getSubCategories()) {
+            if (this.delete(subCategory) > 0) {
+                flag = false;
             }
-        } else {
-            if (category.getArticleList().size() <= 0) {
-                boolean flag = true;
-                for(Category subCategory:category.getSubCategories()) {
-                    if(subCategory.getArticleList().size() > 0) {
-                        flag = false;
-                    }
-                }
-                if(flag) {
-                    category.setDeleted(!category.isDeleted());
-                    return 0;
-                } else {
-                    return 2;
-                }
-            } else {
-                return 1;
-            }
+        }
+
+        if (flag) {// 没有子分类
+            category.setDeleted(true);
+            this.update(category);
+            return 0;
+        } else {// 有子分类
+            return 2;
         }
     }
 
     /**
-     * 批量删除
-     *
-     * @param categories
-     * @return
+     * 清理缓存
      */
-    @Transactional(readOnly = false)
-    public void delete(List<Category> categories) {
-        categoryJpaDao.delete(categories);
+    private void cleanCache() {
+        ehcacheManager = CacheManager.create();
+        ehcacheManager.getEhcache("cn.edu.sdufe.cms.common.entity.article.Category.subCategories").removeAll();
+        ehcacheManager.getCache("cn.edu.sdufe.cms.common.entity.article.Category.articleList").removeAll();
+        ehcacheManager.getCache("cn.edu.sdufe.cms.common.entity.article.Category").removeAll();
     }
 
     @Autowired
@@ -180,4 +184,5 @@ public class CategoryManager {
     public void setCategoryJpaDao(CategoryJpaDao categoryJpaDao) {
         this.categoryJpaDao = categoryJpaDao;
     }
+
 }
