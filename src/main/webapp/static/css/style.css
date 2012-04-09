@@ -107,8 +107,6 @@ padding:15px 10px;
 #bottom-header{width:920px; border-bottom:1px solid #969696; float:left;}
 .logo{width:620px; padding:38px 0px 0px 20px; float:left;display:inline}
 .logo h1{display:inline;padding:17px 0 17px 0}
-.phone{font-size:18px; padding:50px 20px 0px 0px; float:right;}
-.phone-get{font-size:14px; color:#ff4e00;}
 
 /* Search styling */
 .search-fieldset{border:none;padding:0;height:24px;}
