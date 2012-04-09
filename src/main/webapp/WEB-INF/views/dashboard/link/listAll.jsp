@@ -56,12 +56,12 @@
                 <c:forEach items="${links}" var="link" begin="0" step="1">
                     <tr>
                         <td><input type="checkbox" name="isSelected" value="${link.id}"></td>
-                        <td><a href="${link.title}">${link.title}</a></td>
+                        <td><a href="${link.url}">${link.title}</a></td>
                         <td><a href="${link.url}">${link.url}</a></td>
-                        <td><fmt:formatDate value="${link.createTime}" type="both"></fmt:formatDate></td>
-                        <td><fmt:formatDate value="${link.modifyTime}" type="both"></fmt:formatDate></td>
+                        <td><fmt:formatDate value="${link.createdDate}" type="both"></fmt:formatDate></td>
+                        <td><fmt:formatDate value="${link.lastModifiedDate}" type="both"></fmt:formatDate></td>
                         <td><a href="${ctx}/link/edit/${link.id}">【修改】</a>
-                            <a href="${ctx}/link/delete/${link.id}"><c:choose><c:when test="${!link.deleted}">【删除】</c:when><c:otherwise>【恢复】</c:otherwise></c:choose></a></td>
+                            <a href="${ctx}/link/delete/${link.id}"><c:choose><c:when test="${link.status}">【删除】</c:when><c:otherwise>【恢复】</c:otherwise></c:choose></a></td>
                     </tr>
                 </c:forEach>
 
