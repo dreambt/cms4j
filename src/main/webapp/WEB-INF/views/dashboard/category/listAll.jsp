@@ -63,7 +63,7 @@
                                         <tbody>
                                         <c:forEach items="${category.subCategories}" var="subCategory" begin="0" step="1">
                                             <tr>
-                                                <td>${subCategory.categoryName}</td>
+                                                <td><a href="${ctx}/article/listByCategory/${subCategory.id}">${subCategory.categoryName}</a></td>
                                                 <td>${subCategory.displayOrder}</td>
                                                 <td>${subCategory.url}</td>
                                                 <td><c:choose> <c:when test="${subCategory.allowComment}"><img src="${ctx}/static/dashboard/images/success.png"/> </c:when><c:otherwise><img  src="${ctx}/static/dashboard/images/error.png"/> </c:otherwise></c:choose></td>

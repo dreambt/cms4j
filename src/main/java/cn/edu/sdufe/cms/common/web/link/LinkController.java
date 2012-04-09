@@ -24,17 +24,6 @@ public class LinkController {
     private LinkManager linkManager;
 
     /**
-     * 获得所有link
-     *
-     * @param model
-     * @return
-     */
-    public String list(Model model) {
-        model.addAttribute("links", linkManager.getAllLink());
-        return "link/list";
-    }
-
-    /**
      * 显示所有未删除的link
      *
      * @param model

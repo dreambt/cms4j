@@ -6,6 +6,7 @@ import cn.edu.sdufe.cms.common.service.account.UserManager;
 import cn.edu.sdufe.cms.common.service.article.ArchiveManager;
 import cn.edu.sdufe.cms.common.service.article.ArticleManager;
 import cn.edu.sdufe.cms.common.service.article.CategoryManager;
+import cn.edu.sdufe.cms.common.service.link.LinkManager;
 import cn.edu.sdufe.cms.security.ShiroDbRealm;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -39,6 +40,8 @@ public class ArticleController {
 
     private ArchiveManager archiveManager;
 
+    private LinkManager linkManager;
+
     /**
      * 获取菜单编号为id的所有文章正文
      *
@@ -51,6 +54,7 @@ public class ArticleController {
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("archives", archiveManager.getTopTen());
         model.addAttribute("newArticles", articleManager.getTopTen());
+        model.addAttribute("links", linkManager.getAllLink());
         return "article/content";
     }
 
@@ -81,6 +85,20 @@ public class ArticleController {
         return articleManager.getAll(offset, limit);
     }
 
+
+    /**
+     * 获取菜单编号为id的所有文章列表
+     *
+     * @param id
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "listByCategory/{id}", method = RequestMethod.GET)
+    public String listArticleByCategory(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("articles", categoryManager.get(id).getArticleList());
+        return "dashboard/article/listAll";
+    }
+
     /**
      * 获取菜单编号为id的所有文章列表
      *
@@ -105,6 +123,7 @@ public class ArticleController {
         model.addAttribute("newArticles", articleManager.getTopTen());
         model.addAttribute("total", articleManager.count(id));
         model.addAttribute("pageCount", pageCount);
+        model.addAttribute("links", linkManager.getAllLink());
         return "article/list";
     }
 
@@ -146,6 +165,7 @@ public class ArticleController {
         model.addAttribute("newArticles", articleManager.getTopTen());
         model.addAttribute("total", articleManager.count(id));
         model.addAttribute("pageCount", pageCount);
+        model.addAttribute("links", linkManager.getAllLink());
         return "article/digest";
     }
 
@@ -253,5 +273,10 @@ public class ArticleController {
     @Autowired
     public void setArchiveManager(@Qualifier("archiveManager") ArchiveManager archiveManager) {
         this.archiveManager = archiveManager;
+    }
+
+    @Autowired
+    public void setLinkManager(LinkManager linkManager) {
+        this.linkManager = linkManager;
     }
 }
