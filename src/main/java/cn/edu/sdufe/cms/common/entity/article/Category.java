@@ -27,25 +27,16 @@ import java.util.List;
 public class Category extends PersistableEntity {
 
     private Long fatherCategoryId;
-
     private String categoryName;
-
     private List<Category> subCategories = Lists.newArrayList();
-
     private List<Article> articleList = Lists.newArrayList();
-
     private boolean allowComment;
-
     private int displayOrder;
-
     private String url;
-
+    private boolean showNav;
     private boolean deleted;
-
     private String description;
-
     private boolean allowPublish;
-
     private String showType;
 
     @Column(name = "father_category_id")
@@ -114,6 +105,14 @@ public class Category extends PersistableEntity {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public boolean isShowNav() {
+        return showNav;
+    }
+
+    public void setShowNav(boolean showNav) {
+        this.showNav = showNav;
     }
 
     public boolean isDeleted() {
