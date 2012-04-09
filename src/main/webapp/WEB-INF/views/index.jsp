@@ -142,14 +142,21 @@
     </div>
     <div id="content3">
         <div class="maincontent">
+            <h2 class="cufon">公告</h2>
+            <ul class="content-list">
+                <li><a href="#">Doloremque laudantium, totam rem aperiam</a>
+                <li><a href="#">Inventore veritatis et quasi architecto</a>
+            </ul>
+        </div>
+        <div class="maincontent">
             <h2 class="cufon">我们的优势</h2>
 
-            <p>
+           <!-- <p>
                 山东省金融信息工程技术培训中心是经山东省科技厅批准，依托山东财经大学金融、财税、会计、管理、数学和信息技术等雄厚的学科资源，联合行业内相关优势企业成立的一个开放的专业从事与金融信息化和金融风险管理相关的理论与应用技术研究、教育培训与咨询服务的组织。</p>
-
+             -->
             <p><img src="${ctx}/static/images/advantage-icon1.jpg" alt="" class="imgleft"/>
                 <strong>关于学术</strong><br/>
-                新研究基地、金融信息化高端人才的培养基地、金融信息化产业的中试基地、金融信息工程研究与应用的人才库和知识库。</p>
+              金融信息化高端人才的培养基地、金融信息化产业的中试基地、金融信息工程研究与应用的人才库和知识库。</p>
 
             <p><img src="${ctx}/static/images/advantage-icon2.jpg" alt="" class="imgleft"/>
                 <strong>关于师资</strong><br/>
