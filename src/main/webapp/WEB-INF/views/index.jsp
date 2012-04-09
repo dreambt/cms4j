@@ -33,18 +33,19 @@
 <body>
 <!-- BEGIN SLIDER -->
 <div id="slideshow">
+    <c:forEach items="${images}" var="image" begin="0" step="1">
     <div class="slide-text">
         <img src="${ctx}/static/images/slide1.jpg" alt="" class="slidehalf"/>
 
-        <h1>培训成果...</h1>
+        <h1>${image.title}</h1>
 
-        <p>
-            4月25日，国际金融理财标准委员会（FPSB）授权中国金融教育发展基金会金融理财标准委员会发布CFP持证人（国际金融理财师）名单。名单刊登于《金融时报》公告版。本次发布的名单包括2007年9月和2008年3月获得CFP资格认证的持证人，共1182人。.</p>
+        <p>${image.description}</p>
         <a class="read_more" href="#">了解详情 &raquo;</a>
     </div>
+    </c:forEach>
     <!-- end of slide1 -->
 
-    <div class="slide-text">
+    <%--<div class="slide-text">
         <img src="${ctx}/static/images/slide2.jpg" alt="" class="slidehalf"/>
 
         <h1>企业家俱乐部...</h1>
@@ -77,7 +78,7 @@
             temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet.</p>
         <a class="read_more" href="#">了解详情 &raquo;</a>
     </div>
-    <!-- end of slide4 -->
+    <!-- end of slide4 -->--%>
 </div>
 <div id="box-nav-slider">
     <div id="slideshow-navigation">

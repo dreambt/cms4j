@@ -20,4 +20,12 @@ public interface ImageJpaDao extends PagingAndSortingRepository<Image, Long> {
      * @return
      */
     List<Image> findByDeleted(boolean deleted);
+
+    /**
+     * 通过是否在首页显示查找image
+     *
+     * @param showIndex
+     * @return
+     */
+    List<Image> findByShowIndex(boolean showIndex);
 }

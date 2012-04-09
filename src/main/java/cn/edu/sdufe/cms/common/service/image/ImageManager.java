@@ -66,6 +66,15 @@ public class ImageManager {
     }
 
     /**
+     * 获得首页显示的image
+     *
+     * @return
+     */
+    public List<Image> getImageByShowIndex() {
+        return (List<Image>) imageJpaDao.findByShowIndex(true);
+    }
+
+    /**
      * 获得编号为id的image
      *
      * @param id

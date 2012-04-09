@@ -1,6 +1,7 @@
 package cn.edu.sdufe.cms.common.web;
 
 import cn.edu.sdufe.cms.common.service.article.CategoryManager;
+import cn.edu.sdufe.cms.common.service.image.ImageManager;
 import cn.edu.sdufe.cms.common.service.link.LinkManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,6 +24,8 @@ public class GeneralController {
 
     private LinkManager linkManager;
 
+    private ImageManager imageManager;
+
     /**
      * 首页显示菜单，静态+动态
      *
@@ -32,6 +35,7 @@ public class GeneralController {
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index(Model model) {
         model.addAttribute("categories", categoryManager.getNavCategory());
+        model.addAttribute("images", imageManager.getImageByShowIndex());
         model.addAttribute("links", linkManager.getAllLink());
         return "index";
     }
@@ -92,5 +96,10 @@ public class GeneralController {
     @Autowired
     public void setLinkManager(@Qualifier("linkManager") LinkManager linkManager) {
         this.linkManager = linkManager;
+    }
+
+    @Autowired
+    public void setImageManager(@Qualifier("imageManager") ImageManager imageManager) {
+        this.imageManager = imageManager;
     }
 }
