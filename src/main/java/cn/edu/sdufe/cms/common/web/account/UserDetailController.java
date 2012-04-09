@@ -3,7 +3,6 @@ package cn.edu.sdufe.cms.common.web.account;
 import cn.edu.sdufe.cms.common.entity.account.User;
 import cn.edu.sdufe.cms.common.service.account.GroupManager;
 import cn.edu.sdufe.cms.common.service.account.UserManager;
-import com.google.common.collect.Lists;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

@@ -58,7 +58,7 @@ public class ImageController {
         int pageCount = 1;
         if (total % limit == 0) pageCount = total / limit;
         else pageCount = total / limit + 1;
-        model.addAttribute("images", imageManager.getPagedImage(0,limit));
+        model.addAttribute("images", imageManager.getPagedImage(0, limit));
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("total", total);
         model.addAttribute("pageCount", pageCount);
@@ -92,7 +92,7 @@ public class ImageController {
         int pageCount = 1;
         if (total % limit == 0) pageCount = total / limit;
         else pageCount = total / limit + 1;
-        model.addAttribute("images", imageManager.getPagedImage(0,limit));
+        model.addAttribute("images", imageManager.getPagedImage(0, limit));
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("total", total);
         model.addAttribute("pageCount", pageCount);
@@ -136,9 +136,9 @@ public class ImageController {
     @RequestMapping(value = "save", method = RequestMethod.POST)
     public String save(@RequestParam(value = "file", required = false) MultipartFile file,
                        HttpServletRequest request, Image image, RedirectAttributes redirectAttributes) {
-       if(file == null) {
-           redirectAttributes.addFlashAttribute("error", "请选择上传的图片");
-       }
+        if (file == null) {
+            redirectAttributes.addFlashAttribute("error", "请选择上传的图片");
+        }
         //redirectAttributes.addAttribute("imageUrl", request.getContextPath()+"/upload/"+fileName);
         Image img = imageManager.save(file, request, image);
         if (null == img) {

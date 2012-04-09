@@ -1,16 +1,16 @@
 package cn.edu.sdufe.cms.common.entity.link;
 
-import cn.edu.sdufe.cms.common.entity.IdEntity;
+import cn.edu.sdufe.cms.common.entity.PersistableEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.Date;
 
 /**
  * link实体类
+ * <p/>
  * User: pengfei.dongpf@gmail.com
  * Date: 12-4-8
  * Time: 下午4:25
@@ -18,16 +18,11 @@ import java.util.Date;
 @Entity
 @Table(name = "cms_link")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Link extends IdEntity {
+public class Link extends PersistableEntity {
+
     private String title;
-
     private String url;
-
-    private boolean deleted;
-
-    private Date createTime;
-
-    private Date modifyTime;
+    private boolean status;
 
     public String getTitle() {
         return title;
@@ -45,28 +40,12 @@ public class Link extends IdEntity {
         this.url = url;
     }
 
-    public boolean isDeleted() {
-        return deleted;
+    public boolean isStatus() {
+        return status;
     }
 
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getModifyTime() {
-        return modifyTime;
-    }
-
-    public void setModifyTime(Date modifyTime) {
-        this.modifyTime = modifyTime;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     @Override

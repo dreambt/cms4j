@@ -93,8 +93,11 @@ public class ArticleController {
         int total = articleManager.count(id).intValue();
         int limit = 10;
         int pageCount = 1;
-        if (total % limit == 0) {pageCount = pageCount / limit;}
-        else {pageCount = total / limit + 1;}
+        if (total % limit == 0) {
+            pageCount = pageCount / limit;
+        } else {
+            pageCount = total / limit + 1;
+        }
         model.addAttribute("articles", articleManager.getListByCategoryId(id, 0, limit));
         model.addAttribute("category", categoryManager.get(id));
         model.addAttribute("categories", categoryManager.getNavCategory());
@@ -131,8 +134,11 @@ public class ArticleController {
         int total = articleManager.count(id).intValue();
         int limit = 10;
         int pageCount = 1;
-        if (total % limit == 0) {pageCount = pageCount / limit;}
-        else {pageCount = total / limit + 1;}
+        if (total % limit == 0) {
+            pageCount = pageCount / limit;
+        } else {
+            pageCount = total / limit + 1;
+        }
         model.addAttribute("articles", articleManager.getDigestByCategoryId(id, 0, 10));
         model.addAttribute("category", categoryManager.get(id));
         model.addAttribute("categories", categoryManager.getNavCategory());

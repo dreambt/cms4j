@@ -16,8 +16,8 @@ public interface LinkJpaDao extends PagingAndSortingRepository<Link, Long> {
     /**
      * 查找所有未删除的link
      *
-     * @param deleted
+     * @param status
      * @return
      */
-    List<Link> findByDeleted(boolean deleted);
+    List<Link> findByStatus(boolean status);
 }

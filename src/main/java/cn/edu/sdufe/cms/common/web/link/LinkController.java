@@ -25,6 +25,7 @@ public class LinkController {
 
     /**
      * 获得所有link
+     *
      * @param model
      * @return
      */
@@ -57,6 +58,7 @@ public class LinkController {
 
     /**
      * 新建link
+     *
      * @param link
      * @param redirectAttributes
      * @return
@@ -70,6 +72,7 @@ public class LinkController {
 
     /**
      * 批量删除link
+     *
      * @param request
      * @param redirectAttributes
      * @return

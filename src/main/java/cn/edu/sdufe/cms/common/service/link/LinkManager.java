@@ -25,19 +25,20 @@ public class LinkManager {
 
     /**
      * 获得所有link
+     *
      * @return
      */
     public List<Link> getAll() {
-        return (List<Link>)linkJpaDao.findAll();
+        return (List<Link>) linkJpaDao.findAll();
     }
 
     /**
-     * 获得所有未删除的link
+     * 获得所有审核通过的link
      *
      * @return
      */
     public List<Link> getAllLink() {
-        return linkJpaDao.findByDeleted(false);
+        return linkJpaDao.findByStatus(true);
     }
 
     /**
@@ -52,59 +53,46 @@ public class LinkManager {
 
     /**
      * 保存新建link
+     *
      * @param link
      */
     @Transactional(readOnly = false)
     public Link save(Link link) {
-        link.setDeleted(false);
-        link.setCreateTime(null);
-        link.setModifyTime(null);
-        return linkJpaDao.save(link);
+        link.setStatus(false);
+        return this.update(link);
     }
 
     /**
      * 保存修改link
+     *
      * @param link
      * @return
      */
     @Transactional(readOnly = false)
     public Link update(Link link) {
-        link.setModifyTime(null);
+        link.setLastModifiedDate(null);
         return linkJpaDao.save(link);
     }
 
     /**
-     * 设置编号为id的link的删除标记
+     * 删除编号为id的link
      *
      * @param id
      */
     @Transactional(readOnly = false)
     public void delete(Long id) {
-        Link link = this.getLink(id);
-        link.setDeleted(!link.isDeleted());
-        this.update(link);
-    }
-
-    /**
-     * 删除link
-     * @param link
-     */
-    @Transactional(readOnly = false)
-    public void delete(Link link) {
-        link.setDeleted(!link.isDeleted());
-        this.update(link);
+        linkJpaDao.delete(id);
     }
 
     /**
      * 批量删除link
+     *
      * @param ids
      */
     @Transactional(readOnly = false)
     public void batchDelete(String[] ids) {
-        for(String id: ids) {
-            Link link = this.getLink(Long.parseLong(id));
-            link.setDeleted(true);
-            this.update(link);
+        for (String id : ids) {
+            this.delete(Long.parseLong(id));
         }
     }
 
@@ -112,6 +100,5 @@ public class LinkManager {
     public void setLinkJpaDao(LinkJpaDao linkJpaDao) {
         this.linkJpaDao = linkJpaDao;
     }
-
 
 }

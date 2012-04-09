@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * image类jpa dao
- *
+ * <p/>
  * User: pengfei.dongpf@gmail.com
  * Date: 12-4-2
  * Time: 下午8:05

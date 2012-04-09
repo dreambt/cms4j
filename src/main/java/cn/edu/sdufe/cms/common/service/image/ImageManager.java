@@ -86,7 +86,7 @@ public class ImageManager {
         if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
             String fileName = this.upload(file, request);
             image.setImageUrl(fileName);
-             //项目路径// TODO 迁移服务器需要修改
+            //项目路径// TODO 迁移服务器需要修改
             String path = System.getProperty("user.dir") + "\\src\\main\\webapp\\static\\uploads\\gallery\\";
             //图片来源路径
 

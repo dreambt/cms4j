@@ -26,13 +26,14 @@ public class LinkDetailController {
 
     /**
      * 删除编号为id的link
+     *
      * @param id
      */
     @RequestMapping(value = "delete/{id}")
     public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         linkManager.delete(id);
         Link link = linkManager.getLink(id);
-        if(link.isDeleted()) {
+        if (link.isStatus()) {
             redirectAttributes.addFlashAttribute("info", "删除链接" + link.getId() + "成功");
         } else {
             redirectAttributes.addFlashAttribute("info", "恢复链接" + link.getId() + "成功");
@@ -42,6 +43,7 @@ public class LinkDetailController {
 
     /**
      * 跳转到修改link页面
+     *
      * @param id
      * @param model
      * @return
@@ -55,13 +57,14 @@ public class LinkDetailController {
 
     /**
      * 保存修改的link
+     *
      * @param id
      * @param link
      * @param redirectAttributes
      * @return
      */
     @RequestMapping(value = "save/{id}")
-    public String save(@PathVariable Long id, @Valid @ModelAttribute Link link, RedirectAttributes redirectAttributes ) {
+    public String save(@PathVariable Long id, @Valid @ModelAttribute Link link, RedirectAttributes redirectAttributes) {
         linkManager.update(link);
         return "redirect:/link/listAll";
     }

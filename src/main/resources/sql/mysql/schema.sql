@@ -10,8 +10,8 @@ CREATE  TABLE IF NOT EXISTS `cms4j`.`cms_category` (
   `id` MEDIUMINT(8) NOT NULL AUTO_INCREMENT COMMENT '栏目ID' ,
   `father_category_id` MEDIUMINT(8) NOT NULL DEFAULT 0 COMMENT '上级栏目ID' ,
   `category_name` VARCHAR(255) NOT NULL COMMENT '栏目名称' ,
-  `display_order` MEDIUMINT(8) NOT NULL DEFAULT 1 COMMENT '是否允许评论' ,
-  `show_type` VARCHAR(20) NOT NULL DEFAULT 0 COMMENT '显示方式0列表1摘要2正文3相册' ,
+  `display_order` MEDIUMINT(8) NOT NULL DEFAULT 1 COMMENT '显示顺序' ,
+  `show_type` VARCHAR(20) NOT NULL DEFAULT 0 COMMENT '显示方式' ,
   `url` VARCHAR(80) NOT NULL DEFAULT 0 COMMENT '自定义链接地址' ,
   `description` TEXT NOT NULL COMMENT 'SEO描述' ,
   `allow_comment` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '文章数' ,
@@ -245,17 +245,18 @@ DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 -- Table `cms4j`.`cms_link`
 -- -----------------------------------------------------
 
-DROP TABLE IF EXISTS 'cms4j'.'cms_link';
+DROP TABLE IF EXISTS `cms4j`.`cms_link`;
 
-CREATE TABLE IF NOT EXISTS 'cms4j'.'cms_link'(
-id INT(8) NOT NULL AUTO_INCREMENT,
-title VARCHAR(20) NOT NULL,
-url VARCHAR(80) NOT NULL,
-deleted TINYINT(1) NOT NULL,
-create_time TIMESTAMP,
-modify_time TIMESTAMP,
-PRIMARY KEY (id)
-);
+CREATE TABLE IF NOT EXISTS `cms4j`.`cms_link` (
+  `id` INT(8) NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(20) NOT NULL,
+  `url` VARCHAR(80) NOT NULL,
+  `status` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '0=未审核 1=已审核' ,
+  `last_modified_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后修改时间' ,
+  `created_date` TIMESTAMP NOT NULL DEFAULT 0 COMMENT '创建时间' ,
+  PRIMARY KEY (id) )
+ENGINE = InnoDB
+DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 
 
 
@@ -349,15 +350,32 @@ INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (70,3,
 -- -----------------------------------------------------
 -- 分类测试数据
 -- -----------------------------------------------------
-INSERT INTO `cms_category`(`id`, `father_category_id`, `category_name`, `display_order`, `show_type`, `url`, `description`, `allow_comment`, `allow_publish`, `last_modified_date`, `created_date`, `deleted`) VALUES
-(1,1,'首页',1,'NONE','index','无',0,0,'2012-03-22 23:58:00','2012-03-22 23:58:00',0),
-(2,1,'新闻报道',10,'NONE','','本中心的最新新闻资讯',1,1,'2012-03-22 23:58:00','2012-03-22 23:58:00',0),
-(3,2,'校内新闻',11,'LIST','','444',1,1,'2012-03-22 23:58:00','2012-03-22 23:58:00',0),
-(4,2,'校外报道',12,'LIST','','555',1,1,'2012-03-22 23:58:00','2012-03-22 23:58:00',0),
-(5,1,'培训课程',20,'DIGEST','','本中心长期提供培训课程',1,1,'2012-03-22 23:58:00','2012-03-22 23:58:00',0),
-(6,1,'活动相册',30,'GALLERY','','活动相册',0,1,'2012-03-22 23:58:00','2012-03-22 23:58:00',0),
-(7,1,'关于我们',40,'NONE','about','关于我们',0,0,'2012-03-22 23:58:00','2012-03-22 23:58:00',0);
-
+INSERT INTO `cms_category` (`id`, `father_category_id`, `category_name`, `display_order`, `show_type`, `url`, `description`, `allow_comment`, `allow_publish`, `last_modified_date`, `created_date`) VALUES
+(1, 1, '首页', 1, 'NONE', 'index', '无', 0, 0, '2012-03-22 15:58:00', '2012-03-22 15:58:00'),
+(2, 1, '中心概况', 10, 'NONE', '', '本中心的最新新闻资讯', 1, 1, '2012-04-07 08:30:17', '2012-03-22 15:58:00'),
+(3, 2, '中心简介', 11, 'LIST', '', '中心简介', 1, 1, '2012-04-07 08:42:41', '2012-03-22 15:58:00'),
+(4, 2, '组织结构', 12, 'LIST', '', '组织结构', 1, 1, '2012-04-07 08:43:00', '2012-03-22 15:58:00'),
+(5, 1, '学术团队', 20, 'DIGEST', '', '本中心长期提供培训课程', 1, 1, '2012-04-07 12:24:15', '2012-03-22 15:58:00'),
+(6, 1, '学术研究', 30, 'NONE', '', '活动相册', 0, 1, '2012-04-07 12:24:43', '2012-03-22 15:58:00'),
+(7, 1, '资讯服务', 40, 'NONE', 'about', '关于我们', 0, 0, '2012-04-07 12:25:15', '2012-03-22 15:58:00'),
+(8, 1, '教育培训', 50, 'NONE', '', '', 0, 0, '2012-04-07 12:25:16', '2012-04-07 08:31:17'),
+(9, 1, '交流合作', 60, 'NONE', '', '', 0, 1, '2012-04-07 08:31:51', '2012-04-07 08:31:51'),
+(10, 2, '运作机制', 13, 'LIST', '', '', 0, 1, '2012-04-07 08:43:22', '2012-04-07 08:43:22'),
+(11, 5, '学术带头人', 21, 'NONE', '', '', 0, 1, '2012-04-07 08:49:57', '2012-04-07 08:49:57'),
+(12, 5, '学术骨干', 22, 'CONTENT', '', '', 0, 1, '2012-04-07 08:51:08', '2012-04-07 08:50:25'),
+(13, 5, '专家指导委员会', 23, 'CONTENT', '', '', 0, 1, '2012-04-07 08:51:53', '2012-04-07 08:51:53'),
+(14, 5, '专家顾问', 24, 'CONTENT', '', '', 0, 1, '2012-04-07 08:52:14', '2012-04-07 08:52:14'),
+(15, 6, '研究方向', 31, 'CONTENT', '', '', 0, 1, '2012-04-07 08:52:33', '2012-04-07 08:52:33'),
+(16, 6, '科研成果', 32, 'CONTENT', '', '', 0, 1, '2012-04-07 08:52:49', '2012-04-07 08:52:49'),
+(17, 6, '科研项目', 33, 'DIGEST', '', '', 1, 1, '2012-04-07 08:53:09', '2012-04-07 08:53:09'),
+(18, 6, '学术活动', 34, 'DIGEST', '', '', 1, 1, '2012-04-07 08:56:05', '2012-04-07 08:56:05'),
+(19, 7, '财政？', 41, 'LIST', '', '', 0, 1, '2012-04-07 08:57:31', '2012-04-07 08:57:31'),
+(20, 7, '中小银行', 42, 'LIST', '', '', 0, 1, '2012-04-07 08:57:44', '2012-04-07 08:57:44'),
+(21, 7, '证券保险', 43, 'LIST', '', '', 0, 1, '2012-04-07 08:58:00', '2012-04-07 08:58:00'),
+(22, 7, '政府决策', 44, 'LIST', '', '', 0, 1, '2012-04-07 08:58:15', '2012-04-07 08:58:15'),
+(23, 9, '成果转化', 61, 'LIST', '', '', 1, 1, '2012-04-07 08:58:46', '2012-04-07 08:58:46'),
+(24, 9, '合作伙伴', 62, 'ALBUM', '', '', 0, 1, '2012-04-07 08:59:07', '2012-04-07 08:59:07'),
+(25, 9, '对外交流', 63, 'ALBUM', '', '', 0, 1, '2012-04-07 08:59:29', '2012-04-07 08:59:29');
 
 -- -----------------------------------------------------
 -- 文章测试数据
@@ -462,6 +480,16 @@ INSERT INTO `cms_image` (`id`, `title`, `image_url`, `description`, `last_modifi
 -- -----------------------------------------------------
 -- 友情链接测试数据
 -- -----------------------------------------------------
-INSERT INTO 'cms_link' ('id', 'title', 'url', 'deleted', 'create_time', 'modify_time') VALUES
-(1,'1','1','0', '2012-04-04 10:42:31', '2012-04-04 10:42:31'),
-(2,'2','2','0','2012-04-04 10:42:31', '2012-04-04 10:42:31');
+INSERT INTO `cms_link` (`id`, `title`, `url`, `status`, `last_modified_date`, `created_date`) VALUES
+(1,'百度一下1','http://www.baidu.com','1', null, null),
+(2,'百度一下2','http://www.baidu.com','1', null, null),
+(3,'百度一下3','http://www.baidu.com','1', null, null),
+(4,'百度一下4','http://www.baidu.com','1', null, null),
+(5,'百度一下5','http://www.baidu.com','1', null, null),
+(6,'百度一下6','http://www.baidu.com','1', null, null),
+(7,'百度一下7','http://www.baidu.com','1', null, null),
+(8,'百度一下8','http://www.baidu.com','1', null, null),
+(9,'百度一下9','http://www.baidu.com','1', null, null),
+(10,'百度一下10','http://www.baidu.com','1', null, null),
+(11,'百度一下11','http://www.baidu.com','1', null, null),
+(12,'谷歌','http://www.google.com.hk','1',null, null);

@@ -42,7 +42,7 @@ public class GeneralController {
      * @return
      */
     @RequestMapping(value = "/contact", method = RequestMethod.GET)
-     public String contactUs(Model model) {
+    public String contactUs(Model model) {
         model.addAttribute("categories", categoryManager.getNavCategory());
         return "contact";
     }
