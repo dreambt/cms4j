@@ -112,12 +112,12 @@ padding:15px 10px;
 .search-fieldset{border:none;padding:0;height:24px;}
 #search-box{padding-bottom:6px; float:left; height:23px;}
 #search{float:right; width:auto;height:24px;}
-#s{font:12px Tahoma, Arial, Verdana; font-size:11px; color:#c8c9be;margin:0; padding:4px 30px 4px 3px; background-color:#fff; border:1px solid #d3d2d2; width:185px;}
+#s{font:12px Tahoma, Arial, Verdana; font-size:11px; color:#c8c9be;margin:0; padding:4px 30px 4px 3px; background-color:#fff; border:1px solid #d3d2d2; width:230px;}
 #s:focus{border:1px solid #adacac; color:#adacac;}
 #search .go{position:absolute; margin:3px 0 0 -26px;}
 
 /* Top Navigation bar menu styling */
-#nav-menu {width:680px; float:left; margin:5px 0px 5px 0px; list-style-type:none;}
+#nav-menu {width:900px; float:left; margin:5px 0px 5px 0px; list-style-type:none;}
 #nav {margin:0px; padding:0px 0px 0px 0px; float:left;}
 #nav ul{padding:0;margin:0;width:auto;list-style: none;height:30px;position: relative;}
 #nav li{list-style:none;float:left;text-align:center;padding:0;font:normal 11px Tahoma, Arial, Verdana;line-height:26px;}
