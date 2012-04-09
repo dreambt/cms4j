@@ -12,7 +12,7 @@
     <div id="scroll_div">
         <div id="scroll_begin" style="display: inline;">
             <c:forEach items="${links}" var="link" begin="0" step="1">
-                <a href="${link.url}">${link.title}</a>
+                <a href="${link.url}" target="_blank">${link.title}</a>
             </c:forEach>
         </div>
         <div id="scroll_end" style="display: inline;"></div>
