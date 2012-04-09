@@ -55,9 +55,9 @@
                 <tbody>
                 <c:forEach items="${links}" var="link" begin="0" step="1">
                     <tr>
-                        <td><input type="checkbox" name="isSelected" value="${link.id}" ></td>
+                        <td><input type="checkbox" name="isSelected" value="${link.id}"></td>
                         <td><a href="${link.title}">${link.title}</a></td>
-                        <td><a href="${link.url}">${link.url}</a> </td>
+                        <td><a href="${link.url}">${link.url}</a></td>
                         <td><fmt:formatDate value="${link.createTime}" type="both"></fmt:formatDate></td>
                         <td><fmt:formatDate value="${link.modifyTime}" type="both"></fmt:formatDate></td>
                         <td><a href="${ctx}/link/edit/${link.id}">【修改】</a>

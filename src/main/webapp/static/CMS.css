@@ -169,10 +169,12 @@ p.albumDesc{
     float: left;
 }
 #fridendLink #scroll_div{
+    width: 805px;
     overflow: hidden;
     height: 15px;
     white-space: nowrap;
     margin-right: 0px;
+    float: left;
 }
 #fridendLink a:hover{
     text-decoration: underline;
