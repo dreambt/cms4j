@@ -45,11 +45,15 @@
 </div>
 <!-- END OF FOOTER -->
 <script>
-    var speed=40;
+    var speed=20;
     var scroll_end =document.getElementById("scroll_end");
     var scroll_div = document.getElementById("scroll_div");
+    var scroll_begin=document.getElementById("scroll_begin");
     scroll_end.innerHTML=scroll_begin.innerHTML;
-    scroll_begin.innerHTML="";
+    //alert(scroll_begin.scrollWidth+","+scroll_begin.clientWidth+","+scroll_begin.offsetWidth+","+scroll_div.scrollWidth);
+    if(scroll_begin.offsetWidth<=scroll_div.offsetWidth ){
+        scroll_begin.innerHTML="";
+    }
     function Marquee(){
         if(scroll_end.offsetWidth-scroll_div.scrollLeft<=0)
             scroll_div.scrollLeft-=scroll_begin.offsetWidth;
