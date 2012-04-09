@@ -12,7 +12,7 @@
 <!-- BEGIN HEADER -->
 <div id="header">
     <div id="top-header">
-        <div class="logo"><a href="index.html"><img src="${ctx}/static/images/logo.jpg" alt="" style="vertical-align:middle" /><h1 class="cufon">山东省金融信息技术研究中心</h1></a></div>
+        <div class="logo"><a href="index.html"><img src="${ctx}/static/images/logo.jpg" alt="" style="vertical-align:middle;margin-right: 10px;margin-bottom: 5px;" /><h1 class="cufon">山东省金融信息技术研究中心</h1></a></div>
     </div>
     <div id="bottom-header">
         <div id="nav-menu">
@@ -27,8 +27,8 @@
                 </li>
                 <li><a href="${ctx}/" class="cufon">中心概况</a>
                     <ul>
-                        <li><a href="${ctx}/content/1">中心简介</a></li>
-                        <li><a href="${ctx}/content/1">组织结构</a></li>
+                        <li><a href="${ctx}/article/content/17">中心简介</a></li>
+                        <li><a href="${ctx}/article/content/18">组织结构</a></li>
                         <li><a href="#">运作机制</a>
                             <ul>
                                 <li><a href="${ctx}/content/1">规章制度</a></li>
