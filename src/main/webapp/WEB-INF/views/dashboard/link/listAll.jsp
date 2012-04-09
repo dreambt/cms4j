@@ -23,7 +23,7 @@
 <div id="main_container" class="main_container container_16 clearfix">
     <div class="flat_area grid_10">
         <h2>友情管理列表</h2>
-        <p>下面列出了所有友情链接, 您可以对友情链接进行 <strong>修改</strong><strong>删除</strong>.点击链接名称或URL可以直接进入相应的网站.</p>
+        <p>下面列出了所有友情链接, 您可以对友情链接进行 <strong>修改</strong><strong>和审核</strong>.点击链接名称或URL可以直接进入相应的网站.</p>
         <c:if test="${not empty info}">
             <div id="message" class="alert alert_blue">
                 <img height="24" width="24"
