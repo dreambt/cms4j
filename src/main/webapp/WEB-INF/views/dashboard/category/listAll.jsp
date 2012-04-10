@@ -19,6 +19,7 @@
     <div class="flat_area grid_16">
         <h2>菜单管理</h2>
         <p>这里可以管理 <strong>顶级菜单</strong> 和相应的 <strong>二级菜单</strong> .</p>
+        <p>点击二级菜单的名称将跳转到与其相关的文章列表，点击其url将跳转到相应的文章/文章列表/文章摘要的预览页面。在需要进行删除操作时，非空的菜单是不能删除的，这时您得先全部删除与其相关的文章或子菜单!</p>
         <c:if test="${not empty info}">
             <div id="message" class="alert alert_blue">
                 <img height="24" width="24"
@@ -45,7 +46,7 @@
                     <li>
 
                         <h3 class="bar" id="1" title="点击展开">${category.categoryName} [${fn:length(category.subCategories)}]&nbsp;顺序：${category.displayOrder}&nbsp;<a class="amodify" href="${ctx}/category/edit/${category.id}"><span>【修改】</span></a>
-                            <a class="amodify" id="deleteFir" href="${ctx}/category/delete/${category.id}"><span>【删除】</span></a></h3>
+                            <a class="amodify delete" href="${ctx}/category/delete/${category.id}"><span>【删除】</span></a></h3>
                         <c:if test="${fn:length(category.subCategories) > 0}">
                             <div class="content">
                                     <table class="display menu_sec">
@@ -65,7 +66,7 @@
                                             <tr>
                                                 <td><a href="${ctx}/article/listByCategory/${subCategory.id}">${subCategory.categoryName}</a></td>
                                                 <td>${subCategory.displayOrder}</td>
-                                                <td>${subCategory.url}</td>
+                                                <td><a href="${ctx}/${subCategory.url}" target="_blank">${subCategory.url}</a></td>
                                                 <td><c:choose> <c:when test="${subCategory.allowComment}"><img src="${ctx}/static/dashboard/images/success.png"/> </c:when><c:otherwise><img  src="${ctx}/static/dashboard/images/error.png"/> </c:otherwise></c:choose></td>
                                                 <td><c:choose> <c:when test="${subCategory.allowPublish}"><img src="${ctx}/static/dashboard/images/success.png"/> </c:when><c:otherwise><img src="${ctx}/static/dashboard/images/error.png"/> </c:otherwise></c:choose></td>
                                                 <td>
@@ -73,7 +74,7 @@
                                                       <c:if test="${showType.value==subCategory.showType.value}">${showType.displayName}</c:if>
                                                 </c:forEach>
                                                 </td>
-                                                <td><a href="${ctx}/category/edit/${subCategory.id}" type="submit">【修改】</a> <a href="${ctx}/category/delete/${subCategory.id}" type="submit" class="deleteSec">【删除】</a></td>
+                                                <td><a href="${ctx}/category/edit/${subCategory.id}" type="submit">【修改】</a> <a href="${ctx}/category/delete/${subCategory.id}" type="submit" class="delete">【删除】</a></td>
                                             </tr>
                                         </c:forEach>
                                         </tbody>
@@ -88,14 +89,7 @@
     </form:form>
 </div>
 <script type="text/javascript">
-    $('#deleteFir').click(function(){
-        if(confirm("删除一级菜单将连带删除其下属二级菜单，请您慎重！确定要删除吗？")){
-            return true;
-        } else{
-            return false;
-        }
-    });
-    $('.deleteSec').click(function(){
+    $('.delete').click(function(){
         if(confirm("确定要删除吗？")){
             return true;
         } else{
