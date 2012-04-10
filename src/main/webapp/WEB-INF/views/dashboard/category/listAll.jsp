@@ -44,8 +44,7 @@
             <ul class="block content_accordion">
                 <c:forEach items="${categories}" var="category" begin="0" step="1">
                     <li>
-
-                        <h3 class="bar" id="1" title="点击展开">${category.categoryName} [${fn:length(category.subCategories)}]&nbsp;顺序：${category.displayOrder}&nbsp;<a class="amodify" href="${ctx}/category/edit/${category.id}"><span>【修改】</span></a>
+                        <h3 class="bar" id="1" title="点击展开"><a href="${ctx}/">${category.categoryName}</a> [${fn:length(category.subCategories)}]&nbsp;顺序：${category.displayOrder}&nbsp;<a class="amodify" href="${ctx}/category/edit/${category.id}"><span>【修改】</span></a>
                             <a class="amodify delete" href="${ctx}/category/delete/${category.id}"><span>【删除】</span></a></h3>
                         <c:if test="${fn:length(category.subCategories) > 0}">
                             <div class="content">
