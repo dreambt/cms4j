@@ -104,7 +104,7 @@ padding:15px 10px;
 ------------------------------------------------------*/
 #header{height:139px; width:920px; background-image:url(../images/top-shadow.jpg); background-position:center 46px;  background-repeat:no-repeat;}
 #top-header{height:108px; background-image:url(../images/strip-line.gif); background-position:top; background-repeat:repeat-x;}
-#bottom-header{width:920px; border-bottom:1px solid #969696; float:left;}
+#bottom-header{width:920px; border-bottom:1px solid #969696; float:left;height: 29px;}
 .logo{width:620px; padding:38px 0px 0px 20px; float:left;display:inline}
 .logo h1{display:inline;padding:17px 0 17px 0}
 
