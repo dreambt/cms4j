@@ -1,7 +1,11 @@
 package cn.edu.sdufe.cms.utilities.thumb;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.CropImageFilter;
+import java.awt.image.FilteredImageSource;
+import java.awt.image.ImageFilter;
 import java.io.File;
 
 /**
@@ -34,73 +38,47 @@ public class ImageThumb {
     int nHalfDots;
 
     /**
-     * Start: Use Lanczos filter to replace the original algorithm for image
-     * scaling. Lanczos improves quality of the scaled image modify by :blade
-     */
-
-    public static void main(String[] args) {
-        ImageThumb is = new ImageThumb();
-        //项目根路径
-        String path = System.getProperty("user.dir");
-        System.out.println(path);
-        //图片来源路径
-        // TODO 迁移服务器需要修改
-        String fromPath = path + "\\src\\main\\webapp\\static\\uploads\\gallery\\gallery-big\\";
-        String toPath = path + "\\src\\main\\webapp\\static\\uploads\\gallery\\gallery-thumb\\";
-        System.out.println(fromPath);
-        System.out.println(toPath);
-        try {
-            is.saveImageAsJpg(fromPath + "1333520190031iAJ4TX.jpg",
-                    toPath + "c.bmp", 200,175);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
-
-    /**
      *
      * @param fromFileStr
      * @param saveToFileStr
-     * @param formatWideth
+     * @param formatWidth
      * @param formatHeight
      * @throws Exception
      */
     public void saveImageAsJpg(String fromFileStr, String saveToFileStr,
-                               int formatWideth, int formatHeight) throws Exception {
+                               int formatWidth, int formatHeight) throws Exception {
         BufferedImage srcImage;
         File saveFile = new File(saveToFileStr);
         File fromFile = new File(fromFileStr);
         srcImage = ImageIO.read(fromFile); // construct image
-        int imageWideth = srcImage.getWidth(null);
+        int imageWidth = srcImage.getWidth(null);
         int imageHeight = srcImage.getHeight(null);
-        int changeToWideth = 0;
+        int changeToWidth = 0;
         int changeToHeight = 0;
-        if (imageWideth > 0 && imageHeight > 0) {
+        double imageScale = (imageWidth+0.1)/(imageHeight+0.1);
+        double formatScale = (formatWidth+0.1)/(formatHeight+0.1);
+        if (imageWidth > 0 && imageHeight > 0) {
             // flag=true;
-            if (imageWideth / imageHeight >= formatWideth / formatHeight) {
-                if (imageWideth > formatWideth) {
-                    changeToWideth = formatWideth;
-                    changeToHeight = (imageHeight * formatWideth) / imageWideth;
-                } else {
-                    changeToWideth = imageWideth;
-                    changeToHeight = imageHeight;
-                }
+            if (imageScale >= formatScale) {
+                changeToHeight = formatHeight;
+                changeToWidth = (changeToHeight*imageWidth)/imageHeight;
             } else {
-                if (imageHeight > formatHeight) {
-                    changeToHeight = formatHeight;
-                    changeToWideth = (imageWideth * formatHeight) / imageHeight;
-                } else {
-                    changeToWideth = imageWideth;
-                    changeToHeight = imageHeight;
-                }
+                changeToWidth = formatWidth;
+                changeToHeight = (changeToWidth*imageHeight)/imageWidth;
             }
         }
-
-        srcImage = imageZoomOut(srcImage, changeToWideth, changeToHeight);
-        ImageIO.write(srcImage, "JPEG", saveFile);
+        srcImage = imageZoomOut(srcImage, changeToWidth, changeToHeight);
+        BufferedImage tag = cut(srcImage, formatWidth, formatHeight);
+        ImageIO.write(tag, "JPEG", saveFile);
     }
 
+    /**
+     * 重新制定大小
+     * @param srcBufferImage
+     * @param w
+     * @param h
+     * @return
+     */
     public BufferedImage imageZoomOut(BufferedImage srcBufferImage, int w, int h) {
         width = srcBufferImage.getWidth();
         height = srcBufferImage.getHeight();
@@ -115,9 +93,23 @@ public class ImageThumb {
         return pbFinalOut;
     }
 
-    /** *//**
-     * ����ͼ��ߴ�
+    /**
+     * 裁剪
+     * @param src
+     * @param width
+     * @param height
+     * @return
      */
+    public BufferedImage cut(BufferedImage src, int width, int height) {
+        ImageFilter cropFilter = new CropImageFilter(0, 0, width, height);
+        Image img = Toolkit.getDefaultToolkit().createImage(new FilteredImageSource(src.getSource(), cropFilter));
+        BufferedImage tag = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        Graphics g = tag.getGraphics();
+        g.drawImage(img, 0, 0, null); // 绘制缩小后的图
+        g.dispose();
+        return tag;
+    }
+
     private int DetermineResultSize(int w, int h) {
         double scaleH, scaleV;
         scaleH = (double) w / (double) width;

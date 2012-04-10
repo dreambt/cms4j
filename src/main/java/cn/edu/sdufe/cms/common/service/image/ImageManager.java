@@ -104,6 +104,7 @@ public class ImageManager {
                 imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "dashboard-thumb\\" + fileName, 50, 57);
                 imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "photo-thumb\\" + fileName, 200, 122);
                 imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "album-thumb\\" + fileName, 218, 194);
+                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "index-thumb\\" + fileName, 460, 283);
 
             } catch (Exception e) {
                 logger.info(e.getMessage());
@@ -160,6 +161,7 @@ public class ImageManager {
         this.deletePic("dashboard-thumb\\" + image.getImageUrl());
         this.deletePic("photo-thumb\\" + image.getImageUrl());
         this.deletePic("album-thumb\\" + image.getImageUrl());
+        this.deletePic("index-thumb\\" + image.getImageUrl());
 
         //实现上传
         if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
@@ -174,6 +176,7 @@ public class ImageManager {
                 imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "dashboard-thumb\\" + fileName, 50, 57);
                 imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "photo-thumb\\" + fileName, 200, 122);
                 imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "album-thumb\\" + fileName, 218, 194);
+                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "index-thumb\\" + fileName, 460, 283);
 
             } catch (Exception e) {
                 logger.info(e.getMessage());

@@ -88,6 +88,25 @@ public class ImageDetailController {
         return "redirect:/gallery/listAll";
     }
 
+    /**
+     * 首页显示
+     * @param id
+     * @param redirectAttributes
+     * @return
+     */
+    @RequestMapping(value = "showIndex/{id}")
+    public String showIndex(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        Image image = imageManager.getImage(id);
+        image.setShowIndex(!image.isShowIndex());
+        imageManager.update(image);
+        if(image.isShowIndex()) {
+            redirectAttributes.addFlashAttribute("info", "首页显示" + image.getId()+ "成功");
+        } else {
+            redirectAttributes.addFlashAttribute("info", "取消首页显示" + image.getId()+ "成功");
+        }
+        return "redirect:/gallery/listAll";
+    }
+
     @ModelAttribute("image")
     public Image getImage(@PathVariable Long id) {
         return imageManager.getImage(id);
