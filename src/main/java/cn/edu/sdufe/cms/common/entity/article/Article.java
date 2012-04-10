@@ -26,37 +26,21 @@ import java.util.List;
 public class Article extends PersistableEntity {
 
     private Category category;
-
     private Long categoryId;
-
     private String categoryName;
-
     private User user;
-
     private String author;
-
     private boolean top;
-
     private String subject;
-
     private String message;
-
     private String digest;
-
     private String keyword;
-
     private boolean status;
-
     private int rate;
-
     private int rateTimes;
-
     private boolean deleted;
-
     private boolean allowComment;
-
     private int views;
-
     private List<Comment> commentList = Lists.newArrayList();
 
     @ManyToOne(fetch = FetchType.LAZY)

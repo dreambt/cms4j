@@ -18,7 +18,7 @@ CREATE  TABLE IF NOT EXISTS `cms_user` (
   `lastip` INT(10) NOT NULL,
   `last_time` TIMESTAMP NOT NULL DEFAULT 549567296 ,
   `last_act_time` TIMESTAMP NOT NULL DEFAULT 549567296 ,
-  `create_time` TIMESTAMP NOT NULL DEFAULT 549567296,
+  `created_date` TIMESTAMP NOT NULL DEFAULT 549567296,
   `modify_time` TIMESTAMP NOT NULL DEFAULT 549567296,
 );
 
@@ -74,7 +74,7 @@ CREATE  TABLE `cms_category` (
   `description` VARCHAR(255) NOT NULL ,
   `allow_publish` TINYINT(1) NOT NULL ,
   `show_type` VARCHAR(20) NOT NULL,
-  `create_time` TIMESTAMP NOT NULL DEFAULT 549567296,
+  `created_date` TIMESTAMP NOT NULL DEFAULT 549567296,
   `modify_time` TIMESTAMP NOT NULL DEFAULT 549567296,
   PRIMARY KEY (`id`),
   foreign key(father_category_id) references cms_category(id)
@@ -101,7 +101,7 @@ CREATE  TABLE IF NOT EXISTS `cms_article` (
   `allow_comment` TINYINT(1) NOT NULL DEFAULT 0 ,
   `views` TINYINT(3) NOT NULL DEFAULT 0 ,
   `count` TINYINT(3) NOT NULL DEFAULT 0 ,
-  `create_time` TIMESTAMP NOT NULL DEFAULT 549567296 ,
+  `created_date` TIMESTAMP NOT NULL DEFAULT 549567296 ,
   `modify_time` TIMESTAMP NOT NULL DEFAULT 549567296 ,
   PRIMARY KEY (`id`)
 );
@@ -119,7 +119,7 @@ CREATE  TABLE IF NOT EXISTS `cms_comment` (
   `status` TINYINT(1) NOT NULL DEFAULT 0 ,
   `deleted` TINYINT(1) NOT NULL DEFAULT 0 ,
   `message` VARCHAR(1000) NOT NULL ,
-  `create_time` TIMESTAMP NOT NULL DEFAULT 549567296,
+  `created_date` TIMESTAMP NOT NULL DEFAULT 549567296,
   `modify_time` TIMESTAMP NOT NULL DEFAULT 549567296,
   PRIMARY KEY (`id`),
   foreign key(article_id) references cms_article(id)
@@ -158,7 +158,7 @@ CREATE  TABLE IF NOT EXISTS `cms_manage_log` (
   `id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `user_id` MEDIUMINT(8) NOT NULL ,
   `action` VARCHAR(255) NOT NULL ,
-  `create_time` TIMESTAMP NOT NULL DEFAULT 549567296,
+  `created_date` TIMESTAMP NOT NULL DEFAULT 549567296,
   `modify_time` TIMESTAMP NOT NULL DEFAULT 549567296,
   PRIMARY KEY (`id`),
   foreign key(user_id) references cms_user(id)
@@ -174,7 +174,7 @@ CREATE TABLE IF NOT EXISTS cms_archive (
 id INT(10) NOT NULL AUTO_INCREMENT,
 title VARCHAR(10) NOT NULL,
 article_count INT(5) NOT NULL,
-create_time TIMESTAMP NOT NULL,
+created_date TIMESTAMP NOT NULL,
 modify_time TIMESTAMP NOT NULL,
 PRIMARY KEY (id)
 );
@@ -204,6 +204,6 @@ title VARCHAR(50) NOT NULL,
 image_url VARCHAR(30) NOT NULL,
 description VARCHAR(1000),
 deleted TINYINT(3) NOT NULL,
-create_time TIMESTAMP(23,10) NOT NULL,
+created_date TIMESTAMP(23,10) NOT NULL,
 modify_time TIMESTAMP(23,10) NOT NULL,
 );
