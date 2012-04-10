@@ -2,6 +2,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -35,12 +36,12 @@
 <div id="slideshow">
     <c:forEach items="${images}" var="image" begin="0" step="1">
     <div class="slide-text">
-        <img src="${ctx}/static/images/slide1.jpg" alt="" class="slidehalf"/>
+        <img src="${ctx}/static/uploads/gallery/gallery-big/${image.imageUrl}" alt="" class="slidehalf"/>
 
         <h1>${image.title}</h1>
 
         <p>${image.description}</p>
-        <a class="read_more" href="#">了解详情 &raquo;</a>
+        <a class="read_more" href="#"><%----%>&raquo;</a>
     </div>
     </c:forEach>
     <!-- end of slide1 -->
@@ -144,8 +145,9 @@
         <div class="maincontent">
             <h2 class="cufon">公告</h2>
             <ul class="content-list">
-                <li><a href="#">Doloremque laudantium, totam rem aperiam</a>
-                <li><a href="#">Inventore veritatis et quasi architecto</a>
+                <c:forEach items="${posts}" var="post" begin="0" end="1" step="1">
+                <li><a href="${ctx}/article/content/${post.id}">${post.subject}</a></li>
+                </c:forEach>
             </ul>
         </div>
         <div class="maincontent">

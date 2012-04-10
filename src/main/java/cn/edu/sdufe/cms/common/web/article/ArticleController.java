@@ -185,6 +185,17 @@ public class ArticleController {
     }
 
     /**
+     * 获得公告
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "listPost")
+    public String listPost(Model model) {
+        model.addAttribute("articles", categoryManager.get(1L).getArticleList());
+        return "article/list";
+    }
+
+    /**
      * 发表新文章
      *
      * @param model
@@ -276,7 +287,7 @@ public class ArticleController {
     }
 
     @Autowired
-    public void setLinkManager(LinkManager linkManager) {
+    public void setLinkManager(@Qualifier("linkManager") LinkManager linkManager) {
         this.linkManager = linkManager;
     }
 }
