@@ -8,7 +8,7 @@
          获取分页显示的image
      -->
     <select id="getPagedImage" parameterType="int" resultType="Image">
-        select id, title, image_url as imageurl, description, show_index as showindex created_date as createddate, last_modified_date as lastmodifieddate, deleted
+        select id, title, image_url as imageurl, description, show_index as showindex, created_date as createddate, last_modified_date as lastmodifieddate, deleted
         from cms_image
         where deleted=0
         order by id DESC
