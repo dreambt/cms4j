@@ -47,14 +47,17 @@
                                     <c:if test="${fatherCategory.id==category.fatherCategoryId}">selected="selected"</c:if>>${fatherCategory.categoryName}</option>
                         </c:forEach>
                     </select><br><br>
+
                     <strong>显示类型</strong>
                     <form:select path="showType" items="${showTypes}" itemLabel="displayName"
-                                 itemValue="value"></form:select>
+                                 itemValue="value"></form:select>   <br><br>
                         <%--<select name="showType">--%>
                         <%--<c:forEach items="${showTypes}" var="showType" begin="0" step="1" >--%>
                         <%--<option value="${showType.value}" <c:if test="${showType.value==category.showType.value}">selected="selected"</c:if>>${showType.displayName}</option>--%>
                         <%--</c:forEach>--%>
                         <%--</select> <br><br>--%>
+                    <strong>作为导航</strong>
+                    <input type="checkbox" name="asNav">
                     <strong>允许评论</strong>
                     <input name="allowComment" type="checkbox" class="menuLbl"
                            <c:if test="${category.allowComment==true}">checked="checked"</c:if> >
