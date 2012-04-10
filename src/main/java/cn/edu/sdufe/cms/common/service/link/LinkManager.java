@@ -1,6 +1,5 @@
 package cn.edu.sdufe.cms.common.service.link;
 
-import cn.edu.sdufe.cms.common.dao.link.LinkJpaDao;
 import cn.edu.sdufe.cms.common.entity.link.Link;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

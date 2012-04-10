@@ -1,7 +1,6 @@
 package cn.edu.sdufe.cms.common.service.article;
 
 import cn.edu.sdufe.cms.common.dao.article.ArchiveDao;
-import cn.edu.sdufe.cms.common.dao.article.ArchiveJpaDao;
 import cn.edu.sdufe.cms.common.dao.article.ArticleDao;
 import cn.edu.sdufe.cms.common.entity.article.Archive;
 import cn.edu.sdufe.cms.common.entity.article.Article;
@@ -28,10 +27,7 @@ public class ArchiveManager {
 
     private static Logger logger = LoggerFactory.getLogger(ArchiveManager.class);
 
-    private ArchiveJpaDao archiveJpaDao;
-
     private ArchiveDao archiveDao;
-
     private ArticleDao articleDao;
 
     /**
@@ -40,7 +36,7 @@ public class ArchiveManager {
      * @return
      */
     public List<Archive> getAll() {
-        return (List<Archive>) archiveJpaDao.findAll();
+        return (List<Archive>) archiveDao.findAll();
     }
 
     /**
@@ -59,7 +55,7 @@ public class ArchiveManager {
      * @return
      */
     public Archive getByTitle(String title) {
-        return archiveJpaDao.findByTitle(title);
+        return archiveDao.findByTitle(title);
     }
 
     /**
@@ -69,7 +65,7 @@ public class ArchiveManager {
      * @return
      */
     public Archive getByArchiveId(Long id) {
-        return archiveJpaDao.findOne(id);
+        return archiveDao.findOne(id);
     }
 
     /**
@@ -102,7 +98,7 @@ public class ArchiveManager {
             archive.setArticleCount(articles.size());
             archive.setArticleList(articles);
             archive.setLastModifiedDate(null);
-            archiveJpaDao.save(archive);
+            archiveDao.save(archive);
         }
     }
 
@@ -113,20 +109,15 @@ public class ArchiveManager {
      */
     @Transactional(readOnly = false)
     public void delete(Long id) {
-        archiveJpaDao.delete(id);
+        archiveDao.delete(id);
     }
 
     @Autowired
-    public void setArchiveJpaDao(@Qualifier("archiveJpaDao") ArchiveJpaDao archiveJpaDao) {
-        this.archiveJpaDao = archiveJpaDao;
-    }
-
-    @Autowired(required = false)
     public void setArchiveDao(@Qualifier("archiveDao") ArchiveDao archiveDao) {
         this.archiveDao = archiveDao;
     }
 
-    @Autowired(required = false)
+    @Autowired
     public void setArticleDao(@Qualifier("articleDao") ArticleDao articleDao) {
         this.articleDao = articleDao;
     }

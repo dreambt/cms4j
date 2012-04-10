@@ -44,8 +44,8 @@
     <h2 class="box_head grad_colour round_top">编辑文章</h2>
     <div class="toggle_container">
         <div class="block">
-        <input type="hidden" name="id" value="${article.id}"/>
-        <label>文章分类</label> <form:select path="categoryId">
+        <input type="hidden" name="article.id" value="${article.id}"/>
+        <label>文章分类</label> <form:select path="category.id">
         <c:forEach items="${categories}" begin="0" step="1" var="categorie" varStatus="stat">
             <option value="${categorie.id}" <c:if test="${categorie.id eq article.category.id}">selected="selected"</c:if>>${categorie.categoryName}</option>
         </c:forEach></form:select>

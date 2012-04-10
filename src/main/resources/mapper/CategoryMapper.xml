@@ -13,8 +13,9 @@
         <result property="description" column="description"/>
         <result property="allowComment" column="allow_comment"/>
         <result property="allowPublish" column="allow_publish"/>
-        <result property="lastmodifieddate" column="last_modified_date"/>
-        <result property="createddate" column="created_date"/>
+        <result property="showNav" column="show_nav"/>
+        <result property="lastModifiedDate" column="last_modified_date"/>
+        <result property="createdDate" column="created_date"/>
         <result property="deleted" column="deleted"/>
         <collection property="subCategories" javaType="Category"/>
         <collection property="articleList" javaType="Article"/>
@@ -23,9 +24,9 @@
     <!--
          获取分类: 输出直接映射到对象, login_name列要"as loginName"以方便映射 department_id as "department.id"创建department对象并赋值
      -->
-    <select id="getCategory" parameterType="int" resultType="Category">
-        select id,father_category_id as fathercategoryid,category_name as categoryname,allow_comment as allowcomment,display_order as displayorder,
-          url,deleted,description,allow_publish as allowpublish,show_type as showtype,created_date as createddate,last_modified_date as lastmodifieddate
+    <select id="getCategory" parameterType="int" resultMap="categoryDetailMap">
+        select id,father_category_id,category_name,display_order,show_type,url,description,
+          allow_comment,allow_publish,show_nav,created_date,last_modified_date,deleted
         from cms_category
         where id=#{id} and deleted=0
         order by id ASC

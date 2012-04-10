@@ -4,8 +4,6 @@ import cn.edu.sdufe.cms.common.entity.IdEntity;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -22,13 +20,10 @@ import java.util.List;
  */
 @Entity
 @Table(name = "cms_group")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Group extends IdEntity {
 
     private String groupName;
-
     //private List<User> userList = Lists.newArrayList();
-
     private List<String> permissionList = Lists.newArrayList();
 
     public Group() {
@@ -62,7 +57,6 @@ public class Group extends IdEntity {
     @ElementCollection
     @CollectionTable(name = "cms_group_permission", joinColumns = {@JoinColumn(name = "group_id")})
     @Column(name = "permission")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     public List<String> getPermissionList() {
         return permissionList;
     }

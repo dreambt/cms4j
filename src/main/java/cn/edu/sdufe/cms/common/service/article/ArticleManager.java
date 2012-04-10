@@ -1,10 +1,8 @@
 package cn.edu.sdufe.cms.common.service.article;
 
 import cn.edu.sdufe.cms.common.dao.article.ArticleDao;
-import cn.edu.sdufe.cms.common.dao.article.ArticleJpaDao;
 import cn.edu.sdufe.cms.common.dao.article.CategoryDao;
 import cn.edu.sdufe.cms.common.entity.article.Article;
-import cn.edu.sdufe.cms.common.entity.article.Category;
 import cn.edu.sdufe.cms.utilities.analyzer.ArticleKeyword;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.Validate;
@@ -39,9 +37,6 @@ public class ArticleManager {
     private static final int KEYWORD_NUM = 10;
 
     private ArticleDao articleDao = null;
-
-    private ArticleJpaDao articleJpaDao = null;
-
     private CategoryDao categoryDao = null;
 
     private Validator validator = null;
@@ -53,20 +48,17 @@ public class ArticleManager {
      * @return
      */
     public Article get(Long id) {
-
-        //Dao不取相关连接表中的内容，比如评论
-        //return articleDao.getArticle(id);
-        return articleJpaDao.findOne(id);
+        return articleDao.findOne(id);
     }
 
     /**
-     * 通过id获取文章
+     * 通过id获取文章用于显示，带浏览次数统计
      *
      * @param id
      * @return
      */
     public Article getForView(Long id) {
-        Article article = articleJpaDao.findOne(id);
+        Article article = articleDao.findOne(id);
 
         // 记录文章访问次数
         article.setViews(article.getViews() + 1);
@@ -114,7 +106,7 @@ public class ArticleManager {
      */
     @Deprecated
     public List<Article> getAllArticleInitialized() {
-        List<Article> result = (List<Article>) articleJpaDao.findAll();
+        List<Article> result = (List<Article>) articleDao.findAll();
         for (Article article : result) {
             Jpas.initLazyProperty(article.getCommentList());
         }
@@ -160,7 +152,7 @@ public class ArticleManager {
      */
     @Deprecated
     public List<Article> getByUserId(Long userId) {
-        return (List<Article>) articleJpaDao.findByUserId(userId);
+        return (List<Article>) articleDao.findByUserId(userId);
     }
 
     /**
@@ -184,9 +176,6 @@ public class ArticleManager {
             article.setKeyword("");
 
             // 文章分类
-            Category category = categoryDao.get(article.getCategoryId());
-            article.setCategory(category);
-            article.setCategoryName(category.getCategoryName());
 
             //使用Hibernate Validator校验请求参数
             Validate.notNull(article, "文章参数为空");
@@ -239,7 +228,7 @@ public class ArticleManager {
             if (id.length() == 0) {
                 continue;
             }
-            article = articleDao.get(Long.parseLong(id));
+            article = articleDao.findOne(Long.parseLong(id));
             article.setStatus(false);
             this.update(article);
         }
@@ -257,7 +246,7 @@ public class ArticleManager {
             if (id.length() == 0) {
                 continue;
             }
-            article = articleDao.get(Long.parseLong(id));
+            article = articleDao.findOne(Long.parseLong(id));
             article.setDeleted(true);
             this.update(article);
         }
@@ -271,7 +260,7 @@ public class ArticleManager {
     @Transactional(readOnly = false)
     public Article update(Article article) {
         article.setLastModifiedDate(null);
-        return articleJpaDao.save(article);
+        return articlDao.save(article);
     }
 
     /**
@@ -281,11 +270,11 @@ public class ArticleManager {
      */
     @Transactional(readOnly = false)
     public int delete() {
-        List<Article> articleList = articleJpaDao.findByDeleted(true);
+        List<Article> articleList = articleDao.findByDeleted(true);
         int count = articleList.size();
         while (articleList.size() > 0) {
             Article article = articleList.remove(0);
-            articleJpaDao.delete(article.getId());
+            articleDao.delete(article.getId());
         }
         return count;
     }
@@ -305,8 +294,4 @@ public class ArticleManager {
         this.articleDao = articleDao;
     }
 
-    @Autowired
-    public void setArticleJpaDao(@Qualifier("articleJpaDao") ArticleJpaDao articleJpaDao) {
-        this.articleJpaDao = articleJpaDao;
-    }
 }

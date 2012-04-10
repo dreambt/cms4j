@@ -222,7 +222,6 @@ public class ArticleController {
     public String save(Article article, RedirectAttributes redirectAttributes) {
         // 获取用户登录信息
         ShiroDbRealm.ShiroUser shiroUser = (ShiroDbRealm.ShiroUser) SecurityUtils.getSubject().getPrincipal();
-        article.setAuthor(shiroUser.getName());
 
         // 文章作者
         User user = userManager.get(shiroUser.getId());

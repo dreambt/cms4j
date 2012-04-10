@@ -71,7 +71,7 @@ public class ArticleDao extends SqlSessionDaoSupport {
      * @return
      */
     @Cacheable(value = "article")
-    public Article get(Long id) {
+    public Article findOne(Long id) {
         return getSqlSession().selectOne("Article.getArticle", id);
     }
 

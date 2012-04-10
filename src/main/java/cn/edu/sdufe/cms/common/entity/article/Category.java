@@ -4,14 +4,9 @@ import cn.edu.sdufe.cms.common.entity.PersistableEntity;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.codehaus.jackson.annotate.JsonIgnore;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.*;
 import org.springside.modules.utils.Collections3;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.OrderBy;
-import javax.persistence.Table;
 import java.util.List;
 
 /**
@@ -23,7 +18,6 @@ import java.util.List;
  */
 @Entity
 @Table(name = "cms_category")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Category extends PersistableEntity {
 
     private Long fatherCategoryId;
@@ -58,10 +52,7 @@ public class Category extends PersistableEntity {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "cms_category", joinColumns = @JoinColumn(name = "father_category_id"), inverseJoinColumns = @JoinColumn(name = "id"))
-    @Fetch(FetchMode.SUBSELECT)
-    @WhereJoinTable(clause = "deleted='false'")
     @OrderBy("displayOrder ASC")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     public List<Category> getSubCategories() {
         return subCategories;
     }
@@ -71,10 +62,8 @@ public class Category extends PersistableEntity {
     }
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "cms_category_article", joinColumns = @JoinColumn(name = "category_id"), inverseJoinColumns = @JoinColumn(name = "article_id"))
-    @Fetch(FetchMode.SUBSELECT)
+    @JoinTable(name = "cms_article", joinColumns = @JoinColumn(name = "category_id"), inverseJoinColumns = @JoinColumn(name = "id"))
     @OrderBy(value = "id DESC")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     public List<Article> getArticleList() {
         return articleList;
     }

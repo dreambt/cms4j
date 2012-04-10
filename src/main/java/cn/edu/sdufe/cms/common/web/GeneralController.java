@@ -40,7 +40,7 @@ public class GeneralController {
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("images", imageManager.getImageByShowIndex());
         model.addAttribute("links", linkManager.getAllLink());
-       // TODO  model.addAttribute("posts", categoryManager.get(31L).getArticleList());
+        model.addAttribute("posts", categoryManager.get(31L).getArticleList());
         return "index";
     }
 
@@ -92,7 +92,7 @@ public class GeneralController {
         return "web/mashup-client";
     }
 
-    @Autowired(required = false)
+    @Autowired
     public void setCategoryManager(@Qualifier("categoryManager") CategoryManager categoryManager) {
         this.categoryManager = categoryManager;
     }

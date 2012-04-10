@@ -1,7 +1,6 @@
 package cn.edu.sdufe.cms.common.service.image;
 
 import cn.edu.sdufe.cms.common.dao.image.ImageDao;
-import cn.edu.sdufe.cms.common.dao.image.ImageJpaDao;
 import cn.edu.sdufe.cms.common.entity.image.Image;
 import cn.edu.sdufe.cms.utilities.RandomString;
 import cn.edu.sdufe.cms.utilities.thumb.ImageThumb;
@@ -30,9 +29,8 @@ import java.util.List;
 @Component
 @Transactional(readOnly = true)
 public class ImageManager {
-    private static Logger logger = LoggerFactory.getLogger(ImageManager.class);
 
-    private ImageJpaDao imageJpaDao;
+    private static Logger logger = LoggerFactory.getLogger(ImageManager.class);
 
     private ImageDao imageDao;
 
@@ -53,7 +51,7 @@ public class ImageManager {
      * @return
      */
     public List<Image> getAllImageByDeleted() {
-        return imageJpaDao.findByDeleted(false);
+        return imageDao.findByDeleted(false);
     }
 
     /**
@@ -62,7 +60,7 @@ public class ImageManager {
      * @return
      */
     public List<Image> getAllImage() {
-        return (List<Image>) imageJpaDao.findAll(new Sort(Sort.Direction.DESC, "id"));
+        return (List<Image>) imageDao.findAll(new Sort(Sort.Direction.DESC, "id"));
     }
 
     /**
@@ -71,7 +69,7 @@ public class ImageManager {
      * @return
      */
     public List<Image> getImageByShowIndex() {
-        return (List<Image>) imageJpaDao.findByShowIndex(true);
+        return (List<Image>) imageDao.findByShowIndex(true);
     }
 
     /**
@@ -81,7 +79,7 @@ public class ImageManager {
      * @return
      */
     public Image getImage(Long id) {
-        return imageJpaDao.findOne(id);
+        return imageDao.findOne(id);
     }
 
     /**
@@ -113,7 +111,7 @@ public class ImageManager {
         }
         image.setDeleted(false);
         image.setLastModifiedDate(null);
-        return imageJpaDao.save(image);
+        return imageDao.save(image);
     }
 
     /**
@@ -180,7 +178,7 @@ public class ImageManager {
             }
         }
         image.setLastModifiedDate(null);
-        return imageJpaDao.save(image);
+        return imageDao.save(image);
     }
 
     /**
@@ -191,7 +189,7 @@ public class ImageManager {
      */
     @Transactional(readOnly = false)
     public Image update(Image image) {
-        return imageJpaDao.save(image);
+        return imageDao.save(image);
     }
 
     /**
@@ -237,12 +235,12 @@ public class ImageManager {
      */
     @Transactional(readOnly = false)
     public int delete() {
-        List<Image> list = imageJpaDao.findByDeleted(true);
+        List<Image> list = imageDao.findByDeleted(true);
         int count = list.size();
         while (list.size() > 0) {
             try {
                 Image image = list.remove(0);
-                imageJpaDao.delete(image);
+                imageDao.delete(image);
                 deletePic(image.getImageUrl());
             } catch (Exception e) {
                 logger.info("在批量删除文章时发生异常.");
@@ -260,11 +258,6 @@ public class ImageManager {
         //上传路径
         String path = System.getProperty("user.dir");
         new File(path + "\\src\\main\\webapp\\static\\uploads\\gallery\\", fileName).delete();
-    }
-
-    @Autowired
-    public void setImageJpaDao(ImageJpaDao imageJpaDao) {
-        this.imageJpaDao = imageJpaDao;
     }
 
     @Autowired

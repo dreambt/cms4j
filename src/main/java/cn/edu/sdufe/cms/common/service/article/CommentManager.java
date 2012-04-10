@@ -1,7 +1,6 @@
 package cn.edu.sdufe.cms.common.service.article;
 
 import cn.edu.sdufe.cms.common.dao.article.CommentDao;
-import cn.edu.sdufe.cms.common.dao.article.CommentJpaDao;
 import cn.edu.sdufe.cms.common.entity.article.Comment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,8 +25,6 @@ public class CommentManager {
 
     private CommentDao commentDao;
 
-    private CommentJpaDao commentJpaDao;
-
     /**
      * 获取编号为id的评论
      *
@@ -35,7 +32,7 @@ public class CommentManager {
      * @return
      */
     public Comment get(Long id) {
-        return commentJpaDao.findOne(id);
+        return commentDao.findOne(id);
     }
 
     /**
@@ -44,7 +41,7 @@ public class CommentManager {
      * @return
      */
     public List<Comment> getAll() {
-        return (List<Comment>) commentJpaDao.findAll();
+        return (List<Comment>) commentDao.findAll();
     }
 
     /**
@@ -54,7 +51,7 @@ public class CommentManager {
      * @return
      */
     public List<Comment> getByArticleId(Long id) {
-        return commentJpaDao.findByArticleId(id);
+        return commentDao.findByArticleId(id);
     }
 
     /**
@@ -64,7 +61,7 @@ public class CommentManager {
      * @return
      */
     public List<Comment> getByUsername(String username) {
-        return commentJpaDao.findByUsername(username);
+        return commentDao.findByUsername(username);
     }
 
     /**
@@ -73,7 +70,7 @@ public class CommentManager {
      * @return
      */
     public List<Comment> getUnverifiedComment() {
-        return commentJpaDao.findByStatus(false);
+        return commentDao.findByStatus(false);
     }
 
     /**
@@ -107,7 +104,7 @@ public class CommentManager {
     @Transactional(readOnly = false)
     public Comment update(Comment comment) {
         comment.setLastModifiedDate(null);
-        return commentJpaDao.save(comment);
+        return commentDao.save(comment);
     }
 
     /**
@@ -152,7 +149,7 @@ public class CommentManager {
         int count = commentList.size();
         while (commentList.size() > 0) {
             try {
-                commentJpaDao.delete(commentList.remove(0));
+                commentDao.delete(commentList.remove(0));
             } catch (Exception e) {
                 logger.info("在批量删除评论时发生异常.");
             }
@@ -163,11 +160,6 @@ public class CommentManager {
     @Autowired
     public void setCommentDao(@Qualifier("commentDao") CommentDao commentDao) {
         this.commentDao = commentDao;
-    }
-
-    @Autowired
-    public void setCommentJpaDao(@Qualifier("commentJpaDao") CommentJpaDao commentJpaDao) {
-        this.commentJpaDao = commentJpaDao;
     }
 
 }

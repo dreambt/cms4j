@@ -1,6 +1,5 @@
 package cn.edu.sdufe.cms.common.service.image;
 
-import cn.edu.sdufe.cms.common.dao.image.ImageJpaDao;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;

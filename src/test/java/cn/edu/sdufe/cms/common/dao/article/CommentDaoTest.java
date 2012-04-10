@@ -22,7 +22,7 @@ import javax.persistence.PersistenceContext;
 public class CommentDaoTest extends SpringTxTestCase {
 
     @Autowired
-    private CommentJpaDao commentJpaDao;
+    private CommentDao commentDao;
 
     @PersistenceContext
     private EntityManager em;
@@ -34,7 +34,7 @@ public class CommentDaoTest extends SpringTxTestCase {
 
     @Test
     public void testGetCount() throws Exception {
-        Long count = commentJpaDao.count();
+        Long count = commentDao.count();
         em.flush();
         Assert.assertTrue(count > 0);
     }
