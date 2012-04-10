@@ -40,7 +40,7 @@ public class GeneralController {
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("images", imageManager.getImageByShowIndex());
         model.addAttribute("links", linkManager.getAllLink());
-        model.addAttribute("posts", categoryManager.get(31L).getArticleList());
+       // TODO  model.addAttribute("posts", categoryManager.get(31L).getArticleList());
         return "index";
     }
 
