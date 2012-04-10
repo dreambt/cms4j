@@ -57,8 +57,8 @@
                     <th>标题</th>
                     <th>描述</th>
                     <th>URL</th>
-                    <th>首页展示</th>
                     <th>上传时间</th>
+                    <th>首页展示</th>
                     <th>操作</th>
 
                 </tr>
@@ -70,9 +70,9 @@
                     <td><a href="${ctx}/static/uploads/gallery/gallery-big/${image.imageUrl}" rel="fancybox-thumb" class="fancy_box"><img src="${ctx}/static/uploads/gallery/dashboard-thumb/${image.imageUrl}" width="50px"/></a></td>
                     <td><a href="#">${image.title}</a></td>
                     <td><a href="${ctx}/static/uploads/gallery/dashboard-thumb/${image.imageUrl}" class="opener" value="${image.description}">点击查看</a> </td>
-                    <td>${image.imageUrl}</td>
-                    <td><a href="#">首页展示</a></td>
+                    <td><a href="$">${image.imageUrl}</a></td>
                     <td><fmt:formatDate value="${image.createdDate}" type="both"></fmt:formatDate></td>
+                    <td><a href="#">首页展示</a></td>
                     <td><a href="${ctx}/gallery/edit/${image.id}">【编辑】</a>
                         <c:choose><c:when test="${image.deleted}"><a href="${ctx}/gallery/delete/${image.id}">【恢复】</a></c:when>
                             <c:otherwise><a href="${ctx}/gallery/delete/${image.id}" id="delete">【删除】</a></c:otherwise></c:choose></td>
