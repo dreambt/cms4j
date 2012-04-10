@@ -23,7 +23,7 @@
 <div id="main_container" class="main_container container_16 clearfix">
     <div class="flat_area grid_10">
         <h2>友情管理列表</h2>
-        <p>下面列出了所有友情链接, 您可以对友情链接进行 <strong>修改</strong><strong>和审核</strong>.点击链接名称或URL可以直接进入相应的网站.</p>
+        <p>下面列出了所有友情链接, 您可以对友情链接进行 <strong>修改</strong>、<strong>审核</strong><strong>和删除</strong>.点击链接名称或URL可以直接进入相应的网站.</p>
         <c:if test="${not empty info}">
             <div id="message" class="alert alert_blue">
                 <img height="24" width="24"
@@ -60,7 +60,7 @@
                         <td><a href="${link.url}" target="_blank" >${link.url}</a></td>
                         <td><fmt:formatDate value="${link.createdDate}" type="both"></fmt:formatDate></td>
                         <td><fmt:formatDate value="${link.lastModifiedDate}" type="both"></fmt:formatDate></td>
-                        <td><a href="${ctx}/link/edit/${link.id}">【修改】</a>
+                        <td><a href="${ctx}/link/">【审核】</a><a href="${ctx}/link/edit/${link.id}">【修改】</a>
                             <a href="${ctx}/link/delete/${link.id}"><c:choose><c:when test="${link.status}">【删除】</c:when><c:otherwise>【恢复】</c:otherwise></c:choose></a></td>
                     </tr>
                 </c:forEach>
