@@ -19,7 +19,8 @@ CREATE  TABLE IF NOT EXISTS `cms_user` (
   `last_act_time` TIMESTAMP NOT NULL DEFAULT 549567296 ,
   `last_modified_date` TIMESTAMP NOT NULL DEFAULT 549567296,
   `created_date` TIMESTAMP NOT NULL DEFAULT 549567296,
-  `deleted` TINYINT(1) NOT NULL DEFAULT 0
+  `deleted` TINYINT(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
 );
 
 -- -----------------------------------------------------
@@ -205,7 +206,8 @@ image_url VARCHAR(30) NOT NULL,
 description VARCHAR(1000),
 last_modified_date TIMESTAMP(23,10) NOT NULL,
 created_date TIMESTAMP(23,10) NOT NULL,
-deleted TINYINT(3) NOT NULL
+deleted TINYINT(3) NOT NULL,
+PRIMARY KEY (`id`)
 );
 
 
@@ -221,5 +223,6 @@ title VARCHAR(50) NOT NULL,
 url VARCHAR(80) NOT NULL,
 status TINYINT(1),
 last_modified_date TIMESTAMP(23,10) NOT NULL,
-created_date TIMESTAMP(23,10) NOT NULL
+created_date TIMESTAMP(23,10) NOT NULL,
+PRIMARY KEY (`id`)
 );
