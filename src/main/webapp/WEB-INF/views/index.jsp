@@ -41,45 +41,9 @@
         <h1>${image.title}</h1>
 
         <p>${image.description}</p>
-        <a class="read_more" href="#"><%----%>&raquo;</a>
+        <a class="read_more" href="#"></a>
     </div>
     </c:forEach>
-    <!-- end of slide1 -->
-
-    <%--<div class="slide-text">
-        <img src="${ctx}/static/images/slide2.jpg" alt="" class="slidehalf"/>
-
-        <h1>企业家俱乐部...</h1>
-
-        <p>
-            山东省企业家俱乐部作为山东省内最具影响力的商业领袖俱乐部，服务企业家的社会公益活动，帮助山东企业家集聚产、研、政人脉，通过已有的丰富资源、独特优势、全新高效的运作、高品位的活动、周全务实的服务，为山东省商业领袖思想交流、精神互动的非盈利平台。</p>
-        <a class="read_more" href="#">了解详情 &raquo;</a>
-    </div>
-    <!-- end of slide2 -->
-
-    <div class="slide-text">
-        <img src="${ctx}/static/images/slide3.jpg" alt="" class="slidehalf"/>
-
-        <h1>环境关怀...</h1>
-
-        <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum
-            deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non
-            provident, similique sunt in culpa qui officia deserunt mollitia animi.</p>
-        <a class="read_more" href="#">了解详情 &raquo;</a>
-    </div>
-    <!-- end of slide3 -->
-
-    <div class="slide-text">
-        <img src="${ctx}/static/images/slide4.jpg" alt="" class="slidehalf"/>
-
-        <h1>专业的工作...</h1>
-
-        <p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod
-            maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus,
-            temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet.</p>
-        <a class="read_more" href="#">了解详情 &raquo;</a>
-    </div>
-    <!-- end of slide4 -->--%>
 </div>
 <div id="box-nav-slider">
     <div id="slideshow-navigation">

@@ -191,7 +191,8 @@ public class ArticleController {
      */
     @RequestMapping(value = "listPost")
     public String listPost(Model model) {
-        model.addAttribute("articles", categoryManager.get(1L).getArticleList());
+        //model.addAttribute("articles", categoryManager.getCategoryByName("公告").getArticleList());
+        model.addAttribute("articles", categoryManager.get(26L).getArticleList());
         return "article/list";
     }
 

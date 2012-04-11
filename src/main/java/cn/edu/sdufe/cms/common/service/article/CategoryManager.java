@@ -42,6 +42,16 @@ public class CategoryManager {
     }
 
     /**
+     * 通过名称获得分类
+     *
+     * @param name
+     * @return
+     */
+    public Category getCategoryByName(String name) {
+        return categoryDao.getCategoryByName(name);
+    }
+
+    /**
      * 获得编号为id的子分类
      *
      * @param id

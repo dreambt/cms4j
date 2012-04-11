@@ -41,6 +41,7 @@ public class GeneralController {
         model.addAttribute("images", imageManager.getImageByShowIndex());
         model.addAttribute("links", linkManager.getAllLink());
        // TODO  model.addAttribute("posts", categoryManager.get(31L).getArticleList());
+        model.addAttribute("posts", categoryManager.get(26L).getArticleList());
         return "index";
     }
 

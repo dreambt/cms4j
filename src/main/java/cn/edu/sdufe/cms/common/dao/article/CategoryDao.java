@@ -30,6 +30,16 @@ public class CategoryDao extends SqlSessionDaoSupport {
     }
 
     /**
+     * 通过名称获得分类
+     * @param name
+     * @return
+     */
+    @Cacheable(value = "categroyByName")
+    public Category getCategoryByName(String name) {
+        return (Category) getSqlSession().selectOne("Category.getCategoryByName", name);
+    }
+
+    /**
      * 获取所有可发表评论的分类列表
      *
      * @return

@@ -33,6 +33,18 @@
 	</select>
 
     <!--
+        获取分类: 通过分类名称
+    -->
+    <select id="getCategoryByName" parameterType="String" resultType="Category">
+        select id,father_category_id as fathercategoryid,category_name as categoryname,allow_comment as allowcomment,display_order as displayorder,
+          url,deleted,description,allow_publish as allowpublish,show_type as showtype,created_date as createddate,last_modified_date as lastmodifieddate
+        from cms_category
+        where category_name=#{name} and deleted=0
+        order by id ASC
+        limit 1
+	</select>
+
+    <!--
          获取所有可发表评论的分类列表
      -->
     <select id="getAllowPublishCategory" resultType="Category">
