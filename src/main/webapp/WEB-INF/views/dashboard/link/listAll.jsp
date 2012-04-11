@@ -60,8 +60,9 @@
                         <td><a href="${link.url}" target="_blank" >${link.url}</a></td>
                         <td><fmt:formatDate value="${link.createdDate}" type="both"></fmt:formatDate></td>
                         <td><fmt:formatDate value="${link.lastModifiedDate}" type="both"></fmt:formatDate></td>
-                        <td><a href="${ctx}/link/">【审核】</a><a href="${ctx}/link/edit/${link.id}">【修改】</a>
-                            <a href="${ctx}/link/delete/${link.id}"><c:choose><c:when test="${link.status}">【删除】</c:when><c:otherwise>【恢复】</c:otherwise></c:choose></a></td>
+                        <td><a href="${ctx}/link/audit/${link.id}"><c:choose><c:when test="${link.status}">【反审核】</c:when><c:otherwise>【审核】&nbsp;&nbsp;&nbsp;&nbsp;</c:otherwise></c:choose></a>
+                            <a href="${ctx}/link/edit/${link.id}">【修改】</a>
+                            <a href="${ctx}/link/delete/${link.id}">【删除】</a></td>
                     </tr>
                 </c:forEach>
 

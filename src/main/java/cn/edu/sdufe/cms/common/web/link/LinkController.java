@@ -54,6 +54,7 @@ public class LinkController {
      */
     @RequestMapping(value = "save")
     public String save(Link link, RedirectAttributes redirectAttributes) {
+        link.setStatus(false);
         linkManager.save(link);
         redirectAttributes.addFlashAttribute("info", "链接新建成功");
         return "redirect:/link/listAll";

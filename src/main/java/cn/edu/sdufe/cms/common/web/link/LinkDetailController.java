@@ -1,5 +1,6 @@
 package cn.edu.sdufe.cms.common.web.link;
 
+import cn.edu.sdufe.cms.common.entity.article.Comment;
 import cn.edu.sdufe.cms.common.entity.link.Link;
 import cn.edu.sdufe.cms.common.service.link.LinkManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -32,11 +34,8 @@ public class LinkDetailController {
     @RequestMapping(value = "delete/{id}")
     public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         linkManager.delete(id);
-        Link link = linkManager.getLink(id);
-        if (link.isStatus()) {
-            redirectAttributes.addFlashAttribute("info", "删除链接" + link.getId() + "成功");
-        } else {
-            redirectAttributes.addFlashAttribute("info", "恢复链接" + link.getId() + "成功");
+        if (null == linkManager.getLink(id)) {
+            redirectAttributes.addFlashAttribute("info", "删除链接成功");
         }
         return "redirect:/link/listAll";
     }
@@ -66,6 +65,26 @@ public class LinkDetailController {
     @RequestMapping(value = "save/{id}")
     public String save(@PathVariable Long id, @Valid @ModelAttribute Link link, RedirectAttributes redirectAttributes) {
         linkManager.update(link);
+        return "redirect:/link/listAll";
+    }
+
+    /**
+     * 审核编号为id的评论
+     *
+     * @return
+     */
+    @RequestMapping(value = "audit/{id}", method = RequestMethod.GET)
+    public String auditComment(@PathVariable("id") Long id, @ModelAttribute("link") Link link, RedirectAttributes redirectAttributes) {
+        link.setStatus(!link.isStatus());
+        if (null == linkManager.update(link)) {
+            redirectAttributes.addFlashAttribute("error", "操作友情链接 " + id + " 失败.");
+            return "redirect:/link/listAll";
+        }
+        if (link.isStatus()) {
+            redirectAttributes.addFlashAttribute("info", "审核友情链接" + id + " 成功.");
+        } else {
+            redirectAttributes.addFlashAttribute("info", "反审核友情链接" + id + " 成功.");
+        }
         return "redirect:/link/listAll";
     }
 
