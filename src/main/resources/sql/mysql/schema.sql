@@ -107,6 +107,7 @@ DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 -- -----------------------------------------------------
 -- Table `cms4j`.`cms_manage_log`
 -- -----------------------------------------------------
+/*
 DROP TABLE IF EXISTS `cms4j`.`cms_manage_log` ;
 
 CREATE  TABLE IF NOT EXISTS `cms4j`.`cms_manage_log` (
@@ -119,6 +120,7 @@ CREATE  TABLE IF NOT EXISTS `cms4j`.`cms_manage_log` (
   INDEX `fk_cms_log_cms_user1` (`user_id` ASC) )
 ENGINE = InnoDB
 DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
+*/
 
 
 -- -----------------------------------------------------
@@ -187,8 +189,8 @@ DROP TABLE IF EXISTS `cms4j`.`cms_category_article` ;
 CREATE  TABLE IF NOT EXISTS `cms4j`.`cms_category_article` (
   `category_id` MEDIUMINT(8) NOT NULL ,
   `article_id` MEDIUMINT(8) UNSIGNED NOT NULL ,
-  INDEX `fk_cms_category_article_cms_category1` (`category_id` ASC) ,
-  INDEX `fk_cms_category_article_cms_article1` (`article_id` ASC) ,
+  --INDEX `fk_cms_category_article_cms_category1` (`category_id` ASC) ,
+  --INDEX `fk_cms_category_article_cms_article1` (`article_id` ASC) ,
   PRIMARY KEY (`category_id`, `article_id`) )
 ENGINE = InnoDB
 DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
