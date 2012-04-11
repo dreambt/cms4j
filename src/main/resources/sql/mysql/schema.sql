@@ -353,7 +353,7 @@ INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (70,3,
 -- 分类测试数据
 -- -----------------------------------------------------
 INSERT INTO `cms_category` (`id`, `father_category_id`, `category_name`, `display_order`, `show_type`, `url`, `description`, `allow_comment`, `allow_publish`, `show_nav`, `last_modified_date`, `created_date`, `deleted`) VALUES
-(1, 1, '首页', 1, 'NONE', 'index', '无', 0, 0, 1, '2012-03-22 15:58:00', '2012-03-22 15:58:00', 0),
+(1, 1, '公告', 1, 'NONE', 'index', '无', 0, 0, 0, '2012-03-22 15:58:00', '2012-03-22 15:58:00', 0),
 (2, 1, '中心概况', 10, 'NONE', '', '本中心的最新新闻资讯', 1, 1, 1, '2012-04-07 08:30:17', '2012-03-22 15:58:00', 0),
 (3, 2, '中心简介', 11, 'LIST', '', '中心简介', 1, 1, 1, '2012-04-07 08:42:41', '2012-03-22 15:58:00', 0),
 (4, 2, '组织结构', 12, 'LIST', '', '组织结构', 1, 1, 1, '2012-04-07 08:43:00', '2012-03-22 15:58:00', 0),
