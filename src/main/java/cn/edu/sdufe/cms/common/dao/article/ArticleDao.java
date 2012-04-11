@@ -41,6 +41,15 @@ public class ArticleDao extends SqlSessionDaoSupport {
     }
 
     /**
+     * 获得首页显示的新闻资讯
+     * @return
+     */
+    @Cacheable(value = "news")
+    public List<Article> getNews() {
+        return getSqlSession().selectList("Article.getNews");
+    }
+
+    /**
      * 获取分类id的文章
      *
      * @param categoryId

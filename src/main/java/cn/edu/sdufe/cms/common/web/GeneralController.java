@@ -40,8 +40,8 @@ public class GeneralController {
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("images", imageManager.getImageByShowIndex());
         model.addAttribute("links", linkManager.getAllLink());
-       // TODO  model.addAttribute("posts", categoryManager.get(31L).getArticleList());
-        model.addAttribute("posts", categoryManager.get(26L).getArticleList());
+        model.addAttribute("news", articleManager.getNews());
+        model.addAttribute("posts", categoryManager.get(1L).getArticleList());
         return "index";
     }
 

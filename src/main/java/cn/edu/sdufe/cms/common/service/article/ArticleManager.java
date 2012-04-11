@@ -6,6 +6,7 @@ import cn.edu.sdufe.cms.common.dao.article.CategoryDao;
 import cn.edu.sdufe.cms.common.entity.article.Article;
 import cn.edu.sdufe.cms.common.entity.article.Category;
 import cn.edu.sdufe.cms.utilities.analyzer.ArticleKeyword;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.Validate;
 import org.apache.ibatis.session.RowBounds;
@@ -21,6 +22,7 @@ import org.springside.modules.orm.jpa.Jpas;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -105,6 +107,14 @@ public class ArticleManager {
      */
     public List<Article> getTopTen() {
         return articleDao.getTopTen();
+    }
+
+    /**
+     * 获得首页显示的新闻资讯
+     * @return
+     */
+    public List<Article> getNews() {
+        return articleDao.getNews();
     }
 
     /**

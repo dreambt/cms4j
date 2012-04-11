@@ -66,6 +66,17 @@
     </select>
 
     <!--
+        获取首页新闻资讯
+    -->
+    <select id="getNews" resultType="Article">
+        select id,subject,message,author,category_name as categoryname,rate,rate_times as ratetimes,views,top,status,deleted,cms_article.created_date as createddate,cms_article.last_modified_date as lastmodifieddate
+        from cms_article
+        where id in (select article_id from cms_category_article where category_id=3 or category_id=5) and deleted=0
+        order by id desc
+        limit 0,5
+    </select>
+
+    <!--
          通过分类id获取文章
      -->
     <select id="getArticleListByCategoryId" parameterType="int" resultType="Article">

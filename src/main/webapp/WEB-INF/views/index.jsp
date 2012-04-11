@@ -68,39 +68,19 @@
     </div>
     <div id="content2">
         <div class="maincontent">
-            <h2 class="cufon">新闻简报</h2>
+            <h2 class="cufon">新闻资讯</h2>
 
             <div id="featured"><!-- begin of featured slider -->
+                <c:forEach items="${news}" var="new" begin="0" step="1">
                 <div>
                     <div class="bg-featured"><img src="${ctx}/static/images/featured1.jpg" alt="" class="slidehalf"/>
                     </div>
                     <br/>
-                    <strong>企业海外并购高级研修班</strong><br/>
-
-                    <p class="featured-text">山东财经大学企业海外并购高级研修班将带你一起解析时下最热门的经济话题：中国企业走出国门，进行海外并购。 2000年我国加人WTO至今，中国企业对外投资开始了第二高峰。对外投资总额从2000年的20多亿美元激增到2001年的70多亿美元，此时的中国企业意识到只有走出国门，融人到世界经济体系当中，才能有更强的生存能力。
-                        为何中国企业的并购对象集中在发达国家？中国企业如何大规模借助外部融资，达到自己拓展海外的目的？中国企业要如何破解在海外并购中遇到的法律困境？</p>
+                    <strong>${new.subject}</strong><br/>
+                    <%--// TODO 字数限制 图片 --%>
+                    <p class="featured-text">${new.message}</p>
                 </div>
-                <!-- end of featured1 -->
-                <div>
-
-                    <div class="bg-featured"><img src="${ctx}/static/images/featured2.jpg" alt="" class="slidehalf"/>
-                    </div>
-                    <br/>
-                    <strong>首次理事会议</strong><br/>
-
-                    <p class="featured-text">理事长致辞，并宣布山东省金融论坛理事会成立理事长致辞，并宣布山东省金融论坛理事会成立理事长致辞，并宣布山东省金融论坛理事会成立理事长致辞，并宣布山东省金融论坛理事会成立理事长致辞，并宣布山东省金融论坛理事会成立理事长致辞，并宣布山东省金融论坛理事会成立理事长致辞，并宣布山东省金融论坛理事会成立理事长致辞，并宣布山东省金融论坛理事会成立理事长致辞，并宣布山东省金融论坛理事会成立理事长致辞，并宣布山东省金融论坛理事会成立...</p>
-                </div>
-                <!-- end of featured2 -->
-                <div>
-
-                    <div class="bg-featured"><img src="${ctx}/static/images/featured3.jpg" alt="" class="slidehalf"/>
-                    </div>
-                    <br/>
-                    <strong>论坛策划</strong><br/>
-
-                    <p class="featured-text">山东省中小企业融资与私募股权基金发展论坛改革开放来，我国中小企业迅速发展，调整了我国的产业结构，缓解了就业压力，同时促进了科技创新以及经济增长，成为了我国有活力、有生机的经济增长点。当前，卷席而来的金融危机，深刻地影响全球的经济社会发展以及实体经济，给我国中小企业带来了空前的困难。目前，温州企业困境反映出我国当前中小企业之困，中小企业发展中最大的瓶颈是资金缺乏，中小企业如何谋得融资，政策、环境、金融等如何发力，已经成为政府、企业和学术界共同关注和亟待解决的问题。</p>
-                </div>
-                <!-- end of featured3 -->
+                </c:forEach>
             </div>
             <!-- begin of featured slider -->
         </div>
@@ -109,7 +89,7 @@
         <div class="maincontent">
             <h2 class="cufon">公告</h2>
             <ul class="content-list">
-                <c:forEach items="${posts}" var="post" begin="0" end="1" step="1">
+                <c:forEach items="${posts}" var="post" begin="0" end="2" step="1">
                 <li><a href="${ctx}/article/content/${post.id}">${post.subject}</a></li>
                 </c:forEach>
             </ul>

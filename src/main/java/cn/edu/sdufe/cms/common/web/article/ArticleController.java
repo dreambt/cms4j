@@ -2,6 +2,7 @@ package cn.edu.sdufe.cms.common.web.article;
 
 import cn.edu.sdufe.cms.common.entity.account.User;
 import cn.edu.sdufe.cms.common.entity.article.Article;
+import cn.edu.sdufe.cms.common.entity.article.Category;
 import cn.edu.sdufe.cms.common.service.account.UserManager;
 import cn.edu.sdufe.cms.common.service.article.ArchiveManager;
 import cn.edu.sdufe.cms.common.service.article.ArticleManager;
@@ -207,7 +208,8 @@ public class ArticleController {
     public String createArticle(Model model) {
         // 不用报错，Neither BindingResult nor plain target object for bean name 'article' available as request attribute
         model.addAttribute("article", new Article());
-        model.addAttribute("categories", categoryManager.getAllowPublishCategory());
+        List<Category> categories = categoryManager.getAllowPublishCategory();
+        model.addAttribute("categories", categories);
         return "dashboard/article/edit";
     }
 
