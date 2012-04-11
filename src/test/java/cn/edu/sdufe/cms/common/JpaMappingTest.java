@@ -30,7 +30,7 @@ public class JpaMappingTest extends SpringTxTestCase {
 
     @Test
     public void allClassMapping() throws Exception {
-        H2Fixtures.reloadAllTable(dataSource, "/data/sample-data.xml");
+        //H2Fixtures.reloadAllTable(dataSource, "/data/sample-data.xml");
         Metamodel model = em.getEntityManagerFactory().getMetamodel();
         for (EntityType entityType : model.getEntities()) {
             String entityName = entityType.getName();

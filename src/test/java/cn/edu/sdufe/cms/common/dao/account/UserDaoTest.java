@@ -29,7 +29,7 @@ public class UserDaoTest extends SpringTxTestCase {
 
     @Before
     public void setUp() throws Exception {
-        H2Fixtures.reloadAllTable(dataSource, "/data/sample-data.xml");
+        //H2Fixtures.reloadAllTable(dataSource, "/data/sample-data.xml");
     }
 
     @Test
