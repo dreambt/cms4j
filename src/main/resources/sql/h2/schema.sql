@@ -12,14 +12,14 @@ CREATE  TABLE IF NOT EXISTS `cms_user` (
   `status` TINYINT(1) NOT NULL DEFAULT 0 ,
   `email_status` TINYINT(1) NOT NULL DEFAULT 0 ,
   `avatar_status` TINYINT(1) NOT NULL DEFAULT 0 ,
-  `deleted` TINYINT(1) NOT NULL DEFAULT 0 ,
   `photourl` VARCHAR(20) NOT NULL,
   `time_offset` CHAR(4) NOT NULL,
   `lastip` INT(10) NOT NULL,
   `last_time` TIMESTAMP NOT NULL DEFAULT 549567296 ,
   `last_act_time` TIMESTAMP NOT NULL DEFAULT 549567296 ,
+  `last_modified_date` TIMESTAMP NOT NULL DEFAULT 549567296,
   `created_date` TIMESTAMP NOT NULL DEFAULT 549567296,
-  `modify_time` TIMESTAMP NOT NULL DEFAULT 549567296,
+  `deleted` TINYINT(1) NOT NULL DEFAULT 0
 );
 
 -- -----------------------------------------------------
@@ -115,12 +115,12 @@ CREATE  TABLE IF NOT EXISTS `cms_comment` (
   `id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `article_id` MEDIUMINT(8) NOT NULL ,
   `username` VARCHAR(50) NOT NULL ,
+  `message` VARCHAR(1000) NOT NULL ,
   `post_ip` INT(10) NOT NULL ,
   `status` TINYINT(1) NOT NULL DEFAULT 0 ,
-  `deleted` TINYINT(1) NOT NULL DEFAULT 0 ,
-  `message` VARCHAR(1000) NOT NULL ,
+  `last_modified_date` TIMESTAMP NOT NULL DEFAULT 549567296,
   `created_date` TIMESTAMP NOT NULL DEFAULT 549567296,
-  `modify_time` TIMESTAMP NOT NULL DEFAULT 549567296,
+  `deleted` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   foreign key(article_id) references cms_article(id)
 );
@@ -158,8 +158,8 @@ CREATE  TABLE IF NOT EXISTS `cms_manage_log` (
   `id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `user_id` MEDIUMINT(8) NOT NULL ,
   `action` VARCHAR(255) NOT NULL ,
+  `last_modified_date` TIMESTAMP NOT NULL DEFAULT 549567296,
   `created_date` TIMESTAMP NOT NULL DEFAULT 549567296,
-  `modify_time` TIMESTAMP NOT NULL DEFAULT 549567296,
   PRIMARY KEY (`id`),
   foreign key(user_id) references cms_user(id)
 );
@@ -174,8 +174,8 @@ CREATE TABLE IF NOT EXISTS cms_archive (
 id INT(10) NOT NULL AUTO_INCREMENT,
 title VARCHAR(10) NOT NULL,
 article_count INT(5) NOT NULL,
+last_modified_date TIMESTAMP NOT NULL,
 created_date TIMESTAMP NOT NULL,
-modify_time TIMESTAMP NOT NULL,
 PRIMARY KEY (id)
 );
 
@@ -193,7 +193,7 @@ FOREIGN KEY (article_id) REFERENCES cms_article(id)
 );
 
 -- -----------------------------------------------------
--- Table `cms_gallery`
+-- Table `cms_image`
 -- -----------------------------------------------------
 
 DROP TABLE IF EXISTS cms_image;
@@ -203,7 +203,23 @@ id INT(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
 title VARCHAR(50) NOT NULL,
 image_url VARCHAR(30) NOT NULL,
 description VARCHAR(1000),
-deleted TINYINT(3) NOT NULL,
+last_modified_date TIMESTAMP(23,10) NOT NULL,
 created_date TIMESTAMP(23,10) NOT NULL,
-modify_time TIMESTAMP(23,10) NOT NULL,
+deleted TINYINT(3) NOT NULL
+);
+
+
+-- -----------------------------------------------------
+-- Table `cms_link`
+-- -----------------------------------------------------
+
+DROP TABLE IF EXISTS cms_link;
+
+CREATE TABLE cms_link(
+id INT(10) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+title VARCHAR(50) NOT NULL,
+url VARCHAR(80) NOT NULL,
+status TINYINT(1),
+last_modified_date TIMESTAMP(23,10) NOT NULL,
+created_date TIMESTAMP(23,10) NOT NULL
 );
