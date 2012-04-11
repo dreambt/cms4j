@@ -74,10 +74,10 @@
             <div id="featured"><!-- begin of featured slider -->
                 <c:forEach items="${news}" var="newOne" begin="0" step="1">
                 <div>
-                    <div class="bg-featured"><img src="${ctx}/static/images/featured1.jpg" alt="" class="slidehalf"/>
+                    <div class="bg-featured"><a href="${ctx}/article/content/${newOne.id}"><img src="${ctx}/static/images/featured1.jpg" alt="" class="slidehalf"/></a>
                     </div>
                     <br/>
-                    <strong>${newOne.subject}</strong><br/>
+                    <strong><a href="${ctx}/article/content/${newOne.id}">${newOne.subject}</a></strong><br/>
                     <%--// TODO 字数限制 图片 --%>
                     <p class="featured-text">${newOne.message}</p>
                 </div>
