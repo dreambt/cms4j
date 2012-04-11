@@ -57,7 +57,7 @@
                         <%--</c:forEach>--%>
                         <%--</select> <br><br>--%>
                     <strong>作为导航</strong>
-                    <input type="checkbox" name="asNav">
+                    <input type="checkbox" name="showNav" <c:if test="${category.showNav==true}">checked="checked"</c:if>>
                     <strong>允许评论</strong>
                     <input name="allowComment" type="checkbox" class="menuLbl"
                            <c:if test="${category.allowComment==true}">checked="checked"</c:if> >
