@@ -72,14 +72,14 @@
             <h2 class="cufon">新闻资讯</h2>
 
             <div id="featured"><!-- begin of featured slider -->
-                <c:forEach items="${news}" var="new" begin="0" step="1">
+                <c:forEach items="${news}" var="newOne" begin="0" step="1">
                 <div>
                     <div class="bg-featured"><img src="${ctx}/static/images/featured1.jpg" alt="" class="slidehalf"/>
                     </div>
                     <br/>
-                    <strong>${new.subject}</strong><br/>
+                    <strong>${newOne.subject}</strong><br/>
                     <%--// TODO 字数限制 图片 --%>
-                    <p class="featured-text">${new.message}</p>
+                    <p class="featured-text">${newOne.message}</p>
                 </div>
                 </c:forEach>
             </div>
