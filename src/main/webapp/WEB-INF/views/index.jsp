@@ -28,6 +28,7 @@
                 pause:0, // true to enable "pause on hover"
                 pauseOnPagerHover:0 // true to pause when hovering over pager link
             });
+            $('.anno').cycle();
         });
     </script>
 </head>
@@ -88,11 +89,14 @@
     <div id="content3">
         <div class="maincontent">
             <h2 class="cufon">公告</h2>
-            <ul class="content-list">
+            <ul class="content-list anno">
+
                 <c:forEach items="${posts}" var="post" begin="0" end="2" step="1">
-                <li><a href="${ctx}/article/content/${post.id}">${post.subject}</a></li>
+                    <li><a href="${ctx}/article/content/${post.id}" class="announce">${post.subject}</a>
+                </li>
                 </c:forEach>
             </ul>
+            <h5><a href="#">更多公告...</a></h5>
         </div>
         <div class="maincontent">
             <h2 class="cufon">我们的优势</h2>

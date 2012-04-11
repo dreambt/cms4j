@@ -180,3 +180,5 @@ p.albumDesc{
     text-decoration: underline;
 }
 #fridendLink  a.t:hover{text-decoration: none;}
+/*--公告字体颜色--*/
+ul li a.announce{color:#6F6F6F}
