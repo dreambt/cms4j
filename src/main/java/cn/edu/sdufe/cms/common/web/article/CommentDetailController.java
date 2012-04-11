@@ -43,6 +43,10 @@ public class CommentDetailController {
      */
     @RequestMapping(value = "audit/{id}", method = RequestMethod.GET)
     public String auditComment(@PathVariable("id") Long id, @ModelAttribute("comment") Comment comment, RedirectAttributes redirectAttributes) {
+        if(null == commentManager.get(id)) {
+            redirectAttributes.addFlashAttribute("error", "该评论不存在，请刷新重试");
+            return "redirect:/comment/listAll";
+        }
         comment.setStatus(!comment.isStatus());
         if (null == commentManager.update(comment)) {
             redirectAttributes.addFlashAttribute("error", "操作评论 " + id + " 失败.");

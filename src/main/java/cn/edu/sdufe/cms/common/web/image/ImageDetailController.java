@@ -56,9 +56,6 @@ public class ImageDetailController {
     @RequestMapping(value = "save/{id}")
     public String save(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request,
                        @PathVariable Long id, @Valid @ModelAttribute("image") Image image, RedirectAttributes redirectAttributes) {
-        if (file == null) {
-            redirectAttributes.addFlashAttribute("error", "请选择上传的图片");
-        }
         //redirectAttributes.addAttribute("imageUrl", request.getContextPath()+"/upload/"+fileName);
         Image img = imageManager.update(file, request, image);
         if (null == img) {

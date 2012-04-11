@@ -57,9 +57,13 @@ public class ArticleDetailController {
     @RequiresPermissions("article:save")
     @RequestMapping(value = "save/{id}")
     public String saveArticle(@PathVariable("id") Long id, @Valid @ModelAttribute("article") Article article, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+        if(null == articleManager.get(id)) {
+            redirectAttributes.addFlashAttribute("error", "该文章不存在，请刷新重试");
+            return "redirect:/article/listAll";
+        }
         if (bindingResult.hasErrors() || null == articleManager.save(article)) {
             redirectAttributes.addFlashAttribute("error", "保存文章失败");
-            return "redirect:/article/edit/" + article.getId();
+            return "redirect:/article/listAll";
         } else {
             redirectAttributes.addFlashAttribute("message", "保存文章成功");
             return "redirect:/article/listAll";
@@ -100,6 +104,10 @@ public class ArticleDetailController {
     @RequiresPermissions("article:edit")
     @RequestMapping(value = "allow/{id}")
     public String allowArticle(@PathVariable("id") Long id, @ModelAttribute("article") Article article, RedirectAttributes redirectAttributes) {
+        if(null == articleManager.get(id)) {
+            redirectAttributes.addFlashAttribute("error", "该文章不存在，请刷新重试");
+            return "redirect:/article/listAll";
+        }
         article.setAllowComment(!article.isAllowComment());
         if (null == articleManager.update(article)) {
             redirectAttributes.addFlashAttribute("error", "操作文章 " + id + " 失败.");
@@ -123,6 +131,10 @@ public class ArticleDetailController {
     @RequiresPermissions("article:edit")
     @RequestMapping(value = "audit/{id}")
     public String auditArticle(@PathVariable("id") Long id, @ModelAttribute("article") Article article, RedirectAttributes redirectAttributes) {
+        if(null == articleManager.get(id)) {
+            redirectAttributes.addFlashAttribute("error", "该文章不存在，请刷新重试");
+            return "redirect:/article/listAll";
+        }
         article.setStatus(!article.isStatus());
         if (null == articleManager.update(article)) {
             redirectAttributes.addFlashAttribute("error", "操作文章 " + id + " 失败.");

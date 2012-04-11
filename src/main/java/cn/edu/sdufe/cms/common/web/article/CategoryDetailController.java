@@ -52,7 +52,10 @@ public class CategoryDetailController {
      */
     @RequiresPermissions("category:save")
     @RequestMapping(value = "save/{id}")
-    public String save(@Valid @ModelAttribute("category") Category category, RedirectAttributes redirectAttributes) {
+    public String save(@PathVariable Long id, @Valid @ModelAttribute("category") Category category, RedirectAttributes redirectAttributes) {
+        if(null == categoryManager.get(id)) {
+            redirectAttributes.addFlashAttribute("error", "该菜单不存在，请刷新重试");
+        }
         if (null == categoryManager.update(category)) {
             redirectAttributes.addFlashAttribute("error", "修改菜单失败");
         } else {
