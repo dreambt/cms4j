@@ -58,7 +58,7 @@ public class UserManager {
      * @return
      */
     public List<User> getAll() {
-        return (List<User>) userDao.findAll();
+        return userDao.findAll();
     }
 
     /**

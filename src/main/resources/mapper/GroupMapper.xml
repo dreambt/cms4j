@@ -6,7 +6,9 @@
     <resultMap id="groupDetailMap" type="Group">
         <id property="id" column="id"/>
         <result property="groupName" column="group_name"/>
-        <collection property="permissionList" column="id" javaType="ArrayList" ofType="Permission" select="getPermission" />
+        <collection property="permissionList" javaType="Permission">
+            <result property="permission" column="permission"/>
+        </collection>
     </resultMap>
 
     <!--

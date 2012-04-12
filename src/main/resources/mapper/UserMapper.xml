@@ -28,17 +28,19 @@
          获取用户数量
      -->
     <select id="getUserCount" resultType="Long">
-        select count(id)
-        from cms_user
-        limit 1
+        SELECT COUNT( id )
+        FROM cms_user
+        LIMIT 1
 	</select>
 
     <!-- 查询用户 -->
     <select id="getUser" parameterType="Long" resultMap="userDetailMap">
-        select id,group_id,email,username,password,salt,status,email_status,avatar_status,photo_url,time_offset,
-        last_ip,last_time,last_act_time,created_date,last_modified_date,deleted
-        from cms_user
-        where id=#{id}
+        SELECT id, group_id, email, username,
+        PASSWORD , salt,
+        STATUS , email_status, avatar_status, photo_url, time_offset, last_ip, last_time, last_act_time, created_date, last_modified_date, deleted
+        FROM cms_user
+        WHERE id =1
+        LIMIT 1
     </select>
 
     <select id="getUserByEmail" parameterType="String" resultMap="userDetailMap">
@@ -47,6 +49,7 @@
         LEFT OUTER JOIN cms_group AS G ON G.id = U.group_id
         LEFT OUTER JOIN cms_group_permission AS P ON P.group_id = G.id
         WHERE email =#{email}
+        LIMIT 1
     </select>
 
     <!--
