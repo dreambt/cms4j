@@ -113,8 +113,7 @@ public class UserManager {
      * @return
      */
     public User findUserByEmail(String email) {
-        User user = userDao.findByEmail(email);
-        return user;
+        return userDao.findByEmail(email);
     }
 
     /**

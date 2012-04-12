@@ -17,14 +17,20 @@
         <result property="lastModifiedDate" column="last_modified_date"/>
         <result property="createdDate" column="created_date"/>
         <result property="deleted" column="deleted"/>
-        <collection property="subCategories" javaType="Category" columnPrefix="sub_"/>
-        <collection property="articleList" javaType="Article" />
+        <collection property="subCategories" javaType="Category" columnPrefix="sub_">
+            <id property="id" column="id"/>
+            <result property="categoryName" column="category_name"/>
+            <result property="displayOrder" column="display_order"/>
+            <result property="showType" column="show_type"/>
+            <result property="url" column="url"/>
+        </collection>
+        <collection property="articleList" javaType="Article" resultMap="Article.articleDetailMap" />
     </resultMap>
 
     <!--
          获取分类: 输出直接映射到对象, login_name列要"as loginName"以方便映射 department_id as "department.id"创建department对象并赋值
      -->
-    <select id="getCategory" parameterType="int" resultMap="categoryDetailMap">
+    <select id="getCategory" parameterType="Long" resultMap="categoryDetailMap">
         select id,father_category_id,category_name,display_order,show_type,url,description,
           allow_comment,allow_publish,show_nav,created_date,last_modified_date,deleted
         from cms_category
@@ -36,7 +42,7 @@
     <!--
          获取分类id的所有子分类
      -->
-    <select id="getSubCategory" parameterType="int" resultMap="categoryDetailMap">
+    <select id="getSubCategory" parameterType="Long" resultMap="categoryDetailMap">
         SELECT id,category_name,show_type,url,show_nav,deleted
         FROM cms_category
         WHERE id>1 and father_category_id=#{id} and deleted=0

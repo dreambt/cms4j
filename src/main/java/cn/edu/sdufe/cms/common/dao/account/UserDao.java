@@ -29,7 +29,7 @@ public class UserDao extends SqlSessionDaoSupport {
     }
 
     /**
-     * 获取邮箱为email的用户
+     * 获取邮箱为email的用户，仅用于登录
      *
      * @param email
      * @return

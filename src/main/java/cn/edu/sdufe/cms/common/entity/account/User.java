@@ -5,10 +5,8 @@ import cn.edu.sdufe.cms.common.entity.article.Article;
 import cn.edu.sdufe.cms.utilities.IPEncodes;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
-import org.springside.modules.utils.Collections3;
 
 import java.util.Date;
 import java.util.List;

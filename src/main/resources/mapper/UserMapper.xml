@@ -20,8 +20,8 @@
         <result property="lastModifiedDate" column="last_modified_date"/>
         <result property="createdDate" column="created_date"/>
         <result property="deleted" column="deleted"/>
-        <association property="group" column="group_id" resultMap="groupDetailMap" />
-        <collection property="articleList" column="id" resultMap="Article.articleDetailMap" />
+        <association property="group" column="group_id" javaType="Group" resultMap="groupDetailMap" />
+        <collection property="articleList" javaType="Category" resultMap="Article.articleDetailMap" />
     </resultMap>
 
     <!--
@@ -42,10 +42,11 @@
     </select>
 
     <select id="getUserByEmail" parameterType="String" resultMap="userDetailMap">
-        select id,group_id,email,username,password,salt,status,email_status,avatar_status,photo_url,time_offset,
-        last_ip,last_time,last_act_time,created_date,last_modified_date,deleted
-        from cms_user
-        where email=#{email}
+        SELECT U.id, U.group_id, email, username, PASSWORD , salt, STATUS , deleted
+        FROM cms_user AS U
+        LEFT OUTER JOIN cms_group AS G ON G.id = U.group_id
+        LEFT OUTER JOIN cms_group_permission AS P ON P.group_id = G.id
+        WHERE email =#{email}
     </select>
 
     <!--
