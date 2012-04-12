@@ -38,6 +38,10 @@ public class ImageDetailController {
     @RequiresPermissions("gallery:edit")
     @RequestMapping(value = "edit/{id}")
     public String edit(@PathVariable Long id, Model model) {
+        if(null == imageManager.getImage(id)) {
+            model.addAttribute("error", "该相册不存在，请刷新重试");
+            return "redirect:/image/listAll";
+        }
         model.addAttribute("image", imageManager.getImage(id));
         return "dashboard/image/edit";
     }
@@ -57,6 +61,10 @@ public class ImageDetailController {
     public String save(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request,
                        @PathVariable Long id, @Valid @ModelAttribute("image") Image image, RedirectAttributes redirectAttributes) {
         //redirectAttributes.addAttribute("imageUrl", request.getContextPath()+"/upload/"+fileName);
+        if(null == imageManager.getImage(id)) {
+            redirectAttributes.addFlashAttribute("error", "该相册不存在，请刷新重试");
+            return "redirect:/image/listAll";
+        }
         Image img = imageManager.update(file, request, image);
         if (null == img) {
             redirectAttributes.addFlashAttribute("error", "修改图片信息失败");
@@ -76,8 +84,18 @@ public class ImageDetailController {
     @RequiresPermissions("gallery:edit")
     @RequestMapping(value = "delete/{id}")
     public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        Image image = imageManager.delete(id);
-        if (image.isDeleted()) {
+        if(null == imageManager.getImage(id)) {
+            redirectAttributes.addFlashAttribute("error", "该相册已经删除，请刷新查看");
+            return "redirect:/image/listAll";
+        }
+        Image image = imageManager.getImage(id);
+        imageManager.delete(id);
+        imageManager.deletePic("gallery-big\\" + image.getImageUrl());
+        imageManager.deletePic("dashboard-thumb\\" + image.getImageUrl());
+        imageManager.deletePic("photo-thumb\\" + image.getImageUrl());
+        imageManager.deletePic("album-thumb\\" + image.getImageUrl());
+        imageManager.deletePic("index-thumb\\" + image.getImageUrl());
+        if (null == imageManager.getImage(id)) {
             redirectAttributes.addFlashAttribute("info", "删除" + id + "图片信息成功");
         } else {
             redirectAttributes.addFlashAttribute("info", "恢复" + id + "图片信息成功");
@@ -93,6 +111,10 @@ public class ImageDetailController {
      */
     @RequestMapping(value = "showIndex/{id}")
     public String showIndex(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        if(null == imageManager.getImage(id)) {
+            redirectAttributes.addFlashAttribute("error", "该相册已经删除，请刷新查看");
+            return "redirect:/image/listAll";
+        }
         Image image = imageManager.getImage(id);
         image.setShowIndex(!image.isShowIndex());
         imageManager.update(image);

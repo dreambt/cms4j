@@ -37,6 +37,10 @@ public class CategoryDetailController {
     @RequiresPermissions("category:edit")
     @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
     public String edit(@PathVariable Long id, Model model) {
+        if(null == categoryManager.get(id)) {
+            model.addAttribute("info", "该分类不存在，请刷新重试");
+            return "dashboard/category/listAll";
+        }
         model.addAttribute("category", categoryManager.get(id));
         model.addAttribute("showTypes", ShowTypeEnum.values());
         model.addAttribute("fatherCategories", categoryManager.getNavCategory());

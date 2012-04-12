@@ -42,7 +42,10 @@ public class ArticleDetailController {
     public String editArticle(@PathVariable("id") Long id, Model model) {
         // 不用报错，Neither BindingResult nor plain target object for bean name 'article' available as request attribute
         //model.addAttribute("article", articleManager.getArticle(id));
-
+        if(null == articleManager.get(id)) {
+            model.addAttribute("error", "该文章不存在，请刷新重试");
+            return "dashboard/article/listAll";
+        }
         // 获取所有分类
         model.addAttribute("categories", categoryManager.getAllowPublishCategory());
         return "dashboard/article/edit";
@@ -79,6 +82,10 @@ public class ArticleDetailController {
     @RequiresPermissions("article:edit")
     @RequestMapping(value = "top/{id}")
     public String topArticle(@PathVariable("id") Long id, @ModelAttribute("article") Article article, RedirectAttributes redirectAttributes) {
+        if(null == articleManager.get(id)) {
+            redirectAttributes.addFlashAttribute("error", "该文章不存在，请刷新重试");
+            return "redirect:/article/listAll";
+        }
         article.setTop(!article.isTop());
 
         if (article.isTop()) {
@@ -158,6 +165,10 @@ public class ArticleDetailController {
     @RequiresPermissions("article:delete")
     @RequestMapping(value = "delete/{id}")
     public String deleteArticle(@PathVariable("id") Long id, @ModelAttribute("article") Article article, RedirectAttributes redirectAttributes) {
+        if(null == articleManager.get(id)) {
+            redirectAttributes.addFlashAttribute("error", "该文章已经不存在，请刷新查看");
+            return "redirect:/article/listAll";
+        }
         article.setDeleted(!article.isDeleted());
         if (null == articleManager.update(article)) {
             redirectAttributes.addFlashAttribute("error", "操作文章 " + id + " 失败.");

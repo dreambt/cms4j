@@ -68,6 +68,10 @@ public class CommentDetailController {
     @RequiresPermissions("comment:delete")
     @RequestMapping(value = "delete/{id}")
     public String deleteComment(@PathVariable("id") Long id, @ModelAttribute("comment") Comment comment, RedirectAttributes redirectAttributes) {
+        if(null == commentManager.get(id)) {
+            redirectAttributes.addFlashAttribute("error", "该评论不存在，请刷新重试");
+            return "redirect:/comment/listAll";
+        }
         comment.setDeleted(!comment.isDeleted());
         if (null == commentManager.update(comment)) {
             redirectAttributes.addFlashAttribute("error", "操作评论 " + id + " 失败.");

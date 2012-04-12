@@ -85,7 +85,6 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return createForm(model);
         }
-
         try {
             userManager.save(user);
             redirectAttributes.addFlashAttribute("info", "创建用户" + user.getEmail() + "成功, 密码已邮件的方式发送到" + user.getEmail() + ".");
@@ -106,6 +105,10 @@ public class UserController {
     @RequiresPermissions("user:edit")
     @RequestMapping(value = "repass/{id}")
     public String repass(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        if(null == userManager.get(id)) {
+            redirectAttributes.addFlashAttribute("info", "您选择的用户不存在，请刷新重试");
+            return "redirect:/account/user/list";
+        }
         try {
             userManager.repass(id);
             redirectAttributes.addFlashAttribute("info", "重置密码成功, 新密码已邮件的方式通知对方.");
@@ -122,11 +125,11 @@ public class UserController {
         String[] isSelected = request.getParameterValues("isSelected");
         if (isSelected == null) {
             redirectAttributes.addFlashAttribute("error", "请选择要审核的用户.");
-            return "redirect:/account/user/listAll";
+            return "redirect:/account/user/list";
         } else {
             userManager.batchAudit(isSelected);
             redirectAttributes.addFlashAttribute("info", "批量审核用户成功.");
-            return "redirect:/account/user/listAll";
+            return "redirect:/account/user/list";
         }
     }
 
@@ -136,11 +139,11 @@ public class UserController {
         String[] isSelected = request.getParameterValues("isSelected");
         if (isSelected == null) {
             redirectAttributes.addFlashAttribute("error", "请选择要删除的用户.");
-            return "redirect:/account/user/listAll";
+            return "redirect:/account/user/list";
         } else {
             userManager.batchDelete(isSelected);
             redirectAttributes.addFlashAttribute("info", "批量删除用户成功.");
-            return "redirect:/account/user/listAll";
+            return "redirect:/account/user/list";
         }
     }
 

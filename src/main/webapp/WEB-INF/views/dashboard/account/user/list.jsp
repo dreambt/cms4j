@@ -65,7 +65,7 @@
                         <td><fmt:formatDate value="${user.lastTime}" type="both"/></td>
                         <td>${user.lastLoginIP}</td>
                         <td><a href="${ctx}/account/user/audit/${user.id}"><c:choose><c:when test="${user.status}">【已审核】</c:when><c:otherwise>【未审核】</c:otherwise></c:choose></a></td>
-                        <td>${article.deleted}<a href="${ctx}/account/user/repass/${user.id}">【密码找回】</a> <a href="${ctx}/account/user/edit/${user.id}">【编辑】</a> <a href="${ctx}/account/user/delete/${user.id}"><c:choose><c:when test="${article.deleted}">【恢复】</c:when><c:otherwise>【删除】</c:otherwise></c:choose></a></td>
+                        <td>${article.deleted}<a href="${ctx}/account/user/repass/${user.id}">【密码找回】</a> <a href="${ctx}/account/user/edit/${user.id}">【编辑】</a> <a href="${ctx}/account/user/delete/${user.id}"><c:choose><c:when test="${user.deleted}">【恢复】</c:when><c:otherwise>【删除】</c:otherwise></c:choose></a></td>
                     </tr>
                 </c:forEach>
                 </tbody>

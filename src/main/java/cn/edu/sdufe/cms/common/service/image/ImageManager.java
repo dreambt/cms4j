@@ -215,10 +215,8 @@ public class ImageManager {
      * @param id
      */
     @Transactional(readOnly = false)
-    public Image delete(Long id) {
-        Image image = this.getImage(id);
-        image.setDeleted(!image.isDeleted());
-        return this.update(image);
+    public void delete(Long id) {
+        imageJpaDao.delete(id);
     }
 
     /**

@@ -25,7 +25,7 @@
     </div>
 </div>
 <div class="main_container container_16 clearfix">
-<form:form id="userInfo" modelAttribute="user" action="${ctx}/account/user/save" method="post">
+<form:form id="userInfo" modelAttribute="user" action="${ctx}/account/user/save/${user.id}" method="post">
     <div class="box gird_16">
         <h2 class="box_head grad_colour round_top">用户信息</h2>
         <div class="toggle_container">

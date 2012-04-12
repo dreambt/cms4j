@@ -10,10 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -43,21 +40,29 @@ public class UserDetailController {
     }
 
     @RequestMapping(value = "edit/{id}")
-    public String updateForm(Model model) {
+    public String updateForm(@PathVariable Long id, Model model) {
+        if(null == userManager.get(id)) {
+            model.addAttribute("info", "该用户不存在，请刷新重试");
+            return "redirect:/account/user/list";
+        }
         model.addAttribute("allGroups", groupManager.getAllGroup());
         return "dashboard/account/user/edit";
     }
 
     @RequestMapping(value = "save/{id}")
-    public String save(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model,
+    public String save(@PathVariable Long id, @Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model,
                        RedirectAttributes redirectAttributes) {
+        if(null == userManager.get(id)) {
+            redirectAttributes.addFlashAttribute("info", "该用户不存在，请刷新重试");
+            return "redirect:/account/user/list";
+        }
         if (bindingResult.hasErrors()) {
-            return updateForm(model);
+            return updateForm(id, redirectAttributes);
         }
 
         userManager.save(user);
-        redirectAttributes.addFlashAttribute("message", "保存用户成功");
-        return "redirect:/dashboard/account/user/";
+        redirectAttributes.addFlashAttribute("info", "保存用户成功");
+        return "redirect:/account/user/list";
     }
 
     /**
@@ -69,6 +74,10 @@ public class UserDetailController {
     @RequiresPermissions("user:edit")
     @RequestMapping(value = "audit/{id}")
     public String auditArticle(@PathVariable("id") Long id, @ModelAttribute("user") User user, RedirectAttributes redirectAttributes) {
+        if(null == userManager.get(id)) {
+            redirectAttributes.addFlashAttribute("info", "该用户不存在，请刷新重试");
+            return "redirect:/account/user/list";
+        }
         user.setStatus(!user.isStatus());
         userManager.update(user);
 
@@ -89,6 +98,10 @@ public class UserDetailController {
     @RequiresPermissions("user:delete")
     @RequestMapping(value = "delete/{id}")
     public String deleteArticle(@PathVariable("id") Long id, @ModelAttribute("user") User user, RedirectAttributes redirectAttributes) {
+        if(null == userManager.get(id)) {
+            redirectAttributes.addFlashAttribute("info", "该用户已经不存在，请刷新查看");
+            return "redirect:/account/user/list";
+        }
         user.setDeleted(!user.isDeleted());
         userManager.update(user);
 

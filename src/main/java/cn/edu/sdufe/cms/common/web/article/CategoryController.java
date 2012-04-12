@@ -85,6 +85,9 @@ public class CategoryController {
     @RequiresPermissions("category:delete")
     @RequestMapping(value = "delete/{id}", method = RequestMethod.GET)
     public String delete(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        if(null == categoryManager.get(id)) {
+            redirectAttributes.addFlashAttribute("error", "该菜单已经删除，请刷新查看");
+        }
         int result = categoryManager.delete(id);
         if (result == 0) {
             redirectAttributes.addFlashAttribute("info", "删除菜单成功！");
