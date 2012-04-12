@@ -53,7 +53,7 @@ public class ImageController {
      */
     @RequestMapping(value = "album", method = RequestMethod.GET)
     public String album(Model model) {
-        int total = imageManager.getAllImageByDeleted().size();
+        int total = imageManager.getAllUnDeletedImage().size();
         int limit = 4;
         int pageCount = 1;
         if (total % limit == 0) pageCount = total / limit;
@@ -87,7 +87,7 @@ public class ImageController {
      */
     @RequestMapping(value = "photo", method = RequestMethod.GET)
     public String gallery(Model model) {
-        int total = imageManager.getAllImageByDeleted().size();
+        int total = imageManager.getAllUnDeletedImage().size();
         int limit = 12;
         int pageCount = 1;
         if (total % limit == 0) pageCount = total / limit;
@@ -139,9 +139,8 @@ public class ImageController {
         if (file == null) {
             redirectAttributes.addFlashAttribute("error", "请选择上传的图片");
         }
-        //redirectAttributes.addAttribute("imageUrl", request.getContextPath()+"/upload/"+fileName);
-        Image img = imageManager.save(file, request, image);
-        if (null == img) {
+
+        if (imageManager.save(file, request, image) > 0) {
             redirectAttributes.addFlashAttribute("error", "添加图片信息失败");
         } else {
             redirectAttributes.addFlashAttribute("info", "添加" + image.getId() + "图片信息成功");

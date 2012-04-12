@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springside.modules.beanvalidator.BeanValidators;
-import org.springside.modules.orm.jpa.Jpas;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
@@ -62,10 +61,9 @@ public class ArticleManager {
 
         // 记录文章访问次数
         article.setViews(article.getViews() + 1);
+        this.update(article);
 
-        //Dao不取相关连接表中的内容，比如评论
-        //return articleDao.getArticle(id);
-        return update(article);
+        return article;
     }
 
     /**
@@ -87,7 +85,7 @@ public class ArticleManager {
         Map<String, Object> parameters = Maps.newHashMap();
         parameters.put("Direction", "DESC");
         parameters.put("Sort", "id");
-        return articleDao.getAll(parameters, new RowBounds(offset, limit));
+        return articleDao.search(parameters, new RowBounds(offset, limit));
     }
 
     /**
@@ -96,21 +94,7 @@ public class ArticleManager {
      * @return
      */
     public List<Article> getTopTen() {
-        return articleDao.getTopTen();
-    }
-
-    /**
-     * 加载Lazy属性
-     *
-     * @return
-     */
-    @Deprecated
-    public List<Article> getAllArticleInitialized() {
-        List<Article> result = (List<Article>) articleDao.findAll();
-        for (Article article : result) {
-            Jpas.initLazyProperty(article.getCommentList());
-        }
-        return result;
+        return articleDao.findTopTen();
     }
 
     /**
@@ -121,6 +105,8 @@ public class ArticleManager {
      */
     @Deprecated
     public List<Article> search(Map<String, Object> parameters) {
+        parameters.put("Direction", "DESC");
+        parameters.put("Sort", "id");
         return articleDao.search(parameters);
     }
 
@@ -131,7 +117,7 @@ public class ArticleManager {
      * @return
      */
     public List<Article> getListByCategoryId(Long categoryId, int offset, int limit) {
-        return articleDao.getListByCategoryId(categoryId, new RowBounds(offset, limit));
+        return articleDao.findByCategoryId(categoryId, new RowBounds(offset, limit));
     }
 
     /**
@@ -141,18 +127,7 @@ public class ArticleManager {
      * @return
      */
     public List<Article> getDigestByCategoryId(Long categoryId, int offset, int limit) {
-        return articleDao.getDigestByCategoryId(categoryId, new RowBounds(offset, limit));
-    }
-
-    /**
-     * 通过用户userId查找文章
-     *
-     * @param userId
-     * @return
-     */
-    @Deprecated
-    public List<Article> getByUserId(Long userId) {
-        return (List<Article>) articleDao.findByUserId(userId);
+        return articleDao.findDigestByCategoryId(categoryId, new RowBounds(offset, limit));
     }
 
     /**
@@ -162,7 +137,7 @@ public class ArticleManager {
      * @return
      */
     @Transactional(readOnly = false)
-    public Article save(Article article) {
+    public int save(Article article) {
         try {
             // 生成默认摘要
             String str = Jsoup.parse(article.getMessage()).text();
@@ -175,8 +150,6 @@ public class ArticleManager {
             // 关键词由任务生成
             article.setKeyword("");
 
-            // 文章分类
-
             //使用Hibernate Validator校验请求参数
             Validate.notNull(article, "文章参数为空");
             BeanValidators.validateWithException(validator, article);
@@ -184,7 +157,7 @@ public class ArticleManager {
             return this.update(article);
         } catch (ConstraintViolationException cve) {
             logger.warn("操作员{}尝试发表文章, 缺少相关字段.", cve.getConstraintViolations().toString());
-            return null;
+            return 0;
         }
     }
 
@@ -258,9 +231,9 @@ public class ArticleManager {
      * @param article
      */
     @Transactional(readOnly = false)
-    public Article update(Article article) {
+    public int update(Article article) {
         article.setLastModifiedDate(null);
-        return articlDao.save(article);
+        return articleDao.save(article);
     }
 
     /**
@@ -270,13 +243,7 @@ public class ArticleManager {
      */
     @Transactional(readOnly = false)
     public int delete() {
-        List<Article> articleList = articleDao.findByDeleted(true);
-        int count = articleList.size();
-        while (articleList.size() > 0) {
-            Article article = articleList.remove(0);
-            articleDao.delete(article.getId());
-        }
-        return count;
+        return articleDao.delete();
     }
 
     @Autowired

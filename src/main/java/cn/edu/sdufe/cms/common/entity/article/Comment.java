@@ -5,7 +5,6 @@ import cn.edu.sdufe.cms.utilities.IPEncodes;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -15,8 +14,6 @@ import javax.validation.constraints.NotNull;
  * Date: 12-3-20
  * Time: 下午19:43
  */
-@Entity
-@Table(name = "cms_comment")
 public class Comment extends PersistableEntity {
 
     private Article article;
@@ -27,8 +24,6 @@ public class Comment extends PersistableEntity {
     private boolean status;
     private boolean deleted;
 
-    @ManyToOne
-    @JoinColumn(name = "article_id")
     public Article getArticle() {
         return article;
     }
@@ -64,7 +59,6 @@ public class Comment extends PersistableEntity {
         this.postIP = postIP;
     }
 
-    @Transient
     public String getPostHostIP() {
         return IPEncodes.longToIp(this.postIP);
     }

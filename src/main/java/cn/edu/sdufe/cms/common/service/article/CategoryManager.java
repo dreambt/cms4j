@@ -55,8 +55,7 @@ public class CategoryManager {
      * @return
      */
     public List<Category> getNavCategory() {
-        //return categoryDao.getSubCategory(1L);
-        return categoryDao.findByIdGreaterThanAndFatherCategoryIdAndDeletedOrderByDisplayOrderAsc(1L, 1L, false);
+        return categoryDao.getNavCategory();
     }
 
     /**

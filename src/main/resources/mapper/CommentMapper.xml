@@ -12,7 +12,7 @@
         <result property="lastModifiedDate" column="last_modified_date"/>
         <result property="createdDate" column="created_date"/>
         <result property="deleted" column="deleted"/>
-        <association property="article" column="article_id" resultMap="articleDetailMap" />
+        <association property="article" column="article_id" resultMap="Article.articleDetailMap" />
     </resultMap>
 
     <!--
@@ -33,9 +33,10 @@
         获取最新10条评论
     -->
     <select id="getCommentRecent" resultType="ArrayList">
-        select id,article_id,username,message,post_ip,status,created_date,last_modified_date,deleted
+        select id,article_id,username,message,post_ip,status,created_date,last_modified_date
         from cms_commnet
-        where status=1
+        where status=1 and deleted=0
+        order by id DESC
         limit 10
 	</select>
 
@@ -45,20 +46,9 @@
     <select id="getCount" resultType="Long">
 		select count(id)
 		from cms_commnet
-		where deleted=0 and status=1
+		where status=1 and deleted=0
 		order by id ASC
 		limit 1
-	</select>
-
-    <!--
-         获取已标记为删除的评论id
-     -->
-    <select id="getDeletedCommentId" resultType="Long">
-        select id
-        from cms_comment
-        where deleted=1
-        order by id ASC
-        limit 500
 	</select>
 
     <!--
@@ -67,10 +57,24 @@
     <select id="getCountByArticleId" parameterType="Long" resultType="Long">
 		select count(id)
 		from cms_commnet
-		where article_id=#{id} and deleted=0 and status=1
+		where article_id=#{id} and status=1 and deleted=0
 		order by id ASC
 		limit 1
 	</select>
+
+    <!-- 插入评论 -->
+    <insert id="save" parameterType="Comment" useGeneratedKeys="true" keyProperty="id">
+		insert into cms_commnet (
+		cid,aid,username,postip,posttime,status,message,createddate,lastmodifieddate)
+		values (#{id}, #{articleId}, #{username},#{postIP},#{postTime},#{status},#{message},now(),now())
+	</insert>
+
+    <!-- 删除评论 -->
+    <delete id="delete">
+		delete from cms_comment
+		where deleted = 1
+        limit 500
+	</delete>
 
     <!--
         查询评论
@@ -88,21 +92,7 @@
                 and name=#{name}
             </if>
         </where>
+        and status=1 and deleted=0
         order by ${Sort} ${Direction}
     </select>
-
-    <!-- 插入评论 -->
-    <insert id="save" parameterType="Comment" useGeneratedKeys="true" keyProperty="id">
-		insert into cms_commnet (
-		cid,aid,username,postip,posttime,status,message,createddate,lastmodifieddate)
-		values (#{id}, #{articleId}, #{username},#{postIP},#{postTime},#{status},#{message},now(),now())
-	</insert>
-
-    <!-- 删除评论 -->
-    <delete id="delete">
-		delete from cms_comment
-		where deleted = 1
-        limit 500
-	</delete>
-
 </mapper>

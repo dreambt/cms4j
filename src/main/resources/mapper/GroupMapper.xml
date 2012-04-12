@@ -6,13 +6,13 @@
     <resultMap id="groupDetailMap" type="Group">
         <id property="id" column="id"/>
         <result property="groupName" column="group_name"/>
-        <collection property="permissionList" column="id" javaType="ArrayList" ofType="Group" resultMap="groupDetailMap" />
+        <collection property="permissionList" column="id" javaType="ArrayList" ofType="Permission" select="getPermission" />
     </resultMap>
 
     <!--
          获取用户组数量
      -->
-    <select id="getGroupCount" resultType="int">
+    <select id="getGroupCount" resultType="Long">
         select count(id)
         from cms_group
         limit 1
@@ -21,7 +21,7 @@
     <!--
         获取用户组
     -->
-    <select id="getGroup" parameterType="int" resultMap="groupDetailMap">
+    <select id="getGroup" parameterType="Long" resultMap="groupDetailMap">
         select id,group_name
         from cms_group
         where id=#{id}
@@ -29,13 +29,22 @@
 	</select>
 
     <!--
-        获取用户组
+        获取用户编号为id的用户组
     -->
-    <select id="getGroupByUserId" parameterType="int" resultMap="groupDetailMap">
+    <select id="getGroupByUserId" parameterType="Long" resultMap="groupDetailMap">
         select group_id as id,group_name
         from cms_user_group,cms_group
         where cms_user_group.group_id=cms_group.id and user_id=#{id}
         limit 3
+	</select>
+
+    <!--
+        获取用户编号为id的用户组
+    -->
+    <select id="getPermission" parameterType="String" resultType="String">
+        select permission
+        from cms_group_permission
+        where group_id=#{id}
 	</select>
 
     <!--

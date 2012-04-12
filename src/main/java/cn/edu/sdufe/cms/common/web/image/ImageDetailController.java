@@ -60,8 +60,7 @@ public class ImageDetailController {
             redirectAttributes.addFlashAttribute("error", "请选择上传的图片");
         }
         //redirectAttributes.addAttribute("imageUrl", request.getContextPath()+"/upload/"+fileName);
-        Image img = imageManager.update(file, request, image);
-        if (null == img) {
+        if (imageManager.update(file, request, image) > 0) {
             redirectAttributes.addFlashAttribute("error", "修改图片信息失败");
         } else {
             redirectAttributes.addFlashAttribute("info", "修改" + id + "图片信息成功");
@@ -78,8 +77,12 @@ public class ImageDetailController {
      */
     @RequiresPermissions("gallery:edit")
     @RequestMapping(value = "delete/{id}")
-    public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        Image image = imageManager.delete(id);
+    public String delete(@PathVariable Long id, @ModelAttribute("image") Image image, RedirectAttributes redirectAttributes) {
+        if (imageManager.delete(id) > 0) {
+            redirectAttributes.addFlashAttribute("error", "操作文章 " + id + " 失败.");
+            return "redirect:/article/listAll";
+        }
+
         if (image.isDeleted()) {
             redirectAttributes.addFlashAttribute("info", "删除" + id + "图片信息成功");
         } else {

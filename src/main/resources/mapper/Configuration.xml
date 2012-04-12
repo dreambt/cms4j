@@ -3,6 +3,9 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
+    <settings>
+        <setting name="aggressiveLazyLoading" value="false" />
+    </settings>
     <typeAliases>
         <typeAlias alias="User" type="cn.edu.sdufe.cms.common.entity.account.User"/>
         <typeAlias alias="Group" type="cn.edu.sdufe.cms.common.entity.account.Group"/>
@@ -12,5 +15,6 @@
         <typeAlias alias="ManageLog" type="cn.edu.sdufe.cms.common.entity.ManageLog"/>
         <typeAlias alias="Archive" type="cn.edu.sdufe.cms.common.entity.article.Archive"/>
         <typeAlias alias="Image" type="cn.edu.sdufe.cms.common.entity.image.Image"/>
+        <typeAlias alias="Link" type="cn.edu.sdufe.cms.common.entity.link.Link"/>
     </typeAliases>
 </configuration>

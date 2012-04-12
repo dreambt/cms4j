@@ -18,61 +18,31 @@
         <div id="nav-menu">
             <ul class="sf-menu">
                 <li><a href="${ctx}/" class="cufon">首页</a></li>
-                <li><a href="${ctx}/" class="cufon">新闻资讯</a>
-                    <ul>
-                        <li><a href="${ctx}/article/list/4">新闻动态</a></li>
-                        <li><a href="${ctx}/article/list/4">行业资讯</a></li>
-                        <li><a href="${ctx}/article/list/4">学术交流</a></li>
-                    </ul>
-                </li>
-                <li><a href="${ctx}/" class="cufon">中心概况</a>
-                    <ul>
-                        <li><a href="${ctx}/article/content/17">中心简介</a></li>
-                        <li><a href="${ctx}/article/content/18">组织结构</a></li>
-                        <li><a href="#">运作机制</a>
-                            <ul>
-                                <li><a href="${ctx}/content/1">规章制度</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="${ctx}/contact">联系我们</a></li>
-                    </ul>
-                </li>
-                <li><a href="${ctx}/" class="cufon">学术团队</a>
-                    <ul>
-                        <li><a href="${ctx}/gallery/album">学术带头人</a></li>
-                        <li><a href="${ctx}/gallery/album">学术骨干</a></li>
-                        <li><a href="${ctx}/gallery/album">专家顾问</a></li>
-                    </ul>
-                </li>
-                <li><a href="${ctx}/" class="cufon">学术研究</a>
-                    <ul>
-                        <li><a href="${ctx}/article/digest/2">研究方向</a></li>
-                        <li><a href="${ctx}/article/digest/2">科研成果</a></li>
-                        <li><a href="${ctx}/article/digest/2">科研项目</a></li>
-                    </ul>
-                </li>
-                <li><a href="${ctx}/" class="cufon">资讯服务</a>
-                    <ul>
-                        <li><a href="${ctx}/article/list/4">财政税务</a></li>
-                        <li><a href="${ctx}/article/list/3">中小银行</a></li>
-                        <li><a href="${ctx}/article/list/2">证券保险</a></li>
-                        <li><a href="${ctx}/article/list/1">政府决策</a></li>
-                    </ul>
-                </li>
-                <li><a href="${ctx}/" class="cufon">教育培训</a></li>
-                <li><a href="${ctx}/" class="cufon">产学研合作</a>
-                    <ul>
-                        <li><a href="${ctx}/gallery/album">成果转化</a></li>
-                        <li><a href="${ctx}/gallery/photo">合作伙伴</a></li>
-                        <li><a href="${ctx}/gallery/album">对外交流</a></li>
-                    </ul>
-                </li>
-                <li><a href="${ctx}/" class="cufon">网上办公</a>
-                    <ul>
-                        <li><a href="http://oa.sdufe.edu.cn/">办公系统</a></li>
-                        <li><a href="http://filex.sdufe.edu.cn/">文件交换</a></li>
-                    </ul>
-                </li>
+                <c:forEach items="${categories}" var="category" begin="0" step="1">
+                    <c:choose>
+                        <c:when test="${category.showType eq 'NONE'}"><li><a href="${ctx}/${category.url}" class="cufon">${category.categoryName}</a></c:when>
+                        <c:when test="${category.showType eq 'CONTENT'}"><li><a href="${ctx}/article/content/${category.url}" class="cufon">${category.categoryName}</a></c:when>
+                        <c:when test="${category.showType eq 'LIST'}"><li><a href="${ctx}/article/list/${category.id}" class="cufon">${category.categoryName}</a></c:when>
+                        <c:when test="${category.showType eq 'DIGEST'}"><li><a href="${ctx}/article/digest/${category.id}" class="cufon">${category.categoryName}</a></c:when>
+                        <c:when test="${category.showType eq 'GALLERY'}"><li><a href="${ctx}/gallery/photo/${category.url}" class="cufon">${category.categoryName}</a></c:when>
+                        <c:when test="${category.showType eq 'ALBUM'}"><li><a href="${ctx}/gallery/album/${category.url}" class="cufon">${category.categoryName}</a></c:when>
+                    </c:choose>
+                    <c:if test="${fn:length(category.subCategories) > 0}">
+                        <ul>
+                            <c:forEach items="${category.subCategories}" var="subCategory" begin="0" step="1">
+                                <c:choose>
+                                    <c:when test="${subCategory.showType eq 'NONE'}"><li><a href="${ctx}/${subCategory.url}" class="cufon">${subCategory.categoryName}</a></li></c:when>
+                                    <c:when test="${subCategory.showType eq 'CONTENT'}"><li><a href="${ctx}/article/content/${subCategory.url}" class="cufon">${subCategory.categoryName}</a></li></c:when>
+                                    <c:when test="${subCategory.showType eq 'LIST'}"><li><a href="${ctx}/article/list/${subCategory.id}" class="cufon">${subCategory.categoryName}</a></li></c:when>
+                                    <c:when test="${subCategory.showType eq 'DIGEST'}"><li><a href="${ctx}/article/digest/${subCategory.id}" class="cufon">${subCategory.categoryName}</a></li></c:when>
+                                    <c:when test="${subCategory.showType eq 'GALLERY'}"><li><a href="${ctx}/gallery/photo/${subCategory.url}" class="cufon">${subCategory.categoryName}</a></li></c:when>
+                                    <c:when test="${subCategory.showType eq 'ALBUM'}"><li><a href="${ctx}/gallery/album/${subCategory.url}" class="cufon">${subCategory.categoryName}</a></li></c:when>
+                                </c:choose>
+                            </c:forEach>
+                        </ul>
+                    </c:if>
+                    </li>
+                </c:forEach>
             </ul>
         </div>
         <!-- end of nav -->

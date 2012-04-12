@@ -1,10 +1,5 @@
 package cn.edu.sdufe.cms.common.entity;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-
 /**
  * 统一定义id的entity基类.
  * <p/>
@@ -15,14 +10,10 @@ import javax.persistence.MappedSuperclass;
  * Date: 12-3-20
  * Time: 下午19:55
  */
-//JPA Entity基类的标识
-@MappedSuperclass
 public abstract class IdEntity {
 
     private Long id;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
     }

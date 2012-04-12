@@ -1,6 +1,5 @@
 package cn.edu.sdufe.cms.security;
 
-import cn.edu.sdufe.cms.common.entity.account.Group;
 import cn.edu.sdufe.cms.common.entity.account.User;
 import cn.edu.sdufe.cms.common.service.account.UserManager;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -51,7 +50,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
             }
 
             byte[] salt = Encodes.decodeHex(user.getSalt());
-            return new SimpleAuthenticationInfo(new ShiroUser(user.getId(), user.getEmail(), user.getUsername(), user.getGroupNames()), user.getPassword(),
+            return new SimpleAuthenticationInfo(new ShiroUser(user.getId(), user.getEmail(), user.getUsername(), user.getGroup().getGroupName()), user.getPassword(),
                     ByteSource.Util.bytes(salt), getName());
         } else {
             return null;
@@ -68,10 +67,9 @@ public class ShiroDbRealm extends AuthorizingRealm {
 
         if (null != user) {
             SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-            for (Group group : user.getGroupList()) {
-                //基于Permission的权限信息
-                info.addStringPermissions(group.getPermissionList());
-            }
+
+            //基于Permission的权限信息
+            info.addStringPermissions(user.getGroup().getPermissionList());
             return info;
         } else {
             return null;

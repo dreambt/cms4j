@@ -6,7 +6,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -18,8 +17,6 @@ import java.util.List;
  * Date: 12-3-20
  * Time: 下午19:55
  */
-@Entity
-@Table(name = "cms_group")
 public class Group extends IdEntity {
 
     private String groupName;
@@ -35,7 +32,6 @@ public class Group extends IdEntity {
     }
 
     @NotBlank
-    @Column(nullable = false, unique = true)
     public String getGroupName() {
         return groupName;
     }
@@ -54,9 +50,6 @@ public class Group extends IdEntity {
 //        this.userList = userList;
 //    }
 
-    @ElementCollection
-    @CollectionTable(name = "cms_group_permission", joinColumns = {@JoinColumn(name = "group_id")})
-    @Column(name = "permission")
     public List<String> getPermissionList() {
         return permissionList;
     }
@@ -65,7 +58,6 @@ public class Group extends IdEntity {
         this.permissionList = permissionList;
     }
 
-    @Transient
     public String getPermissionNames() {
         List<String> permissionNameList = Lists.newArrayList();
         for (String permission : permissionList) {

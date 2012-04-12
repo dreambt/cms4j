@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.orm.jpa.Jpas;
 
 import java.util.Date;
 import java.util.List;
@@ -38,8 +37,6 @@ public class UserManager {
 
     private UserDao userDao;
 
-    private UserJpaDao userJpaDao;
-
     private NotifyMessageProducer notifyProducer; //JMS消息发送
 
     private ShiroDbRealm shiroRealm;
@@ -51,8 +48,7 @@ public class UserManager {
      * @return
      */
     public User get(Long id) {
-        User user = userJpaDao.findOne(id);
-        //Jpas.initLazyProperty(user.getGroupList());
+        User user = userDao.findOne(id);
         return user;
     }
 
@@ -62,7 +58,7 @@ public class UserManager {
      * @return
      */
     public List<User> getAll() {
-        return (List<User>) userJpaDao.findAll();
+        return (List<User>) userDao.findAll();
     }
 
     /**
@@ -75,26 +71,13 @@ public class UserManager {
     }
 
     /**
-     * 加载Lazy属性
-     *
-     * @return
-     */
-    public List<User> getAllInitialized() {
-        List<User> result = (List<User>) userJpaDao.findAll();
-        for (User user : result) {
-            Jpas.initLazyProperty(user.getGroupList());
-        }
-        return result;
-    }
-
-    /**
      * 按照parameters搜索用户
      *
      * @param parameters
      * @return
      */
     public List<User> search(Map<String, Object> parameters) {
-        return (List<User>) userDao.search(parameters);
+        return userDao.search(parameters);
     }
 
     /**
@@ -104,15 +87,7 @@ public class UserManager {
      */
     @Transactional(readOnly = false)
     public int delete() throws InterruptedException {
-        List<Long> list = userDao.getDeletedId();
-        int count = list.size();
-        while (list.size() > 0) {
-            userJpaDao.delete((Long) list.remove(0));
-
-            // 每次都要休息一会儿
-            Thread.sleep(5000);
-        }
-        return count;
+        return userDao.delete();
     }
 
     /**
@@ -127,7 +102,8 @@ public class UserManager {
             logger.warn("操作员{}尝试删除超级管理员用户", SecurityUtils.getSubject().getPrincipal());
             throw new ServiceException("不能删除超级管理员用户");
         }
-        userJpaDao.delete(id);
+        user.setDeleted(true);
+        userDao.update(user);
     }
 
     /**
@@ -137,18 +113,7 @@ public class UserManager {
      * @return
      */
     public User findUserByEmail(String email) {
-        User user = userJpaDao.findByEmail(email);
-        return user;
-    }
-
-    /**
-     * 通过用户名获取用户
-     *
-     * @param username
-     * @return
-     */
-    public User findUserByUsername(String username) {
-        User user = userJpaDao.findByUsername(username);
+        User user = userDao.findByEmail(email);
         return user;
     }
 
@@ -250,7 +215,7 @@ public class UserManager {
         }
 
         user.setLastModifiedDate(null);
-        userJpaDao.save(user);
+        userDao.save(user);
 
         if (shiroRealm != null) {
             shiroRealm.clearCachedAuthorizationInfo(user.getEmail());
@@ -279,11 +244,6 @@ public class UserManager {
     @Autowired
     public void setUserDao(@Qualifier("userDao") UserDao userDao) {
         this.userDao = userDao;
-    }
-
-    @Autowired
-    public void setUserJpaDao(UserJpaDao userJpaDao) {
-        this.userJpaDao = userJpaDao;
     }
 
     @Autowired(required = false)

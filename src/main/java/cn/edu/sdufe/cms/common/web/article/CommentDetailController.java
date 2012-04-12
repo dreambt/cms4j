@@ -44,7 +44,7 @@ public class CommentDetailController {
     @RequestMapping(value = "audit/{id}", method = RequestMethod.GET)
     public String auditComment(@PathVariable("id") Long id, @ModelAttribute("comment") Comment comment, RedirectAttributes redirectAttributes) {
         comment.setStatus(!comment.isStatus());
-        if (null == commentManager.update(comment)) {
+        if (commentManager.update(comment) > 0) {
             redirectAttributes.addFlashAttribute("error", "操作评论 " + id + " 失败.");
             return "redirect:/comment/listAll";
         }
@@ -65,7 +65,7 @@ public class CommentDetailController {
     @RequestMapping(value = "delete/{id}")
     public String deleteComment(@PathVariable("id") Long id, @ModelAttribute("comment") Comment comment, RedirectAttributes redirectAttributes) {
         comment.setDeleted(!comment.isDeleted());
-        if (null == commentManager.update(comment)) {
+        if (commentManager.update(comment) > 0) {
             redirectAttributes.addFlashAttribute("error", "操作评论 " + id + " 失败.");
             return "redirect:/comment/listAll";
         }

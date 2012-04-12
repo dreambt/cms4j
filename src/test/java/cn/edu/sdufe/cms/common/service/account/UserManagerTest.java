@@ -26,9 +26,6 @@ public class UserManagerTest {
     @Mock
     private UserDao mockUserDao;
 
-    @Mock
-    private UserJpaDao mockUserJpaDao;
-
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
@@ -36,7 +33,6 @@ public class UserManagerTest {
 
         userManager = new UserManager();
         userManager.setUserDao(mockUserDao);
-        userManager.setUserJpaDao(mockUserJpaDao);
     }
 
     @After

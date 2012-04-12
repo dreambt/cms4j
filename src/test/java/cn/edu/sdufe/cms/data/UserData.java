@@ -39,7 +39,7 @@ public class UserData {
 
     public static User getRandomUserWithGroup() {
         User user = getRandomUser();
-        user.getGroupList().add(getRandomDefaultGroup());
+        user.setGroup(getRandomDefaultGroup());
         return user;
     }
 

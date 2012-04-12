@@ -1,5 +1,6 @@
 package cn.edu.sdufe.cms.common.service.image;
 
+import cn.edu.sdufe.cms.common.dao.image.ImageDao;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -17,14 +18,14 @@ public class ImageManagerTest {
     private ImageManager imageManager;
 
     @Mock
-    private ImageJpaDao mockImageDao;
+    private ImageDao mockImageDao;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
         imageManager = new ImageManager();
-        imageManager.setImageJpaDao(mockImageDao);
+        imageManager.setImageDao(mockImageDao);
     }
 
     @Test

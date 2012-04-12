@@ -17,8 +17,8 @@
         <result property="lastModifiedDate" column="last_modified_date"/>
         <result property="createdDate" column="created_date"/>
         <result property="deleted" column="deleted"/>
-        <collection property="subCategories" javaType="Category"/>
-        <collection property="articleList" javaType="Article"/>
+        <collection property="subCategories" javaType="Category" columnPrefix="sub_"/>
+        <collection property="articleList" javaType="Article" />
     </resultMap>
 
     <!--
@@ -28,27 +28,43 @@
         select id,father_category_id,category_name,display_order,show_type,url,description,
           allow_comment,allow_publish,show_nav,created_date,last_modified_date,deleted
         from cms_category
-        where id=#{id} and deleted=0
-        order by id ASC
+        where id>1 and id=#{id} and deleted=0
+        order by display_order ASC
         limit 1
-	</select>
-
-    <!--
-         获取所有可发表评论的分类列表
-     -->
-    <select id="getAllowPublishCategory" resultType="Category">
-        select id,category_name as categoryname
-        from cms_category
-        where allow_publish=1 and deleted=0
 	</select>
 
     <!--
          获取分类id的所有子分类
      -->
-    <select id="getSubCategory" parameterType="int" resultType="Category">
-        select id, father_category_id as fathercategoryid, category_name as categoryname, display_order as displayorder, url, deleted, show_type as showtype
+    <select id="getSubCategory" parameterType="int" resultMap="categoryDetailMap">
+        SELECT id,category_name,show_type,url,show_nav,deleted
+        FROM cms_category
+        WHERE id>1 and father_category_id=#{id} and deleted=0
+        ORDER BY display_order ASC
+	</select>
+
+    <!--
+         获取导航分类
+         select id,father_category_id,category_name,display_order,show_type,url,allow_comment,allow_publish
         from cms_category
-        where father_category_id=#{id} and deleted=0
+        where id>1 and father_category_id=1 and deleted=0 and show_nav=1
+        order by display_order ASC
+     -->
+    <select id="getNavCategory" resultMap="categoryDetailMap">
+        SELECT A.id,A.category_name,A.show_type,A.url,A.show_nav,A.deleted,B.id as sub_id,B.category_name as sub_category_name,B.show_type as sub_show_type,B.url as sub_url
+        FROM cms_category A
+        LEFT OUTER JOIN cms_category B on A.id=B.father_category_id and B.id>1 and B.deleted=0
+        WHERE A.id>1 and A.father_category_id=1 and A.deleted=0  and A.show_nav=1
+        ORDER BY A.display_order ASC,B.display_order ASC
+	</select>
+
+    <!--
+         获取所有可发表评论的分类列表
+     -->
+    <select id="getAllowPublishCategory" resultMap="categoryDetailMap">
+        select id,category_name
+        from cms_category
+        where id>1 and allow_publish=1 and deleted=0
 	</select>
 
     <!--
@@ -57,7 +73,7 @@
     <select id="getCount" resultType="Long">
 		select count(id)
 		from cms_category
-		where deleted=0
+		where id>1 and deleted=0
 		order by id ASC
 		limit 1
 	</select>
@@ -74,7 +90,7 @@
 	</select>
 
     <!-- 查询分类,演示: 1.输入用map传入多个参数 2.<where>语句, 智能添加where和and关键字 3.输出直接映射对象 -->
-    <select id="searchCategory" parameterType="map" resultType="Category">
+    <select id="searchCategory" parameterType="map" resultMap="categoryDetailMap">
         select *
         from cms_category
         <where>

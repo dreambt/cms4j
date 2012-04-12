@@ -57,7 +57,7 @@ public class ArticleDetailController {
     @RequiresPermissions("article:save")
     @RequestMapping(value = "save/{id}")
     public String saveArticle(@PathVariable("id") Long id, @Valid @ModelAttribute("article") Article article, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
-        if (bindingResult.hasErrors() || null == articleManager.save(article)) {
+        if (bindingResult.hasErrors() || articleManager.save(article) > 0) {
             redirectAttributes.addFlashAttribute("error", "保存文章失败");
             return "redirect:/article/edit/" + article.getId();
         } else {
@@ -78,12 +78,12 @@ public class ArticleDetailController {
         article.setTop(!article.isTop());
 
         if (article.isTop()) {
-            if (null == articleManager.update(article)) {
+            if (articleManager.update(article) > 0) {
                 redirectAttributes.addFlashAttribute("error", "操作文章 " + id + " 失败.");
             }
             redirectAttributes.addFlashAttribute("info", "置顶文章 " + id + " 成功.");
         } else {
-            if (null == articleManager.update(article)) {
+            if (articleManager.update(article) > 0) {
                 redirectAttributes.addFlashAttribute("error", "操作文章 " + id + " 失败.");
             }
             redirectAttributes.addFlashAttribute("info", "取消置顶文章 " + id + " 成功.");
@@ -101,7 +101,7 @@ public class ArticleDetailController {
     @RequestMapping(value = "allow/{id}")
     public String allowArticle(@PathVariable("id") Long id, @ModelAttribute("article") Article article, RedirectAttributes redirectAttributes) {
         article.setAllowComment(!article.isAllowComment());
-        if (null == articleManager.update(article)) {
+        if (articleManager.update(article) > 0) {
             redirectAttributes.addFlashAttribute("error", "操作文章 " + id + " 失败.");
             return "redirect:/article/listAll";
         }
@@ -124,7 +124,7 @@ public class ArticleDetailController {
     @RequestMapping(value = "audit/{id}")
     public String auditArticle(@PathVariable("id") Long id, @ModelAttribute("article") Article article, RedirectAttributes redirectAttributes) {
         article.setStatus(!article.isStatus());
-        if (null == articleManager.update(article)) {
+        if (articleManager.update(article) > 0) {
             redirectAttributes.addFlashAttribute("error", "操作文章 " + id + " 失败.");
             return "redirect:/article/listAll";
         }
@@ -147,7 +147,7 @@ public class ArticleDetailController {
     @RequestMapping(value = "delete/{id}")
     public String deleteArticle(@PathVariable("id") Long id, @ModelAttribute("article") Article article, RedirectAttributes redirectAttributes) {
         article.setDeleted(!article.isDeleted());
-        if (null == articleManager.update(article)) {
+        if (articleManager.update(article) > 0) {
             redirectAttributes.addFlashAttribute("error", "操作文章 " + id + " 失败.");
             return "redirect:/article/listAll";
         }

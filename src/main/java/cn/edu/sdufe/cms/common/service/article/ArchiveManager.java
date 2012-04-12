@@ -4,6 +4,7 @@ import cn.edu.sdufe.cms.common.dao.article.ArchiveDao;
 import cn.edu.sdufe.cms.common.dao.article.ArticleDao;
 import cn.edu.sdufe.cms.common.entity.article.Archive;
 import cn.edu.sdufe.cms.common.entity.article.Article;
+import com.google.common.collect.Maps;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 归类业务逻辑层
@@ -36,7 +38,7 @@ public class ArchiveManager {
      * @return
      */
     public List<Archive> getAll() {
-        return (List<Archive>) archiveDao.findAll();
+        return archiveDao.findAll();
     }
 
     /**
@@ -93,7 +95,7 @@ public class ArchiveManager {
         Archive archive = this.getByTitle(String.format("%04d年%02d月", year, month));
 
         //获得指定月份的所有文章
-        List<Article> articles = articleDao.getByMonth(dateTime.toDate());
+        List<Article> articles = articleDao.findByMonth(dateTime.toDate());
         if (articles.size() > 0 && articles.size() != archive.getArticleCount()) {
             archive.setArticleCount(articles.size());
             archive.setArticleList(articles);

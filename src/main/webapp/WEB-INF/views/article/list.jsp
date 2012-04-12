@@ -13,15 +13,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>${category.categoryName}</title>
+    <title>${article.category.categoryName}</title>
 </head>
 <body>
 <!-- BEGIN PAGE TITLE -->
 <div id="page-title">
     <div class="title"><!-- your title page -->
-        <h2 class="cufon"><c:choose><c:when test="${category!=null}">${category.categoryName}</c:when><c:otherwise>${archive.title}</c:otherwise></c:choose></h2>
+        <h2 class="cufon"><c:choose><c:when test="${article!=null}">${article.category.categoryName}</c:when><c:otherwise>${archive.title}</c:otherwise></c:choose></h2>
     </div>
-    <div class="desc">${category.description}</div>
+    <div class="desc">${article.category.description}</div>
 </div>
 <!-- END OF PAGE TITLE -->
 <div id="content-inner">
@@ -32,7 +32,7 @@
         <div class="art-list">
             <strong><c:if test="${article.top}"><img src="${ctx}/static/images/top.gif" /></c:if><a href="${ctx}/article/content/${article.id}">${article.subject}</a></strong>
             <span class="art-attr">
-                作者: ${article.author} &nbsp;•&nbsp; 发表时间: <fmt:formatDate value="${article.createdDate}" pattern="yyyy-MM-dd"/> &nbsp;•&nbsp; 浏览次数: ${article.views} &nbsp;•&nbsp; 评论数: ${fn:length(article.commentList)}
+                作者: ${article.user.username} &nbsp;•&nbsp; 发表时间: <fmt:formatDate value="${article.createdDate}" pattern="yyyy-MM-dd"/> &nbsp;•&nbsp; 浏览次数: ${article.views} &nbsp;•&nbsp; 评论数: ${fn:length(article.commentList)}
             </span>
         </div>
         </c:forEach>

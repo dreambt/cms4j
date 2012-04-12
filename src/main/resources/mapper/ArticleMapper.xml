@@ -18,49 +18,48 @@
         <result property="lastModifiedDate" column="last_modified_date"/>
         <result property="createdDate" column="created_date"/>
         <result property="deleted" column="deleted"/>
-        <association property="user" column="user_id" resultMap="userDetailMap" />
-        <association property="category" column="category_id" resultMap="categoryDetailMap" />
-        <collection property="commentList" column="id" javaType="ArrayList" ofType="Comment" resultMap="commentDetailMap" />
+        <association property="user" column="user_id" javaType="User" columnPrefix="user_" />
+        <association property="category" column="cat_id" javaType="Category" columnPrefix="cat_" />
+        <collection property="commentList" column="id" javaType="Comment" columnPrefix="comm_" />
     </resultMap>
 
     <!--
          获取文章数量
      -->
-    <select id="getArticleCount" parameterType="Long" resultType="Long">
-        select count(id)
-        from cms_article
-        where id in (select article_id from cms_category_article where category_id=#{categoryId}) and status=1 and deleted=0
-        limit 1
+    <select id="getArticleCount" resultType="Long">
+        SELECT COUNT( id )
+        FROM cms_article
+        WHERE deleted =0
+        AND STATUS =1
+        LIMIT 1
 	</select>
 
     <!--
-         获取已标记为删除的文章id
+         获取categoryId分类下面的文章数量
      -->
-    <select id="getDeletedArticleId" resultType="Long">
-        select id
-        from cms_article
-        where deleted=1
-        order by id ASC
-        limit 500
+    <select id="getArticleCountByCategoryId" parameterType="Long" resultType="Long">
+       SELECT COUNT( id )
+       FROM  cms_article
+       WHERE deleted =0
+       AND STATUS =1
+       AND category_id =#{categoryId}
+       LIMIT 1
 	</select>
 
     <!--
          获取文章正文
      -->
-    <select id="getArticle" parameterType="int" resultMap="articleDetailMap">
-        select id,user_id,category_id,subject,message,digest,keyword,top,rate,rate_times,views,status,allow_comment,created_date,last_modified_date,deleted
-        from cms_article
-        where id=#{id}
-        limit 1
-	</select>
-
-    <!--
-         获取所有文章where deleted=0
-     -->
-    <select id="getAllArticle" parameterType="map" resultMap="articleDetailMap">
-        select id,user_id,category_id,subject,rate,rate_times as ratetimes,views,top,allow_comment as allowcomment,status,deleted,cms_article.created_date as createddate,cms_article.last_modified_date as lastmodifieddate
-        from cms_article
-        order by ${Sort} ${Direction}
+    <select id="getArticle" parameterType="Long" resultMap="articleDetailMap">
+        SELECT A.id, user_id, category_id, subject, message, digest, keyword, top, rate, rate_times, views, A.status,
+        A.allow_comment, A.created_date, A.last_modified_date, A.deleted, U.id as user_id, U.username as user_username,
+        C.id as cat_id, C.category_name as cat_category_name, C.description as cat_description
+        FROM cms_article AS A
+        LEFT OUTER JOIN cms_user AS U ON user_id = U.id
+        LEFT OUTER JOIN cms_category AS C ON category_id = C.id
+        WHERE A.id=#{id}
+        AND A.deleted =0
+        AND A.STATUS =1
+        LIMIT 1
 	</select>
 
     <!--
@@ -77,31 +76,42 @@
         获取top 10 文章
     -->
     <select id="getTopTenArticle" resultMap="articleDetailMap">
-        select id,subject
-        from cms_article
-        where deleted=0
-        order by id desc
-        limit 0,10
+        SELECT id, subject
+        FROM cms_article
+        WHERE deleted =0
+        AND STATUS =1
+        ORDER BY id DESC
+        LIMIT 10
     </select>
 
     <!--
          通过分类id获取文章
      -->
-    <select id="getArticleListByCategoryId" parameterType="int" resultMap="articleDetailMap">
-        select id,subject,author,category_name,rate,rate_times as ratetimes,top,status,allow_comment,views,created_date,last_modified_date
-        from cms_article
-        where id in (select article_id from cms_category_article where category_id=#{categoryId}) and status=1 and deleted=0
-        order by top desc
+    <select id="getArticleByCategoryId" parameterType="Long" resultMap="articleDetailMap">
+        SELECT A.id, user_id, category_id, subject, message, digest, keyword, top, rate, rate_times, views, A.status,
+        A.allow_comment, A.created_date, A.last_modified_date, A.deleted, U.id as user_id, U.username as user_username,
+        C.id as cat_id, C.category_name as cat_category_name, C.description as cat_description
+        FROM cms_article AS A
+        LEFT OUTER JOIN cms_user AS U ON user_id = U.id
+        LEFT OUTER JOIN cms_category AS C ON category_id = C.id
+        WHERE A.deleted =0
+        AND A.STATUS =1
+        AND A.category_id=#{categoryId}
 	</select>
 
     <!--
-         通过分类id获取文章
+         获取文章摘要
      -->
-    <select id="getArticleDigestByCategoryId" parameterType="int" resultMap="articleDetailMap">
-        select id,subject,digest,author,category_name,rate,rate_times,views,created_date,last_modified_date,top,status
-        from cms_article
-        where id in (select article_id from cms_category_article where category_id=#{categoryId}) and status=1 and deleted=0
-        order by top desc
+    <select id="getArticleDigestByCategoryId" parameterType="Long" resultMap="articleDetailMap">
+        SELECT A.id, user_id, category_id, subject, digest, keyword, top, rate, rate_times, views, A.status,
+        A.allow_comment, A.created_date, A.last_modified_date, A.deleted, U.id as user_id, U.username as user_username,
+        C.id as cat_id, C.category_name as cat_category_name, C.description as cat_description
+        FROM cms_article AS A
+        LEFT OUTER JOIN cms_user AS U ON user_id = U.id
+        LEFT OUTER JOIN cms_category AS C ON category_id = C.id
+        WHERE A.deleted =0
+        AND A.STATUS =1
+        AND A.category=#{categoryId}
 	</select>
 
     <!--

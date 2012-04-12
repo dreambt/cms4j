@@ -1,9 +1,11 @@
 package cn.edu.sdufe.cms.common.service.link;
 
+import cn.edu.sdufe.cms.common.dao.link.LinkDao;
 import cn.edu.sdufe.cms.common.entity.link.Link;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,9 +20,10 @@ import java.util.List;
 @Component
 @Transactional(readOnly = false)
 public class LinkManager {
+
     private static Logger logger = LoggerFactory.getLogger(LinkManager.class);
 
-    private LinkJpaDao linkJpaDao;
+    private LinkDao linkDao;
 
     /**
      * 获得所有link
@@ -28,7 +31,7 @@ public class LinkManager {
      * @return
      */
     public List<Link> getAll() {
-        return (List<Link>) linkJpaDao.findAll();
+        return (List<Link>) linkDao.findAll();
     }
 
     /**
@@ -37,7 +40,7 @@ public class LinkManager {
      * @return
      */
     public List<Link> getAllLink() {
-        return linkJpaDao.findByStatus(true);
+        return linkDao.findAll();
     }
 
     /**
@@ -47,7 +50,7 @@ public class LinkManager {
      * @return
      */
     public Link getLink(Long id) {
-        return linkJpaDao.findOne(id);
+        return linkDao.findOne(id);
     }
 
     /**
@@ -56,7 +59,7 @@ public class LinkManager {
      * @param link
      */
     @Transactional(readOnly = false)
-    public Link save(Link link) {
+    public int save(Link link) {
         link.setStatus(false);
         return this.update(link);
     }
@@ -68,9 +71,9 @@ public class LinkManager {
      * @return
      */
     @Transactional(readOnly = false)
-    public Link update(Link link) {
+    public int update(Link link) {
         link.setLastModifiedDate(null);
-        return linkJpaDao.save(link);
+        return linkDao.save(link);
     }
 
     /**
@@ -80,7 +83,7 @@ public class LinkManager {
      */
     @Transactional(readOnly = false)
     public void delete(Long id) {
-        linkJpaDao.delete(id);
+        linkDao.delete(id);
     }
 
     /**
@@ -96,8 +99,8 @@ public class LinkManager {
     }
 
     @Autowired
-    public void setLinkJpaDao(LinkJpaDao linkJpaDao) {
-        this.linkJpaDao = linkJpaDao;
+    public void setLinkDao(@Qualifier("linkDao") LinkDao linkDao) {
+        this.linkDao = linkDao;
     }
 
 }

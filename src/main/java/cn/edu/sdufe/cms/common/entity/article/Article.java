@@ -6,7 +6,6 @@ import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -16,8 +15,6 @@ import java.util.List;
  * Date: 12-3-20
  * Time: 下午19:40
  */
-@Entity
-@Table(name = "cms_article")
 public class Article extends PersistableEntity {
 
     private Category category;
@@ -35,8 +32,6 @@ public class Article extends PersistableEntity {
     private int views;
     private List<Comment> commentList = Lists.newArrayList();
 
-    @ManyToOne
-    @JoinTable(name = "cms_category", joinColumns = {@JoinColumn(name = "id")}, inverseJoinColumns = {@JoinColumn(name = "category_id")})
     public Category getCategory() {
         return category;
     }
@@ -45,8 +40,6 @@ public class Article extends PersistableEntity {
         this.category = category;
     }
 
-    @ManyToOne
-    @JoinTable(name = "cms_user", joinColumns = {@JoinColumn(name = "id")}, inverseJoinColumns = {@JoinColumn(name = "user_id")})
     public User getUser() {
         return user;
     }
@@ -145,9 +138,6 @@ public class Article extends PersistableEntity {
         this.views = views;
     }
 
-    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY) // 级联删除相关评论
-    @JoinTable(name = "cms_comment", joinColumns = {@JoinColumn(name = "article_id")}, inverseJoinColumns = {@JoinColumn(name = "id")})
-    @OrderBy("id DESC")
     public List<Comment> getCommentList() {
         return commentList;
     }

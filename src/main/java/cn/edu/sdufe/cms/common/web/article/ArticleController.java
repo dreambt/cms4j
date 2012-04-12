@@ -116,14 +116,14 @@ public class ArticleController {
         } else {
             pageCount = total / limit + 1;
         }
-        model.addAttribute("articles", articleManager.getListByCategoryId(id, 0, limit));
-        model.addAttribute("category", categoryManager.get(id));
-        model.addAttribute("categories", categoryManager.getNavCategory());
-        model.addAttribute("archives", archiveManager.getTopTen());
-        model.addAttribute("newArticles", articleManager.getTopTen());
-        model.addAttribute("total", articleManager.count(id));
+        model.addAttribute("articles", articleManager.getListByCategoryId(id, 0, limit));//文章列表
+        //model.addAttribute("category", categoryManager.get(id));//分类信息
+        model.addAttribute("categories", categoryManager.getNavCategory());//导航菜单
+        model.addAttribute("archives", archiveManager.getTopTen());//边栏归档日志
+        model.addAttribute("newArticles", articleManager.getTopTen());//边栏最新文章
+        model.addAttribute("total", total);
         model.addAttribute("pageCount", pageCount);
-        model.addAttribute("links", linkManager.getAllLink());
+        model.addAttribute("links", linkManager.getAllLink());//页脚友情链接
         return "article/list";
     }
 
@@ -163,7 +163,7 @@ public class ArticleController {
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("archives", archiveManager.getTopTen());
         model.addAttribute("newArticles", articleManager.getTopTen());
-        model.addAttribute("total", articleManager.count(id));
+        model.addAttribute("total", total);
         model.addAttribute("pageCount", pageCount);
         model.addAttribute("links", linkManager.getAllLink());
         return "article/digest";
@@ -186,6 +186,7 @@ public class ArticleController {
 
     /**
      * 获得公告
+     *
      * @param model
      * @return
      */
@@ -228,7 +229,7 @@ public class ArticleController {
         article.setUser(user);
 
         // 保存
-        if (null == articleManager.save(article)) {
+        if (articleManager.save(article) > 0) {
             redirectAttributes.addFlashAttribute("error", "创建文章失败");
             return "redirect:/article/create";
         } else {

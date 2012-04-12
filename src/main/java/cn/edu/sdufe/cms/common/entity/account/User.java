@@ -10,7 +10,6 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springside.modules.utils.Collections3;
 
-import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
@@ -23,9 +22,6 @@ import java.util.List;
  * Date: 12-3-20
  * Time: 下午19:55
  */
-@Entity
-//表名与类名不相同时重新定义表名.
-@Table(name = "cms_user")
 public class User extends PersistableEntity {
 
     private String email;
@@ -39,8 +35,8 @@ public class User extends PersistableEntity {
     private boolean deleted;
     private String photoURL;
     private String timeOffset;
-    private List<Group> groupList = Lists.newArrayList(); //有序的关联对象集合
-    private List<Article> articleList = Lists.newArrayList();
+    private Group group;
+    private List<Article> articleList = Lists.newArrayList();//有序的关联对象集合
     private Long lastIP;
     private String lastLoginIP;
     private Date lastTime;
@@ -64,7 +60,6 @@ public class User extends PersistableEntity {
         this.username = username;
     }
 
-    @Transient
     public String getPlainPassword() {
         return plainPassword;
     }
@@ -147,7 +142,6 @@ public class User extends PersistableEntity {
         this.lastIP = lastIP;
     }
 
-    @Transient
     public String getLastLoginIP() {
         return IPEncodes.longToIp(lastIP);
     }
@@ -172,32 +166,20 @@ public class User extends PersistableEntity {
         this.lastActTime = lastActTime;
     }
 
-    //多对多定义
-    @ManyToMany
-    //中间表定义,表名采用默认命名规则
-    @JoinTable(name = "cms_user_group", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "group_id")})
-    public List<Group> getGroupList() {
-        return groupList;
+    public Group getGroup() {
+        return group;
     }
 
-    public void setGroupList(List<Group> groupList) {
-        this.groupList = groupList;
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
-    @OneToMany(orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinTable(name = "cms_article", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "id")})
     public List<Article> getArticleList() {
         return articleList;
     }
 
     public void setArticleList(List<Article> articleList) {
         this.articleList = articleList;
-    }
-
-    @Transient
-    @JsonIgnore
-    public String getGroupNames() {
-        return Collections3.extractToString(groupList, "groupName", ",");
     }
 
     @Override

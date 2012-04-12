@@ -3,12 +3,7 @@ package cn.edu.sdufe.cms.common.entity.article;
 import cn.edu.sdufe.cms.common.entity.PersistableEntity;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
-import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -18,9 +13,6 @@ import java.util.List;
  * Date: 12-3-31
  * Time: 下午3:59
  */
-@Entity
-@Table(name = "cms_archive")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Archive extends PersistableEntity {
 
     private String title;
@@ -45,11 +37,6 @@ public class Archive extends PersistableEntity {
         this.articleCount = articleCount;
     }
 
-    @OneToMany(orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinTable(name = "cms_archive_article", joinColumns = @JoinColumn(name = "archive_id"), inverseJoinColumns = @JoinColumn(name = "article_id"))
-    @Fetch(FetchMode.SUBSELECT)
-    @OrderBy(value = "id DESC")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     public List<Article> getArticleList() {
         return articleList;
     }
