@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -53,11 +50,14 @@ public class ImageController {
      */
     @RequestMapping(value = "album", method = RequestMethod.GET)
     public String album(Model model) {
-        int total = imageManager.getAllImageByDeleted().size();
+        Long total = imageManager.count().longValue();
         int limit = 4;
-        int pageCount = 1;
-        if (total % limit == 0) pageCount = total / limit;
-        else pageCount = total / limit + 1;
+        Long pageCount = 1L;
+        if (total % limit == 0) {
+            pageCount = total / limit;
+        } else {
+            pageCount = total / limit + 1;
+        }
         model.addAttribute("images", imageManager.getPagedImage(0, limit));
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("total", total);
@@ -87,11 +87,14 @@ public class ImageController {
      */
     @RequestMapping(value = "photo", method = RequestMethod.GET)
     public String gallery(Model model) {
-        int total = imageManager.getAllImageByDeleted().size();
+        Long total = imageManager.count().longValue();
         int limit = 12;
-        int pageCount = 1;
-        if (total % limit == 0) pageCount = total / limit;
-        else pageCount = total / limit + 1;
+        Long pageCount = 1L;
+        if (total % limit == 0) {
+            pageCount = total / limit;
+        } else {
+            pageCount = total / limit + 1;
+        }
         model.addAttribute("images", imageManager.getPagedImage(0, limit));
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("total", total);
@@ -139,9 +142,8 @@ public class ImageController {
         if (file == null) {
             redirectAttributes.addFlashAttribute("error", "请选择上传的图片");
         }
-        //redirectAttributes.addAttribute("imageUrl", request.getContextPath()+"/upload/"+fileName);
-        Image img = imageManager.save(file, request, image);
-        if (null == img) {
+
+        if (imageManager.save(file, request, image) > 0) {
             redirectAttributes.addFlashAttribute("error", "添加图片信息失败");
         } else {
             redirectAttributes.addFlashAttribute("info", "添加" + image.getId() + "图片信息成功");
@@ -150,22 +152,40 @@ public class ImageController {
     }
 
     /**
+     * 删除编号为id的image
+     *
+     * @param id
+     * @param redirectAttributes
+     * @return
+     */
+    @RequiresPermissions("gallery:delete")
+    @RequestMapping(value = "delete/{id}")
+    public String delete(@PathVariable Long id, @ModelAttribute("image") Image image, RedirectAttributes redirectAttributes) {
+        if (imageManager.delete(id) > 0) {
+            redirectAttributes.addFlashAttribute("error", "删除图片 " + id + " 成功.");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "删除图片 " + id + " 失败.");
+        }
+
+        return "redirect:/gallery/listAll";
+    }
+
+    /**
      * 批量删除
      *
      * @return
      */
-    @RequiresPermissions("gallery:edit")
+    @RequiresPermissions("gallery:delete")
     @RequestMapping(value = "batchDelete", method = RequestMethod.POST)
     public String batchDeleteComment(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         String[] isSelected = request.getParameterValues("isSelected");
         if (isSelected == null) {
-            redirectAttributes.addFlashAttribute("error", "请选择要删除的评论.");
-            return "redirect:/gallery/listAll";
+            redirectAttributes.addFlashAttribute("error", "请选择要删除的图片.");
         } else {
             imageManager.batchDelete(isSelected);
-            redirectAttributes.addFlashAttribute("info", "批量删除评论成功.");
-            return "redirect:/gallery/listAll";
+            redirectAttributes.addFlashAttribute("info", "批量删除图片成功.");
         }
+        return "redirect:/gallery/listAll";
     }
 
     @Autowired

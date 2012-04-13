@@ -48,7 +48,7 @@ public class CommentDetailController {
             return "redirect:/comment/listAll";
         }
         comment.setStatus(!comment.isStatus());
-        if (null == commentManager.update(comment)) {
+        if (commentManager.update(comment) > 0) {
             redirectAttributes.addFlashAttribute("error", "操作评论 " + id + " 失败.");
             return "redirect:/comment/listAll";
         }
@@ -73,7 +73,7 @@ public class CommentDetailController {
             return "redirect:/comment/listAll";
         }
         comment.setDeleted(!comment.isDeleted());
-        if (null == commentManager.update(comment)) {
+        if (commentManager.update(comment) > 0) {
             redirectAttributes.addFlashAttribute("error", "操作评论 " + id + " 失败.");
             return "redirect:/comment/listAll";
         }

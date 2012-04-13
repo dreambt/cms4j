@@ -1,10 +1,10 @@
 package cn.edu.sdufe.cms.common.service.article;
 
 import cn.edu.sdufe.cms.common.dao.article.ArticleDao;
-import cn.edu.sdufe.cms.common.dao.article.ArticleJpaDao;
 import cn.edu.sdufe.cms.common.dao.article.CategoryDao;
+import cn.edu.sdufe.cms.common.entity.account.User;
 import cn.edu.sdufe.cms.common.entity.article.Article;
-import cn.edu.sdufe.cms.common.entity.article.Category;
+import cn.edu.sdufe.cms.security.ShiroDbRealm;
 import cn.edu.sdufe.cms.utilities.analyzer.ArticleKeyword;
 import cn.edu.sdufe.cms.utilities.thumb.ImageThumb;
 import com.google.common.collect.Lists;
@@ -12,6 +12,7 @@ import com.google.common.collect.Maps;
 import com.sun.org.apache.xpath.internal.SourceTree;
 import org.apache.commons.lang3.Validate;
 import org.apache.ibatis.session.RowBounds;
+import org.apache.shiro.SecurityUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -23,7 +24,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springside.modules.beanvalidator.BeanValidators;
-import org.springside.modules.orm.jpa.Jpas;
+import org.springside.modules.utils.Encodes;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
@@ -48,10 +49,6 @@ public class ArticleManager {
 
     private ArticleDao articleDao = null;
 
-    private ArticleJpaDao articleJpaDao = null;
-
-    private CategoryDao categoryDao = null;
-
     private Validator validator = null;
 
     /**
@@ -60,28 +57,32 @@ public class ArticleManager {
      * @param id
      * @return
      */
-    public Article get(Long id) {
-
-        //Dao不取相关连接表中的内容，比如评论
-        //return articleDao.getArticle(id);
-        return articleJpaDao.findOne(id);
+    public Article findOne(Long id) {
+        return articleDao.findOne(id);
     }
 
     /**
-     * 通过id获取文章
+     * 通过id获取文章用于显示，带浏览次数统计
      *
      * @param id
      * @return
      */
-    public Article getForView(Long id) {
-        Article article = articleJpaDao.findOne(id);
+    @Transactional(readOnly = false)
+    public Article findForView(Long id) {
+        Article article = articleDao.findOne(id);
 
-        // 记录文章访问次数
-        article.setViews(article.getViews() + 1);
+        // 判断文章是否为空
+        if (null != article) {
+            // 记录文章访问次数
+            Article article1 = new Article();
+            article1.setId(article.getId());
+            article1.setViews(article.getViews() + 1);
+            articleDao.update(article1);
 
-        //Dao不取相关连接表中的内容，比如评论
-        //return articleDao.getArticle(id);
-        return update(article);
+            article.setMessage(Encodes.unescapeHtml(article.getMessage()));
+        }
+
+        return article;
     }
 
     /**
@@ -103,7 +104,7 @@ public class ArticleManager {
         Map<String, Object> parameters = Maps.newHashMap();
         parameters.put("Direction", "DESC");
         parameters.put("Sort", "id");
-        return articleDao.getAll(parameters, new RowBounds(offset, limit));
+        return articleDao.search(parameters, new RowBounds(offset, limit));
     }
 
     /**
@@ -112,34 +113,7 @@ public class ArticleManager {
      * @return
      */
     public List<Article> getTopTen() {
-        return articleDao.getTopTen();
-    }
-
-    /**
-     * 获得首页显示的新闻资讯
-     * @return
-     */
-    public List<Article> getNews() {
-        List<Article> articles = articleDao.getNews();
-        List<String> imageUrls = Lists.newArrayList();
-        for(Article article: articles) {
-
-        }
-        return articleDao.getNews();
-    }
-
-    /**
-     * 加载Lazy属性
-     *
-     * @return
-     */
-    @Deprecated
-    public List<Article> getAllArticleInitialized() {
-        List<Article> result = (List<Article>) articleJpaDao.findAll();
-        for (Article article : result) {
-            Jpas.initLazyProperty(article.getCommentList());
-        }
-        return result;
+        return articleDao.findTopTen();
     }
 
     /**
@@ -148,40 +122,40 @@ public class ArticleManager {
      * @param parameters
      * @return
      */
-    @Deprecated
     public List<Article> search(Map<String, Object> parameters) {
+        parameters.put("Direction", "DESC");
+        parameters.put("Sort", "id");
         return articleDao.search(parameters);
     }
 
     /**
-     * 通过分类categoryId查找文章
+     * 通过分类categoryId查找文章标题
+     *
+     * @param categoryId
+     * @return
+     */
+    public List<Article> getTitleByCategoryId(Long categoryId, int offset, int limit) {
+        return articleDao.findTitleByCategoryId(categoryId, new RowBounds(offset, limit));
+    }
+
+    /**
+     * 通过分类categoryId查找文章列表
      *
      * @param categoryId
      * @return
      */
     public List<Article> getListByCategoryId(Long categoryId, int offset, int limit) {
-        return articleDao.getListByCategoryId(categoryId, new RowBounds(offset, limit));
+        return articleDao.findByCategoryId(categoryId, new RowBounds(offset, limit));
     }
 
     /**
-     * 通过分类categoryId查找文章
+     * 通过分类categoryId查找文章摘要
      *
      * @param categoryId
      * @return
      */
     public List<Article> getDigestByCategoryId(Long categoryId, int offset, int limit) {
-        return articleDao.getDigestByCategoryId(categoryId, new RowBounds(offset, limit));
-    }
-
-    /**
-     * 通过用户userId查找文章
-     *
-     * @param userId
-     * @return
-     */
-    @Deprecated
-    public List<Article> getByUserId(Long userId) {
-        return (List<Article>) articleJpaDao.findByUserId(userId);
+        return articleDao.findDigestByCategoryId(categoryId, new RowBounds(offset, limit));
     }
 
     /**
@@ -191,7 +165,7 @@ public class ArticleManager {
      * @return
      */
     @Transactional(readOnly = false)
-    public Article save(Article article) {
+    public int save(Article article) {
         try {
             // 生成默认摘要
             String str = Jsoup.parse(article.getMessage()).text();
@@ -216,22 +190,23 @@ public class ArticleManager {
             // 关键词由任务生成
             article.setKeyword("");
 
-            // 文章分类
-            Category category = categoryDao.get(article.getCategoryId());
-            article.setCategory(category);
-            article.setCategoryName(category.getCategoryName());
+            // 文章作者
+            ShiroDbRealm.ShiroUser shiroUser = (ShiroDbRealm.ShiroUser) SecurityUtils.getSubject().getPrincipal();
+            User user = new User();
+            user.setId(shiroUser.getId());
+            article.setUser(user);
 
-            article.setCreatedDate(null);
-            article.setLastModifiedDate(null);
+            // 文章正文进行HTML编码
+            article.setMessage(Encodes.escapeHtml(article.getMessage()));
 
             //使用Hibernate Validator校验请求参数
             Validate.notNull(article, "文章参数为空");
             BeanValidators.validateWithException(validator, article);
 
-            return articleJpaDao.save(article);
+            return articleDao.save(article);
         } catch (ConstraintViolationException cve) {
             logger.warn("操作员{}尝试发表文章, 缺少相关字段.", cve.getConstraintViolations().toString());
-            return null;
+            return 0;
         }
     }
 
@@ -294,7 +269,7 @@ public class ArticleManager {
             if (id.length() == 0) {
                 continue;
             }
-            article = articleDao.get(Long.parseLong(id));
+            article = articleDao.findOne(Long.parseLong(id));
             article.setStatus(false);
             this.update(article);
         }
@@ -312,7 +287,7 @@ public class ArticleManager {
             if (id.length() == 0) {
                 continue;
             }
-            article = articleDao.get(Long.parseLong(id));
+            article = articleDao.findOne(Long.parseLong(id));
             article.setDeleted(true);
             this.update(article);
         }
@@ -324,9 +299,8 @@ public class ArticleManager {
      * @param article
      */
     @Transactional(readOnly = false)
-    public Article update(Article article) {
-        article.setLastModifiedDate(null);
-        return articleJpaDao.save(article);
+    public int update(Article article) {
+        return articleDao.update(article);
     }
 
     /**
@@ -336,13 +310,7 @@ public class ArticleManager {
      */
     @Transactional(readOnly = false)
     public int delete() {
-        List<Article> articleList = articleJpaDao.findByDeleted(true);
-        int count = articleList.size();
-        while (articleList.size() > 0) {
-            Article article = articleList.remove(0);
-            articleJpaDao.delete(article.getId());
-        }
-        return count;
+        return articleDao.delete();
     }
 
     @Autowired
@@ -350,18 +318,9 @@ public class ArticleManager {
         this.validator = validator;
     }
 
-    @Autowired(required = false)
-    public void setCategoryDao(@Qualifier("categoryDao") CategoryDao categoryDao) {
-        this.categoryDao = categoryDao;
-    }
-
     @Autowired
     public void setArticleDao(@Qualifier("articleDao") ArticleDao articleDao) {
         this.articleDao = articleDao;
     }
 
-    @Autowired
-    public void setArticleJpaDao(@Qualifier("articleJpaDao") ArticleJpaDao articleJpaDao) {
-        this.articleJpaDao = articleJpaDao;
-    }
 }

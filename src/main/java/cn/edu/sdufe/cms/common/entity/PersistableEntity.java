@@ -1,8 +1,5 @@
 package cn.edu.sdufe.cms.common.entity;
 
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import java.util.Date;
 
 /**
@@ -12,13 +9,10 @@ import java.util.Date;
  * Date: 12-3-20
  * Time: 下午19:55
  */
-@MappedSuperclass
 public abstract class PersistableEntity extends IdEntity {
 
-    @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
-    @Temporal(TemporalType.TIMESTAMP)
     private Date lastModifiedDate;
 
     public Date getCreatedDate() {

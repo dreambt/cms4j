@@ -24,8 +24,19 @@ public class UserDao extends SqlSessionDaoSupport {
      * @return
      */
     @Cacheable(value = "user")
-    public User get(Long id) {
+    public User findOne(Long id) {
         return getSqlSession().selectOne("ACCOUNT.getUser", id);
+    }
+
+    /**
+     * 获取邮箱为email的用户，仅用于登录
+     *
+     * @param email
+     * @return
+     */
+    @Cacheable(value = "user")
+    public User findByEmail(String email) {
+        return getSqlSession().selectOne("ACCOUNT.getUserByEmail", email);
     }
 
     /**
@@ -34,7 +45,7 @@ public class UserDao extends SqlSessionDaoSupport {
      * @return
      */
     @Cacheable(value = "all_user")
-    public List<User> getAll() {
+    public List<User> findAll() {
         return getSqlSession().selectList("ACCOUNT.getAllUser");
     }
 
@@ -49,12 +60,22 @@ public class UserDao extends SqlSessionDaoSupport {
     }
 
     /**
-     * 获取标记为删除的用户id
+     * 新建用户
+     *
+     * @param user
+     * @return
+     */
+    public int save(User user) {
+        return getSqlSession().insert("ACCOUNT.saveUser", user);
+    }
+
+    /**
+     * 删除用户
      *
      * @return
      */
-    public List<Long> getDeletedId() {
-        return getSqlSession().selectList("ACCOUNT.getDeletedUserId");
+    public int delete() {
+        return getSqlSession().delete("ACCOUNT.deleteUser");
     }
 
     /**
@@ -63,8 +84,8 @@ public class UserDao extends SqlSessionDaoSupport {
      * @param user
      * @return
      */
-    public void update(User user) {
-        getSqlSession().update("ACCOUNT.updateUser", user);
+    public int update(User user) {
+        return getSqlSession().update("ACCOUNT.updateUser", user);
     }
 
     /**

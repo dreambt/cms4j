@@ -1,7 +1,6 @@
 package cn.edu.sdufe.cms.common.service.account;
 
 import cn.edu.sdufe.cms.common.dao.account.UserDao;
-import cn.edu.sdufe.cms.common.dao.account.UserJpaDao;
 import cn.edu.sdufe.cms.common.entity.account.User;
 import cn.edu.sdufe.cms.common.service.ServiceException;
 import org.junit.After;
@@ -27,9 +26,6 @@ public class UserManagerTest {
     @Mock
     private UserDao mockUserDao;
 
-    @Mock
-    private UserJpaDao mockUserJpaDao;
-
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
@@ -37,7 +33,6 @@ public class UserManagerTest {
 
         userManager = new UserManager();
         userManager.setUserDao(mockUserDao);
-        userManager.setUserJpaDao(mockUserJpaDao);
     }
 
     @After

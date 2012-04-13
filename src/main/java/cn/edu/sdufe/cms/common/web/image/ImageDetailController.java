@@ -65,40 +65,10 @@ public class ImageDetailController {
             redirectAttributes.addFlashAttribute("error", "该相册不存在，请刷新重试");
             return "redirect:/image/listAll";
         }
-        Image img = imageManager.update(file, request, image);
-        if (null == img) {
+        if (imageManager.update(file, request, image) > 0) {
             redirectAttributes.addFlashAttribute("error", "修改图片信息失败");
         } else {
             redirectAttributes.addFlashAttribute("info", "修改" + id + "图片信息成功");
-        }
-        return "redirect:/gallery/listAll";
-    }
-
-    /**
-     * 删除编号为id的image
-     *
-     * @param id
-     * @param redirectAttributes
-     * @return
-     */
-    @RequiresPermissions("gallery:edit")
-    @RequestMapping(value = "delete/{id}")
-    public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        if(null == imageManager.getImage(id)) {
-            redirectAttributes.addFlashAttribute("error", "该相册已经删除，请刷新查看");
-            return "redirect:/image/listAll";
-        }
-        Image image = imageManager.getImage(id);
-        imageManager.delete(id);
-        imageManager.deletePic("gallery-big\\" + image.getImageUrl());
-        imageManager.deletePic("dashboard-thumb\\" + image.getImageUrl());
-        imageManager.deletePic("photo-thumb\\" + image.getImageUrl());
-        imageManager.deletePic("album-thumb\\" + image.getImageUrl());
-        imageManager.deletePic("index-thumb\\" + image.getImageUrl());
-        if (null == imageManager.getImage(id)) {
-            redirectAttributes.addFlashAttribute("info", "删除" + id + "图片信息成功");
-        } else {
-            redirectAttributes.addFlashAttribute("info", "恢复" + id + "图片信息成功");
         }
         return "redirect:/gallery/listAll";
     }

@@ -44,14 +44,21 @@ public class ArticleController {
     private LinkManager linkManager;
 
     /**
-     * 获取菜单编号为id的所有文章正文
+     * 获取编号为id的文章正文
      *
      * @param id
      * @return
      */
     @RequestMapping(value = "content/{id}", method = RequestMethod.GET)
-    public String contextOfArticle(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("article", articleManager.getForView(id));
+    public String contextOfArticle(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
+        Article article = articleManager.findForView(id);
+
+        if (null == article) {
+            redirectAttributes.addFlashAttribute("message", "不存在编号为 " + id + " 的文章");
+            return "redirect:/error/404";
+        }
+
+        model.addAttribute("article", article);
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("archives", archiveManager.getTopTen());
         model.addAttribute("newArticles", articleManager.getTopTen());
@@ -96,7 +103,7 @@ public class ArticleController {
      */
     @RequestMapping(value = "listByCategory/{id}", method = RequestMethod.GET)
     public String listArticleByCategory(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("articles", categoryManager.get(id).getArticleList());
+        model.addAttribute("articles", articleManager.getListByCategoryId(id, 0, 110));
         return "dashboard/article/listAll";
     }
 
@@ -109,22 +116,22 @@ public class ArticleController {
      */
     @RequestMapping(value = "list/{id}", method = RequestMethod.GET)
     public String listOfArticle(@PathVariable("id") Long id, Model model) {
-        int total = articleManager.count(id).intValue();
+        Long total = articleManager.count(id).longValue();
         int limit = 10;
-        int pageCount = 1;
+        Long pageCount = 1L;
         if (total % limit == 0) {
             pageCount = pageCount / limit;
         } else {
             pageCount = total / limit + 1;
         }
-        model.addAttribute("articles", articleManager.getListByCategoryId(id, 0, limit));
-        model.addAttribute("category", categoryManager.get(id));
-        model.addAttribute("categories", categoryManager.getNavCategory());
-        model.addAttribute("archives", archiveManager.getTopTen());
-        model.addAttribute("newArticles", articleManager.getTopTen());
-        model.addAttribute("total", articleManager.count(id));
+        model.addAttribute("articles", articleManager.getListByCategoryId(id, 0, limit));//文章列表
+        model.addAttribute("categories", categoryManager.getNavCategory());//导航菜单
+        model.addAttribute("category", categoryManager.get(id));//获取分类信息
+        model.addAttribute("archives", archiveManager.getTopTen());//边栏归档日志
+        model.addAttribute("newArticles", articleManager.getTopTen());//边栏最新文章
+        model.addAttribute("total", total);
         model.addAttribute("pageCount", pageCount);
-        model.addAttribute("links", linkManager.getAllLink());
+        model.addAttribute("links", linkManager.getAllLink());//页脚友情链接
         return "article/list";
     }
 
@@ -151,20 +158,20 @@ public class ArticleController {
      */
     @RequestMapping(value = "digest/{id}", method = RequestMethod.GET)
     public String digestOfArticle(@PathVariable("id") Long id, Model model) {
-        int total = articleManager.count(id).intValue();
-        int limit = 10;
-        int pageCount = 1;
+        Long total = articleManager.count(id).longValue();
+        int limit = 6;
+        Long pageCount = 1L;
         if (total % limit == 0) {
             pageCount = pageCount / limit;
         } else {
             pageCount = total / limit + 1;
         }
-        model.addAttribute("articles", articleManager.getDigestByCategoryId(id, 0, 10));
-        model.addAttribute("category", categoryManager.get(id));
+        model.addAttribute("articles", articleManager.getDigestByCategoryId(id, 0, limit));
+        model.addAttribute("category", categoryManager.get(id));//获取分类信息
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("archives", archiveManager.getTopTen());
         model.addAttribute("newArticles", articleManager.getTopTen());
-        model.addAttribute("total", articleManager.count(id));
+        model.addAttribute("total", total);
         model.addAttribute("pageCount", pageCount);
         model.addAttribute("links", linkManager.getAllLink());
         return "article/digest";
@@ -187,6 +194,8 @@ public class ArticleController {
 
     /**
      * 获得公告
+     *
+     * @param model
      * @return
      */
     @RequestMapping(value = "listPost")
@@ -223,20 +232,113 @@ public class ArticleController {
     public String save(Article article, RedirectAttributes redirectAttributes) {
         // 获取用户登录信息
         ShiroDbRealm.ShiroUser shiroUser = (ShiroDbRealm.ShiroUser) SecurityUtils.getSubject().getPrincipal();
-        article.setAuthor(shiroUser.getName());
 
         // 文章作者
         User user = userManager.get(shiroUser.getId());
         article.setUser(user);
 
         // 保存
-        if (null == articleManager.save(article)) {
+        if (articleManager.save(article) > 0) {
             redirectAttributes.addFlashAttribute("error", "创建文章失败");
             return "redirect:/article/create";
         } else {
             redirectAttributes.addFlashAttribute("info", "创建文章成功");
             return "redirect:/article/listAll";
         }
+    }
+
+    /**
+     * 置顶编号为id的文章
+     *
+     * @param id
+     * @return
+     */
+    @RequiresPermissions("article:edit")
+    @RequestMapping(value = "top/{id}")
+    public String topArticle(@PathVariable("id") Long id, @ModelAttribute("article") Article article, RedirectAttributes redirectAttributes) {
+        article.setTop(!article.isTop());
+
+        if (article.isTop()) {
+            if (articleManager.update(article) > 0) {
+                redirectAttributes.addFlashAttribute("error", "操作文章 " + id + " 失败.");
+            }
+            redirectAttributes.addFlashAttribute("info", "置顶文章 " + id + " 成功.");
+        } else {
+            if (articleManager.update(article) > 0) {
+                redirectAttributes.addFlashAttribute("error", "操作文章 " + id + " 失败.");
+            }
+            redirectAttributes.addFlashAttribute("info", "取消置顶文章 " + id + " 成功.");
+        }
+        return "redirect:/article/listAll";
+    }
+
+    /**
+     * 修改编号为id的文章是否允许评论
+     *
+     * @param id
+     * @return
+     */
+    @RequiresPermissions("article:edit")
+    @RequestMapping(value = "allow/{id}")
+    public String allowArticle(@PathVariable("id") Long id, @ModelAttribute("article") Article article, RedirectAttributes redirectAttributes) {
+        article.setAllowComment(!article.isAllowComment());
+        if (articleManager.update(article) > 0) {
+            redirectAttributes.addFlashAttribute("error", "操作文章 " + id + " 失败.");
+            return "redirect:/article/listAll";
+        }
+
+        if (article.isAllowComment()) {
+            redirectAttributes.addFlashAttribute("info", "允许评论文章 " + id + " .");
+        } else {
+            redirectAttributes.addFlashAttribute("info", "不允许评论文章 " + id + " .");
+        }
+        return "redirect:/article/listAll";
+    }
+
+    /**
+     * 审核编号为id的文章
+     *
+     * @param id
+     * @return
+     */
+    @RequiresPermissions("article:edit")
+    @RequestMapping(value = "audit/{id}")
+    public String auditArticle(@PathVariable("id") Long id, @ModelAttribute("article") Article article, RedirectAttributes redirectAttributes) {
+        article.setStatus(!article.isStatus());
+        if (articleManager.update(article) > 0) {
+            redirectAttributes.addFlashAttribute("error", "操作文章 " + id + " 失败.");
+            return "redirect:/article/listAll";
+        }
+
+        if (article.isStatus()) {
+            redirectAttributes.addFlashAttribute("info", "审核文章 " + id + " 成功.");
+        } else {
+            redirectAttributes.addFlashAttribute("info", "反审核文章 " + id + " 成功.");
+        }
+        return "redirect:/article/listAll";
+    }
+
+    /**
+     * 删除编号为id的文章
+     *
+     * @param id
+     * @return
+     */
+    @RequiresPermissions("article:delete")
+    @RequestMapping(value = "delete/{id}")
+    public String deleteArticle(@PathVariable("id") Long id, @ModelAttribute("article") Article article, RedirectAttributes redirectAttributes) {
+        article.setDeleted(!article.isDeleted());
+        if (articleManager.update(article) > 0) {
+            redirectAttributes.addFlashAttribute("error", "操作文章 " + id + " 失败.");
+            return "redirect:/article/listAll";
+        }
+
+        if (article.isDeleted()) {
+            redirectAttributes.addFlashAttribute("info", "删除文章 " + id + " 成功.");
+        } else {
+            redirectAttributes.addFlashAttribute("info", "恢复文章 " + id + " 成功.");
+        }
+        return "redirect:/article/listAll";
     }
 
     @RequiresPermissions("article:edit")

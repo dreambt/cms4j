@@ -16,7 +16,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>${article.subject} - ${article.categoryName}</title>
+    <title>${article.subject} - ${article.category.categoryName}</title>
     <link rel="stylesheet" type="text/css" href="${ctx}/static/css/ui.totop.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/static/Ueditor/themes/default/ueditor.css">
     <link href="${ctx}/static/jquery-validation/1.9.0/validate.min.css" type="text/css" rel="stylesheet"/>
@@ -30,7 +30,7 @@
 <!-- BEGIN PAGE TITLE -->
 <div id="page-title">
     <div class="title"><!-- your title page -->
-        <h2 class="cufon">${article.categoryName}</h2>
+        <h2 class="cufon">${article.category.categoryName}</h2>
     </div>
     <div class="desc">${article.digest}</div>
 </div>
@@ -42,7 +42,7 @@
                 <h2>${article.subject}</h2>
 
                 <div class="blog-posted-inner">
-                    作者: ${article.author} &nbsp; | &nbsp; 发表时间: <fmt:formatDate value="${article.createdDate}" pattern="yyyy-MM-dd"/> &nbsp; | &nbsp;
+                    作者: ${article.user.username} &nbsp; | &nbsp; 发表时间: <fmt:formatDate value="${article.createdDate}" pattern="yyyy-MM-dd"/> &nbsp; | &nbsp;
                     浏览次数: ${article.views} &nbsp; | &nbsp; 评论数: ${fn:length(article.commentList)}
                 </div>
                 ${article.message}

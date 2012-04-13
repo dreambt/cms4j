@@ -19,7 +19,7 @@
 <!-- BEGIN PAGE TITLE -->
 <div id="page-title">
     <div class="title"><!-- your title page -->
-        <h2 class="cufon"><c:choose><c:when test="${category!=null}">${category.categoryName}</c:when><c:otherwise>${archive.title}</c:otherwise></c:choose></h2>
+        <h2 class="cufon"><c:choose><c:when test="${archive eq null}">${category.categoryName}</c:when><c:otherwise>${archive.title}</c:otherwise></c:choose></h2>
     </div>
     <div class="desc">${category.description}</div>
 </div>
@@ -32,7 +32,7 @@
         <div class="art-list">
             <strong><c:if test="${article.top}"><img src="${ctx}/static/images/top.gif" /></c:if><a href="${ctx}/article/content/${article.id}">${article.subject}</a></strong>
             <span class="art-attr">
-                作者: ${article.author} &nbsp;•&nbsp; 发表时间: <fmt:formatDate value="${article.createdDate}" pattern="yyyy-MM-dd"/> &nbsp;•&nbsp; 浏览次数: ${article.views} &nbsp;•&nbsp; 评论数: ${fn:length(article.commentList)}
+                作者: ${article.user.username} &nbsp;•&nbsp; 发表时间: <fmt:formatDate value="${article.createdDate}" pattern="yyyy-MM-dd"/> &nbsp;•&nbsp; 浏览次数: ${article.views} &nbsp;•&nbsp; 评论数: ${fn:length(article.commentList)}
             </span>
         </div>
         </c:forEach>
@@ -82,9 +82,9 @@
                     //加载文章
                     $.each(data, function (index, content) {
                         if(content.top)
-                            articles.append($("<div class='art-list'><strong><img src='${ctx}/static/images/top.gif' /><a href='${ctx}/article/content/" + content.id + "'>" + content.subject + "</a></strong><span class='art-attr'>作者: " + content.author + " &nbsp;•&nbsp; 发表时间: " + ChangeDateFormat(content.createdDate) + " &nbsp;•&nbsp; 浏览次数: " + content.views + " &nbsp;•&nbsp; 评论数: " + content.commentList.length + "</span></div>"));
+                            articles.append($("<div class='art-list'><strong><img src='${ctx}/static/images/top.gif' /><a href='${ctx}/article/content/" + content.id + "'>" + content.subject + "</a></strong><span class='art-attr'>作者: " + content.user.username + " &nbsp;•&nbsp; 发表时间: " + ChangeDateFormat(content.createdDate) + " &nbsp;•&nbsp; 浏览次数: " + content.views + " &nbsp;•&nbsp; 评论数: " + content.commentList.length + "</span></div>"));
                         else
-                            articles.append($("<div class='art-list'><strong><a href='${ctx}/article/content/" + content.id + "'>" + content.subject + "</a></strong><span class='art-attr'>作者: " + content.author + " &nbsp;•&nbsp; 发表时间: " + ChangeDateFormat(content.createdDate) + " &nbsp;•&nbsp; 浏览次数: " + content.views + " &nbsp;•&nbsp; 评论数: " + content.commentList.length + "</span></div>"));
+                            articles.append($("<div class='art-list'><strong><a href='${ctx}/article/content/" + content.id + "'>" + content.subject + "</a></strong><span class='art-attr'>作者: " + content.user.username + " &nbsp;•&nbsp; 发表时间: " + ChangeDateFormat(content.createdDate) + " &nbsp;•&nbsp; 浏览次数: " + content.views + " &nbsp;•&nbsp; 评论数: " + content.commentList.length + "</span></div>"));
 
                     });
 

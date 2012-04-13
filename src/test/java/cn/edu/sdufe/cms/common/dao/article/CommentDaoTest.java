@@ -1,6 +1,5 @@
 package cn.edu.sdufe.cms.common.dao.article;
 
-import cn.edu.sdufe.cms.common.entity.article.Comment;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,9 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springside.modules.test.data.H2Fixtures;
 import org.springside.modules.test.spring.SpringTxTestCase;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 /**
  * CommentDao的测试用例, 测试ORM映射及特殊的DAO操作. 默认在每个测试函数后进行回滚.
@@ -22,10 +18,7 @@ import javax.persistence.PersistenceContext;
 public class CommentDaoTest extends SpringTxTestCase {
 
     @Autowired
-    private CommentJpaDao commentJpaDao;
-
-    @PersistenceContext
-    private EntityManager em;
+    private CommentDao commentDao;
 
     @Before
     public void setUp() throws Exception {
@@ -34,8 +27,8 @@ public class CommentDaoTest extends SpringTxTestCase {
 
     @Test
     public void testGetCount() throws Exception {
-        Long count = commentJpaDao.count();
-        em.flush();
+        Long count = commentDao.count();
+
         Assert.assertTrue(count > 0);
     }
 

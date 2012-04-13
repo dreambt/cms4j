@@ -5,16 +5,9 @@ import cn.edu.sdufe.cms.common.entity.article.Article;
 import cn.edu.sdufe.cms.utilities.IPEncodes;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
-import org.springside.modules.utils.Collections3;
 
-import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
@@ -27,45 +20,23 @@ import java.util.List;
  * Date: 12-3-20
  * Time: 下午19:55
  */
-@Entity
-//表名与类名不相同时重新定义表名.
-@Table(name = "cms_user")
-//默认的缓存策略.
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class User extends PersistableEntity {
 
     private String email;
-
     private String username;
-
     private String plainPassword;
-
     private String password;
-
     private String salt;
-
     private boolean status;
-
     private boolean emailStatus;
-
     private boolean avatarStatus;
-
     private boolean deleted;
-
     private String photoURL;
-
     private String timeOffset;
-
-    private List<Group> groupList = Lists.newArrayList(); //有序的关联对象集合
-
-    private List<Article> articleList = Lists.newArrayList();
-
+    private Group group;
     private Long lastIP;
-
     private String lastLoginIP;
-
     private Date lastTime;
-
     private Date lastActTime;
 
     @Email
@@ -86,7 +57,6 @@ public class User extends PersistableEntity {
         this.username = username;
     }
 
-    @Transient
     public String getPlainPassword() {
         return plainPassword;
     }
@@ -169,7 +139,6 @@ public class User extends PersistableEntity {
         this.lastIP = lastIP;
     }
 
-    @Transient
     public String getLastLoginIP() {
         return IPEncodes.longToIp(lastIP);
     }
@@ -194,37 +163,12 @@ public class User extends PersistableEntity {
         this.lastActTime = lastActTime;
     }
 
-    //多对多定义
-    @ManyToMany
-    //中间表定义,表名采用默认命名规则
-    @JoinTable(name = "cms_user_group", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "group_id")})
-    //Fecth策略定义
-    @Fetch(FetchMode.SUBSELECT)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    public List<Group> getGroupList() {
-        return groupList;
+    public Group getGroup() {
+        return group;
     }
 
-    public void setGroupList(List<Group> groupList) {
-        this.groupList = groupList;
-    }
-
-    @OneToMany(orphanRemoval = true, fetch = FetchType.LAZY)
-    @JoinTable(name = "cms_user_article", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "article_id")})
-    @Fetch(FetchMode.SUBSELECT)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    public List<Article> getArticleList() {
-        return articleList;
-    }
-
-    public void setArticleList(List<Article> articleList) {
-        this.articleList = articleList;
-    }
-
-    @Transient
-    @JsonIgnore
-    public String getGroupNames() {
-        return Collections3.extractToString(groupList, "groupName", ",");
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
     @Override

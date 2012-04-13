@@ -1,16 +1,15 @@
 package cn.edu.sdufe.cms.common.service.image;
 
 import cn.edu.sdufe.cms.common.dao.image.ImageDao;
-import cn.edu.sdufe.cms.common.dao.image.ImageJpaDao;
 import cn.edu.sdufe.cms.common.entity.image.Image;
 import cn.edu.sdufe.cms.utilities.RandomString;
 import cn.edu.sdufe.cms.utilities.thumb.ImageThumb;
+import com.google.common.collect.Maps;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * image 业务逻辑类
@@ -30,9 +30,8 @@ import java.util.List;
 @Component
 @Transactional(readOnly = true)
 public class ImageManager {
-    private static Logger logger = LoggerFactory.getLogger(ImageManager.class);
 
-    private ImageJpaDao imageJpaDao;
+    private static Logger logger = LoggerFactory.getLogger(ImageManager.class);
 
     private ImageDao imageDao;
 
@@ -44,16 +43,17 @@ public class ImageManager {
      * @return
      */
     public List<Image> getPagedImage(int offset, int limit) {
-        return imageDao.getPagedImage(new RowBounds(offset, limit));
+        Map<String, Object> parameters = Maps.newHashMap();
+        return imageDao.search(parameters, new RowBounds(offset, limit));
     }
 
     /**
-     * 获得所有没有删除的image
+     * 获得image数量
      *
      * @return
      */
-    public List<Image> getAllImageByDeleted() {
-        return imageJpaDao.findByDeleted(false);
+    public Long count() {
+        return imageDao.count();
     }
 
     /**
@@ -62,7 +62,7 @@ public class ImageManager {
      * @return
      */
     public List<Image> getAllImage() {
-        return (List<Image>) imageJpaDao.findAll(new Sort(Sort.Direction.DESC, "id"));
+        return imageDao.findAll();
     }
 
     /**
@@ -71,7 +71,9 @@ public class ImageManager {
      * @return
      */
     public List<Image> getImageByShowIndex() {
-        return (List<Image>) imageJpaDao.findByShowIndex(true);
+        Map<String, Object> parameters = Maps.newHashMap();
+        parameters.put("showIndex", "1");
+        return imageDao.search(parameters);
     }
 
     /**
@@ -81,7 +83,7 @@ public class ImageManager {
      * @return
      */
     public Image getImage(Long id) {
-        return imageJpaDao.findOne(id);
+        return imageDao.findOne(id);
     }
 
     /**
@@ -91,7 +93,7 @@ public class ImageManager {
      * @return
      */
     @Transactional(readOnly = false)
-    public Image save(MultipartFile file, HttpServletRequest request, Image image) {
+    public int save(MultipartFile file, HttpServletRequest request, Image image) {
         if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
             String fileName = this.upload(file, request);
             image.setImageUrl(fileName);
@@ -112,9 +114,8 @@ public class ImageManager {
         } else {
             image.setImageUrl("");
         }
-        image.setDeleted(false);
         image.setLastModifiedDate(null);
-        return imageJpaDao.save(image);
+        return imageDao.save(image);
     }
 
     /**
@@ -156,13 +157,7 @@ public class ImageManager {
      * @return
      */
     @Transactional(readOnly = false)
-    public Image update(MultipartFile file, HttpServletRequest request, Image image) {
-        this.deletePic("gallery-big\\" + image.getImageUrl());
-        this.deletePic("dashboard-thumb\\" + image.getImageUrl());
-        this.deletePic("photo-thumb\\" + image.getImageUrl());
-        this.deletePic("album-thumb\\" + image.getImageUrl());
-        this.deletePic("index-thumb\\" + image.getImageUrl());
-
+    public int update(MultipartFile file, HttpServletRequest request, Image image) {
         //实现上传
         if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
             String fileName = this.upload(file, request);
@@ -170,7 +165,6 @@ public class ImageManager {
             //项目路径// TODO 迁移服务器需要修改
             String path = System.getProperty("user.dir") + "\\src\\main\\webapp\\static\\uploads\\gallery\\";
             //图片来源路径
-
             ImageThumb imageThumb = new ImageThumb();
             try {
                 imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "dashboard-thumb\\" + fileName, 50, 57);
@@ -178,12 +172,19 @@ public class ImageManager {
                 imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "album-thumb\\" + fileName, 218, 194);
                 imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "index-thumb\\" + fileName, 460, 283);
 
+                // TODO 删除时只删除数据库，硬盘文件起任务轮询删除
+                // 成功上传新图片以后再删除旧图片，防止事务失败无法回滚图片
+                this.deletePic("gallery-big\\" + image.getImageUrl());
+                this.deletePic("dashboard-thumb\\" + image.getImageUrl());
+                this.deletePic("photo-thumb\\" + image.getImageUrl());
+                this.deletePic("album-thumb\\" + image.getImageUrl());
+                this.deletePic("index-thumb\\" + image.getImageUrl());
             } catch (Exception e) {
                 logger.info(e.getMessage());
             }
         }
         image.setLastModifiedDate(null);
-        return imageJpaDao.save(image);
+        return imageDao.save(image);
     }
 
     /**
@@ -193,20 +194,8 @@ public class ImageManager {
      * @return
      */
     @Transactional(readOnly = false)
-    public Image update(Image image) {
-        return imageJpaDao.save(image);
-    }
-
-    /**
-     * 将image的删除标记置为true
-     *
-     * @param image
-     */
-    @Deprecated
-    @Transactional(readOnly = false)
-    public Image delete(Image image) {
-        image.setDeleted(!image.isDeleted());
-        return this.update(image);
+    public int update(Image image) {
+        return imageDao.save(image);
     }
 
     /**
@@ -215,8 +204,8 @@ public class ImageManager {
      * @param id
      */
     @Transactional(readOnly = false)
-    public void delete(Long id) {
-        imageJpaDao.delete(id);
+    public int delete(Long id) {
+        return imageDao.delete(id);
     }
 
     /**
@@ -227,29 +216,8 @@ public class ImageManager {
     @Transactional(readOnly = false)
     public void batchDelete(String[] ids) {
         for (String id : ids) {
-            Image image = this.getImage(Long.parseLong(id));
-            image.setDeleted(true);
-            this.update(image);
+            this.delete(Long.parseLong(id));
         }
-    }
-
-    /**
-     * 任务删除图片
-     */
-    @Transactional(readOnly = false)
-    public int delete() {
-        List<Image> list = imageJpaDao.findByDeleted(true);
-        int count = list.size();
-        while (list.size() > 0) {
-            try {
-                Image image = list.remove(0);
-                imageJpaDao.delete(image);
-                deletePic(image.getImageUrl());
-            } catch (Exception e) {
-                logger.info("在批量删除文章时发生异常.");
-            }
-        }
-        return count;
     }
 
     /**
@@ -261,11 +229,6 @@ public class ImageManager {
         //上传路径
         String path = System.getProperty("user.dir");
         new File(path + "\\src\\main\\webapp\\static\\uploads\\gallery\\", fileName).delete();
-    }
-
-    @Autowired
-    public void setImageJpaDao(ImageJpaDao imageJpaDao) {
-        this.imageJpaDao = imageJpaDao;
     }
 
     @Autowired

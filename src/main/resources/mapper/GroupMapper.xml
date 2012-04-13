@@ -3,11 +3,18 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="ACCOUNT">
+    <resultMap id="groupDetailMap" type="Group">
+        <id property="id" column="id"/>
+        <result property="groupName" column="group_name"/>
+        <collection property="permissionList" javaType="String">
+            <result property="permission" column="permission"/>
+        </collection>
+    </resultMap>
 
     <!--
          获取用户组数量
      -->
-    <select id="getGroupCount" resultType="int">
+    <select id="getGroupCount" resultType="Long">
         select count(id)
         from cms_group
         limit 1
@@ -16,28 +23,37 @@
     <!--
         获取用户组
     -->
-    <select id="getGroup" parameterType="int" resultType="Group">
-        select id,group_name as groupname
+    <select id="getGroup" parameterType="Long" resultMap="groupDetailMap">
+        select id,group_name
         from cms_group
         where id=#{id}
         limit 1
 	</select>
 
     <!--
-        获取用户组
+        获取用户编号为id的用户组
     -->
-    <select id="getGroupByUserId" parameterType="int" resultType="Group">
-        select group_id as id,group_name as groupname
+    <select id="getGroupByUserId" parameterType="Long" resultMap="groupDetailMap">
+        select group_id as id,group_name
         from cms_user_group,cms_group
         where cms_user_group.group_id=cms_group.id and user_id=#{id}
         limit 3
 	</select>
 
     <!--
+        获取用户编号为id的用户组
+    -->
+    <select id="getPermission" parameterType="String" resultType="String">
+        select permission
+        from cms_group_permission
+        where group_id=#{id}
+	</select>
+
+    <!--
         获取用户组
     -->
-    <select id="getAllGroup" resultType="Group">
-        select id,group_name as groupname
+    <select id="getAllGroup" resultMap="groupDetailMap">
+        select id,group_name
         from cms_group
 	</select>
 
@@ -50,7 +66,7 @@
                 id=#{id}
             </if>
             <if test="groupName != null">
-                and groupname=#{groupName}
+                and group_name=#{groupName}
             </if>
         </where>
         order by ${Sort} ${Direction}

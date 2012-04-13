@@ -7,6 +7,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * image Dao
@@ -18,13 +19,75 @@ import java.util.List;
 public class ImageDao extends SqlSessionDaoSupport {
 
     /**
-     * 获得分页的image
+     * 获取编号为id的图片
+     */
+    @Cacheable(value = "image")
+    public Image findOne(Long id) {
+        return getSqlSession().selectOne("Image.getImage", id);
+    }
+
+    /**
+     * 获得所有的image
      *
-     * @param rowBounds
      * @return
      */
-    @Cacheable(value = "imagePaged")
-    public List<Image> getPagedImage(RowBounds rowBounds) {
-        return getSqlSession().selectList("Image.getPagedImage", 1L, rowBounds);
+    @Cacheable(value = "image")
+    public List<Image> findAll() {
+        return getSqlSession().selectList("Image.getAllImage");
+    }
+
+    /**
+     * 获得image数量
+     *
+     * @return
+     */
+    @Cacheable(value = "image_num")
+    public Long count() {
+        return getSqlSession().selectOne("Image.getImageCount");
+    }
+
+    /**
+     * 新增图片
+     */
+    public int save(Image image) {
+        return getSqlSession().insert("Image.saveImage", image);
+    }
+
+    /**
+     * 删除图片
+     */
+    public int delete(Long id) {
+        return getSqlSession().delete("Image.deleteImage", id);
+    }
+
+    /**
+     * 更新图片
+     */
+    public int update(Image image) {
+        return getSqlSession().update("Image.updateImage", image);
+    }
+
+    /**
+     * 搜索图片
+     *
+     * @param parameters
+     * @return
+     */
+    @Cacheable(value = "image")
+    public List<Image> search(Map<String, Object> parameters) {
+        return getSqlSession().selectList("Image.searchImage", parameters, new RowBounds(0, 12));
+    }
+
+    /**
+     * 搜索图片
+     *
+     * @param parameters
+     * @return
+     */
+    @Cacheable(value = "image")
+    public List<Image> search(Map<String, Object> parameters, RowBounds rowBounds) {
+        parameters.put("Sort", "id");
+        parameters.put("Direction", "DESC");
+        return getSqlSession().selectList("Image.searchImage", parameters, rowBounds);
     }
 }

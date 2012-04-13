@@ -3,15 +3,66 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Archive">
+    <resultMap id="archiveDetailMap" type="Archive">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="article_count" column="image_url"/>
+        <result property="lastModifiedDate" column="last_modified_date"/>
+        <result property="createdDate" column="created_date"/>
+    </resultMap>
 
     <!--
-         获取文章数量
-     -->
-    <select id="getTopTen" resultType="Archive">
-        select id, title, article_count as articlecount, created_date as createddate, last_modified_date as lastmodifieddate
+        获取Archive
+    -->
+    <select id="getArchive" parameterType="int" resultMap="archiveDetailMap">
+        select id, title, article_count, created_date, last_modified_date
         from cms_archive
-        order by id desc
-        limit 0,10
+        where id=#{id}
+        order by id DESC
+        limit 1
 	</select>
 
+    <!--
+        获取Archive
+    -->
+    <select id="getArchiveByTitle" parameterType="String" resultMap="archiveDetailMap">
+        select id, title, article_count, created_date, last_modified_date
+        from cms_archive
+        where title=#{title}
+        order by id DESC
+        limit 1
+	</select>
+
+    <!--
+        获取Archive
+    -->
+    <select id="getAllArchive" resultMap="archiveDetailMap">
+        select id, title, article_count, created_date, last_modified_date
+        from cms_archive
+        order by id DESC
+	</select>
+
+    <!--
+         获取Top 10
+     -->
+    <select id="getTopTenArchive" resultMap="archiveDetailMap">
+        SELECT id, title, article_count
+        FROM cms_archive
+        ORDER BY id DESC
+        LIMIT 10
+	</select>
+
+    <!--
+         查询图片
+     -->
+    <select id="searchArchive" parameterType="map" resultMap="archiveDetailMap">
+        select id, title, article_count, created_date, last_modified_date
+        from cms_archive
+        <where>
+            <if test="title != null">
+                title=#{title}
+            </if>
+        </where>
+        order by ${Sort} ${Direction}
+    </select>
 </mapper>

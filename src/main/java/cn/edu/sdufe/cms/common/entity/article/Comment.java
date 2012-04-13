@@ -3,11 +3,8 @@ package cn.edu.sdufe.cms.common.entity.article;
 import cn.edu.sdufe.cms.common.entity.PersistableEntity;
 import cn.edu.sdufe.cms.utilities.IPEncodes;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -17,27 +14,16 @@ import javax.validation.constraints.NotNull;
  * Date: 12-3-20
  * Time: 下午19:43
  */
-@Entity
-@Table(name = "cms_comment")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Comment extends PersistableEntity {
 
     private Article article;
-
     private String username;
-
     private String message;
-
-    private Long postIp;
-
-    private String postHostIp;
-
+    private Long postIP;
+    private String postHostIP;
     private boolean status;
-
     private boolean deleted;
 
-    @ManyToOne
-    @JoinColumn(name = "article_id")
     public Article getArticle() {
         return article;
     }
@@ -65,21 +51,20 @@ public class Comment extends PersistableEntity {
     }
 
     @NotNull
-    public Long getPostIp() {
-        return postIp;
+    public Long getPostIP() {
+        return postIP;
     }
 
-    public void setPostIp(Long postIp) {
-        this.postIp = postIp;
+    public void setPostIP(Long postIP) {
+        this.postIP = postIP;
     }
 
-    @Transient
-    public String getPostHostIp() {
-        return IPEncodes.longToIp(this.postIp);
+    public String getPostHostIP() {
+        return IPEncodes.longToIp(this.postIP);
     }
 
-    public void setPostHostIp(String postHostIp) {
-        this.postIp = IPEncodes.ipToLong(postHostIp);
+    public void setPostHostIP(String postHostIP) {
+        this.postIP = IPEncodes.ipToLong(postHostIP);
     }
 
     public boolean isStatus() {

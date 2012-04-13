@@ -1,11 +1,7 @@
 package cn.edu.sdufe.cms.common.entity;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.util.Date;
 
 /**
@@ -14,9 +10,6 @@ import java.util.Date;
  * Date: 12-3-20
  * Time: 下午22:10
  */
-@Entity
-@Table(name = "cms_manage_log")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class ManageLog extends PersistableEntity {
 
     private String action;

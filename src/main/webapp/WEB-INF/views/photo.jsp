@@ -20,12 +20,9 @@
     <script type="text/javascript" src="${ctx}/static/js/fancyBox/jquery.fancybox.pack.js?v=2.0.5"></script>
 
     <!-- Optionally add button and/or thumbnail helpers -->
-    <link rel="stylesheet" href="${ctx}/static/js/fancyBox/helpers/jquery.fancybox-buttons.css?v=2.0.5" type="text/css"
-          media="screen"/>
+    <link rel="stylesheet" href="${ctx}/static/js/fancyBox/helpers/jquery.fancybox-buttons.css?v=2.0.5" type="text/css" media="screen"/>
     <script type="text/javascript" src="${ctx}/static/js/fancyBox/helpers/jquery.fancybox-buttons.js?v=2.0.5"></script>
-
-    <link rel="stylesheet" href="${ctx}/static/js/fancyBox/helpers/jquery.fancybox-thumbs.css?v=2.0.5" type="text/css"
-          media="screen"/>
+    <link rel="stylesheet" href="${ctx}/static/js/fancyBox/helpers/jquery.fancybox-thumbs.css?v=2.0.5" type="text/css" media="screen"/>
     <script type="text/javascript" src="${ctx}/static/js/fancyBox/helpers/jquery.fancybox-thumbs.js?v=2.0.5"></script>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -57,24 +54,13 @@
     <div class="title"><!-- your title page -->
         <h1>画廊</h1>
     </div>
-    <div class="desc"><!-- description about your page -->
-        Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates
-        repudiandae sint et molestiae non recusandae, itaque earum rerum hic tenetur a sapiente delectus.
-    </div>
+    <div class="desc">一花一世界，一叶一春秋</div>
 </div>
 <!-- END OF PAGE TITLE -->
-
 <!-- BEGIN CONTENT -->
 <div id="content-inner-full">
-    <%--<h2>Our best works</h2>
-
-    <p>Architecto beatae vitae dicta sunt explicabo nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit
-        aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro
-        quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius
-        modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>--%>
+    <h2><a href="${ctx}/gallery/album">相册模式</a> | <a href="${ctx}/gallery/photo">画廊模式</a></h2>
     <div id="album_load">
-
-
         <c:forEach items="${images}" var="image" begin="0" step="1" varStatus="var">
         <div class="pf-gall"><!-- portfolio 1 -->
             <a href="${ctx}/static/uploads/gallery/gallery-big/${image.imageUrl}" rel="fancybox-thumb" class="fancybox-thumb" title="${image.title}"><img
@@ -82,8 +68,6 @@
         </div>
             <%--<c:if test="${var.index%4==3}"><br/></c:if>--%>
         </c:forEach>
-
-
     </div>
         <div class="blog-pagination"><!-- page pagination -->
             Page&nbsp;:&nbsp;

@@ -17,28 +17,6 @@
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
-    <!-- Jpa Entity Manager 配置 -->
-    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="persistenceUnitName" value="defaultPU"/>
-        <property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter"/>
-        <property name="jpaProperties">
-            <props>
-                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
-                <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
-                <prop key="net.sf.ehcache.configurationResourceName">cache/ehcache.xml</prop>
-                <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
-                <prop key="hibernate.generate_statistics">true</prop>
-                <prop key="hibernate.cache.use_query_cache">true</prop>
-            </props>
-        </property>
-    </bean>
-
-    <bean id="hibernateJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
-
-    <!-- Spring Data Jpa配置 -->
-    <jpa:repositories base-package="cn.edu.sdufe.cms" transaction-manager-ref="transactionManager" entity-manager-factory-ref="entityManagerFactory"/>
-
     <!-- MyBatis配置 -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
@@ -47,8 +25,8 @@
     </bean>
 
     <!-- 事务管理器配置, Jpa单数据源事务 -->
-    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
     </bean>
 
     <!-- 另一个事务管理器, Jdbc单数据源事务 -->

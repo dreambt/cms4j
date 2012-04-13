@@ -38,7 +38,7 @@ public class CommentController {
     @RequiresPermissions("comment:create")
     @RequestMapping(value = "create", method = RequestMethod.POST)
     public String createComment(Comment comment, RedirectAttributes redirectAttributes) {
-        comment.setPostHostIp(request.getRemoteAddr());   //TODO 获得ip
+        comment.setPostHostIP(request.getRemoteAddr());   //TODO 获得ip
         commentManager.save(comment);
         redirectAttributes.addFlashAttribute("info", "添加评论成功");
         return "redirect:/article/content/" + comment.getArticle().getId();

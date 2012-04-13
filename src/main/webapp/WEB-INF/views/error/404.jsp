@@ -45,10 +45,10 @@
     </div>
 
     <div class="error-content">
-        <p>Sorry, it appears the page you were looking for doesn't exist anymore or might have been moved. If the problem persists, please contact our support at <a href="#">dreambt@gmail.com</a> or try searching:</p>
+        <p>对不起, ${message}. 如果有什么疑问, 可以 <a href="mailto:dreambt@gmail.com">联系我们</a> 或者 搜索:</p>
         <form>
             <input type="text" name="search" value="">
-            <button type="submit">Search</button> ro <a href="${ctx}"><button type="submit">返回首页</button></a>
+            <button type="submit">搜索</button> or <a href="${ctx}"><button type="submit">返回首页</button></a>
         </form>
         ${response}
     </div>

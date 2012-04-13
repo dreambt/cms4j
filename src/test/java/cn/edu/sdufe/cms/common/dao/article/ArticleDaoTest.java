@@ -10,9 +10,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springside.modules.test.data.H2Fixtures;
 import org.springside.modules.test.spring.SpringTxTestCase;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 /**
  * ArticleDao的测试用例, 测试ORM映射及特殊的DAO操作. 默认在每个测试函数后进行回滚.
  * User: baitao.jibt (dreambt@gmail.com)
@@ -25,9 +22,6 @@ public class ArticleDaoTest extends SpringTxTestCase {
     @Autowired
     private ArticleDao articleDao;
 
-    @PersistenceContext
-    private EntityManager em;
-
     @Before
     public void setUp() throws Exception {
         //H2Fixtures.reloadAllTable(dataSource, "/data/sample-data.xml");
@@ -38,7 +32,6 @@ public class ArticleDaoTest extends SpringTxTestCase {
         //新建并保存带权限组的用户
         Article article = ArticleData.getRandomArticle();
         Assert.assertEquals(1, articleDao.update(article));
-        em.flush();
 
         // 获取
 

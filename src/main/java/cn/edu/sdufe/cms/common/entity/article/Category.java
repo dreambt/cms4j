@@ -4,14 +4,8 @@ import cn.edu.sdufe.cms.common.entity.PersistableEntity;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.codehaus.jackson.annotate.JsonIgnore;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.*;
 import org.springside.modules.utils.Collections3;
 
-import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.OrderBy;
-import javax.persistence.Table;
 import java.util.List;
 
 /**
@@ -21,9 +15,6 @@ import java.util.List;
  * Date: 12-3-20
  * Time: 下午19:42
  */
-@Entity
-@Table(name = "cms_category")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Category extends PersistableEntity {
 
     private Long fatherCategoryId;
@@ -39,7 +30,6 @@ public class Category extends PersistableEntity {
     private boolean allowPublish;
     private String showType;
 
-    @Column(name = "father_category_id")
     public Long getFatherCategoryId() {
         return fatherCategoryId;
     }
@@ -56,12 +46,6 @@ public class Category extends PersistableEntity {
         this.categoryName = categoryName;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "cms_category", joinColumns = @JoinColumn(name = "father_category_id"), inverseJoinColumns = @JoinColumn(name = "id"))
-    @Fetch(FetchMode.SUBSELECT)
-    @WhereJoinTable(clause = "deleted='false'")
-    @OrderBy("displayOrder ASC")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     public List<Category> getSubCategories() {
         return subCategories;
     }
@@ -70,11 +54,6 @@ public class Category extends PersistableEntity {
         this.subCategories = subCategories;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "cms_category_article", joinColumns = @JoinColumn(name = "category_id"), inverseJoinColumns = @JoinColumn(name = "article_id"))
-    @Fetch(FetchMode.SUBSELECT)
-    @OrderBy(value = "id DESC")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     public List<Article> getArticleList() {
         return articleList;
     }
@@ -139,7 +118,6 @@ public class Category extends PersistableEntity {
         this.allowPublish = allowPublish;
     }
 
-    @Enumerated(EnumType.STRING)
     public ShowTypeEnum getShowType() {
         return ShowTypeEnum.parse(this.showType);
     }
@@ -148,7 +126,6 @@ public class Category extends PersistableEntity {
         this.showType = showType.getValue();
     }
 
-    @Transient
     @JsonIgnore
     public String getArticleNames() {
         return Collections3.extractToString(articleList, "subject", ", ");

@@ -20,57 +20,49 @@ import java.util.Map;
 public class ArticleDao extends SqlSessionDaoSupport {
 
     /**
-     * 获取所有文章
-     *
-     * @param rowBounds
-     * @return
-     */
-    @Cacheable(value = "allArticle")
-    public List<Article> getAll(Map<String, Object> parameters, RowBounds rowBounds) {
-        return getSqlSession().selectList("Article.getAllArticle", parameters, rowBounds);
-    }
-
-    /**
      * 获得最新的10篇文章
      *
      * @return
      */
-    @Cacheable(value = "topTenArticle")
-    public List<Article> getTopTen() {
+    @Cacheable(value = "article")
+    public List<Article> findTopTen() {
         return getSqlSession().selectList("Article.getTopTenArticle");
     }
 
     /**
-     * 获得首页显示的新闻资讯
-     * @return
-     */
-    @Cacheable(value = "news")
-    public List<Article> getNews() {
-        return getSqlSession().selectList("Article.getNews");
-    }
-
-    /**
-     * 获取分类id的文章
+     * 获取分类id的文章标题
      *
      * @param categoryId
      * @param rowBounds
      * @return
      */
-    @Cacheable(value = "articleList")
-    public List<Article> getListByCategoryId(Long categoryId, RowBounds rowBounds) {
-        return getSqlSession().selectList("Article.getArticleListByCategoryId", categoryId, rowBounds);
+    @Cacheable(value = "article_title")
+    public List<Article> findTitleByCategoryId(Long categoryId, RowBounds rowBounds) {
+        return getSqlSession().selectList("Article.getTitleByCategoryId", categoryId, rowBounds);
     }
 
     /**
-     * 获取分类id的文章
+     * 获取分类id的文章列表
+     *
+     * @param categoryId
+     * @param rowBounds
+     * @return
+     */
+    @Cacheable(value = "article")
+    public List<Article> findByCategoryId(Long categoryId, RowBounds rowBounds) {
+        return getSqlSession().selectList("Article.getArticleByCategoryId", categoryId, rowBounds);
+    }
+
+    /**
+     * 获取分类id的文章摘要
      *
      * @param categoryId
      * @param rowBounds
      * @return
      */
     @Cacheable(value = "articleDigest")
-    public List<Article> getDigestByCategoryId(Long categoryId, RowBounds rowBounds) {
-        return getSqlSession().selectList("Article.getArticleDigestByCategoryId", categoryId, rowBounds);
+    public List<Article> findDigestByCategoryId(Long categoryId, RowBounds rowBounds) {
+        return getSqlSession().selectList("Article.getDigestByCategoryId", categoryId, rowBounds);
     }
 
     /**
@@ -80,28 +72,48 @@ public class ArticleDao extends SqlSessionDaoSupport {
      * @return
      */
     @Cacheable(value = "article")
-    public Article get(Long id) {
+    public Article findOne(Long id) {
         return getSqlSession().selectOne("Article.getArticle", id);
     }
 
     /**
-     * 获取文章数量
+     * 获得指定月份的所有文章
+     *
+     * @return
+     */
+    public List<Article> findByMonth(Date month) {
+        return getSqlSession().selectList("Article.getMonthArticle", month);
+    }
+
+    /**
+     * 获取所有文章数量
+     *
+     * @return
+     */
+    @Cacheable(value = "article_all_num")
+    public Long count() {
+        return getSqlSession().selectOne("Article.getArticleCount");
+    }
+
+    /**
+     * 获取categoryId分类下文章数量
      *
      * @param categoryId
      * @return
      */
     @Cacheable(value = "article_num")
     public Long count(Long categoryId) {
-        return getSqlSession().selectOne("Article.getArticleCount", categoryId);
+        return getSqlSession().selectOne("Article.getArticleCountByCategoryId", categoryId);
     }
 
     /**
-     * 获取标记为删除的文章id
+     * 新增文章
      *
+     * @param article
      * @return
      */
-    public List<Long> getDeletedId() {
-        return getSqlSession().selectList("Article.getDeletedArticleId");
+    public int save(Article article) {
+        return getSqlSession().insert("Article.saveArticle", article);
     }
 
     /**
@@ -110,7 +122,7 @@ public class ArticleDao extends SqlSessionDaoSupport {
      * @return
      */
     public int delete() {
-        return getSqlSession().delete("Article.delete");
+        return getSqlSession().delete("Article.deleteArticle");
     }
 
     /**
@@ -129,17 +141,20 @@ public class ArticleDao extends SqlSessionDaoSupport {
      * @param parameters
      * @return
      */
+    @Cacheable(value = "article")
     public List<Article> search(Map<String, Object> parameters) {
         return getSqlSession().selectList("Article.searchArticle", parameters);
     }
 
     /**
-     * 获得指定月份的所有文章
+     * 搜索文章
      *
+     * @param parameters
      * @return
      */
-    public List<Article> getByMonth(Date month) {
-        return getSqlSession().selectList("Article.getMonthArticle", month);
+    @Cacheable(value = "article")
+    public List<Article> search(Map<String, Object> parameters, RowBounds rowBounds) {
+        return getSqlSession().selectList("Article.searchArticle", parameters, rowBounds);
     }
 
 }

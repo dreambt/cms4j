@@ -23,7 +23,6 @@
     <!-- Optionally add button and/or thumbnail helpers -->
     <link rel="stylesheet" href="${ctx}/static/js/fancyBox/helpers/jquery.fancybox-buttons.css?v=2.0.5" type="text/css" media="screen" />
     <script type="text/javascript" src="${ctx}/static/js/fancyBox/helpers/jquery.fancybox-buttons.js?v=2.0.5"></script>
-
     <link rel="stylesheet" href="${ctx}/static/js/fancyBox/helpers/jquery.fancybox-thumbs.css?v=2.0.5" type="text/css" media="screen" />
     <script type="text/javascript" src="${ctx}/static/js/fancyBox/helpers/jquery.fancybox-thumbs.js?v=2.0.5"></script>
     <script type="text/javascript">
@@ -41,17 +40,13 @@
 <body>
 <!-- BEGIN PAGE TITLE -->
 <div id="page-title">
-    <div class="title"><!-- your title page -->
-        <h1>相册</h1>
-    </div>
-    <div class="desc"><!-- description about your page -->
-        Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae, itaque earum rerum hic tenetur a sapiente delectus.
-    </div>
+    <div class="title"><h1>相册</h1></div>
+    <div class="desc">一花一世界，一叶一春秋</div>
 </div>
 <!-- END OF PAGE TITLE -->
-
 <!-- BEGIN CONTENT -->
 <div id="content-inner-full">
+    <h2><a href="${ctx}/gallery/album">相册模式</a> | <a href="${ctx}/gallery/photo">画廊模式</a></h2>
     <div id="album_load">
     <%--<c:out value="${fn:length(images)}"/>--%>
     <c:forEach items="${images}" var="image" begin="0" step="1" varStatus="var">
@@ -61,15 +56,13 @@
             <a href="${ctx}/static/uploads/gallery/gallery-big/${image.imageUrl}" class="fancy_box" title="${image.title}">
                 <img src="${ctx}/static/uploads/gallery/album-thumb/${image.imageUrl}" alt="" width="218px" height="194px" /></a>
             <p class="albumDesc">${image.description}</p>
-
         </div>
     </div>
     <c:if test="${var.index%2==0}"><div class="spacer-pf">&nbsp;</div></c:if>
     </c:forEach>
     </div>
-
     <div class="blog-pagination"><!-- page pagination -->
-        Page&nbsp;:&nbsp;
+        分页&nbsp;:&nbsp;
         <c:choose>
             <c:when test="${total <= 44}">
                 <c:forEach begin="1" end="${pageCount}" step="1" varStatus="var">
@@ -83,7 +76,6 @@
             </c:otherwise>
         </c:choose>
     </div>
-
 </div>
 <!-- END OF CONTENT -->
 <script type="text/javascript">

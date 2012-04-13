@@ -2,11 +2,6 @@ package cn.edu.sdufe.cms.common.entity.link;
 
 import cn.edu.sdufe.cms.common.entity.PersistableEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.Entity;
-import javax.persistence.Table;
 
 /**
  * link实体类
@@ -15,9 +10,6 @@ import javax.persistence.Table;
  * Date: 12-4-8
  * Time: 下午4:25
  */
-@Entity
-@Table(name = "cms_link")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Link extends PersistableEntity {
 
     private String title;

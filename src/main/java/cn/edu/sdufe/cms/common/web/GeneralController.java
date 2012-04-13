@@ -40,8 +40,7 @@ public class GeneralController {
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("images", imageManager.getImageByShowIndex());
         model.addAttribute("links", linkManager.getAllLink());
-        model.addAttribute("news", articleManager.getNews());
-        model.addAttribute("posts", categoryManager.get(1L).getArticleList());
+        model.addAttribute("posts", articleManager.getTitleByCategoryId(2L, 0, 5));
         return "index";
     }
 
@@ -78,6 +77,16 @@ public class GeneralController {
         return "about";
     }
 
+    /**
+     * 找不到页面
+     *
+     * @return
+     */
+    @RequestMapping(value = "/error/404", method = RequestMethod.GET)
+    public String notFound() {
+        return "error/404";
+    }
+
     @RequestMapping(value = "/story/{page}")
     public String story(@PathVariable("page") String page) {
         return "story/" + page;
@@ -93,7 +102,7 @@ public class GeneralController {
         return "web/mashup-client";
     }
 
-    @Autowired(required = false)
+    @Autowired
     public void setCategoryManager(@Qualifier("categoryManager") CategoryManager categoryManager) {
         this.categoryManager = categoryManager;
     }

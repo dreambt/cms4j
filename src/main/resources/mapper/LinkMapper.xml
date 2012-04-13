@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Link">
+    <resultMap id="linkDetailMap" type="Link">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="url" column="url"/>
+        <result property="lastModifiedDate" column="last_modified_date"/>
+        <result property="createdDate" column="created_date"/>
+    </resultMap>
+
+    <!--
+        获取link
+    -->
+    <select id="getLink" parameterType="int" resultMap="linkDetailMap">
+        select id, title, url, created_date, last_modified_date
+        from cms_link
+        where id=#{id}
+        order by id DESC
+        limit 1
+	</select>
+
+    <!--
+        获取link
+    -->
+    <select id="getAllLink" resultMap="linkDetailMap">
+        SELECT id, title, url
+        FROM cms_link
+        ORDER BY id DESC
+        LIMIT 30
+	</select>
+
+    <!--
+        删除link
+    -->
+    <delete id="deleteLink" parameterType="Long">
+		delete from cms_link
+		where id = #{id}
+	</delete>
+
+    <!--
+         查询link
+     -->
+    <select id="searchLink" parameterType="map" resultMap="linkDetailMap">
+        select id, title, url, created_date, last_modified_date
+        from cms_link
+        order by ${Sort} ${Direction}
+    </select>
+</mapper>

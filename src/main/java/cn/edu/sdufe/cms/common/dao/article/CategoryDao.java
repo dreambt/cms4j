@@ -25,7 +25,7 @@ public class CategoryDao extends SqlSessionDaoSupport {
      * @return
      */
     @Cacheable(value = "category")
-    public Category get(Long id) {
+    public Category findOne(Long id) {
         return (Category) getSqlSession().selectOne("Category.getCategory", id);
     }
 
@@ -61,12 +61,22 @@ public class CategoryDao extends SqlSessionDaoSupport {
     }
 
     /**
+     * 获取导航分类
+     *
+     * @return
+     */
+    @Cacheable(value = "navCategory")
+    public List<Category> getNavCategory() {
+        return getSqlSession().selectList("Category.getNavCategory");
+    }
+
+    /**
      * 获取分类的数量
      *
      * @return
      */
     public Long count() {
-        return getSqlSession().selectOne("Category.getCategoryCount");
+        return getSqlSession().selectOne("Category.getCount");
     }
 
     /**
@@ -80,23 +90,21 @@ public class CategoryDao extends SqlSessionDaoSupport {
     }
 
     /**
-     * 搜索分类
-     *
-     * @param parameters
-     * @return
-     */
-    public Category search(Map<String, Object> parameters) {
-        return getSqlSession().selectOne("Category.searchCategory", parameters);
-    }
-
-    /**
      * 创建分类
      *
      * @return
      */
-    public Category save(Category category) {
-        getSqlSession().insert("Category.saveCategory", category);
-        return category;
+    public int save(Category category) {
+        return getSqlSession().insert("Category.saveCategory", category);
+    }
+
+    /**
+     * 删除分类
+     *
+     * @return
+     */
+    public int delete() {
+        return getSqlSession().delete("Category.deleteCategory");
     }
 
     /**
@@ -104,18 +112,17 @@ public class CategoryDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    public Category update(Category category) {
-        getSqlSession().update("Category.updateCategory", category);
-        return category;
+    public int update(Category category) {
+        return getSqlSession().update("Category.updateCategory", category);
     }
 
     /**
-     * 删除编号为id的分类
+     * 搜索分类
      *
-     * @param id
+     * @param parameters
      * @return
      */
-    public int delete(Long id) {
-        return getSqlSession().delete("Category.deleteCategory", id);
+    public List<Category> search(Map<String, Object> parameters) {
+        return getSqlSession().selectList("Category.searchCategory", parameters);
     }
 }

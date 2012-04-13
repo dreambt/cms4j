@@ -1,7 +1,6 @@
 package cn.edu.sdufe.cms.common.service.article;
 
 import cn.edu.sdufe.cms.common.dao.article.CategoryDao;
-import cn.edu.sdufe.cms.common.dao.article.CategoryJpaDao;
 import cn.edu.sdufe.cms.common.entity.article.Category;
 import net.sf.ehcache.CacheManager;
 import org.slf4j.Logger;
@@ -29,7 +28,6 @@ public class CategoryManager {
     private CacheManager ehcacheManager;
 
     private CategoryDao categoryDao;
-    private CategoryJpaDao categoryJpaDao;
 
     /**
      * 获得编号为id的分类
@@ -38,7 +36,7 @@ public class CategoryManager {
      * @return
      */
     public Category get(Long id) {
-        return categoryJpaDao.findOne(id);
+        return categoryDao.findOne(id);
     }
 
     /**
@@ -57,8 +55,7 @@ public class CategoryManager {
      * @return
      */
     public List<Category> getNavCategory() {
-        //return categoryDao.getSubCategory(1L);
-        return categoryJpaDao.findByIdGreaterThanAndFatherCategoryIdAndDeletedOrderByDisplayOrderAsc(1L, 1L, false);
+        return categoryDao.getNavCategory();
     }
 
     /**
@@ -111,7 +108,7 @@ public class CategoryManager {
     public Category update(Category category) {
         // 更新数据，先更新数据避免生成旧数据缓存
         category.setLastModifiedDate(null);
-        categoryJpaDao.save(category);
+        categoryDao.save(category);
 
         // 清理缓存
         this.cleanCache();
@@ -178,11 +175,6 @@ public class CategoryManager {
     @Autowired
     public void setCategoryDao(@Qualifier("categoryDao") CategoryDao categoryDao) {
         this.categoryDao = categoryDao;
-    }
-
-    @Autowired
-    public void setCategoryJpaDao(CategoryJpaDao categoryJpaDao) {
-        this.categoryJpaDao = categoryJpaDao;
     }
 
 }
