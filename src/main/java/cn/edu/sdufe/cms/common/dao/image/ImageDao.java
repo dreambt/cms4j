@@ -43,7 +43,7 @@ public class ImageDao extends SqlSessionDaoSupport {
      */
     @Cacheable(value = "image_num")
     public Long count() {
-        return getSqlSession().selectOne("Image.count");
+        return getSqlSession().selectOne("Image.getImageCount");
     }
 
     /**
@@ -75,8 +75,7 @@ public class ImageDao extends SqlSessionDaoSupport {
      */
     @Cacheable(value = "image")
     public List<Image> search(Map<String, Object> parameters) {
-        RowBounds rowBounds = new RowBounds(0, 10);
-        return this.search(parameters, rowBounds);
+        return getSqlSession().selectList("Image.searchImage", parameters, new RowBounds(0, 12));
     }
 
     /**

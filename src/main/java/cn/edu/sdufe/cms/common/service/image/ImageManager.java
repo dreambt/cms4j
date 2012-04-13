@@ -44,7 +44,6 @@ public class ImageManager {
      */
     public List<Image> getPagedImage(int offset, int limit) {
         Map<String, Object> parameters = Maps.newHashMap();
-        parameters.put("deleted", "0");
         return imageDao.search(parameters, new RowBounds(offset, limit));
     }
 

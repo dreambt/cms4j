@@ -50,11 +50,14 @@ public class ImageController {
      */
     @RequestMapping(value = "album", method = RequestMethod.GET)
     public String album(Model model) {
-        Long total = imageManager.count();
+        Long total = imageManager.count().longValue();
         int limit = 4;
         Long pageCount = 1L;
-        if (total % limit == 0) pageCount = total / limit;
-        else pageCount = total / limit + 1;
+        if (total % limit == 0) {
+            pageCount = total / limit;
+        } else {
+            pageCount = total / limit + 1;
+        }
         model.addAttribute("images", imageManager.getPagedImage(0, limit));
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("total", total);
@@ -84,11 +87,14 @@ public class ImageController {
      */
     @RequestMapping(value = "photo", method = RequestMethod.GET)
     public String gallery(Model model) {
-        Long total = imageManager.count();
+        Long total = imageManager.count().longValue();
         int limit = 12;
         Long pageCount = 1L;
-        if (total % limit == 0) pageCount = total / limit;
-        else pageCount = total / limit + 1;
+        if (total % limit == 0) {
+            pageCount = total / limit;
+        } else {
+            pageCount = total / limit + 1;
+        }
         model.addAttribute("images", imageManager.getPagedImage(0, limit));
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("total", total);

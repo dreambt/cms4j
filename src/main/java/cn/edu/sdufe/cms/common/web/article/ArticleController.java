@@ -102,7 +102,7 @@ public class ArticleController {
      */
     @RequestMapping(value = "listByCategory/{id}", method = RequestMethod.GET)
     public String listArticleByCategory(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("articles", categoryManager.get(id).getArticleList());
+        model.addAttribute("articles", articleManager.getListByCategoryId(id, 0, 110));
         return "dashboard/article/listAll";
     }
 
@@ -115,9 +115,9 @@ public class ArticleController {
      */
     @RequestMapping(value = "list/{id}", method = RequestMethod.GET)
     public String listOfArticle(@PathVariable("id") Long id, Model model) {
-        int total = articleManager.count(id).intValue();
+        Long total = articleManager.count(id).longValue();
         int limit = 10;
-        int pageCount = 1;
+        Long pageCount = 1L;
         if (total % limit == 0) {
             pageCount = pageCount / limit;
         } else {
@@ -125,6 +125,7 @@ public class ArticleController {
         }
         model.addAttribute("articles", articleManager.getListByCategoryId(id, 0, limit));//文章列表
         model.addAttribute("categories", categoryManager.getNavCategory());//导航菜单
+        model.addAttribute("category", categoryManager.get(id));//获取分类信息
         model.addAttribute("archives", archiveManager.getTopTen());//边栏归档日志
         model.addAttribute("newArticles", articleManager.getTopTen());//边栏最新文章
         model.addAttribute("total", total);
@@ -156,16 +157,16 @@ public class ArticleController {
      */
     @RequestMapping(value = "digest/{id}", method = RequestMethod.GET)
     public String digestOfArticle(@PathVariable("id") Long id, Model model) {
-        int total = articleManager.count(id).intValue();
-        int limit = 10;
-        int pageCount = 1;
+        Long total = articleManager.count(id).longValue();
+        int limit = 6;
+        Long pageCount = 1L;
         if (total % limit == 0) {
             pageCount = pageCount / limit;
         } else {
             pageCount = total / limit + 1;
         }
-        model.addAttribute("articles", articleManager.getDigestByCategoryId(id, 0, 10));
-        model.addAttribute("category", categoryManager.get(id));
+        model.addAttribute("articles", articleManager.getDigestByCategoryId(id, 0, limit));
+        model.addAttribute("category", categoryManager.get(id));//获取分类信息
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("archives", archiveManager.getTopTen());
         model.addAttribute("newArticles", articleManager.getTopTen());

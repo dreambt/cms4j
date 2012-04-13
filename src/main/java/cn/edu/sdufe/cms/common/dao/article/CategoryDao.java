@@ -66,7 +66,7 @@ public class CategoryDao extends SqlSessionDaoSupport {
      * @return
      */
     public Long count() {
-        return getSqlSession().selectOne("Category.getCategoryCount");
+        return getSqlSession().selectOne("Category.getCount");
     }
 
     /**

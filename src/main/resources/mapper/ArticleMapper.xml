@@ -88,14 +88,14 @@
         WHERE deleted =0
         AND STATUS =1
         ORDER BY id DESC
-        LIMIT 10
+        LIMIT 6
     </select>
 
     <!--
          通过分类id获取文章标题
      -->
     <select id="getTitleByCategoryId" parameterType="Long" resultMap="articleDetailMap">
-        SELECT A.id, subject, top, views, A.created_date
+        SELECT A.id, subject, top, views, A.created_date, A.last_modified_date
         FROM cms_article AS A
         WHERE A.deleted =0
         AND A.STATUS =1
@@ -107,12 +107,10 @@
          通过分类id获取文章列表
      -->
     <select id="getArticleByCategoryId" parameterType="Long" resultMap="articleDetailMap">
-        SELECT A.id, user_id, subject, message, digest, keyword, top, rate, rate_times, views, A.status,
-        A.allow_comment, A.created_date, A.last_modified_date, A.deleted, U.username as user_username,
-        C.id as cat_id, C.category_name as cat_category_name, C.description as cat_description, C.allow_comment as cat_allow_comment
+        SELECT A.id, user_id, subject, keyword, top, rate, rate_times, views, A.status,
+        A.allow_comment, A.created_date, A.last_modified_date, A.deleted, U.username as user_username
         FROM cms_article AS A
         LEFT OUTER JOIN cms_user AS U ON user_id = U.id
-        LEFT OUTER JOIN cms_category AS C ON category_id = C.id
         WHERE A.deleted =0
         AND A.STATUS =1
         AND A.category_id=#{categoryId}
@@ -123,14 +121,12 @@
      -->
     <select id="getDigestByCategoryId" parameterType="Long" resultMap="articleDetailMap">
         SELECT A.id, user_id, subject, digest, keyword, top, rate, rate_times, views, A.status,
-        A.allow_comment, A.created_date, A.last_modified_date, A.deleted, U.username as user_username,
-        C.id as cat_id, C.category_name as cat_category_name, C.description as cat_description, C.allow_comment as cat_allow_comment
+        A.allow_comment, A.created_date, A.last_modified_date, A.deleted, U.username as user_username
         FROM cms_article AS A
         LEFT OUTER JOIN cms_user AS U ON user_id = U.id
-        LEFT OUTER JOIN cms_category AS C ON category_id = C.id
         WHERE A.deleted =0
         AND A.STATUS =1
-        AND A.category=#{categoryId}
+        AND A.category_id=#{categoryId}
 	</select>
 
     <!-- 更新文章 -->

@@ -30,9 +30,9 @@
         <c:forEach items="${articles}" var="article" begin="0" step="1" varStatus="stat">
         <div class="blog-post digest">
             <img src="${ctx}/static/images/blog-pic1.jpg" alt="" class="imgleft"/>
-            <h2><a href="${ctx}/article/content/${article.id}"><c:if test="${article.top}"><img src="${ctx}/static/images/top.gif" /></c:if>${article.subject}</a></h2>
+            <h2 style="font-size:18px;overflow:hidden"><a href="${ctx}/article/content/${article.id}"><c:if test="${article.top}"><img src="${ctx}/static/images/top.gif" /></c:if>${article.subject}</a></h2>
             <div class="blog-posted">
-                作者: ${article.author} &nbsp; | &nbsp; 发表时间: <fmt:formatDate value="${article.createdDate}" pattern="yyyy-MM-dd"/> &nbsp; | &nbsp; 浏览次数: ${article.views} &nbsp; | &nbsp; 评论数: ${fn:length(article.commentList)}
+                作者: ${article.user.username} &nbsp; | &nbsp; 发表时间: <fmt:formatDate value="${article.createdDate}" pattern="yyyy-MM-dd"/> &nbsp; | &nbsp; 浏览次数: ${article.views} &nbsp; | &nbsp; 评论数: ${fn:length(article.commentList)}
             </div>
             <p>${article.digest}</p>
         </div>
@@ -41,7 +41,7 @@
     <div class="blog-pagination"><!-- page pagination -->
         页码 &nbsp;:&nbsp;
         <c:choose>
-            <c:when test="${total <= 110}">
+            <c:when test="${total <= 66}">
                 <c:forEach begin="1" end="${pageCount}" step="1" varStatus="var">
                     <span class="blog-button-page pagination">${var.index}</span>&nbsp;
                 </c:forEach>
@@ -73,7 +73,7 @@
             //索引从1开始
             //将当前页索引转为int类型
             var intPageIndex = parseInt(pageIndex);
-            var limit = 10;//每页显示文章数量
+            var limit = 6;//每页显示文章数量
 
             $.ajax({
                 url:"${ctx}/article/digest/ajax/${category.id}?offset=" + (intPageIndex - 1) * limit + "&limit=" + limit,
@@ -84,9 +84,9 @@
                     //加载文章
                     $.each(data, function (index, content) {
                         if (content.top)
-                            articles.append($("<div class='blog-post digest'><img src='${ctx}/static/images/blog-pic1.jpg' class='imgleft'/><h2><img src='${ctx}/static/images/top.gif' /><a href='${ctx}/article/content/" + content.id + "'>" + content.subject + "</a></h2><div class='blog-posted'>作者: " + content.author + " &nbsp; | &nbsp; 发表时间: " + ChangeDateFormat(content.createdDate) + " &nbsp; | &nbsp; 浏览次数: " + content.views + " &nbsp; | &nbsp; 评论数: " + content.commentList.length + "</div><p>" + content.digest + "</p></div>"));
+                            articles.append($("<div class='blog-post digest'><img src='${ctx}/static/images/blog-pic1.jpg' class='imgleft'/><h2><img src='${ctx}/static/images/top.gif' /><a href='${ctx}/article/content/" + content.id + "'>" + content.subject + "</a></h2><div class='blog-posted'>作者: " + content.user.username + " &nbsp; | &nbsp; 发表时间: " + ChangeDateFormat(content.createdDate) + " &nbsp; | &nbsp; 浏览次数: " + content.views + " &nbsp; | &nbsp; 评论数: " + content.commentList.length + "</div><p>" + content.digest + "</p></div>"));
                         else
-                            articles.append($("<div class='blog-post digest'><img src='${ctx}/static/images/blog-pic1.jpg' class='imgleft'/><h2><a href='${ctx}/article/content/" + content.id + "'>" + content.subject + "</a></h2><div class='blog-posted'>作者: " + content.author + " &nbsp; | &nbsp; 发表时间: " + ChangeDateFormat(content.createdDate) + " &nbsp; | &nbsp; 浏览次数: " + content.views + " &nbsp; | &nbsp; 评论数: " + content.commentList.length + "</div><p>" + content.digest + "</p></div>"));
+                            articles.append($("<div class='blog-post digest'><img src='${ctx}/static/images/blog-pic1.jpg' class='imgleft'/><h2><a href='${ctx}/article/content/" + content.id + "'>" + content.subject + "</a></h2><div class='blog-posted'>作者: " + content.user.username + " &nbsp; | &nbsp; 发表时间: " + ChangeDateFormat(content.createdDate) + " &nbsp; | &nbsp; 浏览次数: " + content.views + " &nbsp; | &nbsp; 评论数: " + content.commentList.length + "</div><p>" + content.digest + "</p></div>"));
                     });
 
                     $(".blog-pagination").html("Page&nbsp;:&nbsp;");

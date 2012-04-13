@@ -16,7 +16,7 @@
     <!--
         获取image数量
     -->
-    <select id="count" resultMap="imageDetailMap">
+    <select id="getImageCount" resultType="Long">
         SELECT COUNT( id )
         FROM cms_image
         LIMIT 1
