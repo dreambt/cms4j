@@ -40,7 +40,7 @@ public class GeneralController {
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("images", imageManager.getImageByShowIndex());
         model.addAttribute("links", linkManager.getAllLink());
-        model.addAttribute("posts", categoryManager.get(2L).getArticleList());// TODO 改进为直接从文章表获取
+        model.addAttribute("posts", articleManager.getTitleByCategoryId(2L, 0, 5));
         return "index";
     }
 
@@ -75,6 +75,16 @@ public class GeneralController {
     public String ahoutUs(Model model) {
         model.addAttribute("categories", categoryManager.getNavCategory());
         return "about";
+    }
+
+    /**
+     * 找不到页面
+     *
+     * @return
+     */
+    @RequestMapping(value = "/error/404", method = RequestMethod.GET)
+    public String notFound() {
+        return "error/404";
     }
 
     @RequestMapping(value = "/story/{page}")
