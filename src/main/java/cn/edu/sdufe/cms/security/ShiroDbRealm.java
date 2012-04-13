@@ -45,6 +45,12 @@ public class ShiroDbRealm extends AuthorizingRealm {
         User user = userManager.findUserByEmail(token.getUsername());
         //clearCachedAuthorizationInfo("dreambt@126.com");
         if (null != user) {
+            // 已标记为删除的账户
+            if (!user.isDeleted()) {
+                throw new UnknownAccountException();
+            }
+
+            // 未审核的账户
             if (!user.isStatus()) {
                 throw new DisabledAccountException();
             }
