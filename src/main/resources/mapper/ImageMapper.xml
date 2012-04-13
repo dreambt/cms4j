@@ -11,53 +11,94 @@
         <result property="showIndex" column="show_index"/>
         <result property="lastModifiedDate" column="last_modified_date"/>
         <result property="createdDate" column="created_date"/>
-        <result property="deleted" column="deleted"/>
     </resultMap>
+
+    <!--
+        获取image数量
+    -->
+    <select id="count" resultMap="imageDetailMap">
+        SELECT COUNT( id )
+        FROM cms_image
+        LIMIT 1
+	</select>
 
     <!--
         获取image
     -->
-    <select id="getImage" parameterType="int" resultMap="imageDetailMap">
-        select id, title, image_url, description, show_index, created_date, last_modified_date, deleted
-        from cms_image
-        where deleted=0 and id=#{id}
-        order by id DESC
+    <select id="getImage" parameterType="Long" resultMap="imageDetailMap">
+        SELECT id, title, image_url, description, show_index, created_date, last_modified_date
+        FROM cms_image
+        AND id =#{id}
+        ORDER BY id DESC
+        LIMIT 1
 	</select>
 
     <!--
         获取image
     -->
     <select id="getAllImage" resultMap="imageDetailMap">
-        select id, title, image_url, description, show_index, created_date, last_modified_date, deleted
-        from cms_image
-        where deleted=0
-        order by id DESC
+        SELECT id, title, image_url, description, show_index, created_date, last_modified_date
+        FROM cms_image
+        ORDER BY id DESC
+        LIMIT 30
 	</select>
 
     <!--
-         获取分页显示的image
-     -->
-    <select id="getPagedImage" resultMap="imageDetailMap">
-        select id, title, image_url, description, show_index, created_date, last_modified_date, deleted
-        from cms_image
-        where deleted=0
-        order by id DESC
-	</select>
+        新增image
+    -->
+    <insert id="saveImage" parameterType="Image" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO cms_image (title, image_url, description, show_index)
+		values (#{title}, #{imageUrl}, #{description}, #{showIndex})
+	</insert>
+
+    <!--
+        删除image
+    -->
+    <delete id="deleteImage" parameterType="Long">
+        DELETE FROM cms_image
+        WHERE id=#{id}
+	</delete>
+
+    <!--
+        修改image
+    -->
+    <update id="updateImage" parameterType="Image">
+        UPDATE cms_image
+        <set>
+            <if test="title != null and title !=''">
+                title=#{title}
+            </if>
+            <if test="imageUrl != null and imageUrl !=''">
+                image_url=#{imageUrl}
+            </if>
+            <if test="description != null and description !=''">
+                description=#{description}
+            </if>
+            <if test="showIndex != null and showIndex !=''">
+                show_index=#{showIndex}
+            </if>
+        </set>
+        WHERE id=#{id}
+	</update>
 
     <!--
          查询图片
      -->
     <select id="searchImage" parameterType="map" resultMap="imageDetailMap">
-        select id, title, image_url, description, show_index, created_date, last_modified_date, deleted
-        from cms_image
+        SELECT id, title, image_url, description, show_index, created_date, last_modified_date
+        FROM cms_image
         <where>
+            <if test="title != null and title != ''">
+                title link %#{title}%
+            </if>
+            <if test="description != null and description != ''">
+                description link %#{description}%
+            </if>
             <if test="showIndex != null">
                 show_index=#{showIndex}
             </if>
-            <if test="deleted != null">
-                and deleted=#{deleted}
-           </if>
         </where>
-        order by ${Sort} ${Direction}
+        ORDER BY ${Sort} ${Direction}
+        LIMIT 30
     </select>
 </mapper>

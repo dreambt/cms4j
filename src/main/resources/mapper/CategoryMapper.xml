@@ -51,10 +51,6 @@
 
     <!--
          获取导航分类
-         select id,father_category_id,category_name,display_order,show_type,url,allow_comment,allow_publish
-        from cms_category
-        where id>1 and father_category_id=1 and deleted=0 and show_nav=1
-        order by display_order ASC
      -->
     <select id="getNavCategory" resultMap="categoryDetailMap">
         SELECT A.id,A.category_name,A.show_type,A.url,A.show_nav,A.deleted,B.id as sub_id,B.category_name as sub_category_name,B.show_type as sub_show_type,B.url as sub_url
@@ -68,9 +64,11 @@
          获取所有可发表评论的分类列表
      -->
     <select id="getAllowPublishCategory" resultMap="categoryDetailMap">
-        select id,category_name
-        from cms_category
-        where id>1 and allow_publish=1 and deleted=0
+        SELECT id, category_name
+        FROM cms_category
+        WHERE allow_publish =1
+        AND deleted =0
+        LIMIT 0 , 30
 	</select>
 
     <!--

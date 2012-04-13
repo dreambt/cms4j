@@ -12,15 +12,23 @@
         <result property="lastModifiedDate" column="last_modified_date"/>
         <result property="createdDate" column="created_date"/>
         <result property="deleted" column="deleted"/>
-        <association property="article" column="article_id" resultMap="Article.articleDetailMap" />
     </resultMap>
 
     <!--
+         获取分类id的所有评论
+     -->
+    <select id="getCommentByArticleId" parameterType="Long" resultMap="commentDetailMap">
+		SELECT id, username, message, post_ip, STATUS , last_modified_date, created_date, deleted
+		FROM cms_comment
+		WHERE article_id =2
+		AND STATUS =1
+		AND deleted =0
+		ORDER BY id ASC
+		LIMIT 0 , 30
+	</select>
+
+    <!--
          编号为id的评论
-         select cid,aid,username,INET_NTOA(postip) as postip,FROM_UNIXTIME(posttime, 'YYYY-MM-DD HH:MM:SS') as posttime,status,message,FROM_UNIXTIME(createddate, 'YYYY-MM-DD HH:MM:SS') as createddate,FROM_UNIXTIME(lastmodifieddate, 'YYYY-MM-DD HH:MM:SS') as lastmodifieddate
-        from cms_commnet
-        where aid=#{id}
-        limit 1
      -->
     <select id="getComment" parameterType="Long" resultMap="commentDetailMap">
         select id,article_id,username,message,post_ip,status,created_date,last_modified_date,deleted
