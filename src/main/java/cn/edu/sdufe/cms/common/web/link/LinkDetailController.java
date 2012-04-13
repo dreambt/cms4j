@@ -76,7 +76,7 @@ public class LinkDetailController {
     @RequestMapping(value = "audit/{id}", method = RequestMethod.GET)
     public String auditComment(@PathVariable("id") Long id, @ModelAttribute("link") Link link, RedirectAttributes redirectAttributes) {
         link.setStatus(!link.isStatus());
-        if (null == linkManager.update(link)) {
+        if (linkManager.update(link) > 0) {
             redirectAttributes.addFlashAttribute("error", "操作友情链接 " + id + " 失败.");
             return "redirect:/link/listAll";
         }

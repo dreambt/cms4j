@@ -41,14 +41,11 @@ public class ArticleDetailController {
     @RequestMapping(value = {"edit/{id}"})
     public String editArticle(@Valid @ModelAttribute("article") Article article, Model model, RedirectAttributes redirectAttributes) {
         // 编辑不存在的文章，给出提示
-        if(null == article){
+        if (null == article) {
             redirectAttributes.addFlashAttribute("error", "文章不存在");
             return "redirect:/article/listAll";
         }
-        if(null == articleManager.get(id)) {
-            model.addAttribute("error", "该文章不存在，请刷新重试");
-            return "dashboard/article/listAll";
-        }
+
         // 获取所有分类
         model.addAttribute("categories", categoryManager.getAllowPublishCategory());
         return "dashboard/article/edit";
@@ -63,12 +60,12 @@ public class ArticleDetailController {
     @RequiresPermissions("article:save")
     @RequestMapping(value = "save/{id}")
     public String saveArticle(@Valid @ModelAttribute("article") Article article, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
-        if(null == article) {
+        if (null == article) {
             redirectAttributes.addFlashAttribute("error", "该文章不存在，请刷新重试");
             return "redirect:/article/listAll";
         }
 
-        if (bindingResult.hasErrors() || null == articleManager.save(article)) {
+        if (bindingResult.hasErrors() || articleManager.save(article) > 0) {
             redirectAttributes.addFlashAttribute("error", "保存文章失败");
             return "redirect:/article/listAll";
         } else {
