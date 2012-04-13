@@ -30,7 +30,19 @@ public class ArticleDao extends SqlSessionDaoSupport {
     }
 
     /**
-     * 获取分类id的文章
+     * 获取分类id的文章标题
+     *
+     * @param categoryId
+     * @param rowBounds
+     * @return
+     */
+    @Cacheable(value = "article_title")
+    public List<Article> findTitleByCategoryId(Long categoryId, RowBounds rowBounds) {
+        return getSqlSession().selectList("Article.getTitleByCategoryId", categoryId, rowBounds);
+    }
+
+    /**
+     * 获取分类id的文章列表
      *
      * @param categoryId
      * @param rowBounds
@@ -42,7 +54,7 @@ public class ArticleDao extends SqlSessionDaoSupport {
     }
 
     /**
-     * 获取分类id的文章
+     * 获取分类id的文章摘要
      *
      * @param categoryId
      * @param rowBounds
@@ -50,7 +62,7 @@ public class ArticleDao extends SqlSessionDaoSupport {
      */
     @Cacheable(value = "articleDigest")
     public List<Article> findDigestByCategoryId(Long categoryId, RowBounds rowBounds) {
-        return getSqlSession().selectList("Article.getArticleDigestByCategoryId", categoryId, rowBounds);
+        return getSqlSession().selectList("Article.getDigestByCategoryId", categoryId, rowBounds);
     }
 
     /**
@@ -129,6 +141,7 @@ public class ArticleDao extends SqlSessionDaoSupport {
      * @param parameters
      * @return
      */
+    @Cacheable(value = "article")
     public List<Article> search(Map<String, Object> parameters) {
         return getSqlSession().selectList("Article.searchArticle", parameters);
     }
@@ -139,6 +152,7 @@ public class ArticleDao extends SqlSessionDaoSupport {
      * @param parameters
      * @return
      */
+    @Cacheable(value = "article")
     public List<Article> search(Map<String, Object> parameters, RowBounds rowBounds) {
         return getSqlSession().selectList("Article.searchArticle", parameters, rowBounds);
     }
