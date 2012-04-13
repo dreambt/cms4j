@@ -2,11 +2,11 @@ CREATE SCHEMA IF NOT EXISTS `cms4j_dev` DEFAULT CHARACTER SET utf8 COLLATE utf8_
 USE `cms4j_dev` ;
 
 -- -----------------------------------------------------
--- Table `cms4j_dev`.`cms_category`
+-- Table `cms_category`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cms4j_dev`.`cms_category` ;
+DROP TABLE IF EXISTS `cms_category` ;
 
-CREATE  TABLE IF NOT EXISTS `cms4j_dev`.`cms_category` (
+CREATE  TABLE IF NOT EXISTS `cms_category` (
   `id` MEDIUMINT(8) NOT NULL AUTO_INCREMENT COMMENT '栏目ID' ,
   `father_category_id` MEDIUMINT(8) NOT NULL DEFAULT 0 COMMENT '上级栏目ID' ,
   `category_name` VARCHAR(255) NOT NULL COMMENT '栏目名称' ,
@@ -28,11 +28,11 @@ COMMENT = '栏目表';
 
 
 -- -----------------------------------------------------
--- Table `cms4j_dev`.`cms_article`
+-- Table `cms_article`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cms4j_dev`.`cms_article` ;
+DROP TABLE IF EXISTS `cms_article` ;
 
-CREATE  TABLE IF NOT EXISTS `cms4j_dev`.`cms_article` (
+CREATE  TABLE IF NOT EXISTS `cms_article` (
   `id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '帖子ID' ,
   `user_id` MEDIUMINT(8) NOT NULL COMMENT '用户id' ,
   `category_id` MEDIUMINT(8) NOT NULL COMMENT '分类id' ,
@@ -68,11 +68,11 @@ COMMENT = '文章表';
 -- DELIMITER;
 
 -- -----------------------------------------------------
--- Table `cms4j_dev`.`cms_user`
+-- Table `cms_user`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cms4j_dev`.`cms_user` ;
+DROP TABLE IF EXISTS `cms_user` ;
 
-CREATE  TABLE IF NOT EXISTS `cms4j_dev`.`cms_user` (
+CREATE  TABLE IF NOT EXISTS `cms_user` (
   `id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '用户id' ,
   `group_id` MEDIUMINT(8) UNSIGNED NOT NULL COMMENT '用户组id' ,
   `email` VARCHAR(40) NOT NULL COMMENT '电子邮箱' ,
@@ -98,11 +98,11 @@ COMMENT = '用户表';
 
 
 -- -----------------------------------------------------
--- Table `cms4j_dev`.`cms_comment`
+-- Table `cms_comment`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cms4j_dev`.`cms_comment` ;
+DROP TABLE IF EXISTS `cms_comment` ;
 
-CREATE  TABLE IF NOT EXISTS `cms4j_dev`.`cms_comment` (
+CREATE  TABLE IF NOT EXISTS `cms_comment` (
   `id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '评论ID' ,
   `article_id` MEDIUMINT(8) NOT NULL ,
   `username` VARCHAR(255) NOT NULL COMMENT '用户名' ,
@@ -119,11 +119,11 @@ DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 
 
 -- -----------------------------------------------------
--- Table `cms4j_dev`.`cms_manage_log`
+-- Table `cms_manage_log`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cms4j_dev`.`cms_manage_log` ;
+DROP TABLE IF EXISTS `cms_manage_log` ;
 
-CREATE  TABLE IF NOT EXISTS `cms4j_dev`.`cms_manage_log` (
+CREATE  TABLE IF NOT EXISTS `cms_manage_log` (
   `id` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT '管理日志ID' ,
   `user_id` MEDIUMINT(8) NOT NULL ,
   `action` TINYINT(1) NOT NULL COMMENT '0=创建菜单 1=修改菜单 2=移动菜单 3=删除菜单 4=发表文章 5=修改文章 6=审核文章 7=删除文章 8=添加用户 9=修改用户信息 10=审核用户 11=删除用户' ,
@@ -136,11 +136,11 @@ DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 
 
 -- -----------------------------------------------------
--- Table `cms4j_dev`.`cms_group`
+-- Table `cms_group`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cms4j_dev`.`cms_group` ;
+DROP TABLE IF EXISTS `cms_group` ;
 
-CREATE  TABLE IF NOT EXISTS `cms4j_dev`.`cms_group` (
+CREATE  TABLE IF NOT EXISTS `cms_group` (
   `id` MEDIUMINT(8) NOT NULL AUTO_INCREMENT ,
   `group_name` VARCHAR(40) NOT NULL ,
   PRIMARY KEY (`id`) )
@@ -149,11 +149,11 @@ DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 
 
 -- -----------------------------------------------------
--- Table `cms4j_dev`.`cms_user_group`
+-- Table `cms_user_group`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cms4j_dev`.`cms_user_group` ;
+DROP TABLE IF EXISTS `cms_user_group` ;
 
-CREATE  TABLE IF NOT EXISTS `cms4j_dev`.`cms_user_group` (
+CREATE  TABLE IF NOT EXISTS `cms_user_group` (
   `user_id` MEDIUMINT(8) NOT NULL ,
   `group_id` MEDIUMINT(8) NOT NULL ,
   INDEX `fk_cms_user_group_cms_user1` (`user_id` ASC) ,
@@ -164,11 +164,11 @@ DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 
 
 -- -----------------------------------------------------
--- Table `cms4j_dev`.`cms_group_permission`
+-- Table `cms_group_permission`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cms4j_dev`.`cms_group_permission` ;
+DROP TABLE IF EXISTS `cms_group_permission` ;
 
-CREATE  TABLE IF NOT EXISTS `cms4j_dev`.`cms_group_permission` (
+CREATE  TABLE IF NOT EXISTS `cms_group_permission` (
   `id` MEDIUMINT(8) NOT NULL AUTO_INCREMENT ,
   `group_id` MEDIUMINT(8) NOT NULL ,
   `permission` VARCHAR(20) NOT NULL ,
@@ -179,11 +179,11 @@ DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 
 
 -- -----------------------------------------------------
--- Table `cms4j_dev`.`cms_archive`
+-- Table `cms_archive`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cms4j_dev`.`cms_archive` ;
+DROP TABLE IF EXISTS `cms_archive` ;
 
-CREATE  TABLE IF NOT EXISTS `cms4j_dev`.`cms_archive` (
+CREATE  TABLE IF NOT EXISTS `cms_archive` (
   `id` MEDIUMINT(8) NOT NULL  AUTO_INCREMENT ,
   `title` VARCHAR(40) NOT NULL ,
   `article_count` TINYINT(3) NOT NULL ,
@@ -195,11 +195,11 @@ DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 
 
 -- -----------------------------------------------------
--- Table `cms4j_dev`.`cms_archive_article`
+-- Table `cms_archive_article`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cms4j_dev`.`cms_archive_article` ;
+DROP TABLE IF EXISTS `cms_archive_article` ;
 
-CREATE  TABLE IF NOT EXISTS `cms4j_dev`.`cms_archive_article` (
+CREATE  TABLE IF NOT EXISTS `cms_archive_article` (
   `archive_id` MEDIUMINT(8) NOT NULL ,
   `category_id` MEDIUMINT(8) NOT NULL ,
   INDEX `fk_cms_archive_article_cms_archive1` (`archive_id` ASC) ,
@@ -210,11 +210,11 @@ DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 
 
 -- -----------------------------------------------------
--- Table `cms4j_dev`.`cms_image`
+-- Table `cms_image`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cms4j_dev`.`cms_image` ;
+DROP TABLE IF EXISTS `cms_image` ;
 
-CREATE  TABLE IF NOT EXISTS `cms4j_dev`.`cms_image` (
+CREATE  TABLE IF NOT EXISTS `cms_image` (
   `id` MEDIUMINT(8) NOT NULL  AUTO_INCREMENT ,
   `title` VARCHAR(40) NOT NULL ,
   `image_url` VARCHAR(80) NOT NULL ,
@@ -227,12 +227,12 @@ ENGINE = InnoDB
 DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 
 -- -----------------------------------------------------
--- Table `cms4j_dev`.`cms_link`
+-- Table `cms_link`
 -- -----------------------------------------------------
 
-DROP TABLE IF EXISTS `cms4j_dev`.`cms_link`;
+DROP TABLE IF EXISTS `cms_link`;
 
-CREATE TABLE IF NOT EXISTS `cms4j_dev`.`cms_link` (
+CREATE TABLE IF NOT EXISTS `cms_link` (
   `id` INT(8) NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(20) NOT NULL,
   `url` VARCHAR(80) NOT NULL,
@@ -333,31 +333,45 @@ INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (70,3,
 -- 分类测试数据
 -- -----------------------------------------------------
 INSERT INTO `cms_category` (`id`, `father_category_id`, `category_name`, `display_order`, `show_type`, `url`, `description`, `allow_comment`, `allow_publish`, `show_nav`, `last_modified_date`, `created_date`, `deleted`) VALUES
-(1, 1, '公告', 1, 'NONE', 'index', '无', 0, 1, 0, '2012-03-22 15:58:00', '2012-03-22 15:58:00', 0),
-(2, 1, '中心概况', 10, 'NONE', '', '本中心的最新新闻资讯', 1, 1, 1, '2012-04-07 08:30:17', '2012-03-22 15:58:00', 0),
-(3, 3, '中心简介', 11, 'LIST', '', '中心简介', 1, 1, 1, '2012-04-07 08:42:41', '2012-03-22 15:58:00', 0),
-(4, 3, '组织结构', 12, 'LIST', '', '组织结构', 1, 1, 1, '2012-04-07 08:43:00', '2012-03-22 15:58:00', 0),
-(5, 1, '学术团队', 20, 'DIGEST', '', '本中心长期提供培训课程', 1, 1, 1, '2012-04-07 12:24:15', '2012-03-22 15:58:00', 0),
-(6, 1, '学术研究', 30, 'NONE', '', '活动相册', 0, 1, 1, '2012-04-07 12:24:43', '2012-03-22 15:58:00', 0),
-(7, 1, '资讯服务', 40, 'NONE', 'about', '关于我们', 0, 0, 1, '2012-04-07 12:25:15', '2012-03-22 15:58:00', 0),
-(8, 1, '教育培训', 50, 'NONE', '', '', 0, 0, 1, '2012-04-07 12:25:16', '2012-04-07 08:31:17', 0),
-(9, 1, '交流合作', 60, 'NONE', '', '', 0, 1, 1, '2012-04-07 08:31:51', '2012-04-07 08:31:51', 0),
-(10, 3, '运作机制', 13, 'LIST', '', '', 0, 1, 1, '2012-04-07 08:43:22', '2012-04-07 08:43:22', 0),
-(11, 6, '学术带头人', 21, 'NONE', '', '', 0, 1, 1, '2012-04-07 08:49:57', '2012-04-07 08:49:57', 0),
-(12, 6, '学术骨干', 22, 'CONTENT', '', '', 0, 1, 1, '2012-04-07 08:51:08', '2012-04-07 08:50:25', 0),
-(13, 6, '专家指导委员会', 23, 'CONTENT', '', '', 0, 1, 1, '2012-04-07 08:51:53', '2012-04-07 08:51:53', 0),
-(14, 6, '专家顾问', 24, 'CONTENT', '', '', 0, 1, 1, '2012-04-07 08:52:14', '2012-04-07 08:52:14', 0),
-(15, 7, '研究方向', 31, 'CONTENT', '', '', 0, 1, 1, '2012-04-07 08:52:33', '2012-04-07 08:52:33', 0),
-(16, 7, '科研成果', 32, 'CONTENT', '', '', 0, 1, 1, '2012-04-07 08:52:49', '2012-04-07 08:52:49', 0),
-(17, 7, '科研项目', 33, 'DIGEST', '', '', 1, 1, 1, '2012-04-07 08:53:09', '2012-04-07 08:53:09', 0),
-(18, 7, '学术活动', 34, 'DIGEST', '', '', 1, 1, 1, '2012-04-07 08:56:05', '2012-04-07 08:56:05', 0),
-(19, 8, '财政税务', 41, 'LIST', '', '', 0, 1, 1, '2012-04-07 08:57:31', '2012-04-07 08:57:31', 0),
-(20, 8, '中小银行', 42, 'LIST', '', '', 0, 1, 1, '2012-04-07 08:57:44', '2012-04-07 08:57:44', 0),
-(21, 8, '证券保险', 43, 'LIST', '', '', 0, 1, 1, '2012-04-07 08:58:00', '2012-04-07 08:58:00', 0),
-(22, 8, '政府决策', 44, 'LIST', '', '', 0, 1, 1, '2012-04-07 08:58:15', '2012-04-07 08:58:15', 0),
-(23, 10, '成果转化', 61, 'LIST', '', '', 1, 1, 1, '2012-04-07 08:58:46', '2012-04-07 08:58:46', 0),
-(24, 10, '合作伙伴', 62, 'ALBUM', '', '', 0, 1, 1, '2012-04-07 08:59:07', '2012-04-07 08:59:07', 0),
-(25, 10, '对外交流', 63, 'ALBUM', '', '', 0, 1, 1, '2012-04-07 08:59:29', '2012-04-07 08:59:29', 0);
+(1, 1, '公告', 0, 'NONE', 'index', '无', 0, 1, 1, '2012-03-22 15:58:00', '2012-03-22 15:58:00', 0),
+
+(2, 1, '新闻资讯', 2, 'NONE', '', '本中心的最新新闻资讯', 0, 0, 1, '2012-03-22 15:58:00', '2012-03-22 15:58:00', 0),
+(3, 2, '新闻动态', 4, 'LIST', '', '新闻动态', 1, 1, 1, '2012-03-22 15:58:00', '2012-03-22 15:58:00', 0),
+(4, 2, '行业资讯', 6, 'LIST', '', '行业资讯', 1, 1, 1, '2012-03-22 15:58:00', '2012-03-22 15:58:00', 0),
+(5, 2, '学术交流', 8, 'LIST', '', '学术交流', 1, 1, 1, '2012-03-22 15:58:00', '2012-03-22 15:58:00', 0),
+
+(6, 1, '中心概况', 10, 'NONE', '', '中心概况', 0, 0, 1, '2012-04-07 08:30:17', '2012-03-22 15:58:00', 0),
+(7, 6, '中心简介', 12, 'CONTENT', '', '中心简介', 0, 1, 1, '2012-04-07 08:42:41', '2012-03-22 15:58:00', 0),
+(8, 6, '组织结构', 14, 'CONTENT', '', '组织结构', 0, 1, 1, '2012-04-07 08:43:00', '2012-03-22 15:58:00', 0),
+(9, 6, '运作机制', 16, 'CONTENT', '', '运作机制', 0, 1, 1, '2012-04-07 08:43:00', '2012-03-22 15:58:00', 0),
+(10, 6, '联系我们', 18, 'NONE', 'ahout', '联系我们', 1, 0, 1, '2012-04-07 08:43:00', '2012-03-22 15:58:00', 0),
+
+(11, 1, '学术团队', 20, 'NONE', '', '', 0, 0, 1, '2012-04-07 12:24:15', '2012-03-22 15:58:00', 0),
+(12, 11, '学术带头人', 22, 'CONTENT', '', '', 0, 1, 1, '2012-04-07 08:49:57', '2012-04-07 08:49:57', 0),
+(13, 11, '学术骨干', 24, 'CONTENT', '', '', 0, 1, 1, '2012-04-07 08:51:08', '2012-04-07 08:50:25', 0),
+(14, 11, '专家顾问', 26, 'CONTENT', '', '', 0, 1, 1, '2012-04-07 08:52:14', '2012-04-07 08:52:14', 0),
+
+(15, 1, '学术研究', 30, 'NONE', '', '', 0, 0, 1, '2012-04-07 12:24:43', '2012-03-22 15:58:00', 0),
+(16, 15, '研究方向', 32, 'DIGEST', '', '', 0, 1, 1, '2012-04-07 08:52:33', '2012-04-07 08:52:33', 0),
+(17, 15, '科研成果', 34, 'DIGEST', '', '', 1, 1, 1, '2012-04-07 08:52:49', '2012-04-07 08:52:49', 0),
+
+(18, 1, '资讯服务', 40, 'NONE', '', '', 0, 0, 1, '2012-04-07 12:25:15', '2012-03-22 15:58:00', 0),
+(19, 18, '财政税务', 41, 'LIST', '', '', 1, 1, 1, '2012-04-07 08:57:31', '2012-04-07 08:57:31', 0),
+(20, 18, '中小银行', 42, 'LIST', '', '', 1, 1, 1, '2012-04-07 08:57:44', '2012-04-07 08:57:44', 0),
+(21, 18, '证券保险', 43, 'LIST', '', '', 1, 1, 1, '2012-04-07 08:58:00', '2012-04-07 08:58:00', 0),
+(22, 18, '政府决策', 44, 'LIST', '', '', 1, 1, 1, '2012-04-07 08:58:15', '2012-04-07 08:58:15', 0),
+
+(23, 1, '教育培训', 50, 'NONE', '', '', 0, 0, 1, '2012-04-07 12:25:16', '2012-04-07 08:31:17', 0),
+
+(24, 1, '产学研合作', 60, 'NONE', '', '', 0, 0, 1, '2012-04-07 08:31:51', '2012-04-07 08:31:51', 0),
+(25, 24, '成果转化', 62, 'LIST', '', '', 1, 1, 1, '2012-04-07 08:58:46', '2012-04-07 08:58:46', 0),
+(26, 24, '合作伙伴', 64, 'ALBUM', '', '', 0, 1, 1, '2012-04-07 08:59:07', '2012-04-07 08:59:07', 0),
+(27, 24, '对外交流', 66, 'ALBUM', '', '', 0, 1, 1, '2012-04-07 08:59:29', '2012-04-07 08:59:29', 0),
+
+(28, 1, '网上办公', 70, 'NONE', '', '', 0, 0, 1, '2012-04-07 08:53:09', '2012-04-07 08:53:09', 0),
+(29, 28, '办公系统', 72, 'DIGEST', 'http://oa.sdufe.edu.cn/', '', 0, 0, 1, '2012-04-07 08:53:09', '2012-04-07 08:53:09', 0),
+(30, 28, '文件交换', 34, 'DIGEST', 'http://filex.sdufe.edu.cn/', '', 0, 0, 1, '2012-04-07 08:56:05', '2012-04-07 08:56:05', 0);
+
 
 -- -----------------------------------------------------
 -- 文章测试数据
