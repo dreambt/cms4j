@@ -37,14 +37,13 @@ public class ImageDao extends SqlSessionDaoSupport {
     }
 
     /**
-     * 获得分页的image
+     * 获得image数量
      *
-     * @param rowBounds
      * @return
      */
-    @Cacheable(value = "image")
-    public List<Image> getPagedImage(RowBounds rowBounds) {
-        return getSqlSession().selectList("Image.getPagedImage", rowBounds);
+    @Cacheable(value = "image_num")
+    public Long count() {
+        return getSqlSession().selectOne("Image.count");
     }
 
     /**
@@ -57,8 +56,8 @@ public class ImageDao extends SqlSessionDaoSupport {
     /**
      * 删除图片
      */
-    public int delete() {
-        return getSqlSession().delete("Image.deleteImage");
+    public int delete(Long id) {
+        return getSqlSession().delete("Image.deleteImage", id);
     }
 
     /**
