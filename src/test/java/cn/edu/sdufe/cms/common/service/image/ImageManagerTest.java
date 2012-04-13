@@ -28,9 +28,4 @@ public class ImageManagerTest {
         imageManager.setImageDao(mockImageDao);
     }
 
-    @Test
-    public void testDelete() throws Exception {
-        // 无法测试，没有可比性
-        imageManager.delete();
-    }
 }
