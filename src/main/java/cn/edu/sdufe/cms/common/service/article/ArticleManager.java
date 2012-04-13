@@ -2,11 +2,14 @@ package cn.edu.sdufe.cms.common.service.article;
 
 import cn.edu.sdufe.cms.common.dao.article.ArticleDao;
 import cn.edu.sdufe.cms.common.dao.article.CategoryDao;
+import cn.edu.sdufe.cms.common.entity.account.User;
 import cn.edu.sdufe.cms.common.entity.article.Article;
+import cn.edu.sdufe.cms.security.ShiroDbRealm;
 import cn.edu.sdufe.cms.utilities.analyzer.ArticleKeyword;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.Validate;
 import org.apache.ibatis.session.RowBounds;
+import org.apache.shiro.SecurityUtils;
 import org.jsoup.Jsoup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +18,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springside.modules.beanvalidator.BeanValidators;
+import org.springside.modules.utils.Encodes;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
@@ -36,7 +40,6 @@ public class ArticleManager {
     private static final int KEYWORD_NUM = 10;
 
     private ArticleDao articleDao = null;
-    private CategoryDao categoryDao = null;
 
     private Validator validator = null;
 
@@ -46,7 +49,7 @@ public class ArticleManager {
      * @param id
      * @return
      */
-    public Article get(Long id) {
+    public Article findOne(Long id) {
         return articleDao.findOne(id);
     }
 
@@ -56,12 +59,20 @@ public class ArticleManager {
      * @param id
      * @return
      */
-    public Article getForView(Long id) {
+    @Transactional(readOnly = false)
+    public Article findForView(Long id) {
         Article article = articleDao.findOne(id);
 
-        // 记录文章访问次数
-        article.setViews(article.getViews() + 1);
-        this.update(article);
+        // 判断文章是否为空
+        if (null != article) {
+            // 记录文章访问次数
+            Article article1 = new Article();
+            article1.setId(article.getId());
+            article1.setViews(article.getViews() + 1);
+            articleDao.update(article1);
+
+            article.setMessage(Encodes.unescapeHtml(article.getMessage()));
+        }
 
         return article;
     }
@@ -103,7 +114,6 @@ public class ArticleManager {
      * @param parameters
      * @return
      */
-    @Deprecated
     public List<Article> search(Map<String, Object> parameters) {
         parameters.put("Direction", "DESC");
         parameters.put("Sort", "id");
@@ -111,7 +121,17 @@ public class ArticleManager {
     }
 
     /**
-     * 通过分类categoryId查找文章
+     * 通过分类categoryId查找文章标题
+     *
+     * @param categoryId
+     * @return
+     */
+    public List<Article> getTitleByCategoryId(Long categoryId, int offset, int limit) {
+        return articleDao.findTitleByCategoryId(categoryId, new RowBounds(offset, limit));
+    }
+
+    /**
+     * 通过分类categoryId查找文章列表
      *
      * @param categoryId
      * @return
@@ -121,7 +141,7 @@ public class ArticleManager {
     }
 
     /**
-     * 通过分类categoryId查找文章
+     * 通过分类categoryId查找文章摘要
      *
      * @param categoryId
      * @return
@@ -150,11 +170,20 @@ public class ArticleManager {
             // 关键词由任务生成
             article.setKeyword("");
 
+            // 文章作者
+            ShiroDbRealm.ShiroUser shiroUser = (ShiroDbRealm.ShiroUser) SecurityUtils.getSubject().getPrincipal();
+            User user = new User();
+            user.setId(shiroUser.getId());
+            article.setUser(user);
+
+            // 文章正文进行HTML编码
+            article.setMessage(Encodes.escapeHtml(article.getMessage()));
+
             //使用Hibernate Validator校验请求参数
             Validate.notNull(article, "文章参数为空");
             BeanValidators.validateWithException(validator, article);
 
-            return this.update(article);
+            return articleDao.save(article);
         } catch (ConstraintViolationException cve) {
             logger.warn("操作员{}尝试发表文章, 缺少相关字段.", cve.getConstraintViolations().toString());
             return 0;
@@ -232,8 +261,7 @@ public class ArticleManager {
      */
     @Transactional(readOnly = false)
     public int update(Article article) {
-        article.setLastModifiedDate(null);
-        return articleDao.save(article);
+        return articleDao.update(article);
     }
 
     /**
@@ -249,11 +277,6 @@ public class ArticleManager {
     @Autowired
     public void setValidator(@Qualifier("validator") Validator validator) {
         this.validator = validator;
-    }
-
-    @Autowired(required = false)
-    public void setCategoryDao(@Qualifier("categoryDao") CategoryDao categoryDao) {
-        this.categoryDao = categoryDao;
     }
 
     @Autowired
