@@ -43,14 +43,21 @@ public class ArticleController {
     private LinkManager linkManager;
 
     /**
-     * 获取菜单编号为id的所有文章正文
+     * 获取编号为id的文章正文
      *
      * @param id
      * @return
      */
     @RequestMapping(value = "content/{id}", method = RequestMethod.GET)
-    public String contextOfArticle(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("article", articleManager.getForView(id));
+    public String contextOfArticle(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
+        Article article = articleManager.findForView(id);
+
+        if (null == article) {
+            redirectAttributes.addFlashAttribute("message", "不存在编号为 " + id + " 的文章");
+            return "redirect:/error/404";
+        }
+
+        model.addAttribute("article", article);
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("archives", archiveManager.getTopTen());
         model.addAttribute("newArticles", articleManager.getTopTen());
@@ -117,7 +124,6 @@ public class ArticleController {
             pageCount = total / limit + 1;
         }
         model.addAttribute("articles", articleManager.getListByCategoryId(id, 0, limit));//文章列表
-        //model.addAttribute("category", categoryManager.get(id));//分类信息
         model.addAttribute("categories", categoryManager.getNavCategory());//导航菜单
         model.addAttribute("archives", archiveManager.getTopTen());//边栏归档日志
         model.addAttribute("newArticles", articleManager.getTopTen());//边栏最新文章

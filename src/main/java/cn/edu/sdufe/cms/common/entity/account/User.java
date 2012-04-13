@@ -34,7 +34,6 @@ public class User extends PersistableEntity {
     private String photoURL;
     private String timeOffset;
     private Group group;
-    private List<Article> articleList = Lists.newArrayList();//有序的关联对象集合
     private Long lastIP;
     private String lastLoginIP;
     private Date lastTime;
@@ -170,14 +169,6 @@ public class User extends PersistableEntity {
 
     public void setGroup(Group group) {
         this.group = group;
-    }
-
-    public List<Article> getArticleList() {
-        return articleList;
-    }
-
-    public void setArticleList(List<Article> articleList) {
-        this.articleList = articleList;
     }
 
     @Override

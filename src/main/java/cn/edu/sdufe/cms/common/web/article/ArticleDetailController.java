@@ -33,15 +33,18 @@ public class ArticleDetailController {
     /**
      * 编辑文章
      *
-     * @param id
+     * @param article
      * @param model
      * @return
      */
     @RequiresPermissions("article:edit")
     @RequestMapping(value = {"edit/{id}"})
-    public String editArticle(@PathVariable("id") Long id, Model model) {
-        // 不用报错，Neither BindingResult nor plain target object for bean name 'article' available as request attribute
-        //model.addAttribute("article", articleManager.getArticle(id));
+    public String editArticle(@Valid @ModelAttribute("article") Article article, Model model, RedirectAttributes redirectAttributes) {
+        // 编辑不存在的文章，给出提示
+        if(null == article){
+            redirectAttributes.addFlashAttribute("error", "文章不存在");
+            return "redirect:/article/listAll";
+        }
 
         // 获取所有分类
         model.addAttribute("categories", categoryManager.getAllowPublishCategory());
@@ -51,12 +54,12 @@ public class ArticleDetailController {
     /**
      * 保存文章
      *
-     * @param model
+     * @param article
      * @return
      */
     @RequiresPermissions("article:save")
     @RequestMapping(value = "save/{id}")
-    public String saveArticle(@PathVariable("id") Long id, @Valid @ModelAttribute("article") Article article, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+    public String saveArticle(@Valid @ModelAttribute("article") Article article, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors() || articleManager.save(article) > 0) {
             redirectAttributes.addFlashAttribute("error", "保存文章失败");
             return "redirect:/article/edit/" + article.getId();
@@ -162,7 +165,7 @@ public class ArticleDetailController {
 
     @ModelAttribute("article")
     public Article getArticle(@PathVariable("id") Long id) {
-        return articleManager.get(id);
+        return articleManager.findOne(id);
     }
 
     @Autowired

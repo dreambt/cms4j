@@ -68,29 +68,6 @@ public class ImageDetailController {
         return "redirect:/gallery/listAll";
     }
 
-    /**
-     * 删除编号为id的image
-     *
-     * @param id
-     * @param redirectAttributes
-     * @return
-     */
-    @RequiresPermissions("gallery:edit")
-    @RequestMapping(value = "delete/{id}")
-    public String delete(@PathVariable Long id, @ModelAttribute("image") Image image, RedirectAttributes redirectAttributes) {
-        if (imageManager.delete(id) > 0) {
-            redirectAttributes.addFlashAttribute("error", "操作文章 " + id + " 失败.");
-            return "redirect:/article/listAll";
-        }
-
-        if (image.isDeleted()) {
-            redirectAttributes.addFlashAttribute("info", "删除" + id + "图片信息成功");
-        } else {
-            redirectAttributes.addFlashAttribute("info", "恢复" + id + "图片信息成功");
-        }
-        return "redirect:/gallery/listAll";
-    }
-
     @ModelAttribute("image")
     public Image getImage(@PathVariable Long id) {
         return imageManager.getImage(id);

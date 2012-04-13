@@ -15,7 +15,6 @@ public class Image extends PersistableEntity {
     private String imageUrl;
     private String description;
     private boolean showIndex;
-    private boolean deleted;
 
     public String getTitle() {
         return title;
@@ -47,14 +46,6 @@ public class Image extends PersistableEntity {
 
     public void setShowIndex(boolean showIndex) {
         this.showIndex = showIndex;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
     }
 
     @Override

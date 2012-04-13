@@ -18,18 +18,15 @@
 <div id="main_container" class="main_container container_16 clearfix">
     <div class="flat_area grid_16">
         <h2>文章列表</h2>
-
         <p>下面列出了所有文章列表, 您可以对文章进行 <strong>修改</strong> <strong>置顶</strong> <strong>审核</strong> 和 <strong>删除</strong>.</p>
         <c:if test="${not empty info}">
             <div id="message" class="alert alert_blue">
-                <img height="24" width="24"
-                     src="${ctx}/static/dashboard/images/icons/Locked2.png"><strong>${info}</strong>
+                <img height="24" width="24" src="${ctx}/static/dashboard/images/icons/Locked2.png"><strong>${info}</strong>
             </div>
         </c:if>
         <c:if test="${not empty error}">
             <div id="message" class="alert alert_red">
-                <img height="24" width="24"
-                     src="${ctx}/static/dashboard/images/icons/Locked2.png"><strong>${error}</strong>
+                <img height="24" width="24" src="${ctx}/static/dashboard/images/icons/Locked2.png"><strong>${error}</strong>
             </div>
         </c:if>
     </div>
@@ -58,8 +55,8 @@
                     <tr class="gradeA">
                         <td><input type="checkbox" name="isSelected" value="${article.id}"></td>
                         <td><a href="${ctx}/article/content/${article.id}" target="_blank">${article.subject}</a></td>
-                        <td>${article.author}</td>
-                        <td>${article.categoryName}</td>
+                        <td>${article.user.username}</td>
+                        <td>${article.category.categoryName}</td>
                         <td>${article.rate}</td>
                         <td>${article.views}</td>
                         <td><fmt:formatDate value="${article.createdDate}" type="date"/></td>
