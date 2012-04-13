@@ -6,11 +6,16 @@ import cn.edu.sdufe.cms.common.dao.article.CategoryDao;
 import cn.edu.sdufe.cms.common.entity.article.Article;
 import cn.edu.sdufe.cms.common.entity.article.Category;
 import cn.edu.sdufe.cms.utilities.analyzer.ArticleKeyword;
+import cn.edu.sdufe.cms.utilities.thumb.ImageThumb;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.sun.org.apache.xpath.internal.SourceTree;
 import org.apache.commons.lang3.Validate;
 import org.apache.ibatis.session.RowBounds;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +28,7 @@ import org.springside.modules.orm.jpa.Jpas;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -114,6 +120,11 @@ public class ArticleManager {
      * @return
      */
     public List<Article> getNews() {
+        List<Article> articles = articleDao.getNews();
+        List<String> imageUrls = Lists.newArrayList();
+        for(Article article: articles) {
+
+        }
         return articleDao.getNews();
     }
 
@@ -190,6 +201,18 @@ public class ArticleManager {
                 article.setDigest(str);
             }
 
+            //文章中的首个图片
+            article.setImageName(this.getImageFromMessage(article.getMessage()));
+            //项目路径// TODO 迁移服务器需要修改
+            String path = System.getProperty("user.dir") + "\\src\\main\\webapp\\static\\uploads\\";
+            ImageThumb imageThumb = new ImageThumb();
+            try {
+                imageThumb.saveImageAsJpg(path + "article\\article-big\\" + article.getImageName(), path + "article\\news-thumb\\" + article.getImageName(), 274, 157);
+                imageThumb.saveImageAsJpg(path + "article\\article-big\\" + article.getImageName(), path + "article\\digest-thumb\\" + article.getImageName(), 134, 134);
+
+            } catch (Exception e) {
+                logger.error(e.getMessage());
+            }
             // 关键词由任务生成
             article.setKeyword("");
 
@@ -198,14 +221,36 @@ public class ArticleManager {
             article.setCategory(category);
             article.setCategoryName(category.getCategoryName());
 
+            article.setCreatedDate(null);
+            article.setLastModifiedDate(null);
+
             //使用Hibernate Validator校验请求参数
             Validate.notNull(article, "文章参数为空");
             BeanValidators.validateWithException(validator, article);
 
-            return this.update(article);
+            return articleJpaDao.save(article);
         } catch (ConstraintViolationException cve) {
             logger.warn("操作员{}尝试发表文章, 缺少相关字段.", cve.getConstraintViolations().toString());
             return null;
+        }
+    }
+
+    /**
+     * 从正文html代码中获得图片路径
+     *
+     * @param message
+     * @return
+     */
+    public String getImageFromMessage(String message) {
+        Document document = Jsoup.parse(message);
+        Elements imgs = document.getElementsByTag("img");
+        if(null == imgs || imgs.size() == 0) {
+            return "";
+        } else {
+            Element img = imgs.first();
+            String srcString = img.attr("src");
+            String imgName = srcString.substring(srcString.lastIndexOf("/") + 1, srcString.length());
+            return imgName;
         }
     }
 

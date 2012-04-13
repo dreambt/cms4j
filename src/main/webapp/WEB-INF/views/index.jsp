@@ -74,12 +74,12 @@
             <div id="featured"><!-- begin of featured slider -->
                 <c:forEach items="${news}" var="newOne" begin="0" step="1">
                 <div>
-                    <div class="bg-featured"><a href="${ctx}/article/content/${newOne.id}"><img src="${ctx}/static/images/featured1.jpg" alt="" class="slidehalf"/></a>
+                    <div class="bg-featured"><a href="${ctx}/article/content/${newOne.id}"><img src="${ctx}/static/uploads/article/news-thumb/${newOne.imageName}" alt="" class="slidehalf"/></a>
                     </div>
                     <br/>
                     <strong><a href="${ctx}/article/content/${newOne.id}">${newOne.subject}</a></strong><br/>
                     <%--// TODO 字数限制 图片 --%>
-                    <p class="featured-text">${newOne.message}</p>
+                    <p class="featured-text">${newOne.digest}</p>
                 </div>
                 </c:forEach>
             </div>
@@ -96,7 +96,7 @@
                 </li>
                 </c:forEach>
             </ul>
-            <h5><a href="#">更多公告...</a></h5>
+            <h5><a href="${ctx}/article/listPost">更多公告...</a></h5>
         </div>
         <div class="maincontent">
             <h2 class="cufon">我们的优势</h2>

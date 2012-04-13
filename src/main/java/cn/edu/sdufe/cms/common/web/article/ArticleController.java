@@ -187,14 +187,12 @@ public class ArticleController {
 
     /**
      * 获得公告
-     * @param model
      * @return
      */
     @RequestMapping(value = "listPost")
-    public String listPost(Model model) {
-        //model.addAttribute("articles", categoryManager.getCategoryByName("公告").getArticleList());
-        model.addAttribute("articles", categoryManager.get(26L).getArticleList());
-        return "article/list";
+    public String listPost() {
+        Long id = new Long(1L);
+        return "redirect:/article/list/" + id;
     }
 
     /**

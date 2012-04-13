@@ -33,6 +33,7 @@ public class Article extends PersistableEntity {
     private boolean top;
     private String subject;
     private String message;
+    private String imageName;
     private String digest;
     private String keyword;
     private boolean status;
@@ -114,6 +115,14 @@ public class Article extends PersistableEntity {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 
     public String getDigest() {
