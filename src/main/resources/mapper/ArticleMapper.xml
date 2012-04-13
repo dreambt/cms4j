@@ -71,7 +71,7 @@
     <select id="getNews" resultType="Article">
         select id,subject,image_name as imagename,digest,category_name as categorynamedeleted
         from cms_article
-        where id in (select article_id from cms_category_article where category_id=3 or category_id=5) and deleted=0
+        where id in (select article_id from cms_category_article where category_id=3 or category_id=5) and deleted=0 and status=1
         order by id desc
         limit 0,5
     </select>
