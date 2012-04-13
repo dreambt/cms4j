@@ -70,7 +70,7 @@
         </c:forEach>
     </div>
         <div class="blog-pagination"><!-- page pagination -->
-            Page&nbsp;:&nbsp;
+            页码 &nbsp;:&nbsp;
             <c:choose>
                 <c:when test="${total <= 132}">
                     <c:forEach begin="1" end="${pageCount}" step="1" varStatus="var">
@@ -111,7 +111,7 @@
                                 "alt='' class='pf-img'/></a></div>"));
                     });
 
-                    $(".blog-pagination").html("Page&nbsp;:&nbsp;");
+                    $(".blog-pagination").html("页码&nbsp;:&nbsp;");
 
                     //将总记录数结果 得到 总页码数
                     var pageS = total;

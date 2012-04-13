@@ -62,7 +62,7 @@
     </c:forEach>
     </div>
     <div class="blog-pagination"><!-- page pagination -->
-        分页&nbsp;:&nbsp;
+        页码 &nbsp;:&nbsp;
         <c:choose>
             <c:when test="${total <= 44}">
                 <c:forEach begin="1" end="${pageCount}" step="1" varStatus="var">
@@ -109,7 +109,7 @@
                         }
                     });
 
-                    $(".blog-pagination").html("分页&nbsp;:&nbsp;");
+                    $(".blog-pagination").html("页码&nbsp;:&nbsp;");
 
                     //将总记录数结果 得到 总页码数
                     var pageS = total;

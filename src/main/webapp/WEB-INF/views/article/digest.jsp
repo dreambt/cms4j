@@ -47,7 +47,7 @@
                 </c:forEach>
             </c:when>
             <c:otherwise>
-                <c:forEach begin="1" end="5" step="1" varStatus="var">
+                <c:forEach begin="1" end="11" step="1" varStatus="var">
                     <span class="blog-button-page pagination">${var.index}</span>&nbsp;
                 </c:forEach>
             </c:otherwise>
@@ -89,7 +89,7 @@
                             articles.append($("<div class='blog-post digest'><img src='${ctx}/static/images/blog-pic1.jpg' class='imgleft'/><h2><a href='${ctx}/article/content/" + content.id + "'>" + content.subject + "</a></h2><div class='blog-posted'>作者: " + content.user.username + " &nbsp; | &nbsp; 发表时间: " + ChangeDateFormat(content.createdDate) + " &nbsp; | &nbsp; 浏览次数: " + content.views + " &nbsp; | &nbsp; 评论数: " + content.commentList.length + "</div><p>" + content.digest + "</p></div>"));
                     });
 
-                    $(".blog-pagination").html("Page&nbsp;:&nbsp;");
+                    $(".blog-pagination").html("页码&nbsp;:&nbsp;");
 
                     //将总记录数结果 得到 总页码数
                     var pageS = total;

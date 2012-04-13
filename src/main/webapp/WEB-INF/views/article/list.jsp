@@ -46,7 +46,7 @@
                 </c:forEach>
             </c:when>
             <c:otherwise>
-                <c:forEach begin="1" end="5" step="1" varStatus="var">
+                <c:forEach begin="1" end="11" step="1" varStatus="var">
                     <span class="blog-button-page pagination">${var.index}</span>&nbsp;
                 </c:forEach>
             </c:otherwise>
@@ -88,7 +88,7 @@
 
                     });
 
-                    $(".blog-pagination").html("Page&nbsp;:&nbsp;");
+                    $(".blog-pagination").html("页码&nbsp;:&nbsp;");
 
                     //将总记录数结果 得到 总页码数
                     var pageS = total;

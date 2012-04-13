@@ -120,7 +120,7 @@ public class ArticleController {
         int limit = 10;
         Long pageCount = 1L;
         if (total % limit == 0) {
-            pageCount = pageCount / limit;
+            pageCount = total / limit;
         } else {
             pageCount = total / limit + 1;
         }
@@ -162,7 +162,7 @@ public class ArticleController {
         int limit = 6;
         Long pageCount = 1L;
         if (total % limit == 0) {
-            pageCount = pageCount / limit;
+            pageCount = total / limit;
         } else {
             pageCount = total / limit + 1;
         }
@@ -195,7 +195,6 @@ public class ArticleController {
     /**
      * 获得公告
      *
-     * @param model
      * @return
      */
     @RequestMapping(value = "listPost")

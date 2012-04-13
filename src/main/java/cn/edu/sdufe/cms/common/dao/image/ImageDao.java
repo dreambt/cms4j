@@ -75,6 +75,8 @@ public class ImageDao extends SqlSessionDaoSupport {
      */
     @Cacheable(value = "image")
     public List<Image> search(Map<String, Object> parameters) {
+        parameters.put("Sort", "id");
+        parameters.put("Direction", "DESC");
         return getSqlSession().selectList("Image.searchImage", parameters, new RowBounds(0, 12));
     }
 
