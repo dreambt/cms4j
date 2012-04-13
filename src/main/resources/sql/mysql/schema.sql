@@ -1,12 +1,12 @@
-CREATE SCHEMA IF NOT EXISTS `cms4j_mybatis` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
-USE `cms4j_mybatis` ;
+CREATE SCHEMA IF NOT EXISTS `cms4j_dev` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+USE `cms4j_dev` ;
 
 -- -----------------------------------------------------
--- Table `cms4j_mybatis`.`cms_category`
+-- Table `cms4j_dev`.`cms_category`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cms4j_mybatis`.`cms_category` ;
+DROP TABLE IF EXISTS `cms4j_dev`.`cms_category` ;
 
-CREATE  TABLE IF NOT EXISTS `cms4j_mybatis`.`cms_category` (
+CREATE  TABLE IF NOT EXISTS `cms4j_dev`.`cms_category` (
   `id` MEDIUMINT(8) NOT NULL AUTO_INCREMENT COMMENT '栏目ID' ,
   `father_category_id` MEDIUMINT(8) NOT NULL DEFAULT 0 COMMENT '上级栏目ID' ,
   `category_name` VARCHAR(255) NOT NULL COMMENT '栏目名称' ,
@@ -28,11 +28,11 @@ COMMENT = '栏目表';
 
 
 -- -----------------------------------------------------
--- Table `cms4j_mybatis`.`cms_article`
+-- Table `cms4j_dev`.`cms_article`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cms4j_mybatis`.`cms_article` ;
+DROP TABLE IF EXISTS `cms4j_dev`.`cms_article` ;
 
-CREATE  TABLE IF NOT EXISTS `cms4j_mybatis`.`cms_article` (
+CREATE  TABLE IF NOT EXISTS `cms4j_dev`.`cms_article` (
   `id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '帖子ID' ,
   `user_id` MEDIUMINT(8) NOT NULL COMMENT '用户id' ,
   `category_id` VARCHAR(80) NOT NULL COMMENT '分类id' ,
@@ -68,11 +68,11 @@ COMMENT = '文章表';
 -- DELIMITER;
 
 -- -----------------------------------------------------
--- Table `cms4j_mybatis`.`cms_user`
+-- Table `cms4j_dev`.`cms_user`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cms4j_mybatis`.`cms_user` ;
+DROP TABLE IF EXISTS `cms4j_dev`.`cms_user` ;
 
-CREATE  TABLE IF NOT EXISTS `cms4j_mybatis`.`cms_user` (
+CREATE  TABLE IF NOT EXISTS `cms4j_dev`.`cms_user` (
   `id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '用户id' ,
   `group_id` MEDIUMINT(8) UNSIGNED NOT NULL COMMENT '用户组id' ,
   `email` VARCHAR(40) NOT NULL COMMENT '电子邮箱' ,
@@ -98,11 +98,11 @@ COMMENT = '用户表';
 
 
 -- -----------------------------------------------------
--- Table `cms4j_mybatis`.`cms_comment`
+-- Table `cms4j_dev`.`cms_comment`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cms4j_mybatis`.`cms_comment` ;
+DROP TABLE IF EXISTS `cms4j_dev`.`cms_comment` ;
 
-CREATE  TABLE IF NOT EXISTS `cms4j_mybatis`.`cms_comment` (
+CREATE  TABLE IF NOT EXISTS `cms4j_dev`.`cms_comment` (
   `id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '评论ID' ,
   `article_id` MEDIUMINT(8) NOT NULL ,
   `username` VARCHAR(255) NOT NULL COMMENT '用户名' ,
@@ -119,11 +119,11 @@ DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 
 
 -- -----------------------------------------------------
--- Table `cms4j_mybatis`.`cms_manage_log`
+-- Table `cms4j_dev`.`cms_manage_log`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cms4j_mybatis`.`cms_manage_log` ;
+DROP TABLE IF EXISTS `cms4j_dev`.`cms_manage_log` ;
 
-CREATE  TABLE IF NOT EXISTS `cms4j_mybatis`.`cms_manage_log` (
+CREATE  TABLE IF NOT EXISTS `cms4j_dev`.`cms_manage_log` (
   `id` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT '管理日志ID' ,
   `user_id` MEDIUMINT(8) NOT NULL ,
   `action` TINYINT(1) NOT NULL COMMENT '0=创建菜单 1=修改菜单 2=移动菜单 3=删除菜单 4=发表文章 5=修改文章 6=审核文章 7=删除文章 8=添加用户 9=修改用户信息 10=审核用户 11=删除用户' ,
@@ -136,11 +136,11 @@ DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 
 
 -- -----------------------------------------------------
--- Table `cms4j_mybatis`.`cms_group`
+-- Table `cms4j_dev`.`cms_group`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cms4j_mybatis`.`cms_group` ;
+DROP TABLE IF EXISTS `cms4j_dev`.`cms_group` ;
 
-CREATE  TABLE IF NOT EXISTS `cms4j_mybatis`.`cms_group` (
+CREATE  TABLE IF NOT EXISTS `cms4j_dev`.`cms_group` (
   `id` MEDIUMINT(8) NOT NULL AUTO_INCREMENT ,
   `group_name` VARCHAR(40) NOT NULL ,
   PRIMARY KEY (`id`) )
@@ -149,11 +149,11 @@ DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 
 
 -- -----------------------------------------------------
--- Table `cms4j_mybatis`.`cms_user_group`
+-- Table `cms4j_dev`.`cms_user_group`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cms4j_mybatis`.`cms_user_group` ;
+DROP TABLE IF EXISTS `cms4j_dev`.`cms_user_group` ;
 
-CREATE  TABLE IF NOT EXISTS `cms4j_mybatis`.`cms_user_group` (
+CREATE  TABLE IF NOT EXISTS `cms4j_dev`.`cms_user_group` (
   `user_id` MEDIUMINT(8) NOT NULL ,
   `group_id` MEDIUMINT(8) NOT NULL ,
   INDEX `fk_cms_user_group_cms_user1` (`user_id` ASC) ,
@@ -164,11 +164,11 @@ DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 
 
 -- -----------------------------------------------------
--- Table `cms4j_mybatis`.`cms_group_permission`
+-- Table `cms4j_dev`.`cms_group_permission`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cms4j_mybatis`.`cms_group_permission` ;
+DROP TABLE IF EXISTS `cms4j_dev`.`cms_group_permission` ;
 
-CREATE  TABLE IF NOT EXISTS `cms4j_mybatis`.`cms_group_permission` (
+CREATE  TABLE IF NOT EXISTS `cms4j_dev`.`cms_group_permission` (
   `id` MEDIUMINT(8) NOT NULL AUTO_INCREMENT ,
   `group_id` MEDIUMINT(8) NOT NULL ,
   `permission` VARCHAR(20) NOT NULL ,
@@ -179,11 +179,11 @@ DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 
 
 -- -----------------------------------------------------
--- Table `cms4j_mybatis`.`cms_archive`
+-- Table `cms4j_dev`.`cms_archive`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cms4j_mybatis`.`cms_archive` ;
+DROP TABLE IF EXISTS `cms4j_dev`.`cms_archive` ;
 
-CREATE  TABLE IF NOT EXISTS `cms4j_mybatis`.`cms_archive` (
+CREATE  TABLE IF NOT EXISTS `cms4j_dev`.`cms_archive` (
   `id` MEDIUMINT(8) NOT NULL  AUTO_INCREMENT ,
   `title` VARCHAR(40) NOT NULL ,
   `article_count` TINYINT(3) NOT NULL ,
@@ -195,11 +195,11 @@ DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 
 
 -- -----------------------------------------------------
--- Table `cms4j_mybatis`.`cms_archive_article`
+-- Table `cms4j_dev`.`cms_archive_article`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cms4j_mybatis`.`cms_archive_article` ;
+DROP TABLE IF EXISTS `cms4j_dev`.`cms_archive_article` ;
 
-CREATE  TABLE IF NOT EXISTS `cms4j_mybatis`.`cms_archive_article` (
+CREATE  TABLE IF NOT EXISTS `cms4j_dev`.`cms_archive_article` (
   `archive_id` MEDIUMINT(8) NOT NULL ,
   `category_id` MEDIUMINT(8) NOT NULL ,
   INDEX `fk_cms_archive_article_cms_archive1` (`archive_id` ASC) ,
@@ -210,11 +210,11 @@ DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 
 
 -- -----------------------------------------------------
--- Table `cms4j_mybatis`.`cms_image`
+-- Table `cms4j_dev`.`cms_image`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `cms4j_mybatis`.`cms_image` ;
+DROP TABLE IF EXISTS `cms4j_dev`.`cms_image` ;
 
-CREATE  TABLE IF NOT EXISTS `cms4j_mybatis`.`cms_image` (
+CREATE  TABLE IF NOT EXISTS `cms4j_dev`.`cms_image` (
   `id` MEDIUMINT(8) NOT NULL  AUTO_INCREMENT ,
   `title` VARCHAR(40) NOT NULL ,
   `image_url` VARCHAR(80) NOT NULL ,
@@ -227,12 +227,12 @@ ENGINE = InnoDB
 DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 
 -- -----------------------------------------------------
--- Table `cms4j_mybatis`.`cms_link`
+-- Table `cms4j_dev`.`cms_link`
 -- -----------------------------------------------------
 
-DROP TABLE IF EXISTS `cms4j_mybatis`.`cms_link`;
+DROP TABLE IF EXISTS `cms4j_dev`.`cms_link`;
 
-CREATE TABLE IF NOT EXISTS `cms4j_mybatis`.`cms_link` (
+CREATE TABLE IF NOT EXISTS `cms4j_dev`.`cms_link` (
   `id` INT(8) NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(20) NOT NULL,
   `url` VARCHAR(80) NOT NULL,
