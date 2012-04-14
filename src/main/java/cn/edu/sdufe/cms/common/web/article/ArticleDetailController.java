@@ -65,7 +65,7 @@ public class ArticleDetailController {
             return "redirect:/article/listAll";
         }
 
-        if (bindingResult.hasErrors() || articleManager.save(article) > 0) {
+        if (bindingResult.hasErrors() || articleManager.update(article) <= 0) {
             redirectAttributes.addFlashAttribute("error", "保存文章失败");
             return "redirect:/article/listAll";
         } else {

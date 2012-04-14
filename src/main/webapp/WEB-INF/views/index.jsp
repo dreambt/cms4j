@@ -65,7 +65,7 @@
         <div class="maincontent">
             <h2 class="cufon">新闻资讯</h2>
             <div id="featured"><!-- begin of featured slider -->
-                <c:forEach items="${news}" var="newOne" begin="0" step="1">
+                <c:forEach items="${news}" var="newOne" begin="0" end="4" step="1">
                 <div>
                     <div class="bg-featured"><a href="${ctx}/article/content/${newOne.id}"><img src="${ctx}/static/uploads/article/news-thumb/${newOne.imageName}" alt="" class="slidehalf"/></a>
                     </div>
@@ -83,7 +83,7 @@
         <div class="maincontent">
             <h2 class="cufon">公告</h2>
             <ul class="content-list anno">
-                <c:forEach items="${posts}" var="post" begin="0" end="2" step="1">
+                <c:forEach items="${posts}" var="post" begin="0" end="4" step="1">
                     <li><a href="${ctx}/article/content/${post.id}" class="announce">${post.subject}</a>
                 </li>
                 </c:forEach>

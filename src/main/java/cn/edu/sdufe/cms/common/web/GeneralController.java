@@ -40,7 +40,7 @@ public class GeneralController {
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("images", imageManager.getImageByShowIndex());
         model.addAttribute("links", linkManager.getAllLink());
-        // TODO 首页新闻
+        model.addAttribute("news", articleManager.getNews());
         model.addAttribute("posts", articleManager.getTitleByCategoryId(1L, 0, 5));
         return "index";
     }

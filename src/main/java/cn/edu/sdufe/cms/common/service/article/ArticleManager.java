@@ -108,6 +108,16 @@ public class ArticleManager {
     }
 
     /**
+     * 获取首页显示新闻
+     * @return
+     */
+    public List<Article> getNews() {
+        return articleDao.getNews();
+    }
+
+
+
+    /**
      * 获得最新的10篇文章
      *
      * @return

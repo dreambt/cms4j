@@ -38,6 +38,7 @@ CREATE  TABLE IF NOT EXISTS `cms_article` (
   `category_id` MEDIUMINT(8) NOT NULL COMMENT '分类id' ,
   `subject` VARCHAR(80) NOT NULL COMMENT '标题' ,
   `message` MEDIUMTEXT NOT NULL COMMENT '帖子内容' ,
+  `image_name` VARCHAR(30) NOT NULL COMMENT '文章图片',
   `digest` VARCHAR(255) NOT NULL ,
   `keyword` VARCHAR(255) NOT NULL DEFAULT 0 COMMENT '帖子标签' ,
   `top` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '是否是首贴' ,

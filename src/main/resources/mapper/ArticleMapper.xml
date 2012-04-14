@@ -57,7 +57,7 @@
          获取文章正文
      -->
     <select id="getArticle" parameterType="Long" resultMap="articleDetailMap">
-        SELECT A.id, user_id, subject, message, digest, keyword, top, rate, rate_times, views, A.status,
+        SELECT A.id, user_id, subject, message, image_name as imagename, digest, keyword, top, rate, rate_times, views, A.status,
         A.allow_comment, A.created_date, A.last_modified_date, A.deleted, U.username as user_username,
         C.id as cat_id, C.category_name as cat_category_name, C.description as cat_description, C.allow_comment as cat_allow_comment
         FROM cms_article AS A
@@ -65,7 +65,8 @@
         LEFT OUTER JOIN cms_category AS C ON category_id = C.id
         WHERE A.id=#{id}
         AND A.deleted =0
-        AND A.STATUS =1
+        <!-- TODO -->
+        <!--AND A.STATUS =1-->
         LIMIT 1
 	</select>
 
@@ -95,9 +96,9 @@
         获取首页新闻资讯
     -->
     <select id="getNews" resultType="Article">
-        select id,subject,image_name as imagename,digest,category_name as categorynamedeleted
+        select id,subject,image_name as imagename,digest,deleted
         from cms_article
-        where id in (select article_id from cms_category_article where category_id=3 or category_id=5) and deleted=0 and status=1
+        where category_id=3 or category_id=4 and deleted=0 and status=1
         order by id desc
         limit 0,5
     </select>
@@ -125,26 +126,28 @@
         WHERE A.deleted =0
         AND A.STATUS =1
         AND A.category_id=#{categoryId}
+        ORDER BY A.id desc
 	</select>
 
     <!--
          通过分类id获取文章摘要
      -->
     <select id="getDigestByCategoryId" parameterType="Long" resultMap="articleDetailMap">
-        SELECT A.id, user_id, subject, digest, keyword, top, rate, rate_times, views, A.status,
+        SELECT A.id, user_id, subject,image_name as imagename, digest, keyword, top, rate, rate_times, views, A.status,
         A.allow_comment, A.created_date, A.last_modified_date, A.deleted, U.username as user_username
         FROM cms_article AS A
         LEFT OUTER JOIN cms_user AS U ON user_id = U.id
         WHERE A.deleted =0
         AND A.STATUS =1
         AND A.category_id=#{categoryId}
+        ORDER BY A.id desc
 	</select>
 
     <!-- 更新文章 -->
     <insert id="saveArticle" parameterType="Article">
-        INSERT INTO cms_article (user_id, category_id, subject, message, digest, keyword,
+        INSERT INTO cms_article (user_id, category_id, subject, message, image_name, digest, keyword,
             top, rate, rate_times, views, allow_comment, status, deleted, created_date)
-        VALUES (#{user.id}, #{category.id}, #{subject}, #{message}, #{digest}, #{keyword}, #{top}, 0, 0, 0, #{allowComment}, 0, 0, null)
+        VALUES (#{user.id}, #{category.id}, #{subject}, #{message}, #{imageName}, #{digest}, #{keyword}, #{top}, 0, 0, 0, #{allowComment}, 0, 0, null)
     </insert>
 
     <!-- 删除文章 -->
@@ -163,6 +166,9 @@
             </if>
             <if test="message != null and message !=''">
                 message=#{message},
+            </if>
+            <if test="imageName != null and imageName !=''">
+                image_name=#{imageName},
             </if>
             <if test="digest != null and digest !=''">
                 digest=#{digest},
