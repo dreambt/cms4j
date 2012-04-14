@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springside.modules.utils.Encodes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -52,6 +53,7 @@ public class ArticleController {
     @RequestMapping(value = "content/{id}", method = RequestMethod.GET)
     public String contextOfArticle(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
         Article article = articleManager.findForView(id);
+        //article.setMessage(Encodes.unescapeHtml(article.getMessage()));
 
         if (null == article) {
             redirectAttributes.addFlashAttribute("message", "不存在编号为 " + id + " 的文章");
