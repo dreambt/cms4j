@@ -114,7 +114,6 @@ public class ImageManager {
         } else {
             image.setImageUrl("");
         }
-        image.setLastModifiedDate(null);
         return imageDao.save(image);
     }
 
@@ -183,7 +182,6 @@ public class ImageManager {
                 logger.info(e.getMessage());
             }
         }
-        image.setLastModifiedDate(null);
         return imageDao.update(image);
     }
 
@@ -196,6 +194,17 @@ public class ImageManager {
     @Transactional(readOnly = false)
     public int update(Image image) {
         return imageDao.update(image);
+    }
+
+    /**
+     * 修改image
+     *
+     * @param column
+     * @return
+     */
+    @Transactional(readOnly = false)
+    public int update(Long id, String column) {
+        return imageDao.update(id, column);
     }
 
     /**

@@ -1,6 +1,7 @@
 package cn.edu.sdufe.cms.common.dao.image;
 
 import cn.edu.sdufe.cms.common.entity.image.Image;
+import com.google.common.collect.Maps;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.cache.annotation.Cacheable;
@@ -65,6 +66,16 @@ public class ImageDao extends SqlSessionDaoSupport {
      */
     public int update(Image image) {
         return getSqlSession().update("Image.updateImage", image);
+    }
+
+    /**
+     * 更新图片
+     */
+    public int update(Long id, String column) {
+        Map<String, Object> parameters = Maps.newHashMap();
+        parameters.put("id", id);
+        parameters.put("column", column);
+        return getSqlSession().update("Image.updateImageBool", parameters);
     }
 
     /**

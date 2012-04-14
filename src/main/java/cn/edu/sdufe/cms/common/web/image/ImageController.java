@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -160,7 +162,7 @@ public class ImageController {
      */
     @RequiresPermissions("gallery:delete")
     @RequestMapping(value = "delete/{id}")
-    public String delete(@PathVariable Long id, @ModelAttribute("image") Image image, RedirectAttributes redirectAttributes) {
+    public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         if (imageManager.delete(id) > 0) {
             redirectAttributes.addFlashAttribute("error", "删除图片 " + id + " 成功.");
         } else {
@@ -184,6 +186,24 @@ public class ImageController {
         } else {
             imageManager.batchDelete(isSelected);
             redirectAttributes.addFlashAttribute("info", "批量删除图片成功.");
+        }
+        return "redirect:/gallery/listAll";
+    }
+
+    /**
+     * 首页显示
+     *
+     * @param id
+     * @param redirectAttributes
+     * @return
+     */
+    @RequiresPermissions("gallery:edit")
+    @RequestMapping(value = "showIndex/{id}")
+    public String showIndex(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        if (imageManager.update(id, "show_index") > 0) {
+            redirectAttributes.addFlashAttribute("info", "操作成功");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "操作失败");
         }
         return "redirect:/gallery/listAll";
     }

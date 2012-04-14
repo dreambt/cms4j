@@ -74,13 +74,20 @@
             <if test="description != null and description !=''">
                 description=#{description},
             </if>
-            <if test="showIndex != null and showIndex !=''">
+            <if test="showIndex != null">
                 show_index=#{showIndex},
             </if>
         </set>
-
+        last_modified_date=null
         WHERE id=#{id}
 	</update>
+
+    <!-- 更新图片bool字 -->
+    <update id="updateImageBool" parameterType="map">
+        UPDATE cms_image
+        SET ${column}=1-${column},last_modified_date=null
+        WHERE id=#{id}
+    </update>
 
     <!--
          查询图片
@@ -90,10 +97,10 @@
         FROM cms_image
         <where>
             <if test="title != null and title != ''">
-                title link %#{title}%
+                title link %#{title}%,
             </if>
             <if test="description != null and description != ''">
-                description link %#{description}%
+                description link %#{description}%,
             </if>
             <if test="showIndex != null">
                 show_index=#{showIndex}

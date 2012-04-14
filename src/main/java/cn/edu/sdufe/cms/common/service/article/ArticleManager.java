@@ -1,15 +1,12 @@
 package cn.edu.sdufe.cms.common.service.article;
 
 import cn.edu.sdufe.cms.common.dao.article.ArticleDao;
-import cn.edu.sdufe.cms.common.dao.article.CategoryDao;
 import cn.edu.sdufe.cms.common.entity.account.User;
 import cn.edu.sdufe.cms.common.entity.article.Article;
 import cn.edu.sdufe.cms.security.ShiroDbRealm;
 import cn.edu.sdufe.cms.utilities.analyzer.ArticleKeyword;
 import cn.edu.sdufe.cms.utilities.thumb.ImageThumb;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.sun.org.apache.xpath.internal.SourceTree;
 import org.apache.commons.lang3.Validate;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.shiro.SecurityUtils;
@@ -28,8 +25,6 @@ import org.springside.modules.utils.Encodes;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 

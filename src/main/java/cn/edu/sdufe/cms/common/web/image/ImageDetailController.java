@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +39,7 @@ public class ImageDetailController {
     @RequiresPermissions("gallery:edit")
     @RequestMapping(value = "edit/{id}")
     public String edit(@PathVariable Long id, Model model) {
-        if(null == imageManager.getImage(id)) {
+        if (null == imageManager.getImage(id)) {
             model.addAttribute("error", "该相册不存在，请刷新重试");
             return "redirect:/image/listAll";
         }
@@ -59,8 +60,8 @@ public class ImageDetailController {
     @RequiresPermissions("gallery:save")
     @RequestMapping(value = "save/{id}")
     public String save(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request,
-                       @PathVariable Long id, @Valid @ModelAttribute("image") Image image, RedirectAttributes redirectAttributes) {
-        if(null == imageManager.getImage(id)) {
+                       @PathVariable Long id, @Valid @ModelAttribute("image") Image image, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors() || null == image) {
             redirectAttributes.addFlashAttribute("error", "该相册不存在，请刷新重试");
             return "redirect:/image/listAll";
         }
@@ -68,29 +69,6 @@ public class ImageDetailController {
             redirectAttributes.addFlashAttribute("error", "修改图片信息失败");
         } else {
             redirectAttributes.addFlashAttribute("info", "修改" + id + "图片信息成功");
-        }
-        return "redirect:/gallery/listAll";
-    }
-
-    /**
-     * 首页显示
-     * @param id
-     * @param redirectAttributes
-     * @return
-     */
-    @RequiresPermissions("gallery:edit")
-    @RequestMapping(value = "showIndex/{id}")
-    public String showIndex(@PathVariable Long id,  @Valid @ModelAttribute("image") Image image, RedirectAttributes redirectAttributes) {
-        if(null == imageManager.getImage(id)) {
-            redirectAttributes.addFlashAttribute("error", "该相册已经删除，请刷新查看");
-            return "redirect:/image/listAll";
-        }
-        image.setShowIndex(!image.isShowIndex());
-        imageManager.update(image);
-        if(image.isShowIndex()) {
-            redirectAttributes.addFlashAttribute("info", "首页显示" + image.getId()+ "成功");
-        } else {
-            redirectAttributes.addFlashAttribute("info", "取消首页显示" + image.getId()+ "成功");
         }
         return "redirect:/gallery/listAll";
     }
