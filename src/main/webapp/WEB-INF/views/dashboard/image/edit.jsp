@@ -38,7 +38,7 @@
                     <input type="hidden" name="id" value="${image.id}" />
                     <input type="file" id="upload" name="file"><br> <br>
                     图片标题：<br/><input type="text" class="required" name="title" size="52" value="${image.title}"> <br/> <br/>
-                    首页展示：<input type="checkbox" name="showIndex" style="float: none" <c:if test="${image.showIndex}">checked="checked"</c:if>>  <br/> <br/>
+                    首页展示：<input type="checkbox" name="showIndex" style="float: none" value="${image.showIndex}" <c:if test="${image.showIndex}">checked="checked"</c:if>>  <br/> <br/>
                     描述：<br/><textarea type="text" class="required" name="description" cols="55" rows="5">${image.description}</textarea>
                     <br/><br/>
                     <!--<img src="#" style="display: block;float: left;">-->

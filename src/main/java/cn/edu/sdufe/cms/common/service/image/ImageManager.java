@@ -157,6 +157,12 @@ public class ImageManager {
      */
     @Transactional(readOnly = false)
     public int update(MultipartFile file, HttpServletRequest request, Image image) {
+        //首页显示
+        if(null == request.getParameter("showIndex")) {
+            image.setShowIndex(false);
+        } else {
+            image.setShowIndex(true);
+        }
         //实现上传
         if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
             String fileName = this.upload(file, request);

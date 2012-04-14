@@ -77,8 +77,9 @@
             <if test="showIndex != null">
                 show_index=#{showIndex},
             </if>
+            last_modified_date=null
         </set>
-        last_modified_date=null
+
         WHERE id=#{id}
 	</update>
 

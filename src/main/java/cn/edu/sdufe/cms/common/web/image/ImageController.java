@@ -164,7 +164,7 @@ public class ImageController {
     @RequestMapping(value = "delete/{id}")
     public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         if (imageManager.delete(id) > 0) {
-            redirectAttributes.addFlashAttribute("error", "删除图片 " + id + " 成功.");
+            redirectAttributes.addFlashAttribute("info", "删除图片 " + id + " 成功.");
         } else {
             redirectAttributes.addFlashAttribute("error", "删除图片 " + id + " 失败.");
         }
