@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 /**
@@ -59,13 +60,12 @@ public class ArticleDetailController {
      */
     @RequiresPermissions("article:save")
     @RequestMapping(value = "save/{id}")
-    public String saveArticle(@Valid @ModelAttribute("article") Article article, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+    public String saveArticle(@Valid @ModelAttribute("article") Article article, BindingResult bindingResult, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         if (null == article) {
             redirectAttributes.addFlashAttribute("error", "该文章不存在，请刷新重试");
             return "redirect:/article/listAll";
         }
-
-        if (bindingResult.hasErrors() || articleManager.update(article) <= 0) {
+        if (bindingResult.hasErrors() || articleManager.update(article, request) <= 0) {
             redirectAttributes.addFlashAttribute("error", "保存文章失败");
             return "redirect:/article/listAll";
         } else {

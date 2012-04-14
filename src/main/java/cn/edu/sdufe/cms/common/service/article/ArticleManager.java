@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springside.modules.beanvalidator.BeanValidators;
 import org.springside.modules.utils.Encodes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
 import java.util.List;
@@ -170,7 +171,19 @@ public class ArticleManager {
      * @return
      */
     @Transactional(readOnly = false)
-    public int save(Article article) {
+    public int save(Article article, HttpServletRequest request) {
+        //是否置顶
+        if(null == request.getParameter("top")) {
+            article.setTop(false);
+        } else {
+            article.setTop(true);
+        }
+        //是否允许评论
+        if(null == request.getParameter("allowComment")) {
+            article.setAllowComment(false);
+        } else {
+            article.setAllowComment(true);
+        }
         try {
             // 生成默认摘要
             String str = Jsoup.parse(article.getMessage()).text();
@@ -274,9 +287,7 @@ public class ArticleManager {
             if (id.length() == 0) {
                 continue;
             }
-            article = articleDao.findOne(Long.parseLong(id));
-            article.setStatus(false);
-            this.update(article);
+            articleDao.update(Long.parseLong(id), "status");
         }
     }
 
@@ -292,9 +303,7 @@ public class ArticleManager {
             if (id.length() == 0) {
                 continue;
             }
-            article = articleDao.findOne(Long.parseLong(id));
-            article.setDeleted(true);
-            this.update(article);
+            articleDao.update(Long.parseLong(id), "deleted");
         }
     }
 
@@ -304,8 +313,66 @@ public class ArticleManager {
      * @param article
      */
     @Transactional(readOnly = false)
-    public int update(Article article) {
-        return articleDao.update(article);
+    public int update(Article article, HttpServletRequest request) {
+        //是否置顶
+        if(null == request.getParameter("top")) {
+            article.setTop(false);
+        } else {
+            article.setTop(true);
+        }
+        //是否允许评论
+        if(null == request.getParameter("allowComment")) {
+            article.setAllowComment(false);
+        } else {
+            article.setAllowComment(true);
+        }
+        try {
+            // 生成默认摘要
+            String str = Jsoup.parse(article.getMessage()).text();
+            if (str.length() > 150) {
+                article.setDigest(str.substring(0, 150));
+            } else {
+                article.setDigest(str);
+            }
+
+            //文章中的首个图片
+            article.setImageName(this.getImageFromMessage(article.getMessage()));
+            //项目路径// TODO 迁移服务器需要修改
+            String path = System.getProperty("user.dir") + "\\src\\main\\webapp\\static\\uploads\\";
+            ImageThumb imageThumb = new ImageThumb();
+            try {
+                imageThumb.saveImageAsJpg(path + "article\\article-big\\" + article.getImageName(), path + "article\\news-thumb\\" + article.getImageName(), 274, 157);
+                imageThumb.saveImageAsJpg(path + "article\\article-big\\" + article.getImageName(), path + "article\\digest-thumb\\" + article.getImageName(), 134, 134);
+
+            } catch (Exception e) {
+                logger.error(e.getMessage());
+            }
+            // 关键词由任务生成
+            article.setKeyword("");
+
+            // 文章正文进行HTML编码
+            article.setMessage(Encodes.escapeHtml(article.getMessage()));
+
+            //使用Hibernate Validator校验请求参数
+            Validate.notNull(article, "文章参数为空");
+            BeanValidators.validateWithException(validator, article);
+
+            return articleDao.update(article);
+        } catch (ConstraintViolationException cve) {
+            logger.warn("操作员{}尝试发表文章, 缺少相关字段.", cve.getConstraintViolations().toString());
+            return 0;
+        }
+    }
+
+    /**
+     * 更新文章
+     *
+     * @param id
+     * @param column
+     */
+    @Transactional(readOnly = false)
+    public int update(Long id, String column) {
+        return articleDao.update(id, column);
     }
 
     /**

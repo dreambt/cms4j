@@ -1,6 +1,7 @@
 package cn.edu.sdufe.cms.common.dao.article;
 
 import cn.edu.sdufe.cms.common.entity.article.Article;
+import com.google.common.collect.Maps;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.cache.annotation.Cacheable;
@@ -141,6 +142,20 @@ public class ArticleDao extends SqlSessionDaoSupport {
      */
     public int update(Article article) {
         return getSqlSession().update("Article.updateArticle", article);
+    }
+
+    /**
+     * 更新文章
+     *
+     * @param id
+     * @param column
+     * @return
+     */
+    public int update(Long id, String column) {
+        Map parameters = Maps.newHashMap();
+        parameters.put("id", id);
+        parameters.put("column", column);
+        return getSqlSession().update("Article.updateArticleBool", parameters);
     }
 
     /**

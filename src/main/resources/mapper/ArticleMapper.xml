@@ -205,7 +205,7 @@
     <!-- 更新文章bool字 -->
     <update id="updateArticleBool" parameterType="map">
         UPDATE cms_article
-        SET deleted=#{deleted},last_modified_date=null
+        SET ${column}=1-${column},last_modified_date=null
         WHERE id=#{id}
     </update>
 
