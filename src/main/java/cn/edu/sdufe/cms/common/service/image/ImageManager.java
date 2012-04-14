@@ -184,7 +184,7 @@ public class ImageManager {
             }
         }
         image.setLastModifiedDate(null);
-        return imageDao.save(image);
+        return imageDao.update(image);
     }
 
     /**
@@ -195,7 +195,7 @@ public class ImageManager {
      */
     @Transactional(readOnly = false)
     public int update(Image image) {
-        return imageDao.save(image);
+        return imageDao.update(image);
     }
 
     /**

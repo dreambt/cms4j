@@ -60,12 +60,11 @@ public class ImageDetailController {
     @RequestMapping(value = "save/{id}")
     public String save(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request,
                        @PathVariable Long id, @Valid @ModelAttribute("image") Image image, RedirectAttributes redirectAttributes) {
-        //redirectAttributes.addAttribute("imageUrl", request.getContextPath()+"/upload/"+fileName);
         if(null == imageManager.getImage(id)) {
             redirectAttributes.addFlashAttribute("error", "该相册不存在，请刷新重试");
             return "redirect:/image/listAll";
         }
-        if (imageManager.update(file, request, image) > 0) {
+        if (imageManager.update(file, request, image) <= 0) {
             redirectAttributes.addFlashAttribute("error", "修改图片信息失败");
         } else {
             redirectAttributes.addFlashAttribute("info", "修改" + id + "图片信息成功");

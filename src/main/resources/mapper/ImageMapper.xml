@@ -17,7 +17,7 @@
         获取image数量
     -->
     <select id="getImageCount" resultType="Long">
-        SELECT COUNT( id )
+        SELECT COUNT(id)
         FROM cms_image
         LIMIT 1
 	</select>
@@ -28,7 +28,7 @@
     <select id="getImage" parameterType="Long" resultMap="imageDetailMap">
         SELECT id, title, image_url, description, show_index, created_date, last_modified_date
         FROM cms_image
-        AND id =#{id}
+        WHERE id =#{id}
         ORDER BY id DESC
         LIMIT 1
 	</select>
@@ -47,8 +47,8 @@
         新增image
     -->
     <insert id="saveImage" parameterType="Image" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO cms_image (title, image_url, description, show_index)
-		values (#{title}, #{imageUrl}, #{description}, #{showIndex})
+        INSERT INTO cms_image (title, image_url, description, show_index, created_date)
+		values (#{title}, #{imageUrl}, #{description}, #{showIndex}, null)
 	</insert>
 
     <!--
@@ -66,18 +66,20 @@
         UPDATE cms_image
         <set>
             <if test="title != null and title !=''">
-                title=#{title}
+                title=#{title},
             </if>
             <if test="imageUrl != null and imageUrl !=''">
-                image_url=#{imageUrl}
+                image_url=#{imageUrl},
             </if>
             <if test="description != null and description !=''">
-                description=#{description}
+                description=#{description},
             </if>
             <if test="showIndex != null and showIndex !=''">
-                show_index=#{showIndex}
+                show_index=#{showIndex},
             </if>
+            last_modified_date=null
         </set>
+
         WHERE id=#{id}
 	</update>
 

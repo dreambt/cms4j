@@ -143,7 +143,7 @@ public class ImageController {
             redirectAttributes.addFlashAttribute("error", "请选择上传的图片");
         }
 
-        if (imageManager.save(file, request, image) > 0) {
+        if (imageManager.save(file, request, image) <= 0) {
             redirectAttributes.addFlashAttribute("error", "添加图片信息失败");
         } else {
             redirectAttributes.addFlashAttribute("info", "添加" + image.getId() + "图片信息成功");
