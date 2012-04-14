@@ -78,13 +78,13 @@ public class ImageDetailController {
      * @param redirectAttributes
      * @return
      */
+    @RequiresPermissions("gallery:edit")
     @RequestMapping(value = "showIndex/{id}")
-    public String showIndex(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+    public String showIndex(@PathVariable Long id,  @Valid @ModelAttribute("image") Image image, RedirectAttributes redirectAttributes) {
         if(null == imageManager.getImage(id)) {
             redirectAttributes.addFlashAttribute("error", "该相册已经删除，请刷新查看");
             return "redirect:/image/listAll";
         }
-        Image image = imageManager.getImage(id);
         image.setShowIndex(!image.isShowIndex());
         imageManager.update(image);
         if(image.isShowIndex()) {
