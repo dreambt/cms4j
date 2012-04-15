@@ -22,11 +22,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class GeneralController {
 
     private CategoryManager categoryManager;
-
     private LinkManager linkManager;
-
     private ImageManager imageManager;
-
     private ArticleManager articleManager;
 
     /**
@@ -40,7 +37,7 @@ public class GeneralController {
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("images", imageManager.getImageByShowIndex());
         model.addAttribute("links", linkManager.getAllLink());
-        model.addAttribute("news", articleManager.getNews());
+        model.addAttribute("news", articleManager.findNews());
         model.addAttribute("posts", articleManager.getTitleByCategoryId(1L, 0, 5));
         return "index";
     }

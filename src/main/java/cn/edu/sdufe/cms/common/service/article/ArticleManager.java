@@ -96,11 +96,8 @@ public class ArticleManager {
      *
      * @return
      */
-    public List<Article> getAll(int offset, int limit) {
-        Map<String, Object> parameters = Maps.newHashMap();
-        parameters.put("Direction", "DESC");
-        parameters.put("Sort", "id");
-        return articleDao.search(parameters, new RowBounds(offset, limit));
+    public List<Article> findAll(int offset, int limit) {
+        return articleDao.findAll(offset, limit);
     }
 
     /**
@@ -108,8 +105,8 @@ public class ArticleManager {
      *
      * @return
      */
-    public List<Article> getNews() {
-        return articleDao.getNews();
+    public List<Article> findNews() {
+        return articleDao.findNews();
     }
 
 
@@ -118,7 +115,7 @@ public class ArticleManager {
      *
      * @return
      */
-    public List<Article> getTopTen() {
+    public List<Article> findTopTen() {
         return articleDao.findTopTen();
     }
 
@@ -206,7 +203,7 @@ public class ArticleManager {
                 imageThumb.saveImageAsJpg(path + "article\\article-big\\" + article.getImageName(), path + "article\\news-thumb\\" + article.getImageName(), 274, 157);
                 imageThumb.saveImageAsJpg(path + "article\\article-big\\" + article.getImageName(), path + "article\\digest-thumb\\" + article.getImageName(), 134, 134);
             } catch (Exception e) {
-                logger.error(e.getMessage());
+                logger.error("Thumb Image: ", e.getMessage());
             }
 
             // 关键词由任务生成

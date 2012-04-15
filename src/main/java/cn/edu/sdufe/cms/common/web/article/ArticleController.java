@@ -59,7 +59,7 @@ public class ArticleController {
         model.addAttribute("article", article);
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("archives", archiveManager.getTopTen());
-        model.addAttribute("newArticles", articleManager.getTopTen());
+        model.addAttribute("newArticles", articleManager.findTopTen());
         model.addAttribute("links", linkManager.getAllLink());
         return "article/content";
     }
@@ -73,7 +73,7 @@ public class ArticleController {
     @RequiresPermissions("article:list")
     @RequestMapping(value = {"listAll", ""})
     public String listAllArticle(Model model) {
-        model.addAttribute("articles", articleManager.getAll(0, ARTICLE_NUM));
+        model.addAttribute("articles", articleManager.findAll(0, ARTICLE_NUM));
         return "dashboard/article/listAll";
     }
 
@@ -88,7 +88,7 @@ public class ArticleController {
     @RequestMapping(value = "listAll/ajax")
     @ResponseBody
     public List<Article> ajaxAllArticle(@RequestParam("offset") int offset, @RequestParam("limit") int limit) {
-        return articleManager.getAll(offset, limit);
+        return articleManager.findAll(offset, limit);
     }
 
 
@@ -126,7 +126,7 @@ public class ArticleController {
         model.addAttribute("categories", categoryManager.getNavCategory());//导航菜单
         model.addAttribute("category", categoryManager.get(id));//获取分类信息
         model.addAttribute("archives", archiveManager.getTopTen());//边栏归档日志
-        model.addAttribute("newArticles", articleManager.getTopTen());//边栏最新文章
+        model.addAttribute("newArticles", articleManager.findTopTen());//边栏最新文章
         model.addAttribute("total", total);
         model.addAttribute("pageCount", pageCount);
         model.addAttribute("links", linkManager.getAllLink());//页脚友情链接
@@ -168,7 +168,7 @@ public class ArticleController {
         model.addAttribute("category", categoryManager.get(id));//获取分类信息
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("archives", archiveManager.getTopTen());
-        model.addAttribute("newArticles", articleManager.getTopTen());
+        model.addAttribute("newArticles", articleManager.findTopTen());
         model.addAttribute("total", total);
         model.addAttribute("pageCount", pageCount);
         model.addAttribute("links", linkManager.getAllLink());
@@ -186,8 +186,7 @@ public class ArticleController {
     @RequestMapping(value = "digest/ajax/{id}", method = RequestMethod.GET)
     @ResponseBody
     public List<Article> ajaxDigestOfArticle(@PathVariable("id") Long id, @RequestParam("offset") int offset, @RequestParam("limit") int limit) {
-        List<Article> articleList = articleManager.getDigestByCategoryId(id, offset, limit);
-        return articleList;
+        return articleManager.getDigestByCategoryId(id, offset, limit);
     }
 
     /**
@@ -211,8 +210,7 @@ public class ArticleController {
     public String createArticle(Model model) {
         // 不用报错，Neither BindingResult nor plain target object for bean name 'article' available as request attribute
         model.addAttribute("article", new Article());
-        List<Category> categories = categoryManager.getAllowPublishCategory();
-        model.addAttribute("categories", categories);
+        model.addAttribute("categories", categoryManager.getAllowPublishCategory());
         return "dashboard/article/edit";
     }
 
@@ -230,8 +228,7 @@ public class ArticleController {
         ShiroDbRealm.ShiroUser shiroUser = (ShiroDbRealm.ShiroUser) SecurityUtils.getSubject().getPrincipal();
 
         // 文章作者
-        User user = userManager.get(shiroUser.getId());
-        article.setUser(user);
+        article.setUser(userManager.get(shiroUser.getId()));
 
         // 保存
         if (articleManager.save(article, request) <= 0) {

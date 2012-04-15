@@ -56,11 +56,12 @@ public class ArticleDao extends SqlSessionDaoSupport {
     }
 
     /**
-     *获取首页显示新闻
+     * 获取首页显示新闻
+     *
      * @return
      */
     @Cacheable(value = "article")
-    public List<Article> getNews() {
+    public List<Article> findNews() {
         return getSqlSession().selectList("Article.getNews");
     }
 
@@ -82,9 +83,22 @@ public class ArticleDao extends SqlSessionDaoSupport {
      * @param id
      * @return
      */
-    @Cacheable(value = "article",key = "#id")
+    @Cacheable(value = "article", key = "#id")
     public Article findOne(Long id) {
         return getSqlSession().selectOne("Article.getArticle", id);
+    }
+
+    /**
+     * 获取所有文章
+     *
+     * @return
+     */
+    @Cacheable(value = "article", key = "#id")
+    public List<Article> findAll(int offset, int limit) {
+        Map parameters = Maps.newHashMap();
+        parameters.put("offset", offset);
+        parameters.put("limit", limit);
+        return getSqlSession().selectList("Article.getAllArticle", parameters);
     }
 
     /**
@@ -143,7 +157,7 @@ public class ArticleDao extends SqlSessionDaoSupport {
      * @param article
      * @return
      */
-    @CacheEvict(value = "article",key = "#article.id")
+    @CacheEvict(value = "article", key = "#article.id")
     public int update(Article article) {
         return getSqlSession().update("Article.updateArticle", article);
     }
@@ -155,7 +169,7 @@ public class ArticleDao extends SqlSessionDaoSupport {
      * @param column
      * @return
      */
-    @CacheEvict(value = "article",key = "#article.id")
+    @CacheEvict(value = "article", key = "#article.id")
     public int update(Long id, String column) {
         Map parameters = Maps.newHashMap();
         parameters.put("id", id);

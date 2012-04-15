@@ -40,7 +40,6 @@
         <div class="maincontent">
             <div class="blog-post">
                 <h2>${article.subject}</h2>
-
                 <div class="blog-posted-inner">
                     作者: ${article.user.username} &nbsp; | &nbsp; 发表时间: <fmt:formatDate value="${article.createdDate}" pattern="yyyy-MM-dd"/> &nbsp; | &nbsp;
                     浏览次数: ${article.views} &nbsp; | &nbsp; 评论数: ${fn:length(article.commentList)}
@@ -49,19 +48,16 @@
             </div>
             <div id="recentPostList"><!-- relatedPostList -->
                 <div id="related-post-title"><h4>相关文章</h4></div>
-                <div class="related-item-wrapper"><!-- related item -->
+                <div class="related-item-wrapper">
                     <h4><a href="#">相关文章1</a></h4>
                     <img src="${ctx}/static/images/blog-pic2.jpg" alt="" class="imgleft"/>
-                    Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed
-                    quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
+                    <!-- some words -->
                 </div>
                 <div class="related-item-spacer">&nbsp;</div>
-                <div class="related-item-wrapper"><!-- related item -->
+                <div class="related-item-wrapper">
                     <h4><a href="#">相关文章2</a></h4>
                     <img src="${ctx}/static/images/blog-pic3.jpg" alt="" class="imgleft"/>
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-                    anim.
+                    <!-- some words -->
                 </div>
             </div>
             <c:if test="${article.allowComment}">
