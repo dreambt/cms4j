@@ -1,6 +1,7 @@
 package cn.edu.sdufe.cms.common.dao.link;
 
 import cn.edu.sdufe.cms.common.entity.link.Link;
+import com.google.common.collect.Maps;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.cache.annotation.Cacheable;
@@ -58,15 +59,13 @@ public class LinkDao extends SqlSessionDaoSupport {
     }
 
     /**
-     * 搜索图片
-     *
-     * @param parameters
-     * @return
+     * 更新图片
      */
-    @Cacheable(value = "link")
-    public List<Link> search(Map<String, Object> parameters) {
-        RowBounds rowBounds = new RowBounds(0, 10);
-        return getSqlSession().selectList("Link.searchLink", parameters, rowBounds);
+    public int update(Long id, String column) {
+        Map parameters = Maps.newHashMap();
+        parameters.put("id", id);
+        parameters.put("column", column);
+        return getSqlSession().update("Link.updateLinkBool", parameters);
     }
 
     /**
@@ -76,7 +75,8 @@ public class LinkDao extends SqlSessionDaoSupport {
      * @return
      */
     @Cacheable(value = "link")
-    public List<Link> search(Map<String, Object> parameters, RowBounds rowBounds) {
+    public List<Link> search(Map<String, Object> parameters) {
+        RowBounds rowBounds = new RowBounds(0, 10);
         return getSqlSession().selectList("Link.searchLink", parameters, rowBounds);
     }
 }

@@ -25,30 +25,17 @@ import javax.validation.Valid;
 public class LinkDetailController {
     private LinkManager linkManager;
 
-    /**
-     * 删除编号为id的link
-     *
-     * @param id
-     */
-    @RequestMapping(value = "delete/{id}")
-    public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        linkManager.delete(id);
-        if (null == linkManager.getLink(id)) {
-            redirectAttributes.addFlashAttribute("info", "删除链接成功");
-        }
-        return "redirect:/link/listAll";
-    }
+
 
     /**
      * 跳转到修改link页面
      *
-     * @param id
+     * @param link
      * @param model
      * @return
      */
     @RequestMapping(value = "edit/{id}")
-    public String edit(@PathVariable Long id, Model model) {
-        Link link = linkManager.getLink(id);
+    public String edit(@Valid @ModelAttribute Link link, Model model) {
         model.addAttribute("link", link);
         return "dashboard/link/edit";
     }
@@ -67,25 +54,6 @@ public class LinkDetailController {
         return "redirect:/link/listAll";
     }
 
-    /**
-     * 审核编号为id的评论
-     *
-     * @return
-     */
-    @RequestMapping(value = "audit/{id}", method = RequestMethod.GET)
-    public String auditComment(@PathVariable("id") Long id, @ModelAttribute("link") Link link, RedirectAttributes redirectAttributes) {
-        link.setStatus(!link.isStatus());
-        if (linkManager.update(link) > 0) {
-            redirectAttributes.addFlashAttribute("error", "操作友情链接 " + id + " 失败.");
-            return "redirect:/link/listAll";
-        }
-        if (link.isStatus()) {
-            redirectAttributes.addFlashAttribute("info", "审核友情链接" + id + " 成功.");
-        } else {
-            redirectAttributes.addFlashAttribute("info", "反审核友情链接" + id + " 成功.");
-        }
-        return "redirect:/link/listAll";
-    }
 
     @ModelAttribute("link")
     public Link getLink(@PathVariable Long id) {

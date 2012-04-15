@@ -12,10 +12,10 @@
     </resultMap>
 
     <!--
-        获取link
+        根据id获取link
     -->
     <select id="getLink" parameterType="int" resultMap="linkDetailMap">
-        select id, title, url, created_date, last_modified_date
+        select id, title, url, status, created_date as createddate, last_modified_date as lastmodifieddate
         from cms_link
         where id=#{id}
         order by id DESC
@@ -23,14 +23,33 @@
 	</select>
 
     <!--
-        获取link
+        获取所有link
     -->
     <select id="getAllLink" resultMap="linkDetailMap">
-        SELECT id, title, url
+        SELECT id, title, url, status, created_date as createddate, last_modified_date as lastmodifieddate
         FROM cms_link
         ORDER BY id DESC
         LIMIT 30
 	</select>
+
+    <!--
+        获取所有审核的link
+    -->
+    <select id="getAuditedLink" resultMap="linkDetailMap">
+        SELECT id, title, url, status, created_date as createddate, last_modified_date as lastmodifieddate
+        FROM cms_link
+        WHERE status=1
+        ORDER BY id DESC
+        LIMIT 30
+	</select>
+
+    <!--
+        新增image
+    -->
+    <insert id="saveLink" parameterType="Link" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO cms_link (title, url, status, created_date)
+		values (#{title}, #{url}, 0, null)
+	</insert>
 
     <!--
         删除link
@@ -41,10 +60,38 @@
 	</delete>
 
     <!--
+        修改link
+    -->
+    <update id="updateLink" parameterType="Link">
+        UPDATE cms_link
+        <set>
+            <if test="title != null and title !=''">
+                title=#{title},
+            </if>
+            <if test="url != null and url !=''">
+                url=#{url},
+            </if>
+            <if test="status != null">
+                status=#{status},
+            </if>
+            last_modified_date=null
+        </set>
+
+        WHERE id=#{id}
+    </update>
+
+    <!-- 更新图片bool字段 -->
+    <update id="updateLinkBool" parameterType="map">
+        UPDATE cms_link
+        SET ${column}=1-${column},last_modified_date=null
+        WHERE id=#{id}
+    </update>
+
+    <!--
          查询link
      -->
     <select id="searchLink" parameterType="map" resultMap="linkDetailMap">
-        select id, title, url, created_date, last_modified_date
+        select id, title, url, status, created_date, last_modified_date
         from cms_link
         order by ${Sort} ${Direction}
     </select>

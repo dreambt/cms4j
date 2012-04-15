@@ -30,7 +30,7 @@ public class LinkManager {
      *
      * @return
      */
-    public List<Link> getAll() {
+    public List<Link> getAllLink() {
         return (List<Link>) linkDao.findAll();
     }
 
@@ -39,7 +39,7 @@ public class LinkManager {
      *
      * @return
      */
-    public List<Link> getAllLink() {
+    public List<Link> getAuditLink() {
         return linkDao.findAll();
     }
 
@@ -60,8 +60,7 @@ public class LinkManager {
      */
     @Transactional(readOnly = false)
     public int save(Link link) {
-        link.setStatus(false);
-        return this.update(link);
+        return linkDao.save(link);
     }
 
     /**
@@ -72,8 +71,19 @@ public class LinkManager {
      */
     @Transactional(readOnly = false)
     public int update(Link link) {
-        link.setLastModifiedDate(null);
-        return linkDao.save(link);
+        return linkDao.update(link);
+    }
+
+    /**
+     * 保存修改link
+     *
+     * @param id
+     * @param column
+     * @return
+     */
+    @Transactional(readOnly = false)
+    public int update(Long id, String column) {
+        return linkDao.update(id, column);
     }
 
     /**
@@ -82,8 +92,8 @@ public class LinkManager {
      * @param id
      */
     @Transactional(readOnly = false)
-    public void delete(Long id) {
-        linkDao.delete(id);
+    public int delete(Long id) {
+        return linkDao.delete(id);
     }
 
     /**

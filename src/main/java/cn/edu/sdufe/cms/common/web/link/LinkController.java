@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -31,7 +33,7 @@ public class LinkController {
      */
     @RequestMapping(value = "listAll")
     public String listAll(Model model) {
-        model.addAttribute("links", linkManager.getAll());
+        model.addAttribute("links", linkManager.getAllLink());
         return "dashboard/link/listAll";
     }
 
@@ -54,9 +56,41 @@ public class LinkController {
      */
     @RequestMapping(value = "save")
     public String save(Link link, RedirectAttributes redirectAttributes) {
-        link.setStatus(false);
-        linkManager.save(link);
-        redirectAttributes.addFlashAttribute("info", "链接新建成功");
+        if(linkManager.save(link) > 0) {
+            redirectAttributes.addFlashAttribute("info", "链接新建成功");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "链接新建失败");
+        }
+        return "redirect:/link/listAll";
+    }
+
+    /**
+     * 审核编号为id的评论
+     *
+     * @return
+     */
+    @RequestMapping(value = "audit/{id}", method = RequestMethod.GET)
+    public String audit(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        if (linkManager.update(id, "status") > 0) {
+            redirectAttributes.addFlashAttribute("info", "操作链接" + id + " 成功.");
+        } else {
+            redirectAttributes.addFlashAttribute("info", "操作链接" + id + " 失败.");
+        }
+        return "redirect:/link/listAll";
+    }
+
+    /**
+     * 删除编号为id的link
+     *
+     * @param id
+     */
+    @RequestMapping(value = "delete/{id}")
+    public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        if(linkManager.delete(id) > 0) {
+            redirectAttributes.addFlashAttribute("info", "删除链接成功");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "删除链接失败");
+        }
         return "redirect:/link/listAll";
     }
 
