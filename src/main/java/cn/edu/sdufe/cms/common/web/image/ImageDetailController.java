@@ -32,18 +32,18 @@ public class ImageDetailController {
     /**
      * 打开修改image的页面
      *
-     * @param id
+     * @param image
      * @param model
      * @return
      */
     @RequiresPermissions("gallery:edit")
     @RequestMapping(value = "edit/{id}")
-    public String edit(@PathVariable Long id, Model model) {
-        if (null == imageManager.getImage(id)) {
+    public String edit(@Valid @ModelAttribute Image image, Model model) {
+        if (null == image) {
             model.addAttribute("error", "该相册不存在，请刷新重试");
             return "redirect:/image/listAll";
         }
-        model.addAttribute("image", imageManager.getImage(id));
+        model.addAttribute("image", image);
         return "dashboard/image/edit";
     }
 

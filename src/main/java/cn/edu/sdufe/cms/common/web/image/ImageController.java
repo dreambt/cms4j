@@ -201,9 +201,9 @@ public class ImageController {
     @RequestMapping(value = "showIndex/{id}")
     public String showIndex(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         if (imageManager.update(id, "show_index") > 0) {
-            redirectAttributes.addFlashAttribute("info", "操作成功");
+            redirectAttributes.addFlashAttribute("info", "首页显示" + id + "成功");
         } else {
-            redirectAttributes.addFlashAttribute("error", "操作失败");
+            redirectAttributes.addFlashAttribute("error", "首页显示" + id +"失败");
         }
         return "redirect:/gallery/listAll";
     }
