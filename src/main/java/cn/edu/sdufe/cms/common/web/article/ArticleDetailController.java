@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springside.modules.utils.Encodes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -46,6 +47,9 @@ public class ArticleDetailController {
             redirectAttributes.addFlashAttribute("error", "文章不存在");
             return "redirect:/article/listAll";
         }
+
+        // 反解析，否则编辑器会显示HTML代码
+        article.setMessage(Encodes.unescapeHtml(article.getMessage()));
 
         // 获取所有分类
         model.addAttribute("categories", categoryManager.getAllowPublishCategory());

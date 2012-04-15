@@ -320,12 +320,14 @@ public class ArticleManager {
         } else {
             article.setTop(true);
         }
+
         //是否允许评论
         if (null == request.getParameter("allowComment")) {
             article.setAllowComment(false);
         } else {
             article.setAllowComment(true);
         }
+
         try {
             // 生成默认摘要
             String str = Jsoup.parse(article.getMessage()).text();
