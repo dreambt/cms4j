@@ -84,7 +84,7 @@
             <h2 class="cufon">公告</h2>
             <ul class="content-list anno">
                 <c:forEach items="${posts}" var="post" begin="0" end="4" step="1">
-                    <li><a href="${ctx}/article/content/${post.id}" class="announce">${post.subject}</a>
+                    <li><a href="${ctx}/article/content/${post.id}" class="announce">${fn:substring(post.subject,0,20)}<c:if test="${fn:length(post.subject)>20}">...</c:if></a>
                 </li>
                 </c:forEach>
             </ul>

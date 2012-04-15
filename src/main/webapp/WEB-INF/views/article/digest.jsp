@@ -26,11 +26,11 @@
 <!-- END OF PAGE TITLE -->
 <div id="content-inner">
 <div id="content-left">
-    <div class="maincontent" id="article_load">
+    <div id="article_load">
         <c:forEach items="${articles}" var="article" begin="0" step="1" varStatus="stat">
         <div class="blog-post digest">
             <img src="${ctx}/static/images/blog-pic1.jpg" alt="" class="imgleft"/>
-            <h2 style="font-size:18px;overflow:hidden"><a href="${ctx}/article/content/${article.id}"><c:if test="${article.top}"><img src="${ctx}/static/images/top.gif" /></c:if>${article.subject}</a></h2>
+            <h2 style="font-size:18px;overflow:hidden"><a href="${ctx}/article/content/${article.id}"><c:if test="${article.top}"><img src="${ctx}/static/images/top.gif" /></c:if>${fn:substring(article.subject,0,20)}<c:if test="${fn:length(article.subject)>20}">...</c:if></a></h2>
             <div class="blog-posted">
                 作者: ${article.user.username} &nbsp; | &nbsp; 发表时间: <fmt:formatDate value="${article.createdDate}" pattern="yyyy-MM-dd"/> &nbsp; | &nbsp; 浏览次数: ${article.views} &nbsp; | &nbsp; 评论数: ${fn:length(article.commentList)}
             </div>
@@ -43,12 +43,12 @@
         <c:choose>
             <c:when test="${total <= 66}">
                 <c:forEach begin="1" end="${pageCount>1?pageCount:1}" step="1" varStatus="var">
-                    <span class="blog-button-page pagination">${var.index}</span>&nbsp;
+                    <span class="blog-button-page pagination">${var.index}</span>
                 </c:forEach>
             </c:when>
             <c:otherwise>
                 <c:forEach begin="1" end="11" step="1" varStatus="var">
-                    <span class="blog-button-page pagination">${var.index}</span>&nbsp;
+                    <span class="blog-button-page pagination">${var.index}</span>
                 </c:forEach>
             </c:otherwise>
         </c:choose>
@@ -113,7 +113,7 @@
                     //生成页码
                     for (var j = start; j < end + 1; j++) {
                         if (j == intPageIndex) {
-                            var spanSelectd = $("<span class='blog-button-page-selected pagination'>" + j + "</span>&nbsp;");
+                            var spanSelectd = $("<span class='blog-button-page-selected pagination'>" + j + "</span>");
                             pager.append(spanSelectd);
                         } else {
                             var a = $("<span class='blog-button-page pagination'>" + j + "</span>&nbsp;").click(function () {
