@@ -39,7 +39,7 @@
     </div>
 </div>
 <div class="main_container container_16 clearfix">
-<form:form modelAttribute="article" action="${ctx}/article/save/${article.id}" method="post" id="form1">
+<form:form id="articleForm" modelAttribute="article" action="${ctx}/article/save/${article.id}" method="post">
 <div class="box gird_16">
     <h2 class="box_head grad_colour round_top">编辑文章</h2>
     <div class="toggle_container">
@@ -70,7 +70,7 @@
 <script type="text/javascript">
     var URL = "${ctx}/../..";
     $(function () {
-        $("#form1").validate({
+        $("#articleForm").validate({
             event:'submit',
             rules:{subject:{required:true, maxlength:26}}
         });

@@ -52,7 +52,7 @@ public class CategoryController {
     @RequiresPermissions("category:save")
     @RequestMapping(value = "save", method = RequestMethod.POST)
     public String save(Category category, RedirectAttributes redirectAttributes) {
-        if (null == categoryManager.save(category)) {
+        if (categoryManager.save(category) > 0) {
             redirectAttributes.addFlashAttribute("error", "添加菜单失败");
         } else {
             redirectAttributes.addFlashAttribute("info", "添加菜单成功");
@@ -85,7 +85,7 @@ public class CategoryController {
     @RequiresPermissions("category:delete")
     @RequestMapping(value = "delete/{id}", method = RequestMethod.GET)
     public String delete(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
-        if(null == categoryManager.get(id)) {
+        if (null == categoryManager.get(id)) {
             redirectAttributes.addFlashAttribute("error", "该菜单已经删除，请刷新查看");
         }
         int result = categoryManager.delete(id);

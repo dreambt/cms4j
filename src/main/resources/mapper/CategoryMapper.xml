@@ -23,13 +23,16 @@
             <result property="displayOrder" column="display_order"/>
             <result property="showType" column="show_type"/>
             <result property="url" column="url"/>
+            <result property="allowComment" column="allow_comment"/>
+            <result property="allowPublish" column="allow_publish"/>
+            <result property="lastModifiedDate" column="last_modified_date"/>
+            <result property="createdDate" column="created_date"/>
+            <result property="deleted" column="deleted"/>
         </collection>
-        <collection property="articleList" javaType="Article" resultMap="Article.articleDetailMap" />
+        <collection property="articleList" javaType="Article" resultMap="Article.articleDetailMap" columnPrefix="article_" />
     </resultMap>
 
-    <!--
-         获取分类: 输出直接映射到对象, login_name列要"as loginName"以方便映射 department_id as "department.id"创建department对象并赋值
-     -->
+    <!-- 获取分类 -->
     <select id="getCategory" parameterType="Long" resultMap="categoryDetailMap">
         SELECT id, father_category_id, category_name, display_order, show_type, url, description, allow_comment, allow_publish, show_nav, created_date, last_modified_date, deleted
         FROM cms_category
@@ -39,96 +42,132 @@
         LIMIT 1
 	</select>
 
-    <!--
-         获取分类id的所有子分类
-     -->
+    <!-- 获取分类id的所有子分类 -->
     <select id="getSubCategory" parameterType="Long" resultMap="categoryDetailMap">
         SELECT id,category_name,show_type,url,show_nav,deleted
         FROM cms_category
         WHERE father_category_id=#{id} AND deleted=0
         ORDER BY display_order ASC
+        LIMIT 0 , 50
 	</select>
 
-    <!--
-         获取导航分类
-     -->
+    <!-- 获取导航分类 -->
     <select id="getNavCategory" resultMap="categoryDetailMap">
-        SELECT A.id,A.category_name,A.show_type,A.url,A.show_nav,A.deleted,B.id as sub_id,B.category_name as sub_category_name,B.show_type as sub_show_type,B.url as sub_url
+        SELECT A.id,A.display_order,A.category_name,A.show_type,A.url,A.allow_comment,A.allow_publish,A.show_nav,A.deleted,
+        B.id as sub_id,B.display_order as sub_display_order,B.category_name as sub_category_name,B.show_type as sub_show_type,B.url as sub_url,
+        B.allow_comment as sub_allow_comment,B.allow_publish as sub_allow_publish
         FROM cms_category A
         LEFT OUTER JOIN cms_category B on A.id=B.father_category_id and B.id>1 and B.deleted=0
         WHERE A.id>1 and A.father_category_id=1 and A.deleted=0  and A.show_nav=1
         ORDER BY A.display_order ASC,B.display_order ASC
+        LIMIT 0 , 50
 	</select>
 
-    <!--
-         获取所有可发表评论的分类列表
-     -->
+    <!-- 获取所有可发表评论的分类列表 -->
     <select id="getAllowPublishCategory" resultMap="categoryDetailMap">
         SELECT id, category_name
         FROM cms_category
         WHERE allow_publish =1
         AND deleted =0
-        LIMIT 0 , 30
+        LIMIT 0 , 50
 	</select>
 
-    <!--
-         获取子分类数目
-     -->
+    <!-- 获取子分类数目 -->
     <select id="getCount" resultType="Long">
 		SELECT COUNT( id )
 		FROM cms_category
 		WHERE deleted =0
-		ORDER BY id ASC
 		LIMIT 1
 	</select>
 
-    <!--
-         获取子分类数目
-     -->
+    <!-- 获取子分类数目 -->
     <select id="getCountByFatherCategoryId" parameterType="Long" resultType="Long">
 		SELECT COUNT( id )
 		FROM cms_category
 		WHERE father_category_id =#{id}
 		AND deleted =0
-		ORDER BY id ASC
 		LIMIT 1
 	</select>
 
-    <!-- 查询分类,演示: 1.输入用map传入多个参数 2.<where>语句, 智能添加where和and关键字 3.输出直接映射对象 -->
-    <select id="searchCategory" parameterType="map" resultMap="categoryDetailMap">
-        select *
-        from cms_category
-        <where>
-            <if test="categoryName != null">
-                category_name=#{categoryName}
-            </if>
-            <if test="allowComment != null">
-                and allow_comment=#{allowComment}
-            </if>
-            <if test="deleted != null">
-                and deleted=#{deleted}
-            </if>
-            <if test="showType != null">
-                and show_type=#{showType}
-            </if>
-        </where>
-        order by ${Sort} ${Direction}
-    </select>
-
     <!-- 插入分类 -->
     <insert id="saveCategory" parameterType="Category" useGeneratedKeys="true" keyProperty="id">
-		insert into cms_category (
-		father_category_id, category_name, allow_comment, display_order,
-		 url, deleted, description, keyword, allow_publish, show_type, created_date)
-		values (#{fatherCategoryId}, #{categoryName}, #{allowComment}, #{displayOrder},
-		 #{url}, #{deleted}, #{description},
-		 #{keyWord}, #{allowPublish}, #{showType}, #{createddate})
+		INSERT INTO cms_category(father_category_id, category_name, display_order, show_type, url, description,
+		allow_comment, allow_publish, show_nav, created_date, deleted)
+		VALUES (#{fatherCategoryId},#{categoryName},#{displayOrder},#{showType},#{url},#{description},
+		#{allowComment},#{allowPublish},#{showNav},null,0)
 	</insert>
 
     <!-- 删除分类 -->
     <delete id="deleteCategory" parameterType="Long">
-		Delete FROM cms_category
+		DELETE FROM cms_category
 		WHERE id=#{id}
 	</delete>
 
+    <!-- 更新分类 -->
+    <update id="updateCategory" parameterType="Category">
+        UPDATE cms_category
+        <set>
+            <if test="fatherCategoryId > 0">
+                father_category_id=#{fatherCategoryId},
+            </if>
+            <if test="categoryName != null and categoryName !=''">
+                category_name=#{categoryName},
+            </if>
+            <if test="displayOrder != null and displayOrder >= 0">
+                display_order=#{displayOrder},
+            </if>
+            <if test="showType != null and showType !=''">
+                show_type=#{showType},
+            </if>
+            <if test="url != null and url !=''">
+                url=#{url},
+            </if>
+            <if test="description != null and description !=''">
+                description=#{description},
+            </if>
+            <if test="allowComment != null and allowComment !=''">
+                allow_comment=#{allowComment},
+            </if>
+            <if test="allowPublish != null and allowPublish !=''">
+                allow_publish=#{allowPublish},
+            </if>
+            <if test="showNav != null and showNav !=''">
+                show_nav=#{showNav},
+            </if>
+            <if test="allowComment != null and allowComment !=''">
+                allow_comment=#{allowComment},
+            </if>
+            <if test="deleted != null and deleted !=''">
+                deleted=#{deleted},
+            </if>
+            last_modified_date=null
+        </set>
+        WHERE id=#{id}
+    </update>
+
+    <!-- 更新分类bool字 -->
+    <update id="updateCategoryBool" parameterType="map">
+        UPDATE cms_category
+        SET ${column}=1-${column}
+        WHERE id=#{id}
+    </update>
+
+    <!-- 查询分类
+    <select id="searchCategory" parameterType="map" resultMap="categoryDetailMap">
+        SELECT *
+        FROM cms_category
+        <where>
+            deleted=0
+            <if test="categoryName != null and categoryName != ''">
+                and category_name=#{categoryName}
+            </if>
+            <if test="allowComment != null and allowComment != ''">
+                and allow_comment=#{allowComment}
+            </if>
+            <if test="showType != null and showType != ''">
+                and show_type=#{showType}
+            </if>
+        </where>
+        ORDER BY ${Sort} ${Direction}
+    </select>-->
 </mapper>

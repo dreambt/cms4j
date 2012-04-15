@@ -34,6 +34,7 @@ public class CategoryDao extends SqlSessionDaoSupport {
      * @param name
      * @return
      */
+    @Deprecated
     @Cacheable(value = "categroyByName")
     public Category getCategoryByName(String name) {
         return (Category) getSqlSession().selectOne("Category.getCategoryByName", name);

@@ -63,7 +63,7 @@ public class CategoryManager {
      *
      * @return
      */
-    public List getAllowPublishCategory() {
+    public List<Category> getAllowPublishCategory() {
         return categoryDao.getAllowPublishCategory();
     }
 
@@ -93,9 +93,8 @@ public class CategoryManager {
      * @return
      */
     @Transactional(readOnly = false)
-    public Category save(Category category) {
-        category.setDeleted(false);
-        return update(category);
+    public int save(Category category) {
+        return categoryDao.save(category);
     }
 
     /**
@@ -105,15 +104,14 @@ public class CategoryManager {
      * @return
      */
     @Transactional(readOnly = false)
-    public Category update(Category category) {
+    public int update(Category category) {
         // 更新数据，先更新数据避免生成旧数据缓存
-        category.setLastModifiedDate(null);
-        categoryDao.save(category);
+        int num = categoryDao.update(category);
 
         // 清理缓存
         this.cleanCache();
 
-        return category;
+        return num;
     }
 
     /**
@@ -122,6 +120,7 @@ public class CategoryManager {
      * @param id
      * @return 0 删除成功；1 该分类有文章，不能删除；2 该分类的子分类有文章，不能删除；3 指定菜单不存在
      */
+    @Transactional(readOnly = false)
     public int delete(Long id) {
         Category category = this.get(id);
         return this.delete(category);
@@ -166,10 +165,11 @@ public class CategoryManager {
      * 清理缓存
      */
     private void cleanCache() {
-        ehcacheManager = CacheManager.create();
-        ehcacheManager.getEhcache("cn.edu.sdufe.cms.common.entity.article.Category.subCategories").removeAll();
-        ehcacheManager.getCache("cn.edu.sdufe.cms.common.entity.article.Category.articleList").removeAll();
-        ehcacheManager.getCache("cn.edu.sdufe.cms.common.entity.article.Category").removeAll();
+        // TODO 测试是否还有效
+        //ehcacheManager = CacheManager.create();
+        //ehcacheManager.getEhcache("cn.edu.sdufe.cms.common.entity.article.Category.subCategories").removeAll();
+        //ehcacheManager.getCache("cn.edu.sdufe.cms.common.entity.article.Category.articleList").removeAll();
+        //ehcacheManager.getCache("cn.edu.sdufe.cms.common.entity.article.Category").removeAll();
     }
 
     @Autowired

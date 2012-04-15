@@ -36,12 +36,12 @@ public class CategoryDetailController {
      */
     @RequiresPermissions("category:edit")
     @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
-    public String edit(@PathVariable Long id, Model model) {
-        if(null == categoryManager.get(id)) {
-            model.addAttribute("info", "该分类不存在，请刷新重试");
+    public String edit(@Valid @ModelAttribute("category") Category category, Model model) {
+        if(null == category) {
+            model.addAttribute("error", "该分类不存在，请刷新重试.");
             return "dashboard/category/listAll";
         }
-        model.addAttribute("category", categoryManager.get(id));
+        model.addAttribute("category", category);
         model.addAttribute("showTypes", ShowTypeEnum.values());
         model.addAttribute("fatherCategories", categoryManager.getNavCategory());
         return "dashboard/category/edit";
@@ -56,14 +56,14 @@ public class CategoryDetailController {
      */
     @RequiresPermissions("category:save")
     @RequestMapping(value = "save/{id}")
-    public String save(@PathVariable Long id, @Valid @ModelAttribute("category") Category category, RedirectAttributes redirectAttributes) {
-        if(null == categoryManager.get(id)) {
-            redirectAttributes.addFlashAttribute("error", "该菜单不存在，请刷新重试");
+    public String save(@Valid @ModelAttribute("category") Category category, RedirectAttributes redirectAttributes) {
+        if(null == category) {
+            redirectAttributes.addFlashAttribute("error", "该菜单不存在，请刷新重试.");
         }
-        if (null == categoryManager.update(category)) {
-            redirectAttributes.addFlashAttribute("error", "修改菜单失败");
+        if (categoryManager.update(category)>0) {
+            redirectAttributes.addFlashAttribute("info", "修改菜单成功.");
         } else {
-            redirectAttributes.addFlashAttribute("info", "修改菜单成功");
+            redirectAttributes.addFlashAttribute("error", "修改菜单失败.");
         }
         return "redirect:/category/listAll";
     }

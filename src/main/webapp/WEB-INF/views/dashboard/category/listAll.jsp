@@ -22,14 +22,12 @@
         <p>点击二级菜单的名称将跳转到与其相关的文章列表，点击其url将跳转到相应的文章/文章列表/文章摘要的预览页面。在需要进行删除操作时，非空的菜单是不能删除的，这时您得先全部删除与其相关的文章或子菜单!</p>
         <c:if test="${not empty info}">
             <div id="message" class="alert alert_blue">
-                <img height="24" width="24"
-                     src="${ctx}/static/dashboard/images/icons/Locked2.png"><strong>${info}</strong>
+                <img height="24" width="24" src="${ctx}/static/dashboard/images/icons/Locked2.png"><strong>${info}</strong>
             </div>
         </c:if>
         <c:if test="${not empty error}">
             <div id="message" class="alert alert_red">
-                <img height="24" width="24"
-                     src="${ctx}/static/dashboard/images/icons/Locked2.png"><strong>${error}</strong>
+                <img height="24" width="24" src="${ctx}/static/dashboard/images/icons/Locked2.png"><strong>${error}</strong>
             </div>
         </c:if>
     </div>
@@ -66,12 +64,9 @@
                                                 <td><a href="${ctx}/article/listByCategory/${subCategory.id}">${subCategory.categoryName}</a></td>
                                                 <td>${subCategory.displayOrder}</td>
                                                 <td><a href="${ctx}/${subCategory.url}" target="_blank">${subCategory.url}</a></td>
-                                                <td><c:choose> <c:when test="${subCategory.allowComment}"><img src="${ctx}/static/dashboard/images/success.png"/> </c:when><c:otherwise><img  src="${ctx}/static/dashboard/images/error.png"/> </c:otherwise></c:choose></td>
-                                                <td><c:choose> <c:when test="${subCategory.allowPublish}"><img src="${ctx}/static/dashboard/images/success.png"/> </c:when><c:otherwise><img src="${ctx}/static/dashboard/images/error.png"/> </c:otherwise></c:choose></td>
-                                                <td>
-                                                <c:forEach items="${showTypes}" var="showType" begin="0" step="1">
-                                                      <c:if test="${showType.value==subCategory.showType.value}">${showType.displayName}</c:if>
-                                                </c:forEach>
+                                                <td><c:choose><c:when test="${subCategory.allowComment}"><img src="${ctx}/static/dashboard/images/success.png"/></c:when><c:otherwise><img  src="${ctx}/static/dashboard/images/error.png"/></c:otherwise></c:choose></td>
+                                                <td><c:choose><c:when test="${subCategory.allowPublish}"><img src="${ctx}/static/dashboard/images/success.png"/></c:when><c:otherwise><img src="${ctx}/static/dashboard/images/error.png"/></c:otherwise></c:choose></td>
+                                                <td><c:forEach items="${showTypes}" var="showType" begin="0" step="1"><c:if test="${showType.value==subCategory.showType.value}">${showType.displayName}</c:if></c:forEach>
                                                 </td>
                                                 <td><a href="${ctx}/category/edit/${subCategory.id}" type="submit">【修改】</a> <a href="${ctx}/category/delete/${subCategory.id}" type="submit" class="delete">【删除】</a></td>
                                             </tr>

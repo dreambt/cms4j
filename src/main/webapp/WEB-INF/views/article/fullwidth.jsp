@@ -36,18 +36,14 @@
     <div class="desc">${article.digest}</div>
 </div>
 <!-- END OF PAGE TITLE -->
-
 <!-- BEGIN CONTENT -->
 <div id="content-inner-full">
     <div class="maincontent">
         <div class="blog-post">
             <h2>${article.subject}</h2>
-
             <div class="blog-posted-inner" style="width:920px;">
-                作者: ${article.user.username} &nbsp; | &nbsp; 发表时间: <fmt:formatDate value="${article.createdDate}"
-                                                                                   pattern="yyyy-MM-dd"/> &nbsp; |
-                &nbsp;
-                浏览次数: ${article.views} &nbsp; | &nbsp; 评论数: ${fn:length(article.commentList)}
+                作者: ${article.user.username} &nbsp; | &nbsp; 发表时间: <fmt:formatDate value="${article.createdDate}" pattern="yyyy-MM-dd"/> &nbsp; |
+                &nbsp;浏览次数: ${article.views} &nbsp; | &nbsp; 评论数: ${fn:length(article.commentList)}
             </div>
             ${article.message}
         </div>
@@ -72,16 +68,15 @@
                     <c:forEach items="${article.commentList}" var="comment" begin="0" step="1" varStatus="stat">
                         <c:if test="${comment.status&&!comment.deleted}">
                             <div class="commentList-item-wrapper">
-                                <h4><a href="#">${comment.username}</a> 于 <fmt:formatDate value="${comment.createdDate}"
-                                                                                          pattern="yyyy-MM-dd"/> 发表评论：
-                                </h4>
-                                    ${comment.message}
+                                <h4><a href="#">${comment.username}</a> 于 <fmt:formatDate value="${comment.createdDate}" pattern="yyyy-MM-dd"/> 发表评论：</h4>
+                                ${comment.message}
                             </div>
                         </c:if>
                     </c:forEach>
-                </c:when><c:otherwise>
-                    <div class="commentList-item-wrapper"><h4>暂时没有, 发表一下您的观点吧</h4></div>
-                </c:otherwise></c:choose>
+                </c:when>
+                <c:otherwise>
+                <div class="commentList-item-wrapper"><h4>暂时没有, 发表一下您的观点吧</h4></div></c:otherwise>
+                </c:choose>
             </div>
             <div id="comment">
                 <form:form id="commentForm" modelAttribute="comment" action="${ctx}/comment/create" method="post">
@@ -107,7 +102,6 @@
                                                   value="<shiro:principal property="loginName"/>"/>
                         <label>验证码: </label><input type="text" id="code" name="code"/>
                         <label>评分: </label>
-
                         <div id="rating"></div>
                         <input type="submit" class="input-submit" value=" 提 交 "/>
                     </div>
