@@ -26,7 +26,7 @@
 <!-- END OF PAGE TITLE -->
 <div id="content-inner">
 <div id="content-left">
-    <div id="article_load">
+    <div class="maincontent" id="article_load">
         <c:forEach items="${articles}" var="article" begin="0" step="1" varStatus="stat">
         <div class="blog-post digest">
             <img src="${ctx}/static/images/blog-pic1.jpg" alt="" class="imgleft"/>
@@ -43,12 +43,12 @@
         <c:choose>
             <c:when test="${total <= 66}">
                 <c:forEach begin="1" end="${pageCount>1?pageCount:1}" step="1" varStatus="var">
-                    <span class="blog-button-page pagination">${var.index}</span>
+                    <span class="blog-button-page pagination">${var.index}</span>&nbsp;
                 </c:forEach>
             </c:when>
             <c:otherwise>
                 <c:forEach begin="1" end="11" step="1" varStatus="var">
-                    <span class="blog-button-page pagination">${var.index}</span>
+                    <span class="blog-button-page pagination">${var.index}</span>&nbsp;
                 </c:forEach>
             </c:otherwise>
         </c:choose>
@@ -113,7 +113,7 @@
                     //生成页码
                     for (var j = start; j < end + 1; j++) {
                         if (j == intPageIndex) {
-                            var spanSelectd = $("<span class='blog-button-page-selected pagination'>" + j + "</span>&nbsp;&nbsp;");
+                            var spanSelectd = $("<span class='blog-button-page-selected pagination'>" + j + "</span>&nbsp;");
                             pager.append(spanSelectd);
                         } else {
                             var a = $("<span class='blog-button-page pagination'>" + j + "</span>&nbsp;").click(function () {

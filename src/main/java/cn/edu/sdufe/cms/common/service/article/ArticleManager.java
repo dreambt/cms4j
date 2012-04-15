@@ -214,8 +214,9 @@ public class ArticleManager {
             article.setUser(new User(shiroUser.getId()));
 
             // TODO 看一下这里导致的前台问题
-            // 文章正文进行HTML编码
+            // 进行HTML编码
             article.setMessage(Encodes.escapeHtml(article.getMessage()));
+            article.setDigest(Encodes.escapeHtml(article.getDigest()));
 
             //使用Hibernate Validator校验请求参数
             Validate.notNull(article, "文章参数为空");
@@ -352,8 +353,9 @@ public class ArticleManager {
             // 关键词由任务生成
             article.setKeyword("");
 
-            // 文章正文进行HTML编码
+            // 进行HTML编码
             article.setMessage(Encodes.escapeHtml(article.getMessage()));
+            article.setDigest(Encodes.escapeHtml(article.getDigest()));
 
             //使用Hibernate Validator校验请求参数
             Validate.notNull(article, "文章参数为空");
