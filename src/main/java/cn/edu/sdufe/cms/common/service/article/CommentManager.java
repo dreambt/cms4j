@@ -21,7 +21,7 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class CommentManager {
 
-    private static Logger logger = LoggerFactory.getLogger(CommentManager.class);
+    private static final Logger logger = LoggerFactory.getLogger(CommentManager.class);
 
     private CommentDao commentDao;
 
@@ -45,12 +45,22 @@ public class CommentManager {
     }
 
     /**
-     * 获得编号为id的文章的评论总数
+     * 获得评论总数
      *
      * @return
      */
-    public Long count(Long id) {
-        return commentDao.count(id);
+    public Long count() {
+        return commentDao.count();
+    }
+
+    /**
+     * 获得编号为id的文章的评论总数
+     *
+     * @param articleId
+     * @return
+     */
+    public Long count(Long articleId) {
+        return commentDao.count(articleId);
     }
 
     /**
@@ -61,9 +71,8 @@ public class CommentManager {
      */
     @Transactional(readOnly = false)
     public int save(Comment comment) {
-        comment.setStatus(false);
-        comment.setDeleted(false);
-        return this.update(comment);
+        logger.info("New Comment: ", comment.toString());
+        return commentDao.save(comment);
     }
 
     /**
@@ -74,8 +83,8 @@ public class CommentManager {
      */
     @Transactional(readOnly = false)
     public int update(Comment comment) {
-        comment.setLastModifiedDate(null);
-        return commentDao.save(comment);
+        logger.info("Update Comment: ", comment.toString());
+        return commentDao.update(comment);
     }
 
     /**
@@ -86,11 +95,9 @@ public class CommentManager {
      */
     @Transactional(readOnly = false)
     public void batchAudit(String[] ids) {
-        Comment comment = null;
         for (String id : ids) {
-            comment = this.get(Long.parseLong(id));
-            comment.setStatus(true);
-            this.update(comment);
+            commentDao.update(Long.parseLong(id), "status");
+            logger.info("Update Comment: id={}, column=status.", Long.parseLong(id));
         }
     }
 
@@ -101,11 +108,9 @@ public class CommentManager {
      */
     @Transactional(readOnly = false)
     public void batchDelete(String[] ids) {
-        Comment comment = null;
         for (String id : ids) {
-            comment = this.get(Long.parseLong(id));
-            comment.setDeleted(true);
-            this.update(comment);
+            commentDao.update(Long.parseLong(id), "deleted");
+            logger.info("Update Comment: id={}, column=deleted.", Long.parseLong(id));
         }
     }
 

@@ -31,7 +31,7 @@ public class LinkDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    @Cacheable(value = "linkAll")
+    @Cacheable(value = "link")
     public List<Link> findAll() {
         return getSqlSession().selectList("Link.getAllLink");
     }
@@ -63,6 +63,7 @@ public class LinkDao extends SqlSessionDaoSupport {
      * @param parameters
      * @return
      */
+    @Cacheable(value = "link")
     public List<Link> search(Map<String, Object> parameters) {
         RowBounds rowBounds = new RowBounds(0, 10);
         return getSqlSession().selectList("Link.searchLink", parameters, rowBounds);
@@ -74,7 +75,7 @@ public class LinkDao extends SqlSessionDaoSupport {
      * @param parameters
      * @return
      */
-    @Cacheable(value = "linkAll")
+    @Cacheable(value = "link")
     public List<Link> search(Map<String, Object> parameters, RowBounds rowBounds) {
         return getSqlSession().selectList("Link.searchLink", parameters, rowBounds);
     }

@@ -23,7 +23,7 @@
     <div class="footer1">
         <p>地址：山东省 济南市 市中区 山东财经大学<br/>
             电话: +62 1234 5678<br/>
-            邮箱: info@agivee.com<br/>
+            邮箱: .com<br/>
             Copyright © 2012 CMS4j. All Rights Reserved<br/>
         </p>
     </div>
@@ -37,15 +37,13 @@
     </div>
     <div class="footer3">
         <img src="${ctx}/static/images/twitter-footer.jpg" alt="" class="twitter"/>
-
         <h3>服务宗旨</h3>
-
         <p>建设具有解决国内金融领域信息化重大问题的、综合研究能力强的、在国内外有较大影响的金融信息工程产学研机构。</p>
     </div>
 </div>
 <!-- END OF FOOTER -->
 <script>
-    var speed=20;
+    var speed=40;
     var scroll_end =document.getElementById("scroll_end");
     var scroll_div = document.getElementById("scroll_div");
     var scroll_begin=document.getElementById("scroll_begin");

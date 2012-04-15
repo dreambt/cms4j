@@ -22,7 +22,7 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class GroupManager {
 
-    private static Logger logger = LoggerFactory.getLogger(GroupManager.class);
+    private static final Logger logger = LoggerFactory.getLogger(GroupManager.class);
 
     private GroupDao groupDao;
 

@@ -31,76 +31,112 @@
          编号为id的评论
      -->
     <select id="getComment" parameterType="Long" resultMap="commentDetailMap">
-        select id,article_id,username,message,post_ip,status,created_date,last_modified_date,deleted
-        from cms_commnet
-        where id=#{id}
-        limit 1
+        SELECT id, article_id, username, message, post_ip, STATUS , created_date, last_modified_date, deleted
+        FROM cms_comment
+        WHERE id =#{id}
+        LIMIT 1
 	</select>
 
     <!--
         获取最新10条评论
     -->
     <select id="getCommentRecent" resultType="ArrayList">
-        select id,article_id,username,message,post_ip,status,created_date,last_modified_date
-        from cms_commnet
-        where status=1 and deleted=0
-        order by id DESC
-        limit 10
+        SELECT id, article_id, username, message, post_ip, STATUS , created_date, last_modified_date
+        FROM cms_comment
+        WHERE STATUS =1
+        AND deleted =0
+        ORDER BY id DESC
+        LIMIT 10
 	</select>
 
     <!--
          获取评论数目
      -->
     <select id="getCount" resultType="Long">
-		select count(id)
-		from cms_commnet
-		where status=1 and deleted=0
-		order by id ASC
-		limit 1
+		SELECT COUNT( id )
+		FROM cms_comment
+		WHERE STATUS =1
+		AND deleted =0
+		ORDER BY id ASC
+		LIMIT 1
 	</select>
 
     <!--
          获取评论数目
      -->
     <select id="getCountByArticleId" parameterType="Long" resultType="Long">
-		select count(id)
-		from cms_commnet
-		where article_id=#{id} and status=1 and deleted=0
-		order by id ASC
-		limit 1
+		SELECT COUNT( id )
+		FROM cms_comment
+		WHERE article_id =#{articleId}
+		AND STATUS =1
+		AND deleted =0
+		ORDER BY id ASC
+		LIMIT 1
 	</select>
 
     <!-- 插入评论 -->
-    <insert id="save" parameterType="Comment" useGeneratedKeys="true" keyProperty="id">
-		insert into cms_commnet (
-		cid,aid,username,postip,posttime,status,message,createddate,lastmodifieddate)
-		values (#{id}, #{articleId}, #{username},#{postIP},#{postTime},#{status},#{message},now(),now())
+    <insert id="saveComment" parameterType="Comment" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO cms_comment( id, article_id, username, message, post_ip, STATUS, created_date, deleted)
+		VALUES (#{id}, #{articleId}, #{username},#{message},#{postIP},0,null,0)
 	</insert>
 
     <!-- 删除评论 -->
-    <delete id="delete">
-		delete from cms_comment
-		where deleted = 1
+    <delete id="deleteComment">
+		DELETE FROM cms_comment
+		WHERE deleted = 1
         limit 500
 	</delete>
 
-    <!--
-        查询评论
-     -->
-    <select id="searchComment" parameterType="map" resultType="Comment">
-        select id, name, email,
-        login_name as loginName,
-        department_id as "department.id"
-        from acct_user
-        <where>
-            <if test="loginName != null">
-                login_name=#{loginName}
+    <!-- 更新评论 -->
+    <update id="updateComment" parameterType="Comment">
+        UPDATE cms_comment
+        <set>
+            <if test="username != null and username !=''">
+                username=#{username},
             </if>
-            <if test="name != null">
-                and name=#{name}
+            <if test="message != null and message !=''">
+                message=#{message},
+            </if>
+            <if test="postIp > 0">
+                post_ip=#{postIp},
+            </if>
+            <if test="status != null and status !=''">
+                STATUS=#{status},
+            </if>
+            last_modified_date=null
+        </set>
+        WHERE id=#{id}
+    </update>
+
+    <!-- 更新评论bool字段 -->
+    <update id="updateCommentBool" parameterType="map">
+        UPDATE cms_comment
+        SET ${column}=1-${column}
+        WHERE id=#{id}
+    </update>
+
+    <!-- 查询评论 -->
+    <select id="searchComment" parameterType="map" resultType="Comment">
+        SELECT id, article_id, username, message, post_ip, STATUS , created_date, last_modified_date, deleted
+        FROM cms_comment
+        <where>
+            deleted=0 and STATUS=1
+            <if test="id > 0">
+                and id=#{id}
+            </if>
+            <if test="article != null and article.id > 0">
+                and article_id=#{article.id}
+            </if>
+            <if test="username != null and username != ''">
+                and username=#{username}
+            </if>
+            <if test="message != null and message !=''">
+                and message LINK #{message}
+            </if>
+            <if test="postIp > 0">
+                and post_ip=#{postIp}
             </if>
         </where>
-        and status=1 and deleted=0
-        order by ${Sort} ${Direction}
+        ORDER BY ${Sort} ${Direction}
     </select>
 </mapper>

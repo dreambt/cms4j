@@ -35,7 +35,6 @@ import java.util.List;
 public class UserController {
 
     private UserManager userManager;
-
     private GroupManager groupManager;
 
     private GroupListEditor groupListEditor;

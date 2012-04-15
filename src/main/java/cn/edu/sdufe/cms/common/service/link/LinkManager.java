@@ -21,7 +21,7 @@ import java.util.List;
 @Transactional(readOnly = false)
 public class LinkManager {
 
-    private static Logger logger = LoggerFactory.getLogger(LinkManager.class);
+    private static final Logger logger = LoggerFactory.getLogger(LinkManager.class);
 
     private LinkDao linkDao;
 

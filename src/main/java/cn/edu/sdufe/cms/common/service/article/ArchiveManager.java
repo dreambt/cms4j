@@ -27,7 +27,7 @@ import java.util.Map;
 @Transactional(readOnly = true)
 public class ArchiveManager {
 
-    private static Logger logger = LoggerFactory.getLogger(ArchiveManager.class);
+    private static final Logger logger = LoggerFactory.getLogger(ArchiveManager.class);
 
     private ArchiveDao archiveDao;
     private ArticleDao articleDao;

@@ -437,15 +437,15 @@ INSERT INTO `cms_image` (`id`, `title`, `image_url`, `description`, `show_index`
 -- 友情链接测试数据
 -- -----------------------------------------------------
 INSERT INTO `cms_link` (`id`, `title`, `url`, `status`, `last_modified_date`, `created_date`) VALUES
-(1,'百度一下1','http://www.baidu.com','1', null, null),
-(2,'百度一下2','http://www.baidu.com','1', null, null),
-(3,'百度一下3','http://www.baidu.com','1', null, null),
-(4,'百度一下4','http://www.baidu.com','1', null, null),
-(5,'百度一下5','http://www.baidu.com','1', null, null),
-(6,'百度一下6','http://www.baidu.com','1', null, null),
-(7,'百度一下7','http://www.baidu.com','1', null, null),
-(8,'百度一下8','http://www.baidu.com','1', null, null),
-(9,'百度一下9','http://www.baidu.com','1', null, null),
-(10,'百度一下10','http://www.baidu.com','1', null, null),
-(11,'百度一下11','http://www.baidu.com','1', null, null),
-(12,'谷歌','http://www.google.com.hk','1',null, null);
+(1,'山东财经大学','http://www.sdufi.edu.cn/','1', null, null),
+(2,'山东华软金盾','http://www.neiwang.cn/','1', null, null),
+(3,'山东舜德数据','http://www.sundatasoft.com/','1', null, null),
+(4,'戈尔特西斯','http://www.goitsys.com/','1', null, null),
+(5,'山东省城商联盟','','1', null, null),
+(6,'山东省农信社','http://www.sdnxs.com/','1', null, null),
+(7,'山东财经大学','http://www.sdufi.edu.cn/','1', null, null),
+(8,'山东华软金盾','http://www.neiwang.cn/','1', null, null),
+(9,'山东舜德数据','http://www.sundatasoft.com/','1', null, null),
+(10,'戈尔特西斯','http://www.goitsys.com/','1', null, null),
+(11,'山东省城商联盟','','1', null, null),
+(12,'山东省农信社','http://www.sdnxs.com/','1', null, null);

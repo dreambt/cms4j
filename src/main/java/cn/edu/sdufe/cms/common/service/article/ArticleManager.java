@@ -39,7 +39,7 @@ import java.util.Map;
 @Transactional(readOnly = true)
 public class ArticleManager {
 
-    private static Logger logger = LoggerFactory.getLogger(ArticleManager.class);
+    private static final Logger logger = LoggerFactory.getLogger(ArticleManager.class);
 
     private static final int KEYWORD_NUM = 10;
 
@@ -105,12 +105,12 @@ public class ArticleManager {
 
     /**
      * 获取首页显示新闻
+     *
      * @return
      */
     public List<Article> getNews() {
         return articleDao.getNews();
     }
-
 
 
     /**
@@ -173,17 +173,19 @@ public class ArticleManager {
     @Transactional(readOnly = false)
     public int save(Article article, HttpServletRequest request) {
         //是否置顶
-        if(null == request.getParameter("top")) {
+        if (null == request.getParameter("top")) {
             article.setTop(false);
         } else {
             article.setTop(true);
         }
+
         //是否允许评论
-        if(null == request.getParameter("allowComment")) {
+        if (null == request.getParameter("allowComment")) {
             article.setAllowComment(false);
         } else {
             article.setAllowComment(true);
         }
+
         try {
             // 生成默认摘要
             String str = Jsoup.parse(article.getMessage()).text();
@@ -195,25 +197,26 @@ public class ArticleManager {
 
             //文章中的首个图片
             article.setImageName(this.getImageFromMessage(article.getMessage()));
-            //项目路径// TODO 迁移服务器需要修改
+
+            //项目路径
+            // TODO 迁移服务器需要修改
             String path = System.getProperty("user.dir") + "\\src\\main\\webapp\\static\\uploads\\";
             ImageThumb imageThumb = new ImageThumb();
             try {
                 imageThumb.saveImageAsJpg(path + "article\\article-big\\" + article.getImageName(), path + "article\\news-thumb\\" + article.getImageName(), 274, 157);
                 imageThumb.saveImageAsJpg(path + "article\\article-big\\" + article.getImageName(), path + "article\\digest-thumb\\" + article.getImageName(), 134, 134);
-
             } catch (Exception e) {
                 logger.error(e.getMessage());
             }
+
             // 关键词由任务生成
             article.setKeyword("");
 
             // 文章作者
             ShiroDbRealm.ShiroUser shiroUser = (ShiroDbRealm.ShiroUser) SecurityUtils.getSubject().getPrincipal();
-            User user = new User();
-            user.setId(shiroUser.getId());
-            article.setUser(user);
+            article.setUser(new User(shiroUser.getId()));
 
+            // TODO 看一下这里导致的前台问题
             // 文章正文进行HTML编码
             article.setMessage(Encodes.escapeHtml(article.getMessage()));
 
@@ -237,7 +240,7 @@ public class ArticleManager {
     public String getImageFromMessage(String message) {
         Document document = Jsoup.parse(message);
         Elements imgs = document.getElementsByTag("img");
-        if(null == imgs || imgs.size() == 0) {
+        if (null == imgs || imgs.size() == 0) {
             return "";
         } else {
             Element img = imgs.first();
@@ -315,13 +318,13 @@ public class ArticleManager {
     @Transactional(readOnly = false)
     public int update(Article article, HttpServletRequest request) {
         //是否置顶
-        if(null == request.getParameter("top")) {
+        if (null == request.getParameter("top")) {
             article.setTop(false);
         } else {
             article.setTop(true);
         }
         //是否允许评论
-        if(null == request.getParameter("allowComment")) {
+        if (null == request.getParameter("allowComment")) {
             article.setAllowComment(false);
         } else {
             article.setAllowComment(true);

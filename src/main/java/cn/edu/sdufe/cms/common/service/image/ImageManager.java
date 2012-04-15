@@ -31,7 +31,7 @@ import java.util.Map;
 @Transactional(readOnly = true)
 public class ImageManager {
 
-    private static Logger logger = LoggerFactory.getLogger(ImageManager.class);
+    private static final Logger logger = LoggerFactory.getLogger(ImageManager.class);
 
     private ImageDao imageDao;
 

@@ -1,15 +1,12 @@
 package cn.edu.sdufe.cms.common.entity.account;
 
 import cn.edu.sdufe.cms.common.entity.PersistableEntity;
-import cn.edu.sdufe.cms.common.entity.article.Article;
 import cn.edu.sdufe.cms.utilities.IPEncodes;
-import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * 用户Entity
@@ -38,6 +35,13 @@ public class User extends PersistableEntity {
     private String lastLoginIP;
     private Date lastTime;
     private Date lastActTime;
+
+    public User() {
+    }
+
+    public User(Long id) {
+        super.setId(id);
+    }
 
     @Email
     public String getEmail() {

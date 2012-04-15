@@ -69,13 +69,12 @@ public class CommentController {
     public String batchAuditComment(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         String[] isSelected = request.getParameterValues("isSelected");
         if (isSelected == null) {
-            redirectAttributes.addFlashAttribute("error", "请选择要审核的评论.");
-            return "redirect:/comment/listAll";
+            redirectAttributes.addFlashAttribute("error", "请选择要操作的评论.");
         } else {
             commentManager.batchAudit(isSelected);
-            redirectAttributes.addFlashAttribute("info", "批量审核评论成功.");
-            return "redirect:/comment/listAll";
+            redirectAttributes.addFlashAttribute("info", "批量操作评论成功.");
         }
+        return "redirect:/comment/listAll";
     }
 
     /**
@@ -88,13 +87,12 @@ public class CommentController {
     public String batchDeleteComment(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         String[] isSelected = request.getParameterValues("isSelected");
         if (isSelected == null) {
-            redirectAttributes.addFlashAttribute("error", "请选择要删除的评论.");
-            return "redirect:/comment/listAll";
+            redirectAttributes.addFlashAttribute("error", "请选择要操作的评论.");
         } else {
             commentManager.batchDelete(isSelected);
-            redirectAttributes.addFlashAttribute("info", "批量删除评论成功.");
-            return "redirect:/comment/listAll";
+            redirectAttributes.addFlashAttribute("info", "批量操作评论成功.");
         }
+        return "redirect:/comment/listAll";
     }
 
     @Autowired

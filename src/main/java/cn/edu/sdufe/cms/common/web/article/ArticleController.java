@@ -35,13 +35,9 @@ public class ArticleController {
     private static final int ARTICLE_NUM = 75;
 
     private ArticleManager articleManager;
-
     private CategoryManager categoryManager;
-
     private UserManager userManager;
-
     private ArchiveManager archiveManager;
-
     private LinkManager linkManager;
 
     /**
@@ -53,12 +49,12 @@ public class ArticleController {
     @RequestMapping(value = "content/{id}", method = RequestMethod.GET)
     public String contextOfArticle(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
         Article article = articleManager.findForView(id);
-        //article.setMessage(Encodes.unescapeHtml(article.getMessage()));
-
         if (null == article) {
             redirectAttributes.addFlashAttribute("message", "不存在编号为 " + id + " 的文章");
             return "redirect:/error/404";
         }
+
+        //article.setMessage(Encodes.unescapeHtml(article.getMessage()));
 
         model.addAttribute("article", article);
         model.addAttribute("categories", categoryManager.getNavCategory());
@@ -201,8 +197,7 @@ public class ArticleController {
      */
     @RequestMapping(value = "listPost")
     public String listPost() {
-        Long id = new Long(1L);
-        return "redirect:/article/list/" + id;
+        return "redirect:/article/list/" + 1L;
     }
 
     /**

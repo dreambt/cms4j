@@ -4,6 +4,7 @@ import cn.edu.sdufe.cms.common.entity.article.Article;
 import com.google.common.collect.Maps;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
@@ -58,6 +59,7 @@ public class ArticleDao extends SqlSessionDaoSupport {
      *获取首页显示新闻
      * @return
      */
+    @Cacheable(value = "article")
     public List<Article> getNews() {
         return getSqlSession().selectList("Article.getNews");
     }
@@ -80,7 +82,7 @@ public class ArticleDao extends SqlSessionDaoSupport {
      * @param id
      * @return
      */
-    @Cacheable(value = "article")
+    @Cacheable(value = "article",key = "#id")
     public Article findOne(Long id) {
         return getSqlSession().selectOne("Article.getArticle", id);
     }
@@ -90,6 +92,7 @@ public class ArticleDao extends SqlSessionDaoSupport {
      *
      * @return
      */
+    @Cacheable(value = "article")
     public List<Article> findByMonth(Date month) {
         return getSqlSession().selectList("Article.getMonthArticle", month);
     }
@@ -140,6 +143,7 @@ public class ArticleDao extends SqlSessionDaoSupport {
      * @param article
      * @return
      */
+    @CacheEvict(value = "article",key = "#article.id")
     public int update(Article article) {
         return getSqlSession().update("Article.updateArticle", article);
     }
@@ -151,6 +155,7 @@ public class ArticleDao extends SqlSessionDaoSupport {
      * @param column
      * @return
      */
+    @CacheEvict(value = "article",key = "#article.id")
     public int update(Long id, String column) {
         Map parameters = Maps.newHashMap();
         parameters.put("id", id);

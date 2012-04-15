@@ -1,6 +1,7 @@
 package cn.edu.sdufe.cms.common.dao.article;
 
 import cn.edu.sdufe.cms.common.entity.article.Comment;
+import com.google.common.collect.Maps;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
@@ -33,7 +34,7 @@ public class CommentDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    @Cacheable(value = "commentRecent")
+    @Cacheable(value = "comment")
     public List<Comment> getRecentComment() {
         return getSqlSession().selectList("Comment.getCommentRecent");
     }
@@ -43,7 +44,7 @@ public class CommentDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    @Cacheable(value = "commentAll")
+    @Cacheable(value = "comment")
     public List<Comment> findAll() {
         return getSqlSession().selectList("Comment.getAll");
     }
@@ -53,7 +54,7 @@ public class CommentDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    @Cacheable(value = "commentCount")
+    @Cacheable(value = "comment_all_num")
     public Long count() {
         return (Long) getSqlSession().selectOne("Comment.getCount");
     }
@@ -61,10 +62,12 @@ public class CommentDao extends SqlSessionDaoSupport {
     /**
      * 获取编号为id的文章的评论数量
      *
+     * @param articleId
      * @return
      */
-    public Long count(Long id) {
-        return (Long) getSqlSession().selectOne("Comment.getCountByArticleId", id);
+    @Cacheable(value = "comment_num")
+    public Long count(Long articleId) {
+        return (Long) getSqlSession().selectOne("Comment.getCountByArticleId", articleId);
     }
 
     /**
@@ -78,7 +81,7 @@ public class CommentDao extends SqlSessionDaoSupport {
     }
 
     /**
-     * 删除评论
+     * 任务删除评论
      *
      * @return
      */
@@ -97,11 +100,26 @@ public class CommentDao extends SqlSessionDaoSupport {
     }
 
     /**
+     * 更新评论
+     *
+     * @param id
+     * @param column
+     * @return
+     */
+    public int update(Long id, String column) {
+        Map parameters = Maps.newHashMap();
+        parameters.put("id", id);
+        parameters.put("column", column);
+        return getSqlSession().update("Comment.updateCommentBool", parameters);
+    }
+
+    /**
      * 搜索评论
      *
      * @param parameters
      * @return
      */
+    @Cacheable(value = "comment")
     public List<Comment> search(Map<String, Object> parameters) {
         return getSqlSession().selectOne("Comment.searchComment", parameters);
     }

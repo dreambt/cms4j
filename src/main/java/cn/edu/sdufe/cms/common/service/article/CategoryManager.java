@@ -23,7 +23,7 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class CategoryManager {
 
-    private static Logger logger = LoggerFactory.getLogger(CategoryManager.class);
+    private static final Logger logger = LoggerFactory.getLogger(CategoryManager.class);
 
     private CacheManager ehcacheManager;
 

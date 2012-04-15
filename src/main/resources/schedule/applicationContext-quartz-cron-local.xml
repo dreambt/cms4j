@@ -37,9 +37,9 @@
 		<property name="targetObject" ref="cronJob" />
 		<property name="targetMethod" value="execute" />
 		<!-- 同一任务在前一次执行未完成而Trigger时间又到时是否并发开始新的执行, 默认为true. -->
-		<property name="concurrent" value="true" />
+		<property name="concurrent" value="false" />
 	</bean>
 
 	<!-- 被Cron执行的普通Spring Bean -->
-	<bean id="cronJob" class="cn.edu.sdufe.cms.schedule.DataCleanJob" />
+	<bean id="cronJob" class="cn.edu.sdufe.cms.schedule.QuartzJob" />
 </beans>

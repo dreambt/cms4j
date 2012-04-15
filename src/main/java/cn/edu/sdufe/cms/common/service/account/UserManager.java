@@ -33,7 +33,7 @@ import java.util.Map;
 @Transactional(readOnly = true)
 public class UserManager {
 
-    private static Logger logger = LoggerFactory.getLogger(UserManager.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserManager.class);
 
     private UserDao userDao;
 
