@@ -11,7 +11,6 @@
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
     <title>404 - 页面不存在</title>
-
     <meta charset="UTF-8">
     <meta name="description" content="">
     <meta name="keywords" content="">
@@ -37,24 +36,17 @@
     <script src="${ctx}/static/js/modernizr-1.7.min.js"></script>
 </head>
 <body class="error-page">
-
 <article class="error-wrapper">
-
     <div class="error-code">
         <h1>404<span>Whoops! Page not found&#8230;</span></h1>
     </div>
-
     <div class="error-content">
         <p>对不起, ${message}. 如果有什么疑问, 可以 <a href="mailto:dreambt@gmail.com">联系我们</a> 或者 搜索:</p>
         <form>
             <input type="text" name="search" value="">
             <button type="submit">搜索</button> or <a href="${ctx}"><button type="submit">返回首页</button></a>
         </form>
-        ${response}
     </div>
-
 </article>
-
-
 </body>
 </html>

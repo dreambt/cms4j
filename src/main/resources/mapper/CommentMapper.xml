@@ -92,7 +92,7 @@
     <!-- 插入评论 -->
     <insert id="saveComment" parameterType="Comment" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO cms_comment( id, article_id, username, message, post_ip, STATUS, created_date, deleted)
-		VALUES (#{id}, #{articleId}, #{username},#{message},#{postIP},0,null,0)
+		VALUES (#{id}, #{article.id}, #{username},#{message},#{postIP},0,null,0)
 	</insert>
 
     <!-- 删除评论 -->

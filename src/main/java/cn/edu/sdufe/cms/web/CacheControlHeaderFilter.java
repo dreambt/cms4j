@@ -36,7 +36,7 @@ public class CacheControlHeaderFilter implements Filter {
     }
 
     /**
-     * @see javax.servlet.Filter#init(javax.servlet.FilterConfig)
+     * @see Filter#init(FilterConfig)
      */
     @Override
     public void init(FilterConfig filterConfig) {
@@ -49,7 +49,7 @@ public class CacheControlHeaderFilter implements Filter {
     }
 
     /**
-     * @see javax.servlet.Filter#destroy()
+     * @see Filter#destroy()
      */
     @Override
     public void destroy() {

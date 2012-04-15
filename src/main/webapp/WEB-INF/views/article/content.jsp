@@ -20,10 +20,10 @@
     <link rel="stylesheet" type="text/css" href="${ctx}/static/css/ui.totop.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/static/Ueditor/themes/default/ueditor.css">
     <link href="${ctx}/static/jquery-validation/1.9.0/validate.min.css" type="text/css" rel="stylesheet"/>
-    <link href="${ctx}/static/jquery-jRate/jquery.jRate.min.css" type="text/css" rel="stylesheet"/>
+    <link href="${ctx}/static/jquery/comment.css" type="text/css" rel="stylesheet"/>
     <script src="${ctx}/static/jquery-validation/1.9.0/jquery.validate.min.js" type="text/javascript"></script>
     <script src="${ctx}/static/jquery-validation/1.9.0/messages_cn.js" type="text/javascript"></script>
-    <script src="${ctx}/static/jquery-jRate/jquery.jRate.min.js" type="text/javascript"></script>
+    <script src="${ctx}/static/jquery/comment.js" type="text/javascript"></script>
     <script src="${ctx}/static/js/jquery.ui.totop.js" type="text/javascript"></script>
 </head>
 <body>
@@ -80,30 +80,21 @@
                 </div>
                 <div id="comment">
                     <form:form id="commentForm" modelAttribute="comment" action="${ctx}/comment/create" method="post">
-                        <div id="comment-title"><h4>发表评论</h4></div>
-                        <div class="comment-item-wrapper">
-                            <input type="hidden" name="article.id" value="${article.id}"/>
-                            <script type="text/javascript" src="${ctx}/static/Ueditor/editor_config.js"></script>
-                            <script type="text/javascript" src="${ctx}/static/Ueditor/editor_all.js"></script>
-                            <script type="text/plain" id="myEditor"></script>
-                            <script type="text/javascript">
-                                var editor = new baidu.editor.ui.Editor({
-                                    toolbars:[
-                                        ['Undo', 'Redo', '|', 'Bold', 'Italic', 'Underline', 'StrikeThrough', 'RemoveFormat', '|', 'ForeColor', 'BackColor', 'InsertUnorderedList', 'InsertOrderedList', '|', 'Emotion', 'Link', 'Unlink', 'Date', 'Time', 'BlockQuote', 'HighlightCode', 'Preview']
-                                    ],
-                                    minFrameHeight:200,
-                                    maximumWords:500,
-                                    textarea:'message',
-                                    elementPathEnabled:false
-                                });
-                                editor.render("myEditor");
-                            </script>
-                            <label>邮箱: </label><input type="text" id="subject" name="username" class="required email"
-                                                      value="<shiro:principal property="loginName"/>"/>
-                            <label>验证码: </label><input type="text" id="code" name="code"/>
-                            <label>评分: </label>
-
-                            <div id="rating"></div>
+                            <div class="quiz">
+                                <h3>我要评论</h3>
+                                <div class="quiz_content">
+                                    <input type="hidden" name="article.id" value="${article.id}"/>
+                                    <div class="l_text"><label class="m_flo">邮  箱：</label>
+                                        <input type="text" id="subject" name="username" class="required email" value="<shiro:principal property="loginName"/>"/>
+                                    </div>
+                                    <div class="goods-comm">
+                                        <div class="goods-comm-stars"><span class="star_l">满意度：</span>
+                                            <div class="rate-comm" id="rate-comm-1">&nbsp;</div>
+                                        </div>
+                                    </div>
+                                    <div class="l_text"><label class="m_flo">内  容：</label><textarea class="text" id="myEditor" name="message"></textarea><span class="tr">字数限制为5-200个</span></div>
+                                    <div class="l_text"><label class="m_flo">验证码：</label><input type="text" id="captcha" name="captcha" /><img src="${ctx}/captcha.png" alt="验证码"style="cursor:pointer;vertical-align:text-bottom;" onclick="this.src=this.src+'?'+Math.random();"></div>
+                                </div>
                             <input type="submit" class="input-submit" value=" 提 交 "/>
                         </div>
                     </form:form>
@@ -116,7 +107,6 @@
 </div>
 <script>
     $(function () {
-        $("#rating").jRate();
         $("#commentForm").validate();
         $().UItoTop({ easingType:'easeOutQuart' });
     });

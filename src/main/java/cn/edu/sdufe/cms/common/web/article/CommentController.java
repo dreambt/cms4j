@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -28,8 +30,6 @@ public class CommentController {
 
     private CommentManager commentManager;
 
-    private HttpServletRequest request;
-
     /**
      * 添加评论
      *
@@ -39,9 +39,15 @@ public class CommentController {
      */
     @RequiresPermissions("comment:create")
     @RequestMapping(value = "create", method = RequestMethod.POST)
-    public String createComment(Comment comment, RedirectAttributes redirectAttributes) {
+    public String createComment(Comment comment, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+        // 验证验证码是否正确
+        HttpSession session = request.getSession();
+
+
+        // 设置留言者IP
         comment.setPostHostIP(request.getRemoteAddr());   //TODO 获得ip
-        if(commentManager.save(comment) > 0) {
+
+        if (commentManager.save(comment) > 0) {
             redirectAttributes.addFlashAttribute("info", "添加评论成功");
         } else {
             redirectAttributes.addFlashAttribute("error", "添加评论失败");
@@ -58,7 +64,7 @@ public class CommentController {
      */
     @RequiresPermissions("comment:list")
     @RequestMapping(value = {"listAll", ""})
-    public String listAllComment(Model model, RedirectAttributes redirectAttributes) {
+    public String listAllComment(Model model) {
         model.addAttribute("comments", commentManager.getAll());
         return "dashboard/comment/listAll";
     }
@@ -138,11 +144,6 @@ public class CommentController {
     @Autowired
     public void setCommentManager(@Qualifier("commentManager") CommentManager commentManager) {
         this.commentManager = commentManager;
-    }
-
-    @Autowired(required = false)
-    public void setRequest(HttpServletRequest request) {
-        this.request = request;
     }
 
 }
