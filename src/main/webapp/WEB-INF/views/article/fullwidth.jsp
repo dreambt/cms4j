@@ -47,6 +47,7 @@
             </div>
             ${article.message}
         </div>
+        <c:if test="${not empty relatedArticles}">
         <div id="recentPostList"><!-- relatedPostList -->
             <div id="related-post-title"><h4>相关文章</h4></div>
             <div class="related-item-wrapper">
@@ -61,6 +62,7 @@
                 <!-- some words -->
             </div>
         </div>
+        </c:if>
         <c:if test="${article.allowComment}">
             <div id="commentList">
                 <div id="commentList-title"><h4>相关评论</h4></div>
