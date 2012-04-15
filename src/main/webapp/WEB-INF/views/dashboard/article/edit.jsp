@@ -51,7 +51,7 @@
         </c:forEach></form:select>
         <label>是否置顶</label> <input type="checkbox" name="top" value="${article.top}" <c:if test="${article.top}">checked="checked"</c:if> />
         <label>允许评论</label> <input type="checkbox" name="allowComment" value="${article.allowComment}" <c:if test="${article.allowComment}">checked="checked"</c:if> /><br />
-        <label>文章标题</label> <input type="text" id="text" name="subject" class="medium required" size="20" original-title="请输入文章标题" value="${article.subject}" />
+        <label>文章标题</label> <input type="text" id="text" name="subject" class="medium required" size="206" original-title="请输入文章标题" value="${article.subject}" />
         <script type="text/plain" id="myEditor">${article.message}</script>
             <script type="text/javascript">
                 var editor = new baidu.editor.ui.Editor({
@@ -72,7 +72,7 @@
     $(function () {
         $("#form1").validate({
             event:'submit',
-            rules:{subject:{required:true, maxlength:20}}
+            rules:{subject:{required:true, maxlength:26}}
         });
     });
 </script>
