@@ -52,10 +52,15 @@ public class CommentController {
      */
     @RequiresPermissions("comment:list")
     @RequestMapping(value = {"listAll", ""})
-    public String listAllComment(Model model) {
+    public String listAllComment(Model model, RedirectAttributes redirectAttributes) {
         List<Comment> comments = commentManager.getAll();
-        model.addAttribute("comments", comments);
-        return "dashboard/comment/listAll";
+        if (comments.size() > 0) {
+            redirectAttributes.addFlashAttribute("error", "请选择要操作的评论.");
+            return "redirect:dashboard/index";
+        } else {
+            model.addAttribute("comments", comments);
+            return "dashboard/comment/listAll";
+        }
     }
 
     /**

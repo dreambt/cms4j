@@ -40,14 +40,6 @@
             </ul>
         </li>
         </shiro:hasPermission>
-        <shiro:hasPermission name="user:list">
-        <li><a href="" class="top_level"><img src="${ctx}/static/dashboard/images/icons/Users.png"/>用户管理</a>
-            <ul class="drawer">
-                <li><a href="${ctx}/account/user/create">添加用户</a></li>
-                <li><a href="${ctx}/account/user/list">查看所有用户</a></li>
-            </ul>
-        </li>
-        </shiro:hasPermission>
         <shiro:hasPermission name="comment:list">
         <li><a href="${ctx}/comment/listAll"><img src="${ctx}/static/dashboard/images/icons/SpeechBubbles2.png"/>评论管理</a></li>
         </shiro:hasPermission>
@@ -59,12 +51,22 @@
            </ul>
         </li>
         </shiro:hasPermission>
+        <shiro:hasPermission name="user:list">
+            <li><a href="" class="top_level"><img src="${ctx}/static/dashboard/images/icons/Users.png"/>用户管理</a>
+                <ul class="drawer">
+                    <li><a href="${ctx}/account/user/create">添加用户</a></li>
+                    <li><a href="${ctx}/account/user/list">查看所有用户</a></li>
+                </ul>
+            </li>
+        </shiro:hasPermission>
+        <shiro:hasPermission name="link:list">
         <li><a href="${ctx}/dashboard/fridendLink" class="top_level"><img src="${ctx}/static/dashboard/images/icons/AddressBook.png"/>友情链接管理</a>
             <ul class="drawer">
                 <li><a href="${ctx}/link/create">添加友情链接</a></li>
                 <li><a href="${ctx}/link/listAll">友情链接列表</a></li>
             </ul>
         </li>
+        </shiro:hasPermission>
         <li><a href="${ctx}/dashboard/FAQs"><img src="${ctx}/static/dashboard/images/icons/InfoAbout.png"/>文档 F&Q</a></li>
     </ul>
     <form id="search_side"><input class="round_all" type="text" value="Search..." onClick="value=''"></form>

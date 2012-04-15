@@ -28,8 +28,8 @@
                 /login = authc
                 /logout = logout
                 /static/** = anon
-                /dashboard** = user
-                /account** = user
+                /dashboard/** = user
+                /account/** = user
                 <!-- 文章管理 -->
                 /article/create = perms["article:create"]
                 /article/edit/** = perms["article:edit"]
@@ -54,9 +54,9 @@
                 /gallery/delete/** = perms["gallery:delete"]
                 /gallery/listAll = perms["gallery:list"]
                 <!-- 菜单管理 -->
-                /category**= perms["category:list"]
+                /category/**= perms["category:list"]
                 <!-- 友情链接管理 -->
-                /link** = perms["link:list"]
+                /link/** = perms["link:list"]
             </value>
         </property>
     </bean>
