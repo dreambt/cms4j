@@ -50,6 +50,10 @@ public class LinkDetailController {
      */
     @RequestMapping(value = "save/{id}")
     public String save(@PathVariable Long id, @Valid @ModelAttribute Link link, RedirectAttributes redirectAttributes) {
+        if (null == link) {
+            redirectAttributes.addAttribute("error", "该链接不存在，请刷新重试");
+            return "redirect:/link/listAll";
+        }
         linkManager.update(link);
         return "redirect:/link/listAll";
     }

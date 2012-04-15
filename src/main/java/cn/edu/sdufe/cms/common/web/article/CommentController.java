@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -39,8 +41,12 @@ public class CommentController {
     @RequestMapping(value = "create", method = RequestMethod.POST)
     public String createComment(Comment comment, RedirectAttributes redirectAttributes) {
         comment.setPostHostIP(request.getRemoteAddr());   //TODO 获得ip
-        commentManager.save(comment);
-        redirectAttributes.addFlashAttribute("info", "添加评论成功");
+        if(commentManager.save(comment) > 0) {
+            redirectAttributes.addFlashAttribute("info", "添加评论成功");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "添加评论失败");
+        }
+
         return "redirect:/article/content/" + comment.getArticle().getId();
     }
 
@@ -53,14 +59,43 @@ public class CommentController {
     @RequiresPermissions("comment:list")
     @RequestMapping(value = {"listAll", ""})
     public String listAllComment(Model model, RedirectAttributes redirectAttributes) {
-        List<Comment> comments = commentManager.getAll();
-        if (comments.size() > 0) {
-            redirectAttributes.addFlashAttribute("error", "请选择要操作的评论.");
-            return "redirect:dashboard/index";
-        } else {
-            model.addAttribute("comments", comments);
-            return "dashboard/comment/listAll";
+        model.addAttribute("comments", commentManager.getAll());
+        return "dashboard/comment/listAll";
+    }
+
+    /**
+     * 审核编号为id的评论
+     *
+     * @return
+     */
+    @RequestMapping(value = "audit/{id}", method = RequestMethod.GET)
+    public String auditComment(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        if (null == commentManager.get(id)) {
+            redirectAttributes.addAttribute("error", "该评论不存在，请刷新重试");
+            return "redirect:/comment/listAll";
         }
+        if (commentManager.update(id, "status") > 0) {
+            redirectAttributes.addFlashAttribute("info", "审核评论 " + id + " 成功.");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "审核评论 " + id + " 失败.");
+        }
+        return "redirect:/comment/listAll";
+    }
+
+    /**
+     * 删除编号为id的评论
+     *
+     * @return
+     */
+    @RequiresPermissions("comment:delete")
+    @RequestMapping(value = "delete/{id}")
+    public String deleteComment(@PathVariable("id") Long id, @ModelAttribute("comment") Comment comment, RedirectAttributes redirectAttributes) {
+        if (commentManager.update(id, "deleted") > 0) {
+            redirectAttributes.addFlashAttribute("info", "删除评论 " + id + " 成功.");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "删除评论 " + id + " 失败");
+        }
+        return "redirect:/comment/listAll";
     }
 
     /**

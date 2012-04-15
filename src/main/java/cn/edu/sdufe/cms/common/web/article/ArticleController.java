@@ -299,6 +299,10 @@ public class ArticleController {
     @RequiresPermissions("article:edit")
     @RequestMapping(value = "top/{id}")
     public String topArticle(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        if (null == articleManager.findOne(id)) {
+            redirectAttributes.addFlashAttribute("error", "该文章不存在，请刷新重试");
+            return "redirect:/article/listAll";
+        }
         if (articleManager.update(id, "top") > 0) {
             redirectAttributes.addFlashAttribute("info", "操作文章" + id + " 成功.");
         } else {
@@ -316,6 +320,10 @@ public class ArticleController {
     @RequiresPermissions("article:edit")
     @RequestMapping(value = "allow/{id}")
     public String allowArticle(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        if (null == articleManager.findOne(id)) {
+            redirectAttributes.addFlashAttribute("error", "该文章不存在，请刷新重试");
+            return "redirect:/article/listAll";
+        }
         if (articleManager.update(id, "allow_comment") > 0) {
             redirectAttributes.addFlashAttribute("info", "操作文章" + id + " 成功.");
         } else {
@@ -333,6 +341,10 @@ public class ArticleController {
     @RequiresPermissions("article:edit")
     @RequestMapping(value = "audit/{id}")
     public String auditArticle(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        if (null == articleManager.findOne(id)) {
+            redirectAttributes.addFlashAttribute("error", "该文章不存在，请刷新重试");
+            return "redirect:/article/listAll";
+        }
         if (articleManager.update(id, "status") > 0) {
             redirectAttributes.addFlashAttribute("info", "操作文章 " + id + " 成功.");
         } else {

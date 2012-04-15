@@ -56,6 +56,7 @@ public class CategoryDetailController {
     public String save(@Valid @ModelAttribute("category") Category category, RedirectAttributes redirectAttributes) {
         if(null == category) {
             redirectAttributes.addFlashAttribute("error", "该菜单不存在，请刷新重试.");
+            return "redirect:/category/listAll";
         }
         if (categoryManager.update(category)>0) {
             redirectAttributes.addFlashAttribute("info", "修改菜单成功.");

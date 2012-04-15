@@ -77,14 +77,14 @@ public class CommentManager {
 
     /**
      * 更新评论
-     *
-     * @param comment
+     * @param id
+     * @param column
      * @return
      */
     @Transactional(readOnly = false)
-    public int update(Comment comment) {
-        logger.info("Update Comment: ", comment.toString());
-        return commentDao.update(comment);
+    public int update(Long id, String column) {
+        logger.info("Update Comment: ", id + column);
+        return commentDao.update(id, column);
     }
 
     /**

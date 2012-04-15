@@ -40,7 +40,7 @@ public class ImageDetailController {
     @RequestMapping(value = "edit/{id}")
     public String edit(@Valid @ModelAttribute Image image, Model model) {
         if (null == image) {
-            model.addAttribute("error", "该相册不存在，请刷新重试");
+            model.addAttribute("error", "该图片不存在，请刷新重试");
             return "redirect:/image/listAll";
         }
         model.addAttribute("image", image);
@@ -62,7 +62,7 @@ public class ImageDetailController {
     public String save(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request,
                        @PathVariable Long id, @Valid @ModelAttribute("image") Image image, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors() || null == image) {
-            redirectAttributes.addFlashAttribute("error", "该相册不存在，请刷新重试");
+            redirectAttributes.addFlashAttribute("error", "该图片不存在，请刷新重试");
             return "redirect:/image/listAll";
         }
         if (imageManager.update(file, request, image) <= 0) {

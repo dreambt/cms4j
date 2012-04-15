@@ -71,6 +71,10 @@ public class LinkController {
      */
     @RequestMapping(value = "audit/{id}", method = RequestMethod.GET)
     public String audit(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        if (null == linkManager.getLink(id)) {
+            redirectAttributes.addAttribute("error", "该链接不存在，请刷新重试");
+            return "redirect:/link/listAll";
+        }
         if (linkManager.update(id, "status") > 0) {
             redirectAttributes.addFlashAttribute("info", "操作链接" + id + " 成功.");
         } else {

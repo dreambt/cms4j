@@ -12,7 +12,22 @@
         <result property="lastModifiedDate" column="last_modified_date"/>
         <result property="createdDate" column="created_date"/>
         <result property="deleted" column="deleted"/>
+        <association property="article" column="article_id" javaType="Article" columnPrefix="article_">
+            <result property="subject" column="subject"/>
+        </association>
     </resultMap>
+
+    <!--
+        获取所有评论
+    -->
+    <select id="getAll" resultMap="commentDetailMap">
+        SELECT C.id, article_id, subject as article_subject, C.username, C.message, C.post_ip, C.status, C.created_date, C.last_modified_date, C.deleted
+        FROM cms_comment as C
+        LEFT OUTER JOIN cms_article as A
+        ON C.article_id=A.id
+        ORDER BY A.id DESC
+        LIMIT 30
+	</select>
 
     <!--
          获取分类id的所有评论
@@ -20,7 +35,7 @@
     <select id="getCommentByArticleId" parameterType="Long" resultMap="commentDetailMap">
 		SELECT id, username, message, post_ip, STATUS , last_modified_date, created_date, deleted
 		FROM cms_comment
-		WHERE article_id =2
+		WHERE article_id =#{articleId}
 		AND STATUS =1
 		AND deleted =0
 		ORDER BY id ASC
@@ -86,27 +101,6 @@
 		WHERE deleted = 1
         limit 500
 	</delete>
-
-    <!-- 更新评论 -->
-    <update id="updateComment" parameterType="Comment">
-        UPDATE cms_comment
-        <set>
-            <if test="username != null and username !=''">
-                username=#{username},
-            </if>
-            <if test="message != null and message !=''">
-                message=#{message},
-            </if>
-            <if test="postIp > 0">
-                post_ip=#{postIp},
-            </if>
-            <if test="status != null and status !=''">
-                STATUS=#{status},
-            </if>
-            last_modified_date=null
-        </set>
-        WHERE id=#{id}
-    </update>
 
     <!-- 更新评论bool字段 -->
     <update id="updateCommentBool" parameterType="map">
