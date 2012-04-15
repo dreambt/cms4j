@@ -1,6 +1,5 @@
 package cn.edu.sdufe.cms.common.web.link;
 
-import cn.edu.sdufe.cms.common.entity.article.Comment;
 import cn.edu.sdufe.cms.common.entity.link.Link;
 import cn.edu.sdufe.cms.common.service.link.LinkManager;
 import org.springframework.beans.factory.annotation.Autowired;

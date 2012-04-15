@@ -28,7 +28,8 @@
                 /login = authc
                 /logout = logout
                 /static/** = anon
-                /dashboard/** = user
+                /dashboard** = user
+                /account** = user
                 <!-- 文章管理 -->
                 /article/create = perms["article:create"]
                 /article/edit/** = perms["article:edit"]
@@ -40,12 +41,6 @@
                 /comment/save/** = perms["comment:save"]
                 /comment/delete/** = perms["comment:delete"]
                 /comment/listAll = perms["comment:list"]
-                <!-- 菜单管理 -->
-                /category/create = perms["category:create"]
-                /category/edit/** = perms["category:edit"]
-                /category/save/** = perms["category:save"]
-                /category/delete/** = perms["category:delete"]
-                /category/listAll = perms["category:list"]
                 <!-- 用户管理 -->
                 /account/create = perms["user:create"]
                 /account/edit/** = perms["user:edit"]
@@ -58,6 +53,10 @@
                 /gallery/save/** = perms["gallery:save"]
                 /gallery/delete/** = perms["gallery:delete"]
                 /gallery/listAll = perms["gallery:list"]
+                <!-- 菜单管理 -->
+                /category**= perms["category:list"]
+                <!-- 友情链接管理 -->
+                /link** = perms["link:list"]
             </value>
         </property>
     </bean>

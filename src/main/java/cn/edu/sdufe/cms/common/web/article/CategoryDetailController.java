@@ -3,7 +3,6 @@ package cn.edu.sdufe.cms.common.web.article;
 import cn.edu.sdufe.cms.common.entity.article.Category;
 import cn.edu.sdufe.cms.common.entity.article.ShowTypeEnum;
 import cn.edu.sdufe.cms.common.service.article.CategoryManager;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -34,7 +33,6 @@ public class CategoryDetailController {
      * @param model
      * @return
      */
-    @RequiresPermissions("category:edit")
     @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
     public String edit(@Valid @ModelAttribute("category") Category category, Model model) {
         if(null == category) {
@@ -54,7 +52,6 @@ public class CategoryDetailController {
      * @param redirectAttributes
      * @return
      */
-    @RequiresPermissions("category:save")
     @RequestMapping(value = "save/{id}")
     public String save(@Valid @ModelAttribute("category") Category category, RedirectAttributes redirectAttributes) {
         if(null == category) {
