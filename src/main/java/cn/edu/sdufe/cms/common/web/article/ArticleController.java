@@ -65,6 +65,28 @@ public class ArticleController {
     }
 
     /**
+     * 获取编号为id的文章正文
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "content/full/{id}", method = RequestMethod.GET)
+    public String fullOfArticle(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
+        Article article = articleManager.findForView(id);
+        if (null == article) {
+            redirectAttributes.addFlashAttribute("message", "不存在编号为 " + id + " 的文章");
+            return "redirect:/error/404";
+        }
+
+        //article.setMessage(Encodes.unescapeHtml(article.getMessage()));
+
+        model.addAttribute("article", article);
+        model.addAttribute("categories", categoryManager.getNavCategory());
+        model.addAttribute("links", linkManager.getAllLink());
+        return "article/fullwidth";
+    }
+
+    /**
      * 后台获取所有文章列表
      *
      * @param model
