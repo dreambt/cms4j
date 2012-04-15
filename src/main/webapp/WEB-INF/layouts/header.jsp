@@ -38,7 +38,7 @@
                                     <c:when test="${subCategory.showType eq 'GALLERY'}"><li><a href="${ctx}/gallery/photo/${subCategory.url}" class="cufon">${subCategory.categoryName}</a></li></c:when>
                                     <c:when test="${subCategory.showType eq 'ALBUM'}"><li><a href="${ctx}/gallery/album/${subCategory.url}" class="cufon">${subCategory.categoryName}</a></li></c:when>
                                     <c:when test="${subCategory.showType eq 'CONTENT'}"><li><a href="${ctx}/article/content/${subCategory.url}" class="cufon">${subCategory.categoryName}</a></c:when>
-                                    <c:when test="${subCategory.showType eq 'FULL'}"><li><a href="${ctx}/article/content/full/${subCategoryao.url}" class="cufon">${subCategory.categoryName}</a></c:when>
+                                    <c:when test="${subCategory.showType eq 'FULL'}"><li><a href="${ctx}/article/content/full/${subCategory.url}" class="cufon">${subCategory.categoryName}</a></c:when>
                                 </c:choose>
                             </c:forEach>
                         </ul>
