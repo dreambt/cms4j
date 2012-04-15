@@ -73,7 +73,7 @@
             页码 &nbsp;:&nbsp;
             <c:choose>
                 <c:when test="${total <= 132}">
-                    <c:forEach begin="1" end="${pageCount}" step="1" varStatus="var">
+                    <c:forEach begin="1" end="${pageCount>1?pageCount:1}" step="1" varStatus="var">
                         <span class="blog-button-page pagination">${var.index}</span>&nbsp;
                     </c:forEach>
                 </c:when>
@@ -90,6 +90,7 @@
     $(function () {
         var albums = $("#album_load");
         var pager = $(".blog-pagination");
+        pager.find("span:first").css('background-color','#e4e4e4').css('color','#ff4e00').css('cursor','default');
         PageClick = function (pageIndex, total, spanInterval) {
             //索引从1开始
             //将当前页索引转为int类型
