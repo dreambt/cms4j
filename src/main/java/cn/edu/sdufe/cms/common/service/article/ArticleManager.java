@@ -213,8 +213,7 @@ public class ArticleManager {
             ShiroDbRealm.ShiroUser shiroUser = (ShiroDbRealm.ShiroUser) SecurityUtils.getSubject().getPrincipal();
             article.setUser(new User(shiroUser.getId()));
 
-            // TODO 看一下这里导致的前台问题
-            // 进行HTML编码
+            // 进行HTML编码, 否则前台可能破页
             article.setMessage(Encodes.escapeHtml(article.getMessage()));
             article.setDigest(Encodes.escapeHtml(article.getDigest()));
 
@@ -353,7 +352,7 @@ public class ArticleManager {
             // 关键词由任务生成
             article.setKeyword("");
 
-            // 进行HTML编码
+            // 进行HTML编码, 否则前台可能破页
             article.setMessage(Encodes.escapeHtml(article.getMessage()));
             article.setDigest(Encodes.escapeHtml(article.getDigest()));
 
