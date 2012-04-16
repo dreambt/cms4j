@@ -35,7 +35,7 @@
 
             <div class="toggle_container">
                 <div class="info" style="float:left;margin-left: 15%;margin-top: 15px;">
-                    <input type="hidden" name="id" value="${image.id}" />
+                    <input id="picID" type="hidden" name="id" value="${image.id}" />
                     <input type="file" id="upload" name="file"><br> <br>
                     图片标题：<br/><input type="text" class="required" name="title" size="52" value="${image.title}"> <br/> <br/>
                     首页展示：<input type="checkbox" name="showIndex" style="float: none" value="${image.showIndex}" <c:if test="${image.showIndex}">checked="checked"</c:if>>  <br/> <br/>
@@ -45,20 +45,30 @@
                 </div>
             </div>
         </div>
-        <button type="submit" style="margin-left: 23%;width: 100px;">提交</button>
+        <button type="submit" style="margin-left: 23%;width: 100px;" id="submit">提交</button>
     </form:form>
 </div>
 <script type="text/javascript">
     $(function () {
+        var uploadVal=$('#upload').val();
         $('#upload').live('change', function () {
-            var b= $(this).val();
-            var c=(b.substr(b.length -5)).substr((b.substr(b.length -5)).indexOf('.')+1).toLowerCase();
+            var b= uploadVal;
+            if(!checkType(b)){ alert("不能上传非gif、jpg、png、bmp类型的文件！请重新选择要上传的图片文件！");}
+        });
+        //检验上传文件是否是图片
+        function checkType(uploadDom){
+            var c=(uploadDom.substr(uploadDom.length -5)).substr((uploadDom.substr(uploadDom.length -5)).indexOf('.')+1).toLowerCase();
             if(c=='gif'||c=='jpg'||c=='png'||c=="bmp"){
-               return true;
+                return true;
             }else{
-                alert("不能上传非gif、jpg、png、bmp类型的文件！请重新选择要上传的图片文件！");
                 return false;
             }
+        }
+         //如果新上传则必须要选择图片
+        $('#submit').click(function(){
+            if($('#picID').val()==""&&uploadVal==""&&!checkType(uploadVal)){
+                alert("请您选择要上传的图片再提交！");
+                return false; }
         });
        $('form#image').validate({
             event:'submit'
