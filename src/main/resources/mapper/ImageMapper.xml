@@ -79,7 +79,6 @@
             </if>
             last_modified_date=null
         </set>
-
         WHERE id=#{id}
 	</update>
 
@@ -108,6 +107,6 @@
             </if>
         </where>
         ORDER BY ${Sort} ${Direction}
-        LIMIT 30
+        LIMIT 10
     </select>
 </mapper>

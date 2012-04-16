@@ -59,7 +59,7 @@ public class UserDetailController {
             return updateForm(user, redirectAttributes);
         }
 
-        userManager.save(user);
+        userManager.update(user);
         redirectAttributes.addFlashAttribute("info", "保存用户成功");
         return "redirect:/account/user/list";
     }

@@ -86,6 +86,9 @@
             <if test="email != null and email !=''">
                 email=#{email},
             </if>
+            <if test="groupList != null and groupId > 0">
+                group_id=#{groupId},
+            </if>
             <if test="username != null and username !=''">
                 username=#{username},
             </if>

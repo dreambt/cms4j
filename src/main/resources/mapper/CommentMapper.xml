@@ -39,8 +39,7 @@
 		WHERE article_id =#{articleId}
 		AND STATUS =1
 		AND deleted =0
-		ORDER BY id ASC
-		LIMIT 0 , 30
+		ORDER BY id DESC
 	</select>
 
     <!--

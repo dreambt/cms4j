@@ -105,6 +105,7 @@
                 依赖多年的行业经验，为学员提供职业规划服务，并利用人脉资源，为学员和金融单位之间牵线搭桥。</p>
         </div>
     </div>
+    <%@ include file="/WEB-INF/layouts/teacher.jsp" %>
     <!-- BEGIN BOTTOM BOX -->
     <div id="bottom-box">
         <div id="bottom-box-inner">
