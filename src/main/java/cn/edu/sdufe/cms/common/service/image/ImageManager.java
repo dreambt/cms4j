@@ -109,11 +109,11 @@ public class ImageManager {
 
             ImageThumb imageThumb = new ImageThumb();
             try {
-                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "dashboard-thumb\\" + fileName, 50, 57);
-                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "photo-thumb\\" + fileName, 200, 122);
-                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "album-thumb\\" + fileName, 218, 194);
-                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "index-thumb\\" + fileName, 460, 283);
-                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "index-thumb\\" + fileName, 134, 134);
+                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "thumb-50x57\\" + fileName, 50, 57);
+                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "thumb-134x134\\" + fileName, 134, 134);
+                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "thumb-200x122\\" + fileName, 200, 122);
+                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "thumb-218x194\\" + fileName, 218, 194);
+                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "thumb-460x283\\" + fileName, 460, 283);
             } catch (Exception e) {
                 logger.info(e.getMessage());
             }
@@ -178,18 +178,20 @@ public class ImageManager {
             //图片来源路径
             ImageThumb imageThumb = new ImageThumb();
             try {
-                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "dashboard-thumb\\" + fileName, 50, 57);
-                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "photo-thumb\\" + fileName, 200, 122);
-                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "album-thumb\\" + fileName, 218, 194);
-                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "index-thumb\\" + fileName, 460, 283);
+                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "thumb-50x57\\" + fileName, 50, 57);
+                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "thumb-134x134\\" + fileName, 134, 134);
+                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "thumb-200x122\\" + fileName, 200, 122);
+                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "thumb-218x194\\" + fileName, 218, 194);
+                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "thumb-460x283\\" + fileName, 460, 283);
 
                 // TODO 删除时只删除数据库，硬盘文件起任务轮询删除
                 // 成功上传新图片以后再删除旧图片，防止事务失败无法回滚图片
                 this.deletePic("gallery-big\\" + image.getImageUrl());
-                this.deletePic("dashboard-thumb\\" + image.getImageUrl());
-                this.deletePic("photo-thumb\\" + image.getImageUrl());
-                this.deletePic("album-thumb\\" + image.getImageUrl());
-                this.deletePic("index-thumb\\" + image.getImageUrl());
+                this.deletePic("thumb-50x57\\" + image.getImageUrl());
+                this.deletePic("thumb-134x134\\" + image.getImageUrl());
+                this.deletePic("thumb-200x122\\" + image.getImageUrl());
+                this.deletePic("thumb-218x194\\" + image.getImageUrl());
+                this.deletePic("thumb-460x283\\" + image.getImageUrl());
             } catch (Exception e) {
                 logger.info(e.getMessage());
             }

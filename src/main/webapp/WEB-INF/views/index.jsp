@@ -37,7 +37,7 @@
 <div id="slideshow">
     <c:forEach items="${images}" var="image" begin="0" step="1">
     <div class="slide-text">
-        <img src="${ctx}/static/uploads/gallery/index-thumb/${image.imageUrl}" alt="" class="slidehalf"/>
+        <img src="${ctx}/static/uploads/gallery/thumb-460x283/${image.imageUrl}" alt="" class="slidehalf"/>
         <h2>${image.title}</h2>
         <p>${image.description}</p>
         <a class="查看更多" href="#"></a>

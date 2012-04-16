@@ -67,9 +67,9 @@
                 <c:forEach items="${images}" var="image" begin="0" step="1">
                 <tr>
                     <td><input type="checkbox" name="isSelected"  value="${image.id}"></td>
-                    <td><a href="${ctx}/static/uploads/gallery/gallery-big/${image.imageUrl}" rel="fancybox-thumb" class="fancy_box"><img src="${ctx}/static/uploads/gallery/dashboard-thumb/${image.imageUrl}" width="50px"/></a></td>
+                    <td><a href="${ctx}/static/uploads/gallery/gallery-big/${image.imageUrl}" rel="fancybox-thumb" class="fancy_box"><img src="${ctx}/static/uploads/gallery/thumb-50x57/${image.imageUrl}" width="50px"/></a></td>
                     <td><a href="#">${image.title}</a></td>
-                    <td><a href="${ctx}/static/uploads/gallery/dashboard-thumb/${image.imageUrl}" class="opener" value="${image.description}">点击查看</a> </td>
+                    <td><a href="${ctx}/static/uploads/gallery/thumb-50x57/${image.imageUrl}" class="opener" value="${image.description}">点击查看</a> </td>
                     <td><a href="${ctx}/static/uploads/gallery/gallery-big/${image.imageUrl}">${image.imageUrl}</a></td>
                     <td><fmt:formatDate value="${image.createdDate}" type="both"></fmt:formatDate></td>
                     <td><c:choose><c:when test="${image.showIndex}"><a href="${ctx}/gallery/showIndex/${image.id}">【不显示】</a></c:when>
