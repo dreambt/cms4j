@@ -84,19 +84,18 @@
                                 <h3>我要评论</h3>
                                 <div class="quiz_content">
                                     <input type="hidden" name="article.id" value="${article.id}"/>
-                                    <input type="hidden" id="StarNum" name="rate" value="${rate}"/>
                                     <div class="l_text"><label class="m_flo">邮  箱：</label>
-                                        <input type="text" id="username" name="username" class="required email" value="<shiro:principal property="loginName"/>"/>
+                                        <input type="text" id="subject" name="username" class="required email" value="<shiro:principal property="loginName"/>"/>
                                     </div>
                                     <div class="goods-comm">
                                         <div class="goods-comm-stars"><span class="star_l">满意度：</span>
                                             <div class="rate-comm" id="rate-comm-1">&nbsp;</div>
                                         </div>
                                     </div>
-                                    <div class="l_text"><label class="m_flo">内  容：</label><textarea class="text" id="myEditor" name="message">${message}</textarea><span class="tr">字数限制为5-200个</span></div>
-                                    <div class="l_text"><label class="m_flo">验证码：</label><input type="text" id="captcha" name="captcha" /><img src="${ctx}/captcha.png" alt="验证码"style="cursor:pointer;vertical-align:text-bottom;" onclick="this.src=this.src+'?'+Math.random();"></div>
+                                    <div class="l_text"><label class="m_flo">内  容：</label><textarea class="text" id="myEditor" name="message"></textarea><span class="tr">字数限制为5-200个</span></div>
+                                    <div class="l_text"><label class="m_flo">验证码：</label><input type="text" id="captcha" name="captcha" /><span id="imgid" style="cursor:pointer;bottom:0;height: 20px;line-height: 15px;margin-left: 5px;position:relative;">点击输入框即可获取验证码</span> </div>
                                 </div>
-                            <input id="submit" type="submit" class="input-submit" value=" 提 交 "/>
+                            <input type="submit" class="input-submit" value=" 提 交 "/>
                         </div>
                     </form:form>
                 </div>
@@ -110,29 +109,8 @@
     $(function () {
         $("#commentForm").validate();
         $().UItoTop({ easingType:'easeOutQuart' });
-
-        // 表单提交
-        /*var working = false;
-        $("#commentForm").submit(function (e){
-            e.preventDefault();
-            if(working) return false;
-            $("#submit").attr("disabled","disabled");
-            $.ajax({
-                url:"${ctx}/comment/createAjax",
-                type:'POST',
-                data:{username:$("#username").val(),message:$("#myEditor").val(),rate:$("#StarNum").val(),captcha:$("#captcha").val()},
-                dataType:'json',
-                timeout:3000,
-                success:function(){
-                     alert("OK");
-                    $("#submit").attr("disabled","");
-                },
-                fail:function(){
-                    alert("ERROR");
-                    $("#submit").attr("disabled","");
-                }
-            });
-        });*/
+        //$('#imgid').click(function(){$(this).html("<img src='${ctx}/captcha.png' alt='验证码'style='cursor:pointer;vertical-align:text-bottom;height: 16px;' onclick='this.src=this.src+'?'+Math.random();'>")});
+        $('#captcha').focus(function(){$(imgid).html("<img src='${ctx}/captcha.png' alt='验证码'style='cursor:pointer;vertical-align:text-bottom;height: 16px;' onclick='this.src=this.src+'?'+Math.random();'>")});
     });
 </script>
 </body>
