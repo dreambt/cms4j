@@ -50,8 +50,9 @@
 </div>
 <script type="text/javascript">
     $(function () {
-        var uploadVal=$('#upload').val();
+
         $('#upload').live('change', function () {
+            var uploadVal=$('#upload').val();
             var b= uploadVal;
             if(!checkType(b)){ alert("不能上传非gif、jpg、png、bmp类型的文件！请重新选择要上传的图片文件！");}
         });
@@ -66,7 +67,9 @@
         }
          //如果新上传则必须要选择图片
         $('#submit').click(function(){
-            if($('#picID').val()==""&&uploadVal==""&&!checkType(uploadVal)){
+            var uploadVal=$('#upload').val();
+            alert(checkType(uploadVal));
+            if($('#picID').val()=="" && uploadVal==""||checkType(uploadVal)==false){
                 alert("请您选择要上传的图片再提交！");
                 return false; }
         });
