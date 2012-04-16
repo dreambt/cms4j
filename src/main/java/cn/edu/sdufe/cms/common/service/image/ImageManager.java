@@ -104,16 +104,16 @@ public class ImageManager {
             String fileName = this.upload(file, request);
             image.setImageUrl(fileName);
             //项目路径// TODO 迁移服务器需要修改
-            String path = System.getProperty("user.dir") + "\\src\\main\\webapp\\static\\uploads\\gallery\\";
+            String path = System.getProperty("user.dir") + "/src/main/webapp/static/uploads/gallery/";
             //图片来源路径
 
             ImageThumb imageThumb = new ImageThumb();
             try {
-                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "thumb-50x57\\" + fileName, 50, 57);
-                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "thumb-134x134\\" + fileName, 134, 134);
-                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "thumb-200x122\\" + fileName, 200, 122);
-                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "thumb-218x194\\" + fileName, 218, 194);
-                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "thumb-460x283\\" + fileName, 460, 283);
+                imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-50x57/" + fileName, 50, 57);
+                imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-134x134/" + fileName, 134, 134);
+                imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-200x122/" + fileName, 200, 122);
+                imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-218x194/" + fileName, 218, 194);
+                imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-460x283/" + fileName, 460, 283);
             } catch (Exception e) {
                 logger.info(e.getMessage());
             }
@@ -171,27 +171,29 @@ public class ImageManager {
         }
         //实现上传
         if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
+            //存储旧图片名
+            String oldFileName = image.getImageUrl();
             String fileName = this.upload(file, request);
             image.setImageUrl(fileName);
             //项目路径// TODO 迁移服务器需要修改
-            String path = System.getProperty("user.dir") + "\\src\\main\\webapp\\static\\uploads\\gallery\\";
+            String path = System.getProperty("user.dir") + "/src/main/webapp/static/uploads/gallery/";
             //图片来源路径
             ImageThumb imageThumb = new ImageThumb();
             try {
-                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "thumb-50x57\\" + fileName, 50, 57);
-                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "thumb-134x134\\" + fileName, 134, 134);
-                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "thumb-200x122\\" + fileName, 200, 122);
-                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "thumb-218x194\\" + fileName, 218, 194);
-                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "thumb-460x283\\" + fileName, 460, 283);
+                imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-50x57/" + fileName, 50, 57);
+                imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-134x134/" + fileName, 134, 134);
+                imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-200x122/" + fileName, 200, 122);
+                imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-218x194/" + fileName, 218, 194);
+                imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-460x283/" + fileName, 460, 283);
 
                 // TODO 删除时只删除数据库，硬盘文件起任务轮询删除
                 // 成功上传新图片以后再删除旧图片，防止事务失败无法回滚图片
-                this.deletePic("gallery-big\\" + image.getImageUrl());
-                this.deletePic("thumb-50x57\\" + image.getImageUrl());
-                this.deletePic("thumb-134x134\\" + image.getImageUrl());
-                this.deletePic("thumb-200x122\\" + image.getImageUrl());
-                this.deletePic("thumb-218x194\\" + image.getImageUrl());
-                this.deletePic("thumb-460x283\\" + image.getImageUrl());
+                this.deletePic("gallery-big/" + oldFileName);
+                this.deletePic("thumb-50x57/" + oldFileName);
+                this.deletePic("thumb-134x134/" + oldFileName);
+                this.deletePic("thumb-200x122/" + oldFileName);
+                this.deletePic("thumb-218x194/" + oldFileName);
+                this.deletePic("thumb-460x283/" + oldFileName);
             } catch (Exception e) {
                 logger.info(e.getMessage());
             }
@@ -228,6 +230,13 @@ public class ImageManager {
      */
     @Transactional(readOnly = false)
     public int delete(Long id) {
+        String fileName = this.getImage(id).getImageUrl();
+        this.deletePic("gallery-big/" + fileName);
+        this.deletePic("thumb-50x57/" + fileName);
+        this.deletePic("thumb-134x134/" + fileName);
+        this.deletePic("thumb-200x122/" + fileName);
+        this.deletePic("thumb-218x194/" + fileName);
+        this.deletePic("thumb-460x283/" + fileName);
         return imageDao.delete(id);
     }
 
@@ -251,7 +260,7 @@ public class ImageManager {
     public void deletePic(String fileName) {
         //上传路径
         String path = System.getProperty("user.dir");
-        new File(path + "\\src\\main\\webapp\\static\\uploads\\gallery\\", fileName).delete();
+        new File(path + "/src/main/webapp/static/uploads/gallery/", fileName).delete();
     }
 
     @Autowired
