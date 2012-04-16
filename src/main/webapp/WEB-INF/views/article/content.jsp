@@ -85,7 +85,7 @@
                                 <div class="quiz_content">
                                     <input type="hidden" name="article.id" value="${article.id}"/>
                                     <div class="l_text"><label class="m_flo">邮  箱：</label>
-                                        <input type="text" id="subject" name="username" class="required email" value="<shiro:principal property="loginName"/>"/>
+                                        <input type="text" id="subject" name="username" class="email" value="<shiro:principal property="loginName"/>"/>
                                     </div>
                                     <div class="goods-comm">
                                         <div class="goods-comm-stars"><span class="star_l">满意度：</span>
@@ -93,9 +93,10 @@
                                         </div>
                                     </div>
                                     <div class="l_text"><label class="m_flo">内  容：</label><textarea class="text" id="myEditor" name="message"></textarea><span class="tr">字数限制为5-200个</span></div>
-                                    <div class="l_text"><label class="m_flo">验证码：</label><input type="text" id="captcha" name="captcha" /><span id="imgid" style="cursor:pointer;bottom:0;height: 20px;line-height: 15px;margin-left: 5px;position:relative;">点击输入框即可获取验证码</span> </div>
+                                    <div class="l_text" id="imgid" style="display: block;margin-left: 60px;position: absolute;z-index: 9999;bottom:70px; ">&nbsp;</div>
+                                    <div class="l_text"><label class="m_flo">验证码：</label><input type="text" id="captcha" name="captcha" /> </div>
                                 </div>
-                            <input type="submit" class="input-submit" value=" 提 交 "/>
+                            <input type="submit" class="input-submit" value=" 提 交 " id="submit"/>
                         </div>
                     </form:form>
                 </div>
@@ -107,10 +108,41 @@
 </div>
 <script>
     $(function () {
-        $("#commentForm").validate();
+        /*
+        $("#commentForm").validate({
+            rules:{message:{required:true,maxlength:600,minlength:5}}
+        });
+        */
+        var subject=$('#subject');
+        var myEditor=$('#myEditor');
+        var c=$('#captcha');
+
+        //focusEvent(myEditor);
+        function focusEvent(domm){
+              domm.focus(function(){$(this).css('border','1px solid #CCC');});
+        }
+       // subject.live('change',function(){if(subject.val().length>5||subject.val().length<200||subject.val()!=""){subject.css('border','1px solid #CCC');}});
+        //表单校验
+      /* $('#submit').click(function(){
+           //alert(c.val().length);
+           if(subject.val() ==""){subject.css('border','1px solid #f00');return false;};
+           if(myEditor.val()==""||myEditor.val().length<5||myEditor.val().length>200){myEditor.css('border','1px solid #f00');return false;};
+           if(c.val()==""){c.css('border','1px solid #f00');return false;};
+       });   */
+        $('#submit').click(function(){
+            //alert(c.val().length);
+            if(subject.val() ==""){alert("请您填写您的邮箱！");return false;};
+            if(myEditor.val()==""||myEditor.val().length<5||myEditor.val().length>200){alert("请您填写评论内容，字数为：5-200");return false;};
+            if(c.val()==""){alert("请您填写验证码！");return false;};
+        });
+        //totop
         $().UItoTop({ easingType:'easeOutQuart' });
-        //$('#imgid').click(function(){$(this).html("<img src='${ctx}/captcha.png' alt='验证码'style='cursor:pointer;vertical-align:text-bottom;height: 16px;' onclick='this.src=this.src+'?'+Math.random();'>")});
-        $('#captcha').click(function(){$('#imgid').html("<img id='checkNum' src='${ctx}/captcha.png' alt='验证码'style='cursor:pointer;vertical-align:text-bottom;height: 16px;'onclick='this.src=this.src+'?'+Math.random();'>")});
+
+        //验证码点击时显示
+       var img="<img id='checkNum' src='${ctx}/captcha.png' alt='验证码'style='cursor:pointer;vertical-align:text-bottom;position:absolute'>";
+        $('#captcha').click(function(){$('#imgid').show().append(img)});
+        $('#captcha').blur(function(){$('#imgid').hide()});
+       // $('#captcha').focus(function(){$('#imgid').show().append(img)});
     });
 </script>
 </body>
