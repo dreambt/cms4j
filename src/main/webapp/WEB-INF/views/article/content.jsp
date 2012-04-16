@@ -110,7 +110,7 @@
         $("#commentForm").validate();
         $().UItoTop({ easingType:'easeOutQuart' });
         //$('#imgid').click(function(){$(this).html("<img src='${ctx}/captcha.png' alt='验证码'style='cursor:pointer;vertical-align:text-bottom;height: 16px;' onclick='this.src=this.src+'?'+Math.random();'>")});
-        $('#captcha').focus(function(){$(imgid).html("<img src='${ctx}/captcha.png' alt='验证码'style='cursor:pointer;vertical-align:text-bottom;height: 16px;' onclick='this.src=this.src+'?'+Math.random();'>")});
+        $('#captcha').click(function(){$('#imgid').html("<img id='checkNum' src='${ctx}/captcha.png' alt='验证码'style='cursor:pointer;vertical-align:text-bottom;height: 16px;'onclick='this.src=this.src+'?'+Math.random();'>")});
     });
 </script>
 </body>
