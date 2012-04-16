@@ -55,7 +55,7 @@ Time: 下午9:03
                 <c:forEach items="${comments}" var="comment" begin="0" step="1" varStatus="status">
                     <tr class="gradeB">
                         <td class="center"><input type="checkbox" name="isSelected" value="${comment.id}"></td>
-                        <td><a href="${ctx}/article/edit/${comment.article.id}">${comment.article.subject}</a></td>
+                        <td><a href="${ctx}/article/content/${comment.article.id}" target="_blank">${comment.article.subject}</a></td>
                         <td>${comment.username}</td>
                         <td><a class="opener" href="#" value='${comment.message}'>点击查看</a></td>
                         <td>${comment.postHostIP}</td>
