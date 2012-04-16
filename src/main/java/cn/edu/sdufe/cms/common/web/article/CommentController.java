@@ -7,16 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 /**
  * 评论控制器
@@ -40,20 +35,62 @@ public class CommentController {
     @RequiresPermissions("comment:create")
     @RequestMapping(value = "create", method = RequestMethod.POST)
     public String createComment(Comment comment, RedirectAttributes redirectAttributes, HttpServletRequest request) {
-        // 验证验证码是否正确
+        // 获取用户输入的验证码
+        String validateCode = request.getParameter("captcha");
+
+        // 获取系统生成的验证码
         HttpSession session = request.getSession();
+        String storedValidateCode = (String) session.getAttribute("PATCHCA");
 
-
-        // 设置留言者IP
-        comment.setPostHostIP(request.getRemoteAddr());   //TODO 获得ip
-
-        if (commentManager.save(comment) > 0) {
-            redirectAttributes.addFlashAttribute("info", "添加评论成功");
+        // 验证验证码是否正确
+        if (validateCode == null || validateCode.equals("") ||
+                storedValidateCode == null || storedValidateCode.equals("") || !validateCode.equals(storedValidateCode)) {
+            redirectAttributes.addFlashAttribute("error", "请检查您输入的验证码是否正确.");
         } else {
-            redirectAttributes.addFlashAttribute("error", "添加评论失败");
-        }
+            // 设置留言者IP
+            comment.setPostHostIP(request.getRemoteAddr());   //TODO 获得ip
 
+            if (commentManager.save(comment) > 0) {
+                redirectAttributes.addFlashAttribute("info", "添加评论成功.");
+            } else {
+                redirectAttributes.addFlashAttribute("error", "添加评论失败.");
+            }
+        }
         return "redirect:/article/content/" + comment.getArticle().getId();
+    }
+
+    /**
+     * 添加评论 AJAX
+     *
+     * @param comment
+     * @return
+     */
+    @RequiresPermissions("comment:create")
+    @RequestMapping(value = "createAjax")
+    @ResponseBody
+    public String createCommentAjax(Comment comment, HttpServletRequest request) {
+        // TODO AJAX评论
+        // 获取用户输入的验证码
+        String validateCode = request.getParameter("captcha");
+
+        // 获取系统生成的验证码
+        HttpSession session = request.getSession();
+        String storedValidateCode = (String) session.getAttribute("PATCHCA");
+
+        // 验证验证码是否正确
+        if (validateCode == null || validateCode.equals("") ||
+                storedValidateCode == null || storedValidateCode.equals("") || !validateCode.equals(storedValidateCode)) {
+            return "请检查您输入的验证码是否正确.";
+        } else {
+            // 设置留言者IP
+            comment.setPostHostIP(request.getRemoteAddr());   //TODO 获得ip
+
+            if (commentManager.save(comment) > 0) {
+                return "添加评论成功.";
+            } else {
+                return "添加评论失败.";
+            }
+        }
     }
 
     /**
@@ -77,7 +114,7 @@ public class CommentController {
     @RequestMapping(value = "audit/{id}", method = RequestMethod.GET)
     public String auditComment(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         if (null == commentManager.get(id)) {
-            redirectAttributes.addAttribute("error", "该评论不存在，请刷新重试");
+            redirectAttributes.addAttribute("error", "该评论不存在，请刷新重试.");
             return "redirect:/comment/listAll";
         }
         if (commentManager.update(id, "status") > 0) {
@@ -99,7 +136,7 @@ public class CommentController {
         if (commentManager.update(id, "deleted") > 0) {
             redirectAttributes.addFlashAttribute("info", "删除评论 " + id + " 成功.");
         } else {
-            redirectAttributes.addFlashAttribute("error", "删除评论 " + id + " 失败");
+            redirectAttributes.addFlashAttribute("error", "删除评论 " + id + " 失败.");
         }
         return "redirect:/comment/listAll";
     }

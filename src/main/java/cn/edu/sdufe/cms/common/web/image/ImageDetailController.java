@@ -27,6 +27,7 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping(value = "/gallery/")
 public class ImageDetailController {
+
     private ImageManager imageManager;
 
     /**

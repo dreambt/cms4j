@@ -27,6 +27,7 @@
                         <c:when test="${category.showType eq 'ALBUM'}"><li><a href="${ctx}/gallery/album/${category.url}" class="cufon">${category.categoryName}</a></c:when>
                         <c:when test="${category.showType eq 'CONTENT'}"><li><a href="${ctx}/article/content/${category.url}" class="cufon">${category.categoryName}</a></c:when>
                         <c:when test="${category.showType eq 'FULL'}"><li><a href="${ctx}/article/content/full/${category.url}" class="cufon">${category.categoryName}</a></c:when>
+                        <c:when test="${category.showType eq 'LINK'}"><li><a href="${category.url}" class="cufon">${category.categoryName}</a></c:when>
                     </c:choose>
                     <c:if test="${fn:length(category.subCategories) > 0}">
                         <ul>
@@ -39,6 +40,7 @@
                                     <c:when test="${subCategory.showType eq 'ALBUM'}"><li><a href="${ctx}/gallery/album/${subCategory.url}" class="cufon">${subCategory.categoryName}</a></li></c:when>
                                     <c:when test="${subCategory.showType eq 'CONTENT'}"><li><a href="${ctx}/article/content/${subCategory.url}" class="cufon">${subCategory.categoryName}</a></c:when>
                                     <c:when test="${subCategory.showType eq 'FULL'}"><li><a href="${ctx}/article/content/full/${subCategory.url}" class="cufon">${subCategory.categoryName}</a></c:when>
+                                    <c:when test="${subCategory.showType eq 'LINK'}"><li><a href="${subCategory.url}" class="cufon">${subCategory.categoryName}</a></c:when>
                                 </c:choose>
                             </c:forEach>
                         </ul>

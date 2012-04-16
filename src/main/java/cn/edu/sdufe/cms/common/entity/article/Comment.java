@@ -17,11 +17,11 @@ import javax.validation.constraints.NotNull;
 public class Comment extends PersistableEntity {
 
     private Article article;
+    private int rate;
     private String username;
     private String message;
     private Long postIP;
     private String postHostIP;
-    private String Captcha;
     private boolean status;
     private boolean deleted;
 
@@ -31,6 +31,14 @@ public class Comment extends PersistableEntity {
 
     public void setArticle(Article article) {
         this.article = article;
+    }
+
+    public int getRate() {
+        return rate;
+    }
+
+    public void setRate(int rate) {
+        this.rate = rate;
     }
 
     @NotBlank
@@ -66,14 +74,6 @@ public class Comment extends PersistableEntity {
 
     public void setPostHostIP(String postHostIP) {
         this.postIP = IPEncodes.ipToLong(postHostIP);
-    }
-
-    public String getCaptcha() {
-        return Captcha;
-    }
-
-    public void setCaptcha(String captcha) {
-        Captcha = captcha;
     }
 
     public boolean isStatus() {

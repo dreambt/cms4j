@@ -28,7 +28,6 @@ import java.util.List;
 public class ImageController {
 
     private ImageManager imageManager;
-
     private CategoryManager categoryManager;
 
     /**

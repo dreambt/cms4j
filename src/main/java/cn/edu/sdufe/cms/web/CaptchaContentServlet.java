@@ -36,8 +36,8 @@ public class CaptchaContentServlet extends HttpServlet {
     private static DoubleRippleFilterFactory drff = null;    // 双干扰线
     private static WobbleRippleFilterFactory wrff = null;    //
     private static DiffuseRippleFilterFactory dirff = null;  //
-    private static final int WIDTH = 160;                   // 默认160
-    private static final int HEIGHT = 70;                   // 默认70
+    private static final int WIDTH = 120;                   // 默认160
+    private static final int HEIGHT = 50;                   // 默认70
 
     private static final Color TEXT_COLOR = new Color(0, 27, 220);
     private static final Color BACKGROUND_COLOR = new Color(25, 60, 170);
@@ -57,6 +57,7 @@ public class CaptchaContentServlet extends HttpServlet {
         this.wf = new RandomWordFactory();
         this.wf.setMaxLength(6);
         this.wf.setMinLength(4);
+        this.wf.setCharacters("1234567890");
 
         this.captchaService.setWordFactory(wf);
         this.captchaService.setColorFactory(cf);

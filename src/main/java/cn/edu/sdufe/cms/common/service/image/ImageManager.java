@@ -113,7 +113,7 @@ public class ImageManager {
                 imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "photo-thumb\\" + fileName, 200, 122);
                 imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "album-thumb\\" + fileName, 218, 194);
                 imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "index-thumb\\" + fileName, 460, 283);
-
+                imageThumb.saveImageAsJpg(path + "gallery-big\\" + fileName, path + "index-thumb\\" + fileName, 134, 134);
             } catch (Exception e) {
                 logger.info(e.getMessage());
             }

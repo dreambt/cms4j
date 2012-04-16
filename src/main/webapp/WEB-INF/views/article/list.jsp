@@ -32,7 +32,7 @@
         <div class="art-list">
             <strong><c:if test="${article.top}"><img src="${ctx}/static/images/top.gif" /></c:if><a href="${ctx}/article/content/${article.id}">${article.subject}</a></strong>
             <span class="art-attr">
-                作者: ${article.user.username} &nbsp;•&nbsp; 发表时间: <fmt:formatDate value="${article.createdDate}" pattern="yyyy-MM-dd"/> &nbsp;•&nbsp; 浏览次数: ${article.views} &nbsp;•&nbsp; 评论数: ${fn:length(article.commentList)}
+                作者: ${article.user.username} &nbsp;•&nbsp; 发表时间: <fmt:formatDate value="${article.createdDate}" pattern="yyyy年MM月dd日"/> &nbsp;•&nbsp; 浏览次数: ${article.views} &nbsp;•&nbsp; 评论数: ${fn:length(article.commentList)}
             </span>
         </div>
         </c:forEach>
@@ -61,7 +61,10 @@
         var date = new Date(parseInt(cellval + 3600000, 10));
         var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
         var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-        return date.getFullYear() + "-" + month + "-" + currentDate;
+        //var hour = date.getHours();
+        //var min = date.getMinutes();
+        //var sec = date.getSeconds();
+        return date.getFullYear() + "年" + month + "月" + currentDate + "日";// + hour + ":" + min + ":" + sec;
     }
 
     $(function () {
@@ -89,7 +92,7 @@
 
                     });
 
-                    $(".blog-pagination").html("页码&nbsp;:&nbsp;");
+                    $(".blog-pagination").html("页码 &nbsp;:&nbsp;");
 
                     //将总记录数结果 得到 总页码数
                     var pageS = total;

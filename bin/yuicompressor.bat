@@ -16,7 +16,4 @@ java -jar yuicompressor-2.4.7.jar -o ..\src\main\webapp\static\CMS.min.css ..\sr
 echo Compressing.... static\jquery-validation/1.9.0/validate.css
 java -jar yuicompressor-2.4.7.jar -o ..\src\main\webapp\static\jquery-validation/1.9.0/validate.min.css ..\src\main\webapp\static\jquery-validation/1.9.0/validate.css
 
-echo Compressing.... static\jquery-jRate\jquery.jRate.css
-java -jar yuicompressor-2.4.7.jar -o ..\src\main\webapp\static\jquery-jRate\jquery.jRate.min.css ..\src\main\webapp\static\jquery-jRate\jquery.jRate.css
-
 pause

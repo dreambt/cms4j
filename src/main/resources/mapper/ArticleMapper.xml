@@ -94,13 +94,13 @@
     </select>
 
     <!-- 获取首页新闻资讯 -->
-    <select id="getNews" resultType="Article">
-        SELECT id, subject, image_name, digest, deleted
+    <select id="getNews" resultMap="articleDetailMap">
+        SELECT id, subject, image_name, digest
         FROM cms_article
         WHERE category_id in (3,4)
         AND deleted =0
         AND STATUS =1
-        ORDER BY id DESC
+        ORDER BY top DESC, id DESC
         LIMIT 5
     </select>
 
@@ -111,7 +111,7 @@
         WHERE A.deleted =0
         AND A.STATUS =1
         AND A.category_id=#{categoryId}
-        ORDER BY id DESC
+        ORDER BY top DESC, id DESC
 	</select>
 
     <!-- 通过分类id获取文章列表 -->
@@ -123,7 +123,7 @@
         WHERE A.deleted =0
         AND A.STATUS =1
         AND A.category_id=#{categoryId}
-        ORDER BY A.id desc
+        ORDER BY A.top DESC, A.id desc
 	</select>
 
     <!-- 通过分类id获取文章摘要 -->
@@ -135,14 +135,15 @@
         WHERE A.deleted =0
         AND A.STATUS =1
         AND A.category_id=#{categoryId}
-        ORDER BY A.id desc
+        ORDER BY A.top DESC, A.id desc
 	</select>
 
     <!-- 新增文章 -->
     <insert id="saveArticle" parameterType="Article">
         INSERT INTO cms_article (user_id, category_id, subject, message, image_name, digest, keyword,
             top, rate, rate_times, views, allow_comment, status, deleted, created_date)
-        VALUES (#{user.id}, #{category.id}, #{subject}, #{message}, #{imageName}, #{digest}, #{keyword}, #{top}, 0, 0, 0, #{allowComment}, 0, 0, null)
+        VALUES (#{user.id}, #{category.id}, #{subject}, #{message}, #{imageName}, #{digest}, #{keyword},
+            #{top}, 0, 0, 0, #{allowComment}, 0, 0, null)
     </insert>
 
     <!-- 删除文章 -->

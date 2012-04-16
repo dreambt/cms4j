@@ -44,7 +44,7 @@ public class ArticleDetailController {
     public String editArticle(@Valid @ModelAttribute("article") Article article, Model model, RedirectAttributes redirectAttributes) {
         // 编辑不存在的文章，给出提示
         if (null == article) {
-            redirectAttributes.addFlashAttribute("error", "文章不存在");
+            redirectAttributes.addFlashAttribute("error", "文章不存在.");
             return "redirect:/article/listAll";
         }
 
@@ -66,14 +66,14 @@ public class ArticleDetailController {
     @RequestMapping(value = "save/{id}")
     public String saveArticle(@Valid @ModelAttribute("article") Article article, BindingResult bindingResult, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         if (null == article) {
-            redirectAttributes.addFlashAttribute("error", "该文章不存在，请刷新重试");
+            redirectAttributes.addFlashAttribute("error", "该文章不存在，请刷新重试.");
             return "redirect:/article/listAll";
         }
         if (bindingResult.hasErrors() || articleManager.update(article, request) <= 0) {
-            redirectAttributes.addFlashAttribute("error", "保存文章失败");
+            redirectAttributes.addFlashAttribute("error", "保存文章失败.");
             return "redirect:/article/listAll";
         } else {
-            redirectAttributes.addFlashAttribute("message", "保存文章成功");
+            redirectAttributes.addFlashAttribute("info", "保存文章成功.");
             return "redirect:/article/listAll";
         }
     }

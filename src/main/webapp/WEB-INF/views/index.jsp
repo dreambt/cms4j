@@ -38,9 +38,9 @@
     <c:forEach items="${images}" var="image" begin="0" step="1">
     <div class="slide-text">
         <img src="${ctx}/static/uploads/gallery/index-thumb/${image.imageUrl}" alt="" class="slidehalf"/>
-        <h1>${image.title}</h1>
+        <h2>${image.title}</h2>
         <p>${image.description}</p>
-        <a class="read_more" href="#"></a>
+        <a class="查看更多" href="#"></a>
     </div>
     </c:forEach>
 </div>

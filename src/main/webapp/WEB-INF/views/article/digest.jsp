@@ -29,10 +29,10 @@
     <div id="article_load">
         <c:forEach items="${articles}" var="article" begin="0" step="1" varStatus="stat">
         <div class="blog-post digest">
-            <img src="${ctx}/static/images/blog-pic1.jpg" alt="" class="imgleft"/>
-            <h2 style="font-size:18px;overflow:hidden"><a href="${ctx}/article/content/${article.id}"><c:if test="${article.top}"><img src="${ctx}/static/images/top.gif" /></c:if>${fn:substring(article.subject,0,20)}<c:if test="${fn:length(article.subject)>20}">...</c:if></a></h2>
+            <img src="${ctx}/static/uploads/gallery/dashboard-thumb/${article.imageName}" alt="" class="imgleft"/>
+            <h2 style="font-size:18px;overflow:hidden"><a href="${ctx}/article/content/${article.id}" title="${article.subject}"><c:if test="${article.top}"><img src="${ctx}/static/images/top.gif" /></c:if>${fn:substring(article.subject,0,23)}<c:if test="${fn:length(article.subject)>23}">...</c:if></a></h2>
             <div class="blog-posted">
-                作者: ${article.user.username} &nbsp; | &nbsp; 发表时间: <fmt:formatDate value="${article.createdDate}" pattern="yyyy-MM-dd"/> &nbsp; | &nbsp; 浏览次数: ${article.views} &nbsp; | &nbsp; 评论数: ${fn:length(article.commentList)}
+                作者: ${article.user.username} &nbsp; | &nbsp; 发表时间: <fmt:formatDate value="${article.createdDate}" pattern="yyyy年MM月dd日"/> &nbsp; | &nbsp; 浏览次数: ${article.views} &nbsp; | &nbsp; 评论数: ${fn:length(article.commentList)}
             </div>
             <p>${article.digest}</p>
         </div>
@@ -63,7 +63,7 @@
         var date = new Date(parseInt(cellval + 3600000, 10));
         var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
         var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-        return date.getFullYear() + "-" + month + "-" + currentDate;
+        return date.getFullYear() + "年" + month + "月" + currentDate + "日";
     }
 
     $(function () {
@@ -85,12 +85,12 @@
                     //加载文章
                     $.each(data, function (index, content) {
                         if (content.top)
-                            articles.append($("<div class='blog-post digest'><img src='${ctx}/static/images/blog-pic1.jpg' class='imgleft'/><h2><img src='${ctx}/static/images/top.gif' /><a href='${ctx}/article/content/" + content.id + "'>" + content.subject + "</a></h2><div class='blog-posted'>作者: " + content.user.username + " &nbsp; | &nbsp; 发表时间: " + ChangeDateFormat(content.createdDate) + " &nbsp; | &nbsp; 浏览次数: " + content.views + " &nbsp; | &nbsp; 评论数: " + content.commentList.length + "</div><p>" + content.digest + "</p></div>"));
+                            articles.append($("<div class='blog-post digest'><img src='${ctx}/static/images/blog-pic1.jpg' class='imgleft'/><h2 style='font-size:18px;overflow:hidden'><img src='${ctx}/static/images/top.gif' /><a href='${ctx}/article/content/" + content.id + "' title='" + content.subject + "'>" + content.subject.substr(0,23) + "</a></h2><div class='blog-posted'>作者: " + content.user.username + " &nbsp; | &nbsp; 发表时间: " + ChangeDateFormat(content.createdDate) + " &nbsp; | &nbsp; 浏览次数: " + content.views + " &nbsp; | &nbsp; 评论数: " + content.commentList.length + "</div><p>" + content.digest + "</p></div>"));
                         else
-                            articles.append($("<div class='blog-post digest'><img src='${ctx}/static/images/blog-pic1.jpg' class='imgleft'/><h2><a href='${ctx}/article/content/" + content.id + "'>" + content.subject + "</a></h2><div class='blog-posted'>作者: " + content.user.username + " &nbsp; | &nbsp; 发表时间: " + ChangeDateFormat(content.createdDate) + " &nbsp; | &nbsp; 浏览次数: " + content.views + " &nbsp; | &nbsp; 评论数: " + content.commentList.length + "</div><p>" + content.digest + "</p></div>"));
+                            articles.append($("<div class='blog-post digest'><img src='${ctx}/static/images/blog-pic1.jpg' class='imgleft'/><h2 style='font-size:18px;overflow:hidden'><a href='${ctx}/article/content/" + content.id + "' title='" + content.subject + "'>" + content.subject.substr(0,23) + "</a></h2><div class='blog-posted'>作者: " + content.user.username + " &nbsp; | &nbsp; 发表时间: " + ChangeDateFormat(content.createdDate) + " &nbsp; | &nbsp; 浏览次数: " + content.views + " &nbsp; | &nbsp; 评论数: " + content.commentList.length + "</div><p>" + content.digest + "</p></div>"));
                     });
 
-                    $(".blog-pagination").html("页码&nbsp;:&nbsp;");
+                    $(".blog-pagination").html("页码 &nbsp;:&nbsp;");
 
                     //将总记录数结果 得到 总页码数
                     var pageS = total;
