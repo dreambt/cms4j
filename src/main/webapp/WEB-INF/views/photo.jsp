@@ -73,14 +73,10 @@
             页码 &nbsp;:&nbsp;
             <c:choose>
                 <c:when test="${total <= 132}">
-                    <c:forEach begin="1" end="${pageCount>1?pageCount:1}" step="1" varStatus="var">
-                        <span class="blog-button-page pagination">${var.index}</span>&nbsp;
-                    </c:forEach>
+                    <c:forEach begin="1" end="${pageCount>1?pageCount:1}" step="1" varStatus="var"><span class="blog-button-page pagination">${var.index}</span>&nbsp;</c:forEach>
                 </c:when>
                 <c:otherwise>
-                    <c:forEach begin="1" end="11" step="1" varStatus="var">
-                        <span class="blog-button-page pagination">${var.index}</span>&nbsp;
-                    </c:forEach>
+                    <c:forEach begin="1" end="11" step="1" varStatus="var"><span class="blog-button-page pagination">${var.index}</span>&nbsp;</c:forEach>
                 </c:otherwise>
             </c:choose>
         </div>

@@ -65,14 +65,10 @@
         页码 &nbsp;:&nbsp;
         <c:choose>
             <c:when test="${total <= 44}">
-                <c:forEach begin="1" end="${pageCount>1?pageCount:1}" step="1" varStatus="var">
-                    <span class="blog-button-page pagination">${var.index}</span>&nbsp;
-                </c:forEach>
+                <c:forEach begin="1" end="${pageCount>1?pageCount:1}" step="1" varStatus="var"><span class="blog-button-page pagination">${var.index}</span>&nbsp;</c:forEach>
             </c:when>
             <c:otherwise>
-                <c:forEach begin="1" end="11" step="1" varStatus="var">
-                    <span class="blog-button-page pagination">${var.index}</span>&nbsp;
-                </c:forEach>
+                <c:forEach begin="1" end="11" step="1" varStatus="var"><span class="blog-button-page pagination">${var.index}</span>&nbsp;</c:forEach>
             </c:otherwise>
         </c:choose>
     </div>
@@ -133,10 +129,10 @@
                     //生成页码
                     for (var j = start; j < end + 1; j++) {
                         if (j == intPageIndex) {
-                            var spanSelectd = $("<span class='blog-button-page-selected pagination'>" + j + "</span>");
+                            var spanSelectd = $("<span class='blog-button-page-selected pagination'>" + j + "</span>&nbsp;");
                             pager.append(spanSelectd);
                         } else {
-                            var a = $("<span class='blog-button-page pagination'>" + j + "</span>").click(function () {
+                            var a = $("<span class='blog-button-page pagination'>" + j + "</span>&nbsp;").click(function () {
                                 PageClick($(this).text(), total, spanInterval);
                             });
                             pager.append(a);

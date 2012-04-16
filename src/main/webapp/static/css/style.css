@@ -112,7 +112,7 @@ padding:15px 10px;
 .search-fieldset{border:none;padding:0;height:24px;}
 #search-box{padding-bottom:18px; float:left; height:23px;}
 #search{float:right; width:auto;height:24px;}
-#s{font:12px Tahoma, Arial, Verdana; font-size:11px; color:#c8c9be;margin:0; padding:4px 30px 4px 3px; background-color:#fff; border:1px solid #d3d2d2; width:230px;}
+#s{font:12px Tahoma, Arial, Verdana; font-size:11px; color:#c8c9be;margin:0; padding:4px 30px 4px 3px; background-color:#fff; border:1px solid #d3d2d2; width:186px;}
 #s:focus{border:1px solid #adacac; color:#adacac;}
 #search .go{position:absolute; margin:3px 0 0 -26px;}
 

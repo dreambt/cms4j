@@ -18,7 +18,6 @@
             charset="utf-8"></script>
     <script type="text/javascript" src="${ctx}/static/jquery-validation/1.9.0/messages_cn.js" charset="utf-8"></script>
 </head>
-
 <body>
 <div id="main_container" class="main_container container_16 clearfix">
     <div class="flat_area grid_10">
@@ -49,6 +48,7 @@
                     <th>URL</th>
                     <th>创建时间</th>
                     <th>最后修改</th>
+                    <th>审核状态</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -60,12 +60,10 @@
                         <td><a href="${link.url}" target="_blank" >${link.url}</a></td>
                         <td><fmt:formatDate value="${link.createdDate}" type="both"></fmt:formatDate></td>
                         <td><fmt:formatDate value="${link.lastModifiedDate}" type="both"></fmt:formatDate></td>
-                        <td><a href="${ctx}/link/audit/${link.id}"><c:choose><c:when test="${link.status}">【反审核】</c:when><c:otherwise>【审核】&nbsp;&nbsp;&nbsp;&nbsp;</c:otherwise></c:choose></a>
-                            <a href="${ctx}/link/edit/${link.id}">【修改】</a>
-                            <a href="${ctx}/link/delete/${link.id}">【删除】</a></td>
+                        <td><a href="${ctx}/link/audit/${link.id}"><c:choose><c:when test="${link.status}"><span class="green_text">已审核</span></c:when><c:otherwise><span class="red_text">未审核</span></c:otherwise></c:choose></a></td>
+                        <td><a href="${ctx}/link/edit/${link.id}">【修改】</a> <a href="${ctx}/link/delete/${link.id}">【删除】</a></td>
                     </tr>
                 </c:forEach>
-
                 </tbody>
             </table>
         </div>

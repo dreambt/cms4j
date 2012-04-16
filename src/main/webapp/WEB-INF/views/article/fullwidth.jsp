@@ -41,7 +41,7 @@
     <div class="maincontent">
         <div class="blog-post">
             <h2>${article.subject}</h2>
-            <div class="blog-posted-inner" style="width:920px;">
+            <div class="blog-posted-inner" style="width:908px;">
                 作者: ${article.user.username} &nbsp; | &nbsp; 发表时间: <fmt:formatDate value="${article.createdDate}" pattern="yyyy年MM月dd日 hh:mm:ss"/> &nbsp; |
                 &nbsp;浏览次数: ${article.views} <c:if test="${article.allowComment}">&nbsp; | &nbsp; 评论数: ${fn:length(article.commentList)}</c:if>
             </div>

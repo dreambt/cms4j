@@ -9,7 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
-<script src="${ctx}/static/js/jquery.cycle.all.js" type="text/javascript"></script>
+<%--<script src="${ctx}/static/js/jquery.cycle.all.js" type="text/javascript"></script>
 <script type="text/javascript">
     $(function () {
         $('#sponsors').cycle({
@@ -19,10 +19,10 @@
             pauseOnPagerHover:0 // true to pause when hovering over pager link
         });
     });
-</script>
+</script>--%>
 <div id="side-box">
     <div class="maincontent">
-        <h2>搜索文章</h2>
+        <h2 class="cufon">搜索文章</h2>
         <div id="search-box">
             <form id="search" action="#" method="get">
                 <fieldset class="search-fieldset">
@@ -33,7 +33,7 @@
         </div>
     </div>
     <div class="maincontent">
-        <h2>最新文章</h2>
+        <h2 class="cufon">最新文章</h2>
         <ul class="blog-list">
             <c:forEach items="${newArticles}" var="newArticle" begin="0" step="1">
                 <li><a href="${ctx}/article/content/${newArticle.id}">${fn:substring(newArticle.subject,0,20)}<c:if test="${fn:length(newArticle.subject)>20}">...</c:if></a></li>
@@ -41,7 +41,7 @@
         </ul>
     </div>
     <div class="maincontent">
-        <h2>存档分类</h2>
+        <h2 class="cufon">存档分类</h2>
         <ul class="blog-list">
             <c:forEach items="${archives}" var="archive" begin="0" step="1">
                 <li><a href="${ctx}/archive/list/${archive.id}">${archive.title}&nbsp;(${archive.articleCount})</a></li>
@@ -49,8 +49,8 @@
             <li><a href="${ctx}/archive/list">更多存档...</a></li>
         </ul>
     </div>
-    <div class="maincontent">
-        <h2>Sponsor</h2>
+    <%--<div class="maincontent">
+        <h2 class="cufon">Sponsor</h2>
         <div id="sponsors">
             <div class="banner-img"><a href="#"><img src="${ctx}/static/images/sponsors/tf_260x120_v2.gif" alt=""/></a>
             </div>
@@ -65,5 +65,5 @@
             <div class="banner-img"><a href="#"><img src="${ctx}/static/images/sponsors/cc_260x120_v2.gif" alt=""/></a>
             </div>
         </div>
-    </div>
+    </div>--%>
 </div>

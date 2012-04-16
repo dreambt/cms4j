@@ -26,7 +26,7 @@ public class ArticleDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    @Cacheable(value = "article")
+    @Cacheable(value = "topten")
     public List<Article> findTopTen() {
         return getSqlSession().selectList("Article.getTopTenArticle");
     }
@@ -60,7 +60,7 @@ public class ArticleDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    @Cacheable(value = "article")
+    @Cacheable(value = "news")
     public List<Article> findNews() {
         return getSqlSession().selectList("Article.getNews");
     }
