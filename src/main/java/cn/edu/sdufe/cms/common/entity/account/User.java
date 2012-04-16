@@ -2,11 +2,14 @@ package cn.edu.sdufe.cms.common.entity.account;
 
 import cn.edu.sdufe.cms.common.entity.PersistableEntity;
 import cn.edu.sdufe.cms.utilities.IPEncodes;
+import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springside.modules.utils.Collections3;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 用户Entity
@@ -30,7 +33,7 @@ public class User extends PersistableEntity {
     private boolean deleted;
     private String photoURL;
     private String timeOffset;
-    private Group group;
+    private List<Group> groupList = Lists.newArrayList();
     private Long lastIP;
     private String lastLoginIP;
     private Date lastTime;
@@ -167,12 +170,23 @@ public class User extends PersistableEntity {
         this.lastActTime = lastActTime;
     }
 
-    public Group getGroup() {
-        return group;
+    public List<Group> getGroupList() {
+        return groupList;
     }
 
-    public void setGroup(Group group) {
-        this.group = group;
+    public void setGroupList(List<Group> groupList) {
+        this.groupList = groupList;
+    }
+
+    /**
+     * 用户拥有的权限组名称字符串, 多个权限组名称用','分隔.
+     */
+    public String getGroupNames() {
+        return Collections3.extractToString(groupList, "name", ", ");
+    }
+
+    public Long getGroupId(){
+        return groupList.get(0).getId();
     }
 
     @Override

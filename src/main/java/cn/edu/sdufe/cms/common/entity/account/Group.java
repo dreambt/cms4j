@@ -20,7 +20,6 @@ import java.util.List;
 public class Group extends IdEntity {
 
     private String groupName;
-    //private List<User> userList = Lists.newArrayList();
     private List<String> permissionList = Lists.newArrayList();
 
     public Group() {
@@ -39,16 +38,6 @@ public class Group extends IdEntity {
     public void setGroupName(String groupName) {
         this.groupName = groupName;
     }
-
-//    @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY, mappedBy = "groupList")
-//    @Fetch(FetchMode.SUBSELECT)
-//    public List<User> getUserList() {
-//        return userList;
-//    }
-//
-//    public void setUserList(List<User> userList) {
-//        this.userList = userList;
-//    }
 
     public List<String> getPermissionList() {
         return permissionList;

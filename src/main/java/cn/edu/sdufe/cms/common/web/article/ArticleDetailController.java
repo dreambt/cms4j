@@ -29,7 +29,6 @@ import javax.validation.Valid;
 public class ArticleDetailController {
 
     private ArticleManager articleManager;
-
     private CategoryManager categoryManager;
 
     /**

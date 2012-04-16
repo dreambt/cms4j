@@ -80,17 +80,18 @@ public class UserController {
      */
     @RequiresPermissions("user:save")
     @RequestMapping(value = "save")
-    public String save(User user, RedirectAttributes redirectAttributes, BindingResult bindingResult, Model model) {
+    public String save(User user, RedirectAttributes redirectAttributes, BindingResult bindingResult, Model model, HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             return createForm(model);
         }
         try {
+            user.setLastLoginIP(request.getRemoteAddr());   //TODO 获得ip
             userManager.save(user);
             redirectAttributes.addFlashAttribute("info", "创建用户" + user.getEmail() + "成功, 密码已邮件的方式发送到" + user.getEmail() + ".");
             return "redirect:/account/user/list";
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "创建用户" + user.getEmail() + "失败");
-            return "dashboard/account/user/edit";
+            return createForm(model);
         }
     }
 
@@ -104,7 +105,7 @@ public class UserController {
     @RequiresPermissions("user:edit")
     @RequestMapping(value = "repass/{id}")
     public String repass(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
-        if(null == userManager.get(id)) {
+        if (null == userManager.get(id)) {
             redirectAttributes.addFlashAttribute("info", "您选择的用户不存在，请刷新重试");
             return "redirect:/account/user/list";
         }
@@ -116,6 +117,40 @@ public class UserController {
             redirectAttributes.addFlashAttribute("error", "重置密码失败.");
             return "dashboard/account/user/edit";
         }
+    }
+
+    /**
+     * 审核编号为id的文章
+     *
+     * @param id
+     * @return
+     */
+    @RequiresPermissions("user:edit")
+    @RequestMapping(value = "audit/{id}")
+    public String auditArticle(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        if (userManager.update(id, "status") > 0) {
+            redirectAttributes.addFlashAttribute("info", "操作用户 " + id + " 成功.");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "操作用户 " + id + " 失败.");
+        }
+        return "redirect:/account/user/list";
+    }
+
+    /**
+     * 删除编号为id的文章
+     *
+     * @param id
+     * @return
+     */
+    @RequiresPermissions("user:delete")
+    @RequestMapping(value = "delete/{id}")
+    public String deleteArticle(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        if (userManager.update(id, "deleted") > 0) {
+            redirectAttributes.addFlashAttribute("info", "操作用户 " + id + " 成功.");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "操作用户 " + id + " 失败.");
+        }
+        return "redirect:/account/user/list";
     }
 
     @RequiresPermissions("user:edit")
@@ -148,8 +183,7 @@ public class UserController {
 
     @RequestMapping(value = "checkEmail")
     @ResponseBody
-    public String checkEmail(@RequestParam("oldEmail") String oldEmail,
-                             @RequestParam("email") String email) {
+    public String checkEmail(@RequestParam("oldEmail") String oldEmail, @RequestParam("email") String email) {
         if (email.equals(oldEmail)) {
             return "true";
         } else if (userManager.findUserByEmail(email) == null) {

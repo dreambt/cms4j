@@ -1,7 +1,9 @@
 package cn.edu.sdufe.cms.common.dao.account;
 
 import cn.edu.sdufe.cms.common.entity.account.User;
+import com.google.common.collect.Maps;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
@@ -84,8 +86,24 @@ public class UserDao extends SqlSessionDaoSupport {
      * @param user
      * @return
      */
+    @CacheEvict(value = "user", key = "#user.id")
     public int update(User user) {
         return getSqlSession().update("ACCOUNT.updateUser", user);
+    }
+
+    /**
+     * 更新用户
+     *
+     * @param id
+     * @param column
+     * @return
+     */
+    @CacheEvict(value = "user", key = "#id")
+    public int update(Long id, String column) {
+        Map parameters = Maps.newHashMap();
+        parameters.put("id", id);
+        parameters.put("column", column);
+        return getSqlSession().update("ACCOUNT.updateUserBool", parameters);
     }
 
     /**

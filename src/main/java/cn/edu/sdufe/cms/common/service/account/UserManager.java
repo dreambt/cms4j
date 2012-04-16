@@ -48,8 +48,7 @@ public class UserManager {
      * @return
      */
     public User get(Long id) {
-        User user = userDao.findOne(id);
-        return user;
+        return userDao.findOne(id);
     }
 
     /**
@@ -62,6 +61,16 @@ public class UserManager {
     }
 
     /**
+     * 通过邮箱获取用户
+     *
+     * @param email
+     * @return
+     */
+    public User findUserByEmail(String email) {
+        return userDao.findByEmail(email);
+    }
+
+    /**
      * 获取用户数量
      *
      * @return
@@ -71,13 +80,32 @@ public class UserManager {
     }
 
     /**
-     * 按照parameters搜索用户
+     * 创建新用户
      *
-     * @param parameters
-     * @return
+     * @param user
      */
-    public List<User> search(Map<String, Object> parameters) {
-        return userDao.search(parameters);
+    @Transactional(readOnly = false)
+    public int save(User user) {
+        user.setPlainPassword(RandomString.get(8));
+        user.setSalt(RandomString.get(16));
+
+        //设定安全的密码，使用passwordService提供的salt并经过1024次 sha-1 hash
+        if (StringUtils.isNotBlank(user.getPlainPassword()) && shiroRealm != null) {
+            HashPassword hashPassword = shiroRealm.encrypt(user.getPlainPassword());
+            user.setSalt(hashPassword.getSalt());
+            user.setPassword(hashPassword.getPassword());
+        }
+
+        user.setPhotoURL("default.jpg");
+        user.setLastIP(134744072L);
+        user.setTimeOffset("0800");
+        user.setLastTime(new Date());
+        user.setLastActTime(new Date());
+
+        // 发送通知邮件
+        sendNotifyMessage(user);
+
+        return userDao.save(user);
     }
 
     /**
@@ -96,100 +124,13 @@ public class UserManager {
      * @param id
      */
     @Transactional(readOnly = false)
-    public void delete(Long id) {
-        User user = get(id);
-        if (isSupervisor(user)) {
+    public int delete(Long id) {
+        // 判断用户是否为超级管理员
+        if (id == 1) {
             logger.warn("操作员{}尝试删除超级管理员用户", SecurityUtils.getSubject().getPrincipal());
             throw new ServiceException("不能删除超级管理员用户");
         }
-        user.setDeleted(true);
-        userDao.update(user);
-    }
-
-    /**
-     * 通过邮箱获取用户
-     *
-     * @param email
-     * @return
-     */
-    public User findUserByEmail(String email) {
-        return userDao.findByEmail(email);
-    }
-
-    /**
-     * 判断是否超级管理员
-     *
-     * @param user
-     * @return
-     */
-    private boolean isSupervisor(User user) {
-        return (user.getId() != null && user.getId() == 1L);
-    }
-
-    /**
-     * 创建新用户
-     *
-     * @param user
-     */
-    @Transactional(readOnly = false)
-    public void save(User user) {
-        user.setPlainPassword(RandomString.get(8));
-        user.setSalt(RandomString.get(16));
-        user.setPhotoURL("default.jpg");
-        user.setLastIP(134744072L);
-        user.setTimeOffset("0800");
-        user.setLastTime(new Date());
-        user.setLastActTime(new Date());
-        this.update(user);
-    }
-
-    /**
-     * 重置密码
-     *
-     * @param id
-     */
-    @Transactional(readOnly = false)
-    public void repass(Long id) {
-        User user = this.get(id);
-        user.setPlainPassword(RandomString.get(8));
-        user.setSalt(RandomString.get(16));
-        this.update(user);
-    }
-
-    /**
-     * 批量审核用户
-     *
-     * @param ids
-     */
-    @Transactional(readOnly = false)
-    public void batchAudit(String[] ids) {
-        User user = null;
-        for (String id : ids) {
-            if (id.length() == 0) {
-                continue;
-            }
-            user = this.get(Long.parseLong(id));
-            user.setStatus(false);
-            this.update(user);
-        }
-    }
-
-    /**
-     * 批量改变用户的删除标志
-     *
-     * @param ids
-     */
-    @Transactional(readOnly = false)
-    public void batchDelete(String[] ids) {
-        User user = null;
-        for (String id : ids) {
-            if (id.length() == 0) {
-                continue;
-            }
-            user = this.get(Long.parseLong(id));
-            user.setDeleted(true);
-            this.update(user);
-        }
+        return userDao.update(id, "deleted");
     }
 
     /**
@@ -214,13 +155,87 @@ public class UserManager {
         }
 
         user.setLastModifiedDate(null);
-        userDao.save(user);
+        userDao.update(user);
 
         if (shiroRealm != null) {
             shiroRealm.clearCachedAuthorizationInfo(user.getEmail());
         }
 
         sendNotifyMessage(user);
+    }
+
+    /**
+     * 更新用户
+     *
+     * @param id
+     * @param column
+     */
+    @Transactional(readOnly = false)
+    public int update(Long id, String column) {
+        return userDao.update(id, column);
+    }
+
+    /**
+     * 判断是否超级管理员
+     *
+     * @param user
+     * @return
+     */
+    private boolean isSupervisor(User user) {
+        return (user.getId() != null && user.getId() == 1L);
+    }
+
+    /**
+     * 重置密码
+     *
+     * @param id
+     */
+    @Transactional(readOnly = false)
+    public void repass(Long id) {
+        User user = this.get(id);
+        user.setPlainPassword(RandomString.get(8));
+        user.setSalt(RandomString.get(16));
+        this.update(user);
+    }
+
+    /**
+     * 批量审核用户
+     *
+     * @param ids
+     */
+    @Transactional(readOnly = false)
+    public void batchAudit(String[] ids) {
+        for (String id : ids) {
+            if (id.length() == 0) {
+                continue;
+            }
+            userDao.update(Long.parseLong(id), "status");
+        }
+    }
+
+    /**
+     * 批量改变用户的删除标志
+     *
+     * @param ids
+     */
+    @Transactional(readOnly = false)
+    public void batchDelete(String[] ids) {
+        for (String id : ids) {
+            if (id.length() == 0) {
+                continue;
+            }
+            userDao.update(Long.parseLong(id), "deleted");
+        }
+    }
+
+    /**
+     * 按照parameters搜索用户
+     *
+     * @param parameters
+     * @return
+     */
+    public List<User> search(Map<String, Object> parameters) {
+        return userDao.search(parameters);
     }
 
     /**

@@ -20,12 +20,10 @@
         <result property="lastModifiedDate" column="last_modified_date"/>
         <result property="createdDate" column="created_date"/>
         <result property="deleted" column="deleted"/>
-        <association property="group" column="group_id" javaType="Group" columnPrefix="group_" resultMap="groupDetailMap" />
+        <collection property="groupList" column="group_id" javaType="ArrayList" ofType="Group" columnPrefix="group_" resultMap="groupDetailMap" />
     </resultMap>
 
-    <!--
-         获取用户数量
-     -->
+    <!-- 获取用户数量 -->
     <select id="getUserCount" resultType="Long">
         SELECT COUNT( id )
         FROM cms_user
@@ -34,8 +32,8 @@
 
     <!-- 查询用户 -->
     <select id="getUser" parameterType="Long" resultMap="userDetailMap">
-        SELECT U.id, U.group_id, email, username, PASSWORD , salt,
-        STATUS , email_status, avatar_status, photo_url, time_offset, last_ip, last_time, last_act_time, created_date, last_modified_date, deleted,
+        SELECT U.id, U.group_id, email, username, PASSWORD , salt, STATUS , deleted,
+        email_status, avatar_status, photo_url, time_offset, last_ip, last_time, last_act_time, created_date, last_modified_date,
         group_name as group_group_name, permission as group_permission
         FROM cms_user AS U
         LEFT OUTER JOIN cms_group AS G ON G.id = U.group_id
@@ -44,33 +42,96 @@
     </select>
 
     <select id="getUserByEmail" parameterType="String" resultMap="userDetailMap">
-        SELECT U.id, email, username, PASSWORD , salt, STATUS , deleted,
+        SELECT U.id, U.group_id, email, username, PASSWORD , salt, STATUS , deleted,
+        group_name as group_group_name, permission as group_permission
+        FROM cms_user AS U
+        LEFT OUTER JOIN cms_group AS G ON G.id = U.group_id
+        LEFT OUTER JOIN cms_group_permission AS P ON P.group_id = U.group_id
+        WHERE email =#{email}
+    </select>
+
+    <!-- 获取所有用户 -->
+    <select id="getAllUser" resultMap="userDetailMap">
+        SELECT U.id, U.group_id, email, username, PASSWORD , salt,STATUS , deleted,
+        email_status, avatar_status, photo_url, time_offset, last_ip, last_time, last_act_time, created_date, last_modified_date,
         group_name as group_group_name, permission as group_permission
         FROM cms_user AS U
         LEFT OUTER JOIN cms_group AS G ON G.id = U.group_id
         LEFT OUTER JOIN cms_group_permission AS P ON P.group_id = G.id
-        WHERE email =#{email}
     </select>
 
-    <!--
-         获取所有用户
-     -->
-    <select id="getAllUser" resultMap="userDetailMap">
-        select id,group_id,email,username,password,salt,status,email_status,avatar_status,photo_url,time_offset,
-        last_ip,last_time,last_act_time,created_date,last_modified_date,deleted
-        from cms_user
-    </select>
-
-    <!--
-         获取已标记为删除的用户id
-     -->
+    <!-- 获取已标记为删除的用户id -->
     <select id="getDeletedUserId" resultType="Long">
-        select id
-        from cms_user
-        where deleted=1
+        SELECT id
+        FROM cms_user
+        WHERE deleted=1
 	</select>
 
-    <!-- 查询用户,演示: 1.输入用map传入多个参数 2.<where>语句, 智能添加where和and关键字 3.输出直接映射对象 -->
+    <!-- 更新用户 -->
+    <insert id="saveUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO cms_user (id, group_id, email, username, password, salt, status, email_status, avatar_status, photo_url, time_offset, last_ip, last_time, last_act_time, created_date, deleted)
+        VALUES (#{id},#{groupId},#{email},#{username},#{password},#{salt},#{status},#{emailStatus},#{avatarStatus},#{photoURL},#{timeOffset},#{lastIP},#{lastTime},#{lastActTime},null,0)
+	</insert>
+
+    <!-- 更新用户 -->
+    <delete id="deleteUser">
+        DELETE FROM cms_user
+        WHERE deleted=1
+	</delete>
+
+    <!-- 更新用户 -->
+    <update id="updateUser" parameterType="User">
+        UPDATE cms_user
+        <set>
+            <if test="email != null and email !=''">
+                email=#{email},
+            </if>
+            <if test="username != null and username !=''">
+                username=#{username},
+            </if>
+            <if test="password != null and password !=''">
+                password=#{password},
+            </if>
+            <if test="salt != null and salt !=''">
+                salt=#{salt},
+            </if>
+            <if test="emailStatus != null and emailStatus !=''">
+                email_status=#{emailStatus},
+            </if>
+            <if test="avatarStatus != null and avatarStatus !=''">
+                avatar_status=#{avatarStatus},
+            </if>
+            <if test="photoURL != null and photoURL !=''">
+                photo_url=#{photoURL},
+            </if>
+            <if test="timeOffset != null and timeOffset !=''">
+                time_offset=#{timeOffset},
+            </if>
+            <if test="lastIP != null and lastIP !=''">
+                last_ip=#{lastIP},
+            </if>
+            <if test="lastTime != null and lastTime !=''">
+                last_time=#{lastTime},
+            </if>
+            <if test="lastActTime != null and lastActTime !=''">
+                last_act_time=#{lastActTime},
+            </if>
+            <if test="deleted != null and deleted !=''">
+                deleted=#{deleted},
+            </if>
+            last_modified_date=null
+        </set>
+        WHERE id=#{id}
+    </update>
+
+    <!-- 更新用户bool字 -->
+    <update id="updateUserBool" parameterType="map">
+        UPDATE cms_user
+        SET ${column}=1-${column}
+        WHERE id=#{id}
+    </update>
+
+    <!-- 查询用户 -->
     <select id="searchUser" parameterType="map" resultMap="userDetailMap">
         select *
         from cms_user
@@ -91,13 +152,4 @@
         order by ${Sort} ${Direction}
     </select>
 
-    <!-- 更新用户 -->
-    <update id="updateUser" parameterType="User">
-        update cms_user
-        set group_id=#{group_id,},email=#{email},username=#{username},password=#{password},salt=#{salt},status=#{status},
-        email_status=#{emailStatus},avatar_status=#{avatarStatus},deleted=#{deleted},photo_url=#{photoURL},
-        time_offset=#{timeOffset},last_ip=#{lastIP},
-        last_time=#{lastTime},last_act_time=#{lastActTime}
-        where id = #{id}
-	</update>
 </mapper>

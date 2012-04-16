@@ -7,60 +7,47 @@
         <id property="id" column="id"/>
         <result property="groupName" column="group_name"/>
         <collection property="permissionList" javaType="String">
-            <result property="permission" column="permission"/>
+            <result property="id" column="permission" />
         </collection>
     </resultMap>
 
-    <!--
-         获取用户组数量
-     -->
+    <!--获取用户组数量 -->
     <select id="getGroupCount" resultType="Long">
-        select count(id)
-        from cms_group
-        limit 1
+        SELECT count(id)
+        FROM cms_group
+        LIMIT 1
 	</select>
 
-    <!--
-        获取用户组
-    -->
+    <!-- 获取用户组 -->
     <select id="getGroup" parameterType="Long" resultMap="groupDetailMap">
-        select id,group_name
-        from cms_group
-        where id=#{id}
-        limit 1
+        SELECT G.id, group_name, permission
+        FROM cms_group as G
+        LEFT OUTER JOIN cms_group_permission as P ON G.id=P.group_id
+        WHERE G.id=#{groupId}
+        LIMIT 99
 	</select>
 
-    <!--
-        获取用户编号为id的用户组
-    -->
+    <!-- 获取用户编号为id的用户组
     <select id="getGroupByUserId" parameterType="Long" resultMap="groupDetailMap">
-        select group_id as id,group_name
-        from cms_user_group,cms_group
-        where cms_user_group.group_id=cms_group.id and user_id=#{id}
-        limit 3
-	</select>
+        SELECT group_id AS id, group_name
+        FROM cms_user_group, cms_group
+        WHERE cms_user_group.group_id = cms_group.id
+        AND user_id =#{id}
+        LIMIT 3
+	</select>-->
 
-    <!--
-        获取用户编号为id的用户组
-    -->
-    <select id="getPermission" parameterType="String" resultType="String">
-        select permission
-        from cms_group_permission
-        where group_id=#{id}
-	</select>
-
-    <!--
-        获取用户组
-    -->
+    <!-- 获取用户组 -->
     <select id="getAllGroup" resultMap="groupDetailMap">
-        select id,group_name
-        from cms_group
+        SELECT G.id, group_name, permission
+        FROM cms_group as G
+        LEFT OUTER JOIN cms_group_permission as P ON G.id=P.group_id
+        LIMIT 99
 	</select>
 
-    <!-- 查询用户,演示: 1.输入用map传入多个参数 2.<where>语句, 智能添加where和and关键字 3.输出直接映射对象 -->
+    <!-- 查询用户 -->
     <select id="searchGroup" parameterType="map" resultType="ArrayList">
-        select *
-        from cms_group
+        SELECT *
+        FROM cms_group
         <where>
             <if test="id != null">
                 id=#{id}
@@ -69,7 +56,7 @@
                 and group_name=#{groupName}
             </if>
         </where>
-        order by ${Sort} ${Direction}
+        ORDER BY ${Sort} ${Direction}
     </select>
 
 </mapper>

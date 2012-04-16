@@ -39,7 +39,7 @@ public class UserData {
 
     public static User getRandomUserWithGroup() {
         User user = getRandomUser();
-        user.setGroup(getRandomDefaultGroup());
+        user.setGroupList(getRandomDefaultGroup());
         return user;
     }
 
@@ -49,10 +49,12 @@ public class UserData {
         return group;
     }
 
-    public static Group getRandomGroupWithPermissions() {
+    public static List<Group> getRandomGroupWithPermissions() {
+        List<Group> groupList = Lists.newArrayList();
         Group group = getRandomGroup();
         group.getPermissionList().addAll(getRandomDefaultPermissionList());
-        return group;
+        groupList.add(group);
+        return groupList;
     }
 
     public static List<Group> getDefaultGroupList() {
@@ -64,8 +66,8 @@ public class UserData {
         return defaultGroupList;
     }
 
-    public static Group getRandomDefaultGroup() {
-        return RandomData.randomOne(getDefaultGroupList());
+    public static List<Group> getRandomDefaultGroup() {
+        return RandomData.randomSome(getDefaultGroupList());
     }
 
     public static List<String> getDefaultPermissionList() {

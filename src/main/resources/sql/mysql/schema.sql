@@ -10,7 +10,7 @@ CREATE  TABLE IF NOT EXISTS `cms_category` (
   `id` MEDIUMINT(8) NOT NULL AUTO_INCREMENT COMMENT '栏目ID' ,
   `father_category_id` MEDIUMINT(8) NOT NULL DEFAULT 0 COMMENT '上级栏目ID' ,
   `category_name` VARCHAR(255) NOT NULL COMMENT '栏目名称' ,
-  `display_order` MEDIUMINT(8) NOT NULL DEFAULT 1 COMMENT '显示顺序' ,
+  `display_order` SMALLINT(6) NOT NULL DEFAULT 1 COMMENT '显示顺序' ,
   `show_type` VARCHAR(20) NOT NULL DEFAULT 0 COMMENT '显示方式' ,
   `url` VARCHAR(80) NOT NULL DEFAULT 0 COMMENT '自定义链接地址' ,
   `description` TEXT NOT NULL COMMENT 'SEO描述' ,
@@ -42,9 +42,9 @@ CREATE  TABLE IF NOT EXISTS `cms_article` (
   `digest` VARCHAR(255) NOT NULL ,
   `keyword` VARCHAR(255) NOT NULL DEFAULT 0 COMMENT '帖子标签' ,
   `top` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '是否是首贴' ,
-  `rate` SMALLINT(6) NOT NULL DEFAULT 0 COMMENT '评分分数' ,
-  `rate_times` TINYINT(3) NOT NULL DEFAULT 0 COMMENT '评分次数' ,
-  `views` TINYINT(3) NOT NULL DEFAULT 0 COMMENT '浏览次数' ,
+  `rate` TINYINT(3) NOT NULL DEFAULT 0 COMMENT '评分分数' ,
+  `rate_times` INT(11) NOT NULL DEFAULT 0 COMMENT '评分次数' ,
+  `views` INT(11) NOT NULL DEFAULT 0 COMMENT '浏览次数' ,
   `allow_comment` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '是否允许点评' ,
   `status` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '帖子审核状态' ,
   `last_modified_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后修改时间' ,
@@ -263,28 +263,23 @@ INSERT INTO `cms_group`(`id`, `group_name`) VALUES (3,'自由撰稿人');
 -- -----------------------------------------------------
 -- 用户组权限测试数据
 -- -----------------------------------------------------
+--后台管理员
 INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (1,1,"user:create");
 INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (2,1,"user:edit");
 INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (3,1,"user:save");
-INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (4,1,"user:delete");
 INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (5,1,"user:list");
 
 INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (6,1,"group:create");
 INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (7,1,"group:edit");
 INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (8,1,"group:save");
-INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (9,1,"group:delete");
 INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (10,1,"group:list");
 
 INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (11,1,"article:create");
 INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (12,1,"article:edit");
 INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (13,1,"article:save");
-INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (14,1,"article:delete");
 INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (15,1,"article:list");
 
-INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (16,1,"comment:create");
-INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (17,1,"comment:edit");
 INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (18,1,"comment:save");
-INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (19,1,"comment:delete");
 INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (20,1,"comment:list");
 
 INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (21,1,"category:list");
@@ -293,34 +288,40 @@ INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (22,1,
 INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (26,1,"gallery:create");
 INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (27,1,"gallery:edit");
 INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (28,1,"gallery:save");
-INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (29,1,"gallery:delete");
 INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (30,1,"gallery:list");
 
+--前台管理员
+INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (31,2,"user:create");
 INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (32,2,"user:edit");
 INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (33,2,"user:save");
+INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (34,2,"user:list");
 
 INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (36,2,"article:create");
 INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (37,2,"article:edit");
 INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (38,2,"article:save");
-INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (39,2,"article:delete");
 INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (40,2,"article:list");
 
-INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (41,2,"comment:create");
-INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (42,2,"comment:edit");
 INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (43,2,"comment:save");
-INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (44,2,"comment:delete");
 INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (45,2,"comment:list");
 
-INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (56,2,"gallery:list");
-INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (57,2,"link:list");
+INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (51,2,"link:list");
 
+INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (56,2,"gallery:create");
+INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (57,2,"gallery:edit");
+INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (58,2,"gallery:save");
+INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (59,2,"gallery:list");
+
+--自由撰稿人
 INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (62,3,"user:edit");
-INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (63,3,"user:save");
 
 INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (66,3,"article:create");
 INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (67,3,"article:edit");
-INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (68,3,"article:save");
 INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (70,3,"article:list");
+
+INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (71,3,"gallery:create");
+INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (72,3,"gallery:edit");
+INSERT INTO `cms_group_permission`(`id`, `group_id`, `permission`) VALUES (75,3,"gallery:list");
+
 
 
 -- -----------------------------------------------------
@@ -338,7 +339,7 @@ INSERT INTO `cms_category` (`id`, `father_category_id`, `category_name`, `displa
 (7, 6, '中心简介', 12, 'CONTENT', '3', '中心简介', 0, 1, 1, '2012-04-07 08:42:41', '2012-03-22 15:58:00', 0),
 (8, 6, '组织结构', 14, 'CONTENT', '4', '组织结构', 0, 1, 1, '2012-04-07 08:43:00', '2012-03-22 15:58:00', 0),
 (9, 6, '运作机制', 16, 'CONTENT', '5', '运作机制', 0, 1, 1, '2012-04-07 08:43:00', '2012-03-22 15:58:00', 0),
-(10, 6, '联系我们', 18, 'NONE', 'contact', '联系我们', 1, 0, 1, '2012-04-07 08:43:00', '2012-03-22 15:58:00', 0),
+(10, 6, '联系我们', 18, 'NONE', 'about', '联系我们', 1, 0, 1, '2012-04-07 08:43:00', '2012-03-22 15:58:00', 0),
 
 (11, 1, '学术团队', 20, 'NONE', '', '学术团队', 0, 0, 1, '2012-04-07 12:24:15', '2012-03-22 15:58:00', 0),
 (12, 11, '学术带头人', 22, 'CONTENT', '6', '学术带头人', 0, 1, 1, '2012-04-07 08:49:57', '2012-04-07 08:49:57', 0),
@@ -358,7 +359,7 @@ INSERT INTO `cms_category` (`id`, `father_category_id`, `category_name`, `displa
 (23, 1, '教育培训', 50, 'NONE', '', '教育培训', 0, 0, 1, '2012-04-07 12:25:16', '2012-04-07 08:31:17', 0),
 
 (24, 1, '产学研合作', 60, 'NONE', '', '产学研合作', 0, 0, 1, '2012-04-07 08:31:51', '2012-04-07 08:31:51', 0),
-(25, 24, '成果转化', 62, 'DIGEST', '', '成果转化', 1, 1, 1, '2012-04-07 08:58:46', '2012-04-07 08:58:46', 0),
+(25, 24, '成果转化', 62, 'LIST', '', '成果转化', 1, 1, 1, '2012-04-07 08:58:46', '2012-04-07 08:58:46', 0),
 (26, 24, '合作伙伴', 64, 'FULL', '11', '合作伙伴', 0, 1, 1, '2012-04-07 08:59:07', '2012-04-07 08:59:07', 0),
 (27, 24, '对外交流', 66, 'ALBUM', '', '对外交流', 0, 1, 1, '2012-04-07 08:59:29', '2012-04-07 08:59:29', 0),
 

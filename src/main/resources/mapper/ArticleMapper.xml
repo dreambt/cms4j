@@ -139,7 +139,7 @@
 	</select>
 
     <!-- 新增文章 -->
-    <insert id="saveArticle" parameterType="Article">
+    <insert id="saveArticle" parameterType="Article" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO cms_article (user_id, category_id, subject, message, image_name, digest, keyword,
             top, rate, rate_times, views, allow_comment, status, deleted, created_date)
         VALUES (#{user.id}, #{category.id}, #{subject}, #{message}, #{imageName}, #{digest}, #{keyword},

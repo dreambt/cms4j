@@ -169,7 +169,7 @@ public class ArticleDao extends SqlSessionDaoSupport {
      * @param column
      * @return
      */
-    @CacheEvict(value = "article", key = "#article.id")
+    @CacheEvict(value = "article", key = "#id")
     public int update(Long id, String column) {
         Map parameters = Maps.newHashMap();
         parameters.put("id", id);

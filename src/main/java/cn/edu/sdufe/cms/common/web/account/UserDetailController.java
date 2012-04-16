@@ -29,7 +29,6 @@ import java.util.List;
 public class UserDetailController {
 
     private UserManager userManager;
-
     private GroupManager groupManager;
 
     private GroupListEditor groupListEditor;
@@ -40,76 +39,28 @@ public class UserDetailController {
     }
 
     @RequestMapping(value = "edit/{id}")
-    public String updateForm(@PathVariable Long id, Model model) {
-        if(null == userManager.get(id)) {
+    public String updateForm(@ModelAttribute("user") User user, Model model) {
+        if (null == user) {
             model.addAttribute("info", "该用户不存在，请刷新重试");
             return "redirect:/account/user/list";
         }
+        model.addAttribute("user", user);
         model.addAttribute("allGroups", groupManager.getAllGroup());
         return "dashboard/account/user/edit";
     }
 
     @RequestMapping(value = "save/{id}")
-    public String save(@PathVariable Long id, @Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model,
-                       RedirectAttributes redirectAttributes) {
-        if(null == userManager.get(id)) {
+    public String save(@ModelAttribute("user") User user, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (null == user) {
             redirectAttributes.addFlashAttribute("info", "该用户不存在，请刷新重试");
             return "redirect:/account/user/list";
         }
         if (bindingResult.hasErrors()) {
-            return updateForm(id, redirectAttributes);
+            return updateForm(user, redirectAttributes);
         }
 
         userManager.save(user);
         redirectAttributes.addFlashAttribute("info", "保存用户成功");
-        return "redirect:/account/user/list";
-    }
-
-    /**
-     * 审核编号为id的文章
-     *
-     * @param id
-     * @return
-     */
-    @RequiresPermissions("user:edit")
-    @RequestMapping(value = "audit/{id}")
-    public String auditArticle(@PathVariable("id") Long id, @ModelAttribute("user") User user, RedirectAttributes redirectAttributes) {
-        if(null == userManager.get(id)) {
-            redirectAttributes.addFlashAttribute("info", "该用户不存在，请刷新重试");
-            return "redirect:/account/user/list";
-        }
-        user.setStatus(!user.isStatus());
-        userManager.update(user);
-
-        if (user.isStatus()) {
-            redirectAttributes.addFlashAttribute("info", "审核用户 " + id + " 成功.");
-        } else {
-            redirectAttributes.addFlashAttribute("info", "反审核用户 " + id + " 成功.");
-        }
-        return "redirect:/account/user/list";
-    }
-
-    /**
-     * 删除编号为id的文章
-     *
-     * @param id
-     * @return
-     */
-    @RequiresPermissions("user:delete")
-    @RequestMapping(value = "delete/{id}")
-    public String deleteArticle(@PathVariable("id") Long id, @ModelAttribute("user") User user, RedirectAttributes redirectAttributes) {
-        if(null == userManager.get(id)) {
-            redirectAttributes.addFlashAttribute("info", "该用户已经不存在，请刷新查看");
-            return "redirect:/account/user/list";
-        }
-        user.setDeleted(!user.isDeleted());
-        userManager.update(user);
-
-        if (user.isDeleted()) {
-            redirectAttributes.addFlashAttribute("info", "删除用户 " + id + " 成功.");
-        } else {
-            redirectAttributes.addFlashAttribute("info", "恢复用户 " + id + " 成功.");
-        }
         return "redirect:/account/user/list";
     }
 
