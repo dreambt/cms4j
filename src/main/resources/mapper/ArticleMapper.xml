@@ -157,6 +157,9 @@
     <update id="updateArticle" parameterType="Article">
         UPDATE cms_article
         <set>
+            <if test="category != null and category.id > 0">
+                category_id=#{category.id},
+            </if>
             <if test="subject != null and subject !=''">
                 subject=#{subject},
             </if>
