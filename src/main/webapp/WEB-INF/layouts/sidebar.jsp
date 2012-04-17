@@ -36,7 +36,7 @@
         <h2 class="cufon">最新文章</h2>
         <ul class="blog-list">
             <c:forEach items="${newArticles}" var="newArticle" begin="0" step="1">
-                <li><a href="${ctx}/article/content/${newArticle.id}">${fn:substring(newArticle.subject,0,20)}<c:if test="${fn:length(newArticle.subject)>20}">...</c:if></a></li>
+                <li><a href="${ctx}/article/content/${newArticle.id}">${fn:substring(newArticle.subject,0,16)}<c:if test="${fn:length(newArticle.subject)>16}">...</c:if></a></li>
             </c:forEach>
         </ul>
     </div>
