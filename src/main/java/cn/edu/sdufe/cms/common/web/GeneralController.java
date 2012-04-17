@@ -32,14 +32,14 @@ public class GeneralController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
-    public String index(Model model) {
+    @RequestMapping(value = "/index{str}", method = RequestMethod.GET)
+    public String index(Model model, @PathVariable("str") String str) {
         model.addAttribute("categories", categoryManager.getNavCategory());
-        model.addAttribute("images", imageManager.getImageByShowIndex());
+        model.addAttribute("images", imageManager.findByShowIndex());
         model.addAttribute("links", linkManager.getAllLink());
         model.addAttribute("news", articleManager.findNews());
         model.addAttribute("posts", articleManager.getTitleByCategoryId(1L, 0, 5));
-        return "index";
+        return "index" + str;
     }
 
     /**
@@ -50,6 +50,7 @@ public class GeneralController {
     @RequestMapping(value = "/contact", method = RequestMethod.GET)
     public String contactUs(Model model) {
         model.addAttribute("categories", categoryManager.getNavCategory());
+        model.addAttribute("links", linkManager.getAllLink());
         return "contact";
     }
 
@@ -61,6 +62,7 @@ public class GeneralController {
     @RequestMapping(value = "/services", method = RequestMethod.GET)
     public String services(Model model) {
         model.addAttribute("categories", categoryManager.getNavCategory());
+        model.addAttribute("links", linkManager.getAllLink());
         return "services";
     }
 
@@ -72,6 +74,7 @@ public class GeneralController {
     @RequestMapping(value = "/about", method = RequestMethod.GET)
     public String ahoutUs(Model model) {
         model.addAttribute("categories", categoryManager.getNavCategory());
+        model.addAttribute("links", linkManager.getAllLink());
         return "about";
     }
 

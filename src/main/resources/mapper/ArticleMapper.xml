@@ -224,13 +224,13 @@
                 and user_id=#{user.id}
             </if>
             <if test="subject != null and subject != ''">
-                and subject=#{subject}
+                and subject like CONCAT('%',#{subject},'%')
             </if>
             <if test="digest != null and digest != ''">
-                and digest=#{digest}
+                and digest like CONCAT('%',#{digest},'%')
             </if>
             <if test="keyword != null and keyword != ''">
-                and keyword=#{keyword}
+                and keyword like CONCAT('%',#{keyword},'%')
             </if>
             <if test="user != null and user.username != ''">
                 and U.username=#{user.username}

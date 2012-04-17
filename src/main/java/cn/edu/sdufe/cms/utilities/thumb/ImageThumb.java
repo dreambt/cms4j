@@ -16,25 +16,15 @@ import java.io.File;
  */
 public class ImageThumb {
     private int width;
-
     private int height;
-
     private int scaleWidth;
-
     double support = (double) 3.0;
-
     double PI = (double) 3.14159265358978;
-
     double[] contrib;
-
     double[] normContrib;
-
     double[] tmpContrib;
-
     int startContrib, stopContrib;
-
     int nDots;
-
     int nHalfDots;
 
     /**
@@ -128,7 +118,6 @@ public class ImageThumb {
 
         return Math.sin(x * PI) / (x * PI) * Math.sin(x * PI / Support)
                 / (x * PI / Support);
-
     }
 
     private void CalContrib() {
@@ -347,9 +336,7 @@ public class ImageThumb {
                     pbOut.setRGB(x, y, value);
                 }
             }
-
         }
-
         return pbOut;
 
     } // end of VerticalFiltering()

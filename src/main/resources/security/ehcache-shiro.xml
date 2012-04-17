@@ -8,12 +8,12 @@
 		overflowToDisk="false" />
 
 	<!-- Special objects setting. -->
-	<cache name="org.springside.examples.showcase.security.ShiroDbRealm.authorizationCache" maxEntriesLocalHeap="1000"
+	<cache name="cn.edu.sdufe.cms.security.ShiroDbRealm.authorizationCache" maxEntriesLocalHeap="1000"
 		eternal="true" overflowToDisk="true" maxEntriesLocalDisk="10000">
 		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
 			properties="replicatePuts=false,replicateUpdatesViaCopy=false" />
 	</cache>
-	<cache name="org.springside.examples.showcase.security.ShiroDbRealm.authenticationCache" maxEntriesLocalHeap="1000"
+	<cache name="cn.edu.sdufe.cms.security.ShiroDbRealm.authenticationCache" maxEntriesLocalHeap="1000"
 		eternal="true" overflowToDisk="true" maxEntriesLocalDisk="10000">
 		<cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
 			properties="replicatePuts=false,replicateUpdatesViaCopy=false" />

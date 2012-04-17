@@ -24,12 +24,20 @@ public class NotifyMessageProducer {
         sendMessage(user, notifyQueue);
     }
 
+    public void sendQueueGenThumb(final String path, final String fileName) {
+        sendMessage(path, fileName, notifyQueue);
+    }
+
+    public void sendQueueDelThumb(final String fileName) {
+        sendMessage(fileName, notifyQueue);
+    }
+
     public void sendTopic(final User user) {
         sendMessage(user, notifyTopic);
     }
 
     /**
-     * 使用jmsTemplate的send/MessageCreator()发送Map类型的消息并在Message中附加属性用于消息过滤.
+     * 用户信息变更通知邮件
      */
     private void sendMessage(final User user, Destination destination) {
         jmsTemplate.send(destination, new MessageCreator() {
@@ -42,6 +50,43 @@ public class NotifyMessageProducer {
                 message.setString("password", user.getPlainPassword());
 
                 message.setStringProperty("objectType", "user");
+
+                return message;
+            }
+        });
+    }
+
+    /**
+     * 生成缩略图
+     */
+    private void sendMessage(final String path, final String fileName, Destination destination) {
+        jmsTemplate.send(destination, new MessageCreator() {
+            @Override
+            public Message createMessage(Session session) throws JMSException {
+
+                MapMessage message = session.createMapMessage();
+                message.setString("path", path);
+                message.setString("fileName", fileName);
+
+                message.setStringProperty("objectType", "gen_thumb");
+
+                return message;
+            }
+        });
+    }
+
+    /**
+     * 删除缩略图
+     */
+    private void sendMessage(final String fileName, Destination destination) {
+        jmsTemplate.send(destination, new MessageCreator() {
+            @Override
+            public Message createMessage(Session session) throws JMSException {
+
+                MapMessage message = session.createMapMessage();
+                message.setString("fileName", fileName);
+
+                message.setStringProperty("objectType", "del_thumb");
 
                 return message;
             }
