@@ -52,9 +52,9 @@
     $(function(){
         //默认状态下左右滚动
         $("#teacher").Xslider({
-            unitdisplayed:6,
+            unitdisplayed:5,
             numtoMove:1,
-            unitlen:146,
+            unitlen:130,
             loop:"cycle",
             autoscroll:3000
         });
