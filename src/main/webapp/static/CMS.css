@@ -81,7 +81,7 @@ table.menu_sec input{float: left;}
     float: left;
 }
 #userInfo ul li .input_info{
-    background: #EEE url(../static/dashboard/images/grey_noise.png) repeat;
+    background: #EEE url(dashboard/images/grey_noise.png) repeat;
     background-color: #F2F4F6;
     height: 20px;
     border:none;

@@ -48,6 +48,7 @@ public class UserManager {
      * @return
      */
     public User get(Long id) {
+        logger.debug("== Find user by id={}.", id);
         return userDao.findOne(id);
     }
 
@@ -57,6 +58,7 @@ public class UserManager {
      * @return
      */
     public List<User> getAll() {
+        logger.debug("== Find all user.");
         return userDao.findAll();
     }
 
@@ -67,6 +69,7 @@ public class UserManager {
      * @return
      */
     public User findUserByEmail(String email) {
+        logger.debug("== Find user by email={}.", email);
         return userDao.findByEmail(email);
     }
 
@@ -76,6 +79,7 @@ public class UserManager {
      * @return
      */
     public Long getCount() {
+        logger.debug("== Find the number of user.");
         return userDao.count();
     }
 
@@ -105,6 +109,7 @@ public class UserManager {
         // 发送通知邮件
         sendNotifyMessage(user);
 
+        logger.debug("== Save user={}.", user.toString());
         return userDao.save(user);
     }
 
@@ -115,6 +120,7 @@ public class UserManager {
      */
     @Transactional(readOnly = false)
     public int delete() throws InterruptedException {
+        logger.debug("== Delete user.");
         return userDao.delete();
     }
 
@@ -130,7 +136,7 @@ public class UserManager {
             logger.warn("操作员{}尝试删除超级管理员用户", SecurityUtils.getSubject().getPrincipal());
             throw new ServiceException("不能删除超级管理员用户");
         }
-        return userDao.update(id, "deleted");
+        return this.update(id, "deleted");
     }
 
     /**
@@ -154,7 +160,7 @@ public class UserManager {
             user.setPassword(hashPassword.getPassword());
         }
 
-        user.setLastModifiedDate(null);
+        logger.debug("== Update user={}.", user);
         userDao.update(user);
 
         if (shiroRealm != null) {
@@ -172,6 +178,7 @@ public class UserManager {
      */
     @Transactional(readOnly = false)
     public int update(Long id, String column) {
+        logger.debug("== Update user's #{} by id={}.", column, id);
         return userDao.update(id, column);
     }
 
@@ -195,7 +202,9 @@ public class UserManager {
         User user = this.get(id);
         user.setPlainPassword(RandomString.get(8));
         user.setSalt(RandomString.get(16));
-        this.update(user);
+        logger.debug("== Reset user's password by id={}, email={}.", id, user.getEmail());
+        userDao.update(user);
+        sendNotifyMessage(user);
     }
 
     /**
@@ -235,6 +244,7 @@ public class UserManager {
      * @return
      */
     public List<User> search(Map<String, Object> parameters) {
+        logger.debug("== Find users by parameters={}.", parameters.toString());
         return userDao.search(parameters);
     }
 
@@ -248,6 +258,7 @@ public class UserManager {
     private void sendNotifyMessage(User user) {
         if (notifyProducer != null) {
             try {
+                logger.info("== Notify message to user={}.", user.toString());
                 notifyProducer.sendQueue(user);
             } catch (Exception e) {
                 logger.error("消息发送失败", e);

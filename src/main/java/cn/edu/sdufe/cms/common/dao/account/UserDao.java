@@ -25,7 +25,7 @@ public class UserDao extends SqlSessionDaoSupport {
      * @param id
      * @return
      */
-    @Cacheable(value = "user")
+    @Cacheable(value = "userCache")
     public User findOne(Long id) {
         return getSqlSession().selectOne("ACCOUNT.getUser", id);
     }
@@ -36,7 +36,7 @@ public class UserDao extends SqlSessionDaoSupport {
      * @param email
      * @return
      */
-    @Cacheable(value = "user")
+    @Cacheable(value = "userCache")
     public User findByEmail(String email) {
         return getSqlSession().selectOne("ACCOUNT.getUserByEmail", email);
     }
@@ -46,7 +46,7 @@ public class UserDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    @Cacheable(value = "all_user")
+    @Cacheable(value = "usersCache")
     public List<User> findAll() {
         return getSqlSession().selectList("ACCOUNT.getAllUser");
     }
@@ -56,7 +56,7 @@ public class UserDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    @Cacheable(value = "user_num")
+    @Cacheable(value = "userNumCache")
     public Long count() {
         return getSqlSession().selectOne("ACCOUNT.getUserCount");
     }
@@ -112,6 +112,7 @@ public class UserDao extends SqlSessionDaoSupport {
      * @param parameters
      * @return
      */
+    @Cacheable(value = "usersCache")
     public List<User> search(Map<String, Object> parameters) {
         return getSqlSession().selectList("ACCOUNT.searchUser", parameters);
     }

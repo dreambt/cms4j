@@ -12,10 +12,7 @@
 <html>
 <head>
     <title>上传活动图片</title>
-    <link rel="stylesheet" type="text/css" href="${ctx}/static/Ueditor/themes/default/ueditor.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/static/jquery-validation/1.9.0/validate.min.css">
-    <script type="text/javascript" src="${ctx}/static/Ueditor/editor_config.js"></script>
-    <script type="text/javascript" src="${ctx}/static/Ueditor/editor_all.js"></script>
     <script type="text/javascript" src="${ctx}/static/jquery-validation/1.9.0/jquery.validate.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="${ctx}/static/jquery-validation/1.9.0/messages_cn.js" charset="utf-8"></script>
 </head>
@@ -23,7 +20,6 @@
 <div id="main_container" class="main_container container_16 clearfix">
     <div class="flat_area grid_16">
         <h2>上传活动图片</h2>
-
         <p>上传活动图片</p>
     </div>
 </div>
@@ -32,14 +28,13 @@
                enctype="multipart/form-data">
         <div class="box grid_16">
             <h2 class="box_head grad_colour round_top">上传活动图片</h2>
-
             <div class="toggle_container">
                 <div class="info" style="float:left;margin-left: 15%;margin-top: 15px;">
                     <input id="picID" type="hidden" name="id" value="${image.id}" />
                     <input type="file" id="upload" name="file"><br> <br>
                     图片标题：<br/><input type="text" class="required" name="title" size="52" value="${image.title}"> <br/> <br/>
                     首页展示：<input type="checkbox" name="showIndex" style="float: none" value="${image.showIndex}" <c:if test="${image.showIndex}">checked="checked"</c:if>>  <br/> <br/>
-                    描述：<br/><textarea type="text" class="required" name="description" cols="55" rows="5">${image.description}</textarea>
+                    描述信息：<br/><textarea type="text" class="required" name="description" cols="55" rows="5">${image.description}</textarea>
                     <br/><br/>
                     <!--<img src="#" style="display: block;float: left;">-->
                 </div>
@@ -54,6 +49,7 @@
         $('#upload').live('change', function () {
             if(!checkType($('#upload').val())){ alert("不能上传非gif、jpg、png、bmp类型的文件！请重新选择要上传的图片文件！");}
         });
+
         //检验上传文件是否是图片
         function checkType(uploadDom){
             var c=(uploadDom.substr(uploadDom.length -5)).substr((uploadDom.substr(uploadDom.length -5)).indexOf('.')+1).toLowerCase();
@@ -63,6 +59,7 @@
                 return false;
             }
         }
+
          //如果新上传则必须要选择图片
         $('#submit').click(function(){
             var uploadVal=$('#upload').val();
@@ -76,6 +73,7 @@
                 }
             }
         });
+
         //表单校验
        $('form#image').validate({
             event:'submit'

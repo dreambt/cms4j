@@ -76,7 +76,7 @@ public class ImageDetailController {
 
     @ModelAttribute("image")
     public Image getImage(@PathVariable Long id) {
-        return imageManager.getImage(id);
+        return imageManager.findOne(id);
     }
 
     @Autowired

@@ -35,10 +35,10 @@
                 <a target="_blank" href="" title="张抗抗副教授，工学博士，硕士生导师，美国Arizona State University访问学者。多年来一直从事服务计算、信息集成与应用集成及金融云计算综合服务平台等方面的研究。"><img width="120" height="166" alt="张抗抗" src="${ctx}/static/uploads/teacher/pic_zhangkangkang.jpg"></a>
                 <p>张抗抗</p>
             </li>
-        </ul><!--imglist end-->
+        </ul>
     </div>
     <a class="abtn aright" href="#right" title="右移"></a>
-</div><!--teacher end-->
+</div>
 <script type="text/javascript" src="${ctx}/static/js/slider.js"></script>
 <script type="text/javascript">
     $(function(){

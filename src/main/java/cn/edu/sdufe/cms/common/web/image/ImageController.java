@@ -8,13 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -39,7 +37,7 @@ public class ImageController {
     @RequiresPermissions("gallery:list")
     @RequestMapping(value = "listAll", method = RequestMethod.GET)
     public String listAllImage(Model model) {
-        model.addAttribute("images", imageManager.getAllImage());
+        model.addAttribute("images", imageManager.findAll());
         return "dashboard/image/listAll";
     }
 
@@ -144,6 +142,14 @@ public class ImageController {
             redirectAttributes.addFlashAttribute("error", "请选择上传的图片");
         }
 
+        // 是否首页显示
+        if (null == request.getParameter("showIndex")) {
+            image.setShowIndex(false);
+        } else {
+            image.setShowIndex(true);
+        }
+
+        // 保存
         if (imageManager.save(file, request, image) <= 0) {
             redirectAttributes.addFlashAttribute("error", "添加图片信息失败");
         } else {

@@ -2,6 +2,7 @@ package cn.edu.sdufe.cms.common.service.image;
 
 import cn.edu.sdufe.cms.common.dao.image.ImageDao;
 import cn.edu.sdufe.cms.common.entity.image.Image;
+import cn.edu.sdufe.cms.jms.NotifyMessageProducer;
 import cn.edu.sdufe.cms.utilities.RandomString;
 import cn.edu.sdufe.cms.utilities.thumb.ImageThumb;
 import com.google.common.collect.Maps;
@@ -10,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,6 +36,24 @@ public class ImageManager {
     private static final Logger logger = LoggerFactory.getLogger(ImageManager.class);
 
     private ImageDao imageDao;
+    private ImageThumb imageThumb = new ImageThumb();
+
+    private NotifyMessageProducer notifyProducer; //JMS消息发送
+
+    @Value("${path.upload.base}")
+    private String UPLOAD_PATH;
+    @Value("${path.upload.dir}")
+    private String UPLOAD_DIR;
+
+    /**
+     * 获得编号为id的image
+     *
+     * @param id
+     * @return
+     */
+    public Image findOne(Long id) {
+        return imageDao.findOne(id);
+    }
 
     /**
      * 获得分页的image
@@ -61,7 +81,7 @@ public class ImageManager {
      *
      * @return
      */
-    public List<Image> getAllImage() {
+    public List<Image> findAll() {
         return imageDao.findAll();
     }
 
@@ -70,20 +90,10 @@ public class ImageManager {
      *
      * @return
      */
-    public List<Image> getImageByShowIndex() {
+    public List<Image> findByShowIndex() {
         Map<String, Object> parameters = Maps.newHashMap();
         parameters.put("showIndex", "1");
         return imageDao.search(parameters);
-    }
-
-    /**
-     * 获得编号为id的image
-     *
-     * @param id
-     * @return
-     */
-    public Image getImage(Long id) {
-        return imageDao.findOne(id);
     }
 
     /**
@@ -94,26 +104,16 @@ public class ImageManager {
      */
     @Transactional(readOnly = false)
     public int save(MultipartFile file, HttpServletRequest request, Image image) {
-        //首页显示
-        if(null == request.getParameter("showIndex")) {
-            image.setShowIndex(false);
-        } else {
-            image.setShowIndex(true);
-        }
         if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
-            String fileName = this.upload(file, request);
+            String fileName = this.uploadFile(file, request);
             image.setImageUrl(fileName);
-            //项目路径// TODO 迁移服务器需要修改
-            String path = System.getProperty("user.dir") + "/src/main/webapp/static/uploads/gallery/";
-            //图片来源路径
 
-            ImageThumb imageThumb = new ImageThumb();
             try {
-                imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-50x57/" + fileName, 50, 57);
-                imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-134x134/" + fileName, 134, 134);
-                imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-200x122/" + fileName, 200, 122);
-                imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-218x194/" + fileName, 218, 194);
-                imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-460x283/" + fileName, 460, 283);
+                imageThumb.saveImageAsJpg(UPLOAD_PATH + "gallery-big/" + fileName, UPLOAD_PATH + "thumb-50x57/" + fileName, 50, 57);
+                logger.info("Success to generate Thumb: {}", UPLOAD_PATH + "thumb-50x57/" + fileName);
+
+                // 异步生成其他缩略图
+                notifyProducer.sendQueueGenThumb(UPLOAD_PATH, fileName);
             } catch (Exception e) {
                 logger.info(e.getMessage());
             }
@@ -130,20 +130,24 @@ public class ImageManager {
      * @param request
      * @return
      */
-    public String upload(MultipartFile file, HttpServletRequest request) {
+    public String uploadFile(MultipartFile file, HttpServletRequest request) {
         // 转型为MultipartHttpRequest：
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+
         //上传路径
-        String path = multipartRequest.getSession().getServletContext().getRealPath("static/uploads/gallery/gallery-big");
+        String path = multipartRequest.getSession().getServletContext().getRealPath(UPLOAD_DIR);
+
         //原文件名
         String imageName = file.getOriginalFilename();
         String ext = imageName.substring(imageName.lastIndexOf("."), imageName.length());
+
         //服务器上的文件名
-        String fileName = new Date().getTime() + RandomString.get(6) + ext;
+        String fileName = new Date().getTime() + "-" + RandomString.get(6) + ext;
         File targetFile = new File(path, fileName);
         if (!targetFile.exists()) {
             targetFile.mkdirs();
         }
+
         //保存
         try {
             file.transferTo(targetFile);
@@ -164,29 +168,34 @@ public class ImageManager {
     @Transactional(readOnly = false)
     public int update(MultipartFile file, HttpServletRequest request, Image image) {
         //首页显示
-        if(null == request.getParameter("showIndex")) {
+        if (null == request.getParameter("showIndex")) {
             image.setShowIndex(false);
         } else {
             image.setShowIndex(true);
         }
+
         //实现上传
         if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
             //存储旧图片名
             String oldFileName = image.getImageUrl();
-            String fileName = this.upload(file, request);
+            String fileName = this.uploadFile(file, request);
             image.setImageUrl(fileName);
-            //项目路径// TODO 迁移服务器需要修改
-            String path = System.getProperty("user.dir") + "/src/main/webapp/static/uploads/gallery/";
+
+            //项目路径
+            //String path = System.getProperty("user.dir") + "/src/main/webapp/static/uploads/gallery/";
+
             //图片来源路径
             ImageThumb imageThumb = new ImageThumb();
             try {
-                imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-50x57/" + fileName, 50, 57);
-                imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-134x134/" + fileName, 134, 134);
-                imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-200x122/" + fileName, 200, 122);
-                imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-218x194/" + fileName, 218, 194);
-                imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-460x283/" + fileName, 460, 283);
+                imageThumb.saveImageAsJpg(UPLOAD_PATH + "gallery-big/" + fileName, UPLOAD_PATH + "thumb-50x57/" + fileName, 50, 57);
+                logger.info("Success to generate Thumb: {}", UPLOAD_PATH + "thumb-50x57/" + fileName);
+
+                // 异步生成其他缩略图
+                notifyProducer.sendQueueGenThumb(UPLOAD_PATH, fileName);
 
                 // TODO 删除时只删除数据库，硬盘文件起任务轮询删除
+                // notifyProducer.sendQueueDelThumb(fileName);
+
                 // 成功上传新图片以后再删除旧图片，防止事务失败无法回滚图片
                 this.deletePic("gallery-big/" + oldFileName);
                 this.deletePic("thumb-50x57/" + oldFileName);
@@ -230,14 +239,21 @@ public class ImageManager {
      */
     @Transactional(readOnly = false)
     public int delete(Long id) {
-        String fileName = this.getImage(id).getImageUrl();
+        String fileName = this.findOne(id).getImageUrl();
         this.deletePic("gallery-big/" + fileName);
         this.deletePic("thumb-50x57/" + fileName);
         this.deletePic("thumb-134x134/" + fileName);
         this.deletePic("thumb-200x122/" + fileName);
         this.deletePic("thumb-218x194/" + fileName);
         this.deletePic("thumb-460x283/" + fileName);
-        return imageDao.delete(id);
+
+        int num = imageDao.delete(id);
+        // 成功删除数据库记录时，异步删除所有缩略图
+        if (num > 0) {
+            // TODO 删除时只删除数据库，硬盘文件起任务轮询删除
+            // notifyProducer.sendQueueDelThumb(fileName);
+        }
+        return num;
     }
 
     /**
@@ -258,9 +274,11 @@ public class ImageManager {
      * @param fileName
      */
     public void deletePic(String fileName) {
+        // TODO 删除
         //上传路径
         String path = System.getProperty("user.dir");
-        new File(path + "/src/main/webapp/static/uploads/gallery/", fileName).delete();
+        new File(path + "/src/main/webapp/static/uploads/gallery/gallery-big", fileName).delete();
+        //new File(UPLOAD_PATH + "gallery-big/", fileName).delete();
     }
 
     @Autowired
@@ -268,4 +286,8 @@ public class ImageManager {
         this.imageDao = imageDao;
     }
 
+    @Autowired
+    public void setNotifyProducer(NotifyMessageProducer notifyProducer) {
+        this.notifyProducer = notifyProducer;
+    }
 }

@@ -10,9 +10,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <!-- BEGIN HEADER -->
-<div id="header">
+<div class="span-24">
     <div id="top-header">
-        <div class="logo"><a href="index.html"><img src="${ctx}/static/images/logo.jpg" alt="" style="vertical-align:middle;margin-right: 10px;margin-bottom: 5px;" class="cufon" /><h1 class="cufon">山东省金融信息工程技术研究中心</h1></a></div>
+        <div class="logo"><img src="${ctx}/static/images/logo.jpg" style="vertical-align:middle;margin-right: 10px;margin-bottom:15px;"/><h1 class="cufon">山东省金融信息技术研究中心</h1></div>
     </div>
     <div id="bottom-header">
         <div id="nav-menu">
@@ -49,14 +49,11 @@
                 </c:forEach>
             </ul>
         </div>
-        <!-- end of nav -->
-
     </div>
-    <!-- end of nav -->
+</div>
 <script type="text/javascript">
     $(function(){
-       $("ul.sf-menu li:first").css('border-left','none');
+        $("ul.sf-menu li:first").css('border-left','none');
     });
 </script>
-</div>
 <!-- END OF HEADER -->
