@@ -1,33 +1,86 @@
 /* Container
 ------------------------------------------------------*/
-#page-container{width:1018px; margin:0 auto;}
-.page-container-inner{width:1018px; background-image:url(../images/bg-container.png); float:left;}
+#page-container{margin:0 auto;}
+.page-container-inner{ background-image:url(../images/bg-container.png); float:left;}
+#bottom-header{width:940px;border-bottom:1px solid #969696; float:left;height: 29px;margin-bottom: 15px;}
+#footer{width: 940px;}
 
+/*   index frame
+----------------------------------------------------*/
+#index_left{margin-top: 15px; }
+#index_right{margin-top: 15px;}
+#left_l{width: 272px;float: left;}
+#left_r{width:402px;margin-left: 7px;float: left; }
+#left_b{width: 681px;float: left;border: 1px solid #ccc;}
+/*---left_l---*/
+.container_l{border: 1px solid #ccc;margin-bottom: 8px;float: left;}
+.container_l p.title_l{display: block;float: left;padding:2px 5px 5px 8px;font-size:18px;line-height:22px;color:#ff4e00;margin: 0;border-bottom: 1px dashed #ccc;}
+a.more{display: block;float: right;padding-right: 10px;font-size: 10px;color:#ff4e00;}
+.container_l ul.content{list-style:none;float: left;margin:10px; }
+.container_l ul.content li{line-height: 25px;background:url(../images/ico-2.gif) center left  no-repeat;padding-left:10px;}
+.container_l ul.content li a:hover{text-decoration: underline;}
+.container_l ul.content li .time{float: right;}
+/*-----left_r------*/
+legend{width:30%;padding:2px 10px;font-size:18px;line-height:22px;box-shadow:2px 2px 1px #666;border-radius:20px;}
+legend a{color:#ff4e00;text-align: center;display: block;}
+legend.consult{color:#ff4e00;width: 80%;}
+.container_r{padding:15px;float: left;margin:0 0 8px 0;border: 1px solid #ccc;border-radius:5px;width: 90%;}
+ .container_r ul{list-style: none;margin: 0;}
+ .container_r ul li{line-height: 25px;background:url(../images/ico-2.gif) center left  no-repeat;padding-left:10px;}
+ .container_r ul li a:hover{text-decoration: underline;}
+.container_r p.brief{padding: 0;text-indent: 2em;margin: 0;}
+.container_r a.institution{padding: 0 10px; text-align: center;display: block;float: left;line-height: 22px;color:#778087}
+.container_r a.institution:hover{text-decoration: underline;}
+/*-----index_r-----*/
+ .container_right{border: 1px solid #ccc;float: left;margin-bottom: 8px;}
+.container_right p.title_rll{display: block;float: left;padding:2px 5px 5px 8px;font-size:18px;line-height:22px;color:#ff4e00;margin: 0;border-bottom: 1px dashed #ccc;}
+.container_right ul.r_content{list-style:none;float: left;margin:10px; }
+.container_right ul.r_content li{line-height: 25px;background:url(../images/ico-2.gif) center left  no-repeat;padding-left:10px;}
+.container_right ul.r_content li a:hover{text-decoration: underline;}
+.container_right ul.r_content li .time{float: right;}
 
 /*  Homepage Slider
 ------------------------------------------------------*/
-#slideshow{background-color:#202020;width:950px;height:283px;margin:15px 0px 0px 0px;float:left;}
-#slideshow-threed{width:950px;height:283px;margin:15px 0px 0px 0px;float:left;}
-#box-nav-slider{background-image:url(../images/strip-line.gif);background-position:bottom;background-repeat:repeat-x;width:950px;height:17px;float:left;}
-#slideshow-navigation a{background: url(../images/slide.png) no-repeat scroll 50% 50%;display:block;float:left;font-size:0px;width:9px;height:9px;margin:2px;outline-style:none;outline-width:medium;padding:2px;}
+#slideshow{
+    background-color:#202020;
+    height:190px;
+    float:left;
+}
+#slideshow-threed{
+    width:920px;
+    height:283px;
+    margin:15px 0px 0px 0px;
+    float:left;
+}
+#box-nav-slider{
+    background-image:url(../images/strip-line.gif);
+    background-position:bottom;
+    background-repeat:repeat-x;
+    height:17px;
+    position: relative;
+    float: left;
+}
+#slideshow-navigation a{
+    background: url(../images/slide.png) no-repeat scroll 50% 50%;
+    display:block;
+    float:left;
+    font-size:0px;
+    width:9px;
+    height:9px;
+    margin:2px;
+    outline-style:none;
+    outline-width:medium;
+    padding:2px;
+}
 #slideshow-navigation{float:right; padding-right:10px}
 #slideshow-navigation .activeSlide {background: url(../images/slide.png) no-repeat scroll 0% 50%;}
 .slidehalf { margin-top:0px; margin-right:20px; float:left;} /* Editable Slider Image Position */
 .slidehalf2 { margin-top:0px; margin-right:0px; float:left;} /* Editable Slider Image Position */
-.slide-text h2{color:#FFF; padding:50px 20px 0px 0px}
-.slide-text{width: 950px;}
+.slide-text h7{color:#FFF;display: block;line-height:24px;text-align: center;width: 270px;}
+.slide-text{}
 .slide-text p{font-size:12px; color:#b5b5b5; line-height:22px; padding-right:20px;}
 .slide-text a.read_more{color:#ff4e00; font-size:12px;}
 .flash-img {text-align:center; display:block; margin:100px auto 0 auto;}
-
-
-/* Header
-------------------------------------------------------*/
-#header{height:139px; width:950px; background-image:url(../images/top-shadow.jpg); background-position:center 46px;  background-repeat:no-repeat;}
-#top-header{height:108px; background-image:url(../images/strip-line.gif); background-position:top; background-repeat:repeat-x;}
-#bottom-header{width:950px; border-bottom:1px solid #969696; float:left;height: 29px;}
-.logo{width:620px; padding:38px 0px 0px 20px; float:left;display:inline}
-.logo h1{display:inline;padding:17px 0 17px 0}
 
 
 /* Content
@@ -51,15 +104,14 @@ a.aleft{float:left;}
 a.agrayleft{cursor:default;background-position:-34px 50%;}
 a.aright{float:right;background-position:-17px 50%;}
 a.agrayright{cursor:default;background-position:-51px 50%;}
-.scrolllist{width:904px; height: 232px;float:left;margin:0px 23px;}
-.scrolllist .imglist_w{width:870px;height:232px;overflow:hidden;float:left;position:relative;/*必要元素*/}
+.scrolllist{width:679px; height: 205px;float:left;}
+.scrolllist .imglist_w{width:645px;height:205px;overflow:hidden;float:left;position:relative;/*必要元素*/}
 .scrolllist .imglist_w ul{width:20000px;position:absolute;left:0px;top:0px;list-style: none;padding: 0;margin: 0}
-.scrolllist .imglist_w li{width:130px;float:left;padding:0 8px;z-index: 999;}
+.scrolllist .imglist_w li{width:130px;float:left;padding:0;z-index: 999;}
 .scrolllist .imglist_w li img{padding:2px;border:solid 1px #ddd;}
 .scrolllist .imglist_w li a{color:#3366cc;text-decoration:none;float:left;}
 .scrolllist .imglist_w li a:hover img{filter:alpha(opacity=86);-moz-opacity:0.86;opacity:0.86;}
-.scrolllist .imglist_w li p{height:48px;line-height:24px;overflow:hidden;float:left;}
-
+.scrolllist .imglist_w li p{line-height:24px;overflow:hidden;float:left;padding: 0 5px;width: 110px;text-align:center;}
 
 /* Footer
 ------------------------------------------------------*/

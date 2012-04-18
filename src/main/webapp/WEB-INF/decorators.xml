@@ -10,12 +10,16 @@
 
     <decorator name="default" page="default.jsp">
         <pattern>/*</pattern>
+        <pattern>/index</pattern>
         <pattern>/gallery/album*</pattern>
         <pattern>/gallery/photo*</pattern>
     </decorator>
 
     <decorator name="blueprint" page="blueprint.jsp">
         <pattern>/index3</pattern>
+    </decorator>
+    <decorator name="bootstrap" page="bootstrap.jsp">
+        <pattern>/index4</pattern>
     </decorator>
 
     <decorator name="article" page="article.jsp">

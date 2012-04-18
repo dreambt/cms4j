@@ -81,7 +81,7 @@ table.menu_sec input{float: left;}
     float: left;
 }
 #userInfo ul li .input_info{
-    background: #EEE url(dashboard/images/grey_noise.png) repeat;
+    background: #EEE url(../dashboard/images/grey_noise.png) repeat;
     background-color: #F2F4F6;
     height: 20px;
     border:none;
@@ -110,13 +110,13 @@ table.menu_sec input{float: left;}
     color: #4D5256;
 }
 .art-list a:link, a:visited, a:active{
-    color: #444;
+    color: #778087;
     text-decoration: none;
 }
 .art-list .art-attr{
     font-size: 11px;
     font-weight:normal;
-    color: #444;
+    color: #778087;
     display: block;
     -webkit-text-size-adjust: none;
     padding: 2px;
@@ -178,7 +178,7 @@ p.albumDesc{
 /*--公告字体颜色--*/
 ul li a.announce{color:#6F6F6F}
 /*-----teacher名师风采------*/
-a.abtn{display:block;height:130px;width:17px;overflow:hidden;background:url(images/arrow3.png) no-repeat 0px 50%;}
+a.abtn{display:block;height:130px;width:17px;overflow:hidden;background:url(../images/arrow3.png) no-repeat 0px 50%;}
 a.aleft{float:left;}
 a.agrayleft{cursor:default;background-position:-34px 50%;}
 a.aright{float:right;background-position:-17px 50%;}

@@ -74,22 +74,22 @@
         <!---left_l end----->
         <div id="left_r">
             <fieldset class="container_r">
-                <legend><a href="#" style="color:#ff4e00;"><strong>中心简介</strong></a></legend>
+                <legend><a href="#"><strong>中心简介</strong></a></legend>
                 <p class="brief">中心依托山东财经大学的金融、财税、会计、管理、数学和信息技术等雄厚的学科资源，联合行业内相关优势企业，为推动我国金融信息化的发展及相关技术的研究而成立的一个开放的专业从事与金融信息化和金融风险管理相关的理论与应用技术研究、教育培训与咨询服务的组织。</p>
                 <p class="brief">中心下设计算金融研究所、金融风险管理研究所、金融信息安全研究所等若干个在业务上相对独立的研究所；设金融智能实验室等以理论和技术研究为主的专业实验室与研究室。</p>
 
             </fieldset>
             <fieldset class="container_r">
-                <legend><a href="#" style="color:#ff4e00;"><strong>组织机构</strong></a></legend>
-                <span>组织机构一</span>
-                <span>组织机构一</span>
-                <span>组织机构一</span>
-                <span>组织机构一</span>
-                <span>组织机构一</span>
-                <span>组织机构一</span>
+                <legend><a href="#"><strong>组织机构</strong></a></legend>
+                <a class="institution">组织机构一</a>
+                <a class="institution">组织机构一</a>
+                <a class="institution">组织机构一</a>
+                <a class="institution">组织机构一</a>
+                <a class="institution">组织机构一</a>
+                <a class="institution">组织机构一</a>
             </fieldset>
             <fieldset class="container_r">
-                <legend id="consult"><strong>咨询服务</strong><a href="#" class="more" style="float: right;">更多>></a></legend>
+                <legend id="consult"><strong style="display: block;float: left;">咨询服务</strong><a href="#" class="more" style="float: right;">更多>></a></legend>
                 <ul>
                 <li><a href="#">全面信用风险管理体系建设方案</a></li>
                 <li><a href="#">全面信用风险管理体系建设方案</a></li>
