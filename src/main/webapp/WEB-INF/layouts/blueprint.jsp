@@ -48,9 +48,9 @@
 <div id="page-container">
     <div class="page-container-inner">
         <div class="container showgrid">
-            <%@ include file="/WEB-INF/layouts/header2.jsp" %>
+            <%@ include file="/WEB-INF/layouts/header-blueprint.jsp" %>
             <sitemesh:body/>
-            <%@ include file="/WEB-INF/layouts/footer2.jsp" %>
+            <%@ include file="/WEB-INF/layouts/footer-blueprint.jsp" %>
         </div>
     </div>
 </div>
