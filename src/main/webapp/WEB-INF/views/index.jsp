@@ -41,7 +41,7 @@
                 <div id="slideshow">
                     <c:forEach items="${images}" var="image" begin="0" step="1">
                         <div class="slide-text">
-                            <h7>${image.title}</h7>
+                            <div class="PicTitle">${image.title}</div>
                             <img src="${ctx}/static/uploads/gallery/thumb-460x283/${image.imageUrl}" alt="" width="270px"/>
                         </div>
                     </c:forEach>
