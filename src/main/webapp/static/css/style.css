@@ -106,7 +106,9 @@ padding:15px 10px;
 #top-header{height:108px; background-image:url(../images/strip-line.gif); background-position:top; background-repeat:repeat-x;}
 #bottom-header{width:920px; border-bottom:1px solid #969696; float:left;height: 29px;}
 .logo{width:620px; padding:38px 0px 0px 20px; float:left;display:inline}
-.logo h1{display:inline;padding:17px 0 17px 0}
+.logo a{display: block;float: left;}
+.logo a img{display: block;float: left;}
+.logo a h1{display:block;float:left;margin-top: 10px;}
 
 /* Search styling */
 .search-fieldset{border:none;padding:0;height:24px;}
@@ -247,6 +249,6 @@ ul.content-list li a:hover {text-decoration:underline;}
 
 /* Footer
 ------------------------------------------------------*/
-#footer{width:920px;font-size:11px; margin:10px auto; color:#fff; background-color:#666; line-height:18px; float:left;text-align: center;padding: 10px 0;}
+#footer{width:920px;font-size:11px; margin-top: 10px; color:#fff; background-color:#666; line-height:18px; float:left;text-align: center;padding: 10px 0 0 0;}
 #footer a, #footer a:visited{color:#fff; text-decoration:none;}
 #footer p{font-size:11px; color:#eee;margin: 0;padding: 0;}

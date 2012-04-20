@@ -12,7 +12,7 @@
 <!-- BEGIN HEADER -->
 <div id="header">
     <div id="top-header">
-        <div class="logo"><a href="index.html"><img src="${ctx}/static/images/logo.jpg" alt="" style="vertical-align:middle;margin-right: 10px;margin-bottom: 5px;" class="cufon" /><h1 class="cufon">山东省金融信息工程技术研究中心</h1></a></div>
+        <div class="logo"><a href="index.html"><img src="${ctx}/static/images/logo.jpg" alt="" style="vertical-align:middle;margin-right: 10px;margin-bottom:0px;" class="cufon" /><h1 class="cufon">山东省金融信息工程技术研究中心</h1></a></div>
     </div>
     <div id="bottom-header">
         <div id="nav-menu">
