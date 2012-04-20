@@ -147,7 +147,9 @@
         $('img').each(function(i){
             //alert($(this).width());
             if($(this).width()>621){
+                var b=621/($(this).width());
                 $(this).width(621);
+                $(this).height($(this).height()*b);
             }
         });
     });
