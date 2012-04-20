@@ -146,35 +146,7 @@ ul#documentA li{margin: 10px;}
 p.albumDesc{
     width:405px;
 }
-/*--友情链接--*/
-#fridendLink{
-    float: left;
-    width:890px;
-    margin-top:5px;
-    padding: 10px 15px 10px 15px;
-    background-color: #202020;
-    border-bottom: 1px solid #686868;
-}
-#fridendLink a{
-    color: #686868;
-    margin-right: 20px;
-}
-#fridendLink a strong{
-    display: block;
-    float: left;
-}
-#fridendLink #scroll_div{
-    width: 805px;
-    overflow: hidden;
-    height: 15px;
-    white-space: nowrap;
-    margin-right: 0px;
-    float: left;
-}
-#fridendLink a:hover{
-    text-decoration: underline;
-}
-#fridendLink  a.t:hover{text-decoration: none;}
+
 /*--公告字体颜色--*/
 ul li a.announce{color:#6F6F6F}
 /*-----teacher名师风采------*/

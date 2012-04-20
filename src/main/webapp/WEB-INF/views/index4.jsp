@@ -34,9 +34,9 @@
     </script>
 </head>
 <body>
-    <div class="row-fluid">
-        <div class="span9 row-fluid">
-            <div class="span5">
+    <div class="container">
+        <div class="span8" style="margin-left: 0;">
+            <div class="span3" style="margin-left: 0;">
                 <div class="container_l">
                     <!-- BEGIN SLIDER -->
                     <div id="slideshow">
@@ -72,7 +72,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="span7">
+            <div class="span5" style="margin-left: 10px;">
                 <fieldset class="container_r">
                     <legend><a href="#" style="color:#ff4e00;"><strong>中心简介</strong></a></legend>
                     <p class="brief">中心依托山东财经大学的金融、财税、会计、管理、数学和信息技术等雄厚的学科资源，联合行业内相关优势企业，为推动我国金融信息化的发展及相关技术的研究而成立的一个开放的专业从事与金融信息化和金融风险管理相关的理论与应用技术研究、教育培训与咨询服务的组织。</p>
@@ -101,11 +101,11 @@
                     </ul>
                 </fieldset>
             </div>
-            <div class="span9"><%@ include file="/WEB-INF/layouts/teacher.jsp" %></div>
+            <div class="span6 left_b" style="margin-left: 0;"><%@ include file="/WEB-INF/layouts/teacher.jsp" %></div>
         </div>
-        <div class="span3 row-fluid">
-            <div class="container_right span12">
-                <p class="title_rll"><strong>服务对象</strong><a href="#" class="more span5">更多>></a></p>
+        <div class="span3" style="margin-left: 10px;">
+            <div class=" span3 container_right" style="margin-left: 0;">
+                <p class="title_rll span1"><strong>服务对象</strong><a href="#" class="more span1">更多>></a></p>
                 <ul class="r_content">
                     <li><a href="#">全面信用风险管理</a></li>
                     <li><a href="#">全面信用风险管理</a></li>
@@ -115,8 +115,8 @@
                     <li><a href="#">全面信用风险管理</a></li>
                 </ul>
             </div>
-            <div class="container_right span12">
-                <p class="span12"><strong>合作伙伴</strong><a href="#" class="more span5">更多>></a></p>
+            <div class=" span3 container_right" style="margin-left: 0;">
+                <p class="title_rll span1"><strong>合作伙伴</strong><a href="#" class="more span1">更多>></a></p>
                 <ul class="r_content">
                     <li><a href="#">全面信用风险管理</a></li>
                     <li><a href="#">全面信用风险管理</a></li>
@@ -128,8 +128,8 @@
                     <li><a href="#">全面信用风险管理</a></li>
                 </ul>
             </div>
-            <div class="container_right span12">
-                <p class="title_rll"><strong>成果展示</strong><a href="#" class="more span5">更多>></a></p>
+            <div class=" span3 container_right" style="margin-left: 0;">
+                <p class="title_rll span1"><strong>成果展示</strong><a href="#" class="more span1">更多>></a></p>
                 <ul class="r_content">
                     <li><a href="#">全面信用风险管理</a></li>
                     <li><a href="#">全面信用风险管理</a></li>

@@ -31,9 +31,8 @@
     <link href="${ctx}/static/css/style.min.css" rel="stylesheet" type="text/css" />
     <link href="${ctx}/static/css/inner.min.css" rel="stylesheet" type="text/css" />
     <link href="${ctx}/static/css/superfish.min.css" rel="stylesheet" type="text/css"  />
-
-    <link href="${ctx}/static/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
     <link href="${ctx}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="${ctx}/static/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
     <link href="${ctx}/static/style/CMS.css" type="text/css" rel="stylesheet" media="screen" />
 
     <!-- ////////////////////////////////// -->
@@ -62,7 +61,7 @@
     </script>
     <sitemesh:head/>
 </head>
-<body>
+<body data-spy="scroll" data-target=".subnav" >
 <div id="page-container">
     <div class="page-container-inner">
         <div class="container">

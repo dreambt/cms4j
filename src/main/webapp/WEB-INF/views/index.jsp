@@ -53,15 +53,24 @@
                 </div>
                 <!-- END OF SLIDER -->
             </div>
-            <div class="container_l">
-                <p class="title_l">
-                    <strong>新闻资讯</strong><a href="#" class="more">更多>></a>
+            <div class="container container_l">
+                <p class="title_index title_l">
+                    <strong>新闻动态</strong><a href="#" class="more">更多>></a>
                 </p>
-                <ul class="content">
+                <ul class="content l_content">
                     <li><a href="#">北京用友政务领导和专家来本...</a><span class="time">04-16</span></li>
                     <li><a href="#">北京用友政务领导和专家来本...</a><span class="time">04-16</span></li>
                     <li><a href="#">北京用友政务领导和专家来本...</a><span class="time">04-16</span></li>
                     <li><a href="#">北京用友政务领导和专家来本...</a><span class="time">04-16</span></li>
+                    <li><a href="#">北京用友政务领导和专家来本...</a><span class="time">04-16</span></li>
+                    <li><a href="#">北京用友政务领导和专家来本...</a><span class="time">04-16</span></li>
+                </ul>
+            </div>
+            <div class="container container_l">
+                <p class="title_index title_l">
+                    <strong>行业资讯</strong><a href="#" class="more">更多>></a>
+                </p>
+                <ul class="content l_content">
                     <li><a href="#">北京用友政务领导和专家来本...</a><span class="time">04-16</span></li>
                     <li><a href="#">北京用友政务领导和专家来本...</a><span class="time">04-16</span></li>
                     <li><a href="#">北京用友政务领导和专家来本...</a><span class="time">04-16</span></li>
@@ -79,7 +88,7 @@
                 <p class="brief">中心下设计算金融研究所、金融风险管理研究所、金融信息安全研究所等若干个在业务上相对独立的研究所；设金融智能实验室等以理论和技术研究为主的专业实验室与研究室。</p>
 
             </fieldset>
-            <fieldset class="container_r">
+            <fieldset class="content container_r">
                 <legend><a href="#"><strong>组织机构</strong></a></legend>
                 <a class="institution">组织机构一</a>
                 <a class="institution">组织机构一</a>
@@ -88,16 +97,17 @@
                 <a class="institution">组织机构一</a>
                 <a class="institution">组织机构一</a>
             </fieldset>
-            <fieldset class="container_r">
-                <legend id="consult"><strong style="display: block;float: left;">咨询服务</strong><a href="#" class="more" style="float: right;">更多>></a></legend>
-                <ul>
-                <li><a href="#">全面信用风险管理体系建设方案</a></li>
-                <li><a href="#">全面信用风险管理体系建设方案</a></li>
-                <li><a href="#">全面信用风险管理体系建设方案</a></li>
-                <li><a href="#">全面信用风险管理体系建设方案</a></li>
-                <li><a href="#">全面信用风险管理体系建设方案</a></li>
-                <li><a href="#">全面信用风险管理体系建设方案</a></li>
-                <li><a href="#">全面信用风险管理体系建设方案</a></li>
+            <fieldset class="content container_r">
+                <legend><a href="#"><strong>咨询服务</strong></a></legend>
+                <ul class="content left_r">
+                    <li><a href="#">全面信用风险管理体系建设方案</a></li>
+                    <li><a href="#">全面信用风险管理体系建设方案</a></li>
+                    <li><a href="#">全面信用风险管理体系建设方案</a></li>
+                    <li><a href="#">全面信用风险管理体系建设方案</a></li>
+                    <li><a href="#">全面信用风险管理体系建设方案</a></li>
+                    <li><a href="#">全面信用风险管理体系建设方案</a></li>
+                    <li><a href="#">全面信用风险管理体系建设方案</a></li>
+                    <li><a href="#" class="more" style="float: right;">更多>></a></li>
                 </ul>
             </fieldset>
         </div>
@@ -106,9 +116,9 @@
         <!---教师风采---->
     </div>
     <div id="index_right">
-        <div class="container_right">
-            <p class="title_rl"><strong>服务对象</strong><a href="#" class="more">更多>></a></p>
-            <ul class="r_content">
+        <div class="container container_right">
+            <p class="title_index title_rl"><strong>服务对象</strong><a href="#" class="more">更多>></a></p>
+            <ul class="content r_content">
                 <li><a href="#">全面信用风险管理</a></li>
                 <li><a href="#">全面信用风险管理</a></li>
                 <li><a href="#">全面信用风险管理</a></li>
@@ -117,9 +127,9 @@
                 <li><a href="#">全面信用风险管理</a></li>
             </ul>
         </div>
-        <div class="container_right">
-            <p class="title_rl"><strong>合作伙伴</strong><a href="#" class="more">更多>></a></p>
-            <ul class="r_content">
+        <div class="container container_right">
+            <p class="title_index title_rl"><strong>合作伙伴</strong><a href="#" class="more">更多>></a></p>
+            <ul class="content r_content">
                 <li><a href="#">全面信用风险管理</a></li>
                 <li><a href="#">全面信用风险管理</a></li>
                 <li><a href="#">全面信用风险管理</a></li>
@@ -130,9 +140,9 @@
                 <li><a href="#">全面信用风险管理</a></li>
             </ul>
         </div>
-        <div class="container_right">
-            <p class="title_rl"><strong>成果展示</strong><a href="#" class="more">更多>></a></p>
-            <ul class="r_content">
+        <div class="container container_right">
+            <p class="title_index title_rl"><strong>成果展示</strong><a href="#" class="more">更多>></a></p>
+            <ul class="content r_content">
                 <li><a href="#">全面信用风险管理</a></li>
                 <li><a href="#">全面信用风险管理</a></li>
                 <li><a href="#">全面信用风险管理</a></li>

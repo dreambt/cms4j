@@ -14,9 +14,14 @@
     <div id="top-header">
         <div class="logo"><img src="${ctx}/static/images/logo.jpg" style="vertical-align:middle;margin-right: 10px;margin-bottom:15px;"/><h1 class="cufon">山东省金融信息技术研究中心</h1></div>
     </div>
-    <div id="bottom-header">
-        <div id="nav-menu">
-            <ul class="sf-menu">
+    <div class="navbar-inner"></div>
+    <div class="bottom-header container">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span> </a>
+        <div id="nav-menu" class="nav-collapse">
+            <ul class="sf-menu nav">
                 <li><a href="${ctx}/" class="cufon">首页</a></li>
                 <c:forEach items="${categories}" var="category" begin="0" step="1">
                     <c:choose>
