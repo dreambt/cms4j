@@ -63,7 +63,6 @@
                     <li><a href="#">北京用友政务领导和专家来本...</a><span class="time">04-16</span></li>
                     <li><a href="#">北京用友政务领导和专家来本...</a><span class="time">04-16</span></li>
                     <li><a href="#">北京用友政务领导和专家来本...</a><span class="time">04-16</span></li>
-                    <li><a href="#">北京用友政务领导和专家来本...</a><span class="time">04-16</span></li>
                 </ul>
             </div>
             <div class="container container_l">
@@ -84,9 +83,8 @@
         <div id="left_r">
             <fieldset class="container_r">
                 <legend><a href="#"><strong>中心简介</strong></a></legend>
-                <p class="brief">中心依托山东财经大学的金融、财税、会计、管理、数学和信息技术等雄厚的学科资源，联合行业内相关优势企业，为推动我国金融信息化的发展及相关技术的研究而成立的一个开放的专业从事与金融信息化和金融风险管理相关的理论与应用技术研究、教育培训与咨询服务的组织。</p>
-                <p class="brief">中心下设计算金融研究所、金融风险管理研究所、金融信息安全研究所等若干个在业务上相对独立的研究所；设金融智能实验室等以理论和技术研究为主的专业实验室与研究室。</p>
-
+                <p class="brief">中心设有证书培训、政府培训、企业高管培训、专业培训、学历培训共五个系列的涉及金融、财税、银行、投资、工商管理等学科的高端培训。我们为金融、财经、投资界的青年和精英们提供金融风险管理师、理财规划师等专业培训，以满足我国对高端金融人才的需求。我们为各级政府的金融、财税部门提供政策和理论培训，并组织第一线的实地调研活动，为各级领导及公职人员提供理论参考和实际经验。同时，我们还为国内外知名银行、保险、基金、证券等金融投资机构提供各种有针对性的企业内训课程和职业发展课程，并建立起长期战略合作关系。</p>
+                 <p class="bried">中心旨在建设具有解决国内金融领域信息化重大问题的、综合研究能力强的、在国内外有较大影响的金融信息工程产学研机构。</p>
             </fieldset>
             <fieldset class="content container_r">
                 <legend><a href="#"><strong>组织机构</strong></a></legend>
@@ -107,7 +105,7 @@
                     <li><a href="#">全面信用风险管理体系建设方案</a></li>
                     <li><a href="#">全面信用风险管理体系建设方案</a></li>
                     <li><a href="#">全面信用风险管理体系建设方案</a></li>
-                    <li><a href="#" class="more" style="float: right;">更多>></a></li>
+                    <li><a href="#" class="more" style="float: right;background-image: none;">更多>></a></li>
                 </ul>
             </fieldset>
         </div>
@@ -119,6 +117,8 @@
         <div class="container container_right">
             <p class="title_index title_rl"><strong>服务对象</strong><a href="#" class="more">更多>></a></p>
             <ul class="content r_content">
+                <li><a href="#">全面信用风险管理</a></li>
+                <li><a href="#">全面信用风险管理</a></li>
                 <li><a href="#">全面信用风险管理</a></li>
                 <li><a href="#">全面信用风险管理</a></li>
                 <li><a href="#">全面信用风险管理</a></li>
@@ -143,6 +143,7 @@
         <div class="container container_right">
             <p class="title_index title_rl"><strong>成果展示</strong><a href="#" class="more">更多>></a></p>
             <ul class="content r_content">
+                <li><a href="#">全面信用风险管理</a></li>
                 <li><a href="#">全面信用风险管理</a></li>
                 <li><a href="#">全面信用风险管理</a></li>
                 <li><a href="#">全面信用风险管理</a></li>
