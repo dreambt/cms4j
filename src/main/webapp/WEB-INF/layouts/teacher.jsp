@@ -24,16 +24,24 @@
                 <p>郭建峰</p>
             </li>
             <li>
+                <a target="_blank" href="" title="聂培尧"><img width="120" height="166" alt="聂培尧" src="${ctx}/static/uploads/teacher/pic_niepeiyao.jpg"></a>
+                <p>聂培尧</p>
+            </li>
+            <li>
                 <a target="_blank" href="" title="赵志崑副教授，工学博士，硕士生导师。澳大利亚中昆士兰大学博士后。多年来一直从事软件体系结构、智能Agent系统、金融信息系统等方面的研究。"><img width="120" height="166" alt="赵志崑" src="${ctx}/static/uploads/teacher/pic_zhaozhikun.jpg"></a>
                 <p>赵志崑</p>
+            </li>
+            <li>
+                <a target="_blank" href="" title="张抗抗副教授，工学博士，硕士生导师，美国Arizona State University访问学者。多年来一直从事服务计算、信息集成与应用集成及金融云计算综合服务平台等方面的研究。"><img width="120" height="166" alt="张抗抗" src="${ctx}/static/uploads/teacher/pic_zhangkangkang.jpg"></a>
+                <p>张抗抗</p>
             </li>
             <li>
                 <a target="_blank" href="" title="林培光副教授，2006年毕业于北京理工大学，获工学博士学位，硕士生导师，香港科技大学访问学者。多年来一直从事Web数据集成及其相关应用以及金融信息管理系统、金融数据挖掘等方面的研究。"><img width="120" height="166" alt="林培光" src="${ctx}/static/uploads/teacher/pic_linpeiguang.jpg"></a>
                 <p>林培光</p>
             </li>
             <li>
-                <a target="_blank" href="" title="张抗抗副教授，工学博士，硕士生导师，美国Arizona State University访问学者。多年来一直从事服务计算、信息集成与应用集成及金融云计算综合服务平台等方面的研究。"><img width="120" height="166" alt="张抗抗" src="${ctx}/static/uploads/teacher/pic_zhangkangkang.jpg"></a>
-                <p>张抗抗</p>
+                <a target="_blank" href="" title="王帅强"><img width="120" height="166" alt="王帅强" src="${ctx}/static/uploads/teacher/pic_wangshuaiqiang.jpg"></a>
+                <p>王帅强</p>
             </li>
         </ul>
     </div>
@@ -46,7 +54,7 @@
         $("#teacher").Xslider({
             unitdisplayed:5,
             numtoMove:1,
-            unitlen:130,
+            unitlen:136,
             loop:"cycle",
             autoscroll:3000
         });

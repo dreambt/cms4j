@@ -66,7 +66,7 @@
             </div>
             <div class="container container_l">
                 <p class="title_index title_l">
-                    <strong>行业资讯</strong><a href="${ctx}/article/list/4" class="more">更多>></a>
+                    <strong>系统公告</strong><a href="${ctx}/article/list/4" class="more">更多>></a>
                 </p>
                 <ul class="content l_content">
                     <c:forEach items="${news2}" var="new2" begin="0" step="1">
@@ -93,11 +93,17 @@
             </fieldset>
             <fieldset class="content container_r">
                 <legend><a href="${ctx}/article/listInfo"><strong>咨询服务</strong></a></legend>
-                <ul class="content left_r">
+                <ul class="content twoRow">
                     <c:forEach items="${infos}" var="info" begin="0" step="1">
                         <li><a href="${ctx}/article/content/${info.id}">${fn:substring(info.subject,0,13)}</a></li>
                     </c:forEach>
-                    <li><a href="${ctx}/article/list/20" class="more" style="float: right;background-image: none;">更多>></a></li>
+                </ul>
+                <ul class="content twoRow">
+                    <li><a href="#">全面信用风险管理体系建设方案</a></li>
+                    <li><a href="#">全面信用风险管理体系建设方案</a></li>
+                    <li><a href="#">全面信用风险管理体系建设方案</a></li>
+                    <li><a href="#">全面信用风险管理体系建设方案</a></li>
+                    <li><a href="#" class="more" style="float: right;background-image: none;">更多>></a></li>
                 </ul>
             </fieldset>
         </div>
@@ -128,10 +134,10 @@
             </ul>
         </div>
         <div class="container container_right">
-            <p class="title_index title_rl"><strong>成果展示</strong><a href="${ctx}/article/list/" class="more">更多>></a></p>
+            <p class="title_index title_rl"><strong>行业资讯</strong><a href="${ctx}/article/list/" class="more">更多>></a></p>
             <ul class="content r_content">
-                <c:forEach items="${results}" var="result" begin="0" step="1">
-                    <li><a href="${ctx}/article/content/${result.id}">${fn:substring(result.subject,0,8)}</a></li>
+                <c:forEach items="${news2}" var="new2" begin="0" step="1">
+                    <li><a href="${ctx}/article/content/${new2.id}">${fn:substring(new2.subject,0,13)}...</a></li>
                 </c:forEach>
             </ul>
         </div>
