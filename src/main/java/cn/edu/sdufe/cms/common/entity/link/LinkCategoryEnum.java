@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public enum LinkCategoryEnum {
 
-    SERVICEOBJECT("SERVICEOBJECT", "服务对象"), COMPANY("COMPANY", "合作伙伴"), LINK("LINK", "友情链接");
+    SERVICE("SERVICE", "服务对象"), COMPANY("COMPANY", "合作伙伴"), LINK("LINK", "友情链接");
 
     private static Map<String, LinkCategoryEnum> valueMap = Maps.newHashMap();
 
