@@ -84,12 +84,12 @@
             </fieldset>
             <fieldset class="content container_r">
                 <legend><a href="#"><strong>组织机构</strong></a></legend>
-                <a class="institution">金融风险管理研究所</a>
-                <a class="institution">金融服务计算研究所</a>
-                <a class="institution">计算金融研究所</a>
-                <a class="institution">金融信息安全研究所</a>
-                <a class="institution">金融数据管理研究所</a>
-                <a class="institution">金融服务创新研究所</a>
+                <a class="institution" href="#">金融风险管理研究所</a>
+                <a class="institution" href="#">金融服务计算研究所</a>
+                <a class="institution" href="#">计算金融研究所</a>
+                <a class="institution" href="#">金融信息安全研究所</a>
+                <a class="institution" href="#">金融数据管理研究所</a>
+                <a class="institution" href="#">金融服务创新研究所</a>
             </fieldset>
             <fieldset class="content container_r">
                 <legend><a href="${ctx}/article/listInfo"><strong>咨询服务</strong></a></legend>
