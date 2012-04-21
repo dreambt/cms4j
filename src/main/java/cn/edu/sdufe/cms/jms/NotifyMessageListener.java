@@ -59,7 +59,7 @@ public class NotifyMessageListener implements MessageListener {
                 imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-134x134/" + fileName, 134, 134);
                 imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-200x122/" + fileName, 200, 122);
                 imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-218x194/" + fileName, 218, 194);
-                imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-272x166/" + fileName, 460, 283);
+                imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-272x166/" + fileName, 272, 166);
                 logger.info("Success to generate Thumb: {}", path + "thumb-*/" + fileName);
             } else if ("del_thumb".equals(objectType)) {
                 String path = System.getProperty("user.dir");
