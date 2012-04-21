@@ -38,6 +38,16 @@ public class LinkDao extends SqlSessionDaoSupport {
     }
 
     /**
+     * 根据分类获得连接
+     *
+     * @return
+     */
+    @Cacheable(value = "link")
+    public List<Link> getLinkByCategory(String category) {
+        return getSqlSession().selectList("Link.getLinkByCategory", category);
+    }
+
+    /**
      * 新增连接
      */
     public int save(Link link) {

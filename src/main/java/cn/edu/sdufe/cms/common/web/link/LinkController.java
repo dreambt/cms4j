@@ -1,6 +1,7 @@
 package cn.edu.sdufe.cms.common.web.link;
 
 import cn.edu.sdufe.cms.common.entity.link.Link;
+import cn.edu.sdufe.cms.common.entity.link.LinkCategoryEnum;
 import cn.edu.sdufe.cms.common.service.link.LinkManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -43,7 +44,9 @@ public class LinkController {
      * @return
      */
     @RequestMapping(value = "create")
-    public String create() {
+    public String create(Model model) {
+        model.addAttribute("link", new Link());
+        model.addAttribute("linkCategories", LinkCategoryEnum.values());
         return "dashboard/link/edit";
     }
 

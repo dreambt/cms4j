@@ -30,6 +30,8 @@
             <div class="toggle_container">
                 <div class="block">
                     <input type="hidden" name="isSelected" value="${link.id}"/>
+                    <label class="field">链接分类: </label>
+                    <form:select path="category" items="${linkCategories}" itemLabel="displayName" itemValue="value"></form:select><br/><br/>
                     <label for="lnkName" class="field">链接名称: </label><input id="lnkName" name="title" class="required" size="40" value="${link.title}"/><br />
                     <label for="URL" class="field">URL: </label><input id="URL" name="url" class="required" size="40" value="${link.url}" /><br />
                 </div>

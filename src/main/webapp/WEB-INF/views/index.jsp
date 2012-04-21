@@ -2,7 +2,8 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sitemesh-page" uri="http://www.opensymphony.com/sitemesh/page" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
@@ -42,7 +43,7 @@
                     <c:forEach items="${images}" var="image" begin="0" step="1">
                         <div class="slide-text">
                             <div class="PicTitle">${image.title}</div>
-                            <img src="${ctx}/static/uploads/gallery/thumb-460x283/${image.imageUrl}" alt="" width="270px"/>
+                            <img src="${ctx}/static/uploads/gallery/thumb-272x166/${image.imageUrl}" alt="" width="270px"/>
                         </div>
                     </c:forEach>
                 </div>
@@ -55,27 +56,22 @@
             </div>
             <div class="container container_l">
                 <p class="title_index title_l">
-                    <strong>新闻动态</strong><a href="#" class="more">更多>></a>
+                    <strong>新闻动态</strong><a href="${ctx}/article/list/3" class="more">更多>></a>
                 </p>
                 <ul class="content l_content">
-                    <li><a href="#">北京用友政务领导和专家来本...</a><span class="time">04-16</span></li>
-                    <li><a href="#">北京用友政务领导和专家来本...</a><span class="time">04-16</span></li>
-                    <li><a href="#">北京用友政务领导和专家来本...</a><span class="time">04-16</span></li>
-                    <li><a href="#">北京用友政务领导和专家来本...</a><span class="time">04-16</span></li>
-                    <li><a href="#">北京用友政务领导和专家来本...</a><span class="time">04-16</span></li>
+                    <c:forEach items="${news1}" var="new1" begin="0" step="1">
+                        <li><a href="${ctx}/article/content/${new1.id}">${fn:substring(new1.subject,0,13)}...</a><span class="time"><fmt:formatDate value="${new1.createdDate}"  pattern="MM-dd" ></fmt:formatDate></span></li>
+                    </c:forEach>
                 </ul>
             </div>
             <div class="container container_l">
                 <p class="title_index title_l">
-                    <strong>行业资讯</strong><a href="#" class="more">更多>></a>
+                    <strong>行业资讯</strong><a href="${ctx}/article/list/4" class="more">更多>></a>
                 </p>
                 <ul class="content l_content">
-                    <li><a href="#">北京用友政务领导和专家来本...</a><span class="time">04-16</span></li>
-                    <li><a href="#">北京用友政务领导和专家来本...</a><span class="time">04-16</span></li>
-                    <li><a href="#">北京用友政务领导和专家来本...</a><span class="time">04-16</span></li>
-                    <li><a href="#">北京用友政务领导和专家来本...</a><span class="time">04-16</span></li>
-                    <li><a href="#">北京用友政务领导和专家来本...</a><span class="time">04-16</span></li>
-                    <li><a href="#">北京用友政务领导和专家来本...</a><span class="time">04-16</span></li>
+                    <c:forEach items="${news2}" var="new2" begin="0" step="1">
+                        <li><a href="${ctx}/article/content/${new2.id}">${fn:substring(new2.subject,0,13)}...</a><span class="time"><fmt:formatDate value="${new2.createdDate}"  pattern="MM-dd" ></fmt:formatDate></span></li>
+                    </c:forEach>
                 </ul>
             </div>
         </div>
@@ -96,16 +92,12 @@
                 <a class="institution">金融服务创新研究所</a>
             </fieldset>
             <fieldset class="content container_r">
-                <legend><a href="#"><strong>咨询服务</strong></a></legend>
+                <legend><a href="${ctx}/article/listInfo"><strong>咨询服务</strong></a></legend>
                 <ul class="content left_r">
-                    <li><a href="#">全面信用风险管理体系建设方案</a></li>
-                    <li><a href="#">全面信用风险管理体系建设方案</a></li>
-                    <li><a href="#">全面信用风险管理体系建设方案</a></li>
-                    <li><a href="#">全面信用风险管理体系建设方案</a></li>
-                    <li><a href="#">全面信用风险管理体系建设方案</a></li>
-                    <li><a href="#">全面信用风险管理体系建设方案</a></li>
-                    <li><a href="#">全面信用风险管理体系建设方案</a></li>
-                    <li><a href="#" class="more" style="float: right;background-image: none;">更多>></a></li>
+                    <c:forEach items="${infos}" var="info" begin="0" step="1">
+                        <li><a href="${ctx}/article/content/${info.id}">${fn:substring(info.subject,0,13)}</a></li>
+                    </c:forEach>
+                    <li><a href="${ctx}/article/list/20" class="more" style="float: right;background-image: none;">更多>></a></li>
                 </ul>
             </fieldset>
         </div>
@@ -115,43 +107,27 @@
     </div>
     <div id="index_right">
         <div class="container container_right">
-            <p class="title_index title_rl"><strong>服务对象</strong><a href="#" class="more">更多>></a></p>
+            <p class="title_index title_rl"><strong>服务对象</strong><%--<a href="#" class="more">更多>></a>--%></p>
             <ul class="content r_content">
-                <li>股份制商业银行</li>
-                <li>城市商业银行</li>
-                <li>农村信用社</li>
-                <li>村镇银行</li>
-                <li>小额贷款公司</li>
-                <li>证券公司</li>
-                <li>保险公司</li>
-                <li>财政税务管理部门</li>
+                <c:forEach items="${serviceObjects}" var="serviceObject" begin="0" step="1">
+                    <li><a href="${ctx}/article/content/${serviceObject.id}">${fn:substring(serviceObject.title,0,8)}</a></li>
+                </c:forEach>
             </ul>
         </div>
         <div class="container container_right">
-            <p class="title_index title_rl"><strong>合作伙伴</strong><a href="#" class="more">更多>></a></p>
+            <p class="title_index title_rl"><strong>合作伙伴</strong><%--<a href="#" class="more">更多>></a>--%></p>
             <ul class="content r_content">
-                <li><a href="#">全面信用风险管理</a></li>
-                <li><a href="#">全面信用风险管理</a></li>
-                <li><a href="#">全面信用风险管理</a></li>
-                <li><a href="#">全面信用风险管理</a></li>
-                <li><a href="#">全面信用风险管理</a></li>
-                <li><a href="#">全面信用风险管理</a></li>
-                <li><a href="#">全面信用风险管理</a></li>
-                <li><a href="#">全面信用风险管理</a></li>
+                <c:forEach items="${companies}" var="company" begin="0" step="1">
+                    <li><a href="${ctx}/article/content/${company.id}">${fn:substring(company.title,0,8)}</a></li>
+                </c:forEach>
             </ul>
         </div>
         <div class="container container_right">
-            <p class="title_index title_rl"><strong>成果展示</strong><a href="#" class="more">更多>></a></p>
+            <p class="title_index title_rl"><strong>成果展示</strong><a href="${ctx}/article/list/" class="more">更多>></a></p>
             <ul class="content r_content">
-                <li><a href="#">全面信用风险管理</a></li>
-                <li><a href="#">全面信用风险管理</a></li>
-                <li><a href="#">全面信用风险管理</a></li>
-                <li><a href="#">全面信用风险管理</a></li>
-                <li><a href="#">全面信用风险管理</a></li>
-                <li><a href="#">全面信用风险管理</a></li>
-                <li><a href="#">全面信用风险管理</a></li>
-                <li><a href="#">全面信用风险管理</a></li>
-                <li><a href="#">全面信用风险管理</a></li>
+                <c:forEach items="${results}" var="result" begin="0" step="1">
+                    <li><a href="${ctx}/article/content/${result.id}">${fn:substring(result.subject,0,8)}</a></li>
+                </c:forEach>
             </ul>
         </div>
     </div>

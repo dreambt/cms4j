@@ -31,16 +31,16 @@ public class LinkManager {
      * @return
      */
     public List<Link> getAllLink() {
-        return (List<Link>) linkDao.findAll();
+        return linkDao.findAll();
     }
 
     /**
-     * 获得所有审核通过的link
+     * 根据分类获得link
      *
      * @return
      */
-    public List<Link> getAuditLink() {
-        return linkDao.findAll();
+    public List<Link> getLinkByCategory(String category) {
+        return linkDao.getLinkByCategory(category);
     }
 
     /**

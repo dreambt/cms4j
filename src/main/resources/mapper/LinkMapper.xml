@@ -7,6 +7,7 @@
         <id property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="url" column="url"/>
+        <result property="category" column="category" />
         <result property="lastModifiedDate" column="last_modified_date"/>
         <result property="createdDate" column="created_date"/>
     </resultMap>
@@ -15,7 +16,7 @@
         根据id获取link
     -->
     <select id="getLink" parameterType="int" resultMap="linkDetailMap">
-        SELECT id, title, url, STATUS , created_date, last_modified_date
+        SELECT id, title, url, STATUS , category,  created_date, last_modified_date
         FROM cms_link
         WHERE id =#{id}
         ORDER BY id DESC
@@ -26,17 +27,27 @@
         获取所有link
     -->
     <select id="getAllLink" resultMap="linkDetailMap">
-        SELECT id, title, url, STATUS , created_date, last_modified_date
+        SELECT id, title, url, STATUS , category, created_date, last_modified_date
         FROM cms_link
         ORDER BY id DESC
         LIMIT 30
 	</select>
 
     <!--
+        根据分类获得所有link
+    -->
+    <select id="getLinkByCategory" parameterType="String" resultMap="linkDetailMap">
+        SELECT id, title, url, STATUS , category, created_date, last_modified_date
+        FROM cms_link
+        WHERE category=#{category} AND STATUS=1
+        ORDER BY id DESC
+	</select>
+
+    <!--
         获取所有审核的link
     -->
     <select id="getAuditedLink" resultMap="linkDetailMap">
-        SELECT id, title, url, status, created_date, last_modified_date
+        SELECT id, title, url, status, category, created_date, last_modified_date
         FROM cms_link
         WHERE STATUS=1
         ORDER BY id DESC
@@ -47,8 +58,8 @@
         新增image
     -->
     <insert id="saveLink" parameterType="Link" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO cms_link (title, url, status, created_date)
-		VALUES (#{title}, #{url}, 0, null)
+        INSERT INTO cms_link (title, url, status, category, created_date)
+		VALUES (#{title}, #{url}, 0, #{category}, null)
 	</insert>
 
     <!--
@@ -74,6 +85,9 @@
             <if test="status != null">
                 status=#{status},
             </if>
+            <if test="category != null and category !=''">
+                category=#{category},
+            </if>
             last_modified_date=null
         </set>
         WHERE id=#{id}
@@ -90,8 +104,13 @@
          查询link
      -->
     <select id="searchLink" parameterType="map" resultMap="linkDetailMap">
-        SELECT id, title, url, status, created_date, last_modified_date
+        SELECT id, title, url, status, category, created_date, last_modified_date
         FROM cms_link
+        <where>
+            <if test="category != null and category != ''">
+                category=#{category}
+            </if>
+        </where>
         ORDER BY ${Sort} ${Direction}
     </select>
 </mapper>

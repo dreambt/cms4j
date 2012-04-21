@@ -222,6 +222,19 @@ public class ArticleController {
     }
 
     /**
+     * 显示首页资讯
+     *
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "listInfo", method = RequestMethod.GET)
+    public String listInfo(Model model) {
+        // TODO
+        model.addAttribute("articles", articleManager.getInfo());
+        return "article/list";
+    }
+
+    /**
      * 发表新文章
      *
      * @param model

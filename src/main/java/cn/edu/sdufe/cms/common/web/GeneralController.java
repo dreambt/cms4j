@@ -36,9 +36,14 @@ public class GeneralController {
     public String index(Model model, @PathVariable("str") String str) {
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("images", imageManager.findByShowIndex());
-        model.addAttribute("links", linkManager.getAllLink());
-        model.addAttribute("news", articleManager.findNews());
-        model.addAttribute("posts", articleManager.getTitleByCategoryId(1L, 0, 5));
+        model.addAttribute("news1", articleManager.getTitleByCategoryId(3L, 0, 5));
+        model.addAttribute("news2", articleManager.getTitleByCategoryId(4L, 0, 5));
+        model.addAttribute("infos", articleManager.getInfo());
+        model.addAttribute("results", articleManager.getResult());
+        model.addAttribute("serviceObjects", linkManager.getLinkByCategory("SERVICEOBJECT"));
+        model.addAttribute("companies", linkManager.getLinkByCategory("COMPANY"));
+        model.addAttribute("links", linkManager.getLinkByCategory("LINK"));
+        model.addAttribute("posts", articleManager.getTitleByCategoryId(1L, 0, 6));
         return "index" + str;
     }
 

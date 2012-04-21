@@ -66,6 +66,22 @@ public class ArticleDao extends SqlSessionDaoSupport {
     }
 
     /**
+     * 获取社会资讯下的最新文章
+     * @return
+     */
+    public List<Article> getInfo() {
+        return getSqlSession().selectList("Article.getInfo");
+    }
+
+    /**
+     * 获取成果显示
+     * @return
+     */
+    public List<Article> getResult() {
+        return getSqlSession().selectList("Article.getResult");
+    }
+
+    /**
      * 获取分类id的文章摘要
      *
      * @param categoryId
@@ -198,5 +214,6 @@ public class ArticleDao extends SqlSessionDaoSupport {
     public List<Article> search(Map<String, Object> parameters, RowBounds rowBounds) {
         return getSqlSession().selectList("Article.searchArticle", parameters, rowBounds);
     }
+
 
 }

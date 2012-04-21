@@ -59,7 +59,7 @@ public class NotifyMessageListener implements MessageListener {
                 imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-134x134/" + fileName, 134, 134);
                 imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-200x122/" + fileName, 200, 122);
                 imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-218x194/" + fileName, 218, 194);
-                imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-460x283/" + fileName, 460, 283);
+                imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-272x166/" + fileName, 460, 283);
                 logger.info("Success to generate Thumb: {}", path + "thumb-*/" + fileName);
             } else if ("del_thumb".equals(objectType)) {
                 String path = System.getProperty("user.dir");
@@ -68,7 +68,7 @@ public class NotifyMessageListener implements MessageListener {
                 new File(path + "/src/main/webapp/static/uploads/gallery/gallery-big/thumb-134x134", fileName).delete();
                 new File(path + "/src/main/webapp/static/uploads/gallery/gallery-big/thumb-200x122", fileName).delete();
                 new File(path + "/src/main/webapp/static/uploads/gallery/gallery-big/thumb-218x194", fileName).delete();
-                new File(path + "/src/main/webapp/static/uploads/gallery/gallery-big/thumb-460x283", fileName).delete();
+                new File(path + "/src/main/webapp/static/uploads/gallery/gallery-big/thumb-272x166", fileName).delete();
                 logger.info("Success to delete Thumb: {}", path + "thumb-*/" + fileName);
             } else {
                 logger.error("Unknown objectType: " + mapMessage.toString());

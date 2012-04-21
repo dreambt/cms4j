@@ -142,6 +142,22 @@ public class ArticleManager {
     }
 
     /**
+     * 获得社会资讯下的最新文章
+     * @return
+     */
+    public List<Article> getInfo() {
+        return articleDao.getInfo();
+    }
+
+    /**
+     * 获得成果显示
+     * @return
+     */
+    public List<Article> getResult() {
+        return articleDao.getResult();
+    }
+
+    /**
      * 通过分类categoryId查找文章列表
      *
      * @param categoryId
