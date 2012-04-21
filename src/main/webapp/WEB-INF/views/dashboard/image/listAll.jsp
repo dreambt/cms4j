@@ -71,7 +71,7 @@
                     <td><a href="${ctx}/static/uploads/gallery/thumb-50x57/${image.imageUrl}" class="opener" value="${image.description}">点击查看</a> </td>
                     <td><a href="${ctx}/static/uploads/gallery/gallery-big/${image.imageUrl}">${image.imageUrl}</a></td>
                     <td><fmt:formatDate value="${image.createdDate}" type="both"></fmt:formatDate></td>
-                    <td><c:choose><c:when test="${image.showIndex}"><a href="${ctx}/gallery/showIndex/${image.id}">不显示</a></c:when><c:otherwise><a href="${ctx}/gallery/showIndex/${image.id}">显示</a></c:otherwise></c:choose></td>
+                    <td><c:choose><c:when test="${image.showIndex}"><a href="${ctx}/gallery/showIndex/${image.id}">显示</a></c:when><c:otherwise><a href="${ctx}/gallery/showIndex/${image.id}">不显示</a></c:otherwise></c:choose></td>
                     <td><a href="${ctx}/gallery/edit/${image.id}">【编辑】</a><a href="${ctx}/gallery/delete/${image.id}" class="delete">【删除】</a></td>
                 </tr>
                 </c:forEach>
