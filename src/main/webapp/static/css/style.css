@@ -141,7 +141,7 @@ padding:15px 10px;
 a.more{display: block;float: right;padding-right: 10px;font-size:10px !important;color:#666;text-decoration: none;}
 a.more:hover{color:#999;text-decoration: none; }
 
-ul.content{list-style:none;float: left;margin:10px;}
+ul.content{list-style:none;float: left;margin:5px 10px 10px 10px;}
 ul.content li{line-height: 25px;background:url(../images/ico-2.gif) center left  no-repeat;padding-left:10px;}
 ul.content li a{color:#6F6F6F !important;}
 ul.content li a:hover{text-decoration: underline;}
@@ -160,7 +160,7 @@ legend a{color:#444;}
 .container_r ul.left_r{width:360px;list-style: none;margin: 0;}
 .container_r ul.left_r li{width: 360px;}
 .container_r p.brief{width:370px;padding: 0;text-indent: 2em;margin: 0;}
-.container_r a.institution{padding: 0 10px; width: 100px;text-align: center;display: block;float: left;line-height: 22px;color:#6F6F6F !important;}
+.container_r a.institution{padding: 0; width: 123px;text-align: center;display: block;float: left;line-height: 22px;color:#6F6F6F !important;}
 .container_r a.institution:hover{text-decoration: underline;}
 /*-----index_r-----*/
 #index_right .container_right{width: 230px;}

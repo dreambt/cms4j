@@ -83,17 +83,17 @@
         <div id="left_r">
             <fieldset class="container_r">
                 <legend><a href="#"><strong>中心简介</strong></a></legend>
-                <p class="brief">中心设有证书培训、政府培训、企业高管培训、专业培训、学历培训共五个系列的涉及金融、财税、银行、投资、工商管理等学科的高端培训。我们为金融、财经、投资界的青年和精英们提供金融风险管理师、理财规划师等专业培训，以满足我国对高端金融人才的需求。我们为各级政府的金融、财税部门提供政策和理论培训，并组织第一线的实地调研活动，为各级领导及公职人员提供理论参考和实际经验。同时，我们还为国内外知名银行、保险、基金、证券等金融投资机构提供各种有针对性的企业内训课程和职业发展课程，并建立起长期战略合作关系。</p>
-                 <p class="brief">中心旨在建设具有解决国内金融领域信息化重大问题的、综合研究能力强的、在国内外有较大影响的金融信息工程产学研机构。</p>
+                <p class="brief">山东省金融信息工程技术研究中心依托山东财经大学的金融、财税、会计、管理、数学和信息技术等雄厚的学科资源，联合行业内相关优势企业，为推动我国金融信息化的发展及相关技术的研究而成立的一个开放的专业从事与金融信息化和金融风险管理相关的理论与应用技术研究、教育培训、战略规划与咨询服务的组织。中心于2010年12月经山东省科技厅批准成立，是省内在金融信息工程领域唯一的省级工程技术研究中心。中心目前主持国家级科研课题4项，省部级科研课题5项,取得软件著作权6项，申报国家发明专利3项。独立研究及与合作伙伴共同研发的多项成果已成功应用于交通银行、广发银行、恒丰银行、齐鲁银行及小额贷款公司等非银行金融机构。
+                </p>
             </fieldset>
             <fieldset class="content container_r">
                 <legend><a href="#"><strong>组织机构</strong></a></legend>
-                <a class="institution">组织机构一</a>
-                <a class="institution">组织机构一</a>
-                <a class="institution">组织机构一</a>
-                <a class="institution">组织机构一</a>
-                <a class="institution">组织机构一</a>
-                <a class="institution">组织机构一</a>
+                <a class="institution">金融风险管理研究所</a>
+                <a class="institution">金融服务计算研究所</a>
+                <a class="institution">计算金融研究所</a>
+                <a class="institution">金融信息安全研究所</a>
+                <a class="institution">金融数据管理研究所</a>
+                <a class="institution">金融服务创新研究所</a>
             </fieldset>
             <fieldset class="content container_r">
                 <legend><a href="#"><strong>咨询服务</strong></a></legend>
@@ -117,14 +117,14 @@
         <div class="container container_right">
             <p class="title_index title_rl"><strong>服务对象</strong><a href="#" class="more">更多>></a></p>
             <ul class="content r_content">
-                <li><a href="#">全面信用风险管理</a></li>
-                <li><a href="#">全面信用风险管理</a></li>
-                <li><a href="#">全面信用风险管理</a></li>
-                <li><a href="#">全面信用风险管理</a></li>
-                <li><a href="#">全面信用风险管理</a></li>
-                <li><a href="#">全面信用风险管理</a></li>
-                <li><a href="#">全面信用风险管理</a></li>
-                <li><a href="#">全面信用风险管理</a></li>
+                <li>股份制商业银行</li>
+                <li>城市商业银行</li>
+                <li>农村信用社</li>
+                <li>村镇银行</li>
+                <li>小额贷款公司</li>
+                <li>证券公司</li>
+                <li>保险公司</li>
+                <li>财政税务管理部门</li>
             </ul>
         </div>
         <div class="container container_right">
