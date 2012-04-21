@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
-		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd"
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd"
        default-lazy-init="true">
 
     <description>Spring公共配置</description>
@@ -35,25 +35,16 @@
     <!-- 使用annotation定义事务  -->
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
 
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
     <!-- JSR303 Validator定义 -->
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
 
+    <!-- production/local development环境 -->
     <beans profile="production">
-        <!-- 定义受环境影响易变的变量 -->
-        <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-            <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
-            <property name="ignoreResourceNotFound" value="true"/>
-            <property name="locations">
-                <list>
-                    <!-- 标准配置 -->
-                    <value>classpath*:/application.properties</value>
-                    <!-- 本地开发环境配置 -->
-                    <value>classpath*:/application.local.properties</value>
-                    <!-- 服务器生产环境配置 -->
-                    <value>file:/opt/CMS/application.server.properties</value>
-                </list>
-            </property>
-        </bean>
+        <context:property-placeholder ignore-resource-not-found="true"
+                                      location="classpath*:/application.properties,
+          			  classpath*:/application.local.properties,file:/opt/CMS/application.server.properties"/>
 
         <!-- 数据源配置,使用应用内的DBCP数据库连接池 -->
         <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
@@ -62,7 +53,7 @@
             <property name="url" value="${jdbc.url}"/>
             <property name="username" value="${jdbc.username}"/>
             <property name="password" value="${jdbc.password}"/>
-			<property name="defaultAutoCommit" value="false" />
+            <property name="defaultAutoCommit" value="false"/>
         </bean>
 
         <!-- quartz使用的数据源配置 -->
@@ -77,52 +68,76 @@
         <!--<jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/ExampleDB" />-->
     </beans>
 
+    <!-- unit test环境 -->
     <beans profile="test">
-		<!-- 定义受环境影响易变的变量 -->
-        <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-            <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
-            <property name="ignoreResourceNotFound" value="true"/>
-            <property name="locations">
-                <list>
-                    <!-- 标准配置 -->
-                    <value>classpath*:/application.properties</value>
-                    <!-- 本地开发环境配置 -->
-                    <value>classpath*:/application.local.properties</value>
-                    <!-- 测试环境配置 -->
-                    <value>classpath*:/application.test.properties</value>
-                    <!-- 本地测试环境配置 -->
-                    <value>classpath*:/application.test-local.properties</value>
-                </list>
-            </property>
-        </bean>
+        <context:property-placeholder ignore-resource-not-found="true"
+                                      location="classpath*:/application.properties,
+          			  classpath*:/application.local.properties"/>
 
-        <!-- 数据源配置,在测试环境使用JDBC直接连接 -->
-        <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <!-- 非Pool的简单data source -->
+        <bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
             <!-- Connection Info -->
-            <property name="driverClassName" value="${jdbc.driver}"/>
+            <property name="driverClass" value="${jdbc.driver}"/>
             <property name="url" value="${jdbc.url}"/>
             <property name="username" value="${jdbc.username}"/>
             <property name="password" value="${jdbc.password}"/>
         </bean>
 
-        <bean id="quartzDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-            <property name="driverClassName" value="${quartz.jdbc.driver}"/>
+        <bean id="quartzDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+            <property name="driverClass" value="${quartz.jdbc.driver}"/>
             <property name="url" value="${quartz.jdbc.url}"/>
             <property name="username" value="${quartz.jdbc.username}"/>
             <property name="password" value="${quartz.jdbc.password}"/>
         </bean>
 
-        <!-- 运行脚本初始化内存数据库 -->
+        <!-- 初始化数据结构 -->
         <jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
-            <jdbc:script location="classpath:sql/h2/schema.sql"/>
+            <jdbc:script location="classpath:sql/mysql/schema.sql"/>
         </jdbc:initialize-database>
 
-        <!-- 运行脚本初始化内存数据库 -->
+        <!-- 初始化数据结构 -->
         <jdbc:initialize-database data-source="quartzDataSource" ignore-failures="ALL">
-            <jdbc:script location="classpath:sql/h2/quartz.sql"/>
+            <jdbc:script location="classpath:sql/mysql/quartz.sql"/>
         </jdbc:initialize-database>
 
-        <!-- SpringContextHolder定义 -->
-        <bean class="org.springside.modules.test.spring.SpringContextHolder" lazy-init="false"/>
+        <!-- 初始化默认数据
+        <bean class="org.springside.modules.test.data.DefaultDataInitializer" lazy-init="false">
+            <property name="dataSource" ref="dataSource"/>
+            <property name="defaultDataFile" value="/data/sample-data.xml" />
+        </bean>-->
+    </beans>
+
+    <!-- functional test环境 -->
+    <beans profile="functional">
+        <context:property-placeholder ignore-resource-not-found="true"
+                                      location="classpath*:/application.properties,
+          			  classpath*:/application.functional.properties,
+          			  classpath*:/application.functional-local.properties"/>
+
+        <!-- 非Pool的简单data source -->
+        <bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+            <!-- Connection Info -->
+            <property name="driverClass" value="${jdbc.driver}"/>
+            <property name="url" value="${jdbc.url}"/>
+            <property name="username" value="${jdbc.username}"/>
+            <property name="password" value="${jdbc.password}"/>
+        </bean>
+
+        <bean id="quartzDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+            <property name="driverClass" value="${quartz.jdbc.driver}"/>
+            <property name="url" value="${quartz.jdbc.url}"/>
+            <property name="username" value="${quartz.jdbc.username}"/>
+            <property name="password" value="${quartz.jdbc.password}"/>
+        </bean>
+
+        <!-- 初始化数据结构 -->
+        <jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
+            <jdbc:script location="classpath:sql/mysql/schema.sql"/>
+        </jdbc:initialize-database>
+
+        <!-- 初始化数据结构 -->
+        <jdbc:initialize-database data-source="quartzDataSource" ignore-failures="ALL">
+            <jdbc:script location="classpath:sql/mysql/quartz.sql"/>
+        </jdbc:initialize-database>
     </beans>
 </beans>
