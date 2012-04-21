@@ -69,16 +69,16 @@ public class ArticleDao extends SqlSessionDaoSupport {
      * 获取社会资讯下的最新文章
      * @return
      */
-    public List<Article> getInfo() {
-        return getSqlSession().selectList("Article.getInfo");
+    public List<Article> getInfo(Long[] ids) {
+        return getSqlSession().selectList("Article.getTitleByCategoryIds", ids);
     }
 
     /**
      * 获取成果显示
      * @return
      */
-    public List<Article> getResult() {
-        return getSqlSession().selectList("Article.getResult");
+    public List<Article> getResult(Long[] ids) {
+        return getSqlSession().selectList("Article.getTitleByCategoryIds", ids);
     }
 
     /**

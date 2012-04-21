@@ -6,6 +6,7 @@ import cn.edu.sdufe.cms.common.entity.article.Article;
 import cn.edu.sdufe.cms.security.ShiroDbRealm;
 import cn.edu.sdufe.cms.utilities.analyzer.ArticleKeyword;
 import cn.edu.sdufe.cms.utilities.thumb.ImageThumb;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.Validate;
 import org.apache.ibatis.session.RowBounds;
@@ -146,7 +147,8 @@ public class ArticleManager {
      * @return
      */
     public List<Article> getInfo() {
-        return articleDao.getInfo();
+        Long[] ids = {19L,20L,21L,22L};
+        return articleDao.getInfo(ids);
     }
 
     /**
@@ -154,7 +156,8 @@ public class ArticleManager {
      * @return
      */
     public List<Article> getResult() {
-        return articleDao.getResult();
+        Long[] ids = {17L, 25L};
+        return articleDao.getResult(ids);
     }
 
     /**

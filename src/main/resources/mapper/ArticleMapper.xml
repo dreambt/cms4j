@@ -103,22 +103,14 @@
         LIMIT 5
     </select>
 
-    <!-- 获取首页资讯 -->
-    <select id="getInfo" resultMap="articleDetailMap">
-        SELECT id, subject, top
+    <!-- 获取多个分类内的文章 -->
+    <select id="getTitleByCategoryIds" resultMap="articleDetailMap">
+        SELECT id, subject, top, image_name, digest
         FROM cms_article
-        WHERE category_id in (19,20,21,22)
-        AND deleted =0
-        AND STATUS =1
-        ORDER BY top DESC, id DESC
-        LIMIT 7
-    </select>
-
-    <!-- 获取首页资讯 -->
-    <select id="getResult" resultMap="articleDetailMap">
-        SELECT id, subject, top
-        FROM cms_article
-        WHERE category_id in (17, 25)
+        WHERE category_id in
+        <foreach item="item" collection="array" open="(" separator="," close=")" >
+            #{item}
+        </foreach>
         AND deleted =0
         AND STATUS =1
         ORDER BY top DESC, id DESC
@@ -130,7 +122,7 @@
         A.allow_comment, A.created_date, A.last_modified_date, A.deleted, U.username as user_username
         FROM cms_article AS A
         LEFT OUTER JOIN cms_user AS U ON user_id = U.id
-        WHERE A.deleted =0 AND category_id in (19,20,21,22)
+        WHERE A.deleted =0
         AND A.STATUS =1
         AND A.category_id=#{categoryId}
         ORDER BY A.top DESC, A.id desc
