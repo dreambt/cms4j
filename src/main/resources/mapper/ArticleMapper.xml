@@ -92,17 +92,6 @@
         LIMIT 6
     </select>
 
-    <!-- 获取首页新闻资讯 -->
-    <select id="getNews" resultMap="articleDetailMap">
-        SELECT id, subject, image_name, digest
-        FROM cms_article
-        WHERE category_id in (3,4)
-        AND deleted =0
-        AND STATUS =1
-        ORDER BY top DESC, id DESC
-        LIMIT 5
-    </select>
-
     <!-- 获取多个分类内的文章 -->
     <select id="getTitleByCategoryIds" resultMap="articleDetailMap">
         SELECT id, subject, top, image_name, digest

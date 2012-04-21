@@ -56,28 +56,10 @@ public class ArticleDao extends SqlSessionDaoSupport {
     }
 
     /**
-     * 获取首页显示新闻
-     *
+     * 获取多个分类下的文章
      * @return
      */
-    @Cacheable(value = "news")
-    public List<Article> findNews() {
-        return getSqlSession().selectList("Article.getNews");
-    }
-
-    /**
-     * 获取社会资讯下的最新文章
-     * @return
-     */
-    public List<Article> getInfo(Long[] ids) {
-        return getSqlSession().selectList("Article.getTitleByCategoryIds", ids);
-    }
-
-    /**
-     * 获取成果显示
-     * @return
-     */
-    public List<Article> getResult(Long[] ids) {
+    public List<Article> getTitleByCategoryIds(Long[] ids) {
         return getSqlSession().selectList("Article.getTitleByCategoryIds", ids);
     }
 

@@ -102,16 +102,6 @@ public class ArticleManager {
     }
 
     /**
-     * 获取首页显示新闻
-     *
-     * @return
-     */
-    public List<Article> findNews() {
-        return articleDao.findNews();
-    }
-
-
-    /**
      * 获得最新的10篇文章
      *
      * @return
@@ -148,7 +138,7 @@ public class ArticleManager {
      */
     public List<Article> getInfo() {
         Long[] ids = {19L,20L,21L,22L};
-        return articleDao.getInfo(ids);
+        return articleDao.getTitleByCategoryIds(ids);
     }
 
     /**
@@ -157,7 +147,7 @@ public class ArticleManager {
      */
     public List<Article> getResult() {
         Long[] ids = {17L, 25L};
-        return articleDao.getResult(ids);
+        return articleDao.getTitleByCategoryIds(ids);
     }
 
     /**
