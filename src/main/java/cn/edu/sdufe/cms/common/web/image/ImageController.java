@@ -94,7 +94,8 @@ public class ImageController {
         } else {
             pageCount = total / limit + 1;
         }
-        model.addAttribute("images", imageManager.getPagedImage(0, limit));
+        List<Image> images = imageManager.getPagedImage(0, limit);
+        model.addAttribute("images", images);
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("total", total);
         model.addAttribute("pageCount", pageCount);

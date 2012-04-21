@@ -107,6 +107,5 @@
             </if>
         </where>
         ORDER BY ${Sort} ${Direction}
-        LIMIT 5
     </select>
 </mapper>
