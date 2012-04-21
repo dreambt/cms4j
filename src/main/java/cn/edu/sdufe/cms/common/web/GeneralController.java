@@ -40,7 +40,7 @@ public class GeneralController {
         model.addAttribute("news2", articleManager.getTitleByCategoryId(4L, 0, 5));
         model.addAttribute("infos", articleManager.getInfo());
         model.addAttribute("results", articleManager.getResult());
-        model.addAttribute("serviceObjects", linkManager.getLinkByCategory("SERVICEOBJECT"));
+        //model.addAttribute("serviceObjects", linkManager.getLinkByCategory("SERVICEOBJECT"));
         model.addAttribute("companies", linkManager.getLinkByCategory("COMPANY"));
         model.addAttribute("links", linkManager.getLinkByCategory("LINK"));
         model.addAttribute("posts", articleManager.getTitleByCategoryId(1L, 0, 6));

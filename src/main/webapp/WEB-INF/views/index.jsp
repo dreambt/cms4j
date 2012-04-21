@@ -109,9 +109,14 @@
         <div class="container container_right">
             <p class="title_index title_rl"><strong>服务对象</strong><%--<a href="#" class="more">更多>></a>--%></p>
             <ul class="content r_content">
-                <c:forEach items="${serviceObjects}" var="serviceObject" begin="0" step="1">
-                    <li><a href="${ctx}/article/content/${serviceObject.id}">${fn:substring(serviceObject.title,0,8)}</a></li>
-                </c:forEach>
+                    <li>股份制商业银行</li>
+                    <li>城市商业银行</li>
+                    <li>农村信用社</li>
+                    <li>村镇银行</li>
+                    <li>小额贷款公司</li>
+                    <li>证券公司</li>
+                    <li>保险公司</li>
+                    <li>财政税务管理部门</li>
             </ul>
         </div>
         <div class="container container_right">
