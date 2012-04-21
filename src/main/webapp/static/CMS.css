@@ -173,3 +173,9 @@ a.agrayright{cursor:default;background-position:-51px 50%;}
 #friLnk li{padding:2px 5px;display: block;float: left;}
 #friLnk li a{color: #666;font-size: 10px;text-decoration: none;text-align:center;}
 #friLnk li a:hover{text-decoration: underline;}
+/*-----------研究所-----------*/
+#banner{
+    width: 920px;
+    height: 169px;
+    margin: 10px 0 0 0;
+}

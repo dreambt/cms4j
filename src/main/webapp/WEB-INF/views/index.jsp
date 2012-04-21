@@ -93,17 +93,10 @@
             </fieldset>
             <fieldset class="content container_r">
                 <legend><a href="${ctx}/article/listInfo"><strong>咨询服务</strong></a></legend>
-                <ul class="content twoRow">
+                <ul class="content left_r">
                     <c:forEach items="${infos}" var="info" begin="0" step="1">
                         <li><a href="${ctx}/article/content/${info.id}">${fn:substring(info.subject,0,13)}</a></li>
                     </c:forEach>
-                </ul>
-                <ul class="content twoRow">
-                    <li><a href="#">全面信用风险管理体系建设方案</a></li>
-                    <li><a href="#">全面信用风险管理体系建设方案</a></li>
-                    <li><a href="#">全面信用风险管理体系建设方案</a></li>
-                    <li><a href="#">全面信用风险管理体系建设方案</a></li>
-                    <li><a href="#" class="more" style="float: right;background-image: none;">更多>></a></li>
                 </ul>
             </fieldset>
         </div>
