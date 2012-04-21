@@ -97,6 +97,7 @@
                     <c:forEach items="${infos}" var="info" begin="0" step="1">
                         <li><a href="${ctx}/article/content/${info.id}">${fn:substring(info.subject,0,13)}</a></li>
                     </c:forEach>
+                    <li><a href="#" class="more">更多...</a> </li>
                 </ul>
             </fieldset>
         </div>
