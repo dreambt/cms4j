@@ -142,5 +142,16 @@
             </ul>
         </div>
     </div>
+<ul id="friLnk">
+    <li class="friLnkT cufon"><strong>友情链接</strong></li>
+    <li><a href="#">山东省数字媒体技术重点实验室</a></li>
+    <li><a href="#">山东省数字媒体技术重点实验室</a></li>
+    <li><a href="#">山东省数字媒体技术重点实验室</a></li>
+    <li><a href="#">山东省数字媒体技术重点实验室</a></li>
+    <li><a href="#">山东省数字媒体技术重点实验室</a></li>
+    <li><a href="#">山东省数字媒体技术重点实验室</a></li>
+    <li><a href="#">山东省数字媒体技术重点实验室</a></li>
+    <li><a href="#">山东省数字媒体技术重点实验室</a></li>
+</ul>
 </body>
 </html>

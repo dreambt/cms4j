@@ -161,5 +161,15 @@ a.agrayright{cursor:default;background-position:-51px 50%;}
 .scrolllist .imglist_w li a{color:#3366cc;text-decoration:none;float:left;}
 .scrolllist .imglist_w li a:hover img{filter:alpha(opacity=86);-moz-opacity:0.86;opacity:0.86;}
 .scrolllist .imglist_w li p{line-height:24px;overflow:hidden;float:left;padding: 0;width: 110px;text-align:center;}
-
-
+ /*----友情链接---------*/
+#friLnk{
+    width: 920px;
+    list-style: none;
+    display: block;float: left;
+    margin: 0;
+    padding: 10px 0;
+}
+#friLnk li.friLnkT{padding-left:43px;width: 872px;height: 25px;line-height:25px;color: #444;font-size: 14px;background: url(images/friLnk.png) no-repeat center;}
+#friLnk li{padding:2px 5px;display: block;float: left;}
+#friLnk li a{color: #666;font-size: 10px;text-decoration: none;text-align:center;}
+#friLnk li a:hover{text-decoration: underline;}
