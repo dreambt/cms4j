@@ -31,7 +31,7 @@
             <div class="toggle_container">
                 <div class="info" style="float:left;margin-left: 15%;margin-top: 15px;">
                     <input id="picID" type="hidden" name="id" value="${image.id}" />
-                    <input type="file" id="upload" name="file"><br> <br>
+                    <input type="file" id="upload" name="file" value="" alt="${image.imageUrl}"><br> <br>
                     图片标题：<br/><input type="text" class="required" name="title" size="52" value="${image.title}"> <br/> <br/>
                     首页展示：<input type="checkbox" name="showIndex" style="float: none" value="${image.showIndex}" <c:if test="${image.showIndex}">checked="checked"</c:if>>  <br/> <br/>
                     描述信息：<br/><textarea type="text" class="required" name="description" cols="55" rows="5">${image.description}</textarea>
@@ -45,9 +45,12 @@
 </div>
 <script type="text/javascript">
     $(function () {
+           // $('#uniform-upload span.filename').text(${image.imageUrl});
         //上传时选择文件校验
         $('#upload').live('change', function () {
-            if(!checkType($('#upload').val())){ alert("不能上传非gif、jpg、png、bmp类型的文件！请重新选择要上传的图片文件！");}
+            $(this).attr('alt',$(this).val());
+            if(!checkType($('#upload').val())){ alert("不能上传非gif、jpg、png、bmp类型的文件！请重新选择要上传的图片文件！");}else{
+            }
         });
 
         //检验上传文件是否是图片
@@ -62,12 +65,18 @@
 
          //如果新上传则必须要选择图片
         $('#submit').click(function(){
-            var uploadVal=$('#upload').val();
-            //alert(checkType(uploadVal));
-            if(!checkType(uploadVal)){
-                alert("不能上传非gif、jpg、png、bmp类型的文件！请重新选择要上传的图片文件！");return false;
-            } else{
-                if($('#picID').val()=="" && uploadVal==""){
+            var altVal=$('#upload').attr('alt');
+            if($('#picID').val()==""){  //新增
+                //alert("add");
+                if(!checkType(altVal)){ //是否选取上传文件，及其是否是图片
+                    alert("请您选择要上传的图片再提交！");
+                    return false;
+                }
+            }else{//修改
+                //alert("modify");
+                altVal=$('#upload').attr('alt');
+                //alert(altVal);
+                if(!checkType(altVal)){
                     alert("请您选择要上传的图片再提交！");
                     return false;
                 }
