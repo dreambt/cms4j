@@ -49,7 +49,7 @@
             </li>
             <li>
                 <a target="_blank" href="${ctx}/article/content2" title="赵华伟"><img width="120" height="166" alt="赵华伟" src="${ctx}/static/uploads/teacher/pic_zhaohuawei.jpg"></a>
-                <p>赵华伟hao</p>
+                <p>赵华伟</p>
             </li>
             <li>
                 <a target="_blank" href="${ctx}/article/content3" title="聂秀山"><img width="120" height="166" alt="聂秀山" src="${ctx}/static/uploads/teacher/pic_niexiushan.jpg"></a>
