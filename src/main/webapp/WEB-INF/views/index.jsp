@@ -66,11 +66,11 @@
             </div>
             <div class="container container_l">
                 <p class="title_index title_l">
-                    <strong>系统公告</strong><a href="${ctx}/article/list/0" class="more">更多>></a>
+                    <strong>通知公告</strong><a href="${ctx}/article/list/4" class="more">更多>></a>
                 </p>
                 <ul class="content l_content">
-                    <c:forEach items="${posts}" var="post" begin="0" step="1">
-                        <li><a href="${ctx}/article/content/${post.id}">${fn:substring(post.subject,0,13)}...</a><span class="time"><fmt:formatDate value="${post.createdDate}"  pattern="MM-dd" ></fmt:formatDate></span></li>
+                    <c:forEach items="${news2}" var="new2" begin="0" step="1">
+                        <li><a href="${ctx}/article/content/${new2.id}">${fn:substring(new2.subject,0,13)}...</a><span class="time"><fmt:formatDate value="${new2.createdDate}"  pattern="MM-dd" ></fmt:formatDate></span></li>
                     </c:forEach>
                 </ul>
             </div>
@@ -84,25 +84,24 @@
             </fieldset>
             <fieldset class="content container_r">
                 <legend><a href="#"><strong>组织机构</strong></a></legend>
-                <a class="institution" href="${ctx}/index-research">金融风险管理研究所</a>
-                <a class="institution" href="${ctx}/index-research">金融服务计算研究所</a>
-                <a class="institution" href="${ctx}/index-research">计算金融研究所</a>
-                <a class="institution" href="${ctx}/index-research">金融信息安全研究所</a>
-                <a class="institution" href="${ctx}/index-research">金融数据管理研究所</a>
-                <a class="institution" href="${ctx}/index-research">金融服务创新研究所</a>
+                <a class="institution" href="#">金融风险管理研究所</a>
+                <a class="institution" href="#">金融服务计算研究所</a>
+                <a class="institution" href="#">计算金融研究所</a>
+                <a class="institution" href="#">金融信息安全研究所</a>
+                <a class="institution" href="#">金融数据管理研究所</a>
+                <a class="institution" href="#">金融服务创新研究所</a>
             </fieldset>
-            <fieldset class="content container_r">
+            <fieldset class="content container_r" style="padding-bottom: 0;">
                 <legend><a href="${ctx}/article/listInfo"><strong>咨询服务</strong></a></legend>
                 <ul class="content twoRow">
                     <c:forEach items="${infos}" var="info" begin="0" step="1" end="3">
                         <li><a href="${ctx}/article/content/${info.id}">${fn:substring(info.subject,0,15)}</a></li>
                     </c:forEach>
-                </ul>
-                <ul class="content twoRow">
+                </ul> <ul class="content twoRow">
                     <c:forEach items="${infos}" var="info" begin="4" step="1" end="7">
                         <li><a href="${ctx}/article/content/${info.id}">${fn:substring(info.subject,0,15)}</a></li>
                     </c:forEach>
-                    <li><a href="${ctx}/article/listInfo" class="more">更多...</a> </li>
+                    <li><a href="#" class="more">更多...</a> </li>
                 </ul>
             </fieldset>
         </div>
@@ -114,38 +113,40 @@
         <div class="container container_right">
             <p class="title_index title_rl"><strong>服务对象</strong><%--<a href="#" class="more">更多>></a>--%></p>
             <ul class="content r_content">
-                    <li>股份制商业银行</li>
-                    <li>城市商业银行</li>
-                    <li>农村信用社</li>
-                    <li>村镇银行</li>
-                    <li>小额贷款公司</li>
-                    <li>证券公司</li>
-                    <li>保险公司</li>
-                    <li>财政税务管理部门</li>
+                <li>股份制商业银行</li>
+                <li>城市商业银行</li>
+                <li>地方金融管理部门</li>
+                <li>农村信用合作社</li>
+                <li>农村信用合作社</li>
+                <li>村镇银行</li>
+                <li>小额贷款公司</li>
+                <li>证券公司</li>
+                <li>保险公司</li>
+                <li>财政税务管理部门</li>
             </ul>
         </div>
         <div class="container container_right">
             <p class="title_index title_rl"><strong>合作伙伴</strong><%--<a href="#" class="more">更多>></a>--%></p>
             <ul class="content r_content">
                 <c:forEach items="${companies}" var="company" begin="0" step="1">
-                    <li><a href="${company.url}">${fn:substring(company.title,0,8)}</a></li>
+                    <li><a href="${ctx}/article/content/${company.id}">${fn:substring(company.title,0,14)}</a></li>
                 </c:forEach>
             </ul>
         </div>
         <div class="container container_right">
-            <p class="title_index title_rl"><strong>行业资讯</strong><a href="${ctx}/article/list/4" class="more">更多>></a></p>
+            <p class="title_index title_rl"><strong>行业资讯</strong><a href="${ctx}/article/list/" class="more">更多>></a></p>
             <ul class="content r_content">
                 <c:forEach items="${news2}" var="new2" begin="0" step="1">
-                    <li><a href="${ctx}/article/content/${new2.id}">${fn:substring(new2.subject,0,13)}</a></li>
+                    <li><a href="${ctx}/article/content/${new2.id}">${fn:substring(new2.subject,0,13)}...</a></li>
                 </c:forEach>
             </ul>
         </div>
     </div>
-<ul id="friLnk">
-    <li class="friLnkT cufon"><strong>友情链接</strong></li>
-    <c:forEach items="${links}" var="link" begin="0" step="1">
-        <li><a href="${link.url}">${fn:substring(link.title,0,13)}</a></li>
-    </c:forEach>
-</ul>
+    <ul id="friLnk">
+        <li class="friLnkT cufon"><strong>友情链接</strong></li>
+        <c:forEach items="${links}" var="link" begin="0" step="1">
+            <li><a href="${link.url}">${fn:substring(link.title,0,13)}</a></li>
+        </c:forEach>
+    </ul>
 </body>
 </html>

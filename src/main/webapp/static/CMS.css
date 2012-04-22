@@ -168,6 +168,8 @@ a.agrayright{cursor:default;background-position:-51px 50%;}
     display: block;float: left;
     margin: 0;
     padding: 10px 0;
+    height: 51px;
+    overflow: hidden;
 }
 #friLnk li.friLnkT{padding-left:40px;width: 875px;height: 25px;line-height:25px;color: #444;font-size: 14px;background: url(images/friLnk.png) no-repeat center;}
 #friLnk li{padding:2px 5px;display: block;float: left;}
