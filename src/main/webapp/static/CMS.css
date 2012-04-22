@@ -166,8 +166,8 @@ a.agrayright{cursor:default;background-position:-51px 50%;}
     width: 920px;
     list-style: none;
     display: block;float: left;
-    margin: 0;
-    padding: 10px 0;
+    margin:10px 0;
+    padding:0;
     height: 51px;
     overflow: hidden;
 }
