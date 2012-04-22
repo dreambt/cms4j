@@ -70,6 +70,31 @@ public class ArticleController {
      * @param id
      * @return
      */
+    //TODO 临时使用
+    @RequestMapping(value = "content{id}", method = RequestMethod.GET)
+    public String contextOfAgency(@PathVariable("id") String id, Model model, RedirectAttributes redirectAttributes) {
+        Article article = articleManager.findForView(1L);
+        if (null == article) {
+            redirectAttributes.addFlashAttribute("message", "不存在编号为 " + id + " 的文章");
+            return "redirect:/error/404";
+        }
+
+        //article.setMessage(Encodes.unescapeHtml(article.getMessage()));
+
+        model.addAttribute("article", article);
+        model.addAttribute("categories", categoryManager.getNavCategory());
+        model.addAttribute("archives", archiveManager.getTopTen());
+        model.addAttribute("newArticles", articleManager.findTopTen());
+        model.addAttribute("links", linkManager.getAllLink());
+        return "article/content" + id;
+    }
+
+    /**
+     * 获取编号为id的文章正文
+     *
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "content/full/{id}", method = RequestMethod.GET)
     public String fullOfArticle(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
         Article article = articleManager.findForView(id);
@@ -136,7 +161,7 @@ public class ArticleController {
      */
     @RequestMapping(value = "list/{id}", method = RequestMethod.GET)
     public String listOfArticle(@PathVariable("id") Long id, Model model) {
-        Long total = articleManager.count(id).longValue();
+        Long total = articleManager.count(id);
         int limit = 10;
         Long pageCount = 1L;
         if (total % limit == 0) {
@@ -178,7 +203,7 @@ public class ArticleController {
      */
     @RequestMapping(value = "digest/{id}", method = RequestMethod.GET)
     public String digestOfArticle(@PathVariable("id") Long id, Model model) {
-        Long total = articleManager.count(id).longValue();
+        Long total = articleManager.count(id);
         int limit = 6;
         Long pageCount = 1L;
         if (total % limit == 0) {
@@ -230,7 +255,22 @@ public class ArticleController {
     @RequestMapping(value = "listInfo", method = RequestMethod.GET)
     public String listInfo(Model model) {
         // TODO
-        model.addAttribute("articles", articleManager.getInfo());
+        Long total = Long.valueOf(articleManager.getInfo().size());
+        int limit = 10;
+        Long pageCount = 1L;
+        if (total % limit == 0) {
+            pageCount = total / limit;
+        } else {
+            pageCount = total / limit + 1;
+        }
+        model.addAttribute("articles", articleManager.getInfo());//文章列表
+        model.addAttribute("categories", categoryManager.getNavCategory());//导航菜单
+        model.addAttribute("category", categoryManager.get(18L));//获取分类信息
+        model.addAttribute("archives", archiveManager.getTopTen());//边栏归档日志
+        model.addAttribute("newArticles", articleManager.findTopTen());//边栏最新文章
+        model.addAttribute("total", total);
+        model.addAttribute("pageCount", pageCount);
+        model.addAttribute("links", linkManager.getAllLink());//页脚友情链接
         return "article/list";
     }
 

@@ -44,6 +44,7 @@
         FROM cms_link
         WHERE category=#{category} AND STATUS=1
         ORDER BY id DESC
+        LIMIT 10
 	</select>
 
     <!--

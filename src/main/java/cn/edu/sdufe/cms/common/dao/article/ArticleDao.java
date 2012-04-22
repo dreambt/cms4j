@@ -44,6 +44,14 @@ public class ArticleDao extends SqlSessionDaoSupport {
     }
 
     /**
+     * 获取多个分类下的文章
+     * @return
+     */
+    public List<Article> findTitleByCategoryId(Long[] ids) {
+        return getSqlSession().selectList("Article.getTitleByCategoryIds", ids);
+    }
+
+    /**
      * 获取分类id的文章列表
      *
      * @param categoryId
@@ -53,14 +61,6 @@ public class ArticleDao extends SqlSessionDaoSupport {
     @Cacheable(value = "article")
     public List<Article> findByCategoryId(Long categoryId, RowBounds rowBounds) {
         return getSqlSession().selectList("Article.getArticleByCategoryId", categoryId, rowBounds);
-    }
-
-    /**
-     * 获取多个分类下的文章
-     * @return
-     */
-    public List<Article> getTitleByCategoryIds(Long[] ids) {
-        return getSqlSession().selectList("Article.getTitleByCategoryIds", ids);
     }
 
     /**

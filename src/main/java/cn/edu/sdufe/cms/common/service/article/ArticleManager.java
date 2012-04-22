@@ -138,7 +138,7 @@ public class ArticleManager {
      */
     public List<Article> getInfo() {
         Long[] ids = {19L,20L,21L,22L};
-        return articleDao.getTitleByCategoryIds(ids);
+        return articleDao.findTitleByCategoryId(ids);
     }
 
     /**
@@ -147,7 +147,7 @@ public class ArticleManager {
      */
     public List<Article> getResult() {
         Long[] ids = {17L, 25L};
-        return articleDao.getTitleByCategoryIds(ids);
+        return articleDao.findTitleByCategoryId(ids);
     }
 
     /**

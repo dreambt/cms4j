@@ -2,6 +2,7 @@ package cn.edu.sdufe.cms.common.service.link;
 
 import cn.edu.sdufe.cms.common.dao.link.LinkDao;
 import cn.edu.sdufe.cms.common.entity.link.Link;
+import cn.edu.sdufe.cms.common.entity.link.LinkCategoryEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class LinkManager {
      *
      * @return
      */
-    public List<Link> getLinkByCategory(String category) {
+    public List<Link> getLinkByCategory(LinkCategoryEnum category) {
         return linkDao.getLinkByCategory(category);
     }
 

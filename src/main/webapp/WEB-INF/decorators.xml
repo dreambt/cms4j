@@ -26,7 +26,9 @@
         <pattern>/article/list/*</pattern>
         <pattern>/article/content/*</pattern>
         <pattern>/article/digest/*</pattern>
+        <pattern>/article/listInfo</pattern>
         <pattern>/archive/list*</pattern>
+        <pattern>/article/content*</pattern>
     </decorator>
 
     <decorator name="dashboard" page="dashboard/default.jsp">

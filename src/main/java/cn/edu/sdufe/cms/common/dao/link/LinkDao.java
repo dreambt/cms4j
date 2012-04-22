@@ -1,6 +1,7 @@
 package cn.edu.sdufe.cms.common.dao.link;
 
 import cn.edu.sdufe.cms.common.entity.link.Link;
+import cn.edu.sdufe.cms.common.entity.link.LinkCategoryEnum;
 import com.google.common.collect.Maps;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
@@ -43,7 +44,7 @@ public class LinkDao extends SqlSessionDaoSupport {
      * @return
      */
     @Cacheable(value = "link")
-    public List<Link> getLinkByCategory(String category) {
+    public List<Link> getLinkByCategory(LinkCategoryEnum category) {
         return getSqlSession().selectList("Link.getLinkByCategory", category);
     }
 
