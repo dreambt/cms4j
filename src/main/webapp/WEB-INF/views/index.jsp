@@ -117,12 +117,11 @@
                 <li>城市商业银行</li>
                 <li>地方金融管理部门</li>
                 <li>农村信用合作社</li>
-                <li>农村信用合作社</li>
-                <li>村镇银行</li>
+                <li>财税管理部门</li>
                 <li>小额贷款公司</li>
+                <li>村镇银行</li>
                 <li>证券公司</li>
                 <li>保险公司</li>
-                <li>财政税务管理部门</li>
             </ul>
         </div>
         <div class="container container_right">
