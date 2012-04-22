@@ -144,7 +144,7 @@
     <ul id="friLnk">
         <li class="friLnkT cufon"><strong>友情链接</strong></li>
         <c:forEach items="${links}" var="link" begin="0" step="1">
-            <li><a href="${link.url}">${fn:substring(link.title,0,13)}</a></li>
+            <li><a href="${link.url}" target="_blank">${fn:substring(link.title,0,13)}</a></li>
         </c:forEach>
     </ul>
 </body>
