@@ -44,7 +44,7 @@
     <beans profile="production">
         <context:property-placeholder ignore-resource-not-found="true"
                                       location="classpath*:/application.properties,
-          			  classpath*:/application.local.properties,file:/opt/CMS/application.server.properties"/>
+          			  file:d:/application.local.properties,file:/opt/CMS/application.server.properties"/>
 
         <!-- 数据源配置,使用应用内的DBCP数据库连接池 -->
         <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
@@ -72,7 +72,7 @@
     <beans profile="test">
         <context:property-placeholder ignore-resource-not-found="true"
                                       location="classpath*:/application.properties,
-          			  classpath*:/application.local.properties"/>
+          			  file:d:/application.local.properties"/>
 
         <!-- 非Pool的简单data source -->
         <bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
@@ -112,7 +112,7 @@
         <context:property-placeholder ignore-resource-not-found="true"
                                       location="classpath*:/application.properties,
           			  classpath*:/application.functional.properties,
-          			  classpath*:/application.functional-local.properties"/>
+          			  file:d:/application.functional-local.properties"/>
 
         <!-- 非Pool的简单data source -->
         <bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">

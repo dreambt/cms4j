@@ -5,7 +5,6 @@ import cn.edu.sdufe.cms.common.entity.link.LinkCategoryEnum;
 import com.google.common.collect.Maps;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -23,7 +22,6 @@ public class LinkDao extends SqlSessionDaoSupport {
     /**
      * 获取编号为id的连接
      */
-    @Cacheable(value = "link")
     public Link findOne(Long id) {
         return getSqlSession().selectOne("Link.getLink", id);
     }
@@ -33,7 +31,6 @@ public class LinkDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    @Cacheable(value = "link")
     public List<Link> findAll() {
         return getSqlSession().selectList("Link.getAllLink");
     }
@@ -43,7 +40,6 @@ public class LinkDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    @Cacheable(value = "link")
     public List<Link> getLinkByCategory(LinkCategoryEnum category) {
         return getSqlSession().selectList("Link.getLinkByCategory", category);
     }
@@ -85,7 +81,6 @@ public class LinkDao extends SqlSessionDaoSupport {
      * @param parameters
      * @return
      */
-    @Cacheable(value = "link")
     public List<Link> search(Map<String, Object> parameters) {
         RowBounds rowBounds = new RowBounds(0, 10);
         return getSqlSession().selectList("Link.searchLink", parameters, rowBounds);

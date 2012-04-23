@@ -28,8 +28,19 @@
             <result property="description" column="description"/>
             <result property="allowComment" column="allow_comment"/>
         </association>
-        <collection property="commentList" column="id" javaType="ArrayList" ofType="Comment" select="Comment.getCommentByArticleId" />
+        <collection property="commentList" javaType="Comment" columnPrefix="comm_">
+            <id property="id" column="id"/>
+            <result property="username" column="username"/>
+            <result property="message" column="message"/>
+            <result property="postIP" column="post_ip"/>
+            <result property="status" column="status"/>
+            <result property="lastModifiedDate" column="last_modified_date"/>
+            <result property="createdDate" column="created_date"/>
+            <result property="deleted" column="deleted"/>
+        </collection>
     </resultMap>
+
+    <sql id="articleColumns">A.id, A.user_id, A.subject, A.message, A.image_name, A.digest, A.keyword, A.top, A.rate, A.rate_times, A.views, A.status, A.allow_comment, A.created_date, A.last_modified_date, A.deleted</sql>
 
     <!-- 获取文章数量 -->
     <select id="getArticleCount" resultType="Long">
@@ -52,19 +63,17 @@
 
     <!-- 获取文章正文 -->
     <select id="getArticle" parameterType="Long" resultMap="articleDetailMap">
-        SELECT A.id, user_id, subject, message, image_name, digest, keyword, top, rate, rate_times, views, A.status,
-        A.allow_comment, A.created_date, A.last_modified_date, A.deleted, U.username as user_username,
-        C.id as cat_id, C.category_name as cat_category_name, C.description as cat_description, C.allow_comment as cat_allow_comment
+        SELECT <include refid="articleColumns"/>, U.username AS user_username, C.id AS cat_id, C.category_name AS cat_category_name, C.description AS cat_description, C.allow_comment AS cat_allow_comment, COMM.username AS comm_username, COMM.message AS comm_message
         FROM cms_article AS A
         LEFT OUTER JOIN cms_user AS U ON user_id = U.id
         LEFT OUTER JOIN cms_category AS C ON category_id = C.id
-        WHERE A.id=#{id}
+        LEFT OUTER JOIN cms_comment AS COMM ON A.id = COMM.article_id
+        WHERE A.id =#{id}
 	</select>
 
     <!-- 获取所有文章, 后台专用 -->
     <select id="getAllArticle" parameterType="map" resultMap="articleDetailMap">
-        SELECT A.id, user_id, subject, message, image_name, digest, keyword, top, rate, rate_times, views, A.status,
-        A.allow_comment, A.created_date, A.last_modified_date, A.deleted, U.username as user_username,
+        SELECT <include refid="articleColumns"/>, U.username as user_username,
         C.id as cat_id, C.category_name as cat_category_name, C.description as cat_description, C.allow_comment as cat_allow_comment
         FROM cms_article AS A
         LEFT OUTER JOIN cms_user AS U ON user_id = U.id
@@ -75,7 +84,7 @@
 
     <!-- 获取本月的所有文章 -->
     <select id="getMonthArticle" parameterType="Date" resultMap="articleDetailMap">
-        SELECT id, user_id, category_id, subject, rate, rate_times, views, top, STATUS , deleted, created_date, last_modified_date
+        SELECT <include refid="articleColumns"/>
         FROM cms_article
         WHERE deleted =0
         AND YEAR( created_date ) = YEAR( #{created_date} )
@@ -94,24 +103,20 @@
 
     <!-- 获取多个分类内的文章 -->
     <select id="getTitleByCategoryIds" resultMap="articleDetailMap">
-        SELECT A.id, user_id, subject, keyword, top, rate, rate_times, views, A.status,
-        A.allow_comment, A.created_date, A.last_modified_date, A.deleted, U.username as user_username
-        FROM cms_article AS A
-        LEFT OUTER JOIN cms_user AS U ON user_id = U.id
-        WHERE A.category_id in
+        SELECT id, subject, top, image_name, digest
+        FROM cms_article
+        WHERE category_id in
         <foreach item="item" collection="array" open="(" separator="," close=")" >
             #{item}
         </foreach>
-        AND A.deleted =0
-        AND A.STATUS =1
-        ORDER BY A.top DESC, A.id DESC
-        LIMIT 10
+        AND deleted =0
+        AND STATUS =1
+        ORDER BY top DESC, id DESC
     </select>
 
     <!-- 通过分类id获取文章 -->
     <select id="getTitleByCategoryId" parameterType="Long" resultMap="articleDetailMap">
-        SELECT A.id, user_id, subject, keyword, top, rate, rate_times, views, A.status,
-        A.allow_comment, A.created_date, A.last_modified_date, A.deleted
+        SELECT <include refid="articleColumns"/>
         FROM cms_article AS A
         WHERE A.deleted =0
         AND A.STATUS =1
@@ -121,22 +126,8 @@
 	</select>
 
     <!-- 通过分类id获取文章列表 -->
-    <select id="getArticleByCategoryId" parameterType="Long" resultMap="articleDetailMap">
-        SELECT A.id, user_id, subject, keyword, top, rate, rate_times, views, A.status,
-        A.allow_comment, A.created_date, A.last_modified_date, A.deleted, U.username as user_username
-        FROM cms_article AS A
-        LEFT OUTER JOIN cms_user AS U ON user_id = U.id
-        WHERE A.deleted =0
-        AND A.STATUS =1
-        AND A.category_id=#{categoryId}
-        ORDER BY A.top DESC, A.id desc
-        LIMIT 30
-	</select>
-
-    <!-- 通过分类id获取文章摘要 -->
-    <select id="getDigestByCategoryId" parameterType="Long" resultMap="articleDetailMap">
-        SELECT A.id, user_id, subject,image_name, digest, keyword, top, rate, rate_times, views, A.status,
-        A.allow_comment, A.created_date, A.last_modified_date, A.deleted, U.username as user_username
+    <select id="getListByCategoryId" parameterType="Long" resultMap="articleDetailMap">
+        SELECT <include refid="articleColumns"/>, U.username as user_username
         FROM cms_article AS A
         LEFT OUTER JOIN cms_user AS U ON user_id = U.id
         WHERE A.deleted =0
@@ -209,17 +200,23 @@
         WHERE id=#{id}
 	</update>
 
-    <!-- 更新文章bool字 -->
+    <!-- 更新文章bool字段 -->
     <update id="updateArticleBool" parameterType="map">
         UPDATE cms_article
         SET ${column}=1-${column}
         WHERE id=#{id}
     </update>
 
+    <!-- 更新文章views字段 -->
+    <update id="updateArticleViews" parameterType="Long">
+        UPDATE cms_article
+        SET views=1+views
+        WHERE id=#{id}
+    </update>
+
     <!-- 查询文章 -->
     <select id="searchArticle" parameterType="map" resultMap="articleDetailMap">
-        SELECT A.id, user_id, subject, digest, keyword, top, rate, rate_times, views, A.status,
-        A.allow_comment, A.created_date, A.last_modified_date, A.deleted, U.username as user_username,
+        SELECT <include refid="articleColumns"/>, U.username as user_username,
         C.id as cat_id, C.category_name as cat_category_name, C.description as cat_description, C.allow_comment as cat_allow_comment
         FROM cms_article AS A
         LEFT OUTER JOIN cms_user AS U ON user_id = U.id
@@ -249,6 +246,6 @@
             </if>
         </where>
         ORDER BY ${Sort} ${Direction}
-        LIMIT 75
+        LIMIT ${offset},${limit}
     </select>
 </mapper>

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -59,7 +58,7 @@ public class LinkController {
      */
     @RequestMapping(value = "save")
     public String save(Link link, RedirectAttributes redirectAttributes) {
-        if(linkManager.save(link) > 0) {
+        if (linkManager.save(link) > 0) {
             redirectAttributes.addFlashAttribute("info", "链接新建成功");
         } else {
             redirectAttributes.addFlashAttribute("error", "链接新建失败");
@@ -93,7 +92,7 @@ public class LinkController {
      */
     @RequestMapping(value = "delete/{id}")
     public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        if(linkManager.delete(id) > 0) {
+        if (linkManager.delete(id) > 0) {
             redirectAttributes.addFlashAttribute("info", "删除链接成功");
         } else {
             redirectAttributes.addFlashAttribute("error", "删除链接失败");

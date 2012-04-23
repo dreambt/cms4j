@@ -2,10 +2,7 @@ package cn.edu.sdufe.cms.common.dao.article;
 
 import cn.edu.sdufe.cms.common.entity.article.Article;
 import com.google.common.collect.Maps;
-import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -26,7 +23,6 @@ public class ArticleDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    @Cacheable(value = "topten")
     public List<Article> findTopTen() {
         return getSqlSession().selectList("Article.getTopTenArticle");
     }
@@ -35,16 +31,21 @@ public class ArticleDao extends SqlSessionDaoSupport {
      * 获取分类id的文章标题
      *
      * @param categoryId
-     * @param rowBounds
+     * @param offset
+     * @param limit
      * @return
      */
-    @Cacheable(value = "article_title")
-    public List<Article> findTitleByCategoryId(Long categoryId, RowBounds rowBounds) {
-        return getSqlSession().selectList("Article.getTitleByCategoryId", categoryId, rowBounds);
+    public List<Article> findTitleByCategoryId(Long categoryId, int offset, int limit) {
+        Map parameters = Maps.newHashMap();
+        parameters.put("categoryId", categoryId);
+        parameters.put("offset", offset);
+        parameters.put("limit", limit);
+        return getSqlSession().selectList("Article.getTitleByCategoryId", parameters);
     }
 
     /**
-     * 获取多个分类下的文章
+     * 获取分类ids的文章标题
+     *
      * @return
      */
     public List<Article> findTitleByCategoryId(Long[] ids) {
@@ -55,24 +56,16 @@ public class ArticleDao extends SqlSessionDaoSupport {
      * 获取分类id的文章列表
      *
      * @param categoryId
-     * @param rowBounds
+     * @param offset
+     * @param limit
      * @return
      */
-    @Cacheable(value = "article")
-    public List<Article> findByCategoryId(Long categoryId, RowBounds rowBounds) {
-        return getSqlSession().selectList("Article.getArticleByCategoryId", categoryId, rowBounds);
-    }
-
-    /**
-     * 获取分类id的文章摘要
-     *
-     * @param categoryId
-     * @param rowBounds
-     * @return
-     */
-    @Cacheable(value = "articleDigest")
-    public List<Article> findDigestByCategoryId(Long categoryId, RowBounds rowBounds) {
-        return getSqlSession().selectList("Article.getDigestByCategoryId", categoryId, rowBounds);
+    public List<Article> findByCategoryId(Long categoryId, int offset, int limit) {
+        Map parameters = Maps.newHashMap();
+        parameters.put("categoryId", categoryId);
+        parameters.put("offset", offset);
+        parameters.put("limit", limit);
+        return getSqlSession().selectList("Article.getListByCategoryId", parameters);
     }
 
     /**
@@ -81,7 +74,6 @@ public class ArticleDao extends SqlSessionDaoSupport {
      * @param id
      * @return
      */
-    @Cacheable(value = "article", key = "#id")
     public Article findOne(Long id) {
         return getSqlSession().selectOne("Article.getArticle", id);
     }
@@ -91,7 +83,6 @@ public class ArticleDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    @Cacheable(value = "article", key = "#id")
     public List<Article> findAll(int offset, int limit) {
         Map parameters = Maps.newHashMap();
         parameters.put("offset", offset);
@@ -104,7 +95,6 @@ public class ArticleDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    @Cacheable(value = "article")
     public List<Article> findByMonth(Date month) {
         return getSqlSession().selectList("Article.getMonthArticle", month);
     }
@@ -114,7 +104,6 @@ public class ArticleDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    @Cacheable(value = "article_all_num")
     public Long count() {
         return getSqlSession().selectOne("Article.getArticleCount");
     }
@@ -125,7 +114,6 @@ public class ArticleDao extends SqlSessionDaoSupport {
      * @param categoryId
      * @return
      */
-    @Cacheable(value = "article_num")
     public Long count(Long categoryId) {
         return getSqlSession().selectOne("Article.getArticleCountByCategoryId", categoryId);
     }
@@ -155,19 +143,17 @@ public class ArticleDao extends SqlSessionDaoSupport {
      * @param article
      * @return
      */
-    @CacheEvict(value = "article", key = "#article.id")
     public int update(Article article) {
         return getSqlSession().update("Article.updateArticle", article);
     }
 
     /**
-     * 更新文章
+     * 更新文章Bool字段
      *
      * @param id
      * @param column
      * @return
      */
-    @CacheEvict(value = "article", key = "#id")
     public int update(Long id, String column) {
         Map parameters = Maps.newHashMap();
         parameters.put("id", id);
@@ -176,14 +162,13 @@ public class ArticleDao extends SqlSessionDaoSupport {
     }
 
     /**
-     * 搜索文章
+     * 更新文章views字段
      *
-     * @param parameters
+     * @param id
      * @return
      */
-    @Cacheable(value = "article")
-    public List<Article> search(Map<String, Object> parameters) {
-        return getSqlSession().selectList("Article.searchArticle", parameters);
+    public int update(Long id) {
+        return getSqlSession().update("Article.updateArticleViews", id);
     }
 
     /**
@@ -192,10 +177,20 @@ public class ArticleDao extends SqlSessionDaoSupport {
      * @param parameters
      * @return
      */
-    @Cacheable(value = "article")
-    public List<Article> search(Map<String, Object> parameters, RowBounds rowBounds) {
-        return getSqlSession().selectList("Article.searchArticle", parameters, rowBounds);
+    public List<Article> search(Map<String, Object> parameters) {
+        return this.search(parameters, 0, 10);
     }
 
+    /**
+     * 搜索文章
+     *
+     * @param parameters
+     * @return
+     */
+    public List<Article> search(Map<String, Object> parameters, int offset, int limit) {
+        parameters.put("offset", offset);
+        parameters.put("limit", limit);
+        return getSqlSession().selectList("Article.searchArticle", parameters);
+    }
 
 }

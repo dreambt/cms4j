@@ -1,8 +1,6 @@
 package cn.edu.sdufe.cms.common.web.article;
 
-import cn.edu.sdufe.cms.common.entity.account.User;
 import cn.edu.sdufe.cms.common.entity.article.Article;
-import cn.edu.sdufe.cms.common.entity.article.Category;
 import cn.edu.sdufe.cms.common.service.account.UserManager;
 import cn.edu.sdufe.cms.common.service.article.ArchiveManager;
 import cn.edu.sdufe.cms.common.service.article.ArticleManager;
@@ -17,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springside.modules.utils.Encodes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;

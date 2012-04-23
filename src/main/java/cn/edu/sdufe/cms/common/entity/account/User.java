@@ -185,7 +185,7 @@ public class User extends PersistableEntity {
         return Collections3.extractToString(groupList, "name", ", ");
     }
 
-    public Long getGroupId(){
+    public Long getGroupId() {
         return groupList.get(0).getId();
     }
 

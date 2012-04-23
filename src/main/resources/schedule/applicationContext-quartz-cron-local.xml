@@ -29,7 +29,7 @@
 		<!-- 周一至五,朝九晚五工作时间内每小时执行一次
 		<property name="cronExpression" value="0 0/60 9-17 ? * MON-FRI" />
         <property name="cronExpression" value="0 0 0 L * ?" />--><!-- 每月最后一日 -->
-        <property name="cronExpression" value="0 */30 * ? * MON-FRI" />
+        <property name="cronExpression" value="0 */10 * ? * MON-FRI" />
     </bean>
 
 	<!-- Cron JobDetajil, 基于MethodInvokingJobDetailFactoryBean调用普通Spring Bean -->

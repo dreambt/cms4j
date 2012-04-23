@@ -6,7 +6,6 @@ import cn.edu.sdufe.cms.jms.NotifyMessageProducer;
 import cn.edu.sdufe.cms.utilities.RandomString;
 import cn.edu.sdufe.cms.utilities.thumb.ImageThumb;
 import com.google.common.collect.Maps;
-import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +63,7 @@ public class ImageManager {
      */
     public List<Image> getPagedImage(int offset, int limit) {
         Map<String, Object> parameters = Maps.newHashMap();
-        return imageDao.search(parameters, new RowBounds(offset, limit));
+        return imageDao.search(parameters, offset, limit);
     }
 
     /**

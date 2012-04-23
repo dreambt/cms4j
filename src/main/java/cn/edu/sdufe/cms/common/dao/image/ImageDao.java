@@ -2,9 +2,7 @@ package cn.edu.sdufe.cms.common.dao.image;
 
 import cn.edu.sdufe.cms.common.entity.image.Image;
 import com.google.common.collect.Maps;
-import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -22,7 +20,6 @@ public class ImageDao extends SqlSessionDaoSupport {
     /**
      * 获取编号为id的图片
      */
-    @Cacheable(value = "image")
     public Image findOne(Long id) {
         return getSqlSession().selectOne("Image.getImage", id);
     }
@@ -32,7 +29,6 @@ public class ImageDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    @Cacheable(value = "image")
     public List<Image> findAll() {
         return getSqlSession().selectList("Image.getAllImage");
     }
@@ -42,7 +38,6 @@ public class ImageDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    @Cacheable(value = "image_num")
     public Long count() {
         return getSqlSession().selectOne("Image.getImageCount");
     }
@@ -84,11 +79,8 @@ public class ImageDao extends SqlSessionDaoSupport {
      * @param parameters
      * @return
      */
-    @Cacheable(value = "image")
     public List<Image> search(Map<String, Object> parameters) {
-        parameters.put("Sort", "id");
-        parameters.put("Direction", "DESC");
-        return getSqlSession().selectList("Image.searchImage", parameters, new RowBounds(0, 12));
+        return this.search(parameters, 0, 10);
     }
 
     /**
@@ -97,10 +89,11 @@ public class ImageDao extends SqlSessionDaoSupport {
      * @param parameters
      * @return
      */
-    @Cacheable(value = "image")
-    public List<Image> search(Map<String, Object> parameters, RowBounds rowBounds) {
+    public List<Image> search(Map<String, Object> parameters, int offset, int limit) {
+        parameters.put("offset", offset);
+        parameters.put("limit", limit);
         parameters.put("Sort", "id");
         parameters.put("Direction", "DESC");
-        return getSqlSession().selectList("Image.searchImage", parameters, rowBounds);
+        return getSqlSession().selectList("Image.searchImage", parameters);
     }
 }

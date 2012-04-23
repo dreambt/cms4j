@@ -18,6 +18,8 @@
         </association>
     </resultMap>
 
+    <sql id="commentColumns">id, article_id, username, message, post_ip, STATUS , last_modified_date, created_date, deleted</sql>
+
     <!--
         获取所有评论
     -->
@@ -34,7 +36,7 @@
          获取分类id的所有评论
      -->
     <select id="getCommentByArticleId" parameterType="Long" resultMap="commentDetailMap">
-		SELECT id, username, message, post_ip, STATUS , last_modified_date, created_date, deleted
+		SELECT <include refid="commentColumns"/>
 		FROM cms_comment
 		WHERE article_id =#{articleId}
 		AND STATUS =1
@@ -46,7 +48,7 @@
          编号为id的评论
      -->
     <select id="getComment" parameterType="Long" resultMap="commentDetailMap">
-        SELECT id, article_id, username, message, post_ip, STATUS , created_date, last_modified_date, deleted
+        SELECT <include refid="commentColumns"/>
         FROM cms_comment
         WHERE id =#{id}
         LIMIT 1
@@ -56,7 +58,7 @@
         获取最新10条评论
     -->
     <select id="getCommentRecent" resultType="ArrayList">
-        SELECT id, article_id, username, message, post_ip, STATUS , created_date, last_modified_date
+        SELECT <include refid="commentColumns"/>
         FROM cms_comment
         WHERE STATUS =1
         AND deleted =0
@@ -111,7 +113,7 @@
 
     <!-- 查询评论 -->
     <select id="searchComment" parameterType="map" resultType="Comment">
-        SELECT id, article_id, username, message, post_ip, STATUS , created_date, last_modified_date, deleted
+        SELECT <include refid="commentColumns"/>
         FROM cms_comment
         <where>
             deleted=0 and STATUS=1

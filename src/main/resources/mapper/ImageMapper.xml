@@ -13,6 +13,8 @@
         <result property="createdDate" column="created_date"/>
     </resultMap>
 
+    <sql id="imageColumns">id, title, image_url, description, show_index, created_date, last_modified_date</sql>
+
     <!--
         获取image数量
     -->
@@ -26,7 +28,7 @@
         获取image
     -->
     <select id="getImage" parameterType="Long" resultMap="imageDetailMap">
-        SELECT id, title, image_url, description, show_index, created_date, last_modified_date
+        SELECT <include refid="imageColumns"/>
         FROM cms_image
         WHERE id =#{id}
         ORDER BY id DESC
@@ -37,7 +39,7 @@
         获取image
     -->
     <select id="getAllImage" resultMap="imageDetailMap">
-        SELECT id, title, image_url, description, show_index, created_date, last_modified_date
+        SELECT <include refid="imageColumns"/>
         FROM cms_image
         ORDER BY id DESC
         LIMIT 30
@@ -93,7 +95,7 @@
          查询图片
      -->
     <select id="searchImage" parameterType="map" resultMap="imageDetailMap">
-        SELECT id, title, image_url, description, show_index, created_date, last_modified_date
+        SELECT <include refid="imageColumns"/>
         FROM cms_image
         <where>
             <if test="title != null and title != ''">

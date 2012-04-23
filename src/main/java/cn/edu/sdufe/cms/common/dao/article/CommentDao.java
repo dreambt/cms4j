@@ -3,7 +3,6 @@ package cn.edu.sdufe.cms.common.dao.article;
 import cn.edu.sdufe.cms.common.entity.article.Comment;
 import com.google.common.collect.Maps;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -24,7 +23,6 @@ public class CommentDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    @Cacheable(value = "comment")
     public Comment findOne(Long id) {
         return getSqlSession().selectOne("Comment.getComment", id);
     }
@@ -34,7 +32,6 @@ public class CommentDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    @Cacheable(value = "comment")
     public List<Comment> getRecentComment() {
         return getSqlSession().selectList("Comment.getCommentRecent");
     }
@@ -44,7 +41,6 @@ public class CommentDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    @Cacheable(value = "comment")
     public List<Comment> findAll() {
         return getSqlSession().selectList("Comment.getAll");
     }
@@ -54,7 +50,6 @@ public class CommentDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    @Cacheable(value = "comment_all_num")
     public Long count() {
         return (Long) getSqlSession().selectOne("Comment.getCount");
     }
@@ -65,7 +60,6 @@ public class CommentDao extends SqlSessionDaoSupport {
      * @param articleId
      * @return
      */
-    @Cacheable(value = "comment_num")
     public Long count(Long articleId) {
         return (Long) getSqlSession().selectOne("Comment.getCountByArticleId", articleId);
     }
@@ -119,7 +113,6 @@ public class CommentDao extends SqlSessionDaoSupport {
      * @param parameters
      * @return
      */
-    @Cacheable(value = "comment")
     public List<Comment> search(Map<String, Object> parameters) {
         return getSqlSession().selectOne("Comment.searchComment", parameters);
     }

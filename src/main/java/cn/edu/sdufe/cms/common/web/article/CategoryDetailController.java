@@ -35,7 +35,7 @@ public class CategoryDetailController {
      */
     @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
     public String edit(@Valid @ModelAttribute("category") Category category, Model model) {
-        if(null == category) {
+        if (null == category) {
             model.addAttribute("error", "该分类不存在，请刷新重试.");
             return "dashboard/category/listAll";
         }
@@ -54,11 +54,11 @@ public class CategoryDetailController {
      */
     @RequestMapping(value = "save/{id}")
     public String save(@Valid @ModelAttribute("category") Category category, RedirectAttributes redirectAttributes) {
-        if(null == category) {
+        if (null == category) {
             redirectAttributes.addFlashAttribute("error", "该菜单不存在，请刷新重试.");
             return "redirect:/category/listAll";
         }
-        if (categoryManager.update(category)>0) {
+        if (categoryManager.update(category) > 0) {
             redirectAttributes.addFlashAttribute("info", "修改菜单成功.");
         } else {
             redirectAttributes.addFlashAttribute("error", "修改菜单失败.");

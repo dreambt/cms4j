@@ -4,7 +4,6 @@ package cn.edu.sdufe.cms.common.dao.article;
 import cn.edu.sdufe.cms.common.entity.article.Archive;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -23,7 +22,6 @@ public class ArchiveDao extends SqlSessionDaoSupport {
     /**
      * 获取编号为id的archive
      */
-    @Cacheable(value = "archive")
     public Archive findOne(Long id) {
         return getSqlSession().selectOne("Archive.getArchive", id);
     }
@@ -31,7 +29,6 @@ public class ArchiveDao extends SqlSessionDaoSupport {
     /**
      * 获取标题为title的archive
      */
-    @Cacheable(value = "archive")
     public Archive findByTitle(String title) {
         return getSqlSession().selectOne("Archive.getArchiveByTitle", title);
     }
@@ -41,7 +38,6 @@ public class ArchiveDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    @Cacheable(value = "archiveAll")
     public List<Archive> findAll() {
         return getSqlSession().selectList("Archive.getAllArchive");
     }
@@ -51,7 +47,6 @@ public class ArchiveDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    @Cacheable(value = "archiveTopTen")
     public List<Archive> getTopTen() {
         return getSqlSession().selectList("Archive.getTopTenArchive");
     }

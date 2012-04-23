@@ -6,10 +6,8 @@ import cn.edu.sdufe.cms.common.entity.article.Article;
 import cn.edu.sdufe.cms.security.ShiroDbRealm;
 import cn.edu.sdufe.cms.utilities.analyzer.ArticleKeyword;
 import cn.edu.sdufe.cms.utilities.thumb.ImageThumb;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.Validate;
-import org.apache.ibatis.session.RowBounds;
 import org.apache.shiro.SecurityUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -71,10 +69,7 @@ public class ArticleManager {
         // 判断文章是否为空
         if (null != article) {
             // 记录文章访问次数
-            Article article1 = new Article();
-            article1.setId(article.getId());
-            article1.setViews(article.getViews() + 1);
-            articleDao.update(article1);
+            articleDao.update(id);
 
             article.setMessage(Encodes.unescapeHtml(article.getMessage()));
         }
@@ -129,20 +124,22 @@ public class ArticleManager {
      * @return
      */
     public List<Article> getTitleByCategoryId(Long categoryId, int offset, int limit) {
-        return articleDao.findTitleByCategoryId(categoryId, new RowBounds(offset, limit));
+        return articleDao.findTitleByCategoryId(categoryId, offset, limit);
     }
 
     /**
      * 获得社会资讯下的最新文章
+     *
      * @return
      */
     public List<Article> getInfo() {
-        Long[] ids = {19L,20L,21L,22L};
+        Long[] ids = {19L, 20L, 21L, 22L};
         return articleDao.findTitleByCategoryId(ids);
     }
 
     /**
      * 获得成果显示
+     *
      * @return
      */
     public List<Article> getResult() {
@@ -157,7 +154,7 @@ public class ArticleManager {
      * @return
      */
     public List<Article> getListByCategoryId(Long categoryId, int offset, int limit) {
-        return articleDao.findByCategoryId(categoryId, new RowBounds(offset, limit));
+        return articleDao.findByCategoryId(categoryId, offset, limit);
     }
 
     /**
@@ -167,7 +164,8 @@ public class ArticleManager {
      * @return
      */
     public List<Article> getDigestByCategoryId(Long categoryId, int offset, int limit) {
-        return articleDao.findDigestByCategoryId(categoryId, new RowBounds(offset, limit));
+
+        return articleDao.findByCategoryId(categoryId, offset, limit);
     }
 
     /**

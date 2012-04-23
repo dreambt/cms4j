@@ -2,7 +2,6 @@ package cn.edu.sdufe.cms.common.dao.article;
 
 import cn.edu.sdufe.cms.common.entity.article.Category;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -24,20 +23,8 @@ public class CategoryDao extends SqlSessionDaoSupport {
      * @param id
      * @return
      */
-    @Cacheable(value = "category")
     public Category findOne(Long id) {
         return (Category) getSqlSession().selectOne("Category.getCategory", id);
-    }
-
-    /**
-     * 通过名称获得分类
-     * @param name
-     * @return
-     */
-    @Deprecated
-    @Cacheable(value = "categroyByName")
-    public Category getCategoryByName(String name) {
-        return (Category) getSqlSession().selectOne("Category.getCategoryByName", name);
     }
 
     /**
@@ -45,7 +32,6 @@ public class CategoryDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    @Cacheable(value = "allowPublishCategory")
     public List<Category> getAllowPublishCategory() {
         return getSqlSession().selectList("Category.getAllowPublishCategory");
     }
@@ -56,7 +42,6 @@ public class CategoryDao extends SqlSessionDaoSupport {
      * @param id
      * @return
      */
-    @Cacheable(value = "subCategory")
     public List<Category> getSubCategory(Long id) {
         return getSqlSession().selectList("Category.getSubCategory", id);
     }
@@ -66,7 +51,6 @@ public class CategoryDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    @Cacheable(value = "navCategory")
     public List<Category> getNavCategory() {
         return getSqlSession().selectList("Category.getNavCategory");
     }
