@@ -3,7 +3,6 @@ package cn.edu.sdufe.cms.common.dao.link;
 import cn.edu.sdufe.cms.common.entity.link.Link;
 import cn.edu.sdufe.cms.common.entity.link.LinkCategoryEnum;
 import com.google.common.collect.Maps;
-import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Component;
 
@@ -82,7 +81,18 @@ public class LinkDao extends SqlSessionDaoSupport {
      * @return
      */
     public List<Link> search(Map<String, Object> parameters) {
-        RowBounds rowBounds = new RowBounds(0, 10);
-        return getSqlSession().selectList("Link.searchLink", parameters, rowBounds);
+        return this.search(parameters, 0, 10);
+    }
+
+    /**
+     * 搜索图片
+     *
+     * @param parameters
+     * @return
+     */
+    public List<Link> search(Map<String, Object> parameters, int offset, int limit) {
+        parameters.put("offset", offset);
+        parameters.put("limit", limit);
+        return getSqlSession().selectList("Link.searchLink", parameters);
     }
 }

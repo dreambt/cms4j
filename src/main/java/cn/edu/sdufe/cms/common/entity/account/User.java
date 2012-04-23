@@ -13,8 +13,6 @@ import java.util.List;
 
 /**
  * 用户Entity
- * 使用JPA annotation定义ORM关系.
- * 使用Hibernate annotation定义JPA未覆盖的部分.
  * <p/>
  * User: baitao.jibt (dreambt@gmail.com)
  * Date: 12-3-20

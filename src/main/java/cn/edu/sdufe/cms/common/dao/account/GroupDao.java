@@ -24,21 +24,8 @@ public class GroupDao extends SqlSessionDaoSupport {
      * @param groupId
      * @return
      */
-    @Cacheable(value = "group")
     public Group getGroup(Long groupId) {
         return getSqlSession().selectOne("ACCOUNT.getGroup", groupId);
-    }
-
-    /**
-     * 获取用户id所在的用户组
-     *
-     * @param id
-     * @return
-     */
-    @Deprecated
-    @Cacheable(value = "user_group")
-    public List<Group> getGroupByUserId(Long id) {
-        return getSqlSession().selectList("ACCOUNT.getGroupByUserId", id);
     }
 
     /**
@@ -46,7 +33,6 @@ public class GroupDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    @Cacheable(value = "all_group")
     public List<Group> getAllGroup() {
         return getSqlSession().selectList("ACCOUNT.getAllGroup");
     }
@@ -56,7 +42,6 @@ public class GroupDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    @Cacheable(value = "group_num")
     public Long count() {
         return getSqlSession().selectOne("ACCOUNT.getGroupCount");
     }

@@ -3,8 +3,6 @@ package cn.edu.sdufe.cms.common.dao.account;
 import cn.edu.sdufe.cms.common.entity.account.User;
 import com.google.common.collect.Maps;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -25,7 +23,6 @@ public class UserDao extends SqlSessionDaoSupport {
      * @param id
      * @return
      */
-    @Cacheable(value = "userCache")
     public User findOne(Long id) {
         return getSqlSession().selectOne("ACCOUNT.getUser", id);
     }
@@ -36,7 +33,6 @@ public class UserDao extends SqlSessionDaoSupport {
      * @param email
      * @return
      */
-    @Cacheable(value = "userCache")
     public User findByEmail(String email) {
         return getSqlSession().selectOne("ACCOUNT.getUserByEmail", email);
     }
@@ -46,7 +42,6 @@ public class UserDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    @Cacheable(value = "usersCache")
     public List<User> findAll() {
         return getSqlSession().selectList("ACCOUNT.getAllUser");
     }
@@ -56,7 +51,6 @@ public class UserDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    @Cacheable(value = "userNumCache")
     public Long count() {
         return getSqlSession().selectOne("ACCOUNT.getUserCount");
     }
@@ -86,7 +80,6 @@ public class UserDao extends SqlSessionDaoSupport {
      * @param user
      * @return
      */
-    @CacheEvict(value = "user", key = "#user.id")
     public int update(User user) {
         return getSqlSession().update("ACCOUNT.updateUser", user);
     }
@@ -98,7 +91,6 @@ public class UserDao extends SqlSessionDaoSupport {
      * @param column
      * @return
      */
-    @CacheEvict(value = "user", key = "#id")
     public int update(Long id, String column) {
         Map parameters = Maps.newHashMap();
         parameters.put("id", id);
@@ -112,7 +104,6 @@ public class UserDao extends SqlSessionDaoSupport {
      * @param parameters
      * @return
      */
-    @Cacheable(value = "usersCache")
     public List<User> search(Map<String, Object> parameters) {
         return getSqlSession().selectList("ACCOUNT.searchUser", parameters);
     }
