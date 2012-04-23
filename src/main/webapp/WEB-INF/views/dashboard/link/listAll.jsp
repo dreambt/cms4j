@@ -46,6 +46,7 @@
                     <th>选择</th>
                     <th>名称</th>
                     <th>URL</th>
+                    <th>类别</th>
                     <th>创建时间</th>
                     <th>最后修改</th>
                     <th>审核状态</th>
@@ -58,6 +59,7 @@
                         <td><input type="checkbox" name="isSelected" value="${link.id}"></td>
                         <td><a href="${link.url}" target="_blank">${link.title}</a></td>
                         <td><a href="${link.url}" target="_blank" >${link.url}</a></td>
+                        <td><a href="${link}" target="_blank" >${link}</a></td>
                         <td><fmt:formatDate value="${link.createdDate}" type="both"></fmt:formatDate></td>
                         <td><fmt:formatDate value="${link.lastModifiedDate}" type="both"></fmt:formatDate></td>
                         <td><a href="${ctx}/link/audit/${link.id}"><c:choose><c:when test="${link.status}"><span class="green_text">已审核</span></c:when><c:otherwise><span class="red_text">未审核</span></c:otherwise></c:choose></a></td>
