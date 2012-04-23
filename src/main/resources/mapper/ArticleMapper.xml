@@ -111,9 +111,8 @@
     <!-- 通过分类id获取文章 -->
     <select id="getTitleByCategoryId" parameterType="Long" resultMap="articleDetailMap">
         SELECT A.id, user_id, subject, keyword, top, rate, rate_times, views, A.status,
-        A.allow_comment, A.created_date, A.last_modified_date, A.deleted, U.username as user_username
+        A.allow_comment, A.created_date, A.last_modified_date, A.deleted
         FROM cms_article AS A
-        LEFT OUTER JOIN cms_user AS U ON user_id = U.id
         WHERE A.deleted =0
         AND A.STATUS =1
         AND A.category_id=#{categoryId}
