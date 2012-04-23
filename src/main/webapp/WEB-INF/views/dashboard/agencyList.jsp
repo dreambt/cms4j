@@ -98,13 +98,7 @@
                 }
             }
         });
-        $('#deleteAll').click(function () {
-            if (confirm("确定批量删除吗？")) {
-                $("#imageList").attr("action", "${ctx}/gallery/batchDelete").submit();
-            } else {
-                return false;
-            }
-        });
+
         $('.delete').click(function(){
             if(confirm('确定删除？')){
                 return true;
