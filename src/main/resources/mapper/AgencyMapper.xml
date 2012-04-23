@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Agency">
+    <resultMap id="agencyDetailMap" type="Agency">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="categoryId" column="category_id"/>
+        <result property="imageUrl" column="image_url"/>
+        <result property="introduction" column="introduction"/>
+        <result property="rate" column="rate" />
+        <result property="deleted" column="deleted" />
+        <result property="createdDate" column="created_date"/>
+        <result property="lastModifiedDate" column="last_modified_date"/>
+    </resultMap>
+
+    <sql id="agencyColumns">id, title, category_id, image_url, introduction, rate, deleted , created_date, last_modified_date</sql>
+
+    <!--
+        根据编号获取组织机构
+    -->
+    <select id="getAgency" parameterType="Long" resultMap="agencyDetailMap">
+        SELECT <include refid="agencyColumns"/>
+        FROM cms_agency
+        WHERE id=#{id} and deleted=0
+        ORDER BY ID DESC
+        LIMIT 1
+    </select>
+
+    <!--
+        获得所有的组织机构
+    -->
+    <select id="getAllAgency" resultMap="agencyDetailMap">
+        SELECT <include refid="agencyColumns"/>
+        FROM cms_agency
+        WHERE deleted=0
+        ORDER BY ID DESC
+        LIMIT 30
+    </select>
+
+</mapper>

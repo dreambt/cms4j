@@ -16,5 +16,7 @@
         <typeAlias alias="Archive" type="cn.edu.sdufe.cms.common.entity.article.Archive"/>
         <typeAlias alias="Image" type="cn.edu.sdufe.cms.common.entity.image.Image"/>
         <typeAlias alias="Link" type="cn.edu.sdufe.cms.common.entity.link.Link"/>
+        <typeAlias alias="Agency" type="cn.edu.sdufe.cms.common.entity.agency.Agency"/>
+        <typeAlias alias="Teacher" type="cn.edu.sdufe.cms.common.entity.agency.Teacher"/>
     </typeAliases>
 </configuration>

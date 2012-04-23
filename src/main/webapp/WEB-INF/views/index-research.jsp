@@ -16,17 +16,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>金融风险管理研究所</title>
+    <title>${agency.title}</title>
 </head>
 <body>
-<img id="banner" src="${ctx}/static/images/banner.png"/>
+<img id="banner" src="${ctx}/static/images/${agency.imageUrl}"/>
 <div id="index_left">
     <div id="left_l">
         <div class="container container_l">
             <p class="title_index title_l">
                 <strong>发展定位</strong>
             </p>
-            <p class="researchDesc">2008年金融危机以来，全球金融市场大幅波动频繁发生，给世界经济和金融市场的健康发展造成了巨大的破坏，对金融风险进行严格管控成为各国领导人、各行各业、特别是金融行业的共识。金融风险管理研究所隶属于山东省金融信息工程技术研究中心，依托山东财经大学的学科和科研优势，致力于金融风险的识别、度量和控制的理论与应用的研究。研究所致力于学以致用，充分利用自身在产学研合作方面的独特优势，连接企业与高校，促进科技成果的研究、转化与应用。</p>
+            <p class="researchDesc">${fn:substring(agency.introduction,0,215)}</p>
         </div>
     </div>
     <!---left_l end----->

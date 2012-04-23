@@ -1,6 +1,7 @@
 package cn.edu.sdufe.cms.common.web;
 
 import cn.edu.sdufe.cms.common.entity.link.LinkCategoryEnum;
+import cn.edu.sdufe.cms.common.service.agency.AgencyManager;
 import cn.edu.sdufe.cms.common.service.article.ArticleManager;
 import cn.edu.sdufe.cms.common.service.article.CategoryManager;
 import cn.edu.sdufe.cms.common.service.image.ImageManager;
@@ -26,6 +27,7 @@ public class GeneralController {
     private LinkManager linkManager;
     private ImageManager imageManager;
     private ArticleManager articleManager;
+    private AgencyManager agencyManager;
 
     /**
      * 首页显示菜单，静态+动态
@@ -41,10 +43,10 @@ public class GeneralController {
         model.addAttribute("news2", articleManager.getTitleByCategoryId(4L, 0, 5));
         model.addAttribute("infos", articleManager.getInfo());
         model.addAttribute("results", articleManager.getResult());
-        //model.addAttribute("serviceObjects", linkManager.getLinkByCategory("SERVICEOBJECT"));
         model.addAttribute("companies", linkManager.getLinkByCategory(LinkCategoryEnum.COMPANY));
         model.addAttribute("links", linkManager.getLinkByCategory(LinkCategoryEnum.LINK));
         model.addAttribute("posts", articleManager.getTitleByCategoryId(1L, 0, 6));
+        model.addAttribute("agencies", agencyManager.getAllAgency());
         return "index" + str;
     }
 
@@ -127,5 +129,10 @@ public class GeneralController {
     @Autowired
     public void setArticleManager(@Qualifier("articleManager") ArticleManager articleManager) {
         this.articleManager = articleManager;
+    }
+
+    @Autowired
+    public void setAgencyManager(AgencyManager agencyManager) {
+        this.agencyManager = agencyManager;
     }
 }
