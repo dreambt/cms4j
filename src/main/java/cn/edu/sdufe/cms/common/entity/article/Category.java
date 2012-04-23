@@ -1,9 +1,9 @@
 package cn.edu.sdufe.cms.common.entity.article;
 
 import cn.edu.sdufe.cms.common.entity.PersistableEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.springside.modules.utils.Collections3;
 
 import java.util.List;

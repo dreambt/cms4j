@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springside.modules.test.data.H2Fixtures;
 import org.springside.modules.test.spring.SpringTxTestCase;
 
 /**
@@ -23,7 +22,7 @@ public class UserDaoTest extends SpringTxTestCase {
 
     @Before
     public void setUp() throws Exception {
-        //H2Fixtures.reloadAllTable(dataSource, "/data/sample-data.xml");
+        //Fixtures.reloadAllTable(dataSource, "/data/sample-data.xml");
     }
 
     @Test
