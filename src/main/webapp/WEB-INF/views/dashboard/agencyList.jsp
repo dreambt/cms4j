@@ -64,10 +64,10 @@
                 </thead>
                 <tbody>
                 <td><input type="checkbox" name="isSelected"  value=""></td>
-                <td><a href="#" rel="fancybox-thumb" class="fancy_box"><img src="#" width="80px" height="30px"/></a></td>
-                <td><a href="#"></a>风险管理组织架构</td>
+                <td><a href="${ctx}/static/images/banner.png" rel="fancybox-thumb" class="fancy_box"><img src="${ctx}/static/images/banner.png" width="80px" height="30px"/></a></td>
+                <td><a href="${ctx}/index-research">风险管理组织架构</a></td>
                 <td><a href="${ctx}/static/uploads/gallery/thumb-50x57/" class="opener" value="风险管理组织架构">点击查看</a> </td>
-                <td><a href="#"></a>ttt</td>
+                <td><a href="${ctx}/index-research">index-research</a></td>
                 <td>2012-04-23 16:31</td>
                 <td>2012-04-23 16:31</td>
                 <td><a href="#">【审核】</a><a href="#">【编辑】</a><a href="#" class="delete">【删除】</a></td>
