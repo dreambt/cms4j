@@ -59,6 +59,14 @@
                 </ul>
             </li>
         </shiro:hasPermission>
+
+            <li><a href="${ctx}/dashboard/agency" class="top_level"><img src="${ctx}/static/dashboard/images/icons/AddressBook.png"/>机构管理</a>
+                <ul class="drawer">
+                    <li><a href="${ctx}/dashboard/agency">添加机构</a></li>
+                    <li><a href="${ctx}/dashboard/agencyList">机构列表</a></li>
+                </ul>
+            </li>
+
         <shiro:hasPermission name="link:list">
         <li><a href="${ctx}/dashboard/fridendLink" class="top_level"><img src="${ctx}/static/dashboard/images/icons/AddressBook.png"/>友情链接管理</a>
             <ul class="drawer">
