@@ -233,7 +233,7 @@ DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 DROP TABLE IF EXISTS `cms_link`;
 
 CREATE TABLE IF NOT EXISTS `cms_link` (
-  `id` INT(8) NOT NULL AUTO_INCREMENT,
+  `id` MEDIUMINT(8) NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(20) NOT NULL,
   `url` VARCHAR(80) NOT NULL,
   `category` VARCHAR(20) NOT NULL,
@@ -244,18 +244,19 @@ CREATE TABLE IF NOT EXISTS `cms_link` (
 ENGINE = InnoDB
 DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 
+
 -- -----------------------------------------------------
 -- Table `cms_agency`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `cms_agency`;
 
 CREATE TABLE IF NOT EXISTS `cms_agency` (
-  `id` int(8) NOT NULL AUTO_INCREMENT,
+  `id` MEDIUMINT(8) NOT NULL AUTO_INCREMENT,
   `title` varchar(20) NOT NULL,
   `category_id` mediumint(8) NOT NULL,
   `image_url` varchar(50) NOT NULL,
   `introduction` mediumtext NOT NULL,
-  `rate` int(4) NOT NULL DEFAULT '0',
+  `rate` int(11) NOT NULL DEFAULT '0',
   `deleted` tinyint(1) NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `last_modified_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -263,17 +264,18 @@ CREATE TABLE IF NOT EXISTS `cms_agency` (
 ) ENGINE=InnoDB
 DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+
 -- -----------------------------------------------------
 -- Table `cms_teacher`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `cms_teacher`;
 
 CREATE TABLE IF NOT EXISTS `cms_teacher` (
-  `id` int(8) NOT NULL AUTO_INCREMENT,
+  `id` MEDIUMINT(8) NOT NULL AUTO_INCREMENT,
   `teacher_name` varchar(10) NOT NULL,
   `introduction` mediumtext NOT NULL,
-  `article_id` mediumint(8) NOT NULL,
-  `agency_id` int(8) NOT NULL,
+  `article_id` MEDIUMINT(8) NOT NULL,
+  `agency_id` MEDIUMINT(8) NOT NULL,
   `image_url` varchar(50) NOT NULL,
   `deleted` tinyint(1) NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
