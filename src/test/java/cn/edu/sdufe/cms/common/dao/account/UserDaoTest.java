@@ -3,9 +3,11 @@ package cn.edu.sdufe.cms.common.dao.account;
 import cn.edu.sdufe.cms.common.entity.account.User;
 import cn.edu.sdufe.cms.data.UserData;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springside.modules.test.data.Fixtures;
 import org.springside.modules.test.spring.SpringTxTestCase;
 
 /**
@@ -14,6 +16,7 @@ import org.springside.modules.test.spring.SpringTxTestCase;
  * Date: 12-3-21
  * Time: 下午7:01
  */
+@Ignore
 @ContextConfiguration(locations = {"/applicationContext.xml"})
 public class UserDaoTest extends SpringTxTestCase {
 
@@ -22,7 +25,7 @@ public class UserDaoTest extends SpringTxTestCase {
 
     @Before
     public void setUp() throws Exception {
-        //Fixtures.reloadAllTable(dataSource, "/data/sample-data.xml");
+        Fixtures.reloadData(dataSource, "/data/sample-data.xml");
     }
 
     @Test

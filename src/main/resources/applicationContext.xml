@@ -32,7 +32,7 @@
         <property name="dataSource" ref="quartzDataSource"/>
     </bean>
 
-    <!-- 使用annotation定义事务  -->
+    <!-- 使用annotation定义事务 -->
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
 
     <aop:aspectj-autoproxy proxy-target-class="true"/>
@@ -43,7 +43,7 @@
     <!-- production/local development环境 -->
     <beans profile="production">
         <context:property-placeholder ignore-resource-not-found="true"
-                                      location="classpath*:/application.properties,
+                                      location="classpath*:/application.properties,classpath*:/application.local.properties,
           			  file:d:/application.local.properties,file:/opt/CMS/application.server.properties"/>
 
         <!-- 数据源配置,使用应用内的DBCP数据库连接池 -->
@@ -72,7 +72,7 @@
     <beans profile="test">
         <context:property-placeholder ignore-resource-not-found="true"
                                       location="classpath*:/application.properties,
-          			  file:d:/application.local.properties"/>
+          			  classpath*:/application.test.properties" />
 
         <!-- 非Pool的简单data source -->
         <bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
@@ -92,12 +92,12 @@
 
         <!-- 初始化数据结构 -->
         <jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
-            <jdbc:script location="classpath:sql/mysql/schema.sql"/>
+            <jdbc:script location="classpath:sql/h2/schema.sql"/>
         </jdbc:initialize-database>
 
         <!-- 初始化数据结构 -->
         <jdbc:initialize-database data-source="quartzDataSource" ignore-failures="ALL">
-            <jdbc:script location="classpath:sql/mysql/quartz.sql"/>
+            <jdbc:script location="classpath:sql/h2/quartz.sql"/>
         </jdbc:initialize-database>
 
         <!-- 初始化默认数据
@@ -112,7 +112,7 @@
         <context:property-placeholder ignore-resource-not-found="true"
                                       location="classpath*:/application.properties,
           			  classpath*:/application.functional.properties,
-          			  file:d:/application.functional-local.properties"/>
+          			  classpath*:/application.functional-local.properties" />
 
         <!-- 非Pool的简单data source -->
         <bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
@@ -132,12 +132,12 @@
 
         <!-- 初始化数据结构 -->
         <jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
-            <jdbc:script location="classpath:sql/mysql/schema.sql"/>
+            <jdbc:script location="classpath:sql/h2/schema.sql"/>
         </jdbc:initialize-database>
 
         <!-- 初始化数据结构 -->
         <jdbc:initialize-database data-source="quartzDataSource" ignore-failures="ALL">
-            <jdbc:script location="classpath:sql/mysql/quartz.sql"/>
+            <jdbc:script location="classpath:sql/h2/quartz.sql"/>
         </jdbc:initialize-database>
     </beans>
 </beans>

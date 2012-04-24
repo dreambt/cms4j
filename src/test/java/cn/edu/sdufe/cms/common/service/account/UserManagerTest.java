@@ -5,6 +5,7 @@ import cn.edu.sdufe.cms.common.entity.account.User;
 import cn.edu.sdufe.cms.common.service.ServiceException;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -40,6 +41,7 @@ public class UserManagerTest {
         ShiroTestHelper.clearSubject();
     }
 
+    @Ignore
     @Test
     public void testSaveUser() throws Exception {
         User admin = new User();
