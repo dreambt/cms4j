@@ -39,4 +39,70 @@
         LIMIT 30
     </select>
 
+    <!--
+        保存组织机构
+    -->
+    <insert id="saveAgency" parameterType="Agency" userGeneratedKeys="true" keyPropoty="id">
+        INSERT INTO cms_agecny
+            (title, category_id, image_url, introduction, rate, deleted, created_date)
+        VALUES
+            (#{title}, #{category_id}, #{image_url}, #{introduction}, 0, 0, null)
+    </insert>
+
+    <!--
+        彻底删除组织机构
+    -->
+    <delete id="deleteAgency" parameterType="Long">
+        DELETE FROM cms_agency
+        WHERE id=#{id} AND deleted=1
+        ORDER BY id DESC
+        LIMIT 1
+    </delete>
+
+    <!--
+        批量彻底删除组织机构
+    -->
+    <delete id="batchDeleteAgency" parameterType="Long">
+        DELETE FROM cms_agency
+        WHERE deleted=1
+        LIMIT 500
+    </delete>
+
+    <!--
+        更新组织机构
+    -->
+    <update id="updateAgency" parameterType="Agency">
+        UPDATE cms_agency
+        <set>
+            <if test="title != null and title != ''">
+                title=#{title}
+            </if>
+            <if test="image_url != null and image_url != ''">
+                image_url=#{image_url}
+            </if>
+            <if test="introduction != null and introduction != ''">
+                introduction=#{introduction}
+            </if>
+        </set>
+        WHERE id=#{id} AND deleted=0
+    </update>
+
+    <!--
+        更新boolean字段
+    -->
+    <update id="updateAgencyBool" parameterType="Map">
+        UPDATE cms_agency
+        SET ${column}=1-${column}
+        WHERE id=#{id}
+    </update>
+
+    <!--
+        增加访问次数
+    -->
+    <update id="updateAgencyViews" parameterType="Long">
+        UPDATE cms_agency
+        SET rate=1+rate
+        WHERE id=#{id}
+    </update>
+
 </mapper>
