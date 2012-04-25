@@ -41,7 +41,7 @@
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
 
     <!-- production/local development环境 -->
-    <beans profile="production">
+    <beans profile="production,development">
         <context:property-placeholder ignore-resource-not-found="true"
                                       location="classpath*:/application.properties,classpath*:/application.local.properties,
           			  file:d:/application.local.properties,file:/opt/CMS/application.server.properties"/>
@@ -57,54 +57,34 @@
         </bean>
 
         <!-- quartz使用的数据源配置 -->
-        <bean id="quartzDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-            <property name="driverClassName" value="${quartz.jdbc.driver}"/>
-            <property name="url" value="${quartz.jdbc.url}"/>
-            <property name="username" value="${quartz.jdbc.username}"/>
-            <property name="password" value="${quartz.jdbc.password}"/>
-        </bean>
-
-        <!-- 数据源配置,使用应用服务器的数据库连接池 -->
-        <!--<jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/ExampleDB" />-->
-    </beans>
-
-    <!-- unit test环境 -->
-    <beans profile="test">
-        <context:property-placeholder ignore-resource-not-found="true"
-                                      location="classpath*:/application.properties,
-          			  classpath*:/application.test.properties" />
-
-        <!-- 非Pool的简单data source -->
-        <bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
-            <!-- Connection Info -->
-            <property name="driverClass" value="${jdbc.driver}"/>
-            <property name="url" value="${jdbc.url}"/>
-            <property name="username" value="${jdbc.username}"/>
-            <property name="password" value="${jdbc.password}"/>
-        </bean>
-
         <bean id="quartzDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
             <property name="driverClass" value="${quartz.jdbc.driver}"/>
             <property name="url" value="${quartz.jdbc.url}"/>
             <property name="username" value="${quartz.jdbc.username}"/>
             <property name="password" value="${quartz.jdbc.password}"/>
         </bean>
+    </beans>
 
-        <!-- 初始化数据结构 -->
-        <jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
+    <!-- unit test环境 -->
+    <beans profile="test">
+        <context:property-placeholder ignore-resource-not-found="true"
+                                      location="classpath*:/application.properties,
+          			  classpath*:/application.test.properties"/>
+
+        <!-- 嵌入式内存中数据库 -->
+        <jdbc:embedded-database id="dataSource" type="H2">
             <jdbc:script location="classpath:sql/h2/schema.sql"/>
-        </jdbc:initialize-database>
+        </jdbc:embedded-database>
 
-        <!-- 初始化数据结构 -->
-        <jdbc:initialize-database data-source="quartzDataSource" ignore-failures="ALL">
+        <jdbc:embedded-database id="quartzDataSource" type="H2">
             <jdbc:script location="classpath:sql/h2/quartz.sql"/>
-        </jdbc:initialize-database>
+        </jdbc:embedded-database>
 
-        <!-- 初始化默认数据
+        <!-- 初始化默认数据 -->
         <bean class="org.springside.modules.test.data.DefaultDataInitializer" lazy-init="false">
             <property name="dataSource" ref="dataSource"/>
-            <property name="defaultDataFile" value="/data/sample-data.xml" />
-        </bean>-->
+            <property name="defaultDataFile" value="/data/sample-data.xml"/>
+        </bean>
     </beans>
 
     <!-- functional test环境 -->
@@ -112,9 +92,9 @@
         <context:property-placeholder ignore-resource-not-found="true"
                                       location="classpath*:/application.properties,
           			  classpath*:/application.functional.properties,
-          			  classpath*:/application.functional-local.properties" />
+          			  classpath*:/application.functional-local.properties"/>
 
-        <!-- 非Pool的简单data source -->
+        <!-- 简单data source -->
         <bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
             <!-- Connection Info -->
             <property name="driverClass" value="${jdbc.driver}"/>
@@ -135,7 +115,6 @@
             <jdbc:script location="classpath:sql/h2/schema.sql"/>
         </jdbc:initialize-database>
 
-        <!-- 初始化数据结构 -->
         <jdbc:initialize-database data-source="quartzDataSource" ignore-failures="ALL">
             <jdbc:script location="classpath:sql/h2/quartz.sql"/>
         </jdbc:initialize-database>

@@ -17,7 +17,6 @@ import org.springside.modules.test.spring.SpringTxTestCase;
  * Date: 12-3-21
  * Time: 下午6:53
  */
-@Ignore
 @ContextConfiguration(locations = {"/applicationContext.xml"})
 public class CommentDaoTest extends SpringTxTestCase {
 

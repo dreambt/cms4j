@@ -1,228 +1,264 @@
--- -----------------------------------------------------
--- Table `cms_user`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `cms_user` ;
+--
+-- 数据库: `cms4j_dev`
+--
 
-CREATE  TABLE IF NOT EXISTS `cms_user` (
-  `id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `email` VARCHAR(40) NOT NULL ,
-  `username` VARCHAR(40) NOT NULL ,
-  `password` CHAR(40) NOT NULL ,
-  `salt` CHAR(16) NOT NULL ,
-  `status` TINYINT(1) NOT NULL DEFAULT 0 ,
-  `email_status` TINYINT(1) NOT NULL DEFAULT 0 ,
-  `avatar_status` TINYINT(1) NOT NULL DEFAULT 0 ,
-  `photourl` VARCHAR(20) NOT NULL,
-  `time_offset` CHAR(4) NOT NULL,
-  `lastip` INT(10) NOT NULL,
-  `last_time` TIMESTAMP NOT NULL DEFAULT 0 ,
-  `last_act_time` TIMESTAMP NOT NULL DEFAULT 0 ,
-  `last_modified_date` TIMESTAMP NOT NULL DEFAULT 0,
-  `created_date` TIMESTAMP NOT NULL DEFAULT 0,
-  `deleted` TINYINT(1) NOT NULL DEFAULT 0,
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `cms_agency`
+--
+
+DROP TABLE IF EXISTS `cms_agency`;
+CREATE TABLE IF NOT EXISTS `cms_agency` (
+  `id` mediumint(8) NOT NULL AUTO_INCREMENT,
+  `title` varchar(20) NOT NULL,
+  `category_id` mediumint(8) NOT NULL,
+  `image_url` varchar(50) NOT NULL,
+  `introduction` mediumtext NOT NULL,
+  `rate` int(11) NOT NULL,
+  `deleted` tinyint(1) NOT NULL,
+  `created_date` timestamp NOT NULL,
+  `last_modified_date` timestamp NOT NULL,
   PRIMARY KEY (`id`)
 );
 
--- -----------------------------------------------------
--- Table `cms_group`
--- -----------------------------------------------------
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `cms_archive`
+--
+
+DROP TABLE IF EXISTS `cms_archive`;
+CREATE TABLE IF NOT EXISTS `cms_archive` (
+  `id` mediumint(8) NOT NULL AUTO_INCREMENT,
+  `title` varchar(40) NOT NULL,
+  `article_count` tinyint(3) NOT NULL,
+  `last_modified_date` timestamp NOT NULL,
+  `created_date` timestamp NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `cms_archive_article`
+--
+
+DROP TABLE IF EXISTS `cms_archive_article`;
+CREATE TABLE IF NOT EXISTS `cms_archive_article` (
+  `archive_id` mediumint(8) NOT NULL,
+  `article_id` mediumint(8) NOT NULL,
+  PRIMARY KEY (`archive_id`,`article_id`)
+);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `cms_article`
+--
+
+DROP TABLE IF EXISTS `cms_article`;
+CREATE TABLE IF NOT EXISTS `cms_article` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` mediumint(8) NOT NULL,
+  `category_id` mediumint(8) NOT NULL,
+  `subject` varchar(80) NOT NULL,
+  `message` mediumtext NOT NULL,
+  `image_name` varchar(50) NOT NULL,
+  `digest` varchar(255) NOT NULL,
+  `keyword` varchar(255) NOT NULL,
+  `top` tinyint(1) NOT NULL,
+  `rate` tinyint(3) NOT NULL,
+  `rate_times` int(11) NOT NULL,
+  `views` int(11) NOT NULL,
+  `allow_comment` tinyint(1) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `last_modified_date` timestamp NOT NULL,
+  `created_date` timestamp NOT NULL,
+  `deleted` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `cms_category`
+--
+
+DROP TABLE IF EXISTS `cms_category`;
+CREATE TABLE IF NOT EXISTS `cms_category` (
+  `id` mediumint(8) NOT NULL AUTO_INCREMENT,
+  `father_category_id` mediumint(8) NOT NULL,
+  `category_name` varchar(255) NOT NULL,
+  `display_order` smallint(6) NOT NULL,
+  `show_type` varchar(20) NOT NULL,
+  `url` varchar(80) NOT NULL,
+  `description` text NOT NULL,
+  `allow_comment` tinyint(1) NOT NULL,
+  `allow_publish` tinyint(1) NOT NULL,
+  `show_nav` tinyint(1) NOT NULL,
+  `last_modified_date` timestamp NOT NULL,
+  `created_date` timestamp NOT NULL,
+  `deleted` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `cms_comment`
+--
+
+DROP TABLE IF EXISTS `cms_comment`;
+CREATE TABLE IF NOT EXISTS `cms_comment` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `article_id` mediumint(8) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `message` text NOT NULL,
+  `post_ip` int(10) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `last_modified_date` timestamp NOT NULL,
+  `created_date` timestamp NOT NULL,
+  `deleted` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `cms_group`
+--
+
 DROP TABLE IF EXISTS `cms_group`;
-
-create table `cms_group` (
-        id MEDIUMINT(8) UNSIGNED not null AUTO_INCREMENT,
-        group_name VARCHAR(40) NOT NULL ,
-        PRIMARY KEY (`id`)
-) ;
-
--- -----------------------------------------------------
--- Table `cms_user_group`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `cms_user_group`;
-
-create table `cms_user_group` (
-        user_id MEDIUMINT(8) UNSIGNED not null,
-        group_id MEDIUMINT(8) UNSIGNED not null,
-        foreign key(user_id) references cms_user(id),
-        foreign key(group_id) references cms_group(id)
-) ;
-
--- -----------------------------------------------------
--- Table `cms_group_permission`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `cms_group_permission`;
-
-create table `cms_group_permission` (
-        id MEDIUMINT(8) UNSIGNED not null AUTO_INCREMENT,
-        group_id MEDIUMINT(8) UNSIGNED not null,
-        permission varchar(20) not null,
-        PRIMARY KEY (`id`),
-        foreign key(group_id) references cms_group(id)
-) ;
-
--- -----------------------------------------------------
--- Table `cms_category`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `cms_category` ;
-
-CREATE  TABLE `cms_category` (
-  `id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `father_category_id` MEDIUMINT(8) NOT NULL DEFAULT 0 ,
-  `category_name` VARCHAR(255) NOT NULL ,
-  `allow_comment` TINYINT(1) NOT NULL DEFAULT 1 ,
-  `display_order` SMALLINT(6) NOT NULL DEFAULT 0 ,
-  `url` VARCHAR(255) NOT NULL DEFAULT 0 ,
-  `deleted` TINYINT(1) NOT NULL DEFAULT 0 ,
-  `description` VARCHAR(255) NOT NULL ,
-  `allow_publish` TINYINT(1) NOT NULL ,
-  `show_type` VARCHAR(20) NOT NULL,
-  `created_date` TIMESTAMP NOT NULL DEFAULT 0,
-  `modify_time` TIMESTAMP NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`),
-  foreign key(father_category_id) references cms_category(id)
-);
-
--- -----------------------------------------------------
--- Table `cms_article`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `cms_article` ;
-
-CREATE  TABLE IF NOT EXISTS `cms_article` (
-  `id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `author` VARCHAR(80) NOT NULL ,
-  `category_name` VARCHAR(80) NOT NULL ,
-  `subject` VARCHAR(80) NOT NULL ,
-  `message` TEXT NOT NULL ,
-  `digest` VARCHAR(255) NOT NULL ,
-  `keyword` VARCHAR(80) NOT NULL ,
-  `top` TINYINT(1) NOT NULL DEFAULT 0 ,
-  `status` TINYINT(1) NOT NULL DEFAULT 0 ,
-  `rate` SMALLINT(6) NOT NULL DEFAULT 0 ,
-  `rate_times` TINYINT(3) NOT NULL DEFAULT 0 ,
-  `deleted` TINYINT(1) NOT NULL DEFAULT 0 ,
-  `allow_comment` TINYINT(1) NOT NULL DEFAULT 0 ,
-  `views` TINYINT(3) NOT NULL DEFAULT 0 ,
-  `count` TINYINT(3) NOT NULL DEFAULT 0 ,
-  `created_date` TIMESTAMP NOT NULL DEFAULT 0 ,
-  `modify_time` TIMESTAMP NOT NULL DEFAULT 0 ,
+CREATE TABLE IF NOT EXISTS `cms_group` (
+  `id` mediumint(8) NOT NULL AUTO_INCREMENT,
+  `group_name` varchar(40) NOT NULL,
   PRIMARY KEY (`id`)
 );
 
--- -----------------------------------------------------
--- Table `cms_comment`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `cms_comment` ;
+-- --------------------------------------------------------
 
-CREATE  TABLE IF NOT EXISTS `cms_comment` (
-  `id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `article_id` MEDIUMINT(8) NOT NULL ,
-  `username` VARCHAR(50) NOT NULL ,
-  `message` VARCHAR(1000) NOT NULL ,
-  `post_ip` INT(10) NOT NULL ,
-  `status` TINYINT(1) NOT NULL DEFAULT 0 ,
-  `last_modified_date` TIMESTAMP NOT NULL DEFAULT 0,
-  `created_date` TIMESTAMP NOT NULL DEFAULT 0,
-  `deleted` TINYINT(1) NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`),
-  foreign key(article_id) references cms_article(id)
+--
+-- 表的结构 `cms_group_permission`
+--
+
+DROP TABLE IF EXISTS `cms_group_permission`;
+CREATE TABLE IF NOT EXISTS `cms_group_permission` (
+  `id` mediumint(8) NOT NULL AUTO_INCREMENT,
+  `group_id` mediumint(8) NOT NULL,
+  `permission` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
 );
 
--- -----------------------------------------------------
--- Table `cms_user_article`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `cms_user_article` ;
+-- --------------------------------------------------------
 
-CREATE  TABLE IF NOT EXISTS `cms_user_article` (
-  `user_id` MEDIUMINT(8) NOT NULL ,
-  `article_id` MEDIUMINT(8) NOT NULL ,
-  foreign key(user_id) references cms_user(id),
-  foreign key(article_id) references cms_article(id)
+--
+-- 表的结构 `cms_image`
+--
+
+DROP TABLE IF EXISTS `cms_image`;
+CREATE TABLE IF NOT EXISTS `cms_image` (
+  `id` mediumint(8) NOT NULL AUTO_INCREMENT,
+  `title` varchar(40) NOT NULL,
+  `image_url` varchar(80) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `show_index` tinyint(1) NOT NULL,
+  `last_modified_date` timestamp NOT NULL,
+  `created_date` timestamp NOT NULL,
+  PRIMARY KEY (`id`)
 );
 
--- -----------------------------------------------------
--- Table `cms_category_article`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `cms_category_article` ;
+-- --------------------------------------------------------
 
-CREATE  TABLE IF NOT EXISTS `cms_category_article` (
-  `category_id` MEDIUMINT(8) NOT NULL ,
-  `article_id` MEDIUMINT(8) NOT NULL ,
-  foreign key(category_id) references cms_category(id),
-  foreign key(article_id) references cms_article(id)
+--
+-- 表的结构 `cms_link`
+--
+
+DROP TABLE IF EXISTS `cms_link`;
+CREATE TABLE IF NOT EXISTS `cms_link` (
+  `id` mediumint(8) NOT NULL AUTO_INCREMENT,
+  `title` varchar(20) NOT NULL,
+  `url` varchar(80) NOT NULL,
+  `category` varchar(20) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `last_modified_date` timestamp NOT NULL,
+  `created_date` timestamp NOT NULL,
+  PRIMARY KEY (`id`)
 );
 
--- -----------------------------------------------------
--- Table `cms_manage_log`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `cms_manage_log` ;
+-- --------------------------------------------------------
 
-CREATE  TABLE IF NOT EXISTS `cms_manage_log` (
-  `id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `user_id` MEDIUMINT(8) NOT NULL ,
-  `action` VARCHAR(255) NOT NULL ,
-  `last_modified_date` TIMESTAMP NOT NULL DEFAULT 0,
-  `created_date` TIMESTAMP NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`),
-  foreign key(user_id) references cms_user(id)
+--
+-- 表的结构 `cms_manage_log`
+--
+
+DROP TABLE IF EXISTS `cms_manage_log`;
+CREATE TABLE IF NOT EXISTS `cms_manage_log` (
+  `id` mediumint(8) unsigned NOT NULL,
+  `user_id` mediumint(8) NOT NULL,
+  `action` tinyint(1) NOT NULL,
+  `last_modified_date` timestamp NOT NULL,
+  `created_date` timestamp NOT NULL,
+  PRIMARY KEY (`id`)
 );
 
--- -----------------------------------------------------
--- Table `cms_archive`
--- -----------------------------------------------------
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS cms_archive;
+--
+-- 表的结构 `cms_teacher`
+--
 
-CREATE TABLE IF NOT EXISTS cms_archive (
-id INT(10) NOT NULL AUTO_INCREMENT,
-title VARCHAR(10) NOT NULL,
-article_count INT(5) NOT NULL,
-last_modified_date TIMESTAMP NOT NULL,
-created_date TIMESTAMP NOT NULL,
-PRIMARY KEY (id)
+DROP TABLE IF EXISTS `cms_teacher`;
+CREATE TABLE IF NOT EXISTS `cms_teacher` (
+  `id` mediumint(8) NOT NULL AUTO_INCREMENT,
+  `teacher_name` varchar(20) NOT NULL,
+  `article_id` mediumint(8) NOT NULL,
+  `agency_id` mediumint(8) NOT NULL,
+  `introduction` mediumtext(255) NOT NULL,
+  `image_url` varchar(50) NOT NULL,
+  `deleted` tinyint(1) NOT NULL,
+  `created_date` timestamp NOT NULL,
+  `last_modified_date` timestamp NOT NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
 );
 
--- -----------------------------------------------------
--- Table `cms_archive_article`
--- -----------------------------------------------------
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS cms_archive_article;
+--
+-- 表的结构 `cms_user`
+--
 
-CREATE TABLE IF NOT EXISTS cms_archive_article (
-archive_id INT(10) NOT NULL,
-article_id INT(10) NOT NULL,
-FOREIGN KEY (archive_id) REFERENCES cms_archive(id),
-FOREIGN KEY (article_id) REFERENCES cms_article(id)
+DROP TABLE IF EXISTS `cms_user`;
+CREATE TABLE IF NOT EXISTS `cms_user` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `group_id` mediumint(8) unsigned NOT NULL,
+  `email` varchar(40) NOT NULL,
+  `username` varchar(40) NOT NULL,
+  `password` varchar(40) NOT NULL,
+  `salt` varchar(16) NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `email_status` tinyint(1) NOT NULL,
+  `avatar_status` tinyint(1) NOT NULL,
+  `photo_url` varchar(40) NOT NULL,
+  `time_offset` varchar(4) NOT NULL,
+  `last_ip` int(10) NOT NULL,
+  `last_time` datetime NOT NULL,
+  `last_act_time` datetime NOT NULL,
+  `last_modified_date` timestamp DEFAULT NULL,
+  `created_date` timestamp DEFAULT NULL,
+  `deleted` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
 );
 
--- -----------------------------------------------------
--- Table `cms_image`
--- -----------------------------------------------------
+-- --------------------------------------------------------
 
-DROP TABLE IF EXISTS cms_image;
+--
+-- 表的结构 `cms_user_group`
+--
 
-CREATE TABLE IF NOT EXISTS cms_image(
-id INT(10) NOT NULL AUTO_INCREMENT,
-title VARCHAR(50) NOT NULL,
-image_url VARCHAR(30) NOT NULL,
-description VARCHAR(1000),
-last_modified_date TIMESTAMP NOT NULL,
-created_date TIMESTAMP NOT NULL,
-deleted TINYINT(3) NOT NULL,
-PRIMARY KEY (`id`)
-);
-
-
--- -----------------------------------------------------
--- Table `cms_link`
--- -----------------------------------------------------
-
-DROP TABLE IF EXISTS cms_link;
-
-CREATE TABLE IF NOT EXISTS cms_link(
-id INT(10) NOT NULL AUTO_INCREMENT,
-title VARCHAR(50) NOT NULL,
-url VARCHAR(80) NOT NULL,
-status TINYINT(1),
-last_modified_date TIMESTAMP NOT NULL,
-created_date TIMESTAMP NOT NULL,
-PRIMARY KEY (`id`)
+DROP TABLE IF EXISTS `cms_user_group`;
+CREATE TABLE IF NOT EXISTS `cms_user_group` (
+  `user_id` mediumint(8) NOT NULL,
+  `group_id` mediumint(8) NOT NULL,
+  PRIMARY KEY (`user_id`,`group_id`)
 );

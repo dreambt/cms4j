@@ -23,9 +23,9 @@ public class ArticleData {
     public static Article getRandomArticle() {
         String subject = RandomData.randomName(ArticleSuffix);
         String message = RandomData.randomName(ArticleSuffix);
-        String auther = RandomData.randomName(ArticleSuffix);
 
         Article article = new Article();
+        article.setId(1L);
         article.setSubject(subject);
         article.setMessage(message);
         article.setDigest("");

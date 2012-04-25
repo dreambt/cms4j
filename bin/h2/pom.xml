@@ -4,7 +4,7 @@
 	<parent>
 		<artifactId>springside-parent</artifactId>
 		<groupId>org.springside</groupId>
-		<version>4.0.0.RC2</version>
+		<version>4.0.0.RC3</version>
 	</parent>
 	<groupId>org.springside</groupId>
 	<artifactId>h2-starts</artifactId>

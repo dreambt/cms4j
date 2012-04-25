@@ -2,6 +2,7 @@ package cn.edu.sdufe.cms.common.dao.account;
 
 import cn.edu.sdufe.cms.common.entity.account.User;
 import cn.edu.sdufe.cms.data.UserData;
+import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -16,7 +17,6 @@ import org.springside.modules.test.spring.SpringTxTestCase;
  * Date: 12-3-21
  * Time: 下午7:01
  */
-@Ignore
 @ContextConfiguration(locations = {"/applicationContext.xml"})
 public class UserDaoTest extends SpringTxTestCase {
 
@@ -32,9 +32,11 @@ public class UserDaoTest extends SpringTxTestCase {
     public void crudEntityWithUser() throws Exception {
         //新建并保存带权限组的用户
         User user = UserData.getRandomUserWithGroup();
-        userDao.update(user);
+        Assert.assertEquals(1, userDao.save(user));
+
+        Assert.assertEquals(1, userDao.update(user));
 
         // 获取
-
+        Assert.assertEquals(user.getEmail(), userDao.findOne(1L).getEmail());
     }
 }

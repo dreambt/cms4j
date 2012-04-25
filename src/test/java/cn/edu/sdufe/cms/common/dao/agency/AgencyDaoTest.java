@@ -1,6 +1,7 @@
 package cn.edu.sdufe.cms.common.dao.agency;
 
 import cn.edu.sdufe.cms.common.entity.agency.Agency;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springside.modules.test.data.Fixtures;
 import org.springside.modules.test.spring.SpringTxTestCase;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,29 +24,31 @@ import java.util.List;
 @ContextConfiguration(locations = {"classpath*:/applicationContext.xml"})
 public class AgencyDaoTest extends SpringTxTestCase {
 
+    @Autowired
     private AgencyDao agencyDao;
     private Agency agency1 = new Agency();
     private Agency agency2 = new Agency();
 
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
+        Fixtures.reloadData(dataSource, "/data/sample-data.xml");
+
         agency1.setTitle("a");
         agency1.setCategoryId(100);
         agency1.setImageUrl("a.jpg");
         agency1.setIntroduction("a");
-
     }
 
     @Test
     public void testGetAgency() {
         Agency agency = agencyDao.getAgency(1L);
-        System.out.println(agency.getTitle());
+        Assert.assertEquals("research", agency.getTitle());
     }
 
     @Test
     public void testGetAllAgency() {
         List<Agency> agencies = agencyDao.getAllAgency();
-        for(Agency agency : agencies) {
+        for (Agency agency : agencies) {
             System.out.println(agency.getTitle());
         }
     }
@@ -54,7 +57,7 @@ public class AgencyDaoTest extends SpringTxTestCase {
     @Rollback(value = false)
     public void testSave() {
         int result = agencyDao.save(agency1);
-        System.out.println(result);
+        Assert.assertEquals(1, result);
     }
 
     @Test
@@ -72,10 +75,5 @@ public class AgencyDaoTest extends SpringTxTestCase {
         agency2.setTitle("b");
         int result = agencyDao.updateAgency(agency2);
         System.out.println(result);
-    }
-
-    @Autowired
-    public void setAgencyDao(AgencyDao agencyDao) {
-        this.agencyDao = agencyDao;
     }
 }
