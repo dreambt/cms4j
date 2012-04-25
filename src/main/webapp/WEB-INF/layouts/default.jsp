@@ -21,10 +21,10 @@
     <!-- ////////////////////////////////// -->
     <!-- //      Start Stylesheets       // -->
     <!-- ////////////////////////////////// -->
-    <link href="${ctx}/static/css/style.min.css" rel="stylesheet" type="text/css" />
+    <link href="${ctx}/static/css/style.css" rel="stylesheet" type="text/css" />
     <link href="${ctx}/static/css/inner.min.css" rel="stylesheet" type="text/css" />
     <link href="${ctx}/static/css/superfish.min.css" rel="stylesheet" type="text/css"  />
-    <link href="${ctx}/static/CMS.min.css" type="text/css" rel="stylesheet" />
+    <link href="${ctx}/static/CMS.css" type="text/css" rel="stylesheet" />
     <!--[if IE 6]><link href="${ctx}/static/css/ie6.min.css" rel="stylesheet" type="text/css" /><![endif]-->
 
     <!-- ////////////////////////////////// -->

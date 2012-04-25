@@ -31,8 +31,8 @@
     </div>
     <!---left_l end----->
     <div id="left_r">
-        <fieldset class="content container_r">
-            <legend><a href="#"><strong>咨询服务</strong></a></legend>
+        <div class="container container_r">
+            <p class="title_index title_m"><a href="#"><strong>咨询服务</strong></a></p>
             <ul class="content twoRow">
                 <li><a href="">风险管理组织架构</a></li>
                 <li><a href="">风险管理组织架构</a></li>
@@ -43,15 +43,15 @@
                 <li><a href="">全面风险管理规划</a></li>
                 <li><a href="">金融风险监控体系</a></li>
             </ul>
-        </fieldset>
-        <fieldset class="content container_r">
-            <legend><a href="#"><strong>解决方案</strong></a></legend>
+        </div>
+        <div class="container container_r">
+            <p class="title_index title_m"><a href="#"><strong>解决方案</strong></a></p>
             <ul class="content left_r">
                 <li><a href="#">农村金融机构全面风险管理方案</a></li>
                 <li><a href="#">中小银行信用风险内部评级解决方案</a></li>
                 <li><a href="#">战略规划落地实施解决方案</a></li>
             </ul>
-        </fieldset>
+        </div>
     </div>
     <!---- left_r end---->
     <div id="left_b"> <%@ include file="/WEB-INF/layouts/teacher.jsp" %></div>

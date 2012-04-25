@@ -77,13 +77,13 @@
         </div>
         <!---left_l end----->
         <div id="left_r">
-            <fieldset class="container_r">
-                <legend><a href="#"><strong>中心简介</strong></a></legend>
+            <div class="container container_r">
+                <p class="title_index title_m"><a href="#"><strong>中心简介</strong></a></p>
                 <p class="brief">山东省金融信息工程技术研究中心依托山东财经大学的金融、财税、会计、管理、数学和信息技术等雄厚的学科资源，联合行业内相关优势企业，为推动我国金融信息化的发展及相关技术的研究而成立的一个开放的专业从事与金融信息化和金融风险管理相关的理论与应用技术研究、教育培训、战略规划与咨询服务的组织。中心于2010年12月经山东省科技厅批准成立，是省内在金融信息工程领域唯一的省级工程技术研究中心。中心目前主持国家级科研课题4项，省部级科研课题5项,取得软件著作权6项，申报国家发明专利3项。独立研究及与合作伙伴共同研发的多项成果已成功应用于交通银行、广发银行、恒丰银行、齐鲁银行及小额贷款公司等非银行金融机构。
                 </p>
-            </fieldset>
-            <fieldset class="content container_r">
-                <legend><a href="#"><strong>组织机构</strong></a></legend>
+            </div>
+            <div class="container container_r">
+                <p class="title_index title_m"><a href="#"><strong>组织机构</strong></a></p>
                 <c:forEach items="${agencies}" var="agency" begin="0" step="1">
                     <a class="institution" href="${ctx}/agency/${agency.id}">${agency.title}</a>
                 </c:forEach>
@@ -93,9 +93,9 @@
                 <a class="institution" href="${ctx}/index-research">金融信息安全研究所</a>
                 <a class="institution" href="${ctx}/index-research">金融数据管理研究所</a>
                 <a class="institution" href="${ctx}/index-research">金融服务创新研究所</a>--%>
-            </fieldset>
-            <fieldset class="content container_r" style="padding-bottom: 0;">
-                <legend><a href="${ctx}/article/listInfo"><strong>咨询服务</strong></a></legend>
+            </div>
+                <div class="container container_r">
+                <p class="title_index title_m"><a href="${ctx}/article/listInfo"><strong>咨询服务</strong></a></p>
                 <ul class="content twoRow">
                     <c:forEach items="${infos}" var="info" begin="0" step="1" end="3">
                         <li><a href="${ctx}/article/content/${info.id}">${fn:substring(info.subject,0,15)}</a></li>
@@ -106,7 +106,7 @@
                     </c:forEach>
                     <li><a href="#" class="more">更多...</a> </li>
                 </ul>
-            </fieldset>
+            </div>
         </div>
         <!---- left_r end---->
         <div id="left_b"> <%@ include file="/WEB-INF/layouts/teacher.jsp" %></div>
