@@ -1,16 +1,17 @@
 package cn.edu.sdufe.cms.common.dao.agency;
 
-import cn.edu.sdufe.cms.common.entity.account.User;
 import cn.edu.sdufe.cms.common.entity.agency.Agency;
-import org.apache.ibatis.io.Resources;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.transaction.annotation.Transactional;
+import org.springside.modules.test.spring.SpringTxTestCase;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * 用途
@@ -19,20 +20,62 @@ import org.springframework.transaction.annotation.Transactional;
  * Time: 上午11:38
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "/applicationContext.xml")
-public class AgencyDaoTest {
+@ContextConfiguration(locations = {"classpath*:/applicationContext.xml"})
+public class AgencyDaoTest extends SpringTxTestCase {
 
-    @Autowired
     private AgencyDao agencyDao;
+    private Agency agency1 = new Agency();
+    private Agency agency2 = new Agency();
 
     @Before
-    public void setUp() throws Exception {
-        agencyDao = new AgencyDao();
+    public void setUp() {
+        agency1.setTitle("a");
+        agency1.setCategoryId(100);
+        agency1.setImageUrl("a.jpg");
+        agency1.setIntroduction("a");
+
     }
 
     @Test
-    public void testGetAgency() throws Exception {
+    public void testGetAgency() {
         Agency agency = agencyDao.getAgency(1L);
         System.out.println(agency.getTitle());
+    }
+
+    @Test
+    public void testGetAllAgency() {
+        List<Agency> agencies = agencyDao.getAllAgency();
+        for(Agency agency : agencies) {
+            System.out.println(agency.getTitle());
+        }
+    }
+
+    @Test
+    @Rollback(value = false)
+    public void testSave() {
+        int result = agencyDao.save(agency1);
+        System.out.println(result);
+    }
+
+    @Test
+    public void testDeleteAgency() {
+        int result = agencyDao.deleteAgency(8L);
+        System.out.println(result);
+    }
+
+    @Test
+    @Rollback(false)
+    public void testUpdateAgency() {
+        int result1 = agencyDao.save(agency1);
+        System.out.println(result1);
+        agency2 = agencyDao.getAgency(7L);
+        agency2.setTitle("b");
+        int result = agencyDao.updateAgency(agency2);
+        System.out.println(result);
+    }
+
+    @Autowired
+    public void setAgencyDao(AgencyDao agencyDao) {
+        this.agencyDao = agencyDao;
     }
 }

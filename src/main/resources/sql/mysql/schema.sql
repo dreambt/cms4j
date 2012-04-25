@@ -17,9 +17,8 @@ CREATE  TABLE IF NOT EXISTS `cms_category` (
   `last_modified_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后修改时间' ,
   `created_date` TIMESTAMP NOT NULL DEFAULT 0 COMMENT '创建时间' ,
   `deleted` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '是否关闭' ,
-  PRIMARY KEY (`id`) ,
-  INDEX `fk_upid_catid` (`father_category_id` ASC) )
-ENGINE = InnoDB
+  PRIMARY KEY (`id`)
+)ENGINE = InnoDB
 DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci
 COMMENT = '栏目表';
 
@@ -47,9 +46,7 @@ CREATE  TABLE IF NOT EXISTS `cms_article` (
   `last_modified_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后修改时间' ,
   `created_date` TIMESTAMP NOT NULL DEFAULT 0 COMMENT '创建时间' ,
   `deleted` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '是否已删除' ,
-  PRIMARY KEY (`id`),
-  INDEX `fk_cms_article_user` (`user_id` ASC),
-  INDEX `fk_cms_artical_category` (`category_id` ASC)
+  PRIMARY KEY (`id`)
 )ENGINE = InnoDB
 DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci
 COMMENT = '文章表';
@@ -88,8 +85,7 @@ CREATE  TABLE IF NOT EXISTS `cms_user` (
   `last_modified_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后修改时间' ,
   `created_date` TIMESTAMP NOT NULL DEFAULT 0 COMMENT '创建时间' ,
   `deleted` TINYINT(1) NOT NULL ,
-  PRIMARY KEY (`id`),
-  INDEX `fk_cms_user_group` (`group_id` ASC)
+  PRIMARY KEY (`id`)
 )ENGINE = InnoDB
 DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci
 COMMENT = '用户表';
@@ -110,9 +106,8 @@ CREATE  TABLE IF NOT EXISTS `cms_comment` (
   `last_modified_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后修改时间' ,
   `created_date` TIMESTAMP NOT NULL DEFAULT 0 COMMENT '创建时间' ,
   `deleted` TINYINT(1) NOT NULL ,
-  PRIMARY KEY (`id`) ,
-  INDEX `fk_cms_comment_cms_artical1` (`article_id` ASC) )
-ENGINE = InnoDB
+  PRIMARY KEY (`id`)
+)ENGINE = InnoDB
 DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 
 
@@ -127,9 +122,8 @@ CREATE  TABLE IF NOT EXISTS `cms_manage_log` (
   `action` TINYINT(1) NOT NULL COMMENT '0=创建菜单 1=修改菜单 2=移动菜单 3=删除菜单 4=发表文章 5=修改文章 6=审核文章 7=删除文章 8=添加用户 9=修改用户信息 10=审核用户 11=删除用户' ,
   `last_modified_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后修改时间' ,
   `created_date` TIMESTAMP NOT NULL DEFAULT 0 COMMENT '创建时间' ,
-  PRIMARY KEY (`id`) ,
-  INDEX `fk_cms_log_cms_user1` (`user_id` ASC) )
-ENGINE = InnoDB
+  PRIMARY KEY (`id`)
+)ENGINE = InnoDB
 DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 
 
@@ -170,9 +164,8 @@ CREATE  TABLE IF NOT EXISTS `cms_group_permission` (
   `id` MEDIUMINT(8) NOT NULL AUTO_INCREMENT ,
   `group_id` MEDIUMINT(8) NOT NULL ,
   `permission` VARCHAR(20) NOT NULL ,
-  PRIMARY KEY (`id`) ,
-  INDEX `fk_cms_group_permission_cms_group1` (`group_id` ASC) )
-ENGINE = InnoDB
+  PRIMARY KEY (`id`)
+)ENGINE = InnoDB
 DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 
 
@@ -199,10 +192,8 @@ DROP TABLE IF EXISTS `cms_archive_article` ;
 
 CREATE  TABLE IF NOT EXISTS `cms_archive_article` (
   `archive_id` MEDIUMINT(8) NOT NULL ,
-  `category_id` MEDIUMINT(8) NOT NULL ,
-  INDEX `fk_cms_archive_article_cms_archive1` (`archive_id` ASC) ,
-  INDEX `fk_cms_archive_article_cms_category1` (`category_id` ASC) ,
-  PRIMARY KEY (`archive_id`, `category_id`) )
+  `article_id` MEDIUMINT(8) NOT NULL ,
+  PRIMARY KEY (`archive_id`, `article_id`) )
 ENGINE = InnoDB
 DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 
