@@ -42,11 +42,11 @@
     <!--
         保存组织机构
     -->
-    <insert id="saveAgency" parameterType="Agency" userGeneratedKeys="true" keyPropoty="id">
-        INSERT INTO cms_agecny
+    <insert id="saveAgency" parameterType="Agency" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO cms_agency
             (title, category_id, image_url, introduction, rate, deleted, created_date)
         VALUES
-            (#{title}, #{category_id}, #{image_url}, #{introduction}, 0, 0, null)
+            (#{title}, #{categoryId}, #{imageUrl}, #{introduction}, 0, 0, null)
     </insert>
 
     <!--
@@ -75,14 +75,15 @@
         UPDATE cms_agency
         <set>
             <if test="title != null and title != ''">
-                title=#{title}
+                title=#{title},
             </if>
-            <if test="image_url != null and image_url != ''">
-                image_url=#{image_url}
+            <if test="imageUrl != null and imageUrl != ''">
+                image_url=#{imageUrl},
             </if>
             <if test="introduction != null and introduction != ''">
-                introduction=#{introduction}
+                introduction=#{introduction},
             </if>
+            last_modified_date=null
         </set>
         WHERE id=#{id} AND deleted=0
     </update>
