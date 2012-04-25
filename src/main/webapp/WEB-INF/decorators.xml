@@ -16,8 +16,9 @@
     </decorator>
 
     <decorator name="blueprint" page="blueprint.jsp">
-        <pattern>/index3</pattern>
+        <pattern>/index-blueprint</pattern>
     </decorator>
+
     <decorator name="bootstrap" page="bootstrap.jsp">
         <pattern>/index4</pattern>
     </decorator>
