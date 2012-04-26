@@ -4,6 +4,8 @@ import cn.edu.sdufe.cms.common.dao.account.UserDao;
 import cn.edu.sdufe.cms.common.dao.article.ArchiveDao;
 import cn.edu.sdufe.cms.common.dao.article.ArticleDao;
 import cn.edu.sdufe.cms.common.dao.article.CommentDao;
+import cn.edu.sdufe.cms.common.service.article.ArchiveManager;
+import cn.edu.sdufe.cms.common.service.article.ArticleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +27,13 @@ public class QuartzJob {
     private UserDao userDao;
 
     @Autowired
-    public ArticleDao articleDao;
+    public ArticleManager articleManager;
 
     @Autowired
     private CommentDao commentDao;
 
     @Autowired
-    private ArchiveDao archiveDao;
+    private ArchiveManager archiveManager;
 
     /**
      * 定时打印当前用户数到日志.
@@ -42,11 +44,11 @@ public class QuartzJob {
         logger.info("######### There are {} user in database. #########", userCount);
 
         // 删除标记为deleted的记录
-        logger.info("######### There are {} article was deleted. #########", articleDao.delete());
+        logger.info("######### There are {} article was deleted. #########", articleManager.delete());
         logger.info("######### There are {} comment was deleted. #########", commentDao.delete());
 
         // 归档
-        archiveDao.findAll();
+        archiveManager.save();
         logger.info("######### Archive was ready. #########");
 
         // 生成文章关键词

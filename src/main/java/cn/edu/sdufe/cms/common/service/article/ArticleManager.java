@@ -47,6 +47,8 @@ public class ArticleManager {
 
     private ArchiveDao archiveDao;
 
+    private ArchiveManager archiveManager;
+
     private Validator validator = null;
 
     /**
@@ -395,7 +397,11 @@ public class ArticleManager {
     @Transactional(readOnly = false)
     public int delete() {
         List<Long> ids = articleDao.findDeletedArticle();
+        if(null == ids) {
+            return 0;
+        }
         archiveDao.deleteAAByArticleId(ids);
+        archiveManager.batchUpdate();
         return articleDao.delete();
     }
 
@@ -412,5 +418,10 @@ public class ArticleManager {
     @Autowired
     public void setArchiveDao(ArchiveDao archiveDao) {
         this.archiveDao = archiveDao;
+    }
+
+    @Autowired
+    public void setArchiveManager(ArchiveManager archiveManager) {
+        this.archiveManager = archiveManager;
     }
 }

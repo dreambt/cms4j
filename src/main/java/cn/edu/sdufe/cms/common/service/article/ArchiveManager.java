@@ -100,7 +100,7 @@ public class ArchiveManager {
     }
 
     /**
-     * 更新指定月份之前12个月的归类
+     * 更新归类
      */
     @Transactional(readOnly = false)
     public void batchUpdate() {
