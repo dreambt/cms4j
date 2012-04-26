@@ -182,12 +182,12 @@ a.agrayright{cursor:default;background-position:-51px 50%;}
     width: 950px;
     list-style: none;
     display: block;
-    margin:10px 0;
+    margin:10px 0 0 0;
     padding:0;
     height: 51px;
     overflow: hidden;
 }
-#friLnk li.friLnkT{padding-left:56px;width:894px;height: 25px;line-height:25px;color: #444;font-size: 14px;background: url(images/friLnk.png) no-repeat center;}
+#friLnk li.friLnkT{padding-left:56px;width:894px;height: 25px;line-height:25px;color: #444;font-size: 14px;background: url(images/friLnk.png) repeat-x center;}
 #friLnk li.fri{padding:2px 5px;display: block;float: left;}
 #friLnk li a{color: #666;font-size: 12px;text-decoration: none;text-align:center;width: 100%;}
 #friLnk li a:hover{text-decoration: underline;}
