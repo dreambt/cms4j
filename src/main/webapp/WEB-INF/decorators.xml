@@ -22,6 +22,10 @@
     <decorator name="bootstrap" page="bootstrap.jsp">
         <pattern>/index4</pattern>
     </decorator>
+    <decorator name="blueprintindex" page="default3.jsp">
+        <pattern>/index3</pattern>
+        <pattern>/index-research3</pattern>
+    </decorator>
 
     <decorator name="article" page="article.jsp">
         <pattern>/article/list/*</pattern>

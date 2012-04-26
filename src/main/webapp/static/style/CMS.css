@@ -1,3 +1,13 @@
+html,body{height:100%}
+body{
+    font-family:Tahoma, Arial, Verdana;
+    font-size:12px;
+    margin:0 auto;
+    padding:0;
+    background:url(../images/bg-body.jpg) repeat;
+    color:#6f6f6f;
+    height:100%;
+}
 /* Container
 ------------------------------------------------------*/
 #page-container{width:1018px; margin:0 auto;}

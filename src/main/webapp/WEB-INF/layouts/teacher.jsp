@@ -79,7 +79,7 @@
         $("#teacher").Xslider({
             unitdisplayed:5,
             numtoMove:1,
-            unitlen:135,
+            unitlen:143,
             loop:"cycle",
             autoscroll:3000
         });

@@ -10,7 +10,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <!-- BEGIN HEADER -->
-<div id="header">
+<div id="header" class="span-24">
     <div id="top-header">
         <div class="logo"><a href="index.html"><img src="${ctx}/static/images/logo.jpg" alt="" style="vertical-align:middle;margin-right: 10px;margin-bottom:0px;" class="cufon" /><h1 class="cufon">山东省金融信息工程技术研究中心</h1></a></div>
     </div>

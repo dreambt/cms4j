@@ -21,11 +21,11 @@
     <!-- ////////////////////////////////// -->
     <!-- //      Start Stylesheets       // -->
     <!-- ////////////////////////////////// -->
-    <link href="${ctx}/static/blueprint/1.0.1/screen.css" type="text/css" rel="stylesheet" media="screen, projection" />
-    <link href="${ctx}/static/blueprint/1.0.1/print.css" type="text/css" rel="stylesheet" media="print" />
-    <!--[if lt IE 8]><link href="${ctx}/static/blueprint/1.0.1/ie.css" type="text/css" rel="stylesheet" media="screen, projection"><![endif]-->
+    <link href="${ctx}/static/style/style3.css" rel="stylesheet" type="text/css" />
+    <link href="${ctx}/static/css/inner.min.css" rel="stylesheet" type="text/css" />
     <link href="${ctx}/static/css/superfish.min.css" rel="stylesheet" type="text/css"  />
-    <link href="${ctx}/static/CMS.css" type="text/css" rel="stylesheet" />
+    <link href="${ctx}/static/style/CMS3.css" type="text/css" rel="stylesheet" />
+    <!--[if IE 6]><link href="${ctx}/static/css/ie6.min.css" rel="stylesheet" type="text/css" /><![endif]-->
 
     <!-- ////////////////////////////////// -->
     <!-- //      Javascript Files        // -->
@@ -57,10 +57,10 @@
 <body>
 <div id="page-container">
     <div class="page-container-inner">
-        <div class="container">
-            <%@ include file="/WEB-INF/layouts/header.jsp" %>
+        <div class="frame">
+            <%@ include file="/WEB-INF/layouts/header3.jsp" %>
             <sitemesh:body/>
-            <%@ include file="/WEB-INF/layouts/footer.jsp" %>
+            <%@ include file="/WEB-INF/layouts/footer3.jsp" %>
         </div>
     </div>
 </div>
