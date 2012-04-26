@@ -17,8 +17,8 @@ CREATE TABLE IF NOT EXISTS `cms_agency` (
   `introduction` mediumtext NOT NULL,
   `rate` int(11) NOT NULL,
   `deleted` tinyint(1) NOT NULL,
-  `created_date` timestamp NOT NULL,
-  `last_modified_date` timestamp NOT NULL,
+  `last_modified_date` timestamp DEFAULT NULL,
+  `created_date` timestamp DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -33,8 +33,8 @@ CREATE TABLE IF NOT EXISTS `cms_archive` (
   `id` mediumint(8) NOT NULL AUTO_INCREMENT,
   `title` varchar(40) NOT NULL,
   `article_count` tinyint(3) NOT NULL,
-  `last_modified_date` timestamp NOT NULL,
-  `created_date` timestamp NOT NULL,
+  `last_modified_date` timestamp DEFAULT NULL,
+  `created_date` timestamp DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -73,8 +73,8 @@ CREATE TABLE IF NOT EXISTS `cms_article` (
   `views` int(11) NOT NULL,
   `allow_comment` tinyint(1) NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `last_modified_date` timestamp NOT NULL,
-  `created_date` timestamp NOT NULL,
+  `last_modified_date` timestamp DEFAULT NULL,
+  `created_date` timestamp DEFAULT NULL,
   `deleted` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
 );
@@ -97,8 +97,8 @@ CREATE TABLE IF NOT EXISTS `cms_category` (
   `allow_comment` tinyint(1) NOT NULL,
   `allow_publish` tinyint(1) NOT NULL,
   `show_nav` tinyint(1) NOT NULL,
-  `last_modified_date` timestamp NOT NULL,
-  `created_date` timestamp NOT NULL,
+  `last_modified_date` timestamp DEFAULT NULL,
+  `created_date` timestamp DEFAULT NULL,
   `deleted` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
 );
@@ -117,8 +117,8 @@ CREATE TABLE IF NOT EXISTS `cms_comment` (
   `message` text NOT NULL,
   `post_ip` int(10) NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `last_modified_date` timestamp NOT NULL,
-  `created_date` timestamp NOT NULL,
+  `last_modified_date` timestamp DEFAULT NULL,
+  `created_date` timestamp DEFAULT NULL,
   `deleted` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
 );
@@ -163,8 +163,8 @@ CREATE TABLE IF NOT EXISTS `cms_image` (
   `image_url` varchar(80) NOT NULL,
   `description` varchar(255) NOT NULL,
   `show_index` tinyint(1) NOT NULL,
-  `last_modified_date` timestamp NOT NULL,
-  `created_date` timestamp NOT NULL,
+  `last_modified_date` timestamp DEFAULT NULL,
+  `created_date` timestamp DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -181,8 +181,8 @@ CREATE TABLE IF NOT EXISTS `cms_link` (
   `url` varchar(80) NOT NULL,
   `category` varchar(20) NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `last_modified_date` timestamp NOT NULL,
-  `created_date` timestamp NOT NULL,
+  `last_modified_date` timestamp DEFAULT NULL,
+  `created_date` timestamp DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -197,8 +197,8 @@ CREATE TABLE IF NOT EXISTS `cms_manage_log` (
   `id` mediumint(8) unsigned NOT NULL,
   `user_id` mediumint(8) NOT NULL,
   `action` tinyint(1) NOT NULL,
-  `last_modified_date` timestamp NOT NULL,
-  `created_date` timestamp NOT NULL,
+  `last_modified_date` timestamp DEFAULT NULL,
+  `created_date` timestamp DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
@@ -217,8 +217,8 @@ CREATE TABLE IF NOT EXISTS `cms_teacher` (
   `introduction` mediumtext(255) NOT NULL,
   `image_url` varchar(50) NOT NULL,
   `deleted` tinyint(1) NOT NULL,
-  `created_date` timestamp NOT NULL,
-  `last_modified_date` timestamp NOT NULL DEFAULT NULL,
+  `last_modified_date` timestamp DEFAULT NULL,
+  `created_date` timestamp DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
