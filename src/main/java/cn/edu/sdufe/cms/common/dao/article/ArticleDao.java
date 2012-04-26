@@ -109,6 +109,14 @@ public class ArticleDao extends SqlSessionDaoSupport {
     }
 
     /**
+     * 获取删除标记为真的文章
+     * @return
+     */
+    public List<Long> findDeletedArticle() {
+            return getSqlSession().selectList("Article.getDeletedArticle");
+    }
+
+    /**
      * 获取categoryId分类下文章数量
      *
      * @param categoryId

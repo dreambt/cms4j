@@ -19,8 +19,6 @@ public class Archive extends PersistableEntity {
 
     private int articleCount;
 
-    private List<Article> articleList = Lists.newArrayList();
-
     public String getTitle() {
         return title;
     }
@@ -35,14 +33,6 @@ public class Archive extends PersistableEntity {
 
     public void setArticleCount(int articleCount) {
         this.articleCount = articleCount;
-    }
-
-    public List<Article> getArticleList() {
-        return articleList;
-    }
-
-    public void setArticleList(List<Article> articleList) {
-        this.articleList = articleList;
     }
 
     @Override

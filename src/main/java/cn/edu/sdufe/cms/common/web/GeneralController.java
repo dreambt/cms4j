@@ -2,10 +2,12 @@ package cn.edu.sdufe.cms.common.web;
 
 import cn.edu.sdufe.cms.common.entity.link.LinkCategoryEnum;
 import cn.edu.sdufe.cms.common.service.agency.AgencyManager;
+import cn.edu.sdufe.cms.common.service.article.ArchiveManager;
 import cn.edu.sdufe.cms.common.service.article.ArticleManager;
 import cn.edu.sdufe.cms.common.service.article.CategoryManager;
 import cn.edu.sdufe.cms.common.service.image.ImageManager;
 import cn.edu.sdufe.cms.common.service.link.LinkManager;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -28,6 +30,7 @@ public class GeneralController {
     private ImageManager imageManager;
     private ArticleManager articleManager;
     private AgencyManager agencyManager;
+    private ArchiveManager archiveManager;
 
     /**
      * 首页显示菜单，静态+动态
@@ -48,6 +51,17 @@ public class GeneralController {
         model.addAttribute("posts", articleManager.getTitleByCategoryId(1L, 0, 6));
         model.addAttribute("agencies", agencyManager.getAllAgency());
         return "index" + str;
+    }
+
+    /**
+     * 测试归档
+     * @return
+     */
+    @RequestMapping(value = "archive")
+    public String test() {
+        archiveManager.save();
+        archiveManager.batchUpdate();
+        return "index";
     }
 
     /**
@@ -134,5 +148,10 @@ public class GeneralController {
     @Autowired
     public void setAgencyManager(AgencyManager agencyManager) {
         this.agencyManager = agencyManager;
+    }
+
+    @Autowired
+    public void setArchiveManager(ArchiveManager archiveManager) {
+        this.archiveManager = archiveManager;
     }
 }

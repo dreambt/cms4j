@@ -1,5 +1,6 @@
 package cn.edu.sdufe.cms.common.service.article;
 
+import cn.edu.sdufe.cms.common.dao.article.ArchiveDao;
 import cn.edu.sdufe.cms.common.dao.article.ArticleDao;
 import cn.edu.sdufe.cms.common.entity.account.User;
 import cn.edu.sdufe.cms.common.entity.article.Article;
@@ -43,6 +44,8 @@ public class ArticleManager {
     private static final int KEYWORD_NUM = 10;
 
     private ArticleDao articleDao = null;
+
+    private ArchiveDao archiveDao;
 
     private Validator validator = null;
 
@@ -305,7 +308,6 @@ public class ArticleManager {
      */
     @Transactional(readOnly = false)
     public void batchDelete(String[] ids) {
-        Article article = null;
         for (String id : ids) {
             if (id.length() == 0) {
                 continue;
@@ -392,6 +394,8 @@ public class ArticleManager {
      */
     @Transactional(readOnly = false)
     public int delete() {
+        List<Long> ids = articleDao.findDeletedArticle();
+        archiveDao.deleteAAByArticleId(ids);
         return articleDao.delete();
     }
 
@@ -405,4 +409,8 @@ public class ArticleManager {
         this.articleDao = articleDao;
     }
 
+    @Autowired
+    public void setArchiveDao(ArchiveDao archiveDao) {
+        this.archiveDao = archiveDao;
+    }
 }

@@ -31,15 +31,6 @@ public class ArchiveManager {
     private ArticleDao articleDao;
 
     /**
-     * 获得所有归档
-     *
-     * @return
-     */
-    public List<Archive> getAll() {
-        return archiveDao.findAll();
-    }
-
-    /**
      * 获得最新10条的归类
      *
      * @return
@@ -49,56 +40,29 @@ public class ArchiveManager {
     }
 
     /**
-     * 获取标题为title的归类
-     *
-     * @param title
-     * @return
-     */
-    public Archive getByTitle(String title) {
-        return archiveDao.findByTitle(title);
-    }
-
-    /**
-     * 获取编号为id的归类
-     *
-     * @param id
-     * @return
-     */
-    public Archive getByArchiveId(Long id) {
-        return archiveDao.findOne(id);
-    }
-
-    /**
-     * 更新最近12个月份的归类
-     */
-    @Transactional(readOnly = false)
-    public void update() {
-        DateTime dateTime = new DateTime();
-        int count = 12;
-        while (count-- >= 0) {
-            this.save(dateTime);
-            dateTime.plusMonths(-1);
-        }
-    }
-
-    /**
      * 保存指定月份的归类
      *
-     * @param dateTime
      */
     @Transactional(readOnly = false)
-    public void save(DateTime dateTime) {
+    public void save() {
+        DateTime dateTime = new DateTime();
+        dateTime = dateTime.plusMonths(-1);
         int year = dateTime.getYear();
         int month = dateTime.getMonthOfYear();
-        Archive archive = this.getByTitle(String.format("%04d年%02d月", year, month));
 
         //获得指定月份的所有文章
         List<Article> articles = articleDao.findByMonth(dateTime.toDate());
-        if (articles.size() > 0 && articles.size() != archive.getArticleCount()) {
+        if (articles.size() > 0) {
+            Archive archive = new Archive();
+            archive.setTitle(String.format("%04d年%02d月", year, month));
             archive.setArticleCount(articles.size());
-            archive.setArticleList(articles);
-            archive.setLastModifiedDate(null);
             archiveDao.save(archive);
+            //加入归档文章对应表
+            Long archiveId = archiveDao.findByTitle(String.format("%04d年%02d月", year, month)).getId();
+            for(Article article: articles) {
+                Long articleId = article.getId();
+                archiveDao.saveAA(archiveId, articleId);
+            }
         }
     }
 
@@ -112,6 +76,43 @@ public class ArchiveManager {
         archiveDao.delete(id);
     }
 
+    /**
+     * 更新指定月份的归类
+     */
+    @Transactional(readOnly = false)
+    public void update(Archive archive) {
+        DateTime dateTime = new DateTime();
+        dateTime = dateTime.plusMonths(-1);
+        int year = dateTime.getYear();
+        int month = dateTime.getMonthOfYear();
+
+        List<Article> articles = articleDao.findByMonth(dateTime.toDate());
+        if(articles.size() > 0 && archive.getArticleCount() != articles.size()) {
+            archive.setArticleCount(articles.size());
+            archiveDao.updateArchive(archive);
+            //加入归档文章对应表
+            Long archiveId = archiveDao.findByTitle(String.format("%04d年%02d月", year, month)).getId();
+            for(Article article: articles) {
+                Long articleId = article.getId();
+                archiveDao.saveAA(archiveId, articleId);
+            }
+        }
+    }
+
+    /**
+     * 更新指定月份之前12个月的归类
+     */
+    @Transactional(readOnly = false)
+    public void batchUpdate() {
+        List<Archive> archives = archiveDao.findAll();
+        if(null == archives) {
+            return;
+        }
+        for(Archive archive: archives) {
+            this.update(archive);
+        }
+    }
+
     @Autowired
     public void setArchiveDao(@Qualifier("archiveDao") ArchiveDao archiveDao) {
         this.archiveDao = archiveDao;
@@ -121,5 +122,4 @@ public class ArchiveManager {
     public void setArticleDao(@Qualifier("articleDao") ArticleDao articleDao) {
         this.articleDao = articleDao;
     }
-
 }

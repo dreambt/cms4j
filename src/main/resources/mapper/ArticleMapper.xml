@@ -71,6 +71,13 @@
         WHERE A.id =#{id}
 	</select>
 
+    <!-- 获取删除标记为真的文章 -->
+    <select id="getDeletedArticle" resultMap="articleDetailMap">
+        SELECT id
+        FROM cms_article
+        WHERE deleted=1
+    </select>
+
     <!-- 获取所有文章, 后台专用 -->
     <select id="getAllArticle" parameterType="map" resultMap="articleDetailMap">
         SELECT <include refid="articleColumns"/>, U.username as user_username,
@@ -85,7 +92,7 @@
     <!-- 获取本月的所有文章 -->
     <select id="getMonthArticle" parameterType="Date" resultMap="articleDetailMap">
         SELECT <include refid="articleColumns"/>
-        FROM cms_article
+        FROM cms_article AS A
         WHERE deleted =0
         AND YEAR( created_date ) = YEAR( #{created_date} )
         AND MONTH( created_date ) = MONTH( #{created_date} )

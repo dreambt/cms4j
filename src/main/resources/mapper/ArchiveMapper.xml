@@ -42,6 +42,7 @@
         select <include refid="archiveColumns"/>
         from cms_archive
         order by id DESC
+        LIMIT 30
 	</select>
 
     <!--
@@ -55,16 +56,67 @@
 	</select>
 
     <!--
-         查询图片
-     -->
-    <select id="searchArchive" parameterType="map" resultMap="archiveDetailMap">
-        select <include refid="archiveColumns"/>
-        from cms_archive
-        <where>
-            <if test="title != null">
-                title=#{title}
+        保存Archive
+    -->
+    <insert id="saveArchive" parameterType="Archive">
+        INSERT INTO cms_archive
+        (title, article_count, created_date)
+        VALUES
+        (#{title}, #{articleCount}, null)
+    </insert>
+
+    <!--
+        保存Archive_Article
+    -->
+    <insert id="saveAA" parameterType="map">
+        INSERT INTO cms_archive_article
+        (archive_id, article_id)
+        VALUES
+        (#{archiveId}, #{articleId})
+    </insert>
+
+    <!--
+        删除Archive
+    -->
+    <delete id="deleteArchive" parameterType="Long">
+        DELETE FROM cms_archive
+        WHERE id=#{id}
+        LIMIT 500
+    </delete>
+
+    <!--
+        根据archive_id删除Archive_Article
+    -->
+    <delete id="deleteAAByArchiveId" parameterType="Long">
+        DELETE FROM cms_archive_article
+        WHERE archive_id=#{archiveId}
+        LIMIT 500
+    </delete>
+
+    <!--
+        根据article_id删除Archive_Article
+    -->
+    <delete id="deleteAAByArticleId" parameterType="Long">
+        DELETE FROM cms_archive_article
+        WHERE article_id in
+        <foreach item="item" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        LIMIT 500
+    </delete>
+
+    <!--
+        更新归档
+    -->
+    <update id="updateArchive" parameterType="Archive">
+        UPDATE cms_archive
+        <set>
+            <if test="articleCount != null and articleCount != ''">
+                article_count=#{articleCount},
             </if>
-        </where>
-        order by ${Sort} ${Direction}
-    </select>
+            last_modified_date=null
+        </set>
+        WHERE id=#{id}
+    </update>
+
 </mapper>
