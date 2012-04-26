@@ -263,7 +263,6 @@ CREATE TABLE IF NOT EXISTS `cms_teacher` (
   `teacher_name` varchar(20) NOT NULL,
   `article_id` MEDIUMINT(8) NOT NULL,
   `agency_id` MEDIUMINT(8) NOT NULL,
-  `introduction` mediumtext NOT NULL,
   `image_url` varchar(50) NOT NULL,
   `deleted` tinyint(1) NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -505,5 +504,5 @@ INSERT INTO `cms_agency` (`id`, `title`,`category_id`, `image_url`, `introductio
 -- -----------------------------------------------------
 -- 学术骨干老师测试数据
 -- -----------------------------------------------------
-INSERT INTO `cms_teacher` (`id`, `teacher_name`, `introduction`, `article_id`, `agency_id`, `image_url`, `deleted`, `created_date`, `last_modified_date`) VALUES
-(1, '赵华伟', '金融信息安全研究所副所长，计算机科学与技术学院网络工程教研室主任，副教授，硕士生导师，博士后，CCF YOCSEF济南分论坛委员，澳大利亚国家信息通信技术研究院访问学者，中国传感器网络安全标准工作组核心技术编辑。担任《计算机学报》、《通信学报》、《北京邮电大学学报》、《Journal of Network and Computer Applications》等国内外重要期刊和CMC、MUE等国际会议的审稿人。研究领域:涉及金融信息安全体系设计、信息安全等级保护、信息系统安全审计、物联网安全应用等。已参与完成2项国家级课题、3项省级课题的研究工作。主持完成一项山东省科学院博士基金课题，被省级部门技术鉴定为国际先进。目前正在参与国家自然科学基金1项(61101085)，并主持山东省自然科学基金(ZR2011FL027)，山东省博士后基金（201003016），山东省信息化与工业化融合专项研究课题(2012EI020)的研究工作。 已在《计算机研究与发展》等国内著名期刊和ISECS等IEEE组织的国际会议上发表学术论文近20篇，获得实用新型专利4项，申请发明专利2项。', 1, 1, 'pic_zhaohuawei.jpg', 0, '2012-04-21 09:11:03', '2012-04-21 09:07:47');
+INSERT INTO `cms_teacher` (`id`, `teacher_name`, `article_id`, `agency_id`, `image_url`, `deleted`, `created_date`, `last_modified_date`) VALUES
+(1, '赵华伟', 1, 1, 'pic_zhaohuawei.jpg', 0, '2012-04-21 09:11:03', '2012-04-21 09:07:47');

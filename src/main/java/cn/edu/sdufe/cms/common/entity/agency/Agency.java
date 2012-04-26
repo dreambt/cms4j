@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class Agency extends PersistableEntity {
     private String title;
 
-    private int categoryId;
+    private Long categoryId;
 
     private String imageUrl;
 
@@ -32,11 +32,11 @@ public class Agency extends PersistableEntity {
         this.title = title;
     }
 
-    public int getCategoryId() {
+    public Long getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(int categoryId) {
+    public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
     }
 

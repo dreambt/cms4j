@@ -52,17 +52,7 @@
     <!--
         彻底删除组织机构
     -->
-    <delete id="deleteAgency" parameterType="Long">
-        DELETE FROM cms_agency
-        WHERE id=#{id} AND deleted=1
-        ORDER BY id DESC
-        LIMIT 1
-    </delete>
-
-    <!--
-        批量彻底删除组织机构
-    -->
-    <delete id="batchDeleteAgency" parameterType="Long">
+    <delete id="deleteAgency">
         DELETE FROM cms_agency
         WHERE deleted=1
         LIMIT 500

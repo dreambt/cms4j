@@ -1,6 +1,7 @@
 package cn.edu.sdufe.cms.common.dao.agency;
 
 import cn.edu.sdufe.cms.common.entity.agency.Agency;
+import cn.edu.sdufe.cms.data.AgencyData;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,28 +16,21 @@ import org.springside.modules.test.spring.SpringTxTestCase;
 import java.util.List;
 
 /**
- * 用途
+ * 组织机构测试类
  * User: pengfei.dongpf(pengfei.dong@gmail.com)
  * Date: 12-4-24
  * Time: 上午11:38
  */
-@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:/applicationContext.xml"})
 public class AgencyDaoTest extends SpringTxTestCase {
 
     @Autowired
     private AgencyDao agencyDao;
-    private Agency agency1 = new Agency();
-    private Agency agency2 = new Agency();
+    private Agency agency;
 
     @Before
     public void setUp() throws Exception {
         Fixtures.reloadData(dataSource, "/data/sample-data.xml");
-
-        agency1.setTitle("a");
-        agency1.setCategoryId(100);
-        agency1.setImageUrl("a.jpg");
-        agency1.setIntroduction("a");
     }
 
     @Test
@@ -48,32 +42,29 @@ public class AgencyDaoTest extends SpringTxTestCase {
     @Test
     public void testGetAllAgency() {
         List<Agency> agencies = agencyDao.getAllAgency();
-        for (Agency agency : agencies) {
-            System.out.println(agency.getTitle());
-        }
+        Assert.assertEquals(2, agencies.size());
     }
 
     @Test
-    @Rollback(value = false)
     public void testSave() {
-        int result = agencyDao.save(agency1);
+        agency = AgencyData.getRandomAgency();
+        int result = agencyDao.save(agency);
         Assert.assertEquals(1, result);
     }
 
     @Test
     public void testDeleteAgency() {
-        int result = agencyDao.deleteAgency(8L);
-        System.out.println(result);
+        int result = agencyDao.deleteAgency();
+        Assert.assertEquals(1, result);
     }
 
     @Test
-    @Rollback(false)
     public void testUpdateAgency() {
-        int result1 = agencyDao.save(agency1);
-        System.out.println(result1);
-        agency2 = agencyDao.getAgency(7L);
-        agency2.setTitle("b");
-        int result = agencyDao.updateAgency(agency2);
-        System.out.println(result);
+        agency = agencyDao.getAgency(1L);
+        agency.setTitle("b");
+        int result = agencyDao.updateAgency(agency);
+        Assert.assertEquals(1, result);
+        agency = agencyDao.getAgency(1L);
+        Assert.assertEquals("b", agency.getTitle());
     }
 }

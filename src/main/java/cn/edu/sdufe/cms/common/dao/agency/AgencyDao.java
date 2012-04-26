@@ -48,22 +48,12 @@ public class AgencyDao extends SqlSessionDaoSupport {
     }
 
     /**
-     * 彻底删除组织机构
-     * @param id
+     * 彻底删除标记为删除的组织机构
      * @return
      */
     @Cacheable(value = "agencyCache")
-    public int deleteAgency(Long id) {
-        return getSqlSession().delete("Agency.deleteAgency", id);
-    }
-
-    /**
-     * 批量彻底删除组织机构
-     * @return
-     */
-    @Cacheable(value = "agencyCache")
-    public int batchDeleteAgency() {
-        return getSqlSession().delete("Agency.batchDeleteAgency");
+    public int deleteAgency() {
+        return getSqlSession().delete("Agency.deleteAgency");
     }
 
     /**

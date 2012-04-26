@@ -10,7 +10,7 @@
         <result property="articleId" column="article_id"/>
         <result property="agencyId" column="agency_id"/>
         <result property="imageUrl" column="image_url"/>
-        <result property="deleted" column="deleted" />
+        <result property="deleted" column="deleted"/>
         <result property="createdDate" column="created_date"/>
         <result property="lastModifiedDate" column="last_modified_date"/>
     </resultMap>
@@ -21,7 +21,8 @@
         根据编号获取教师信息
     -->
     <select id="getTeacher" parameterType="Long" resultMap="teacherDetailMap">
-        SELECT <include refid="teacherColumns"/>
+        SELECT
+        <include refid="teacherColumns"/>
         FROM cms_teacher
         WHERE id=#{id} and deleted=0
         ORDER BY ID DESC
@@ -43,7 +44,8 @@
         获得所有的教师信息
     -->
     <select id="getAllTeacher" resultMap="teacherDetailMap">
-        SELECT <include refid="teacherColumns"/>
+        SELECT
+        <include refid="teacherColumns"/>
         FROM cms_teacher
         WHERE deleted=0
         ORDER BY ID DESC
@@ -57,23 +59,13 @@
         INSERT INTO cms_teacher
             (teacher_name, article_id, agency_id, image_url, deleted, created_date)
         VALUES
-            (#{teacher_name}, #{article_id}, #{agency_id}, #{image_url}, 0, null)
+            (#{teacherName}, #{articleId}, #{agencyId}, #{imageUrl}, 0, null)
     </insert>
 
     <!--
         彻底删除老师信息
     -->
-    <delete id="deleteTeacher" parameterType="Long">
-        DELETE FROM cms_teacher
-        WHERE id=#{id} AND deleted=1
-        ORDER BY id DESC
-        LIMIT 1
-    </delete>
-
-    <!--
-        批量彻底删除老师信息
-    -->
-    <delete id="batchDeleteTeacher" parameterType="Long">
+    <delete id="deleteTeacher">
         DELETE FROM cms_teacher
         WHERE deleted=1
         LIMIT 500
@@ -85,16 +77,17 @@
     <update id="updateTeacher" parameterType="Teacher">
         UPDATE cms_teacher
         <set>
-            <if test="teacher_name != null and teacher_name != ''">
-                teacher_name=#{teacher_name}
+            <if test="teacherName != null and teacherName != ''">
+                teacher_name=#{teacherName},
             </if>
-            <if test="agency_id != null and agency_id != ''">
-                agency_id=#{agency_id}
+            <if test="agencyId != null and agencyId != ''">
+                agency_id=#{agencyId},
             </if>
-            <if test="image_url != null and image_url != ''">
-                image_url=#{image_url}
+            <if test="imageUrl != null and imageUrl != ''">
+                image_url=#{imageUrl},
             </if>
         </set>
+        last_modified_date=null
         WHERE id=#{id} AND deleted=0
     </update>
 

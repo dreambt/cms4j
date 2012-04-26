@@ -30,6 +30,15 @@ public class TeacherManager {
         return teacherDao.getTeacher(id);
     }
 
+    /**
+     * 根据编号获得对应文章
+     * @param id
+     * @return
+     */
+    public Long getArticleId(Long id) {
+        return teacherDao.getArticleId(id);
+    }
+
     @Autowired
     public void setTeacherDao(TeacherDao teacherDao) {
         this.teacherDao = teacherDao;

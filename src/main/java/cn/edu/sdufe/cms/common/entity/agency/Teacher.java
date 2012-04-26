@@ -11,9 +11,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  */
 public class Teacher extends PersistableEntity {
     private String teacherName;
-    private String introduction;
-    private int articleId;
-    private int agencyId;
+    private Long articleId;
+    private Long agencyId;
     private String imageUrl;
     private boolean deleted;
 
@@ -25,27 +24,19 @@ public class Teacher extends PersistableEntity {
         this.teacherName = teacherName;
     }
 
-    public String getIntroduction() {
-        return introduction;
-    }
-
-    public void setIntroduction(String introduction) {
-        this.introduction = introduction;
-    }
-
-    public int getArticleId() {
+    public Long getArticleId() {
         return articleId;
     }
 
-    public void setArticleId(int articleId) {
+    public void setArticleId(Long articleId) {
         this.articleId = articleId;
     }
 
-    public int getAgencyId() {
+    public Long getAgencyId() {
         return agencyId;
     }
 
-    public void setAgencyId(int agencyId) {
+    public void setAgencyId(Long agencyId) {
         this.agencyId = agencyId;
     }
 
