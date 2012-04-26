@@ -6,6 +6,8 @@ import cn.edu.sdufe.cms.common.entity.account.User;
 import com.google.common.collect.Lists;
 import org.springside.modules.test.data.RandomData;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,13 +30,18 @@ public class UserData {
         String username = RandomData.randomName(UserSuffix);
 
         User user = new User();
-        user.setId(1L);
+        user.setId(RandomData.randomId() & 0xFF);
         user.setEmail(username + "@sdufe.edu.cn");
         user.setUsername(username);
         user.setPassword(DEFAULT_PASSWORD);
-        user.setSalt("");
+        user.setSalt(RandomData.randomName(UserSuffix));
         user.setStatus(true);
-
+        user.setPhotoURL("1.jpg");
+        user.setTimeOffset("0800");
+        user.setLastIP(134744072L);
+        Date now = Calendar.getInstance().getTime();
+        user.setLastTime(now);
+        user.setLastActTime(now);
         return user;
     }
 

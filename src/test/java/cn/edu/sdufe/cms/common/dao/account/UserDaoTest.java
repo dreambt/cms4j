@@ -4,10 +4,12 @@ import cn.edu.sdufe.cms.common.entity.account.User;
 import cn.edu.sdufe.cms.data.UserData;
 import junit.framework.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 import org.springside.modules.test.data.Fixtures;
 import org.springside.modules.test.spring.SpringTxTestCase;
 
@@ -21,22 +23,40 @@ import org.springside.modules.test.spring.SpringTxTestCase;
 public class UserDaoTest extends SpringTxTestCase {
 
     @Autowired
-    private UserDao userDao;
+    private UserDao userDao=null;
+
+    private User user=null;
 
     @Before
     public void setUp() throws Exception {
         Fixtures.reloadData(dataSource, "/data/sample-data.xml");
+        user = UserData.getRandomUserWithGroup();
     }
 
     @Test
-    public void crudEntityWithUser() throws Exception {
+    public void getUser() throws Exception {
+        // 获取
+        Assert.assertEquals("dreambt@126.com", userDao.findOne(1L).getEmail());
+    }
+
+    @Test
+    @Rollback(false)
+    public void saveUser() throws Exception {
         //新建并保存带权限组的用户
-        User user = UserData.getRandomUserWithGroup();
         Assert.assertEquals(1, userDao.save(user));
 
+        // 获取
+        Assert.assertEquals(user.getEmail(), userDao.findOne(user.getId()).getEmail());
+    }
+
+    @Test
+    @Rollback(false)
+     public void updateUser() throws Exception {
+        //更新用户
+        user.setUsername("baitao.jibt");
         Assert.assertEquals(1, userDao.update(user));
 
         // 获取
-        Assert.assertEquals(user.getEmail(), userDao.findOne(1L).getEmail());
+        Assert.assertEquals(user.getUsername(), userDao.findOne(user.getId()).getUsername());
     }
 }
