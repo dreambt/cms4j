@@ -60,13 +60,13 @@
             </li>
         </shiro:hasPermission>
 
-            <li><a href="${ctx}/dashboard/agency" class="top_level"><img src="${ctx}/static/dashboard/images/icons/AddressBook.png"/>机构管理</a>
+            <li><a href="${ctx}/dashboard/agency" class="top_level"><img src="${ctx}/static/dashboard/images/icons/Apartment%20Building.png"/>机构管理</a>
                 <ul class="drawer">
                     <li><a href="${ctx}/dashboard/agency/create">添加机构</a></li>
                     <li><a href="${ctx}/dashboard/agency/listAll">机构列表</a></li>
                 </ul>
             </li>
-        <li><a href="${ctx}/dashboard/teacher" class="top_level"><img src="${ctx}/static/dashboard/images/icons/AddressBook.png"/>老师管理</a>
+        <li><a href="${ctx}/dashboard/teacher" class="top_level"><img src="${ctx}/static/dashboard/images/icons/User2.png"/>老师管理</a>
                 <ul class="drawer">
                     <li><a href="${ctx}/dashboard/editTeacher">添加老师</a></li>
                     <li><a href="${ctx}/dashboard/listTeacher">老师列表</a></li>
