@@ -56,6 +56,17 @@
 	</select>
 
     <!--
+        根据archive编号获得article编号
+    -->
+    <select id="getArticleIdByArchiveId" parameterType="map" resultMap="archiveDetailMap">
+        select article_id
+        from cms_archive_article
+        where archive_id=#{archiveId}
+        order by id DESC
+        LIMIT ${offset}, ${limit}
+    </select>
+
+    <!--
         保存Archive
     -->
     <insert id="saveArchive" parameterType="Archive">
@@ -98,10 +109,7 @@
     -->
     <delete id="deleteAAByArticleId" parameterType="Long">
         DELETE FROM cms_archive_article
-        WHERE article_id in
-        <foreach item="item" collection="list" open="(" separator="," close=")">
-            #{item}
-        </foreach>
+        WHERE article_id=#{articleId}
         LIMIT 500
     </delete>
 

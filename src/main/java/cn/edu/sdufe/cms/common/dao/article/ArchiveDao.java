@@ -53,6 +53,18 @@ public class ArchiveDao extends SqlSessionDaoSupport {
     }
 
     /**
+     * 根据归档编号获得文章编号
+     *
+     * @return
+     */
+    public List<Long> getArticleIdByArchiveId(Long archiveId, int offset, int limit) {
+        Map parameter = Maps.newHashMap();
+        parameter.put("offset", offset);
+        parameter.put("limit", limit);
+        return getSqlSession().selectList("Archive.getArticleIdByArchiveId", parameter);
+    }
+
+    /**
      * 新增归档
      */
     public int save(Archive archive) {

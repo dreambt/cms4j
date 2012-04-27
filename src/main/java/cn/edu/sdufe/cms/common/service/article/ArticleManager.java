@@ -7,6 +7,7 @@ import cn.edu.sdufe.cms.common.entity.article.Article;
 import cn.edu.sdufe.cms.security.ShiroDbRealm;
 import cn.edu.sdufe.cms.utilities.analyzer.ArticleKeyword;
 import cn.edu.sdufe.cms.utilities.thumb.ImageThumb;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.Validate;
 import org.apache.shiro.SecurityUtils;
@@ -109,6 +110,23 @@ public class ArticleManager {
     public List<Article> findTopTen() {
         return articleDao.findTopTen();
     }
+
+    /**
+     * 根据archive编号获得文章列表
+     * @param archiveId
+     * @param offset
+     * @param limit
+     * @return
+     */
+    public List<Article> findArticleByArchiveId(Long archiveId, int offset, int limit) {
+        List<Article> articles = Lists.newArrayList();
+        List<Long> ids = archiveManager.getArticleIdByArchiveId(archiveId, offset, limit);
+        for(Long id: ids) {
+            articles.add(articleDao.findOne(id));
+        }
+        return articles;
+    }
+
 
     /**
      * 按照parameters搜索用户

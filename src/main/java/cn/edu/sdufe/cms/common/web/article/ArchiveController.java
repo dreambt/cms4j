@@ -51,7 +51,7 @@ public class ArchiveController {
     public String articleListByArchiveId(Model model, @PathVariable("id") Long id) {
         model.addAttribute("archives", archiveManager.getAll());
         model.addAttribute("archive", archiveManager.getByArchiveId(id));
-        model.addAttribute("articles", archiveManager.getByArchiveId(id).getArticleList());
+        model.addAttribute("articles", articleManager.findArticleByArchiveId(id, 0, 10));
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("newArticles", articleManager.findTopTen());
         return "article/list";

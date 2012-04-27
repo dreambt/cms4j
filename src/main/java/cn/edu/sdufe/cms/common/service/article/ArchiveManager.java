@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,12 +34,41 @@ public class ArchiveManager {
     private ArticleDao articleDao;
 
     /**
+     * 获得所有归档
+     *
+     * @return
+     */
+    public List<Archive> getAll() {
+        return archiveDao.findAll();
+    }
+
+    /**
      * 获得最新10条的归类
      *
      * @return
      */
     public List<Archive> getTopTen() {
         return archiveDao.getTopTen();
+    }
+
+    /**
+     * 获取编号为id的归类
+     *
+     * @param id
+     * @return
+     */
+    public Archive getByArchiveId(Long id) {
+        return archiveDao.findOne(id);
+    }
+
+    /**
+     * 通过archive编号获得文章编号
+     *
+     * @param archiveId
+     * @return
+     */
+    public List<Long> getArticleIdByArchiveId(Long archiveId, int offset, int limit) {
+        return archiveDao.getArticleIdByArchiveId(archiveId, offset, limit);
     }
 
     /**
@@ -81,21 +113,22 @@ public class ArchiveManager {
      */
     @Transactional(readOnly = false)
     public void update(Archive archive) {
-        DateTime dateTime = new DateTime();
-        dateTime = dateTime.plusMonths(-1);
-        int year = dateTime.getYear();
-        int month = dateTime.getMonthOfYear();
+        String month = archive.getTitle();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月");
+        Date date = null;
+        try {
+            date = sdf.parse(month);
+        } catch (ParseException e) {
+            logger.error(e.getMessage());
+        }
 
-        List<Article> articles = articleDao.findByMonth(dateTime.toDate());
+        List<Article> articles = articleDao.findByMonth(date);
+        if(null == articles || articles.size() == 0) {
+            archiveDao.delete(archive.getId());
+        }
         if(articles.size() > 0 && archive.getArticleCount() != articles.size()) {
             archive.setArticleCount(articles.size());
             archiveDao.updateArchive(archive);
-            //加入归档文章对应表
-            Long archiveId = archiveDao.findByTitle(String.format("%04d年%02d月", year, month)).getId();
-            for(Article article: articles) {
-                Long articleId = article.getId();
-                archiveDao.saveAA(archiveId, articleId);
-            }
         }
     }
 
