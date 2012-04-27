@@ -51,7 +51,7 @@ a{color:#ff4e00; text-decoration:none;}
 a:visited{color:#ff4e00; text-decoration:none;}
 a:hover{color:#ff9566;}
 a img{border:none}
-.imgleft{float:left; padding:5px 12px 0px 0px;}
+.imgleft{float:left; padding:5px 12px 0px 0px;width: 134px;height: 134px;}
 .imgright{float:right; padding-left:12px;}
 
 /* lists, blockquotes and paragraphs */
