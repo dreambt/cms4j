@@ -10,13 +10,12 @@
         <result property="articleId" column="article_id"/>
         <result property="agencyId" column="agency_id"/>
         <result property="imageUrl" column="image_url"/>
-        <result property="description" column="description"/>
         <result property="deleted" column="deleted"/>
         <result property="createdDate" column="created_date"/>
         <result property="lastModifiedDate" column="last_modified_date"/>
     </resultMap>
 
-    <sql id="teacherColumns">id, teacher_name, article_id, agency_id, image_url, description, deleted, created_date, last_modified_date</sql>
+    <sql id="teacherColumns">id, teacher_name, article_id, agency_id, image_url, deleted, created_date, last_modified_date</sql>
 
     <!--
         根据编号获取教师信息
@@ -58,9 +57,9 @@
     -->
     <insert id="saveTeacher" parameterType="Teacher" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO cms_teacher
-            (teacher_name, article_id, agency_id, image_url, description, deleted, created_date)
+            (teacher_name, article_id, agency_id, image_url, deleted, created_date)
         VALUES
-            (#{teacherName}, #{articleId}, #{agencyId}, #{imageUrl}, #{description}, 0, null)
+            (#{teacherName}, #{articleId}, #{agencyId}, #{imageUrl}, 0, null)
     </insert>
 
     <!--
@@ -87,9 +86,6 @@
             <if test="imageUrl != null and imageUrl != ''">
                 image_url=#{imageUrl},
             </if>
-            <if test="description != null and description != ''">
-                description=#{description},
-          </if>
         </set>
         last_modified_date=null
         WHERE id=#{id} AND deleted=0

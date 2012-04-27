@@ -16,7 +16,6 @@ public class TeacherData {
         teacher.setArticleId(1L);
         teacher.setAgencyId(1L);
         teacher.setImageUrl("teacherName.jpg");
-        teacher.setDescription("dddd");
         return teacher;
     }
 

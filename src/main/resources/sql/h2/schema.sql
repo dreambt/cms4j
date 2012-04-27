@@ -215,7 +215,6 @@ CREATE TABLE IF NOT EXISTS `cms_teacher` (
   `article_id` mediumint(8) NOT NULL,
   `agency_id` mediumint(8) NOT NULL,
   `image_url` varchar(50) NOT NULL,
-  `description` MEDIUMTEXT NOT NULL,
   `deleted` tinyint(1) NOT NULL,
   `last_modified_date` timestamp DEFAULT NULL,
   `created_date` timestamp DEFAULT NULL,
