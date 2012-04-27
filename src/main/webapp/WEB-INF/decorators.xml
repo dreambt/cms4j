@@ -45,5 +45,6 @@
         <pattern>/account*</pattern>
         <pattern>/gallery*</pattern>
         <pattern>/link*</pattern>
+        <pattern>/teacher*</pattern>
     </decorator>
 </decorators>

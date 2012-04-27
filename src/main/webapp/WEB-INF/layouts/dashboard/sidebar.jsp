@@ -66,6 +66,12 @@
                     <li><a href="${ctx}/dashboard/agency/listAll">机构列表</a></li>
                 </ul>
             </li>
+        <li><a href="${ctx}/dashboard/teacher" class="top_level"><img src="${ctx}/static/dashboard/images/icons/AddressBook.png"/>老师管理</a>
+                <ul class="drawer">
+                    <li><a href="${ctx}/dashboard/editTeacher">添加老师</a></li>
+                    <li><a href="${ctx}/dashboard/listTeacher">老师列表</a></li>
+                </ul>
+            </li>
 
         <shiro:hasPermission name="link:list">
         <li><a href="${ctx}/dashboard/fridendLink" class="top_level"><img src="${ctx}/static/dashboard/images/icons/AddressBook.png"/>友情链接管理</a>
