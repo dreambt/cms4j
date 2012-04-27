@@ -14,6 +14,7 @@ public class Teacher extends PersistableEntity {
     private Long articleId;
     private Long agencyId;
     private String imageUrl;
+    private String description;
     private boolean deleted;
 
     public String getTeacherName() {
@@ -46,6 +47,14 @@ public class Teacher extends PersistableEntity {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public boolean isDeleted() {

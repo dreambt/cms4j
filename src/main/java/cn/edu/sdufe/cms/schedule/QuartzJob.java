@@ -43,13 +43,15 @@ public class QuartzJob {
         Long userCount = userDao.count();
         logger.info("######### There are {} user in database. #########", userCount);
 
+        // 归档
+        archiveManager.save();
+        logger.info("######### Archive was ready. #########");
+
         // 删除标记为deleted的记录
         logger.info("######### There are {} article was deleted. #########", articleManager.delete());
         logger.info("######### There are {} comment was deleted. #########", commentDao.delete());
 
-        // 归档
-        archiveManager.save();
-        logger.info("######### Archive was ready. #########");
+
 
         // 生成文章关键词
         //count = articleManager.genKeyword();

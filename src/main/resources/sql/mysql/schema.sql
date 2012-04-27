@@ -264,6 +264,7 @@ CREATE TABLE IF NOT EXISTS `cms_teacher` (
   `article_id` MEDIUMINT(8) NOT NULL,
   `agency_id` MEDIUMINT(8) NOT NULL,
   `image_url` varchar(50) NOT NULL,
+  `description` MEDIUMTEXT NOT NULL,
   `deleted` tinyint(1) NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `last_modified_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -504,5 +505,5 @@ INSERT INTO `cms_agency` (`id`, `title`,`category_id`, `image_url`, `introductio
 -- -----------------------------------------------------
 -- 学术骨干老师测试数据
 -- -----------------------------------------------------
-INSERT INTO `cms_teacher` (`id`, `teacher_name`, `article_id`, `agency_id`, `image_url`, `deleted`, `created_date`, `last_modified_date`) VALUES
-(1, '赵华伟', 1, 1, 'pic_zhaohuawei.jpg', 0, '2012-04-21 09:11:03', '2012-04-21 09:07:47');
+INSERT INTO `cms_teacher` (`id`, `teacher_name`, `article_id`, `agency_id`, `image_url`, `description`, `deleted`, `created_date`, `last_modified_date`) VALUES
+(1, '赵华伟', 1, 1, 'pic_zhaohuawei.jpg', 'DDDD',  0, '2012-04-21 09:11:03', '2012-04-21 09:07:47');
