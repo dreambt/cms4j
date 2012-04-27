@@ -6,7 +6,7 @@
     <resultMap id="archiveDetailMap" type="Archive">
         <id property="id" column="id"/>
         <result property="title" column="title"/>
-        <result property="article_count" column="image_url"/>
+        <result property="articleCount" column="article_count"/>
         <result property="lastModifiedDate" column="last_modified_date"/>
         <result property="createdDate" column="created_date"/>
     </resultMap>
@@ -58,11 +58,11 @@
     <!--
         根据archive编号获得article编号
     -->
-    <select id="getArticleIdByArchiveId" parameterType="map" resultMap="archiveDetailMap">
+    <select id="getArticleIdByArchiveId" parameterType="map" resultType="Long">
         select article_id
         from cms_archive_article
         where archive_id=#{archiveId}
-        order by id DESC
+        order by archive_id DESC
         LIMIT ${offset}, ${limit}
     </select>
 

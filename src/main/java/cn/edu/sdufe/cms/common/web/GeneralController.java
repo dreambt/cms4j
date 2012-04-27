@@ -54,17 +54,6 @@ public class GeneralController {
     }
 
     /**
-     * 测试归档
-     * @return
-     */
-    @RequestMapping(value = "archive")
-    public String test() {
-        archiveManager.save();
-        archiveManager.batchUpdate();
-        return "index";
-    }
-
-    /**
      * 联系我们
      *
      * @return

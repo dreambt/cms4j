@@ -59,6 +59,7 @@ public class ArchiveDao extends SqlSessionDaoSupport {
      */
     public List<Long> getArticleIdByArchiveId(Long archiveId, int offset, int limit) {
         Map parameter = Maps.newHashMap();
+        parameter.put("archiveId", archiveId);
         parameter.put("offset", offset);
         parameter.put("limit", limit);
         return getSqlSession().selectList("Archive.getArticleIdByArchiveId", parameter);
