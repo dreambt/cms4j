@@ -107,9 +107,12 @@
     <!--
         根据article_id删除Archive_Article
     -->
-    <delete id="deleteAAByArticleId" parameterType="Long">
+    <delete id="deleteAAByArticleId">
         DELETE FROM cms_archive_article
-        WHERE article_id=#{articleId}
+        WHERE article_id IN
+        <foreach item="item" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
         LIMIT 500
     </delete>
 
