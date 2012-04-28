@@ -46,13 +46,6 @@ h3{font-size:18px; line-height:20px;}
 h4{font-size:16px; line-height:18px; font-weight:bold;}
 h5{font-size:12px; margin:3px 0px; padding:0px;letter-spacing:1px;}
 
-/* links */
-a{color:#ff4e00; text-decoration:none;}
-a:visited{color:#ff4e00; text-decoration:none;}
-a:hover{color:#ff9566;}
-a img{border:none}
-.imgleft{float:left; padding:5px 12px 0px 0px;width: 134px;height: 134px;}
-.imgright{float:right; padding-left:12px;}
 
 /* lists, blockquotes and paragraphs */
 p, ul, ol, blockquote{
@@ -97,7 +90,7 @@ padding:15px 10px;
 ------------------------------------------------------*/
 #page-container{width:988px; margin:0 auto;}
 .page-container-inner{width:988px; background-image:url(../images/bg-container.png); float:left;}
-.frame{width:920px; margin:0 auto;}
+.frame{width:920px; margin:0 auto;height: 139px;}
 
 
 /* Header

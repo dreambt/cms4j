@@ -62,11 +62,20 @@
     <h2><a href="${ctx}/gallery/album">相册模式</a> | <a href="${ctx}/gallery/photo">画廊模式</a></h2>
     <div id="album_load">
         <c:forEach items="${images}" var="image" begin="0" step="1" varStatus="var">
+            <div class="span-6">
         <div class="pf-gall"><!-- portfolio 1 -->
             <a href="${ctx}/static/uploads/gallery/gallery-big/${image.imageUrl}" rel="fancybox-thumb" class="fancybox-thumb" title="${image.title}"><img
-                    src="${ctx}/static/uploads/gallery/thumb-200x122/${image.imageUrl}" width="200" height="122" alt="" class="pf-img"/></a>
+                    src="${ctx}/static/uploads/gallery/thumb-200x122/${image.imageUrl}" alt="" class="pf-img"/></a>
         </div>
-            <%--<c:if test="${var.index%4==3}"><br/></c:if>--%>
+            </div>
+            <c:if test="${var.count%3==0}">
+                <div class="span-6 last">
+                <div class="pf-gall">
+                    <a href="${ctx}/static/uploads/gallery/gallery-big/${image.imageUrl}" rel="fancybox-thumb" class="fancybox-thumb" title="${image.title}"><img
+                            src="${ctx}/static/uploads/gallery/thumb-200x122/${image.imageUrl}" alt="" class="pf-img"/></a>
+                </div>
+                </div>
+            </c:if>
         </c:forEach>
     </div>
         <div class="blog-pagination"><!-- page pagination -->
