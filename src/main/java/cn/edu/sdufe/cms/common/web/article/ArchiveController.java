@@ -3,6 +3,7 @@ package cn.edu.sdufe.cms.common.web.article;
 import cn.edu.sdufe.cms.common.service.article.ArchiveManager;
 import cn.edu.sdufe.cms.common.service.article.ArticleManager;
 import cn.edu.sdufe.cms.common.service.article.CategoryManager;
+import cn.edu.sdufe.cms.common.service.link.LinkManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,8 @@ public class ArchiveController {
 
     private ArticleManager articleManager;
 
+    private LinkManager linkManager;
+
     /**
      * 显示所有归类
      *
@@ -49,11 +52,24 @@ public class ArchiveController {
      */
     @RequestMapping(value = "list/{id}")
     public String articleListByArchiveId(Model model, @PathVariable("id") Long id) {
-        model.addAttribute("archives", archiveManager.getAll());
+        Long total = articleManager.count(id);
+        int limit = 10;
+        Long pageCount = 1L;
+        if (total % limit == 0) {
+            pageCount = total / limit;
+        } else {
+            pageCount = total / limit + 1;
+        }
+        model.addAttribute("articles", articleManager.findArticleByArchiveId(id, 0, 10));//文章列表
+        model.addAttribute("categories", categoryManager.getNavCategory());//导航菜单
+        model.addAttribute("category", categoryManager.get(id));//获取分类信息
+        model.addAttribute("archives", archiveManager.getTopTen());//边栏归档日志
+        model.addAttribute("newArticles", articleManager.findTopTen());//边栏最新文章
         model.addAttribute("archive", archiveManager.getByArchiveId(id));
-        model.addAttribute("articles", articleManager.findArticleByArchiveId(id, 0, 10));
-        model.addAttribute("categories", categoryManager.getNavCategory());
-        model.addAttribute("newArticles", articleManager.findTopTen());
+        model.addAttribute("total", total);
+        model.addAttribute("pageCount", pageCount);
+        model.addAttribute("links", linkManager.getAllLink());//页脚友情链接
+
         return "article/list";
     }
 
@@ -72,4 +88,8 @@ public class ArchiveController {
         this.articleManager = articleManager;
     }
 
+    @Autowired
+    public void setLinkManager(LinkManager linkManager) {
+        this.linkManager = linkManager;
+    }
 }
