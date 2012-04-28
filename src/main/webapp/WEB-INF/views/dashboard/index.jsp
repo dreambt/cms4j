@@ -38,7 +38,7 @@
 
         <div class="toggle_container">
             <div id="tabs-1"class="block calender">
-                <div class="datepicker" style="margin: 0em;"></div>
+                <div class="datepicker"></div>
             </div>
             <div id="tabs-2" class="block">
                 <div class="content">
