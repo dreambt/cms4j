@@ -13,6 +13,7 @@ public class Teacher extends PersistableEntity {
     private String teacherName;
     private Long articleId;
     private Long agencyId;
+    private Agency agency;
     private String imageUrl;
     private boolean deleted;
 
@@ -38,6 +39,14 @@ public class Teacher extends PersistableEntity {
 
     public void setAgencyId(Long agencyId) {
         this.agencyId = agencyId;
+    }
+
+    public Agency getAgency() {
+        return agency;
+    }
+
+    public void setAgency(Agency agency) {
+        this.agency = agency;
     }
 
     public String getImageUrl() {

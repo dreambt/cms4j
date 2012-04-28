@@ -13,19 +13,23 @@
         <result property="deleted" column="deleted"/>
         <result property="createdDate" column="created_date"/>
         <result property="lastModifiedDate" column="last_modified_date"/>
+        <association property="agency" column="agency_id" javaType="Agency">
+            <result property="title" column="title"/>
+        </association>
     </resultMap>
 
-    <sql id="teacherColumns">id, teacher_name, article_id, agency_id, image_url, deleted, created_date, last_modified_date</sql>
+    <sql id="teacherColumns">A.id, A.teacher_name, A.article_id, A.agency_id, A.image_url, A.deleted, A.created_date, A.last_modified_date</sql>
 
     <!--
         根据编号获取教师信息
     -->
     <select id="getTeacher" parameterType="Long" resultMap="teacherDetailMap">
         SELECT
-        <include refid="teacherColumns"/>
-        FROM cms_teacher
-        WHERE id=#{id} and deleted=0
-        ORDER BY ID DESC
+        <include refid="teacherColumns"/>, B.title
+        FROM cms_teacher AS A
+        LEFT JOIN cms_agency AS B ON A.agency_id=B.id
+        WHERE A.id=#{id} and A.deleted=0
+        ORDER BY A.ID DESC
         LIMIT 1
     </select>
 
@@ -45,10 +49,11 @@
     -->
     <select id="getAllTeacher" resultMap="teacherDetailMap">
         SELECT
-        <include refid="teacherColumns"/>
-        FROM cms_teacher
-        WHERE deleted=0
-        ORDER BY ID DESC
+        <include refid="teacherColumns"/>, B.title
+        FROM cms_teacher AS A
+        LEFT JOIN cms_agency AS B ON A.agency_id=B.id
+        WHERE A.deleted=0
+        ORDER BY A.ID DESC
         LIMIT 30
     </select>
 
