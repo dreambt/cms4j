@@ -176,18 +176,7 @@ public class ArticleManager {
      * @param categoryId
      * @return
      */
-    public List<Article> getListByCategoryId(Long categoryId, int offset, int limit) {
-        return articleDao.findByCategoryId(categoryId, offset, limit);
-    }
-
-    /**
-     * 通过分类categoryId查找文章摘要
-     *
-     * @param categoryId
-     * @return
-     */
-    public List<Article> getDigestByCategoryId(Long categoryId, int offset, int limit) {
-
+    public List<Article> findByCategoryId(Long categoryId, int offset, int limit) {
         return articleDao.findByCategoryId(categoryId, offset, limit);
     }
 

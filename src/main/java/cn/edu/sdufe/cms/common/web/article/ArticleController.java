@@ -145,7 +145,7 @@ public class ArticleController {
      */
     @RequestMapping(value = "listByCategory/{id}", method = RequestMethod.GET)
     public String listArticleByCategory(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("articles", articleManager.getListByCategoryId(id, 0, 110));
+        model.addAttribute("articles", articleManager.findByCategoryId(id, 0, 110));
         return "dashboard/article/listAll";
     }
 
@@ -166,7 +166,7 @@ public class ArticleController {
         } else {
             pageCount = total / limit + 1;
         }
-        model.addAttribute("articles", articleManager.getListByCategoryId(id, 0, limit));//文章列表
+        model.addAttribute("articles", articleManager.findByCategoryId(id, 0, limit));//文章列表
         model.addAttribute("categories", categoryManager.getNavCategory());//导航菜单
         model.addAttribute("category", categoryManager.get(id));//获取分类信息
         model.addAttribute("archives", archiveManager.getTopTen());//边栏归档日志
@@ -188,7 +188,7 @@ public class ArticleController {
     @RequestMapping(value = "list/ajax/{id}", method = RequestMethod.GET)
     @ResponseBody
     public List<Article> ajaxListOfArticle(@PathVariable("id") Long id, @RequestParam("offset") int offset, @RequestParam("limit") int limit) {
-        return articleManager.getListByCategoryId(id, offset, limit);
+        return articleManager.findByCategoryId(id, offset, limit);
     }
 
     /**
@@ -208,7 +208,7 @@ public class ArticleController {
         } else {
             pageCount = total / limit + 1;
         }
-        model.addAttribute("articles", articleManager.getDigestByCategoryId(id, 0, limit));
+        model.addAttribute("articles", articleManager.findByCategoryId(id, 0, limit));
         model.addAttribute("category", categoryManager.get(id));//获取分类信息
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("archives", archiveManager.getTopTen());
@@ -230,7 +230,7 @@ public class ArticleController {
     @RequestMapping(value = "digest/ajax/{id}", method = RequestMethod.GET)
     @ResponseBody
     public List<Article> ajaxDigestOfArticle(@PathVariable("id") Long id, @RequestParam("offset") int offset, @RequestParam("limit") int limit) {
-        return articleManager.getDigestByCategoryId(id, offset, limit);
+        return articleManager.findByCategoryId(id, offset, limit);
     }
 
     /**

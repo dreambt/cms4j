@@ -4,6 +4,7 @@ import cn.edu.sdufe.cms.common.entity.PersistableEntity;
 import cn.edu.sdufe.cms.utilities.IPEncodes;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springside.modules.utils.Collections3;
@@ -183,6 +184,7 @@ public class User extends PersistableEntity {
         return Collections3.extractToString(groupList, "name", ", ");
     }
 
+    @JsonIgnore
     public Long getGroupId() {
         return groupList.get(0).getId();
     }

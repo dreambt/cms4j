@@ -65,7 +65,7 @@ public class ArticleDao extends SqlSessionDaoSupport {
         parameters.put("categoryId", categoryId);
         parameters.put("offset", offset);
         parameters.put("limit", limit);
-        return getSqlSession().selectList("Article.getListByCategoryId", parameters);
+        return getSqlSession().selectList("Article.findByCategoryId", parameters);
     }
 
     /**
