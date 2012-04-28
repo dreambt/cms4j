@@ -248,16 +248,3 @@ CREATE TABLE IF NOT EXISTS `cms_user` (
   `deleted` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
 );
-
--- --------------------------------------------------------
-
---
--- 表的结构 `cms_user_group`
---
-
-DROP TABLE IF EXISTS `cms_user_group`;
-CREATE TABLE IF NOT EXISTS `cms_user_group` (
-  `user_id` mediumint(8) NOT NULL,
-  `group_id` mediumint(8) NOT NULL,
-  PRIMARY KEY (`user_id`,`group_id`)
-);

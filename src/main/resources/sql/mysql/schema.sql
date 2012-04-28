@@ -141,21 +141,6 @@ DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 
 
 -- -----------------------------------------------------
--- Table `cms_user_group`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `cms_user_group` ;
-
-CREATE  TABLE IF NOT EXISTS `cms_user_group` (
-  `user_id` MEDIUMINT(8) NOT NULL ,
-  `group_id` MEDIUMINT(8) NOT NULL ,
-  INDEX `fk_cms_user_group_cms_user1` (`user_id` ASC) ,
-  INDEX `fk_cms_user_group_cms_group1` (`group_id` ASC) ,
-  PRIMARY KEY (`user_id`, `group_id`) )
-ENGINE = InnoDB
-DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
-
-
--- -----------------------------------------------------
 -- Table `cms_group_permission`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `cms_group_permission` ;
