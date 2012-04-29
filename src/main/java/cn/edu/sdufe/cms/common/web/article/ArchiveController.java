@@ -23,11 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ArchiveController {
 
     private ArchiveManager archiveManager;
-
     private CategoryManager categoryManager;
-
     private ArticleManager articleManager;
-
     private LinkManager linkManager;
 
     /**
