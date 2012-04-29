@@ -76,7 +76,7 @@ public class ArticleManager {
         if (null != article) {
             // 记录文章访问次数
             articleDao.update(id);
-
+            article.setViews(article.getViews()+1);
             article.setMessage(Encodes.unescapeHtml(article.getMessage()));
         }
 
