@@ -109,15 +109,20 @@
 
                     //加载文章
                     $.each(data, function (index, content) {
+                        if((index+1)%4!=0){
                         albums.append($("<div class='pf-gall span-6 last'>" +
                                 "<a href='${ctx}/static/uploads/gallery/gallery-big/" + content.imageUrl + "' rel='fancybox-thumb'" +
                                 " class='fancybox-thumb' title='" + content.title + "'>" +
                                 "<img src='${ctx}/static/uploads/gallery/thumb-200x122/" + content.imageUrl + "' width='200' height='122'" +
-                                "alt='' class='pf-img'/></a></div>"));
+                                "alt='' class='pf-img'/></a></div><div class='spacer-pf'>&nbsp;</div>"));
+                        }else{
+                            albums.append($("<div class='pf-gall span-6 last'>" +
+                                    "<a href='${ctx}/static/uploads/gallery/gallery-big/" + content.imageUrl + "' rel='fancybox-thumb'" +
+                                    " class='fancybox-thumb' title='" + content.title + "'>" +
+                                    "<img src='${ctx}/static/uploads/gallery/thumb-200x122/" + content.imageUrl + "' width='200' height='122'" +
+                                    "alt='' class='pf-img'/></a></div>"));
+                        }
                     });
-                    if (index%2 == 0) {
-                        albums.append($("<div class='spacer-pf'>&nbsp;</div>"));
-                    }
 
                     $(".blog-pagination").html("页码&nbsp;:&nbsp;");
 
