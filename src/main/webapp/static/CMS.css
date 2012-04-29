@@ -185,7 +185,9 @@ a img{border:none}
 
 
 /*--------归档列表的样式-------------------*/
-ul#documentA li{margin: 10px;}
+ul#documentA li{margin: 10px;list-style:disc;}
+ul#documentA li a{color: #666;text-decoration: none;}
+ul#documentA li a:hover{text-decoration: underline;color: #999;}
 
 /*--------album------*/
 #album_load{
