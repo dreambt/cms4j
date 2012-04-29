@@ -31,7 +31,7 @@
 <!-- BEGIN PAGE TITLE -->
 <div id="page-title">
     <div class="title"><!-- your title page -->
-        <h2 class="cufon">${article.category.categoryName}</h2>
+        <h2>${article.category.categoryName}</h2>
     </div>
     <div class="desc">${article.digest}</div>
 </div>

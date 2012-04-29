@@ -30,7 +30,7 @@ content.jsp<%--
 <!-- BEGIN PAGE TITLE -->
 <div id="page-title">
     <div class="title"><!-- your title page -->
-        <h2 class="cufon">学术骨干</h2>
+        <h2>学术骨干</h2>
     </div>
     <div class="desc">${article.digest}</div>
 </div>

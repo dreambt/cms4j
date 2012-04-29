@@ -28,7 +28,7 @@
             <!-- BEGIN PAGE TITLE -->
             <div id="page-title">
                 <div class="title"><!-- your title page -->
-                    <h1 class="cufon">联系我们</h1>
+                    <h1>联系我们</h1>
                 </div>
                 <div class="desc"><!-- description about your page -->
                     您的回复是对我们最大的支持, 欢迎社会各界与我们合作交流.
@@ -40,7 +40,7 @@
             <div id="content-inner">
                 <div id="content-map">
                     <div class="maincontent">
-                        <h2 class="cufon">我们希望听到您的声音</h2>
+                        <h2>我们希望听到您的声音</h2>
                         <p id="loadBar" style="display:none;">
                             <strong>邮件发送中. 可能需要花费一些时间&#8230;</strong><br />
                             <img src="${ctx}/static/images/loading.gif" alt="Loading..." title="Sending Email" />
@@ -53,7 +53,7 @@
                             Phone: +86 1234 5678<br />
                             Email: jrgczx@gmail.com
                         </p>
-                        <h2 class="cufon">给我们发送邮件</h2>
+                        <h2>给我们发送邮件</h2>
                         <div id="contactFormArea">
                             <form action="scripts/contact.php" method="post" id="cForm">
                                 <fieldset>
@@ -89,7 +89,7 @@
                 </div>
                 <div id="side-map">
                     <div class="maincontent">
-                        <h2 class="cufon">地理位置</h2>
+                        <h2>地理位置</h2>
                         <div class="google-map"><p><img src="${ctx}/static/images/big-map.png" alt=""  /></p></div>
                     </div>
                 </div>

@@ -22,7 +22,7 @@
 </script>--%>
 <div id="side-box">
     <div class="maincontent">
-        <h2 class="cufon">搜索文章</h2>
+        <h2>搜索文章</h2>
         <div id="search-box">
             <form id="search" action="#" method="get">
                 <fieldset class="search-fieldset">
@@ -33,7 +33,7 @@
         </div>
     </div>
     <div class="maincontent">
-        <h2 class="cufon">最新文章</h2>
+        <h2>最新文章</h2>
         <ul class="blog-list">
             <c:forEach items="${newArticles}" var="newArticle" begin="0" step="1">
                 <li><a href="${ctx}/article/content/${newArticle.id}">${fn:substring(newArticle.subject,0,16)}<c:if test="${fn:length(newArticle.subject)>16}">...</c:if></a></li>
@@ -41,7 +41,7 @@
         </ul>
     </div>
     <div class="maincontent">
-        <h2 class="cufon">存档分类</h2>
+        <h2>存档分类</h2>
         <ul class="blog-list">
             <c:forEach items="${archives}" var="archive" begin="0" step="1">
                 <li><a href="${ctx}/archive/list/${archive.id}">${archive.title}&nbsp;(${archive.articleCount})</a></li>
@@ -50,7 +50,7 @@
         </ul>
     </div>
     <%--<div class="maincontent">
-        <h2 class="cufon">Sponsor</h2>
+        <h2>Sponsor</h2>
         <div id="sponsors">
             <div class="banner-img"><a href="#"><img src="${ctx}/static/images/sponsors/tf_260x120_v2.gif" alt=""/></a>
             </div>

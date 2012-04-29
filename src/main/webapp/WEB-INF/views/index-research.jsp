@@ -96,7 +96,7 @@
 
 </div>
 <ul id="friLnk" class="span-24">
-    <li class="friLnkT cufon"><strong>友情链接</strong></li>
+    <li class="friLnkT"><strong>友情链接</strong></li>
     <c:forEach items="${links}" var="link" begin="0" step="1">
         <li class="fri"><a href="${link.url}">${fn:substring(link.title,0,13)}</a></li>
     </c:forEach>

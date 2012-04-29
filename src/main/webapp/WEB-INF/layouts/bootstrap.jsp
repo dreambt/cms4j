@@ -54,11 +54,6 @@
             $('ul.sf-menu').superfish();
         });
     </script>
-    <script type="text/javascript" src="${ctx}/static/js/cufon-yui.js"></script>
-    <script type="text/javascript" src="${ctx}/static/js/Microsoft_YaHei_400.font.js"></script>
-    <script type="text/javascript">
-        Cufon.replace('.cufon')('.phone')('.textslide p');
-    </script>
     <sitemesh:head/>
 </head>
 <body data-spy="scroll" data-target=".subnav" >

@@ -40,7 +40,7 @@
 <body>
 <!-- BEGIN PAGE TITLE -->
 <div id="page-title">
-    <div class="title"><h2 class="cufon">相册</h2></div>
+    <div class="title"><h2>相册</h2></div>
     <div class="desc">一花一世界，一叶一春秋</div>
 </div>
 <!-- END OF PAGE TITLE -->
