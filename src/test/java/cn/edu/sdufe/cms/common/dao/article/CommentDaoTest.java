@@ -2,14 +2,13 @@ package cn.edu.sdufe.cms.common.dao.article;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springside.modules.test.data.Fixtures;
-import org.springside.modules.test.spring.SpringTxTestCase;
+import org.springside.modules.test.data.DataFixtures;
+import org.springside.modules.test.spring.SpringTransactionalTestCase;
 
 /**
  * CommentDao的测试用例, 测试ORM映射及特殊的DAO操作. 默认在每个测试函数后进行回滚.
@@ -18,7 +17,7 @@ import org.springside.modules.test.spring.SpringTxTestCase;
  * Time: 下午6:53
  */
 @ContextConfiguration(locations = {"/applicationContext.xml"})
-public class CommentDaoTest extends SpringTxTestCase {
+public class CommentDaoTest extends SpringTransactionalTestCase {
 
     private static Logger logger = LoggerFactory.getLogger(CommentDaoTest.class);
 
@@ -27,13 +26,13 @@ public class CommentDaoTest extends SpringTxTestCase {
 
     @Before
     public void setUp() throws Exception {
-        Fixtures.reloadData(dataSource, "/data/sample-data.xml");
+        DataFixtures.reloadData(dataSource, "/data/sample-data.xml");
     }
 
     @Test
     public void testGetCount() throws Exception {
         Long count = commentDao.count();
-        logger.info("Comment count: ",count);
+        logger.info("Comment count: {}",count);
         Assert.assertTrue(count > 0);
     }
 

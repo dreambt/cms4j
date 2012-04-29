@@ -74,8 +74,6 @@
 		FROM cms_comment
 		WHERE STATUS =1
 		AND deleted =0
-		ORDER BY id ASC
-		LIMIT 1
 	</select>
 
     <!--
@@ -87,8 +85,6 @@
 		WHERE article_id =#{articleId}
 		AND STATUS =1
 		AND deleted =0
-		ORDER BY id ASC
-		LIMIT 1
 	</select>
 
     <!-- 插入评论 -->

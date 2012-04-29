@@ -5,13 +5,10 @@ import cn.edu.sdufe.cms.data.AgencyData;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springside.modules.test.data.Fixtures;
-import org.springside.modules.test.spring.SpringTxTestCase;
+import org.springside.modules.test.data.DataFixtures;
+import org.springside.modules.test.spring.SpringTransactionalTestCase;
 
 import java.util.List;
 
@@ -22,7 +19,7 @@ import java.util.List;
  * Time: 上午11:38
  */
 @ContextConfiguration(locations = {"classpath*:/applicationContext.xml"})
-public class AgencyDaoTest extends SpringTxTestCase {
+public class AgencyDaoTest extends SpringTransactionalTestCase {
 
     @Autowired
     private AgencyDao agencyDao;
@@ -30,7 +27,7 @@ public class AgencyDaoTest extends SpringTxTestCase {
 
     @Before
     public void setUp() throws Exception {
-        Fixtures.reloadData(dataSource, "/data/sample-data.xml");
+        DataFixtures.reloadData(dataSource, "/data/sample-data.xml");
     }
 
     @Test

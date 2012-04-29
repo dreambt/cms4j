@@ -6,12 +6,10 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.test.data.Fixtures;
-import org.springside.modules.test.spring.SpringTxTestCase;
+import org.springside.modules.test.data.DataFixtures;
+import org.springside.modules.test.spring.SpringTransactionalTestCase;
 
 /**
  * UserDao的测试用例, 测试ORM映射及特殊的DAO操作. 默认在每个测试函数后进行回滚.
@@ -20,7 +18,7 @@ import org.springside.modules.test.spring.SpringTxTestCase;
  * Time: 下午7:01
  */
 @ContextConfiguration(locations = {"/applicationContext.xml"})
-public class UserDaoTest extends SpringTxTestCase {
+public class UserDaoTest extends SpringTransactionalTestCase {
 
     @Autowired
     private UserDao userDao=null;
@@ -29,7 +27,7 @@ public class UserDaoTest extends SpringTxTestCase {
 
     @Before
     public void setUp() throws Exception {
-        Fixtures.reloadData(dataSource, "/data/sample-data.xml");
+        DataFixtures.reloadData(dataSource, "/data/sample-data.xml");
         user = UserData.getRandomUserWithGroup();
     }
 
@@ -40,7 +38,6 @@ public class UserDaoTest extends SpringTxTestCase {
     }
 
     @Test
-    @Rollback(false)
     public void saveUser() throws Exception {
         //新建并保存带权限组的用户
         Assert.assertEquals(1, userDao.save(user));
@@ -50,9 +47,9 @@ public class UserDaoTest extends SpringTxTestCase {
     }
 
     @Test
-    @Rollback(false)
      public void updateUser() throws Exception {
         //更新用户
+        user = userDao.findOne(2L);
         user.setUsername("baitao.jibt");
         Assert.assertEquals(1, userDao.update(user));
 

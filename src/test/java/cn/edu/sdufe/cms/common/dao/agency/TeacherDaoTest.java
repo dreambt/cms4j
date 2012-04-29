@@ -8,8 +8,8 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
-import org.springside.modules.test.data.Fixtures;
-import org.springside.modules.test.spring.SpringTxTestCase;
+import org.springside.modules.test.data.DataFixtures;
+import org.springside.modules.test.spring.SpringTransactionalTestCase;
 
 /**
  * 老师信息测试类
@@ -18,7 +18,7 @@ import org.springside.modules.test.spring.SpringTxTestCase;
  * Time: 下午2:33
  */
 @ContextConfiguration(locations = {"classpath*:/applicationContext.xml"})
-public class TeacherDaoTest extends SpringTxTestCase {
+public class TeacherDaoTest extends SpringTransactionalTestCase {
 
     @Autowired
     private TeacherDao teacherDao;
@@ -26,7 +26,7 @@ public class TeacherDaoTest extends SpringTxTestCase {
 
     @Before
     public void setUp() throws Exception {
-        Fixtures.reloadData(dataSource, "/data/sample-data.xml");
+        DataFixtures.reloadData(dataSource, "/data/sample-data.xml");
     }
 
     @Test
