@@ -15,7 +15,7 @@ public class Start {
     public static final String TEST_BASE_URL = "http://localhost:8082/CMS";
 
     public static void main(String[] args) throws Exception {
-        Server server = JettyFactory.createServer(PORT, CONTEXT);
+        Server server = JettyFactory.createServerInSource(PORT, CONTEXT);
         server.start();
         System.out.println("Server running at " + BASE_URL);
         System.out.println("Hit Enter in console to stop server");

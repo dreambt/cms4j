@@ -4,7 +4,7 @@ import cn.edu.sdufe.cms.Start;
 import org.eclipse.jetty.server.Server;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
-import org.springside.modules.test.data.Fixtures;
+import org.springside.modules.test.data.DataFixtures;
 import org.springside.modules.test.functional.JettyFactory;
 import org.springside.modules.test.spring.SpringContextHolder;
 
@@ -37,7 +37,7 @@ public class BaseFunctionalTestCase {
      */
     protected static void startJetty() throws Exception {
         if (jettyServer == null) {
-            jettyServer = JettyFactory.createServer(Start.TEST_PORT, Start.CONTEXT);
+            jettyServer = JettyFactory.createServerInSource(Start.TEST_PORT, Start.CONTEXT);
             jettyServer.start();
             dataSource = SpringContextHolder.getBean("dataSource");
         }
@@ -47,6 +47,6 @@ public class BaseFunctionalTestCase {
      * 载入默认数据.
      */
     protected static void reloadSampleData() throws Exception {
-        Fixtures.reloadData(dataSource, "/data/sample-data.xml");
+        DataFixtures.reloadData(dataSource, "/data/sample-data.xml");
     }
 }
