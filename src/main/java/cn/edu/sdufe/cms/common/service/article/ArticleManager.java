@@ -113,6 +113,7 @@ public class ArticleManager {
 
     /**
      * 根据archive编号获得文章列表
+     *
      * @param archiveId
      * @param offset
      * @param limit
@@ -121,7 +122,7 @@ public class ArticleManager {
     public List<Article> findArticleByArchiveId(Long archiveId, int offset, int limit) {
         List<Article> articles = Lists.newArrayList();
         List<Long> ids = archiveManager.getArticleIdByArchiveId(archiveId, offset, limit);
-        for(Long id: ids) {
+        for (Long id : ids) {
             articles.add(articleDao.findOne(id));
         }
         return articles;
@@ -156,7 +157,7 @@ public class ArticleManager {
      * @return
      */
     public List<Article> getInfo() {
-        Long[] ids = {19L, 20L, 21L, 22L};
+        Long[] ids = {19L, 20L, 21L, 22L, 32L, 33L};
         return articleDao.findTitleByCategoryId(ids);
     }
 
@@ -404,7 +405,7 @@ public class ArticleManager {
     @Transactional(readOnly = false)
     public int delete() {
         List<Long> ids = articleDao.findDeletedArticle();
-        if(null == ids) {
+        if (null == ids) {
             return 0;
         }
         archiveDao.deleteAAByArticleId(ids);
