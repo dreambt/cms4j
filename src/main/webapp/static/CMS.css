@@ -133,14 +133,14 @@ a img{border:none}
 /* Portfolio
 ------------------------------------------------------*/
 .main-portfolio p{padding-bottom:25px;}
-.portfolio-box{width:442px; background-color:#f2f2f2;float:left; margin-bottom:37px;}
+.portfolio-box{background-color:#f2f2f2;float:left; margin-bottom:15px;height: 276px;overflow: hidden;}
 .portfolio-box-bottom{width:442px; background-color:#f2f2f2;float:left; margin-bottom:17px;}
 .spacer-pf{width:36px; float:left; display:block; height:100%;}
 .pf-content{padding:18px; font-size:11px; float:left;}
 .pf-content img{border:1px solid #ccc; margin-right:15px; float:left;}
-.pf-gall{border:1px solid #ccc; padding:1%; margin-bottom:30px;width: 97%}
+.pf-gall{border:1px solid #ccc; padding:2px; margin-bottom:15px;height: 137px;width:224px;}
 .pf-content p{font-size:11px;}
-.pf-title{background:url(images/strip-line2.gif) repeat; width:422px; font-size:16px; color:#ff4e00; padding:10px; float:left;}
+.pf-title{background:url(images/strip-line2.gif) repeat; width:450px; font-size:16px; color:#ff4e00; padding:10px; float:left;}
 
 .portfolio-pagination{
     height: 30px;
@@ -194,8 +194,11 @@ ul#documentA li{margin: 10px;}
     width: 950px;
 }
 p.albumDesc{
-    width:405px;
+    width:434px;
+    height: 200px;
+    margin: 0;
 }
+.spacer-pf{width:10px; float:left; display:block; height:100%;}
 
 /* Contact
 ------------------------------------------------------*/
@@ -218,10 +221,10 @@ ul li a.announce{color:#6F6F6F}
 a.abtn{display:block;height:130px;width:17px;overflow:hidden;background:url(images/arrow3.png) no-repeat 0px 50%;}
 a.aleft{float:left;}
 a.agrayleft{cursor:default;background-position:-34px 50%;}
-a.aright{float:right;background-position:-17px 50%;}
+a.aright{background-position:-17px 50%;}
 a.agrayright{cursor:default;background-position:-51px 50%;}
 .scrolllist{width:750px; height: 205px;float:left;}
-.scrolllist .imglist_w{width:716px;height:205px;overflow:hidden;float:left;position:relative;/*必要元素*/}
+.scrolllist .imglist_w{width:714px;height:205px;overflow:hidden;float:left;position:relative;/*必要元素*/}
 .scrolllist .imglist_w ul{width:20000px;position:absolute;top:0px;list-style: none;padding: 0;margin: 0}
 .scrolllist .imglist_w li{width:130px;float:left;padding:2px 4px 0 9px;z-index: 999;}
 .scrolllist .imglist_w li img{padding:2px;border:solid 1px #ddd;}
@@ -260,7 +263,7 @@ a.agrayright{cursor:default;background-position:-51px 50%;}
 .logo a img{display:block;float: left;}
 .logo a h1{display:block;float: left;margin-top:6px;text-decoration: none;}
  /*------main----------*/
-#left_b{border: 1px solid #ccc;margin-top: 10px;}
+#left_b{width:748px;border:1px solid #ddd;float:left;margin-top: 10px;}
 .container_index{margin-bottom: 8px;float: left;}
 span.more{display: block;float: right;padding-right:5px;font-size:10px !important;color:#666 !important;text-decoration: none;}
 span.more:hover{color:#999 !important;text-decoration:underline; }
@@ -268,7 +271,8 @@ ul.content{list-style:none;padding: 0;margin: 0;display: block;float: left;}
 ul.content li{line-height: 25px;background:url(images/ico-2.gif) center left  no-repeat;padding-left:10px;width:92%;margin-left:3%;float:left;display:block; }
 ul.content li a{color:#6F6F6F !important;text-decoration: none;display: block;float: left;}
 ul.content li a:hover{text-decoration: underline;}
-ul.content li span.time{float: right;display: block;color:#999;font-size: 11px;}
+ul.content li.lastM{background-image: none;}
+ul.content li span.time{float: right;display: block;color:#999;font-size: 11px;margin-right:5px;}
 .title_index{text-indent:0.5em;display: block;float: left;padding:5px 0;margin:0;font-size:12px;line-height:22px;color:#444;background: url("images/title_bg.png")  repeat-x;text-decoration: none;}
 .title_index strong{display:block;float: left;}
 .title_index:hover{color:#666;}
@@ -278,6 +282,9 @@ ul.content li span.time{float: right;display: block;color:#999;font-size: 11px;}
 .title-268{width: 268px;}
 .title-468{width: 468px;}
 .title-188{width: 188px;}
+.subTitle{text-indent: 1em;}
+.span149{width: 149px;margin-right:10px;float: left;}
+p{margin-bottom: 1em;}
 /*---left_l---*/
 p.researchDesc{padding:5px 8px  8px 8px;display: block;float:left;margin: 0;}
 .p5{padding: 5px;}

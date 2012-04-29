@@ -40,7 +40,7 @@
 <body>
 <!-- BEGIN PAGE TITLE -->
 <div id="page-title">
-    <div class="title"><h1>相册</h1></div>
+    <div class="title"><h2 class="cufon">相册</h2></div>
     <div class="desc">一花一世界，一叶一春秋</div>
 </div>
 <!-- END OF PAGE TITLE -->
@@ -48,13 +48,12 @@
 <div id="content-inner-full">
     <h2><a href="${ctx}/gallery/album">相册模式</a> | <a href="${ctx}/gallery/photo">画廊模式</a></h2>
     <div id="album_load">
-    <%--<c:out value="${fn:length(images)}"/>--%>
-    <c:forEach items="${images}" var="image" begin="0" step="1" varStatus="var">
-    <div class="portfolio-box"><!-- portfolio 1 -->
+   <c:forEach items="${images}" var="image" begin="0" step="1" varStatus="var">
+    <div class="portfolio-box span-12 last"><!-- portfolio 1 -->
         <div class="pf-title">${image.title}</div>
         <div class="pf-content">
             <a href="${ctx}/static/uploads/gallery/gallery-big/${image.imageUrl}" class="fancy_box" title="${image.title}">
-                <img src="${ctx}/static/uploads/gallery/thumb-218x194/${image.imageUrl}" alt="" width="218px" height="194px" /></a>
+                <img src="${ctx}/static/uploads/gallery/thumb-218x194/${image.imageUrl}" alt="" /></a>
             <p class="albumDesc">${image.description}</p>
         </div>
     </div>
@@ -93,11 +92,11 @@
 
                     //加载文章
                     $.each(data, function (index, content) {
-                        albums.append($("<div class='portfolio-box'>" +
+                        albums.append($("<div class='portfolio-box span-12 last'>" +
                                 "<div class='pf-title'>" + content.title + "</div>" +
                                 "<div class='pf-content'>" +
                                 "<a href='${ctx}/static/uploads/gallery/gallery-big/" + content.imageUrl + "' class='fancy_box' title='" + content.title + "'>" +
-                                "<img alt='' width='218px' height='194px' src='${ctx}/static/uploads/gallery/thumb-218x194/" + content.imageUrl + "' /></a>" +
+                                "<img alt='' src='${ctx}/static/uploads/gallery/thumb-218x194/" + content.imageUrl + "' /></a>" +
                                 "<p class='albumDesc'>" + content.description + "</p>" +
                                 "</div>" +
                                 "</div>"));

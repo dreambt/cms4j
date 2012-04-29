@@ -62,19 +62,14 @@
     <h2><a href="${ctx}/gallery/album">相册模式</a> | <a href="${ctx}/gallery/photo">画廊模式</a></h2>
     <div id="album_load">
         <c:forEach items="${images}" var="image" begin="0" step="1" varStatus="var">
-            <div class="span-6">
+            <div class="span-6 last">
         <div class="pf-gall"><!-- portfolio 1 -->
             <a href="${ctx}/static/uploads/gallery/gallery-big/${image.imageUrl}" rel="fancybox-thumb" class="fancybox-thumb" title="${image.title}"><img
                     src="${ctx}/static/uploads/gallery/thumb-200x122/${image.imageUrl}" alt="" class="pf-img"/></a>
         </div>
-            </div>
-            <c:if test="${var.count%3==0}">
-                <div class="span-6 last">
-                <div class="pf-gall">
-                    <a href="${ctx}/static/uploads/gallery/gallery-big/${image.imageUrl}" rel="fancybox-thumb" class="fancybox-thumb" title="${image.title}"><img
-                            src="${ctx}/static/uploads/gallery/thumb-200x122/${image.imageUrl}" alt="" class="pf-img"/></a>
                 </div>
-                </div>
+            <c:if test="${var.count%4!=0}">
+                <div class="spacer-pf">&nbsp;</div>
             </c:if>
         </c:forEach>
     </div>
@@ -82,10 +77,14 @@
             页码 &nbsp;:&nbsp;
             <c:choose>
                 <c:when test="${total <= 132}">
-                    <c:forEach begin="1" end="${pageCount>1?pageCount:1}" step="1" varStatus="var"><span class="blog-button-page pagination">${var.index}</span>&nbsp;</c:forEach>
+                    <c:forEach begin="1" end="${pageCount>1?pageCount:1}" step="1" varStatus="var">
+                        <span class="blog-button-page pagination">${var.index}</span>&nbsp;
+                    </c:forEach>
                 </c:when>
                 <c:otherwise>
-                    <c:forEach begin="1" end="11" step="1" varStatus="var"><span class="blog-button-page pagination">${var.index}</span>&nbsp;</c:forEach>
+                    <c:forEach begin="1" end="11" step="1" varStatus="var">
+                        <span class="blog-button-page pagination">${var.index}</span>&nbsp;
+                    </c:forEach>
                 </c:otherwise>
             </c:choose>
         </div>
@@ -110,12 +109,15 @@
 
                     //加载文章
                     $.each(data, function (index, content) {
-                        albums.append($("<div class='pf-gall'><!-- portfolio 1 -->" +
+                        albums.append($("<div class='pf-gall span-6 last'>" +
                                 "<a href='${ctx}/static/uploads/gallery/gallery-big/" + content.imageUrl + "' rel='fancybox-thumb'" +
                                 " class='fancybox-thumb' title='" + content.title + "'>" +
                                 "<img src='${ctx}/static/uploads/gallery/thumb-200x122/" + content.imageUrl + "' width='200' height='122'" +
                                 "alt='' class='pf-img'/></a></div>"));
                     });
+                    if (index%2 == 0) {
+                        albums.append($("<div class='spacer-pf'>&nbsp;</div>"));
+                    }
 
                     $(".blog-pagination").html("页码&nbsp;:&nbsp;");
 

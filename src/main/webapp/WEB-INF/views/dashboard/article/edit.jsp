@@ -25,7 +25,7 @@
     <div class="flat_area grid_16">
         <h2>编辑文章</h2>
         <p>请选择 <strong>文章分类</strong> <strong>是否置顶</strong> <strong>是否允许评论</strong> , 并填写 <strong>文章标题</strong> 和 <strong>文章内容</strong>.</p>
-        <P><strong>请您注意：</strong>发表文章时插入的图片宽度超过612像素，系统会自动以图片长宽比例将其缩小到宽度为612像素！</P>
+        <P><strong>请您注意：</strong>发表文章时插入的图片宽度超过676像素，系统会自动以图片长宽比例将其缩小到宽度为676像素！</P>
         <c:if test="${not empty info}">
             <div id="message" class="alert alert_blue">
                 <img height="24" width="24" src="${ctx}/static/dashboard/images/icons/Locked2.png"><strong>${info}</strong>

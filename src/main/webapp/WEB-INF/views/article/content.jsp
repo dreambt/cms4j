@@ -146,9 +146,9 @@
         //设置图片宽度最大为621px
         $('img').each(function(i){
             //alert($(this).width());
-            if($(this).width()>621){
-                var b=621/($(this).width());
-                $(this).width(621);
+            if($(this).width()>676){
+                var b=676/($(this).width());
+                $(this).width(676);
                 $(this).height($(this).height()*b);
             }
         });

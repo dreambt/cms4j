@@ -27,13 +27,13 @@
     <!-- ////////////////////////////////// -->
     <!-- //      Start Stylesheets       // -->
     <!-- ////////////////////////////////// -->
-    <!--<link href="${ctx}/static/blueprint/1.0.1/screen-customized.css" type="text/css" rel="stylesheet" media="screen, projection"/>
-    <link href="${ctx}/static/blueprint/1.0.1/print.css" type="text/css" rel="stylesheet" media="print"/>-->
+    <link href="${ctx}/static/blueprint/1.0.1/screen.css" type="text/css" rel="stylesheet" media="screen, projection" />
+    <link href="${ctx}/static/blueprint/1.0.1/screen-customized.css" type="text/css" rel="stylesheet" media="screen, projection" />
+    <link href="${ctx}/static/blueprint/1.0.1/print.css" type="text/css" rel="stylesheet" media="print" />
     <!--[if lt IE 8]><link href="${ctx}/static/blueprint/1.0.1/ie.css" type="text/css" rel="stylesheet" media="screen, projection"><![endif]-->
-    <link href="${ctx}/static/css/style.min.css" rel="stylesheet" type="text/css"/>
-    <link href="${ctx}/static/css/inner.min.css" rel="stylesheet" type="text/css"/>
-    <link href="${ctx}/static/css/superfish.min.css" rel="stylesheet" type="text/css"/>
-    <link href="${ctx}/static/CMS.min.css" rel="stylesheet" type="text/css"/>
+    <link href="${ctx}/static/css/superfish.min.css" rel="stylesheet" type="text/css"  />
+    <link href="${ctx}/static/CMS.css" type="text/css" rel="stylesheet" />
+
     <!--[if IE 6]>
     <link href="${ctx}/static/css/ie6.min.css" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" src="${ctx}/static/js/DD_belatedPNG.js"></script>
@@ -78,7 +78,7 @@
 <body>
 <div id="page-container">
     <div class="page-container-inner">
-        <div class="frame">
+        <div class="container">
             <%@ include file="/WEB-INF/layouts/header.jsp" %>
             <sitemesh:body/>
             <%@ include file="/WEB-INF/layouts/footer.jsp" %>
