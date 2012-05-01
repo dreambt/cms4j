@@ -27,8 +27,17 @@
             <p class="title_index title-268">
                 <strong>关于我们</strong>
             </p>
-
-           <p class="researchDesc">${fn:substring(agency.introduction,0,215)}</p>
+           <p class="researchDesc">金融风险管理研究所围绕着新资本协议框架，基于流程银行的最佳实践，结合人工智能、数据挖掘技术和各种数据分析方法，研究经济及金融一体化趋势下金融风险的识别、度量和控制理论与应用，特别是金融信用风险评估指标体系、风险分析模型及预警系统、商业银行结构性风险管理系统、证券投资风险预测与管理工具等。研究所依托山东财经大学的学科优势，与相关企业、科研单位在金融机构全面风险管理方面开展产学研合作，促进科技成果的转化与应用。</p>
+           <p class="researchDesc">专家团队由具有较高理论造诣的高校教师和具有丰富实际工作经验的业界专家组成。其中教授2人，副教授、高级工程师和高级系统分析师6人，团队成员大多具有博士学位或具有海外学习与工作经历。</p>
+        </div>
+        <div class="container_index span-7-border">
+            <p class="title_index title-268"><a href="#"><strong>解决方案</strong></a></p>
+            <ul class="content span-7">
+                <li><a href="#">农村金融机构全面风险管理方案</a></li>
+                <li><a href="#">中小银行信用风险内部评级解决方案</a></li>
+                <li><a href="#">战略规划落地实施解决方案</a></li>
+                <li><a href="#">战略规划落地实施解决方案</a></li>
+            </ul>
         </div>
     </div>
     <!---left_l end----->
@@ -54,33 +63,28 @@
             </p>
 
         </div>
-        <div class="container_index span-12-border">
-            <p class="title_index title-468"><a href="#"><strong>解决方案</strong></a></p>
-            <ul class="content span-12">
-                <li><a href="#">农村金融机构全面风险管理方案</a></li>
-                <li><a href="#">中小银行信用风险内部评级解决方案</a></li>
-                <li><a href="#">战略规划落地实施解决方案</a></li>
-            </ul>
-        </div>
+
     </div>
     <!---- left_r end---->
     <div id="left_b" class="span-19 last">
+        <p class="title_index title-748"><strong>专家团队</strong></p>
         <%@ include file="/WEB-INF/layouts/teacher.jsp" %>
     </div>
     <!---教师风采---->
 </div>
 <div class="span-5 last">
     <div class="container_index span-5-border">
-        <p class="title_index title-188"><strong>教育培训</strong><%--<a href="#" class="more">更多>></a>--%></p>
-            <span class="span-2"><a href="#" class="institution">证书培训</a></span>
-            <span class="span-2"><a href="#" class="institution">高管培训</a></span>
-            <span class="span-2"><a href="#" class="institution">学历培训</a></span>
-            <span class="span-2"><a href="#" class="institution">学历培训</a></span>
+        <p class="title_index title-188"><strong>产学研合作</strong><%--<a href="#" class="more">更多>></a>--%></p>
+        <p class="brief">本研究所与山东省城商联盟、山东省农信社等多家金融机构，山东舜德数据管理软件公司等多家国内外企业建立了长期的紧密合作关系。承担国家自然基金项目1项、省部级科研课题及企业委托研发课题6项。独立研究及与合作伙伴共同研发的成果已取得软件著作权6项，申报国家发明专利2项，“基于流程管理的商业银行资产管理系统”和“基于Basel II的商业银行内部评级系统”等多项成果已成功应用于交通银行、广发银行、恒丰银行、齐鲁银行、德州商行及小额贷款公司等非银行金融机构。</p>
     </div>
     <div class="container_index span-5-border">
         <p class="title_index title-188"><strong>IT支持系统</strong><span class="more"> <a href="${ctx}/article/list/" class="more">更多>></a></span></p>
         <ul class="content span-5">
             <li><a href="#">风险及内控管理系统</a></li>
+            <li><a href="#">流动性风险管理系统</a></li>
+            <li><a href="#">流动性风险管理系统</a></li>
+            <li><a href="#">流动性风险管理系统</a></li>
+            <li><a href="#">流动性风险管理系统</a></li>
             <li><a href="#">流动性风险管理系统</a></li>
 
         </ul>

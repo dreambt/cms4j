@@ -76,7 +76,7 @@ public class ArticleManager {
         if (null != article) {
             // 记录文章访问次数
             articleDao.update(id);
-            article.setViews(article.getViews()+1);
+            article.setViews(article.getViews() + 1);
             article.setMessage(Encodes.unescapeHtml(article.getMessage()));
         }
 
@@ -405,7 +405,7 @@ public class ArticleManager {
     @Transactional(readOnly = false)
     public int delete() {
         List<Long> ids = articleDao.findDeletedArticle();
-        if (null == ids) {
+        if (null == ids || ids.size() == 0) {
             return 0;
         }
         archiveDao.deleteAAByArticleId(ids);
