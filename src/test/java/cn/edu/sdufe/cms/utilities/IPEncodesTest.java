@@ -23,12 +23,12 @@ public class IPEncodesTest {
         ipEncodes = new IPEncodes();
     }
 
-    @Test(timeout = 3)
+    @Test(timeout = 5)
     public void testIpToLong() throws Exception {
         assertEquals(address, ipEncodes.ipToLong(HOSTNAME));
     }
 
-    @Test(timeout = 3)
+    @Test(timeout = 5)
     public void testLongToIp() throws Exception {
         assertEquals(HOSTNAME, ipEncodes.longToIp(address));
     }
