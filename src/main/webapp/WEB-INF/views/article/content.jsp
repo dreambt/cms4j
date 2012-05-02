@@ -93,7 +93,7 @@
                                         </div>
                                     </div>
                                     <div class="l_text"><label class="m_flo">内  容：</label><textarea class="text" id="myEditor" name="message"></textarea><span class="tr">字数限制为5-200个</span></div>
-                                    <div class="l_text" id="imgid" style="display: block;margin-left: 60px;position: absolute;z-index: 9999;bottom:70px; ">&nbsp;</div>
+                                    <div class="l_text" id="imgid" style="display: block;margin-left: 60px;position: absolute;z-index: 9999;bottom:80px; ">&nbsp;</div>
                                     <div class="l_text"><label class="m_flo">验证码：</label><input type="text" id="captcha" name="captcha" /> </div>
                                 </div>
                             <input type="submit" class="input-submit" value=" 提 交 " id="submit"/>
