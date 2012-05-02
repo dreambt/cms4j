@@ -32,7 +32,6 @@ public class CommentController {
      * @param redirectAttributes
      * @return
      */
-    @RequiresPermissions("comment:create")
     @RequestMapping(value = "create", method = RequestMethod.POST)
     public String createComment(Comment comment, RedirectAttributes redirectAttributes, HttpServletRequest request) {
         // 获取用户输入的验证码

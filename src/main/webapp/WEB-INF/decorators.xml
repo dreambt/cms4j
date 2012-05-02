@@ -15,10 +15,6 @@
         <pattern>/gallery/photo*</pattern>
     </decorator>
 
-    <decorator name="blueprint" page="blueprint.jsp">
-        <pattern>/index-blueprint</pattern>
-    </decorator>
-
     <decorator name="bootstrap" page="bootstrap.jsp">
         <pattern>/index4</pattern>
     </decorator>
@@ -34,6 +30,7 @@
         <pattern>/article/listInfo</pattern>
         <pattern>/archive/list*</pattern>
         <pattern>/article/content*</pattern>
+        <pattern>/comment/create</pattern>
     </decorator>
 
     <decorator name="dashboard" page="dashboard/default.jsp">

@@ -63,7 +63,9 @@
 
     <!-- 获取文章正文 -->
     <select id="getArticle" parameterType="Long" resultMap="articleDetailMap">
-        SELECT <include refid="articleColumns"/>, U.username AS user_username, C.id AS cat_id, C.category_name AS cat_category_name, C.description AS cat_description, C.allow_comment AS cat_allow_comment, COMM.username AS comm_username, COMM.message AS comm_message
+        SELECT <include refid="articleColumns"/>, U.username AS user_username,
+        C.id AS cat_id, C.category_name AS cat_category_name, C.description AS cat_description, C.allow_comment AS cat_allow_comment,
+        COMM.username AS comm_username, COMM.message AS comm_message, COMM.status AS comm_status, COMM.deleted AS comm_deleted
         FROM cms_article AS A
         LEFT OUTER JOIN cms_user AS U ON user_id = U.id
         LEFT OUTER JOIN cms_category AS C ON category_id = C.id

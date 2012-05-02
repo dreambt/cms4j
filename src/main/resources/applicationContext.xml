@@ -44,8 +44,9 @@
     <!-- production/local development环境 -->
     <beans profile="production,development">
         <context:property-placeholder ignore-resource-not-found="true"
-                                      location="classpath*:/application.properties,classpath*:/application.local.properties,
-          			  file:d:/application.local.properties,file:/opt/CMS/application.server.properties"/>
+                                      location="classpath*:/application.properties,
+                                      classpath*:/application.local.properties,
+                                      file:/opt/CMS/application.server.properties"/>
 
         <!-- 数据源配置,使用应用内的DBCP数据库连接池 -->
         <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
