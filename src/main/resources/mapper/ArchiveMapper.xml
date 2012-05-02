@@ -56,7 +56,7 @@
 	</select>
 
     <!--
-        根据archive编号获得article编号
+        根据archive编号获得article编号, 分页
     -->
     <select id="getArticleIdByArchiveId" parameterType="map" resultType="Long">
         select article_id
@@ -64,6 +64,15 @@
         where archive_id=#{archiveId}
         order by archive_id DESC
         LIMIT ${offset}, ${limit}
+    </select>
+
+    <!--
+        根据archive编号获得article编号
+    -->
+    <select id="getAllArticleIdByArchiveId" parameterType="Long" resultType="Long">
+        select article_id
+        from cms_archive_article
+        where archive_id=#{archiveId}
     </select>
 
     <!--

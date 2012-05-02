@@ -46,7 +46,7 @@ public class TeacherDaoTest extends SpringTransactionalTestCase {
     public void testSave() throws Exception {
         teacher = TeacherData.getTeacher();
         int result = teacherDao.save(teacher);
-        System.out.println(teacher.getId());
-        //Assert.assertEquals(1, result);
+        //System.out.println(teacher.getId());
+       Assert.assertEquals(1, result);
     }
 }

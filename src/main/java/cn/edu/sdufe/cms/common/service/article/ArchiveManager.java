@@ -109,27 +109,18 @@ public class ArchiveManager {
     }
 
     /**
-     * 更新指定月份的归类
+     * 更新归类
      */
     @Transactional(readOnly = false)
     public void update(Archive archive) {
-        String month = archive.getTitle();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月");
-        Date date = null;
-        try {
-            date = sdf.parse(month);
-        } catch (ParseException e) {
-            logger.error(e.getMessage());
-        }
-
-        List<Article> articles = articleDao.findByMonth(date);
-        if(null == articles || articles.size() == 0) {
+        List<Long> archives = archiveDao.getAllArticleIdByArchiveId(archive.getId());
+        if(null == archives || 0 == archives.size()) {
             archiveDao.delete(archive.getId());
         }
-        if(articles.size() > 0 && archive.getArticleCount() != articles.size()) {
-            archive.setArticleCount(articles.size());
+        if(archive.getArticleCount() != archives.size()) {
             archiveDao.updateArchive(archive);
         }
+
     }
 
     /**
