@@ -10,6 +10,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  * Time: 下午3:28
  */
 public class Teacher extends PersistableEntity {
+
     private String teacherName;
     private Long articleId;
     private Long agencyId;

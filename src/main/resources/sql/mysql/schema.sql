@@ -231,8 +231,8 @@ CREATE TABLE IF NOT EXISTS `cms_agency` (
   `introduction` mediumtext NOT NULL,
   `rate` int(11) NOT NULL DEFAULT '0',
   `deleted` tinyint(1) NOT NULL,
-  `created_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `last_modified_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB
 DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
@@ -250,8 +250,7 @@ CREATE TABLE IF NOT EXISTS `cms_teacher` (
   `agency_id` MEDIUMINT(8) NOT NULL,
   `image_url` varchar(50) NOT NULL,
   `deleted` tinyint(1) NOT NULL,
-  `created_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `last_modified_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
