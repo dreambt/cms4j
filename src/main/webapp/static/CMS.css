@@ -84,7 +84,7 @@ ul.news-list li a:hover {text-decoration:underline;}
 .blog-post h2 a, .blog-post h2 a:visited{margin-bottom:0px;color:  #FF4E00;text-decoration: none;}
 .blog-post h2 a:hover{margin-bottom:0px;color:#FF9566;}
 .digest.blog-post{margin-bottom:35px;height: 125px;display: block;}
-.blog-post{margin-bottom:35px;text-align: left;}
+.blog-post{margin-bottom:35px;text-align: left;width:676px;}
 .blog-posted{background-image:url(images/strip-line.gif); background-repeat:repeat; width:487px; padding:5px; margin:5px 0px 5px 0px; font-size:11px; float:left;}
 .blog-posted-inner{background-image:url(images/strip-line.gif); background-repeat:repeat; width:676px; padding:5px; margin:5px 0px 14px 0px; font-size:11px; float:left;}
 .blog-posted, .blog-posted-inner{color:#565656;}
