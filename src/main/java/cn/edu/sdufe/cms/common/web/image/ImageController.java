@@ -166,7 +166,7 @@ public class ImageController {
      * @param redirectAttributes
      * @return
      */
-    @RequiresPermissions("gallery:delete")
+    @RequiresPermissions("gallery:save")
     @RequestMapping(value = "delete/{id}")
     public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         if (imageManager.delete(id) > 0) {
@@ -183,7 +183,7 @@ public class ImageController {
      *
      * @return
      */
-    @RequiresPermissions("gallery:delete")
+    @RequiresPermissions("gallery:save")
     @RequestMapping(value = "batchDelete", method = RequestMethod.POST)
     public String batchDeleteComment(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         String[] isSelected = request.getParameterValues("isSelected");

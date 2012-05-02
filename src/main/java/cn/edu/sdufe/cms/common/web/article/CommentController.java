@@ -129,7 +129,7 @@ public class CommentController {
      *
      * @return
      */
-    @RequiresPermissions("comment:delete")
+    @RequiresPermissions("comment:save")
     @RequestMapping(value = "delete/{id}")
     public String deleteComment(@PathVariable("id") Long id, @ModelAttribute("comment") Comment comment, RedirectAttributes redirectAttributes) {
         if (commentManager.update(id, "deleted") > 0) {
@@ -164,7 +164,7 @@ public class CommentController {
      *
      * @return
      */
-    @RequiresPermissions("comment:delete")
+    @RequiresPermissions("comment:save")
     @RequestMapping(value = "batchDelete", method = RequestMethod.POST)
     public String batchDeleteComment(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         String[] isSelected = request.getParameterValues("isSelected");

@@ -68,6 +68,7 @@ public class ArticleController {
      * @return
      */
     //TODO 临时使用
+    @Deprecated
     @RequestMapping(value = "content{id}", method = RequestMethod.GET)
     public String contextOfAgency(@PathVariable("id") String id, Model model, RedirectAttributes redirectAttributes) {
         Article article = articleManager.findForView(1L);
@@ -326,7 +327,7 @@ public class ArticleController {
         }
     }
 
-    @RequiresPermissions("article:delete")
+    @RequiresPermissions("article:save")
     @RequestMapping(value = "deleteAll")
     public String batchDeleteArticle(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         String[] isSelected = request.getParameterValues("isSelected");
@@ -409,7 +410,7 @@ public class ArticleController {
      * @param id
      * @return
      */
-    @RequiresPermissions("article:delete")
+    @RequiresPermissions("article:save")
     @RequestMapping(value = "delete/{id}")
     public String deleteArticle(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         if (articleManager.update(id, "deleted") > 0) {

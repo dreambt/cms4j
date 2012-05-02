@@ -142,7 +142,7 @@ public class UserController {
      * @param id
      * @return
      */
-    @RequiresPermissions("user:delete")
+    @RequiresPermissions("user:save")
     @RequestMapping(value = "delete/{id}")
     public String deleteArticle(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         if (userManager.update(id, "deleted") > 0) {
@@ -167,7 +167,7 @@ public class UserController {
         }
     }
 
-    @RequiresPermissions("user:delete")
+    @RequiresPermissions("user:save")
     @RequestMapping(value = "deleteAll")
     public String batchDeleteUser(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         String[] isSelected = request.getParameterValues("isSelected");
