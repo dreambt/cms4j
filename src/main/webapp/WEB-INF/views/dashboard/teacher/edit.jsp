@@ -45,12 +45,19 @@
             <div class="toggle_container">
                 <div class="block">
                     <input type="hidden" name="article.id" value="" id="teacherID"/>
-                    <label>上传头像：</label>
+                    <label for="upload">上传头像：</label>
                     <input type="file" id="upload" name="file" value="" alt=""><br/>
-                    <label>老师姓名：</label> <input type="text" id="text" name="subject" class="required" original-title="请输入老师姓名" value="${article.subject}" />
+                    <label for="teacherName">老师姓名：</label> <input type="text" id="teacherName" name="subject" class="required" original-title="请输入老师姓名" value="${article.subject}" />
                     <input type="hidden" id="allowComment" value="false"/>
-                    <label>是否置顶</label> <input type="checkbox" name="top" value="${article.top}" <c:if test="${article.top}">checked="checked"</c:if> /> &nbsp;&nbsp;
+                    <label for="topt">是否置顶</label> <input id="topt" type="checkbox" name="top" value="${article.top}" <c:if test="${article.top}">checked="checked"</c:if> /> &nbsp;&nbsp;
                     <br />
+                    <label for="agencyT">所属研究所</label><select id="agencyT">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    </select>
                     <script type="text/plain" id="myEditor">${article.message}</script>
                     <script type="text/javascript">
                         var editor = new baidu.editor.ui.Editor({
