@@ -57,18 +57,19 @@ public class NotifyMessageListener implements MessageListener {
                 String fileName = mapMessage.getString("fileName");
                 ImageThumb imageThumb = new ImageThumb();
                 imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-134x134/" + fileName, 134, 134);
-                imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-200x122/" + fileName, 200, 122);
+                imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-224x136/" + fileName, 224, 136);
                 imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-218x194/" + fileName, 218, 194);
                 imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-272x166/" + fileName, 272, 166);
                 logger.info("Success to generate Thumb: {}", path + "thumb-*/" + fileName);
             } else if ("del_thumb".equals(objectType)) {
                 String path = System.getProperty("user.dir");
                 String fileName = mapMessage.getString("fileName");
-                new File(path + "/src/main/webapp/static/uploads/gallery/gallery-big/thumb-50x57", fileName).delete();
-                new File(path + "/src/main/webapp/static/uploads/gallery/gallery-big/thumb-134x134", fileName).delete();
-                new File(path + "/src/main/webapp/static/uploads/gallery/gallery-big/thumb-200x122", fileName).delete();
-                new File(path + "/src/main/webapp/static/uploads/gallery/gallery-big/thumb-218x194", fileName).delete();
-                new File(path + "/src/main/webapp/static/uploads/gallery/gallery-big/thumb-272x166", fileName).delete();
+                new File(path + "/src/main/webapp/static/uploads/gallery/gallery-big", fileName).delete();
+                new File(path + "/src/main/webapp/static/uploads/gallery/thumb-50x57", fileName).delete();
+                new File(path + "/src/main/webapp/static/uploads/gallery/thumb-134x134", fileName).delete();
+                new File(path + "/src/main/webapp/static/uploads/gallery/thumb-224x136", fileName).delete();
+                new File(path + "/src/main/webapp/static/uploads/gallery/thumb-218x194", fileName).delete();
+                new File(path + "/src/main/webapp/static/uploads/gallery/thumb-272x166", fileName).delete();
                 logger.info("Success to delete Thumb: {}", path + "thumb-*/" + fileName);
             } else {
                 logger.error("Unknown objectType: " + mapMessage.toString());

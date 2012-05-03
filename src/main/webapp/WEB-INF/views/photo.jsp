@@ -65,7 +65,7 @@
             <div class="span-6 last">
         <div class="pf-gall"><!-- portfolio 1 -->
             <a href="${ctx}/static/uploads/gallery/gallery-big/${image.imageUrl}" rel="fancybox-thumb" class="fancybox-thumb" title="${image.title}"><img
-                    src="${ctx}/static/uploads/gallery/thumb-200x122/${image.imageUrl}" alt="" class="pf-img"/></a>
+                    src="${ctx}/static/uploads/gallery/thumb-224x136/${image.imageUrl}" alt="" class="pf-img"/></a>
         </div>
                 </div>
             <c:if test="${var.count%4!=0}">
@@ -113,13 +113,13 @@
                         albums.append($("<div class='pf-gall span-6 last'>" +
                                 "<a href='${ctx}/static/uploads/gallery/gallery-big/" + content.imageUrl + "' rel='fancybox-thumb'" +
                                 " class='fancybox-thumb' title='" + content.title + "'>" +
-                                "<img src='${ctx}/static/uploads/gallery/thumb-200x122/" + content.imageUrl + "' width='200' height='122'" +
+                                "<img src='${ctx}/static/uploads/gallery/thumb-224x136/" + content.imageUrl + "' width='200' height='122'" +
                                 "alt='' class='pf-img'/></a></div><div class='spacer-pf'>&nbsp;</div>"));
                         }else{
                             albums.append($("<div class='pf-gall span-6 last'>" +
                                     "<a href='${ctx}/static/uploads/gallery/gallery-big/" + content.imageUrl + "' rel='fancybox-thumb'" +
                                     " class='fancybox-thumb' title='" + content.title + "'>" +
-                                    "<img src='${ctx}/static/uploads/gallery/thumb-200x122/" + content.imageUrl + "' width='200' height='122'" +
+                                    "<img src='${ctx}/static/uploads/gallery/thumb-224x136/" + content.imageUrl + "' width='200' height='122'" +
                                     "alt='' class='pf-img'/></a></div>"));
                         }
                     });

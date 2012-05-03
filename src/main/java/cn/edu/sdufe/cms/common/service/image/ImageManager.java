@@ -199,7 +199,7 @@ public class ImageManager {
                 this.deletePic("gallery-big/" + oldFileName);
                 this.deletePic("thumb-50x57/" + oldFileName);
                 this.deletePic("thumb-134x134/" + oldFileName);
-                this.deletePic("thumb-200x122/" + oldFileName);
+                this.deletePic("thumb-224x136/" + oldFileName);
                 this.deletePic("thumb-218x194/" + oldFileName);
                 this.deletePic("thumb-460x283/" + oldFileName);
             } catch (Exception e) {
@@ -242,7 +242,7 @@ public class ImageManager {
         this.deletePic("gallery-big/" + fileName);
         this.deletePic("thumb-50x57/" + fileName);
         this.deletePic("thumb-134x134/" + fileName);
-        this.deletePic("thumb-200x122/" + fileName);
+        this.deletePic("thumb-224x136/" + fileName);
         this.deletePic("thumb-218x194/" + fileName);
         this.deletePic("thumb-460x283/" + fileName);
 
@@ -276,7 +276,7 @@ public class ImageManager {
         // TODO 删除
         //上传路径
         String path = System.getProperty("user.dir");
-        new File(path + "/src/main/webapp/static/uploads/gallery/gallery-big", fileName).delete();
+        new File(path + "/src/main/webapp/static/uploads/gallery/", fileName).delete();
         //new File(UPLOAD_PATH + "gallery-big/", fileName).delete();
     }
 
