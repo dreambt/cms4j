@@ -258,7 +258,7 @@ public class ArticleManager {
         Document document = Jsoup.parse(message);
         Elements imgs = document.getElementsByTag("img");
         if (null == imgs || imgs.size() == 0) {
-            return "";
+            return "noPic.jpg";
         } else {
             Element img = imgs.first();
             String srcString = img.attr("src");
