@@ -27,7 +27,7 @@
     <!--
         获取Archive
     -->
-    <select id="getArchiveByTitle" parameterType="String" resultMap="archiveDetailMap">
+    <select id="getArchiveByTitle" parameterType="String" resultType="Archive">
         select <include refid="archiveColumns"/>
         from cms_archive
         where title=#{title}

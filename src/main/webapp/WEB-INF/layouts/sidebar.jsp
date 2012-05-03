@@ -43,7 +43,7 @@
     <div class="maincontent">
         <h2>存档分类</h2>
         <ul class="blog-list">
-            <c:forEach items="${archives}" var="archive" begin="0" step="1">
+            <c:forEach items="${archives}" var="archive" begin="0" step="1" end="10">
                 <li><a href="${ctx}/archive/list/${archive.id}">${archive.title}&nbsp;(${archive.articleCount})</a></li>
             </c:forEach>
             <li><a href="${ctx}/archive/list">更多存档...</a></li>

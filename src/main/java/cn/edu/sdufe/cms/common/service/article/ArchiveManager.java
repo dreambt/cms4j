@@ -82,11 +82,16 @@ public class ArchiveManager {
         int year = dateTime.getYear();
         int month = dateTime.getMonthOfYear();
 
+        String title = String.format("%04d年%02d月", year, month);
+        if(null != archiveDao.findByTitle(title)) {
+            return;
+        }
+
         //获得指定月份的所有文章
         List<Article> articles = articleDao.findByMonth(dateTime.toDate());
         if (articles.size() > 0) {
             Archive archive = new Archive();
-            archive.setTitle(String.format("%04d年%02d月", year, month));
+            archive.setTitle(title);
             archive.setArticleCount(articles.size());
             archiveDao.save(archive);
             //加入归档文章对应表
