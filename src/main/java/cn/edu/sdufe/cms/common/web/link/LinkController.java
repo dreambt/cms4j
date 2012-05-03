@@ -34,6 +34,7 @@ public class LinkController {
     @RequestMapping(value = "listAll")
     public String listAll(Model model) {
         model.addAttribute("links", linkManager.getAllLink());
+        model.addAttribute("linkCategories", LinkCategoryEnum.values());
         return "dashboard/link/listAll";
     }
 

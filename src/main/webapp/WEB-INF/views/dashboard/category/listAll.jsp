@@ -66,8 +66,7 @@
                                                 <td><a href="${ctx}/${subCategory.url}" target="_blank">${subCategory.url}</a></td>
                                                 <td><c:choose><c:when test="${subCategory.allowComment}"><img src="${ctx}/static/dashboard/images/success.png"/></c:when><c:otherwise><img  src="${ctx}/static/dashboard/images/error.png"/></c:otherwise></c:choose></td>
                                                 <td><c:choose><c:when test="${subCategory.allowPublish}"><img src="${ctx}/static/dashboard/images/success.png"/></c:when><c:otherwise><img src="${ctx}/static/dashboard/images/error.png"/></c:otherwise></c:choose></td>
-                                                <td><c:forEach items="${showTypes}" var="showType" begin="0" step="1"><c:if test="${showType.value==subCategory.showType.value}">${showType.displayName}</c:if></c:forEach>
-                                                </td>
+                                                <td><c:forEach items="${showTypes}" var="showType" begin="0" step="1"><c:if test="${showType.value==subCategory.showType.value}">${showType.displayName}</c:if></c:forEach></td>
                                                 <td><a href="${ctx}/category/edit/${subCategory.id}" type="submit">【修改】</a> <a href="${ctx}/category/delete/${subCategory.id}" type="submit" class="delete">【删除】</a></td>
                                             </tr>
                                         </c:forEach>
