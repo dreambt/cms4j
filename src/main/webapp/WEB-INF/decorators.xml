@@ -43,5 +43,6 @@
         <pattern>/gallery*</pattern>
         <pattern>/link*</pattern>
         <pattern>/teacher*</pattern>
+        <pattern>/agency*</pattern>
     </decorator>
 </decorators>

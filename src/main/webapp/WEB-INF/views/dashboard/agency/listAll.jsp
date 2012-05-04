@@ -9,6 +9,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -56,21 +57,23 @@
                     <th>banner</th>
                     <th>研究所名</th>
                     <th>描述</th>
-                    <th>URL</th>
                     <th>添加时间</th>
                     <th>最后修改时间</th>
                     <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
+                <c:forEach items="${agencies}" var="agency" begin="0" step="1" varStatus="stat">
+                <tr>
                 <td><input type="checkbox" name="isSelected"  value=""></td>
-                <td><a href="${ctx}/static/images/banner.png" rel="fancybox-thumb" class="fancy_box"><img src="${ctx}/static/images/banner.png" width="80px" height="30px"/></a></td>
-                <td><a href="${ctx}/index-research">风险管理组织架构</a></td>
-                <td><a href="${ctx}/static/uploads/gallery/thumb-50x57" class="opener" value="风险管理组织架构">点击查看</a> </td>
-                <td><a href="${ctx}/index-research">index-research</a></td>
-                <td>2012-04-23 16:31</td>
-                <td>2012-04-23 16:31</td>
-                <td><a href="#">【审核】</a><a href="#">【编辑】</a><a href="#" class="delete">【删除】</a></td>
+                <td><a href="${ctx}/static/uploads/agency/${agency.imageUrl}" rel="fancybox-thumb" class="fancy_box"><img src="${ctx}/static/uploads/agency/${agency.imageUrl}" width="80px" height="30px"/></a></td>
+                <td><a href="${ctx}/index-research/${agency.id}">${agency.title}</a></td>
+                <td><a href="#" class="opener" value="${agency.introduction}">点击查看</a> </td>
+                <td><fmt:formatDate value="${agency.createdDate}" type="both"></fmt:formatDate></td>
+                <td><fmt:formatDate value="${agency.createdDate}" type="both"></fmt:formatDate></td>
+                <td><a href="${ctx}/agency/edit/${agency.id}"class="edit">【编辑】</a><a href="${ctx}/agency/delete/${agency.id}" class="delete">【删除】</a></td>
+                </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>

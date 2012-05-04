@@ -23,21 +23,19 @@
 <div id="main_container" class="main_container container_16 clearfix">
     <div class="flat_area grid_10">
         <h2>添加研究所</h2>
-
         <p>添加研究所，上传的研究所banner图片的规格为：<strong>920px*196px</strong></p>
     </div>
 </div>
 <div class="main_container container_16 clearfix">
-    <form id="agency">
+    <form:form id="agencyForm" modelAttribute="agency" action="${ctx}/agency/save/${agency.id}" method="post">
         <div class="box grid_16">
             <h2 class="box_head grad_colour round_top">添加研究所</h2>
-
             <div class="toggle_container">
                 <div class="info" style="float:left;margin-left: 15%;margin-top: 15px;">
-                    <input id="agencyID" type="hidden" name="id" value=""/>
-                    研究所图片：<br/><input type="file" id="upload" name="file" value="" alt=""><br> <br>
-                    机构研究所：<br/><input type="text" class="required" name="title" size="52" value=""> <br/> <br/>
-                    研究所描述：<br/><textarea type="text" class="required" name="description" cols="55" rows="5"></textarea>
+                    <input id="agencyID" type="hidden" name="id" value="${agency.id}"/>
+                    研究所图片：<br/><input type="file" id="upload" name="imageUrl" value="banner.png" alt=""><br> <br>
+                    研究所名称：<br/><input type="text" class="required" name="title" size="52" value="${agency.title}"> <br/> <br/>
+                    研究所描述：<br/><textarea type="text" class="required" name="introduction" cols="55" rows="5"></textarea>
                     <br/> <br/>
                     <br/><br/>
                     <!--<img src="#" style="display: block;float: left;">-->
@@ -45,7 +43,7 @@
             </div>
         </div>
         <button type="submit" style="margin-left: 23%;width: 100px;" id="submit">提交</button>
-    </form>
+    </form:form>
 </div>
 <script type="text/javascript ">
     $(function(){

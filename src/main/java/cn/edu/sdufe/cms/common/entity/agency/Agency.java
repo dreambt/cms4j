@@ -1,27 +1,21 @@
 package cn.edu.sdufe.cms.common.entity.agency;
 
 import cn.edu.sdufe.cms.common.entity.PersistableEntity;
-import com.opensymphony.module.sitemesh.tapestry.Title;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.springframework.stereotype.Component;
 
 /**
  * 用途
- * User: pengfei.dongpf(pengfei.dong@gmail.com)
+ * User: pengfei.dongpf(pengfei.dong@gmail.com), lirong.songlr(1158633726@qq.com)
  * Date: 12-4-23
  * Time: 下午12:55
  */
 public class Agency extends PersistableEntity {
+
     private String title;
-
     private Long categoryId;
-
     private String imageUrl;
-
     private String introduction;
-
     private int rate;
-
     private boolean deleted;
 
     public String getTitle() {
