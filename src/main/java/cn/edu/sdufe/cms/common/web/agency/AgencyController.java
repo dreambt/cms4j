@@ -2,7 +2,6 @@ package cn.edu.sdufe.cms.common.web.agency;
 
 import cn.edu.sdufe.cms.common.entity.agency.Agency;
 import cn.edu.sdufe.cms.common.entity.article.Category;
-import cn.edu.sdufe.cms.common.entity.link.Link;
 import cn.edu.sdufe.cms.common.entity.link.LinkCategoryEnum;
 import cn.edu.sdufe.cms.common.service.agency.AgencyManager;
 import cn.edu.sdufe.cms.common.service.article.CategoryManager;
@@ -13,7 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 用途
@@ -22,7 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * Time: 下午1:26
  */
 @Controller
-@RequestMapping(value = "/agency/")
+@RequestMapping(value = "/agency")
 public class AgencyController {
 
     private AgencyManager agencyManager;
@@ -61,6 +64,8 @@ public class AgencyController {
     }
 
     /**
+     * 打开新建研究所页面
+     *
      * @param model
      * @return
      */
@@ -71,10 +76,18 @@ public class AgencyController {
         return "dashboard/agency/edit";
     }
 
+    /**
+     * 保存研究所
+     * @param file
+     * @param request
+     * @param agency
+     * @param redirectAttributes
+     * @return
+     */
     @RequestMapping(value = "save", method = RequestMethod.POST)
-    public String save(Agency agency, RedirectAttributes redirectAttributes) {
+    public String save(@RequestParam(value = "file") MultipartFile file, HttpServletRequest request, Agency agency, RedirectAttributes redirectAttributes) {
 
-        if (agencyManager.saveAgency(agency) > 0) {
+        if (agencyManager.saveAgency(file, request, agency) > 0) {
             redirectAttributes.addFlashAttribute("info", "机构添加成功");
         } else {
             redirectAttributes.addFlashAttribute("error", "机构添加失败");
@@ -83,6 +96,8 @@ public class AgencyController {
     }
 
     /**
+     * 删除研究所
+     *
      * @param id
      * @param redirectAttributes
      * @return
@@ -96,7 +111,6 @@ public class AgencyController {
         }
         return "redirect:/agency/listAll";
     }
-
 
 
     @Autowired

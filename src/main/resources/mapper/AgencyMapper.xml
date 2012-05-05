@@ -34,7 +34,6 @@
     <select id="getAllAgency" resultMap="agencyDetailMap">
         SELECT <include refid="agencyColumns"/>
         FROM cms_agency
-        WHERE deleted=0
         ORDER BY ID DESC
         LIMIT 30
     </select>

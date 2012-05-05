@@ -5,6 +5,7 @@ import cn.edu.sdufe.cms.common.entity.image.Image;
 import cn.edu.sdufe.cms.jms.NotifyMessageProducer;
 import cn.edu.sdufe.cms.utilities.RandomString;
 import cn.edu.sdufe.cms.utilities.thumb.ImageThumb;
+import cn.edu.sdufe.cms.utilities.upload.UploadFile;
 import com.google.common.collect.Maps;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -104,7 +105,8 @@ public class ImageManager {
     @Transactional(readOnly = false)
     public int save(MultipartFile file, HttpServletRequest request, Image image) {
         if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
-            String fileName = this.uploadFile(file, request);
+            UploadFile uploadFile = new UploadFile();
+            String fileName = uploadFile.uploadFile(file, request, UPLOAD_DIR);
             image.setImageUrl(fileName);
 
             try {
@@ -120,40 +122,6 @@ public class ImageManager {
             image.setImageUrl("");
         }
         return imageDao.save(image);
-    }
-
-    /**
-     * 上传文件
-     *
-     * @param file
-     * @param request
-     * @return
-     */
-    public String uploadFile(MultipartFile file, HttpServletRequest request) {
-        // 转型为MultipartHttpRequest：
-        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-
-        //上传路径
-        String path = multipartRequest.getSession().getServletContext().getRealPath(UPLOAD_DIR);
-
-        //原文件名
-        String imageName = file.getOriginalFilename();
-        String ext = imageName.substring(imageName.lastIndexOf("."), imageName.length());
-
-        //服务器上的文件名
-        String fileName = new Date().getTime() + "-" + RandomString.get(6) + ext;
-        File targetFile = new File(path, fileName);
-        if (!targetFile.exists()) {
-            targetFile.mkdirs();
-        }
-
-        //保存
-        try {
-            file.transferTo(targetFile);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return fileName;
     }
 
     /**
@@ -177,7 +145,8 @@ public class ImageManager {
         if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
             //存储旧图片名
             String oldFileName = image.getImageUrl();
-            String fileName = this.uploadFile(file, request);
+            UploadFile uploadFile = new UploadFile();
+            String fileName = uploadFile.uploadFile(file, request, UPLOAD_DIR);
             image.setImageUrl(fileName);
 
             //项目路径

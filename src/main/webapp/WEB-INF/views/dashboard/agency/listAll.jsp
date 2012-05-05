@@ -40,7 +40,7 @@
             </div>
         </c:if>
         <c:if test="${not empty error}">
-            <div id="message" class="alert alert_red">
+            <div id="error" class="alert alert_red">
                 <img height="24" width="24"
                      src="${ctx}/static/dashboard/images/icons/Locked2.png"><strong>${error}</strong>
             </div>
@@ -70,8 +70,10 @@
                 <td><a href="${ctx}/agency/show/${agency.id}" target="_blank">${agency.title}</a></td>
                 <td><a href="#" class="opener" value="${agency.introduction}">点击查看</a> </td>
                 <td><fmt:formatDate value="${agency.createdDate}" type="both"></fmt:formatDate></td>
-                <td><fmt:formatDate value="${agency.createdDate}" type="both"></fmt:formatDate></td>
-                <td><a href="${ctx}/agency/edit/${agency.id}"class="edit">【编辑】</a><a href="${ctx}/agency/delete/${agency.id}" class="delete">【删除】</a></td>
+                <td><fmt:formatDate value="${agency.lastModifiedDate}" type="both"></fmt:formatDate></td>
+                <td><a href="${ctx}/agency/edit/${agency.id}" class="edit">【编辑】</a>
+                    <a href="${ctx}/agency/delete/${agency.id}"><c:choose><c:when test="${agency.deleted}">【恢复】</c:when><c:otherwise>【删除】</c:otherwise></c:choose></a>
+                </td>
                 </tr>
                 </c:forEach>
                 </tbody>

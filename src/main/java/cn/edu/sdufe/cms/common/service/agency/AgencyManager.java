@@ -3,13 +3,19 @@ package cn.edu.sdufe.cms.common.service.agency;
 import cn.edu.sdufe.cms.common.dao.agency.AgencyDao;
 import cn.edu.sdufe.cms.common.entity.agency.Agency;
 import cn.edu.sdufe.cms.common.entity.article.Category;
+import cn.edu.sdufe.cms.common.entity.article.ShowTypeEnum;
 import cn.edu.sdufe.cms.common.service.article.CategoryManager;
+import cn.edu.sdufe.cms.utilities.thumb.ImageThumb;
+import cn.edu.sdufe.cms.utilities.upload.UploadFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -27,6 +33,10 @@ public class AgencyManager {
     private AgencyDao agencyDao;
 
     private CategoryManager categoryManager;
+
+    private String UPLOAD_PATH = "d:/CMS4j/src/main/webapp/static/uploads/agency/";
+
+    private String UPLOAD_DIR = "static/uploads/agency/";
 
     /**
      * 根据编号获得组织机构
@@ -48,20 +58,67 @@ public class AgencyManager {
     }
 
     /**
+     * 删除组织机构
      * @param id
+     * @return
      */
     @Transactional(readOnly = false)
     public int deleteAgency(Long id) {
         return agencyDao.updateAgencyBool(id, "deleted");
     }
 
+    /**
+     * 保存组织机构
+     * @param agency
+     * @return
+     */
     @Transactional(readOnly = false)
-    public int saveAgency(Agency agency) {
+    public int saveAgency(MultipartFile file, HttpServletRequest request, Agency agency) {
+        //构造研究所对应的分类
+        Category category = new Category();
+        category.setFatherCategoryId(18L);
+        category.setCategoryName(agency.getTitle());
+        category.setAllowComment(false);
+        category.setDisplayOrder(47);
+        category.setUrl("");
+        category.setShowNav(true);
+        category.setDeleted(false);
+        category.setDescription(agency.getTitle());
+        category.setAllowPublish(false);
+        category.setShowType(ShowTypeEnum.NONE);
+        categoryManager.save(category);
 
-        agency.setCategoryId(1L);
-        agency.setImageUrl("banner.png");
+        //上传图片
+        if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
+            UploadFile uploadFile = new UploadFile();
+            String fileName = uploadFile.uploadFile(file, request, UPLOAD_DIR);
+            agency.setImageUrl(fileName);
+        } else {
+            agency.setImageUrl("");
+        }
+        agency.setCategoryId(category.getId());
         return agencyDao.save(agency);
 
+    }
+
+    /**
+     * 更新组织机构
+     * @param file
+     * @param request
+     * @param agency
+     * @return
+     */
+    @Transactional(readOnly = false)
+    public int updateAgency(MultipartFile file, HttpServletRequest request, Agency agency) {
+        //实现上传
+        if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
+            //存储旧图片名
+            String oldFileName = agency.getImageUrl();
+            UploadFile uploadFile = new UploadFile();
+            String fileName = uploadFile.uploadFile(file, request, UPLOAD_DIR);
+            agency.setImageUrl(fileName);
+        }
+        return agencyDao.updateAgency(agency);
     }
 
     @Autowired

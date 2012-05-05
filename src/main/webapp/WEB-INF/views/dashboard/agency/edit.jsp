@@ -27,15 +27,15 @@
     </div>
 </div>
 <div class="main_container container_16 clearfix">
-    <form:form id="agencyForm" modelAttribute="agency" action="${ctx}/agency/save/${agency.id}" method="post">
+    <form:form id="agency" modelAttribute="agency" action="${ctx}/agency/save/${agency.id}" method="post" enctype="multipart/form-data">
         <div class="box grid_16">
             <h2 class="box_head grad_colour round_top">添加研究所</h2>
             <div class="toggle_container">
                 <div class="info" style="float:left;margin-left: 15%;margin-top: 15px;">
-                    <input id="agencyID" type="hidden" name="id" value="${agency.id}"/>
-                    研究所图片：<br/><input type="file" id="upload" name="imageUrl" value="banner.png" alt=""><br> <br>
+                    <input id="picID" type="hidden" name="id" value="${agency.id}"/>
+                    研究所图片：<br/><input type="file" id="upload" name="file" alt="${agency.imageUrl}"><br> <br>
                     研究所名称：<br/><input type="text" class="required" name="title" size="52" value="${agency.title}"> <br/> <br/>
-                    研究所描述：<br/><textarea type="text" class="required" name="introduction" cols="55" rows="5"></textarea>
+                    研究所描述：<br/><textarea type="text" class="required" name="introduction" cols="55" rows="5">${agency.introduction}</textarea>
                     <br/> <br/>
                     <br/><br/>
                     <!--<img src="#" style="display: block;float: left;">-->
