@@ -13,6 +13,10 @@
         <result property="deleted" column="deleted"/>
         <result property="createdDate" column="created_date"/>
         <result property="lastModifiedDate" column="last_modified_date"/>
+        <association property="article" column="article_id" javaType="Article">
+            <result property="subject" column="subject"/>
+            <result property="message" column="message"/>
+        </association>
         <association property="agency" column="agency_id" javaType="Agency">
             <result property="title" column="title"/>
         </association>
@@ -25,9 +29,10 @@
     -->
     <select id="getTeacher" parameterType="Long" resultMap="teacherDetailMap">
         SELECT
-        <include refid="teacherColumns"/>, B.title
+        <include refid="teacherColumns"/>, B.title, C.subject, C.message
         FROM cms_teacher AS A
         LEFT JOIN cms_agency AS B ON A.agency_id=B.id
+        LEFT JOIN cms_article AS C ON A.article_id=C.id
         WHERE A.id=#{id} and A.deleted=0
         ORDER BY A.ID DESC
         LIMIT 1
@@ -52,6 +57,7 @@
         <include refid="teacherColumns"/>, B.title
         FROM cms_teacher AS A
         LEFT JOIN cms_agency AS B ON A.agency_id=B.id
+        LEFT JOIN cms_article AS C ON A.article_id=C.id
         WHERE A.deleted=0
         ORDER BY A.ID DESC
         LIMIT 30

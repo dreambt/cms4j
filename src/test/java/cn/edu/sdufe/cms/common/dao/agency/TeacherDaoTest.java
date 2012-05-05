@@ -22,11 +22,16 @@ public class TeacherDaoTest extends SpringTransactionalTestCase {
 
     @Autowired
     private TeacherDao teacherDao;
-    private Teacher teacher;
 
     @Before
     public void setUp() throws Exception {
         DataFixtures.reloadData(dataSource, "/data/sample-data.xml");
+    }
+
+    @Test
+    public void testGetTeacher() throws Exception {
+        Teacher teacher = teacherDao.getTeacher(1L);
+        Assert.assertEquals("CFA 特许金融分析师1", teacher.getArticle().getSubject());
     }
 
     @Test
@@ -44,7 +49,7 @@ public class TeacherDaoTest extends SpringTransactionalTestCase {
     @Test
     @Rollback(false)
     public void testSave() throws Exception {
-        teacher = TeacherData.getTeacher();
+        Teacher teacher = TeacherData.getTeacher();
         int result = teacherDao.save(teacher);
         //System.out.println(teacher.getId());
        Assert.assertEquals(1, result);

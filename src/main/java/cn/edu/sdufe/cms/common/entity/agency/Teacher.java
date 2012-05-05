@@ -1,6 +1,7 @@
 package cn.edu.sdufe.cms.common.entity.agency;
 
 import cn.edu.sdufe.cms.common.entity.PersistableEntity;
+import cn.edu.sdufe.cms.common.entity.article.Article;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
@@ -13,6 +14,7 @@ public class Teacher extends PersistableEntity {
 
     private String teacherName;
     private Long articleId;
+    private Article article;
     private Long agencyId;
     private Agency agency;
     private String imageUrl;
@@ -32,6 +34,14 @@ public class Teacher extends PersistableEntity {
 
     public void setArticleId(Long articleId) {
         this.articleId = articleId;
+    }
+
+    public Article getArticle() {
+        return article;
+    }
+
+    public void setArticle(Article article) {
+        this.article = article;
     }
 
     public Long getAgencyId() {
