@@ -110,13 +110,13 @@
 
             <ul class="content span-6">
                 <c:forEach items="${infos}" var="info" begin="0" step="1" end="3">
-                    <li><a href="${ctx}/article/content/${info.id}">${fn:substring(info.subject,0,15)}</a></li>
+                    <li class="counseling"><a href="${ctx}/article/content/${info.id}">${fn:substring(info.subject,0,15)}</a></li>
                 </c:forEach>
             </ul>
             <div class="span-1">&nbsp;</div>
             <ul class="content span-6 last">
                 <c:forEach items="${infos}" var="info" begin="4" step="1" end="6">
-                    <li><a href="${ctx}/article/content/${info.id}">${fn:substring(info.subject,0,15)}</a></li>
+                    <li class="counseling"><a href="${ctx}/article/content/${info.id}">${fn:substring(info.subject,0,15)}</a></li>
                 </c:forEach>
                 <li class="lastM"><span> <a href="#" class="more">更多...</a></span></li>
             </ul>

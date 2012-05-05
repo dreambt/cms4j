@@ -39,7 +39,7 @@
     <div class="span-12 last">
         <div class="container_index span-12-border">
             <p class="title_index title-468"><a href="#"><strong>学术研究</strong></a></p>
-            <p class="brief">围绕着新资本协议框架，基于流程银行的最佳实践，结合人工智能、数据挖掘技术和各种数据分析方法，研究经济及金融一体化趋势下金融信用风险评估指标体系、风险分析模型及预警系统、商业银行风险管理系统、证券投资风险预测模型与管理工具等。研究内容主要包括：</p>
+            <p class="brief">围绕着新资本协议框架，基于流程银行的最佳实践，结合人工智能、数据挖掘技术和各种数据分析方法，研究经济及金融一体化趋势下金融信用风险评估指标体系、风险分析模型及预警系统、商业银行风险管理系统、证券投资风险预测模型与管理工具等</p>
             <h6 class="subTitle">1. 商业银行风险度量与管理模型</h6>
             <p class="brief train">
             按照《巴塞尔新资本协议》的要求及框架，研究针对各种风险类型的度量和管理模型，以支持商业银行的风险管理行为。利用最新数据挖掘方法和技术，研究针对已发生业务行为的风险识别模型和未来风险的预测模型。
@@ -53,19 +53,22 @@
                 以风险点识别及监测、关键风险指标体系、事件管理及事件数据库、损失数据库的建立为核心基础，进行操作风险的分析评估、趋势分析、计量模型的开发建立。研究风险区域的选择、风险点的识别、监测、风险诱因、关键风险指标选择、数据的收集和关键风险指标监测评估。
             </p>
             <h6 class="subTitle">4. 客户风险监控模型研究</h6>
-            <p class="brief train" style="margin-bottom: 15px;">
+            <p class="brief train">
                 研究针对客户财务风险的量化分析和预警模型，建立计算客户财务综合风险指数的方法。研究授信客户的现金流未来趋势的预测模型，发现客户的现金流恶化的可能或异常的现金流出。研究客户间关联关系的发现模型及风险预警模型。
             </p>
-                <ul class="content span-6">
-                    <li><a href="#">商业银行全面风险管理规划</a></li>
-                    <li><a href="#">中小金融机构授信管理体系</a></li>
-                    <li><a href="#">商业银行操作风险及内控管理</a></li>
-                </ul>
+        </div>
+        <div class="container_index span-12-border">
+            <p class="title_index title-468"><a href="#"><strong>学术研究</strong></a></p>
+            <ul class="content span-6">
+                <li><a href="#">商业银行全面风险管理规划</a></li>
+                <li><a href="#">中小金融机构授信管理体系</a></li>
+                <li><a href="#">商业银行操作风险及内控管理</a></li>
+            </ul>
             <ul class="content span-6 last">
-                    <li><a href="#">农村金融机构全面风险管理建设</a></li>
-                    <li><a href="#">中小银行信用风险内部评级体系</a></li>
-                    <li><a href="#">商业银行流动性风险管理方案</a></li>
-                </ul>
+                <li><a href="#">农村金融机构全面风险管理建设</a></li>
+                <li><a href="#">中小银行信用风险内部评级体系</a></li>
+                <li><a href="#">商业银行流动性风险管理方案</a></li>
+            </ul>
         </div>
 
     </div>
@@ -90,9 +93,13 @@
     <div class="container_index span-5-border">
         <p class="title_index title-188"><strong>合作伙伴</strong><%--<a href="#" class="more">更多>></a>--%></p>
         <ul class="content span-5">
-            <c:forEach items="${companies}" var="company" begin="0" step="1">
-                <li><a href="${ctx}/article/content/${company.id}">${fn:substring(company.title,0,14)}</a></li>
-            </c:forEach>
+            <li>民生银行等股份制银行</li>
+            <li>山东省农信社等省属银行</li>
+            <li>齐鲁银行等城市商业银行</li>
+            <li>小额贷款公司与村镇银行</li>
+            <li>证券公司及保险担保公司</li>
+            <li>地方财政及税务管理部门</li>
+            <li>地方银监会证监会金融办</li>
         </ul>
     </div>
 
