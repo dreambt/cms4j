@@ -2,7 +2,7 @@
 ------------------------------------------------------*/
 html,body{height:100%}
 body{
-    font-family:Tahoma, Arial, Verdana;
+   font-family:\u5b8b\u4f53,Tahoma, Arial, Verdana;
     font-size:12px;
     margin:0 auto;
     padding:0;
@@ -219,7 +219,8 @@ form {margin:0; padding:0;}
 
 /*--公告字体颜色--*/
 ul li a.announce{color:#6F6F6F}
-/*-----teacher名师风采------*/
+
+/*-----teacher名师风采1------*/
 a.abtn{display:block;height:130px;width:17px;overflow:hidden;background:url(images/arrow3.png) no-repeat 0px 50%;}
 a.aleft{float:left;}
 a.agrayleft{cursor:default;background-position:-34px 50%;}
@@ -233,6 +234,15 @@ a.agrayright{cursor:default;background-position:-51px 50%;}
 .scrolllist .imglist_w li a{color:#3366cc;text-decoration:none;float:left;}
 .scrolllist .imglist_w li a:hover img{filter:alpha(opacity=86);-moz-opacity:0.86;opacity:0.86;}
 .scrolllist .imglist_w li p{line-height:24px;overflow:hidden;float:left;padding: 0;margin:0;width: 126px;text-align:center;text-indent:0;}
+/*-----teacher名师风采2------*/
+.scrolllist_index{width:790px; height: 205px;float:left;}
+.scrolllist_index .imglist_w_index{width:754px;height:205px;overflow:hidden;float:left;position:relative;/*必要元素*/}
+.scrolllist_index .imglist_w_index ul.imglist_index{width:20000px;position:absolute;top:0px;list-style: none;padding: 0;margin: 0}
+.scrolllist_index .imglist_w_index li{width:126px;float:left;padding:2px 0px 0 0px;z-index: 999;}
+.scrolllist_index .imglist_w_index li img{padding:1px;border:solid 1px #ddd;}
+.scrolllist_index .imglist_w_index li a{color:#3366cc;text-decoration:none;float:left;}
+.scrolllist_index .imglist_w_index li a:hover img{filter:alpha(opacity=86);-moz-opacity:0.86;opacity:0.86;}
+.scrolllist_index .imglist_w_index li p{line-height:24px;overflow:hidden;float:left;padding: 0;margin:0;width: 126px;text-align:center;text-indent:0;}
  /*----友情链接---------*/
 #friLnk{
     width: 950px;
@@ -266,10 +276,11 @@ a.agrayright{cursor:default;background-position:-51px 50%;}
 .logo a h1{display:block;float: left;margin-top:6px;text-decoration: none;}
  /*------main----------*/
 #left_b{width:748px;border:1px solid #ddd;float:left;margin-top: 10px;}
+#left_b_index{width: 788px;border:1px solid #ddd;float:left;margin-top: 10px;}
 .container_index{margin-bottom: 8px;float: left;}
-span.more{display: block;float: right;padding-right:5px;font-size:10px !important;color:#666 !important;text-decoration: none;}
+span.more{display: block;float: right;padding-right:5px;font-size:10px !important;color:#666 !important;text-decoration: none;-webkit-text-size-adjust:none;}
 span.more:hover{color:#999 !important;text-decoration:underline; }
-ul.content{list-style:none;padding: 0;margin: 0;display: block;float: left;}
+ul.content{list-style:none;padding: 0;margin: 0 0 2px 0;display: block;float: left;overflow: hidden;}
 ul.content li{line-height: 25px;background:url(images/ico-2.gif) center left  no-repeat;padding-left:10px;width:92%;margin-left:3%;float:left;display:block; }
 ul.content li a{color:#6F6F6F !important;text-decoration: none;display: block;float: left;}
 ul.content li a:hover{text-decoration: underline;}
@@ -280,19 +291,29 @@ ul.content li span.time{float: right;display: block;color:#999;font-size: 11px;m
 .title_index:hover{color:#666;}
 .title_index a{color:#444;text-decoration: none;}
 .title_index a:hover{color:#666;}
+.title-788{width: 748px;}
 .title-748{width: 748px;}
 .title-268{width: 268px;}
 .title-468{width: 468px;}
+.title-508{width: 508px;}
 .title-188{width: 188px;}
-.subTitle{text-indent: 1em;}
+.title-148{width: 148px;}
+ul.content li.serviceObj{width: 135px;!important}
+.subTitle{text-indent: .8em;display: block;float: left;margin-top: 8px;}
+.subTitle:first-child{margin-top: .5em;}
 .span149{width: 149px;margin-right:10px;float: left;}
 p{margin-bottom: 1em;}
 /*---left_l---*/
 p.researchDesc{padding:5px 8px  8px 8px;display: block;float:left;margin: 0;}
 .p5{padding: 5px;}
-
+ .mb-5{margin-bottom: 5px;}
 /*-----left_r------*/
-p.brief{text-indent: 2em;padding:5px 8px 8px 8px;display: block;float: left;margin: 0;}
+p.brief{text-indent:0;padding:5px 8px 8px 8px;display: block;float: left;margin: 0;}
+p.brief a{text-decoration: none;}
+p.brief a strong:hover{text-decoration: none;color: #666;}
+p.brief a strong{color: #333;}
+p.train{margin-top: 0px;padding-top: 0;padding-bottom: 0;}
+p.train:last-child{margin-top: 0px;padding-top: 0;padding-bottom:8px;}
 a.institution{padding: 0;margin:0;width:100%;text-align: center;display: block;float: left;line-height: 26px;color:#6F6F6F !important;text-decoration: none;}
 a.institution:hover{text-decoration: underline;}
 
@@ -307,9 +328,7 @@ a.institution:hover{text-decoration: underline;}
 }
 
 #box-nav-slider{
-    background-image:url(images/strip-line.gif);
-    background-position:bottom;
-    background-repeat:repeat-x;
+    background:url(images/strip-line.gif) bottom repeat-x;
     height:17px;
     position: relative;
     float: left;

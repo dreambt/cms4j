@@ -143,7 +143,7 @@
         $('#captcha').click(function(){$('#imgid').show().append(img)});
         $('#captcha').blur(function(){$('#imgid').hide()});
        // $('#captcha').focus(function(){$('#imgid').show().append(img)});
-        //设置图片宽度最大为621px
+        //设置图片宽度最大为676px
         $('img').each(function(i){
             //alert($(this).width());
             if($(this).width()>676){
