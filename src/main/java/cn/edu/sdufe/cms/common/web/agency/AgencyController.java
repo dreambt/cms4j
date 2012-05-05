@@ -51,7 +51,7 @@ public class AgencyController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "{id}")
+    @RequestMapping(value = "show/{id}")
     public String indexOfAgency(@PathVariable Long id, Model model) {
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("agency", agencyManager.getAgency(id));

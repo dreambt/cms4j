@@ -62,8 +62,7 @@
             <ul class="content span-7">
                 <c:forEach items="${news1}" var="new1" begin="0" step="1">
                     <li><a href="${ctx}/article/content/${new1.id}">${fn:substring(new1.subject,0,16)}...</a><span
-                            class="time"><fmt:formatDate value="${new1.createdDate}"
-                                                         pattern="MM-dd"></fmt:formatDate></span></li>
+                            class="time"><fmt:formatDate value="${new1.createdDate}" pattern="MM-dd"></fmt:formatDate></span></li>
                 </c:forEach>
             </ul>
         </div>
@@ -74,8 +73,7 @@
             <ul class="content span-7">
                 <c:forEach items="${news2}" var="new2" begin="0" step="1">
                     <li><a href="${ctx}/article/content/${new2.id}">${fn:substring(new2.subject,0,16)}...</a><span
-                            class="time"><fmt:formatDate value="${new2.createdDate}"
-                                                         pattern="MM-dd"></fmt:formatDate></span></li>
+                            class="time"><fmt:formatDate value="${new2.createdDate}" pattern="MM-dd"></fmt:formatDate></span></li>
                 </c:forEach>
             </ul>
         </div>
@@ -84,7 +82,6 @@
     <div class="span-13 last">
         <div class="container_index span-13-border">
             <p class="title_index title-508"><a href="#"><strong>中心简介</strong></a></p>
-
             <p class="brief">
                 山东省金融信息工程技术研究中心依托山东财经大学的金融、财税、会计、管理、数学和信息技术等雄厚的学科资源，联合行业内相关优势企业，面向我国金融信息化、金融风险管理、金融服务创新与金融服务外包产业发展的实际需要,
                 开展金融信息化相关政策、理论与技术研究，以及人才培养、产品研发与咨询服务。重点研究面向中小金融机构的信息技术解决方案、工具和方法，以工程技术研究中心作为科技成果向生产力转化的中间环节,提高现有科技成果的成熟性、配套性和工程化水平,使中心的技术和业务直达金融信息技术服务市场价值链的上游,加速金融服务创新和金融信息化科技成果向现实生产力的转化。目前中心主持国家级科研课题4项，省部级科研课题5项,取得软件著作权6项，申报国家发明专利3项。独立研究及与合作伙伴共同研发的多项成果已成功应用于交通银行、广发银行、恒丰银行、德州商行和多家小额贷款公司。
@@ -92,22 +89,13 @@
         </div>
         <div class="container_index span-13-border">
             <p class="title_index title-508"><a href="#"><strong>学术研究</strong></a></p>
-
-            <p class="brief train" style="margin-top: 5px;"><a href="#"><strong>金融服务计算。</strong></a>研究面向银行、证券、保险等金融行业应用的新型云计算体系结构、虚拟化开发与测试环境、基于SaaS模式的金融综合服务平台、金融云数据中心和服务计算技术等。
-            </p>
-
-            <p class="brief train"><a href="#"><strong>金融风险管理。</strong></a>研究新资本协议框架下商业银行全面风险管理体系，重点研究金融风险识别、度量、缓释与控制技术，以及金融风险评估指标体系、风险分析模型、风险预警系统及管
-            </p>
-
-            <p class="brief train"><a href="#"><strong>金融数据管理。</strong></a>研究金融领域信息化建设中的数据治理、数据整合、数据挖掘与数据应用技术。重点研究金融数据存储、抽取、转换、分析和数据展现技术，数据分析模型及智能分析
-            </p>
-
-            <p class="brief train"><a href="#"><strong>金融信息安全。</strong></a>研究金融行业信息化建设中的网络与信息安全理论与应用技术，重点研究金融网络安全架构、信息科技风险管理、信息系统安全审计、移动支付安全体系和应急处置技
-            </p>
+            <p class="brief train" style="margin-top: 5px;"><a href="#"><strong>金融服务计算。</strong></a>研究面向银行、证券、保险等金融行业应用的新型云计算体系结构、虚拟化开发与测试环境、基于SaaS模式的金融综合服务平台、金融云数据中心和服务计算技术等。</p>
+            <p class="brief train"><a href="#"><strong>金融风险管理。</strong></a>研究新资本协议框架下商业银行全面风险管理体系，重点研究金融风险识别、度量、缓释与控制技术，以及金融风险评估指标体系、风险分析模型、风险预警系统及管</p>
+            <p class="brief train"><a href="#"><strong>金融数据管理。</strong></a>研究金融领域信息化建设中的数据治理、数据整合、数据挖掘与数据应用技术。重点研究金融数据存储、抽取、转换、分析和数据展现技术，数据分析模型及智能分析</p>
+            <p class="brief train"><a href="#"><strong>金融信息安全。</strong></a>研究金融行业信息化建设中的网络与信息安全理论与应用技术，重点研究金融网络安全架构、信息科技风险管理、信息系统安全审计、移动支付安全体系和应急处置技</p>
         </div>
         <div class="container_index span-13-border">
             <p class="title-508 title_index"><a href="${ctx}/article/listInfo"><strong>咨询服务</strong></a></p>
-
             <ul class="content span-6">
                 <c:forEach items="${infos}" var="info" begin="0" step="1" end="3">
                     <li class="counseling"><a href="${ctx}/article/content/${info.id}">${fn:substring(info.subject,0,15)}</a></li>
@@ -130,14 +118,12 @@
 </div>
 <!---- left_r end---->
 
-
 <div class="span-4 last">
-
     <div class="container_index span-4-border">
         <p class="title_index title-148"><strong>研究机构</strong><%--<a href="#" class="more">更多>></a>--%></p>
         <ul class="content span-4">
             <c:forEach items="${agencies}" var="agency" begin="0" step="1">
-                <li><a href="${ctx}/agency/${agency.id}">${agency.title}</a> </li>
+                <li><a href="${ctx}/agency/show/${agency.id}">${agency.title}</a> </li>
             </c:forEach>
         </ul>
     </div>
@@ -156,8 +142,7 @@
     </div>
 
     <div class="container_index  span-4-border">
-        <p class="title_index title-148"><strong>行业资讯</strong><span class="more"> <a href="${ctx}/article/list/"
-                                                                                  class="more">更多>></a></span></p>
+        <p class="title_index title-148"><strong>行业资讯</strong><span class="more"> <a href="${ctx}/article/list/" class="more">更多>></a></span></p>
         <ul class="content title-148">
             <c:forEach items="${news2}" var="new2" begin="0" step="1">
                 <li><a href="${ctx}/article/content/${new2.id}">${fn:substring(new2.subject,0,10)}...</a></li>

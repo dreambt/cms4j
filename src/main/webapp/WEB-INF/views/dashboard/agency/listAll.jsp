@@ -57,7 +57,7 @@
                     <th>banner</th>
                     <th>研究所名</th>
                     <th>描述</th>
-                    <th>添加时间</th>
+                    <th>创建时间</th>
                     <th>最后修改时间</th>
                     <th>操作</th>
                 </tr>
@@ -67,7 +67,7 @@
                 <tr>
                 <td><input type="checkbox" name="isSelected"  value=""></td>
                 <td><a href="${ctx}/static/uploads/agency/${agency.imageUrl}" rel="fancybox-thumb" class="fancy_box"><img src="${ctx}/static/uploads/agency/${agency.imageUrl}" width="80px" height="30px"/></a></td>
-                <td><a href="${ctx}/index-research/${agency.id}">${agency.title}</a></td>
+                <td><a href="${ctx}/agency/show/${agency.id}" target="_blank">${agency.title}</a></td>
                 <td><a href="#" class="opener" value="${agency.introduction}">点击查看</a> </td>
                 <td><fmt:formatDate value="${agency.createdDate}" type="both"></fmt:formatDate></td>
                 <td><fmt:formatDate value="${agency.createdDate}" type="both"></fmt:formatDate></td>
