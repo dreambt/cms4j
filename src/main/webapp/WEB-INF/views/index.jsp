@@ -68,12 +68,12 @@
         </div>
         <div class="container_index span-7-border">
             <p class="title_index title-268">
-                <strong>通知公告</strong><span class="more"> <a href="${ctx}/article/list/4" class="more">更多>></a></span>
+                <strong>通知公告</strong><span class="more"> <a href="${ctx}/article/list/1" class="more">更多>></a></span>
             </p>
             <ul class="content span-7">
-                <c:forEach items="${news2}" var="new2" begin="0" step="1">
-                    <li><a href="${ctx}/article/content/${new2.id}">${fn:substring(new2.subject,0,16)}...</a><span
-                            class="time"><fmt:formatDate value="${new2.createdDate}" pattern="MM-dd"></fmt:formatDate></span></li>
+                <c:forEach items="${posts}" var="post" begin="0" step="1">
+                    <li><a href="${ctx}/article/content/${post.id}">${fn:substring(post.subject,0,16)}...</a><span
+                            class="time"><fmt:formatDate value="${post.createdDate}" pattern="MM-dd"></fmt:formatDate></span></li>
                 </c:forEach>
             </ul>
         </div>
