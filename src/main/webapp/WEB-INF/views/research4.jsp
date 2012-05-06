@@ -77,19 +77,19 @@
             <div class="imglist_w">
                 <ul class="imglist">
                     <li>
-                        <a target="_blank" href="${ctx}/article/content3" title="聂秀山博士， 副教授，毕业于山东大学信息科学与工程学院。近年来主持国家自然基金一项，省两化融合研究课题一项，参与国家973项目和国家自然基金项目多项。主要研究方向为金融信息安全、信息内容安全认证等。"><img width="120" height="166" alt="聂秀山" src="${ctx}/static/uploads/teacher/pic_niexiushan.jpg"></a>
+                        <a target="_blank" href="${ctx}/article/content/64" title="聂秀山博士， 副教授，毕业于山东大学信息科学与工程学院。近年来主持国家自然基金一项，省两化融合研究课题一项，参与国家973项目和国家自然基金项目多项。主要研究方向为金融信息安全、信息内容安全认证等。"><img width="120" height="166" alt="聂秀山" src="${ctx}/static/uploads/teacher/pic_niexiushan.jpg"></a>
                         <p>聂秀山</p>
                     </li>
                     <li>
-                        <a target="_blank" href="${ctx}/article/content2" title="赵华伟"><img width="120" height="166" alt="赵华伟" src="${ctx}/static/uploads/teacher/pic_zhaohuawei.jpg"></a>
+                        <a target="_blank" href="${ctx}/article/content/62" title="赵华伟"><img width="120" height="166" alt="赵华伟" src="${ctx}/static/uploads/teacher/pic_zhaohuawei.jpg"></a>
                         <p>赵华伟</p>
                     </li>
                     <li>
-                        <a target="_blank" href="${ctx}/article/content1" title="万海山"><img width="120" height="166" alt="万海山" src="${ctx}/static/uploads/teacher/pic_wanhaishan.jpg"></a>
+                        <a target="_blank" href="${ctx}/article/content/61" title="万海山"><img width="120" height="166" alt="万海山" src="${ctx}/static/uploads/teacher/pic_wanhaishan.jpg"></a>
                         <p>万海山</p>
                     </li>
                     <li>
-                        <a target="_blank" href="${ctx}/article/content4" title="王倩"><img width="120" height="166" alt="王倩" src="${ctx}/static/uploads/teacher/pic_wangqian.jpg"></a>
+                        <a target="_blank" href="${ctx}/article/content/65" title="王倩"><img width="120" height="166" alt="王倩" src="${ctx}/static/uploads/teacher/pic_wangqian.jpg"></a>
                         <p>王倩</p>
                     </li>
                 </ul>

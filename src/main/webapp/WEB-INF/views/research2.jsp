@@ -77,23 +77,23 @@
             <div class="imglist_w">
                 <ul class="imglist">
                     <li>
-                        <a target="_self" href="" title="盛秋戬"><img width="120" height="166" alt="盛秋戬" src="${ctx}/static/uploads/teacher/pic_shengqiujian.jpg"></a>
+                        <a target="_self" href="${ctx}/article/content/66" title="盛秋戬"><img width="120" height="166" alt="盛秋戬" src="${ctx}/static/uploads/teacher/pic_shengqiujian.jpg"></a>
                         <p>盛秋戬</p>
                     </li>
                     <li>
-                        <a target="_self" href="" title="刘文金"><img width="120" height="166" alt="刘文金" src="${ctx}/static/uploads/teacher/pic_liuwenjin.jpg"></a>
+                        <a target="_self" href="${ctx}/article/content/68" title="刘文金"><img width="120" height="166" alt="刘文金" src="${ctx}/static/uploads/teacher/pic_liuwenjin.jpg"></a>
                         <p>刘文金</p>
                     </li>
                     <li>
-                        <a target="_self" href="" title="王帅强"><img width="120" height="166" alt="王帅强" src="${ctx}/static/uploads/teacher/pic_wangshuaiqiang.jpg"></a>
+                        <a target="_self" href="${ctx}/article/content/69" title="王帅强"><img width="120" height="166" alt="王帅强" src="${ctx}/static/uploads/teacher/pic_wangshuaiqiang.jpg"></a>
                         <p>王帅强</p>
                     </li>
                     <li>
-                        <a target="_self" href="" title="林培光"><img width="120" height="166" alt="林培光" src="${ctx}/static/uploads/teacher/pic_guojianfeng.jpg"></a>
+                        <a target="_self" href="${ctx}/article/content/71" title="林培光"><img width="120" height="166" alt="林培光" src="${ctx}/static/uploads/teacher/pic_guojianfeng.jpg"></a>
                         <p>林培光</p>
                     </li>
                     <li>
-                        <a target="_self" href="" title="田茂圣"><img width="120" height="166" alt="田茂圣" src="${ctx}/static/uploads/teacher/pic_tianmaosheng.jpg"></a>
+                        <a target="_self" href="${ctx}/article/content/70" title="田茂圣"><img width="120" height="166" alt="田茂圣" src="${ctx}/static/uploads/teacher/pic_tianmaosheng.jpg"></a>
                         <p>田茂圣</p>
                     </li>
                 </ul>

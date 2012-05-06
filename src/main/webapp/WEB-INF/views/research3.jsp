@@ -93,11 +93,11 @@
                         <p>张燕</p>
                     </li>
                     <li>
-                        <a target="_self" href="" title="赵志崑"><img width="120" height="166" alt="赵志崑" src="${ctx}/static/uploads/teacher/pic_zhaozhikun.jpg"></a>
+                        <a target="_self" href="${ctx}/article/content/72" title="赵志崑"><img width="120" height="166" alt="赵志崑" src="${ctx}/static/uploads/teacher/pic_zhaozhikun.jpg"></a>
                         <p>赵志崑</p>
                     </li>
                     <li>
-                        <a target="_self" href="" title="刘文金"><img width="120" height="166" alt="刘文金" src="${ctx}/static/uploads/teacher/pic_liuwenjin.jpg"></a>
+                        <a target="_self" href="${ctx}/article/content/68" title="刘文金"><img width="120" height="166" alt="刘文金" src="${ctx}/static/uploads/teacher/pic_liuwenjin.jpg"></a>
                         <p>刘文金</p>
                     </li>
                 </ul>
