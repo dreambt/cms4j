@@ -1,5 +1,6 @@
 package cn.edu.sdufe.cms.common.web.article;
 
+import cn.edu.sdufe.cms.common.entity.article.Article;
 import cn.edu.sdufe.cms.common.service.article.ArchiveManager;
 import cn.edu.sdufe.cms.common.service.article.ArticleManager;
 import cn.edu.sdufe.cms.common.service.article.CategoryManager;
@@ -8,8 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 归类功能
@@ -42,14 +44,14 @@ public class ArchiveController {
     }
 
     /**
-     * 显示编号为id的归类
+     * 显示归档编号为id的文章列表
      *
      * @param model
      * @return
      */
     @RequestMapping(value = "list/{id}")
     public String articleListByArchiveId(Model model, @PathVariable("id") Long id) {
-        Long total = articleManager.count(id);
+        Long total = new Long(archiveManager.getByArchiveId(id).getArticleCount());
         int limit = 10;
         Long pageCount = 1L;
         if (total % limit == 0) {
@@ -57,17 +59,30 @@ public class ArchiveController {
         } else {
             pageCount = total / limit + 1;
         }
-        model.addAttribute("articles", articleManager.findArticleByArchiveId(id, 0, 10));//文章列表
+        model.addAttribute("articles", articleManager.findArticleByArchiveId(id, 0, limit));//文章列表
         model.addAttribute("categories", categoryManager.getNavCategory());//导航菜单
-        model.addAttribute("category", categoryManager.get(id));//获取分类信息
+        model.addAttribute("archive", archiveManager.getByArchiveId(id));
         model.addAttribute("archives", archiveManager.getTopTen());//边栏归档日志
         model.addAttribute("newArticles", articleManager.findTopTen());//边栏最新文章
-        model.addAttribute("archive", archiveManager.getByArchiveId(id));
         model.addAttribute("total", total);
         model.addAttribute("pageCount", pageCount);
         model.addAttribute("links", linkManager.getAllLink());//页脚友情链接
 
         return "article/list";
+    }
+
+    /**
+     * 获取归档编号为id的文章列表
+     *
+     * @param id
+     * @param offset
+     * @param limit
+     * @return
+     */
+    @RequestMapping(value = "list/ajax/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Article> ajaxListOfArticleByArchive(@PathVariable("id") Long id, @RequestParam("offset") int offset, @RequestParam("limit") int limit) {
+        return articleManager.findArticleByArchiveId(id, offset, limit);
     }
 
     @Autowired

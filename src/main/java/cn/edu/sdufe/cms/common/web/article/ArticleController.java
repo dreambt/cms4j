@@ -175,6 +175,7 @@ public class ArticleController {
         model.addAttribute("total", total);
         model.addAttribute("pageCount", pageCount);
         model.addAttribute("links", linkManager.getAllLink());//页脚友情链接
+
         return "article/list";
     }
 

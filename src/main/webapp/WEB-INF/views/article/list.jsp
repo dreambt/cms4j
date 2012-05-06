@@ -13,7 +13,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>${category.categoryName}</title>
+    <title><c:choose><c:when test="${archive eq null}">${category.categoryName}</c:when><c:otherwise>${archive.title}</c:otherwise></c:choose></title>
 </head>
 <body>
 <!-- BEGIN PAGE TITLE -->
@@ -78,7 +78,10 @@
             var limit = 10;//每页显示文章数量
 
             $.ajax({
-                url:"${ctx}/article/list/ajax/${category.id}?offset=" + (intPageIndex - 1) * limit + "&limit=" + limit,
+                <c:choose>
+                    <c:when test="${archive eq null}">url:"${ctx}/article/list/ajax/${category.id}?offset=" + (intPageIndex - 1) * limit + "&limit=" + limit,</c:when>
+                    <c:otherwise>url:"${ctx}/archive/list/ajax/${archive.id}?offset=" + (intPageIndex - 1) * limit + "&limit=" + limit,</c:otherwise>
+                </c:choose>
                 timeout:3000,
                 success:function (data) {
                     articles.html("");
