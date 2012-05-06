@@ -48,9 +48,8 @@ public class TeacherDetailController {
               model.addAttribute("error","该老师已经删除不能修改");
               return "redirect:/teacher/listAll";
           }else {
-              model.addAttribute("article",article);
               model.addAttribute("teacher",teacher) ;
-
+              model.addAttribute("article",article);
               List<Agency> agencyList = agencyManager.getAllAgency();
               model.addAttribute("agencies", agencyList);
               return "dashboard/teacher/edit";
@@ -69,21 +68,24 @@ public class TeacherDetailController {
      */
     @RequestMapping(value = "save/{id}")
     public String update(@RequestParam(value="file", required=false) MultipartFile file,HttpServletRequest request,
-                         @PathVariable Long id,@Valid @ModelAttribute("teacher") Teacher teacher,Article article,BindingResult bindingResult,
-                         RedirectAttributes redirectAttributes)  {
-        article.setMessage(request.getParameter("message"));
-        if(bindingResult.hasErrors()||teacher.isDeleted()){
-            redirectAttributes.addFlashAttribute("error","该老师已不存在");
-            return "redirect:/teacher/listAll" ;
-        }  if(articleManager.update(article, request) <= 0)  {
-            if(teacherManager.updateTeacher(file,article,request,teacher)<=0){
-                redirectAttributes.addFlashAttribute("error", "修改老师老师失败");
-            }
-        }
-        else{
-            teacher.setLastModifiedDate(new Date());
-            teacher.getArticle().setMessage(request.getParameter("message"));
-            redirectAttributes.addFlashAttribute("info", "修改" + id + "修改老师成功");
+                         @PathVariable Long id,@Valid @ModelAttribute("teacher") Teacher teacher,
+                         @Valid @ModelAttribute("article") Article article,BindingResult bindingResult, RedirectAttributes redirectAttributes)  {
+           if(bindingResult.hasErrors()||teacher.isDeleted()){
+               redirectAttributes.addFlashAttribute("error","该老师已不存在");
+               return "redirect:/teacher/listAll" ;
+           }
+           article.setMessage(request.getParameter("message"));
+
+           if(articleManager.update(article, request) <= 0)  {
+               redirectAttributes.addFlashAttribute("error", "修改老师老师失败");
+               return "redirect:/teacher/listAll";
+           } else{
+               if(teacherManager.updateTeacher(file,article,request,teacher)<=0){
+                   redirectAttributes.addFlashAttribute("error", "修改老师老师失败");
+               } else {
+                   redirectAttributes.addFlashAttribute("info", "修改" + id + "修改老师成功");
+               }
+
         }
 
         return "redirect:/teacher/listAll";
@@ -91,6 +93,10 @@ public class TeacherDetailController {
     @ModelAttribute("teacher")
     public Teacher getTeacher(@PathVariable Long id) {
         return  teacherManager.getTeacher(id);
+    }
+    @ModelAttribute("article")
+    public Article  getArticle(@PathVariable Long id){
+        return articleManager.findOne(id);
     }
     @Autowired
     public void setTeacherManager(TeacherManager teacherManager){

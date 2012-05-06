@@ -106,7 +106,12 @@ public class TeacherManager {
              String fileName = uploadFile.uploadFile(file, request, UPLOAD_DIR);
              teacher.setImageUrl(fileName);
          }
-        return   teacherDao.updateTeacher(teacher);
+        if(articleDao.update(article)>0){
+            return teacherDao.updateTeacher(teacher);
+        } else{
+            return 0;
+        }
+
 
     }
 

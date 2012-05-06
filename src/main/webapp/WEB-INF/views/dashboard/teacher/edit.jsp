@@ -54,7 +54,7 @@
                     <label>所属研究所</label>
                     <form:select path="agencyId">
                         <c:forEach items="${agencies}" begin="0" step="1" var="agency" varStatus="stat">
-                            <option value="${agency.categoryId}" <c:if test="${agency.categoryId eq teacher.agency.categoryId}">selected="selected"</c:if>>${agency.title}</option>
+                            <option value="${agency.id}" <c:if test="${agency.categoryId eq teacher.agency.categoryId}">selected="selected"</c:if>>${agency.title}</option>
                         </c:forEach>
                     </form:select>
                     <script type="text/plain" id="myEditor">${teacher.article.message}</script>

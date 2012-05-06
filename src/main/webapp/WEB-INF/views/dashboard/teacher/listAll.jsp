@@ -67,7 +67,7 @@
                         <td><input type="checkbox" name="isSelected"  value="${teacher.id}"></td>
                         <td><a href="${ctx}/static/uploads/teacher/${teacher.imageUrl}" rel="fancybox-thumb" class="fancy_box"><img src="${ctx}/static/uploads/teacher/${teacher.imageUrl}" width="50px"/></a></td>
                         <td><a href="${ctx}/article/content/${teacher.article.id}" target="_blank">${teacher.teacherName}</a></td>
-                        <td><a href="${ctx}/agency/show/${teacher.agencyId}" target="_blank">${teacher.agency.title}</a> </td>
+                        <td><a href="${ctx}/agency/show/${teacher.agency.id}" target="_blank">${teacher.agency.title}</a> </td>
                         <td><a href="${ctx}/static/uploads/teacher/${teacher.imageUrl}">${teacher.imageUrl}</a></td>
                         <td><fmt:formatDate value="${teacher.createdDate}" type="both"></fmt:formatDate></td>
                         <td><a href="${ctx}/teacher/showIndex/${teacher.id}"><c:choose><c:when test="${teacher.top eq true}">显示</c:when><c:otherwise>不显示</c:otherwise></c:choose></a></td>

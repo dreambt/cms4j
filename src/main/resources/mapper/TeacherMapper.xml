@@ -97,8 +97,9 @@
             <if test="imageUrl != null and imageUrl != ''">
                 image_url=#{imageUrl},
             </if>
+            last_modified_date=null
         </set>
-        last_modified_date=null
+
         WHERE id=#{id} AND deleted=0
     </update>
 
