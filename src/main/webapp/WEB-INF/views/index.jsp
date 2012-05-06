@@ -61,7 +61,7 @@
             </p>
             <ul class="content span-7">
                 <c:forEach items="${news1}" var="new1" begin="0" step="1">
-                    <li><a href="${ctx}/article/content/${new1.id}">${fn:substring(new1.subject,0,16)}...</a><span
+                    <li><a href="${ctx}/article/content/${new1.id}" title="${new1.subject}">${fn:substring(new1.subject,0,16)}...</a><span
                             class="time"><fmt:formatDate value="${new1.createdDate}" pattern="MM-dd"></fmt:formatDate></span></li>
                 </c:forEach>
             </ul>
@@ -72,7 +72,7 @@
             </p>
             <ul class="content span-7">
                 <c:forEach items="${posts}" var="post" begin="0" step="1">
-                    <li><a href="${ctx}/article/content/${post.id}">${fn:substring(post.subject,0,16)}...</a><span
+                    <li><a href="${ctx}/article/content/${post.id}" title="${post.subject}"> ${fn:substring(post.subject,0,16)}...</a><span
                             class="time"><fmt:formatDate value="${post.createdDate}" pattern="MM-dd"></fmt:formatDate></span></li>
                 </c:forEach>
             </ul>
@@ -98,13 +98,13 @@
             <p class="title-508 title_index"><a href="${ctx}/article/listInfo"><strong>咨询服务</strong></a></p>
             <ul class="content span-6">
                 <c:forEach items="${infos}" var="info" begin="0" step="1" end="3">
-                    <li class="counseling"><a href="${ctx}/article/content/${info.id}">${fn:substring(info.subject,0,15)}</a></li>
+                    <li class="counseling"><a href="${ctx}/article/content/${info.id}" title="${info.subject}">${fn:substring(info.subject,0,15)}</a></li>
                 </c:forEach>
             </ul>
             <div class="span-1">&nbsp;</div>
             <ul class="content span-6 last">
                 <c:forEach items="${infos}" var="info" begin="4" step="1" end="6">
-                    <li class="counseling"><a href="${ctx}/article/content/${info.id}">${fn:substring(info.subject,0,15)}</a></li>
+                    <li class="counseling"><a href="${ctx}/article/content/${info.id}" title="${info.subject}">${fn:substring(info.subject,0,15)}</a></li>
                 </c:forEach>
                 <li class="lastM"><span> <a href="#" class="more">更多...</a></span></li>
             </ul>
@@ -151,7 +151,7 @@
         <p class="title_index title-148"><strong>行业资讯</strong><span class="more"> <a href="${ctx}/article/list/" class="more">更多>></a></span></p>
         <ul class="content title-148">
             <c:forEach items="${news2}" var="new2" begin="0" step="1">
-                <li><a href="${ctx}/article/content/${new2.id}">${fn:substring(new2.subject,0,10)}...</a></li>
+                <li><a href="${ctx}/article/content/${new2.id}" title="${new2.subject}">${fn:substring(new2.subject,0,10)}...</a></li>
             </c:forEach>
         </ul>
     </div>

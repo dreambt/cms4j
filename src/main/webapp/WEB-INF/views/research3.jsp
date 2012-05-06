@@ -58,12 +58,14 @@
         <div class="container_index span-12-border">
             <p class="title_index title-468"><a href="#"><strong>咨询服务</strong></a></p>
             <ul class="content span-6">
-                <li><a href="#">中小金融机构的产品体系建设</a></li>
-                <li><a href="#">虚拟化金融服务开发与测试环境</a></li>
+                <li><a href="${ctx}/article/content/67">商业银行数据治理与综合应用规划</a></li>
+                <li><a href="${ctx}/article/content/68">银行经营分析与决策支持系统方案</a></li>
+                <li><a href="${ctx}/article/content/69">基于精细化的分析型客户关系管理</a></li>
             </ul>
             <ul class="content span-6 last">
-                <li><a href="#">基于SaaS的金融综合服务平台</a></li>
-                <li><a href="#">敏捷云—建模业务服务的云平台</a></li>
+                <li><a href="${ctx}/article/content/72">中小金融机构商务智能解决方案</a></li>
+                <li><a href="${ctx}/article/content/70">中小金融机构管理会计考核系统</a></li>
+                <li><a href="${ctx}/article/content/71">商业银行电子报表管理系统方案</a></li>
             </ul>
         </div>
     </div>
