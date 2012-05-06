@@ -1,9 +1,8 @@
 <%--
-  研究所.
-  User: Deng Xiaolan (824688439@qq.com)
-  Date: 12-4-21
-  Time: 下午9:19
-  To change this template use File | Settings | File Templates.
+  金融风险管理研究所
+  User: Wang Kejun (445489171@qq.com)
+  Date: 12-5-6
+  Time: 下午13:14
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
@@ -16,7 +15,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>${agency.title}</title>
+    <title>金融风险管理研究所</title>
 </head>
 <body>
 <img id="banner" src="${ctx}/static/uploads/agency/${agency.imageUrl}" width="948px"/>
@@ -27,7 +26,7 @@
             <p class="title_index title-268">
                 <strong>关于我们</strong>
             </p>
-           <p class="researchDesc train">金融风险管理研究所围绕着新资本协议框架，基于流程银行的最佳实践，结合人工智能、数据挖掘技术和各种数据分析方法，研究经济及金融一体化趋势下金融风险的识别、度量和控制理论与应用，特别是金融信用风险评估指标体系、风险分析模型及预警系统、商业银行结构性风险管理系统、证券投资风险预测与管理工具等。研究所依托山东财经大学的学科优势，与相关企业、科研单位在金融机构全面风险管理方面开展产学研合作，促进科技成果的转化与应用。</p>
+           <p class="researchDesc train">	金融风险管理研究所围绕着新资本协议框架，基于流程银行的最佳实践，结合人工智能、数据挖掘技术和各种数据分析方法，研究经济及金融一体化趋势下金融风险的识别、度量和控制理论与应用，特别是金融信用风险评估指标体系、风险分析模型及预警系统、商业银行结构性风险管理系统、证券投资风险预测与管理工具等。研究所依托山东财经大学的学科优势，与相关企业、科研单位在金融机构全面风险管理方面开展产学研合作，促进科技成果的转化与应用。</p>
            <p class="researchDesc train">专家团队由具有较高理论造诣的高校教师和具有丰富实际工作经验的业界专家组成。其中教授2人，副教授、高级工程师和高级系统分析师6人，团队成员大多具有博士学位或具有海外学习与工作经历。</p>
         </div>
         <div class="container_index span-7-border">
@@ -42,7 +41,7 @@
             <p class="brief">围绕着新资本协议框架，基于流程银行的最佳实践，结合人工智能、数据挖掘技术和各种数据分析方法，研究经济及金融一体化趋势下金融信用风险评估指标体系、风险分析模型及预警系统、商业银行风险管理系统、证券投资风险预测模型与管理工具等</p>
             <h6 class="subTitle">商业银行风险度量与管理模型</h6>
             <p class="brief train">
-            按照《巴塞尔新资本协议》的要求及框架，研究针对各种风险类型的度量和管理模型，以支持商业银行的风险管理行为。利用最新数据挖掘方法和技术，研究针对已发生业务行为的风险识别模型和未来风险的预测模型。
+                按照《巴塞尔新资本协议》的要求及框架，研究针对各种风险类型的度量和管理模型，以支持商业银行的风险管理行为。利用最新数据挖掘方法和技术，研究针对已发生业务行为的风险识别模型和未来风险的预测模型。
             </p>
             <h6 class="subTitle"> 商业银行信用风险内部评级体系</h6>
             <p class="brief train">
@@ -50,7 +49,7 @@
             </p>
             <h6 class="subTitle">商业银行操作风险及内控管理体系</h6>
             <p class="brief train">
-                以风险点识别及监测、关键风险指标体系、事件管理及事件数据库、损失数据库的建立为核心基础，进行操作风险的分析评估、趋势分析、计量模型的开发建立。研究风险区域的选择、风险点的识别、监测、风险诱因、关键风险指标选择、数据的收集和关键风险指标监测评估。
+                研究风险区域的选择、风险点的识别监测、风险诱因、关键风险指标选择监测评估、数据的收集、事件管理和损失数据库。进行操作风险的分析评估、趋势分析、计量模型的开发。
             </p>
             <h6 class="subTitle">客户风险监控模型研究</h6>
             <p class="brief train">
@@ -58,7 +57,7 @@
             </p>
         </div>
         <div class="container_index span-12-border">
-            <p class="title_index title-468"><a href="#"><strong>学术研究</strong></a></p>
+            <p class="title_index title-468"><a href="#"><strong>咨询服务</strong></a></p>
             <ul class="content span-6">
                 <li><a href="#">商业银行全面风险管理规划</a></li>
                 <li><a href="#">中小金融机构授信管理体系</a></li>

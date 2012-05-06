@@ -28,6 +28,8 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping(value = "/research")
 public class ResearchController {
 
+    private CategoryManager categoryManager;
+
     /**
      * 根据编号打开对应的研究所首页
      * @param id
@@ -36,5 +38,10 @@ public class ResearchController {
     @RequestMapping(value = "{id}")
     public String indexOfAgency(@PathVariable Long id) {
         return "research" + id;
+    }
+
+    @Autowired
+    public void setCategoryManager(CategoryManager categoryManager) {
+        this.categoryManager = categoryManager;
     }
 }

@@ -122,9 +122,15 @@
     <div class="container_index span-4-border">
         <p class="title_index title-148"><strong>研究机构</strong><%--<a href="#" class="more">更多>></a>--%></p>
         <ul class="content span-4">
-            <c:forEach items="${agencies}" var="agency" begin="0" step="1">
-                <li><a href="${ctx}/agency/show/${agency.id}">${agency.title}</a> </li>
-            </c:forEach>
+            <li><a href="${ctx}/research/1">金融风险管理研究所</a></li>
+            <li><a href="${ctx}/research/2">金融数据管理研究所</a></li>
+            <li><a href="${ctx}/research/3">金融服务计算研究所</a></li>
+            <li><a href="${ctx}/research/4">金融信息安全研究所</a></li>
+            <li>计算金融研究所</li>
+            <li>金融创新研究所</li>
+            <%--<c:forEach items="${agencies}" var="agency" begin="0" step="1">--%>
+                <%--<li><a href="${ctx}/agency/show/${agency.id}">${agency.title}</a></li>--%>
+            <%--</c:forEach>--%>
         </ul>
     </div>
 
