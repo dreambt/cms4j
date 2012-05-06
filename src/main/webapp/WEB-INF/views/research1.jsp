@@ -19,7 +19,6 @@
 </head>
 <body>
 <img id="banner" src="${ctx}/static/uploads/agency/1336285832603-xUv61T.jpg" width="948px"/>
-
 <div class="span-19">
     <div class="span-7">
         <div class="container_index span-7-border">
@@ -69,17 +68,42 @@
                 <li><a href="#">商业银行流动性风险管理方案</a></li>
             </ul>
         </div>
-
     </div>
     <!---- left_r end---->
     <div id="left_b">
         <p class="title_index title-748"><strong>专家团队</strong></p>
-        <%@ include file="/WEB-INF/layouts/teacher.jsp" %>
+        <div class="scrolllist" id="teacher">
+            <a class="abtn aleft" href="#left" title="左移"></a>
+            <div class="imglist_w">
+                <ul class="imglist">
+                    <li>
+                        <a target="_self" href="" title="田茂圣"><img width="120" height="166" alt="田茂圣" src="${ctx}/static/uploads/teacher/pic_tianmaosheng.jpg"></a>
+                        <p>田茂圣</p>
+                    </li>
+                    <li>
+                        <a target="_self" href="" title="赵志崑"><img width="120" height="166" alt="赵志崑" src="${ctx}/static/uploads/teacher/pic_zhaozhikun.jpg"></a>
+                        <p>赵志崑</p>
+                    </li>
+                    <li>
+                        <a target="_self" href="" title="林培光"><img width="120" height="166" alt="林培光" src="${ctx}/static/uploads/teacher/pic_guojianfeng.jpg"></a>
+                        <p>林培光</p>
+                    </li>
+                    <li>
+                        <a target="_self" href="" title="刘文金"><img width="120" height="166" alt="刘文金" src="${ctx}/static/uploads/teacher/pic_liuwenjin.jpg"></a>
+                        <p>刘文金</p>
+                    </li>
+                    <li>
+                        <a target="_self" href="" title="王帅强"><img width="120" height="166" alt="王帅强" src="${ctx}/static/uploads/teacher/pic_wangshuaiqiang.jpg"></a>
+                        <p>王帅强</p>
+                    </li>
+                </ul>
+            </div>
+            <a class="abtn aright" href="#right" title="右移"></a>
+        </div>
     </div>
     <!---教师风采---->
 </div>
 <div class="span-5 last">
-
     <div class="container_index span-5-border">
         <p class="title_index title-188"><strong>教育培训</strong></p>
         <h6 class="subTitle">Basel II与银行全面风险管理</h6>
@@ -101,7 +125,6 @@
             <li>地方银监会证监会金融办</li>
         </ul>
     </div>
-
 </div>
 <ul id="friLnk" class="span-24">
     <li class="friLnkT"><strong>友情链接</strong></li>
@@ -109,5 +132,18 @@
         <li class="fri"><a href="${link.url}">${fn:substring(link.title,0,13)}</a></li>
     </c:forEach>
 </ul>
+<script type="text/javascript" src="${ctx}/static/js/slider.js"></script>
+<script type="text/javascript">
+    $(function(){
+        //默认状态下左右滚动
+        $("#teacher").Xslider({
+            unitdisplayed:5,
+            numtoMove:1,
+            unitlen:143,
+            loop:"cycle",
+            autoscroll:3000
+        });
+    });
+</script>
 </body>
 </html>

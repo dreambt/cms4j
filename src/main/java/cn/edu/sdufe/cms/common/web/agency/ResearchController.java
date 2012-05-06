@@ -1,6 +1,7 @@
 package cn.edu.sdufe.cms.common.web.agency;
 
 import cn.edu.sdufe.cms.common.service.article.CategoryManager;
+import cn.edu.sdufe.cms.common.service.link.LinkManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ResearchController {
 
     private CategoryManager categoryManager;
+    private LinkManager linkManager;
 
     /**
      * 根据编号打开对应的研究所首页
@@ -28,11 +30,17 @@ public class ResearchController {
     @RequestMapping(value = "{id}")
     public String indexOfAgency(@PathVariable Long id, Model model) {
         model.addAttribute("categories", categoryManager.getNavCategory());
+        model.addAttribute("links", linkManager.getAllLink());
         return "research" + id;
     }
 
     @Autowired
     public void setCategoryManager(CategoryManager categoryManager) {
         this.categoryManager = categoryManager;
+    }
+
+    @Autowired
+    public void setLinkManager(LinkManager linkManager) {
+        this.linkManager = linkManager;
     }
 }

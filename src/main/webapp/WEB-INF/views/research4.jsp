@@ -19,7 +19,6 @@
 </head>
 <body>
 <img id="banner" src="${ctx}/static/uploads/agency/1336285917999-vFRmcI.jpg" width="948px"/>
-
 <div class="span-19">
     <div class="span-7">
         <div class="container_index span-7-border">
@@ -69,17 +68,38 @@
                 <li><a href="#">移动支付安全解决方案</a></li>
             </ul>
         </div>
-
     </div>
     <!---- left_r end---->
     <div id="left_b">
         <p class="title_index title-748"><strong>专家团队</strong></p>
-        <%@ include file="/WEB-INF/layouts/teacher.jsp" %>
+        <div class="scrolllist" id="teacher">
+            <a class="abtn aleft" href="#left" title="左移"></a>
+            <div class="imglist_w">
+                <ul class="imglist">
+                    <li>
+                        <a target="_blank" href="${ctx}/article/content3" title="聂秀山博士， 副教授，毕业于山东大学信息科学与工程学院。近年来主持国家自然基金一项，省两化融合研究课题一项，参与国家973项目和国家自然基金项目多项。主要研究方向为金融信息安全、信息内容安全认证等。"><img width="120" height="166" alt="聂秀山" src="${ctx}/static/uploads/teacher/pic_niexiushan.jpg"></a>
+                        <p>聂秀山</p>
+                    </li>
+                    <li>
+                        <a target="_blank" href="${ctx}/article/content2" title="赵华伟"><img width="120" height="166" alt="赵华伟" src="${ctx}/static/uploads/teacher/pic_zhaohuawei.jpg"></a>
+                        <p>赵华伟</p>
+                    </li>
+                    <li>
+                        <a target="_blank" href="${ctx}/article/content1" title="万海山"><img width="120" height="166" alt="万海山" src="${ctx}/static/uploads/teacher/pic_wanhaishan.jpg"></a>
+                        <p>万海山</p>
+                    </li>
+                    <li>
+                        <a target="_blank" href="${ctx}/article/content4" title="王倩"><img width="120" height="166" alt="王倩" src="${ctx}/static/uploads/teacher/pic_wangqian.jpg"></a>
+                        <p>王倩</p>
+                    </li>
+                </ul>
+            </div>
+            <a class="abtn aright" href="#right" title="右移"></a>
+        </div>
     </div>
     <!---教师风采---->
 </div>
 <div class="span-5 last">
-
     <div class="container_index span-5-border">
         <p class="title_index title-188"><strong>教育培训</strong></p>
         <h6 class="subTitle">认证类课程</h6>
@@ -105,7 +125,6 @@
             <li>地方银监会证监会金融办</li>
         </ul>
     </div>
-
 </div>
 <ul id="friLnk" class="span-24">
     <li class="friLnkT"><strong>友情链接</strong></li>
@@ -113,5 +132,18 @@
         <li class="fri"><a href="${link.url}">${fn:substring(link.title,0,13)}</a></li>
     </c:forEach>
 </ul>
+<script type="text/javascript" src="${ctx}/static/js/slider.js"></script>
+<script type="text/javascript">
+    $(function(){
+        //默认状态下左右滚动
+        $("#teacher").Xslider({
+            unitdisplayed:5,
+            numtoMove:1,
+            unitlen:143,
+            loop:"cycle",
+            autoscroll:3000
+        });
+    });
+</script>
 </body>
 </html>

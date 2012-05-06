@@ -1,5 +1,5 @@
 <%--
-  金融数据管理研究所
+ 金融服务计算研究所
   User: Wang Kejun (445489171@qq.com)
   Date: 12-5-6
   Time: 下午13:14
@@ -15,79 +15,107 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>金融数据管理研究所</title>
+    <title>金融服务计算研究所</title>
 </head>
 <body>
 <img id="banner" src="${ctx}/static/uploads/agency/1336285889720-RoZ0EU.jpg" width="948px"/>
-
 <div class="span-19">
     <div class="span-7">
         <div class="container_index span-7-border">
             <p class="title_index title-268">
                 <strong>关于我们</strong>
             </p>
-           <p class="researchDesc train">  金融数据管理研究所主要致力于解决银行、证券、保险、财政、税务等金融领域信息化建设中的数据治理、数据整合、数据仓库建设、数据挖掘技术与数据应用问题，研究面向金融领域的金融信息系统虚拟化技术、大数据存储技术、DW/DM/OLAP等数据的抽取、转换、加工、展现技术，数据分析模型及智能分析算法等，为金融机构提供各类营运业务分析和管理决策服务，全面提升金融机构的业务能力和管理水平。研究所依托山东财经大学的学科优势，与相关企业、科研单位开展产学研合作，为金融机构提供技术解决方案、专业培训、发展规划和咨询服务，促进科技成果的转化与应用。</p>
-           <p class="researchDesc train">  研究团队由具有较高理论造诣的高校教师和具有丰富实际工作经验的业界专家组成。其中教授2人，副教授、高级工程师和高级系统分析师6人，团队成员大多具有博士学位或具有海外学习与工作经历。</p>
+           <p class="researchDesc train">		金融服务计算研究所主要致力于银行、证券、保险、财税等金融行业特别是中小金融机构信息化领域中的IT基础架构优化设计、信息系统构建、服务支撑体系建设和服务计算技术的应用研究、咨询和服务，为金融业务流程优化和服务创新提供技术支撑。研究所依托山东财经大学的学科优势，与相关合作企业、科研机构及目标用户开展密切的产学研合作，促进科研成果转化，推动金融业特别是金融服务产业的发展。</p>
+           <p class="researchDesc train">		研究团队由具有较高理论造诣的高校教师和具有丰富实际工作经验的业界专家组成。其中教授2人，副教授、高级工程师、系统分析师和架构师6人，大多具有博士学位或具有海外学习与工作经历。</p>
         </div>
         <div class="container_index span-7-border">
             <p class="title_index title-268"><strong>产学研合作</strong><%--<a href="#" class="more">更多>></a>--%></p>
-            <p class="brief">  本研究所与山东省城商联盟、山东省农信社等多家金融机构，山东舜德数据管理公司和SaS China等多家国内外企业建立了长期的紧密合作关系。承担国家自然基金项目1项、教育部科技发展计划项目2项、山东省自然基金项目2项。独立研究及与合作伙伴共同研发的成果已取得软件著作权2项，申报国家发明专利2项，“基于商务智能的分析型客户关系管理系统”等多项成果已成功应用于工商银行、交通银行和德州商行等多家金融机构。</p>
+            <p class="brief">  本研究所与山东省城商联盟、山东省农信社等多家金融机构，银泉科技、山东舜德和CA Technologies等多家国内外企业建立了长期的紧密合作关系。承担国家自然基金项目2项、省自然基金和科技攻关计划项目4项。独立研究及与合作伙伴共同研发的成果已取得软件著作权2项，申报国家发明专利1项，“基于SaaS面向中小企业的金融综合服务平台”“虚拟化金融服务开发与测试环境”等多项成果有望近期应用于全省的小额贷款企业、村镇银行和城市商业银行等。</p>
         </div>
     </div>
     <!---left_l end----->
     <div class="span-12 last">
         <div class="container_index span-12-border">
             <p class="title_index title-468"><a href="#"><strong>学术研究</strong></a></p>
-            <p class="brief">	  依托省部共建的经济运行分析高性能计算实验室和校企共建的商务智能与数据挖掘实验室，研究金融业大数据的分布式存储和检索方法、金融信息分析与建模、大数据中心构建方法、面向个性化金融服务的数据集成、数据仓库、海量数据挖掘方法研究、对用户信息及其行为习惯的挖掘等。主要研究内容：</p>
-            <h6 class="subTitle">金融数据标准化与金融数据质量</h6>
+            <p class="brief">		依托省部共建的金融信息工程实验室和校企共建的云计算与虚拟化技术实验室，研究面向银行、证券、保险等金融行业应用的新型云计算体系结构、基于SaaS模式的金融信息云服务平台、面向服务的金融业务流程管理与再造、虚拟化的金融服务开发与测试环境和金融云数据中心建设等。主要研究内容：</p>
+            <h6 class="subTitle">金融云计算体系结构</h6>
             <p class="brief train">
-                  数据标准是保证数据质量的基础，通过数据标准化建立金融机构统一的数据标准体系和架构，推进数据信息标准化建设，规范数据标准机制和流程，提高数据标准管理与维护的有效性，提高数据质量，增强数据定义与使用的一致性、降低系统整合难度，为实现金融统计标准化打下了坚实的基础。
+                  云计算是IT技术和服务方式的重大变革。云计算在业务灵活性管理及运营成本方面的具有极大的优势。然而，金融系统毕竟是非常特殊的，他们对数据安全性特别敏感，对客户的隐私性特别关注。基于金融系统的特殊性，研究金融云计算体系结构，建立从基础架构、平台到软件与应用服务的完善体系。
             </p>
-            <h6 class="subTitle"> 	金融海量数据挖掘方法研究</h6>
+            <h6 class="subTitle">面向中小金融机构基于SaaS的金融综合服务平台</h6>
             <p class="brief train">
-                  面向海量数据，利用数据挖掘、机器学习等方法，研究客户价值、客户行为、金融产品等的关联规则、分类和聚类，主要研究目标不仅包括对海量数据的分析，进而实现为最终用户提供服务，还包括对用户信息及其行为习惯的挖掘。重点挖掘不同目标客户的消费能力和消费需求，并设计相应的金融服务。
+                  基于SaaS模式按照面向服务的系统架构及软件设计方法，以中小银行业务处理系统中最基础的核心业务系统的研究和搭建工作为起点，研究“服务”的构建方法，建立中小金融机构“服务”的定义、分析设计及开发规范，并按照“单实例、多租户”的模式通过“服务”的方式给各个中小金融机构提供金融业务服务。
             </p>
-            <h6 class="subTitle">	金融数据整合与商务智能</h6>
+            <h6 class="subTitle">虚拟化金融服务开发与测试环境研究</h6>
             <p class="brief train">
-                  利用报表、查询与分析、数据仓库、OLAP以及数据挖掘技术，对来自整个金融企业的数据进行整合并提供自助报表和分析。研究金融机构主数据管理、数据清理与压缩、提取、转换和加载（ETL）、迁移与同步等数据整合与数据挖掘技术。
+                  研究通过云环境和虚拟化技术，快速地按照需求构建和部署开发和测试环境。研究建立标准虚拟化模板，支持开发和测试需求的采集，并根据需求进行虚拟化资源配置，并可根据测试结果构建新产品和新服务的部署运行资源配置。
             </p>
-            <h6 class="subTitle">金融产品优化与推荐</h6>
+            <h6 class="subTitle">金融云数据中心研究</h6>
             <p class="brief train">
-                  利用数据挖掘、机器学习等现代信息技术，深入挖掘金融产品与客户需求之间的关系，敏锐捕捉不同客户的金融产品需求，优化现有的金融产品并设计更符合不同用户客观需求的金融产品，并推荐给目标客户。
+                  随着数据量呈指数增长，多数金融机构遇到了存储成本增加和效率下降的问题。研究建立基于云的逻辑上集中统一的金融数据中心，获得动态可扩展性的存储基础架构，通过云存储支持全新的数据分析与挖掘，为实现金融智的提供支撑。
             </p>
         </div>
         <div class="container_index span-12-border">
             <p class="title_index title-468"><a href="#"><strong>咨询服务</strong></a></p>
             <ul class="content span-6">
-                <li><a href="#">商业银行数据治理与综合应用规划</a></li>
-                <li><a href="#">银行经营分析与决策支持系统方案</a></li>
-                <li><a href="#">基于精细化的分析型客户关系管理</a></li>
+                <li><a href="#">中小金融机构的产品体系建设</a></li>
+                <li><a href="#">虚拟化金融服务开发与测试环境</a></li>
             </ul>
             <ul class="content span-6 last">
-                <li><a href="#">中小金融机构商务智能解决方案</a></li>
-                <li><a href="#">中小金融机构管理会计考核系统</a></li>
-                <li><a href="#">商业银行电子报表管理系统方案</a></li>
+                <li><a href="#">基于SaaS的金融综合服务平台</a></li>
+                <li><a href="#">敏捷云—建模业务服务的云平台</a></li>
             </ul>
         </div>
-
     </div>
     <!---- left_r end---->
     <div id="left_b">
         <p class="title_index title-748"><strong>专家团队</strong></p>
-        <%@ include file="/WEB-INF/layouts/teacher.jsp" %>
+        <div class="scrolllist" id="teacher">
+            <a class="abtn aleft" href="#left" title="左移"></a>
+            <div class="imglist_w">
+                <ul class="imglist">
+                    <li>
+                        <a target="_self" href="" title="张抗抗"><img width="120" height="166" alt="张抗抗" src="${ctx}/static/uploads/teacher/pic_zhangkangkang.jpg"></a>
+                        <p>张抗抗</p>
+                    </li>
+                    <li>
+                        <a target="_self" href="" title="徐如志"><img width="120" height="166" alt="徐如志" src="${ctx}/static/uploads/teacher/pic_xuruzhi.jpg"></a>
+                        <p>徐如志</p>
+                    </li>
+                    <li>
+                        <a target="_self" href="" title="杨峰"><img width="120" height="166" alt="杨峰" src="${ctx}/static/uploads/teacher/pic_yangfeng.jpg"></a>
+                        <p>杨峰</p>
+                    </li>
+                    <li>
+                        <a target="_self" href="" title="张燕"><img width="120" height="166" alt="张燕" src="${ctx}/static/uploads/teacher/pic_zhangyan.jpg"></a>
+                        <p>张燕</p>
+                    </li>
+                    <li>
+                        <a target="_self" href="" title="赵志崑"><img width="120" height="166" alt="赵志崑" src="${ctx}/static/uploads/teacher/pic_zhaozhikun.jpg"></a>
+                        <p>赵志崑</p>
+                    </li>
+                    <li>
+                        <a target="_self" href="" title="刘文金"><img width="120" height="166" alt="刘文金" src="${ctx}/static/uploads/teacher/pic_liuwenjin.jpg"></a>
+                        <p>刘文金</p>
+                    </li>
+                </ul>
+            </div>
+            <a class="abtn aright" href="#right" title="右移"></a>
+        </div>
     </div>
     <!---教师风采---->
 </div>
 <div class="span-5 last">
-
     <div class="container_index span-5-border">
         <p class="title_index title-188"><strong>教育培训</strong></p>
-        <h6 class="subTitle">金融商务智能解决方案</h6>
-        <p class="brief train">  金融数据挖掘分析模型设计、Oracle商业智能数据仓库、微软商业智能和数据仓库、IBM商业智能和数据仓库、开源商业智能以及其它。</p>
-        <h6 class="subTitle">数据挖掘统计</h6>
-        <p class="brief train">  SAS数据统计、SAS数据挖掘、SPSS统计分析、SPSS数据挖掘。</p>
-        <h6 class="subTitle">数据存储管理</h6>
-        <p class="brief train">  Oracle数据库管理、Oracle RAC集群、Oracle性能优化、IBM DB2开发管理、Sybase IQ开发和管理、Teradata开发和管理、Sql Server实施和管理。</p>
+        <h6 class="subTitle">云计算的基础知识</h6>
+        <p class="brief train">  云计算技术概述、Google云计算技术、Amazon云计算技术、 微软云计算技术、开源云计算系统、云计算发展趋势</p>
+        <h6 class="subTitle">金融云计算的技术架构</h6>
+        <p class="brief train">  金融云计算的开发与应用、金融云数据的管理、金融私有云的构建、金融云计算的安全体系</p>
+        <h6 class="subTitle">金融云计算的企业实践</h6>
+        <p class="brief train">  金融云计算的规划与部署、金融云计算平台的企业应用、金融云计算的行业应用</p>
+        <h6 class="subTitle">金融云计算战略</h6>
+        <p class="brief train">  金融企业云计算发展战略、云计算与金融服务创新、云计算前景与投资分析等</p>
     </div>
     <div class="container_index span-5-border">
         <p class="title_index title-188"><strong>服务对象</strong><%--<a href="#" class="more">更多>></a>--%></p>
@@ -101,7 +129,6 @@
             <li>地方银监会证监会金融办</li>
         </ul>
     </div>
-
 </div>
 <ul id="friLnk" class="span-24">
     <li class="friLnkT"><strong>友情链接</strong></li>
@@ -109,5 +136,18 @@
         <li class="fri"><a href="${link.url}">${fn:substring(link.title,0,13)}</a></li>
     </c:forEach>
 </ul>
+<script type="text/javascript" src="${ctx}/static/js/slider.js"></script>
+<script type="text/javascript">
+    $(function(){
+        //默认状态下左右滚动
+        $("#teacher").Xslider({
+            unitdisplayed:5,
+            numtoMove:1,
+            unitlen:143,
+            loop:"cycle",
+            autoscroll:3000
+        });
+    });
+</script>
 </body>
 </html>

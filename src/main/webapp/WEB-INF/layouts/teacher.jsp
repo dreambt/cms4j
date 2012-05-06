@@ -4,7 +4,6 @@
   User: Deng Xiaolan (824688439@qq.com)
   Date: 12-4-14
   Time: 下午5:07
-  To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="sitemesh" uri="http://www.opensymphony.com/sitemesh/decorator" %>
