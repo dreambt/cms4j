@@ -14,9 +14,7 @@ public class Teacher extends PersistableEntity {
 
     private String teacherName;
     private boolean top;
-    private Long articleId;
     private Article article;
-    private Long agencyId;
     private Agency agency;
     private String imageUrl;
     private boolean deleted;
@@ -37,28 +35,12 @@ public class Teacher extends PersistableEntity {
         this.top = top;
     }
 
-    public Long getArticleId() {
-        return articleId;
-    }
-
-    public void setArticleId(Long articleId) {
-        this.articleId = articleId;
-    }
-
     public Article getArticle() {
         return article;
     }
 
     public void setArticle(Article article) {
         this.article = article;
-    }
-
-    public Long getAgencyId() {
-        return agencyId;
-    }
-
-    public void setAgencyId(Long agencyId) {
-        this.agencyId = agencyId;
     }
 
     public Agency getAgency() {

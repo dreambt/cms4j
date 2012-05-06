@@ -1,6 +1,8 @@
 package cn.edu.sdufe.cms.data;
 
+import cn.edu.sdufe.cms.common.entity.agency.Agency;
 import cn.edu.sdufe.cms.common.entity.agency.Teacher;
+import cn.edu.sdufe.cms.common.entity.article.Article;
 
 /**
  * 老师信息测试数据
@@ -13,8 +15,12 @@ public class TeacherData {
     public static Teacher getTeacher() {
         Teacher teacher = new Teacher();
         teacher.setTeacherName("teacherName");
-        teacher.setArticleId(1L);
-        teacher.setAgencyId(1L);
+
+        Article article = ArticleData.getRandomArticle();
+        teacher.setArticle(article);
+
+        Agency agency = AgencyData.getRandomAgency();
+        teacher.setAgency(agency);
         teacher.setImageUrl("teacherName.jpg");
         return teacher;
     }

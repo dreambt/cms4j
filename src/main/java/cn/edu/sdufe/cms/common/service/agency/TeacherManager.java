@@ -8,6 +8,7 @@ import cn.edu.sdufe.cms.common.entity.account.User;
 import cn.edu.sdufe.cms.common.entity.agency.Teacher;
 import cn.edu.sdufe.cms.common.entity.article.Article;
 import cn.edu.sdufe.cms.common.entity.article.Category;
+import cn.edu.sdufe.cms.common.service.article.ArticleManager;
 import cn.edu.sdufe.cms.security.ShiroDbRealm;
 import cn.edu.sdufe.cms.utilities.upload.UploadFile;
 import org.apache.shiro.SecurityUtils;
@@ -32,12 +33,15 @@ import java.util.List;
 @Component
 @Transactional(readOnly = true)
 public class TeacherManager {
+
     private static final Logger logger = LoggerFactory.getLogger(TeacherManager.class);
 
+    private ArticleManager articleManager;
     private TeacherDao teacherDao;
     private ArticleDao articleDao;
     private CategoryDao categoryDao;
     private String UPLOAD_DIR = "static/uploads/teacher/";
+
     /**
      * 根据编号获得老师信息
      *
@@ -69,17 +73,14 @@ public class TeacherManager {
     }
 
     /**
-     *
      * @param id
-     *
      */
-   @Transactional(readOnly =false)
-   public int delete(long id){
-          return teacherDao.updateTeacherBool(id,"deleted") ;
-  }
+    @Transactional(readOnly = false)
+    public int delete(long id) {
+        return teacherDao.updateTeacherBool(id, "deleted");
+    }
 
     /**
-     *
      * @param ids
      */
     @Transactional(readOnly = false)
@@ -88,39 +89,34 @@ public class TeacherManager {
             if (id.length() == 0) {
                 continue;
             }
-            teacherDao.updateTeacherBool(Long.parseLong(id),"deleted");
+            teacherDao.updateTeacherBool(Long.parseLong(id), "deleted");
         }
     }
 
     /**
-     *
      * @param file
      * @param request
      * @param teacher
      * @return
      */
     @Transactional(readOnly = false)
-    public int updateTeacher(MultipartFile file,Article article, HttpServletRequest request,Teacher teacher){
-         if(file.getOriginalFilename()!=null && !file.getOriginalFilename().equals("")){
-             UploadFile uploadFile = new UploadFile();
-             String fileName = uploadFile.uploadFile(file, request, UPLOAD_DIR);
-             teacher.setImageUrl(fileName);
-         }
-        if(articleDao.update(article)>0){
-            return teacherDao.updateTeacher(teacher);
-        } else{
-            return 0;
+    public int updateTeacher(MultipartFile file, HttpServletRequest request, Teacher teacher) {
+        // 保存文章
+        articleManager.update(teacher.getArticle(), request);
+
+        if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
+            UploadFile uploadFile = new UploadFile();
+            String fileName = uploadFile.uploadFile(file, request, UPLOAD_DIR);
+            teacher.setImageUrl(fileName);
         }
-
-
+        return teacherDao.updateTeacher(teacher);
     }
 
     /**
-     *
      * @param id
      */
     @Transactional(readOnly = false)
-    public void showIndex(Long id){
+    public void showIndex(Long id) {
         teacherDao.updateTeacherBool(id, "top");
     }
 
@@ -129,10 +125,9 @@ public class TeacherManager {
      * @return
      */
     @Transactional(readOnly = false)
-    public int save(MultipartFile file,Teacher teacher, Article article, HttpServletRequest request) {
+    public int save(MultipartFile file, Teacher teacher, Article article, HttpServletRequest request) {
 
         // 文章作者
-
         ShiroDbRealm.ShiroUser shiroUser = (ShiroDbRealm.ShiroUser) SecurityUtils.getSubject().getPrincipal();
         article.setUser(new User(shiroUser.getId()));
         article.setCategory(categoryDao.findOne(13L));
@@ -149,13 +144,13 @@ public class TeacherManager {
                 UploadFile uploadFile = new UploadFile();
                 String fileName = uploadFile.uploadFile(file, request, UPLOAD_DIR);
                 teacher.setImageUrl(fileName);
-            }else{
+            } else {
                 teacher.setImageUrl("");
             }
-            teacher.setArticleId(article.getId());
-            if( teacherDao.save(teacher)>0){
-                    return 1;
-            }else{
+            teacher.setArticle(article);
+            if (teacherDao.save(teacher) > 0) {
+                return 1;
+            } else {
                 return 0;
             }
 
@@ -164,6 +159,10 @@ public class TeacherManager {
         }
     }
 
+    @Autowired
+    public void setArticleManager(ArticleManager articleManager) {
+        this.articleManager = articleManager;
+    }
 
     @Autowired
     public void setTeacherDao(TeacherDao teacherDao) {

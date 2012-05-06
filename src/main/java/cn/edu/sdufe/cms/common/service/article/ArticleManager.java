@@ -354,7 +354,6 @@ public class ArticleManager {
             try {
                 imageThumb.saveImageAsJpg(path + "article\\article-big\\" + article.getImageName(), path + "article\\news-thumb\\" + article.getImageName(), 274, 157);
                 imageThumb.saveImageAsJpg(path + "article\\article-big\\" + article.getImageName(), path + "article\\digest-thumb\\" + article.getImageName(), 134, 134);
-
             } catch (Exception e) {
                 logger.error(e.getMessage());
             }

@@ -7,8 +7,6 @@
         <id property="id" column="id"/>
         <result property="teacherName" column="teacher_name"/>
         <result property="top" column="top"/>
-        <result property="articleId" column="article_id"/>
-        <result property="agencyId" column="agency_id"/>
         <result property="imageUrl" column="image_url"/>
         <result property="deleted" column="deleted"/>
         <result property="createdDate" column="created_date"/>
@@ -19,6 +17,7 @@
             <result property="message" column="message"/>
         </association>
         <association property="agency" column="agency_id" javaType="Agency">
+            <result property="id" column="id"/>
             <result property="title" column="title"/>
         </association>
     </resultMap>
@@ -30,7 +29,7 @@
     -->
     <select id="getTeacher" parameterType="Long" resultMap="teacherDetailMap">
         SELECT
-        <include refid="teacherColumns"/>, B.title, C.subject AS art_subject, C.message AS art_message
+        <include refid="teacherColumns"/>, B.title, C.id AS art_id, C.subject AS art_subject, C.message AS art_message
         FROM cms_teacher AS A
         LEFT JOIN cms_agency AS B ON A.agency_id=B.id
         LEFT JOIN cms_article AS C ON A.article_id=C.id
@@ -70,7 +69,7 @@
         INSERT INTO cms_teacher
             (teacher_name, top, article_id, agency_id, image_url, deleted, created_date)
         VALUES
-            (#{teacherName}, #{top}, #{articleId}, #{agencyId}, #{imageUrl}, 0, null)
+            (#{teacherName}, #{top}, #{article.id}, #{agency.id}, #{imageUrl}, 0, null)
     </insert>
 
     <!--
@@ -91,11 +90,14 @@
             <if test="teacherName != null and teacherName != ''">
                 teacher_name=#{teacherName},
             </if>
-            <if test="agencyId != null and agencyId != ''">
-                agency_id=#{agencyId},
+            <if test="agency.id != null and agency.id != ''">
+                agency_id=#{agency.id},
             </if>
             <if test="imageUrl != null and imageUrl != ''">
                 image_url=#{imageUrl},
+            </if>
+            <if test="top != null">
+                top=#{top},
             </if>
             last_modified_date=null
         </set>

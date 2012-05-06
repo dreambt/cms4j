@@ -67,32 +67,6 @@ public class ArticleController {
      * @param id
      * @return
      */
-    //TODO 临时使用
-    @Deprecated
-    @RequestMapping(value = "content{id}", method = RequestMethod.GET)
-    public String contextOfAgency(@PathVariable("id") String id, Model model, RedirectAttributes redirectAttributes) {
-        Article article = articleManager.findForView(1L);
-        if (null == article) {
-            redirectAttributes.addFlashAttribute("message", "不存在编号为 " + id + " 的文章");
-            return "redirect:/error/404";
-        }
-
-        //article.setMessage(Encodes.unescapeHtml(article.getMessage()));
-
-        model.addAttribute("article", article);
-        model.addAttribute("categories", categoryManager.getNavCategory());
-        model.addAttribute("archives", archiveManager.getTopTen());
-        model.addAttribute("newArticles", articleManager.findTopTen());
-        model.addAttribute("links", linkManager.getAllLink());
-        return "article/content" + id;
-    }
-
-    /**
-     * 获取编号为id的文章正文
-     *
-     * @param id
-     * @return
-     */
     @RequestMapping(value = "content/full/{id}", method = RequestMethod.GET)
     public String fullOfArticle(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
         Article article = articleManager.findForView(id);

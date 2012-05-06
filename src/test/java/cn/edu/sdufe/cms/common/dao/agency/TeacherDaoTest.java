@@ -31,6 +31,7 @@ public class TeacherDaoTest extends SpringTransactionalTestCase {
     @Test
     public void testGetTeacher() throws Exception {
         Teacher teacher = teacherDao.getTeacher(1L);
+        Assert.assertEquals("1",teacher.getArticle().getId().toString());
         Assert.assertEquals("CFA 特许金融分析师1", teacher.getArticle().getSubject());
     }
 

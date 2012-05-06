@@ -50,7 +50,7 @@
             <option value="${categorie.id}" <c:if test="${categorie.id eq article.category.id}">selected="selected"</c:if>>${categorie.categoryName}</option>
         </c:forEach></form:select>
         <label>是否置顶</label> <input type="checkbox" name="top" value="${article.top}" <c:if test="${article.top}">checked="checked"</c:if> />
-        <label>允许评论</label> <input type="checkbox" name="allowComment" value="${article.allowComment}" <c:if test="${article.allowComment}">checked="checked"</c:if> /><br />
+        <label>允许评论</label> <input type="checkbox" name="allowComment" value="true" <c:if test="${article.allowComment}">checked="checked"</c:if> /><br />
         <label>文章标题</label> <input type="text" id="text" name="subject" class="medium required" size="206" original-title="请输入文章标题" value="${article.subject}" />
         <script type="text/plain" id="myEditor">${article.message}</script>
             <script type="text/javascript">
@@ -66,7 +66,7 @@
 <button class="button_colour" id="publish" type="submit"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/BendedArrowRight.png"><span>发 布</span></button>
 <button class="button_colour" type="reset"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/BendedArrowRight.png"><span>草 稿</span></button>
 </form:form>
-</div>
+</div>    ${article.message}
 <script type="text/javascript">
     var URL = "${ctx}/../..";
     $(function () {

@@ -44,15 +44,16 @@
             <h2 class="box_head grad_colour round_top">编辑老师介绍信息</h2>
             <div class="toggle_container">
                 <div class="block">
-                    <input type="hidden" name="teacher.id" value="${teacher.id}" id="teacherID"/>
+                    <input type="hidden" name="id" value="${teacher.id}" id="teacherID"/>
+                    <input type="hidden" name="article.id" value="${teacher.article.id}" id="articleID"/>
                     <label>上传头像：</label>
                     <input type="file" id="upload" name="file" alt="${teacher.imageUrl}"><br/>
-                    <label>老师姓名：</label> <input type="text" id="teacher.name" name="teacherName" class="required" original-title="请输入老师姓名" value="${teacher.teacherName}" />
+                    <label>老师姓名：</label> <input type="text" id="teacherName" name="teacherName" class="required" original-title="请输入老师姓名" value="${teacher.teacherName}" />
                     <input type="hidden" id="allowComment" value="false"/>
-                    <label for="topt">是否置顶</label> <input id="topt" type="checkbox" name="top" value="${article.top}" <c:if test="${article.top}">checked="checked"</c:if> /> &nbsp;&nbsp;
+                    <label for="top">是否置顶</label> <input id="top" type="checkbox" name="top" value="${teacher.top}" <c:if test="${teacher.top}">checked="checked"</c:if> />
                     <br />
                     <label>所属研究所</label>
-                    <form:select path="agencyId">
+                    <form:select path="agency.id">
                         <c:forEach items="${agencies}" begin="0" step="1" var="agency" varStatus="stat">
                             <option value="${agency.id}" <c:if test="${agency.categoryId eq teacher.agency.categoryId}">selected="selected"</c:if>>${agency.title}</option>
                         </c:forEach>
@@ -60,7 +61,7 @@
                     <script type="text/plain" id="myEditor">${teacher.article.message}</script>
                     <script type="text/javascript">
                         var editor = new baidu.editor.ui.Editor({
-                            textarea: 'message',
+                            textarea: 'article.message',
                             elementPathEnabled:false
                         });
                         editor.render("myEditor");
@@ -115,7 +116,6 @@
                 }
             }
         });
-
     });
 </script>
 </body>
