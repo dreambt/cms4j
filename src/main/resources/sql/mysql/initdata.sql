@@ -247,7 +247,7 @@ INSERT INTO `cms_agency` (`id`, `title`, `category_id`, `image_url`, `introducti
 -- -----------------------------------------------------
 -- 学术骨干老师测试数据
 -- -----------------------------------------------------
-INSERT INTO `cms_teacher` (`id`, `teacher_name`, `article_id`, `agency_id`, `image_url`, `deleted`, `last_modified_date`, `created_date`) VALUES
-(1, '赵华伟', 1, 1, 'pic_zhaohuawei.jpg', 0, '2012-04-21 01:11:03', '2012-04-27 06:27:05'),
-(2, '徐如志', 1, 1, 'pic_xuruzhi.jpg', 0, '2012-04-21 01:11:03', '2012-04-28 08:51:25'),
-(3, '赵志崑', 2, 1, 'pic_zhaozhikun.jpg', 0, '2012-04-21 01:11:03', '2012-04-28 02:23:40');
+INSERT INTO `cms_teacher` (`id`, `teacher_name`, `top`, `article_id`, `agency_id`, `image_url`, `deleted`, `last_modified_date`, `created_date`) VALUES
+(1, '赵华伟', 0, 1, 1, 'pic_zhaohuawei.jpg', 0, '2012-04-21 01:11:03', '2012-04-27 06:27:05'),
+(2, '徐如志', 0, 1, 1, 'pic_xuruzhi.jpg', 0, '2012-04-21 01:11:03', '2012-04-28 08:51:25'),
+(3, '赵志崑', 0, 2, 1, 'pic_zhaozhikun.jpg', 0, '2012-04-21 01:11:03', '2012-04-28 02:23:40');

@@ -32,13 +32,13 @@
 
         <p>老师列表</p>
         <c:if test="${not empty info}">
-            <div id="message" class="alert alert_blue">
+            <div id="info" class="alert alert_blue">
                 <img height="24" width="24"
                      src="${ctx}/static/dashboard/images/icons/Locked2.png"><strong>${info}</strong>
             </div>
         </c:if>
         <c:if test="${not empty error}">
-            <div id="message" class="alert alert_red">
+            <div id="error" class="alert alert_red">
                 <img height="24" width="24"
                      src="${ctx}/static/dashboard/images/icons/Locked2.png"><strong>${error}</strong>
             </div>
@@ -46,7 +46,7 @@
     </div>
 </div>
 <div class="main_container container_16 clearfix">
-    <form id="imageList" name="imageList" method="post">
+    <form:form id="imageList" name="imageList" method="post">
         <div class="box grid_16 round_all">
             <table class="display table">
                 <thead>
@@ -62,16 +62,17 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${images}" var="image" begin="0" step="1">
+                <c:forEach items="${teachers}"  var="teacher" begin="0" step="1" varStatus="stat">
                     <tr>
-                        <td><input type="checkbox" name="isSelected"  value="${image.id}"></td>
-                        <td><a href="${ctx}/static/uploads/gallery/gallery-big/${image.imageUrl}" rel="fancybox-thumb" class="fancy_box"><img src="${ctx}/static/uploads/gallery/thumb-50x57/${image.imageUrl}" width="50px"/></a></td>
-                        <td><a href="#">徐如志</a></td>
-                        <td><a href="#" value="">aaa</a> </td>
-                        <td><a href="${ctx}/static/uploads/gallery/gallery-big/${image.imageUrl}">${image.imageUrl}</a></td>
-                        <td><fmt:formatDate value="${image.createdDate}" type="both"></fmt:formatDate></td>
-                        <td><c:choose><c:when test="${image.showIndex}"><a href="${ctx}/gallery/showIndex/${image.id}">显示</a></c:when><c:otherwise><a href="${ctx}/gallery/showIndex/${image.id}">不显示</a></c:otherwise></c:choose></td>
-                        <td><a href="${ctx}/gallery/edit/${image.id}">【编辑】</a><a href="${ctx}/gallery/delete/${image.id}" class="delete">【删除】</a></td>
+                        <td><input type="checkbox" name="isSelected"  value="${teacher.id}"></td>
+                        <td><a href="${ctx}/static/uploads/teacher/${teacher.imageUrl}" rel="fancybox-thumb" class="fancy_box"><img src="${ctx}/static/uploads/teacher/${teacher.imageUrl}" width="50px"/></a></td>
+                        <td><a href="${ctx}/article/content/${teacher.article.id}" target="_blank">${teacher.teacherName}</a></td>
+                        <td><a href="${ctx}/agency/show/${teacher.agencyId}" target="_blank">${teacher.agency.title}</a> </td>
+                        <td><a href="${ctx}/static/uploads/teacher/${teacher.imageUrl}">${teacher.imageUrl}</a></td>
+                        <td><fmt:formatDate value="${teacher.createdDate}" type="both"></fmt:formatDate></td>
+                        <td><a href="${ctx}/teacher/showIndex/${teacher.id}"><c:choose><c:when test="${teacher.top eq true}">显示</c:when><c:otherwise>不显示</c:otherwise></c:choose></a></td>
+                        <td><a href="${ctx}/teacher/edit/${teacher.id}">【编辑】</a> <c:if test="${teacher.deleted eq true}"> <a href="${ctx}/teacher/delete/${teacher.id}">【恢复】</a></c:if>
+                            <c:if test="${teacher.deleted eq false}"> <a href="${ctx}/teacher/delete/${teacher.id}">【删除】</a></c:if></td>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -80,7 +81,7 @@
         <button class="button_colour" id="deleteAll"><img height="24" width="24" alt="Bended Arrow Right"
                                                           src="${ctx}/static/dashboard/images/icons/BendedArrowRight.png"/><span>批量删除</span>
         </button>
-    </form>
+    </form:form>
 </div>
 <script type="text/javascript">
     $(document).ready(function() {
@@ -105,12 +106,13 @@
         });
         $('#deleteAll').click(function () {
             if (confirm("确定批量删除吗？")) {
-                $("#imageList").attr("action", "${ctx}/gallery/batchDelete").submit();
+                $("#imageList").attr("action", "${ctx}/teacher/batchDelete").submit();
             } else {
                 return false;
             }
         });
         $('.delete').click(function(){
+
             if(confirm('确定删除？')){
                 return true;
             }else{

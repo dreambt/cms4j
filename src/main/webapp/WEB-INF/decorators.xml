@@ -31,7 +31,7 @@
         <pattern>/article/listInfo</pattern>
         <pattern>/archive/list*</pattern>
         <pattern>/article/content*</pattern>
-        <pattern>/comment/create</pattern>
+        <pattern>/comment/create</pattern>        <pattern>/teacher/content/*</pattern>
     </decorator>
 
     <decorator name="dashboard" page="dashboard/default.jsp">

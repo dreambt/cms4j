@@ -211,6 +211,7 @@ CREATE TABLE IF NOT EXISTS `cms_manage_log` (
 DROP TABLE IF EXISTS `cms_teacher`;
 CREATE TABLE IF NOT EXISTS `cms_teacher` (
   `id` mediumint(8) NOT NULL AUTO_INCREMENT,
+  `top` tinyint(1) NOT NULL,
   `teacher_name` varchar(20) NOT NULL,
   `article_id` mediumint(8) NOT NULL,
   `agency_id` mediumint(8) NOT NULL,

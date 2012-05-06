@@ -11,7 +11,7 @@ import java.util.Map;
 
 /**
  * 用途
- * User: pengfei.dongpf(pengfei.dong@gmail.com)
+ * User: pengfei.dongpf(pengfei.dong@gmail.com)，meng.hm(Uee2011@126.com)
  * Date: 12-4-23
  * Time: 下午3:31
  */
@@ -24,7 +24,6 @@ public class TeacherDao extends SqlSessionDaoSupport {
      * @param id
      * @return
      */
-    @Cacheable(value = "teacherCache")
     public Teacher getTeacher(Long id) {
         return getSqlSession().selectOne("Teacher.getTeacher", id);
     }
@@ -35,7 +34,6 @@ public class TeacherDao extends SqlSessionDaoSupport {
      * @param id
      * @return
      */
-    @Cacheable(value = "teacherCache")
     public Long getArticleId(Long id) {
         return getSqlSession().selectOne("Teacher.getArticleId", id);
     }
@@ -45,7 +43,6 @@ public class TeacherDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    @Cacheable(value = "teacherCache")
     public List<Teacher> getAllTeacher() {
         return getSqlSession().selectList("Teacher.getAllTeacher");
     }
@@ -56,7 +53,6 @@ public class TeacherDao extends SqlSessionDaoSupport {
      * @param teacher
      * @return
      */
-    @Cacheable(value = "teacherCache")
     public int save(Teacher teacher) {
         return getSqlSession().insert("Teacher.saveTeacher", teacher);
     }
@@ -66,7 +62,6 @@ public class TeacherDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    @Cacheable(value = "teacherCache")
     public int deleteTeacher() {
         return getSqlSession().delete("Teacher.deleteTeacher");
     }
@@ -77,7 +72,6 @@ public class TeacherDao extends SqlSessionDaoSupport {
      * @param teacher
      * @return
      */
-    @Cacheable(value = "teacherCache")
     public int updateTeacher(Teacher teacher) {
         return getSqlSession().update("Teacher.updateTeacher", teacher);
     }
@@ -89,11 +83,11 @@ public class TeacherDao extends SqlSessionDaoSupport {
      * @param column
      * @return
      */
-    @Cacheable(value = "teacherCache")
     public int updateTeacherBool(Long id, String column) {
         Map parameters = Maps.newHashMap();
         parameters.put("id", id);
         parameters.put("column", column);
         return getSqlSession().update("Teacher.updateTeacherBool", parameters);
     }
+
 }

@@ -13,6 +13,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public class Teacher extends PersistableEntity {
 
     private String teacherName;
+    private boolean top;
     private Long articleId;
     private Article article;
     private Long agencyId;
@@ -26,6 +27,14 @@ public class Teacher extends PersistableEntity {
 
     public void setTeacherName(String teacherName) {
         this.teacherName = teacherName;
+    }
+
+    public boolean isTop() {
+        return top;
+    }
+
+    public void setTop(boolean top) {
+        this.top = top;
     }
 
     public Long getArticleId() {

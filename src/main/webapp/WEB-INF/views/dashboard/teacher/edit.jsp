@@ -39,26 +39,25 @@
     </div>
 </div>
 <div class="main_container container_16 clearfix">
-    <form:form id="teacherForm">
+    <form:form id="teacherForm" modelAttribute="teacher" action="${ctx}/teacher/save/${teacher.id}" method="post" enctype="multipart/form-data">
         <div class="box gird_16">
             <h2 class="box_head grad_colour round_top">编辑老师介绍信息</h2>
             <div class="toggle_container">
                 <div class="block">
-                    <input type="hidden" name="article.id" value="" id="teacherID"/>
-                    <label for="upload">上传头像：</label>
-                    <input type="file" id="upload" name="file" value="" alt=""><br/>
-                    <label for="teacherName">老师姓名：</label> <input type="text" id="teacherName" name="subject" class="required" original-title="请输入老师姓名" value="${article.subject}" />
+                    <input type="hidden" name="teacher.id" value="${teacher.id}" id="teacherID"/>
+                    <label>上传头像：</label>
+                    <input type="file" id="upload" name="file" alt="${teacher.imageUrl}"><br/>
+                    <label>老师姓名：</label> <input type="text" id="teacher.name" name="teacherName" class="required" original-title="请输入老师姓名" value="${teacher.teacherName}" />
                     <input type="hidden" id="allowComment" value="false"/>
                     <label for="topt">是否置顶</label> <input id="topt" type="checkbox" name="top" value="${article.top}" <c:if test="${article.top}">checked="checked"</c:if> /> &nbsp;&nbsp;
                     <br />
-                    <label for="agencyT">所属研究所</label><select id="agencyT">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    </select>
-                    <script type="text/plain" id="myEditor">${article.message}</script>
+                    <label>所属研究所</label>
+                    <form:select path="agencyId">
+                        <c:forEach items="${agencies}" begin="0" step="1" var="agency" varStatus="stat">
+                            <option value="${agency.categoryId}" <c:if test="${agency.categoryId eq teacher.agency.categoryId}">selected="selected"</c:if>>${agency.title}</option>
+                        </c:forEach>
+                    </form:select>
+                    <script type="text/plain" id="myEditor">${teacher.article.message}</script>
                     <script type="text/javascript">
                         var editor = new baidu.editor.ui.Editor({
                             textarea: 'message',

@@ -246,6 +246,7 @@ DROP TABLE IF EXISTS `cms_teacher`;
 CREATE TABLE IF NOT EXISTS `cms_teacher` (
   `id` MEDIUMINT(8) NOT NULL AUTO_INCREMENT,
   `teacher_name` varchar(20) NOT NULL,
+  `top` tinyint(1) NOT NULL,
   `article_id` MEDIUMINT(8) NOT NULL,
   `agency_id` MEDIUMINT(8) NOT NULL,
   `image_url` varchar(50) NOT NULL,

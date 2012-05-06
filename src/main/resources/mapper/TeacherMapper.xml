@@ -6,14 +6,15 @@
     <resultMap id="teacherDetailMap" type="Teacher">
         <id property="id" column="id"/>
         <result property="teacherName" column="teacher_name"/>
-        <result property="introduction" column="introduction"/>
+        <result property="top" column="top"/>
         <result property="articleId" column="article_id"/>
         <result property="agencyId" column="agency_id"/>
         <result property="imageUrl" column="image_url"/>
         <result property="deleted" column="deleted"/>
         <result property="createdDate" column="created_date"/>
         <result property="lastModifiedDate" column="last_modified_date"/>
-        <association property="article" column="article_id" javaType="Article">
+        <association property="article" column="article_id" javaType="Article" columnPrefix="art_">
+            <result property="id" column="id"/>
             <result property="subject" column="subject"/>
             <result property="message" column="message"/>
         </association>
@@ -22,18 +23,18 @@
         </association>
     </resultMap>
 
-    <sql id="teacherColumns">A.id, A.teacher_name, A.article_id, A.agency_id, A.image_url, A.deleted, A.created_date, A.last_modified_date</sql>
+    <sql id="teacherColumns">A.id, A.teacher_name, A.top, A.article_id, A.agency_id, A.image_url, A.deleted, A.created_date, A.last_modified_date</sql>
 
     <!--
         根据编号获取教师信息
     -->
     <select id="getTeacher" parameterType="Long" resultMap="teacherDetailMap">
         SELECT
-        <include refid="teacherColumns"/>, B.title, C.subject, C.message
+        <include refid="teacherColumns"/>, B.title, C.subject AS art_subject, C.message AS art_message
         FROM cms_teacher AS A
         LEFT JOIN cms_agency AS B ON A.agency_id=B.id
         LEFT JOIN cms_article AS C ON A.article_id=C.id
-        WHERE A.id=#{id} and A.deleted=0
+        WHERE A.id=#{id}
         ORDER BY A.ID DESC
         LIMIT 1
     </select>
@@ -54,12 +55,11 @@
     -->
     <select id="getAllTeacher" resultMap="teacherDetailMap">
         SELECT
-        <include refid="teacherColumns"/>, B.title
+        <include refid="teacherColumns"/>, B.title, C.id as art_id
         FROM cms_teacher AS A
         LEFT JOIN cms_agency AS B ON A.agency_id=B.id
         LEFT JOIN cms_article AS C ON A.article_id=C.id
-        WHERE A.deleted=0
-        ORDER BY A.ID DESC
+        ORDER BY A.top DESC, A.id DESC
         LIMIT 30
     </select>
 
@@ -68,9 +68,9 @@
     -->
     <insert id="saveTeacher" parameterType="Teacher" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO cms_teacher
-            (teacher_name, article_id, agency_id, image_url, deleted, created_date)
+            (teacher_name, top, article_id, agency_id, image_url, deleted, created_date)
         VALUES
-            (#{teacherName}, #{articleId}, #{agencyId}, #{imageUrl}, 0, null)
+            (#{teacherName}, #{top}, #{articleId}, #{agencyId}, #{imageUrl}, 0, null)
     </insert>
 
     <!--
