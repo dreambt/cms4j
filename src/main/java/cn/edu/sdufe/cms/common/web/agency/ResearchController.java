@@ -1,5 +1,6 @@
 package cn.edu.sdufe.cms.common.web.agency;
 
+import cn.edu.sdufe.cms.common.entity.link.LinkCategoryEnum;
 import cn.edu.sdufe.cms.common.service.article.CategoryManager;
 import cn.edu.sdufe.cms.common.service.link.LinkManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class ResearchController {
     @RequestMapping(value = "{id}")
     public String indexOfAgency(@PathVariable Long id, Model model) {
         model.addAttribute("categories", categoryManager.getNavCategory());
-        model.addAttribute("links", linkManager.getAllLink());
+        model.addAttribute("links", linkManager.getLinkByCategory(LinkCategoryEnum.LINK));
         return "research" + id;
     }
 

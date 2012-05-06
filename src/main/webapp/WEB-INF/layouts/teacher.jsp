@@ -39,8 +39,16 @@
                 <p>张抗抗</p>
             </li>
             <li>
+                <a target="_self" href="" title="盛秋戬"><img width="120" height="166" alt="盛秋戬" src="${ctx}/static/uploads/teacher/pic_shengqiujian.jpg"></a>
+                <p>盛秋戬</p>
+            </li>
+            <li>
                 <a target="_self" href="" title="林培光副教授，2006年毕业于北京理工大学，获工学博士学位，硕士生导师，香港科技大学访问学者。多年来一直从事Web数据集成及其相关应用以及金融信息管理系统、金融数据挖掘等方面的研究。"><img width="120" height="166" alt="林培光" src="${ctx}/static/uploads/teacher/pic_linpeiguang.jpg"></a>
                 <p>林培光</p>
+            </li>
+            <li>
+                <a target="_self" href="" title="刘文金"><img width="120" height="166" alt="刘文金" src="${ctx}/static/uploads/teacher/pic_liuwenjin.jpg"></a>
+                <p>刘文金</p>
             </li>
             <li>
                 <a target="_self" href="" title="王帅强"><img width="120" height="166" alt="王帅强" src="${ctx}/static/uploads/teacher/pic_wangshuaiqiang.jpg"></a>
@@ -49,6 +57,14 @@
             <li>
                 <a target="_blank" href="${ctx}/article/content1" title="万海山"><img width="120" height="166" alt="万海山" src="${ctx}/static/uploads/teacher/pic_wanhaishan.jpg"></a>
                 <p>万海山</p>
+            </li>
+            <li>
+                <a target="_self" href="" title="杨峰"><img width="120" height="166" alt="杨峰" src="${ctx}/static/uploads/teacher/pic_yangfeng.jpg"></a>
+                <p>杨峰</p>
+            </li>
+            <li>
+                <a target="_self" href="" title="张燕"><img width="120" height="166" alt="张燕" src="${ctx}/static/uploads/teacher/pic_zhangyan.jpg"></a>
+                <p>张燕</p>
             </li>
             <li>
                 <a target="_blank" href="${ctx}/article/content2" title="赵华伟"><img width="120" height="166" alt="赵华伟" src="${ctx}/static/uploads/teacher/pic_zhaohuawei.jpg"></a>
