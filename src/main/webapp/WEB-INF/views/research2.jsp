@@ -18,7 +18,7 @@
     <title>金融服务计算研究所</title>
 </head>
 <body>
-<img id="banner" src="${ctx}/static/uploads/agency/${agency.imageUrl}" width="948px"/>
+<img id="banner" src="${ctx}/static/uploads/agency/1336285859071-MFO1Lr.jpg" width="948px"/>
 
 <div class="span-19">
     <div class="span-7">
