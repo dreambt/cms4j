@@ -19,7 +19,7 @@
     <title>${agency.title}</title>
 </head>
 <body>
-<img id="banner" src="${ctx}/static/images/${agency.imageUrl}" class="span-24"/>
+<img id="banner" src="${ctx}/static/uploads/agency/${agency.imageUrl}" width="948px"/>
 
 <div class="span-19">
     <div class="span-7">
@@ -40,19 +40,19 @@
         <div class="container_index span-12-border">
             <p class="title_index title-468"><a href="#"><strong>学术研究</strong></a></p>
             <p class="brief">围绕着新资本协议框架，基于流程银行的最佳实践，结合人工智能、数据挖掘技术和各种数据分析方法，研究经济及金融一体化趋势下金融信用风险评估指标体系、风险分析模型及预警系统、商业银行风险管理系统、证券投资风险预测模型与管理工具等</p>
-            <h6 class="subTitle">1. 商业银行风险度量与管理模型</h6>
+            <h6 class="subTitle">商业银行风险度量与管理模型</h6>
             <p class="brief train">
             按照《巴塞尔新资本协议》的要求及框架，研究针对各种风险类型的度量和管理模型，以支持商业银行的风险管理行为。利用最新数据挖掘方法和技术，研究针对已发生业务行为的风险识别模型和未来风险的预测模型。
             </p>
-            <h6 class="subTitle">2. 商业银行信用风险内部评级体系</h6>
+            <h6 class="subTitle"> 商业银行信用风险内部评级体系</h6>
             <p class="brief train">
                 研究信用风险识别工具和计量工具，研制风险监控系统，实现风险识别、预警及全过程的风险监控。研究风险管理部门日常的风险管理工具、方法和风险管理流程。研究基于风险量化结果的风险决策和内部评级的价值应用。
             </p>
-            <h6 class="subTitle">3. 商业银行操作风险及内控管理体系</h6>
+            <h6 class="subTitle">商业银行操作风险及内控管理体系</h6>
             <p class="brief train">
                 以风险点识别及监测、关键风险指标体系、事件管理及事件数据库、损失数据库的建立为核心基础，进行操作风险的分析评估、趋势分析、计量模型的开发建立。研究风险区域的选择、风险点的识别、监测、风险诱因、关键风险指标选择、数据的收集和关键风险指标监测评估。
             </p>
-            <h6 class="subTitle">4. 客户风险监控模型研究</h6>
+            <h6 class="subTitle">客户风险监控模型研究</h6>
             <p class="brief train">
                 研究针对客户财务风险的量化分析和预警模型，建立计算客户财务综合风险指数的方法。研究授信客户的现金流未来趋势的预测模型，发现客户的现金流恶化的可能或异常的现金流出。研究客户间关联关系的发现模型及风险预警模型。
             </p>
@@ -91,7 +91,7 @@
         <p class="brief train">内容包括：金融风险管理的基本原理、金融风险度量的VAR方法及应用、信用风险的度量方法、信用风险的管理方法、风险预算管理、流动性风险管理、操作风险管理、事件风险管理、蒙特卡洛方法、数量分析技术在风险管理中的运用。</p>
     </div>
     <div class="container_index span-5-border">
-        <p class="title_index title-188"><strong>合作伙伴</strong><%--<a href="#" class="more">更多>></a>--%></p>
+        <p class="title_index title-188"><strong>服务对象</strong><%--<a href="#" class="more">更多>></a>--%></p>
         <ul class="content span-5">
             <li>民生银行等股份制银行</li>
             <li>山东省农信社等省属银行</li>
