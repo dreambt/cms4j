@@ -20,6 +20,7 @@ public class AgencyDao extends SqlSessionDaoSupport {
 
     /**
      * 根据编号获得组织机构
+     *
      * @param id
      * @return
      */
@@ -30,6 +31,7 @@ public class AgencyDao extends SqlSessionDaoSupport {
 
     /**
      * 获得所有的组织机构
+     *
      * @return
      */
     @Cacheable(value = "agencyCache")
@@ -39,6 +41,7 @@ public class AgencyDao extends SqlSessionDaoSupport {
 
     /**
      * 保存组织机构
+     *
      * @param agency
      * @return
      */
@@ -49,6 +52,7 @@ public class AgencyDao extends SqlSessionDaoSupport {
 
     /**
      * 彻底删除标记为删除的组织机构
+     *
      * @return
      */
     @Cacheable(value = "agencyCache")
@@ -58,6 +62,7 @@ public class AgencyDao extends SqlSessionDaoSupport {
 
     /**
      * 更新组织机构
+     *
      * @param agency
      * @return
      */
@@ -68,6 +73,7 @@ public class AgencyDao extends SqlSessionDaoSupport {
 
     /**
      * 更新组织机构某一boolean字段
+     *
      * @param id
      * @param column
      * @return
@@ -82,6 +88,7 @@ public class AgencyDao extends SqlSessionDaoSupport {
 
     /**
      * 增加浏览次数
+     *
      * @param id
      * @return
      */

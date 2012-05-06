@@ -1,10 +1,7 @@
 package cn.edu.sdufe.cms.common.entity.article;
 
 import cn.edu.sdufe.cms.common.entity.PersistableEntity;
-import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
-import java.util.List;
 
 /**
  * 归类功能

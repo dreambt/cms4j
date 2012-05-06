@@ -1,7 +1,6 @@
 package cn.edu.sdufe.cms.utilities.upload;
 
 import cn.edu.sdufe.cms.utilities.RandomString;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 

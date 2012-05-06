@@ -20,6 +20,7 @@ public class TeacherDao extends SqlSessionDaoSupport {
 
     /**
      * 根据编号获得老师信息
+     *
      * @param id
      * @return
      */
@@ -30,6 +31,7 @@ public class TeacherDao extends SqlSessionDaoSupport {
 
     /**
      * 根据编号获得对应文章编号
+     *
      * @param id
      * @return
      */
@@ -40,6 +42,7 @@ public class TeacherDao extends SqlSessionDaoSupport {
 
     /**
      * 获得所有老师信息
+     *
      * @return
      */
     @Cacheable(value = "teacherCache")
@@ -49,6 +52,7 @@ public class TeacherDao extends SqlSessionDaoSupport {
 
     /**
      * 保存老师信息
+     *
      * @param teacher
      * @return
      */
@@ -59,6 +63,7 @@ public class TeacherDao extends SqlSessionDaoSupport {
 
     /**
      * 彻底删除标记为删除的老师信息
+     *
      * @return
      */
     @Cacheable(value = "teacherCache")
@@ -68,6 +73,7 @@ public class TeacherDao extends SqlSessionDaoSupport {
 
     /**
      * 修改老师信息
+     *
      * @param teacher
      * @return
      */
@@ -78,6 +84,7 @@ public class TeacherDao extends SqlSessionDaoSupport {
 
     /**
      * 更新老师信息某一boolean字段
+     *
      * @param id
      * @param column
      * @return

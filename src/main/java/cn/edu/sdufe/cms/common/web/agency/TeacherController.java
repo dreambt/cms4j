@@ -22,6 +22,7 @@ public class TeacherController {
 
     /**
      * 根据编号获得老师信息
+     *
      * @param id
      * @param model
      * @return

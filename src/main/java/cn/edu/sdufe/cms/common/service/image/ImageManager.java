@@ -3,7 +3,6 @@ package cn.edu.sdufe.cms.common.service.image;
 import cn.edu.sdufe.cms.common.dao.image.ImageDao;
 import cn.edu.sdufe.cms.common.entity.image.Image;
 import cn.edu.sdufe.cms.jms.NotifyMessageProducer;
-import cn.edu.sdufe.cms.utilities.RandomString;
 import cn.edu.sdufe.cms.utilities.thumb.ImageThumb;
 import cn.edu.sdufe.cms.utilities.upload.UploadFile;
 import com.google.common.collect.Maps;
@@ -15,11 +14,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 

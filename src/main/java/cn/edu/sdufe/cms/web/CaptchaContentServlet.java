@@ -3,7 +3,6 @@ package cn.edu.sdufe.cms.web;
 import org.patchca.color.ColorFactory;
 import org.patchca.color.SingleColorFactory;
 import org.patchca.filter.predefined.*;
-import org.patchca.service.CaptchaService;
 import org.patchca.service.ConfigurableCaptchaService;
 import org.patchca.utils.encoder.EncoderHelper;
 import org.patchca.word.RandomWordFactory;

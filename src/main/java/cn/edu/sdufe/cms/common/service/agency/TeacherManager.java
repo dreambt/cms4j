@@ -23,6 +23,7 @@ public class TeacherManager {
 
     /**
      * 根据编号获得老师信息
+     *
      * @param id
      * @return
      */
@@ -32,6 +33,7 @@ public class TeacherManager {
 
     /**
      * 根据编号获得对应文章
+     *
      * @param id
      * @return
      */

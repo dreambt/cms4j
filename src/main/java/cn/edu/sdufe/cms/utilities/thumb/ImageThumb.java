@@ -28,7 +28,6 @@ public class ImageThumb {
     int nHalfDots;
 
     /**
-     *
      * @param fromFileStr
      * @param saveToFileStr
      * @param formatWidth
@@ -45,16 +44,16 @@ public class ImageThumb {
         int imageHeight = srcImage.getHeight(null);
         int changeToWidth = 0;
         int changeToHeight = 0;
-        double imageScale = (imageWidth+0.1)/(imageHeight+0.1);
-        double formatScale = (formatWidth+0.1)/(formatHeight+0.1);
+        double imageScale = (imageWidth + 0.1) / (imageHeight + 0.1);
+        double formatScale = (formatWidth + 0.1) / (formatHeight + 0.1);
         if (imageWidth > 0 && imageHeight > 0) {
             // flag=true;
             if (imageScale >= formatScale) {
                 changeToHeight = formatHeight;
-                changeToWidth = (changeToHeight*imageWidth)/imageHeight;
+                changeToWidth = (changeToHeight * imageWidth) / imageHeight;
             } else {
                 changeToWidth = formatWidth;
-                changeToHeight = (changeToWidth*imageHeight)/imageWidth;
+                changeToHeight = (changeToWidth * imageHeight) / imageWidth;
             }
         }
         srcImage = imageZoomOut(srcImage, changeToWidth, changeToHeight);
@@ -64,6 +63,7 @@ public class ImageThumb {
 
     /**
      * 重新制定大小
+     *
      * @param srcBufferImage
      * @param w
      * @param h
@@ -85,6 +85,7 @@ public class ImageThumb {
 
     /**
      * 裁剪
+     *
      * @param src
      * @param width
      * @param height

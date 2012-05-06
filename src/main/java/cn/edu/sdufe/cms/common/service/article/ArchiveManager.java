@@ -12,9 +12,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -73,7 +70,6 @@ public class ArchiveManager {
 
     /**
      * 保存指定月份的归类
-     *
      */
     @Transactional(readOnly = false)
     public void save() {
@@ -83,7 +79,7 @@ public class ArchiveManager {
         int month = dateTime.getMonthOfYear();
 
         String title = String.format("%04d年%02d月", year, month);
-        if(null != archiveDao.findByTitle(title)) {
+        if (null != archiveDao.findByTitle(title)) {
             return;
         }
 
@@ -96,7 +92,7 @@ public class ArchiveManager {
             archiveDao.save(archive);
             //加入归档文章对应表
             Long archiveId = archiveDao.findByTitle(String.format("%04d年%02d月", year, month)).getId();
-            for(Article article: articles) {
+            for (Article article : articles) {
                 Long articleId = article.getId();
                 archiveDao.saveAA(archiveId, articleId);
             }
@@ -119,10 +115,10 @@ public class ArchiveManager {
     @Transactional(readOnly = false)
     public void update(Archive archive) {
         List<Long> archives = archiveDao.getAllArticleIdByArchiveId(archive.getId());
-        if(null == archives || 0 == archives.size()) {
+        if (null == archives || 0 == archives.size()) {
             archiveDao.delete(archive.getId());
         }
-        if(archive.getArticleCount() != archives.size()) {
+        if (archive.getArticleCount() != archives.size()) {
             archiveDao.updateArchive(archive);
         }
 
@@ -134,10 +130,10 @@ public class ArchiveManager {
     @Transactional(readOnly = false)
     public void batchUpdate() {
         List<Archive> archives = archiveDao.findAll();
-        if(null == archives) {
+        if (null == archives) {
             return;
         }
-        for(Archive archive: archives) {
+        for (Archive archive : archives) {
             this.update(archive);
         }
     }

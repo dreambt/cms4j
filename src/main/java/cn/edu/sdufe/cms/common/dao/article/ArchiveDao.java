@@ -3,7 +3,6 @@ package cn.edu.sdufe.cms.common.dao.article;
 
 import cn.edu.sdufe.cms.common.entity.article.Archive;
 import com.google.common.collect.Maps;
-import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Component;
 
@@ -92,7 +91,7 @@ public class ArchiveDao extends SqlSessionDaoSupport {
     }
 
     /**
-     *  删除归档
+     * 删除归档
      */
     public int delete(Long id) {
         return getSqlSession().delete("Archive.deleteArchive", id);

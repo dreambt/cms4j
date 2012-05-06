@@ -1,8 +1,6 @@
 package cn.edu.sdufe.cms.schedule;
 
 import cn.edu.sdufe.cms.common.dao.account.UserDao;
-import cn.edu.sdufe.cms.common.dao.article.ArchiveDao;
-import cn.edu.sdufe.cms.common.dao.article.ArticleDao;
 import cn.edu.sdufe.cms.common.dao.article.CommentDao;
 import cn.edu.sdufe.cms.common.service.article.ArchiveManager;
 import cn.edu.sdufe.cms.common.service.article.ArticleManager;
@@ -50,7 +48,6 @@ public class QuartzJob {
         // 删除标记为deleted的记录
         logger.info("######### There are {} article was deleted. #########", articleManager.delete());
         logger.info("######### There are {} comment was deleted. #########", commentDao.delete());
-
 
 
         // 生成文章关键词
