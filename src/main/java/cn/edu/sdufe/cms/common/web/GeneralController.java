@@ -43,13 +43,10 @@ public class GeneralController {
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("images", imageManager.findByShowIndex());
         model.addAttribute("news1", articleManager.getTitleByCategoryId(3L, 0, 5));
-        model.addAttribute("news2", articleManager.getTitleByCategoryId(4L, 0, 5));
+        model.addAttribute("news2", articleManager.getTitleByCategoryId(4L, 0, 10));
         model.addAttribute("infos", articleManager.getInfo());
-        model.addAttribute("results", articleManager.getResult());
-        model.addAttribute("companies", linkManager.getLinkByCategory(LinkCategoryEnum.COMPANY));
         model.addAttribute("links", linkManager.getLinkByCategory(LinkCategoryEnum.LINK));
         model.addAttribute("posts", articleManager.getTitleByCategoryId(1L, 0, 6));
-        model.addAttribute("agencies", agencyManager.getAllAgency());
         return "index" + str;
     }
 

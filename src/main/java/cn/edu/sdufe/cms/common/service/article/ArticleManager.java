@@ -162,16 +162,6 @@ public class ArticleManager {
     }
 
     /**
-     * 获得成果显示
-     *
-     * @return
-     */
-    public List<Article> getResult() {
-        Long[] ids = {17L, 25L};
-        return articleDao.findTitleByCategoryId(ids);
-    }
-
-    /**
      * 通过分类categoryId查找文章列表
      *
      * @param categoryId
