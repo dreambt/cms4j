@@ -58,14 +58,14 @@
         <div class="container_index span-12-border">
             <p class="title_index title-468"><a href="#"><strong>咨询服务</strong></a></p>
             <ul class="content span-6">
-                <li><a href="#">ISO/IEC20000及27001认证咨询</a></li>
-                <li><a href="#">等级保护咨询及信息安全审计</a></li>
-                <li><a href="#">电子税务终端安全Key解决方案</a></li>
+                <c:forEach items="${infos}" var="info" begin="0" step="1" end="2">
+                    <li class="counseling"><c:if test="${info.message!=''}"><a href="${ctx}/article/content/${info.id}">${fn:substring(info.subject,0,15)}</a></c:if></li>
+                </c:forEach>
             </ul>
             <ul class="content span-6 last">
-                <li><a href="#">银行内网安全解决方案</a></li>
-                <li><a href="#">网上银行安全解决方案</a></li>
-                <li><a href="#">移动支付安全解决方案</a></li>
+                <c:forEach items="${infos}" var="info" begin="3" step="1" end="5">
+                    <li class="counseling"><c:if test="${info.message!=''}"><a href="${ctx}/article/content/${info.id}">${fn:substring(info.subject,0,15)}</a></c:if></li>
+                </c:forEach>
             </ul>
         </div>
     </div>

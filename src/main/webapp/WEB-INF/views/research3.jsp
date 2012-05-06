@@ -58,12 +58,14 @@
         <div class="container_index span-12-border">
             <p class="title_index title-468"><a href="#"><strong>咨询服务</strong></a></p>
             <ul class="content span-6">
-                <li><a href="${ctx}/article/content/60">中小金融机构的产品体系建设</a></li>
-                <li><a href="${ctx}/article/content/62">虚拟化金融服务开发与测试环境</a></li>
+                <c:forEach items="${infos}" var="info" begin="0" step="1" end="2">
+                    <li class="counseling"><c:if test="${info.message!=''}"><a href="${ctx}/article/content/${info.id}">${fn:substring(info.subject,0,15)}</a></c:if></li>
+                </c:forEach>
             </ul>
             <ul class="content span-6 last">
-                <li><a href="${ctx}/article/content/61">基于SaaS的金融综合服务平台</a></li>
-                <li><a href="${ctx}/article/content/64">敏捷云—建模业务服务的云平台</a></li>
+                <c:forEach items="${infos}" var="info" begin="3" step="1" end="5">
+                    <li class="counseling"><c:if test="${info.message!=''}"><a href="${ctx}/article/content/${info.id}">${fn:substring(info.subject,0,15)}</a></c:if></li>
+                </c:forEach>
             </ul>
         </div>
     </div>

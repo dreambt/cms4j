@@ -1,6 +1,8 @@
 package cn.edu.sdufe.cms.common.web.agency;
 
 import cn.edu.sdufe.cms.common.entity.link.LinkCategoryEnum;
+import cn.edu.sdufe.cms.common.service.agency.AgencyManager;
+import cn.edu.sdufe.cms.common.service.article.ArticleManager;
 import cn.edu.sdufe.cms.common.service.article.CategoryManager;
 import cn.edu.sdufe.cms.common.service.link.LinkManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ public class ResearchController {
 
     private CategoryManager categoryManager;
     private LinkManager linkManager;
+    private ArticleManager articleManager;
+    private AgencyManager agencyManager;
 
     /**
      * 根据编号打开对应的研究所首页
@@ -32,6 +36,7 @@ public class ResearchController {
     public String indexOfAgency(@PathVariable Long id, Model model) {
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("links", linkManager.getLinkByCategory(LinkCategoryEnum.LINK));
+        model.addAttribute("infos", articleManager.findByCategoryId(agencyManager.getAgency(id).getCategoryId(), 0, 6));
         return "research" + id;
     }
 
@@ -43,5 +48,15 @@ public class ResearchController {
     @Autowired
     public void setLinkManager(LinkManager linkManager) {
         this.linkManager = linkManager;
+    }
+
+    @Autowired
+    public void setArticleManager(ArticleManager articleManager) {
+        this.articleManager = articleManager;
+    }
+
+    @Autowired
+    public void setAgencyManager(AgencyManager agencyManager) {
+        this.agencyManager = agencyManager;
     }
 }

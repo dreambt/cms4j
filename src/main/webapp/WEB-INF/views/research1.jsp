@@ -58,14 +58,14 @@
         <div class="container_index span-12-border">
             <p class="title_index title-468"><a href="#"><strong>咨询服务</strong></a></p>
             <ul class="content span-6">
-                <li><a href="#">商业银行全面风险管理规划</a></li>
-                <li><a href="#">中小金融机构授信管理体系</a></li>
-                <li><a href="#">商业银行操作风险及内控管理</a></li>
+                <c:forEach items="${infos}" var="info" begin="0" step="1" end="2">
+                    <li class="counseling"><c:if test="${info.message!=''}"><a href="${ctx}/article/content/${info.id}">${fn:substring(info.subject,0,15)}</a></c:if></li>
+                </c:forEach>
             </ul>
             <ul class="content span-6 last">
-                <li><a href="#">农村金融机构全面风险管理建设</a></li>
-                <li><a href="#">中小银行信用风险内部评级体系</a></li>
-                <li><a href="#">商业银行流动性风险管理方案</a></li>
+                <c:forEach items="${infos}" var="info" begin="3" step="1" end="5">
+                    <li class="counseling"><c:if test="${info.message!=''}"><a href="${ctx}/article/content/${info.id}">${fn:substring(info.subject,0,15)}</a></c:if></li>
+                </c:forEach>
             </ul>
         </div>
     </div>
