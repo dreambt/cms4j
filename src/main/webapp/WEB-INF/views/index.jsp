@@ -144,7 +144,7 @@
         </ul>
     </div>
     <div class="container_index  span-4-border">
-        <p class="title_index title-148"><strong>行业资讯</strong><span class="more"> <a href="${ctx}/article/list/" class="more">更多>></a></span></p>
+        <p class="title_index title-148"><strong>行业资讯</strong><span class="more"> <a href="${ctx}/article/list/4" class="more">更多>></a></span></p>
         <ul class="content title-148">
             <c:forEach items="${news2}" var="new2" begin="0" step="1">
                 <li><a href="${ctx}/article/content/${new2.id}">${fn:substring(new2.subject,0,10)}<c:if test="${fn:length(new2.subject)>10}">...</c:if></a></li>
