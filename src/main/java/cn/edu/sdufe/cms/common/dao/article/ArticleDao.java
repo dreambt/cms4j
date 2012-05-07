@@ -113,7 +113,7 @@ public class ArticleDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    public List<Long> findDeletedArticle() {
+    public List<Article> findDeletedArticle() {
         return getSqlSession().selectList("Article.getDeletedArticle");
     }
 

@@ -66,7 +66,7 @@
 <button class="button_colour" id="publish" type="submit"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/BendedArrowRight.png"><span>发 布</span></button>
 <button class="button_colour" type="reset"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/BendedArrowRight.png"><span>草 稿</span></button>
 </form:form>
-</div>    ${article.message}
+</div>
 <script type="text/javascript">
     var URL = "${ctx}/../..";
     $(function () {

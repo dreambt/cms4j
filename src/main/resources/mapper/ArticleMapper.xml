@@ -75,7 +75,7 @@
 
     <!-- 获取删除标记为真的文章 -->
     <select id="getDeletedArticle" resultMap="articleDetailMap">
-        SELECT id
+        SELECT id,image_name
         FROM cms_article
         WHERE deleted=1
     </select>

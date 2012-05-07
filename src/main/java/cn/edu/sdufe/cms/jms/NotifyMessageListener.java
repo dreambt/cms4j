@@ -6,6 +6,7 @@ import cn.edu.sdufe.cms.utilities.thumb.ImageThumb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.jms.MapMessage;
 import javax.jms.Message;
@@ -30,6 +31,11 @@ public class NotifyMessageListener implements MessageListener {
     @Autowired(required = false)
     private UserRecoveryMailService userRecoveryMailService;
 
+    @Value("${path.upload.base}")
+    private String UPLOAD_PATH;
+    @Value("${path.upload.dir}")
+    private String UPLOAD_DIR;
+
     /**
      * MessageListener回调函数.
      */
@@ -53,24 +59,22 @@ public class NotifyMessageListener implements MessageListener {
                     }
                 }
             } else if ("gen_thumb".equals(objectType)) {
-                String path = mapMessage.getString("path");
                 String fileName = mapMessage.getString("fileName");
                 ImageThumb imageThumb = new ImageThumb();
-                imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-134x134/" + fileName, 134, 134);
-                imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-224x136/" + fileName, 224, 136);
-                imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-218x194/" + fileName, 218, 194);
-                imageThumb.saveImageAsJpg(path + "gallery-big/" + fileName, path + "thumb-272x166/" + fileName, 272, 166);
-                logger.info("Success to generate Thumb: {}", path + "thumb-*/" + fileName);
+                imageThumb.saveImageAsJpg(UPLOAD_PATH + "gallery/gallery-big/" + fileName, UPLOAD_PATH + "gallery/thumb-134x134/" + fileName, 134, 134);
+                imageThumb.saveImageAsJpg(UPLOAD_PATH + "gallery/gallery-big/" + fileName, UPLOAD_PATH + "gallery/thumb-224x136/" + fileName, 224, 136);
+                imageThumb.saveImageAsJpg(UPLOAD_PATH + "gallery/gallery-big/" + fileName, UPLOAD_PATH + "gallery/thumb-218x194/" + fileName, 218, 194);
+                imageThumb.saveImageAsJpg(UPLOAD_PATH + "gallery/gallery-big/" + fileName, UPLOAD_PATH + "gallery/thumb-272x166/" + fileName, 272, 166);
+                logger.info("Success to generate Thumb: {}", UPLOAD_PATH + "gallery/thumb-*/" + fileName);
             } else if ("del_thumb".equals(objectType)) {
-                String path = System.getProperty("user.dir");
                 String fileName = mapMessage.getString("fileName");
-                new File(path + "/src/main/webapp/static/uploads/gallery/gallery-big", fileName).delete();
-                new File(path + "/src/main/webapp/static/uploads/gallery/thumb-50x57", fileName).delete();
-                new File(path + "/src/main/webapp/static/uploads/gallery/thumb-134x134", fileName).delete();
-                new File(path + "/src/main/webapp/static/uploads/gallery/thumb-224x136", fileName).delete();
-                new File(path + "/src/main/webapp/static/uploads/gallery/thumb-218x194", fileName).delete();
-                new File(path + "/src/main/webapp/static/uploads/gallery/thumb-272x166", fileName).delete();
-                logger.info("Success to delete Thumb: {}", path + "thumb-*/" + fileName);
+                new File(UPLOAD_PATH + "gallery/gallery-big", fileName).delete();
+                new File(UPLOAD_PATH + "gallery/thumb-50x57", fileName).delete();
+                new File(UPLOAD_PATH + "gallery/thumb-134x134", fileName).delete();
+                new File(UPLOAD_PATH + "gallery/thumb-224x136", fileName).delete();
+                new File(UPLOAD_PATH + "gallery/thumb-218x194", fileName).delete();
+                new File(UPLOAD_PATH + "gallery/thumb-272x166", fileName).delete();
+                logger.info("Success to delete Thumb: {}", UPLOAD_PATH + "gallery/thumb-*/" + fileName);
             } else {
                 logger.error("Unknown objectType: " + mapMessage.toString());
             }

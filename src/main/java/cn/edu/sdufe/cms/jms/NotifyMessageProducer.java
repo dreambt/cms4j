@@ -24,12 +24,12 @@ public class NotifyMessageProducer {
         sendMessage(user, notifyQueue);
     }
 
-    public void sendQueueGenThumb(final String path, final String fileName) {
-        sendMessage(path, fileName, notifyQueue);
+    public void sendQueueGenThumb(final String fileName) {
+        sendMessage(fileName, notifyQueue);
     }
 
     public void sendQueueDelThumb(final String fileName) {
-        sendMessage(fileName, notifyQueue);
+        sendMessage2(fileName, notifyQueue);
     }
 
     public void sendTopic(final User user) {
@@ -59,13 +59,12 @@ public class NotifyMessageProducer {
     /**
      * 生成缩略图
      */
-    private void sendMessage(final String path, final String fileName, Destination destination) {
+    private void sendMessage(final String fileName, Destination destination) {
         jmsTemplate.send(destination, new MessageCreator() {
             @Override
             public Message createMessage(Session session) throws JMSException {
 
                 MapMessage message = session.createMapMessage();
-                message.setString("path", path);
                 message.setString("fileName", fileName);
 
                 message.setStringProperty("objectType", "gen_thumb");
@@ -78,7 +77,7 @@ public class NotifyMessageProducer {
     /**
      * 删除缩略图
      */
-    private void sendMessage(final String fileName, Destination destination) {
+    private void sendMessage2(final String fileName, Destination destination) {
         jmsTemplate.send(destination, new MessageCreator() {
             @Override
             public Message createMessage(Session session) throws JMSException {

@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springside.modules.beanvalidator.BeanValidators;
@@ -27,6 +28,7 @@ import org.springside.modules.utils.Encodes;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -45,12 +47,12 @@ public class ArticleManager {
     private static final int KEYWORD_NUM = 10;
 
     private ArticleDao articleDao = null;
-
-    private ArchiveDao archiveDao;
-
-    private ArchiveManager archiveManager;
-
+    private ArchiveDao archiveDao = null;
+    private ArchiveManager archiveManager = null;
     private Validator validator = null;
+
+    @Value("${path.upload.base}")
+    private String UPLOAD_PATH;
 
     /**
      * 通过id获取文章
@@ -206,14 +208,12 @@ public class ArticleManager {
             article.setImageName(this.getImageFromMessage(article.getMessage()));
 
             //项目路径
-            // TODO 迁移服务器需要修改
-            String path = System.getProperty("user.dir") + "\\src\\main\\webapp\\static\\uploads\\";
             ImageThumb imageThumb = new ImageThumb();
             try {
-                imageThumb.saveImageAsJpg(path + "article\\article-big\\" + article.getImageName(), path + "article\\news-thumb\\" + article.getImageName(), 274, 157);
-                imageThumb.saveImageAsJpg(path + "article\\article-big\\" + article.getImageName(), path + "article\\digest-thumb\\" + article.getImageName(), 134, 134);
+                imageThumb.saveImageAsJpg(UPLOAD_PATH + "article/article-big/" + article.getImageName(), UPLOAD_PATH + "article/news-thumb/" + article.getImageName(), 274, 157);
+                imageThumb.saveImageAsJpg(UPLOAD_PATH + "article/article-big/" + article.getImageName(), UPLOAD_PATH + "article/digest-thumb/" + article.getImageName(), 134, 134);
             } catch (Exception e) {
-                logger.error("Thumb Image: ", e.getMessage());
+                logger.error("Thumb Image: {}", e.getMessage());
             }
 
             // 关键词由任务生成
@@ -348,14 +348,12 @@ public class ArticleManager {
 
             //文章中的首个图片
             article.setImageName(this.getImageFromMessage(article.getMessage()));
-            //项目路径// TODO 迁移服务器需要修改
-            String path = System.getProperty("user.dir") + "\\src\\main\\webapp\\static\\uploads\\";
             ImageThumb imageThumb = new ImageThumb();
             try {
-                imageThumb.saveImageAsJpg(path + "article\\article-big\\" + article.getImageName(), path + "article\\news-thumb\\" + article.getImageName(), 274, 157);
-                imageThumb.saveImageAsJpg(path + "article\\article-big\\" + article.getImageName(), path + "article\\digest-thumb\\" + article.getImageName(), 134, 134);
+                imageThumb.saveImageAsJpg(UPLOAD_PATH + "article/article-big/" + article.getImageName(), UPLOAD_PATH + "article/news-thumb/" + article.getImageName(), 274, 157);
+                imageThumb.saveImageAsJpg(UPLOAD_PATH + "article/article-big/" + article.getImageName(), UPLOAD_PATH + "article/digest-thumb/" + article.getImageName(), 134, 134);
             } catch (Exception e) {
-                logger.error(e.getMessage());
+                logger.error("Post article error: {}",e.getMessage());
             }
             // 关键词由任务生成
             article.setKeyword("");
@@ -393,12 +391,18 @@ public class ArticleManager {
      */
     @Transactional(readOnly = false)
     public int delete() {
-        List<Long> ids = articleDao.findDeletedArticle();
-        if (null == ids || ids.size() == 0) {
+        List<Article> articleList = articleDao.findDeletedArticle();
+        if (null == articleList || articleList.size() == 0) {
             return 0;
         }
-        archiveDao.deleteAAByArticleId(ids);
+        archiveDao.deleteAAByArticleId(articleList);
         archiveManager.batchUpdate();
+        for (Article article : articleList) {
+            String imageName = article.getImageName();
+            new File(UPLOAD_PATH + "article/article-big", imageName).delete();
+            new File(UPLOAD_PATH + "article/digest-thumb", imageName).delete();
+            new File(UPLOAD_PATH + "article/news-thumb", imageName).delete();
+        }
         return articleDao.delete();
     }
 

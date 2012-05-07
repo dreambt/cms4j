@@ -101,7 +101,7 @@
     <delete id="deleteArchive" parameterType="Long">
         DELETE FROM cms_archive
         WHERE id=#{id}
-        LIMIT 500
+        LIMIT 1
     </delete>
 
     <!--
@@ -110,7 +110,7 @@
     <delete id="deleteAAByArchiveId" parameterType="Long">
         DELETE FROM cms_archive_article
         WHERE archive_id=#{archiveId}
-        LIMIT 500
+        LIMIT 1
     </delete>
 
     <!--
@@ -120,9 +120,8 @@
         DELETE FROM cms_archive_article
         WHERE article_id IN
         <foreach item="item" collection="list" open="(" separator="," close=")">
-            #{item}
+            #{item.id}
         </foreach>
-        LIMIT 500
     </delete>
 
     <!--

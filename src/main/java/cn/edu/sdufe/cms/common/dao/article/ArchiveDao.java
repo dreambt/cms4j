@@ -2,6 +2,7 @@ package cn.edu.sdufe.cms.common.dao.article;
 
 
 import cn.edu.sdufe.cms.common.entity.article.Archive;
+import cn.edu.sdufe.cms.common.entity.article.Article;
 import com.google.common.collect.Maps;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Component;
@@ -107,8 +108,8 @@ public class ArchiveDao extends SqlSessionDaoSupport {
     /**
      * 删除归档文章对应表
      */
-    public int deleteAAByArticleId(List ids) {
-        return getSqlSession().delete("Archive.deleteAAByArticleId", ids);
+    public int deleteAAByArticleId(List<Article> articleList) {
+        return getSqlSession().delete("Archive.deleteAAByArticle", articleList);
     }
 
     /**

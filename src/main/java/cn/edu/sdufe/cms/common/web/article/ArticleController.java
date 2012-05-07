@@ -227,8 +227,9 @@ public class ArticleController {
      */
     @RequestMapping(value = "listInfo", method = RequestMethod.GET)
     public String listInfo(Model model) {
-        // TODO
-        Long total = Long.valueOf(articleManager.getInfo().size());
+        // TODO 应该用fatherCategoryId的 , 不然，下次增加新分类后没法查询完整数据
+        List<Article> articleList = articleManager.getInfo();
+        Long total = Long.valueOf(articleList.size());
         int limit = 10;
         Long pageCount = 1L;
         if (total % limit == 0) {
@@ -236,7 +237,7 @@ public class ArticleController {
         } else {
             pageCount = total / limit + 1;
         }
-        model.addAttribute("articles", articleManager.getInfo());//文章列表
+        model.addAttribute("articles", articleList);//文章列表
         model.addAttribute("categories", categoryManager.getNavCategory());//导航菜单
         model.addAttribute("category", categoryManager.get(18L));//获取分类信息
         model.addAttribute("archives", archiveManager.getTopTen());//边栏归档日志

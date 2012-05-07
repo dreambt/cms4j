@@ -9,6 +9,7 @@ import cn.edu.sdufe.cms.utilities.upload.UploadFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,13 +29,11 @@ public class AgencyManager {
 
     private static final Logger logger = LoggerFactory.getLogger(AgencyManager.class);
 
-    private AgencyDao agencyDao;
+    private AgencyDao agencyDao = null;
+    private CategoryManager categoryManager = null;
 
-    private CategoryManager categoryManager;
-
-    private String UPLOAD_PATH = "d:/CMS4j/src/main/webapp/static/uploads/agency/";
-
-    private String UPLOAD_DIR = "static/uploads/agency/";
+    @Value("${path.upload.base}")
+    private String UPLOAD_PATH;
 
     /**
      * 根据编号获得组织机构
@@ -91,7 +90,7 @@ public class AgencyManager {
         //上传图片
         if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
             UploadFile uploadFile = new UploadFile();
-            String fileName = uploadFile.uploadFile(file, request, UPLOAD_DIR);
+            String fileName = uploadFile.uploadFile(file, request, UPLOAD_PATH);
             agency.setImageUrl(fileName);
         } else {
             agency.setImageUrl("");
@@ -116,7 +115,7 @@ public class AgencyManager {
             //存储旧图片名
             String oldFileName = agency.getImageUrl();
             UploadFile uploadFile = new UploadFile();
-            String fileName = uploadFile.uploadFile(file, request, UPLOAD_DIR);
+            String fileName = uploadFile.uploadFile(file, request, UPLOAD_PATH);
             agency.setImageUrl(fileName);
         }
         return agencyDao.updateAgency(agency);

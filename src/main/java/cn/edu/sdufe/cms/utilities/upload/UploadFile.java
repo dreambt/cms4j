@@ -25,10 +25,10 @@ public class UploadFile {
      */
     public String uploadFile(MultipartFile file, HttpServletRequest request, String upload_dir) {
         // 转型为MultipartHttpRequest：
-        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+        //MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 
         //上传路径
-        String path = multipartRequest.getSession().getServletContext().getRealPath(upload_dir);
+        //String upload_dir = multipartRequest.getSession().getServletContext().getRealPath(upload_dir);
 
         //原文件名
         String imageName = file.getOriginalFilename();
@@ -36,7 +36,7 @@ public class UploadFile {
 
         //服务器上的文件名
         String fileName = new Date().getTime() + "-" + RandomString.get(6) + ext;
-        File targetFile = new File(path, fileName);
+        File targetFile = new File(upload_dir, fileName);
         if (!targetFile.exists()) {
             targetFile.mkdirs();
         }

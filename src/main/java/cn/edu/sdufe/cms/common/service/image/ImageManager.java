@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -32,15 +31,13 @@ public class ImageManager {
 
     private static final Logger logger = LoggerFactory.getLogger(ImageManager.class);
 
-    private ImageDao imageDao;
+    private ImageDao imageDao = null;
     private ImageThumb imageThumb = new ImageThumb();
 
     private NotifyMessageProducer notifyProducer; //JMS消息发送
 
     @Value("${path.upload.base}")
     private String UPLOAD_PATH;
-    @Value("${path.upload.dir}")
-    private String UPLOAD_DIR;
 
     /**
      * 获得编号为id的image
@@ -103,15 +100,15 @@ public class ImageManager {
     public int save(MultipartFile file, HttpServletRequest request, Image image) {
         if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
             UploadFile uploadFile = new UploadFile();
-            String fileName = uploadFile.uploadFile(file, request, UPLOAD_DIR);
+            String fileName = uploadFile.uploadFile(file, request, UPLOAD_PATH + "gallery/gallery-big/");
             image.setImageUrl(fileName);
 
             try {
-                imageThumb.saveImageAsJpg(UPLOAD_PATH + "gallery-big/" + fileName, UPLOAD_PATH + "thumb-50x57/" + fileName, 50, 57);
-                logger.info("Success to generate Thumb: {}", UPLOAD_PATH + "thumb-50x57/" + fileName);
+                imageThumb.saveImageAsJpg(UPLOAD_PATH + "gallery/gallery-big/" + fileName, UPLOAD_PATH + "gallery/thumb-50x57/" + fileName, 50, 57);
+                logger.info("Success to generate Thumb: {}", UPLOAD_PATH + "gallery/thumb-50x57/" + fileName);
 
                 // 异步生成其他缩略图
-                notifyProducer.sendQueueGenThumb(UPLOAD_PATH, fileName);
+                notifyProducer.sendQueueGenThumb(fileName);
             } catch (Exception e) {
                 logger.info(e.getMessage());
             }
@@ -143,31 +140,21 @@ public class ImageManager {
             //存储旧图片名
             String oldFileName = image.getImageUrl();
             UploadFile uploadFile = new UploadFile();
-            String fileName = uploadFile.uploadFile(file, request, UPLOAD_DIR);
+            String fileName = uploadFile.uploadFile(file, request, UPLOAD_PATH + "gallery/gallery-big/");
             image.setImageUrl(fileName);
-
-            //项目路径
-            //String path = System.getProperty("user.dir") + "/src/main/webapp/static/uploads/gallery/";
 
             //图片来源路径
             ImageThumb imageThumb = new ImageThumb();
             try {
-                imageThumb.saveImageAsJpg(UPLOAD_PATH + "gallery-big/" + fileName, UPLOAD_PATH + "thumb-50x57/" + fileName, 50, 57);
-                logger.info("Success to generate Thumb: {}", UPLOAD_PATH + "thumb-50x57/" + fileName);
+                imageThumb.saveImageAsJpg(UPLOAD_PATH + "gallery/gallery-big/" + fileName, UPLOAD_PATH + "gallery/thumb-50x57/" + fileName, 50, 57);
+                logger.info("Success to generate Thumb: {}", UPLOAD_PATH + "gallery/thumb-50x57/" + fileName);
 
                 // 异步生成其他缩略图
-                notifyProducer.sendQueueGenThumb(UPLOAD_PATH, fileName);
-
-                // TODO 删除时只删除数据库，硬盘文件起任务轮询删除
-                // notifyProducer.sendQueueDelThumb(fileName);
+                notifyProducer.sendQueueGenThumb(fileName);
 
                 // 成功上传新图片以后再删除旧图片，防止事务失败无法回滚图片
-                this.deletePic("gallery-big/" + oldFileName);
-                this.deletePic("thumb-50x57/" + oldFileName);
-                this.deletePic("thumb-134x134/" + oldFileName);
-                this.deletePic("thumb-224x136/" + oldFileName);
-                this.deletePic("thumb-218x194/" + oldFileName);
-                this.deletePic("thumb-460x283/" + oldFileName);
+                // 删除时只删除数据库，硬盘文件起任务轮询删除
+                notifyProducer.sendQueueDelThumb(oldFileName);
             } catch (Exception e) {
                 logger.info(e.getMessage());
             }
@@ -204,19 +191,13 @@ public class ImageManager {
      */
     @Transactional(readOnly = false)
     public int delete(Long id) {
-        String fileName = this.findOne(id).getImageUrl();
-        this.deletePic("gallery-big/" + fileName);
-        this.deletePic("thumb-50x57/" + fileName);
-        this.deletePic("thumb-134x134/" + fileName);
-        this.deletePic("thumb-224x136/" + fileName);
-        this.deletePic("thumb-218x194/" + fileName);
-        this.deletePic("thumb-460x283/" + fileName);
+        String fileName = imageDao.findOne(id).getImageUrl();
 
         int num = imageDao.delete(id);
         // 成功删除数据库记录时，异步删除所有缩略图
         if (num > 0) {
-            // TODO 删除时只删除数据库，硬盘文件起任务轮询删除
-            // notifyProducer.sendQueueDelThumb(fileName);
+            // 删除时只删除数据库，硬盘文件起任务轮询删除
+            notifyProducer.sendQueueDelThumb(fileName);
         }
         return num;
     }
@@ -231,19 +212,6 @@ public class ImageManager {
         for (String id : ids) {
             this.delete(Long.parseLong(id));
         }
-    }
-
-    /**
-     * 真正删除上传的图片
-     *
-     * @param fileName
-     */
-    public void deletePic(String fileName) {
-        // TODO 删除
-        //上传路径
-        String path = System.getProperty("user.dir");
-        new File(path + "/src/main/webapp/static/uploads/gallery/", fileName).delete();
-        //new File(UPLOAD_PATH + "gallery-big/", fileName).delete();
     }
 
     @Autowired
