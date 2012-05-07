@@ -36,7 +36,6 @@
 </head>
 <body>
 <div class="span-20">
-
     <div class="span-7">
         <div class="container_index">
             <!-- BEGIN SLIDER -->
@@ -113,11 +112,10 @@
     <!---教师风采---->
     <div id="left_b_index">
         <p class="title_index title-788"><strong>专家团队</strong></p>
-        <%@ include file="/WEB-INF/layouts/teacher_index.jsp" %>
+        <%@ include file="/WEB-INF/layouts/teacher.jsp" %>
     </div>
 </div>
 <!---- left_r end---->
-
 <div class="span-4 last">
     <div class="container_index span-4-border">
         <p class="title_index title-148"><strong>研究机构</strong><%--<a href="#" class="more">更多>></a>--%></p>
@@ -133,7 +131,6 @@
             <%--</c:forEach>--%>
         </ul>
     </div>
-
     <div class="container_index span-4-border">
         <p class="title_index title-148"><strong>服务对象</strong><%--<a href="#" class="more">更多>></a>--%></p>
         <ul class="content span-4">
@@ -146,7 +143,6 @@
             <li class="serviceObj">地方银监会证监会金融办</li>
         </ul>
     </div>
-
     <div class="container_index  span-4-border">
         <p class="title_index title-148"><strong>行业资讯</strong><span class="more"> <a href="${ctx}/article/list/" class="more">更多>></a></span></p>
         <ul class="content title-148">
