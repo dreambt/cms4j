@@ -1,13 +1,11 @@
 package cn.edu.sdufe.cms.common.service.agency;
 
 import cn.edu.sdufe.cms.common.dao.agency.TeacherDao;
-import cn.edu.sdufe.cms.common.dao.article.CategoryDao;
-import cn.edu.sdufe.cms.common.entity.agency.Agency;
 import cn.edu.sdufe.cms.common.dao.article.ArticleDao;
+import cn.edu.sdufe.cms.common.dao.article.CategoryDao;
 import cn.edu.sdufe.cms.common.entity.account.User;
 import cn.edu.sdufe.cms.common.entity.agency.Teacher;
 import cn.edu.sdufe.cms.common.entity.article.Article;
-import cn.edu.sdufe.cms.common.entity.article.Category;
 import cn.edu.sdufe.cms.common.service.article.ArticleManager;
 import cn.edu.sdufe.cms.security.ShiroDbRealm;
 import cn.edu.sdufe.cms.utilities.upload.UploadFile;
@@ -15,13 +13,11 @@ import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Validator;
 import java.util.List;
 
 /**
@@ -125,38 +121,21 @@ public class TeacherManager {
      * @return
      */
     @Transactional(readOnly = false)
-    public int save(MultipartFile file, Teacher teacher, Article article, HttpServletRequest request) {
-
-        // 文章作者
-        ShiroDbRealm.ShiroUser shiroUser = (ShiroDbRealm.ShiroUser) SecurityUtils.getSubject().getPrincipal();
-        article.setUser(new User(shiroUser.getId()));
+    public int save(MultipartFile file, Teacher teacher, HttpServletRequest request) {
+        Article article = teacher.getArticle();
         article.setCategory(categoryDao.findOne(13L));
-
         article.setSubject(teacher.getTeacherName());
-        article.setMessage(article.getMessage());
-        article.setImageName("");
-        article.setDigest("");
-        article.setKeyword("");
         article.setStatus(true);
-        article.setRate(0);
-        if (articleDao.save(article) > 0) {
+        if (articleManager.save(article, request) > 0) {
             if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
                 UploadFile uploadFile = new UploadFile();
                 String fileName = uploadFile.uploadFile(file, request, UPLOAD_DIR);
                 teacher.setImageUrl(fileName);
-            } else {
-                teacher.setImageUrl("");
             }
             teacher.setArticle(article);
-            if (teacherDao.save(teacher) > 0) {
-                return 1;
-            } else {
-                return 0;
-            }
-
-        } else {
-            return 0;
+            return teacherDao.save(teacher);
         }
+        return 0;
     }
 
     @Autowired

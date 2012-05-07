@@ -1,12 +1,11 @@
 package cn.edu.sdufe.cms.common.web.agency;
 
-import cn.edu.sdufe.cms.common.service.agency.AgencyManager;
 import cn.edu.sdufe.cms.common.entity.agency.Agency;
 import cn.edu.sdufe.cms.common.entity.agency.Teacher;
 import cn.edu.sdufe.cms.common.entity.article.Article;
+import cn.edu.sdufe.cms.common.service.agency.AgencyManager;
 import cn.edu.sdufe.cms.common.service.agency.TeacherManager;
 import cn.edu.sdufe.cms.common.service.article.ArticleManager;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -76,23 +75,21 @@ public class TeacherController {
 
     /**
      * 保存老师
-     *  @param file
+     *
+     * @param file
      * @param teacher
-     * @param article
      * @param request
      * @param redirectAttributes
      * @return
      */
     @RequestMapping(value = "save")
-    public String save(@RequestParam(value = "file") MultipartFile file,Teacher teacher, Article article, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        article.setMessage(request.getParameter("message"));
-        if (teacherManager.save(file,teacher, article, request) > 0) {
+    public String save(@RequestParam(value = "file") MultipartFile file, Teacher teacher, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        if (teacherManager.save(file, teacher, request) > 0) {
             redirectAttributes.addFlashAttribute("info", "创建老师成功");
         } else {
             redirectAttributes.addFlashAttribute("error", "创建老师失败");
         }
         return "redirect:/teacher/listAll";
-
     }
 
     /**

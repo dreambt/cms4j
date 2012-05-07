@@ -68,6 +68,10 @@
                 /category/**= perms["category:list"]
                 <!-- 友情链接管理 -->
                 /link/** = perms["link:list"]
+                <!-- 研究所管理 -->
+                /agency/** = perms["agency:list"]
+                <!-- 老师管理 -->
+                /teacher/** = perms["teacher:list"]
             </value>
         </property>
     </bean>
