@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>山东省金融信息工程培训中心</title>
+    <title>首页</title>
 
     <!-- ////////////////////////////////// -->
     <!-- //      Javascript Files        // -->
