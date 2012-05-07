@@ -1,4 +1,4 @@
-<%--
+﻿<%--
   Header模块
   User: Deng Xiaolan (824688439@qq.com)
   Date: 12-3-18
@@ -12,7 +12,7 @@
 <!-- BEGIN HEADER -->
 <div class="row-fluid">
     <div id="top-header">
-        <div class="logo"><img src="${ctx}/static/images/logo.jpg" style="vertical-align:middle;margin-right: 10px;margin-bottom:15px;"/><h1>山东省金融信息技术研究中心</h1></div>
+        <div class="logo"><img src="${ctx}/static/images/logo.jpg" style="vertical-align:middle;margin-right: 10px;margin-bottom:15px;"/><h1>山东省金融信息工程技术研究中心</h1></div>
     </div>
     <div class="navbar-inner"></div>
     <div class="bottom-header container">

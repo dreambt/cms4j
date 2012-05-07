@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+﻿<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="sitemesh" uri="http://www.opensymphony.com/sitemesh/decorator" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -15,7 +15,7 @@
     <meta name="keywords" content=""/>
     <meta name="title" content=""/>
     <meta name="description" content=""/>
-    <title><sitemesh:title/></title>
+    <title><sitemesh:title/> - 山东省金融信息工程技术研究中心</title>
     <link rel="shortcut icon" href="${ctx}/static/favicon.ico" type="image/x-icon" />
 
     <!-- ////////////////////////////////// -->

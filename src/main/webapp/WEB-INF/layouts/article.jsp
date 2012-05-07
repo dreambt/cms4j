@@ -1,4 +1,4 @@
-<%--
+﻿<%--
   文章类模板
   User: Deng Xiaolan (824688439@qq.com)
   Date: 12-3-18
@@ -21,7 +21,7 @@
     <meta name="keywords" content=""/>
     <meta name="title" content=""/>
     <meta name="description" content=""/>
-    <title><sitemesh:title/></title>
+    <title><sitemesh:title/> - 山东省金融信息工程技术研究中心</title>
     <link rel="shortcut icon" href="${ctx}/static/favicon.ico" type="image/x-icon"/>
 
     <!-- ////////////////////////////////// -->
