@@ -23,7 +23,7 @@
         <property name="mapperLocations" value="classpath:/mapper/*Mapper.xml"/>
     </bean>
 
-    <!-- 事务管理器配置, Jpa单数据源事务 -->
+    <!-- 事务管理器配置, 使用jdbc事务 -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
@@ -60,12 +60,15 @@
         </bean>
 
         <!-- quartz使用的数据源配置 -->
-        <bean id="quartzDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
-            <property name="driverClass" value="${quartz.jdbc.driver}"/>
+        <bean id="quartzDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+            <property name="driverClassName" value="${quartz.jdbc.driver}"/>
             <property name="url" value="${quartz.jdbc.url}"/>
             <property name="username" value="${quartz.jdbc.username}"/>
             <property name="password" value="${quartz.jdbc.password}"/>
         </bean>
+
+        <!-- 数据源配置,使用应用服务器的数据库连接池 -->
+        <!--<jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/ExampleDB" />-->
     </beans>
 
     <!-- unit test环境 -->
@@ -95,15 +98,16 @@
         <context:property-placeholder ignore-resource-not-found="true"
                                       location="classpath*:/application.properties,
           			  classpath*:/application.functional.properties,
-          			  classpath*:/application.functional-local.properties"/>
+          			  classpath*:/application.functional-local.properties" />
 
-        <!-- 简单data source -->
-        <bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+        <!-- 数据源配置,使用应用内的DBCP数据库连接池 -->
+        <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
             <!-- Connection Info -->
-            <property name="driverClass" value="${jdbc.driver}"/>
+            <property name="driverClassName" value="${jdbc.driver}"/>
             <property name="url" value="${jdbc.url}"/>
             <property name="username" value="${jdbc.username}"/>
             <property name="password" value="${jdbc.password}"/>
+            <property name="defaultAutoCommit" value="false"/>
         </bean>
 
         <bean id="quartzDataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
