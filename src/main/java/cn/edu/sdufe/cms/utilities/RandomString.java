@@ -13,7 +13,7 @@ public class RandomString {
 
     private static final int MAX_NUM = 62;
 
-    public static String get(int pwd_len) {
+    public static String get(int pwdLen) {
         int i;
         int count = 0;
         String table = "AaBbCc0DdEeFf9GgHhIi1JjKkLl8MmNnOo2PpQqRr7SsTtUu3VvWwXx6Yy5Zz4";
@@ -21,7 +21,7 @@ public class RandomString {
 
         StringBuffer pwd = new StringBuffer("");
         Random r = new Random();
-        while (count < pwd_len) {
+        while (count < pwdLen) {
             i = Math.abs(r.nextInt(MAX_NUM));
 
             if (i >= 0 && i < str.length) {

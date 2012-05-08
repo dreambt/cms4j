@@ -51,7 +51,7 @@ public class ImageController {
     public String album(Model model) {
         Long total = imageManager.count().longValue();
         int limit = 4;
-        Long pageCount = 1L;
+        Long pageCount;
         if (total % limit == 0) {
             pageCount = total / limit;
         } else {
@@ -88,7 +88,7 @@ public class ImageController {
     public String gallery(Model model) {
         Long total = imageManager.count().longValue();
         int limit = 12;
-        Long pageCount = 1L;
+        Long pageCount;
         if (total % limit == 0) {
             pageCount = total / limit;
         } else {
@@ -139,8 +139,9 @@ public class ImageController {
     @RequestMapping(value = "save", method = RequestMethod.POST)
     public String save(@RequestParam(value = "file", required = false) MultipartFile file,
                        HttpServletRequest request, Image image, RedirectAttributes redirectAttributes) {
-        if (file == null) {
+        if (null == file) {
             redirectAttributes.addFlashAttribute("error", "请选择上传的图片");
+            return "redirect:/gallery/listAll";
         }
 
         // 是否首页显示
@@ -154,7 +155,7 @@ public class ImageController {
         if (imageManager.save(file, request, image) <= 0) {
             redirectAttributes.addFlashAttribute("error", "添加图片信息失败");
         } else {
-            redirectAttributes.addFlashAttribute("info", "添加" + image.getId() + "图片信息成功");
+            redirectAttributes.addFlashAttribute("info", "添加图片信息成功");
         }
         return "redirect:/gallery/listAll";
     }

@@ -135,7 +135,7 @@ public class ArticleController {
     public String listOfArticle(@PathVariable("id") Long id, Model model) {
         Long total = articleManager.count(id);
         int limit = 10;
-        Long pageCount = 1L;
+        Long pageCount;
         if (total % limit == 0) {
             pageCount = total / limit;
         } else {
@@ -178,7 +178,7 @@ public class ArticleController {
     public String digestOfArticle(@PathVariable("id") Long id, Model model) {
         Long total = articleManager.count(id);
         int limit = 6;
-        Long pageCount = 1L;
+        Long pageCount;
         if (total % limit == 0) {
             pageCount = total / limit;
         } else {
@@ -231,7 +231,7 @@ public class ArticleController {
         List<Article> articleList = articleManager.getInfo();
         Long total = Long.valueOf(articleList.size());
         int limit = 10;
-        Long pageCount = 1L;
+        Long pageCount;
         if (total % limit == 0) {
             pageCount = total / limit;
         } else {

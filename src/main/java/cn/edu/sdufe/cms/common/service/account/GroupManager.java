@@ -33,6 +33,7 @@ public class GroupManager {
      * @return
      */
     public Group getGroup(Long id) {
+        logger.info("Info: {}", "getGroup where id=" + id);
         return groupDao.getGroup(id);
     }
 
@@ -42,6 +43,7 @@ public class GroupManager {
      * @return
      */
     public List<Group> getAllGroup() {
+        logger.info("Info: {}", "getAllGroup");
         return groupDao.getAllGroup();
     }
 
@@ -51,6 +53,7 @@ public class GroupManager {
      * @return
      */
     public Long getCount() {
+        logger.info("Info: {}", "getCount");
         return groupDao.count();
     }
 

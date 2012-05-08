@@ -3,7 +3,6 @@ package cn.edu.sdufe.cms.common.dao.agency;
 import cn.edu.sdufe.cms.common.entity.agency.Agency;
 import com.google.common.collect.Maps;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -24,7 +23,6 @@ public class AgencyDao extends SqlSessionDaoSupport {
      * @param id
      * @return
      */
-    @Cacheable(value = "agencyCache")
     public Agency getAgency(Long id) {
         return getSqlSession().selectOne("Agency.getAgency", id);
     }
@@ -34,7 +32,6 @@ public class AgencyDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    @Cacheable(value = "agencyCache")
     public List<Agency> getAllAgency() {
         return getSqlSession().selectList("Agency.getAllAgency");
     }
@@ -45,7 +42,6 @@ public class AgencyDao extends SqlSessionDaoSupport {
      * @param agency
      * @return
      */
-    @Cacheable(value = "agencyCache")
     public int save(Agency agency) {
         return getSqlSession().insert("Agency.saveAgency", agency);
     }
@@ -55,7 +51,6 @@ public class AgencyDao extends SqlSessionDaoSupport {
      *
      * @return
      */
-    @Cacheable(value = "agencyCache")
     public int deleteAgency() {
         return getSqlSession().delete("Agency.deleteAgency");
     }
@@ -66,7 +61,6 @@ public class AgencyDao extends SqlSessionDaoSupport {
      * @param agency
      * @return
      */
-    @Cacheable(value = "agencyCache")
     public int updateAgency(Agency agency) {
         return getSqlSession().update("Agency.updateAgency", agency);
     }
@@ -78,7 +72,6 @@ public class AgencyDao extends SqlSessionDaoSupport {
      * @param column
      * @return
      */
-    @Cacheable(value = "agencyCache")
     public int updateAgencyBool(Long id, String column) {
         Map parameters = Maps.newHashMap();
         parameters.put("id", id);
@@ -92,7 +85,6 @@ public class AgencyDao extends SqlSessionDaoSupport {
      * @param id
      * @return
      */
-    @Cacheable(value = "agencyCache")
     public int updateAgencyViews(Long id) {
         return getSqlSession().update("Agency.updateAgencyViews", id);
     }

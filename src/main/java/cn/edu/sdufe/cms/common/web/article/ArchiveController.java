@@ -51,9 +51,9 @@ public class ArchiveController {
      */
     @RequestMapping(value = "list/{id}")
     public String articleListByArchiveId(Model model, @PathVariable("id") Long id) {
-        Long total = new Long(archiveManager.getByArchiveId(id).getArticleCount());
+        Long total = Long.valueOf(archiveManager.getByArchiveId(id).getArticleCount());
         int limit = 10;
-        Long pageCount = 1L;
+        Long pageCount;
         if (total % limit == 0) {
             pageCount = total / limit;
         } else {

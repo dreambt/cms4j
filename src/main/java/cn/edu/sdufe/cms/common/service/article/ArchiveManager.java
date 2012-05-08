@@ -117,11 +117,9 @@ public class ArchiveManager {
         List<Long> archives = archiveDao.getAllArticleIdByArchiveId(archive.getId());
         if (null == archives || 0 == archives.size()) {
             archiveDao.delete(archive.getId());
-        }
-        if (archive.getArticleCount() != archives.size()) {
+        } else if (archive.getArticleCount() != archives.size()) {
             archiveDao.updateArchive(archive);
         }
-
     }
 
     /**
@@ -130,11 +128,10 @@ public class ArchiveManager {
     @Transactional(readOnly = false)
     public void batchUpdate() {
         List<Archive> archives = archiveDao.findAll();
-        if (null == archives) {
-            return;
-        }
-        for (Archive archive : archives) {
-            this.update(archive);
+        if (null != archives) {
+            for (Archive archive : archives) {
+                this.update(archive);
+            }
         }
     }
 

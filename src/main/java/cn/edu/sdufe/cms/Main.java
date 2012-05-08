@@ -2,12 +2,16 @@ package cn.edu.sdufe.cms;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.webapp.WebAppContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.net.URL;
 import java.security.ProtectionDomain;
 
 public class Main {
+
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) throws Exception {
 
@@ -20,7 +24,7 @@ public class Main {
             server.start();
             server.join();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Error: {}", e.getMessage());
             System.exit(100);
         }
     }

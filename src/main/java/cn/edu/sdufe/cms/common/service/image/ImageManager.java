@@ -32,7 +32,6 @@ public class ImageManager {
     private static final Logger logger = LoggerFactory.getLogger(ImageManager.class);
 
     private ImageDao imageDao = null;
-    private ImageThumb imageThumb = new ImageThumb();
 
     private NotifyMessageProducer notifyProducer; //JMS消息发送
 
@@ -103,6 +102,7 @@ public class ImageManager {
             String fileName = uploadFile.uploadFile(file, request, UPLOAD_PATH + "gallery/gallery-big/");
             image.setImageUrl(fileName);
 
+            ImageThumb imageThumb = new ImageThumb();
             try {
                 imageThumb.saveImageAsJpg(UPLOAD_PATH + "gallery/gallery-big/" + fileName, UPLOAD_PATH + "gallery/thumb-50x57/" + fileName, 50, 57);
                 logger.info("Success to generate Thumb: {}", UPLOAD_PATH + "gallery/thumb-50x57/" + fileName);

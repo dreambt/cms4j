@@ -27,55 +27,44 @@ import java.util.Random;
 public class CaptchaContentServlet extends HttpServlet {
 
     private static ConfigurableCaptchaService captchaService = null;
+    ;
     private static ColorFactory cf = null;                   // 颜色
     private static RandomWordFactory wf = null;              // 字体
     private static Random r = new Random();
     private static CurvesRippleFilterFactory crff = null;    // 曲线波纹加干扰线
-    private static MarbleRippleFilterFactory mrff = null;    //
-    private static DoubleRippleFilterFactory drff = null;    // 双干扰线
-    private static WobbleRippleFilterFactory wrff = null;    //
-    private static DiffuseRippleFilterFactory dirff = null;  //
+    private static MarbleRippleFilterFactory mrff = new MarbleRippleFilterFactory();    //
+    private static DoubleRippleFilterFactory drff = new DoubleRippleFilterFactory();    // 双干扰线
+    private static WobbleRippleFilterFactory wrff = new WobbleRippleFilterFactory();    //
+    private static DiffuseRippleFilterFactory dirff = new DiffuseRippleFilterFactory(); //
     private static final int WIDTH = 120;                   // 默认160
     private static final int HEIGHT = 50;                   // 默认70
 
     private static final Color TEXT_COLOR = new Color(0, 27, 220);
-    private static final Color BACKGROUND_COLOR = new Color(25, 60, 170);
+    //private static final Color BACKGROUND_COLOR = new Color(25, 60, 170);
 
     @Override
     public void init() throws ServletException {
         super.init();
-        this.captchaService = new ConfigurableCaptchaService();
-        this.crff = new CurvesRippleFilterFactory(captchaService.getColorFactory());
-        this.drff = new DoubleRippleFilterFactory();
-        this.wrff = new WobbleRippleFilterFactory();
-        this.dirff = new DiffuseRippleFilterFactory();
-        this.mrff = new MarbleRippleFilterFactory();
-        this.cf = new SingleColorFactory(TEXT_COLOR);
-
-        // 设置字体
-        this.wf = new RandomWordFactory();
-        this.wf.setMaxLength(6);
-        this.wf.setMinLength(4);
-        this.wf.setCharacters("1234567890");
-
-        this.captchaService.setWordFactory(wf);
-        this.captchaService.setColorFactory(cf);
-        this.captchaService.setWidth(WIDTH);
-        this.captchaService.setHeight(HEIGHT);
-    }
-
-    @Override
-    public void destroy() {
-        this.captchaService = null;
-
-        this.crff = null;
-        this.drff = null;
-        this.wrff = null;
-        this.dirff = null;
-        this.mrff = null;
-        this.cf = null;
-        this.wf = null;
-        super.destroy();
+        if (null == wf) {
+            // 设置字体
+            this.wf = new RandomWordFactory();
+            this.wf.setMaxLength(6);
+            this.wf.setMinLength(4);
+            this.wf.setCharacters("1234567890");
+        }
+        if (null == cf) {
+            this.cf = new SingleColorFactory(TEXT_COLOR);
+        }
+        if (null == captchaService) {
+            captchaService = new ConfigurableCaptchaService();
+            captchaService.setWordFactory(wf);
+            captchaService.setColorFactory(cf);
+            captchaService.setWidth(WIDTH);
+            captchaService.setHeight(HEIGHT);
+        }
+        if (null == crff) {
+            this.crff = new CurvesRippleFilterFactory(captchaService.getColorFactory());
+        }
     }
 
     @Override

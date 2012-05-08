@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.util.List;
 
 /**
@@ -51,7 +52,7 @@ public class AgencyManager {
      * @return
      */
     public List<Agency> getAllAgency() {
-        return (List<Agency>) agencyDao.getAllAgency();
+        return agencyDao.getAllAgency();
     }
 
     /**
@@ -112,11 +113,13 @@ public class AgencyManager {
     public int updateAgency(MultipartFile file, HttpServletRequest request, Agency agency) {
         //实现上传
         if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
-            //存储旧图片名
-            String oldFileName = agency.getImageUrl();
+            // 上传新图片
             UploadFile uploadFile = new UploadFile();
             String fileName = uploadFile.uploadFile(file, request, UPLOAD_PATH);
             agency.setImageUrl(fileName);
+
+            //删除旧图片
+            new File(UPLOAD_PATH + "agency", agency.getImageUrl()).delete();
         }
         return agencyDao.updateAgency(agency);
     }

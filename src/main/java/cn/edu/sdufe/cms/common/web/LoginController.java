@@ -25,10 +25,11 @@ public class LoginController {
      */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
-        if (SecurityUtils.getSubject().isAuthenticated())
+        if (SecurityUtils.getSubject().isAuthenticated()) {
             return "redirect:/dashboard/index";
-        else
+        } else {
             return "security/login";
+        }
     }
 
     /**

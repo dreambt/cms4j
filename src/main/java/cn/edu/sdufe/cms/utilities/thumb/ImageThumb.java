@@ -18,14 +18,14 @@ public class ImageThumb {
     private int width;
     private int height;
     private int scaleWidth;
-    double support = (double) 3.0;
-    double PI = (double) 3.14159265358978;
-    double[] contrib;
-    double[] normContrib;
-    double[] tmpContrib;
-    int startContrib, stopContrib;
-    int nDots;
-    int nHalfDots;
+    private double support = (double) 3.0;
+    private double pi = (double) 3.14159265358978;
+    private double[] contrib;
+    private double[] normContrib;
+    private double[] tmpContrib;
+    //private int startContrib, stopContrib;
+    private int nDots;
+    private int nHalfDots;
 
     /**
      * @param fromFileStr
@@ -74,13 +74,14 @@ public class ImageThumb {
         height = srcBufferImage.getHeight();
         scaleWidth = w;
 
-        if (DetermineResultSize(w, h) == 1) {
+        if (determineResultSize(w, h) == 1) {
             return srcBufferImage;
+        } else {
+            calContrib();
+            BufferedImage pbOut = horizontalFiltering(srcBufferImage, w);
+            pbOut = verticalFiltering(pbOut, h);
+            return pbOut;
         }
-        CalContrib();
-        BufferedImage pbOut = HorizontalFiltering(srcBufferImage, w);
-        BufferedImage pbFinalOut = VerticalFiltering(pbOut, h);
-        return pbFinalOut;
     }
 
     /**
@@ -101,7 +102,7 @@ public class ImageThumb {
         return tag;
     }
 
-    private int DetermineResultSize(int w, int h) {
+    private int determineResultSize(int w, int h) {
         double scaleH, scaleV;
         scaleH = (double) w / (double) width;
         scaleV = (double) h / (double) height;
@@ -110,18 +111,18 @@ public class ImageThumb {
         }
         return 0;
 
-    } // end of DetermineResultSize()
+    } // end of determineResultSize()
 
-    private double Lanczos(int i, int inWidth, int outWidth, double Support) {
+    private double lanczos(int i, int inWidth, int outWidth, double Support) {
         double x;
 
         x = (double) i * (double) outWidth / (double) inWidth;
 
-        return Math.sin(x * PI) / (x * PI) * Math.sin(x * PI / Support)
-                / (x * PI / Support);
+        return Math.sin(x * pi) / (x * pi) * Math.sin(x * pi / Support)
+                / (x * pi / Support);
     }
 
-    private void CalContrib() {
+    private void calContrib() {
         nHalfDots = (int) ((double) width * support / (double) scaleWidth);
         nDots = nHalfDots * 2 + 1;
         try {
@@ -138,7 +139,7 @@ public class ImageThumb {
         double weight = 0.0;
         int i = 0;
         for (i = 1; i <= center; i++) {
-            contrib[center + i] = Lanczos(i, width, scaleWidth, support);
+            contrib[center + i] = lanczos(i, width, scaleWidth, support);
             weight += contrib[center + i];
         }
 
@@ -155,10 +156,10 @@ public class ImageThumb {
         for (i = center + 1; i < nDots; i++) {
             normContrib[i] = normContrib[center * 2 - i];
         }
-    } // end of CalContrib()
+    } // end of calContrib()
 
     // �����Ե
-    private void CalTempContrib(int start, int stop) {
+    private void calTempContrib(int start, int stop) {
         double weight = 0;
 
         int i = 0;
@@ -170,29 +171,29 @@ public class ImageThumb {
             tmpContrib[i] = contrib[i] / weight;
         }
 
-    } // end of CalTempContrib()
+    } // end of calTempContrib()
 
-    private int GetRedValue(int rgbValue) {
+    private int getRedValue(int rgbValue) {
         int temp = rgbValue & 0x00ff0000;
         return temp >> 16;
     }
 
-    private int GetGreenValue(int rgbValue) {
+    private int getGreenValue(int rgbValue) {
         int temp = rgbValue & 0x0000ff00;
         return temp >> 8;
     }
 
-    private int GetBlueValue(int rgbValue) {
+    private int getBlueValue(int rgbValue) {
         return rgbValue & 0x000000ff;
     }
 
-    private int ComRGB(int redValue, int greenValue, int blueValue) {
+    private int comRGB(int redValue, int greenValue, int blueValue) {
 
         return (redValue << 16) + (greenValue << 8) + blueValue;
     }
 
     // ��ˮƽ�˲�
-    private int HorizontalFilter(BufferedImage bufImg, int startX, int stopX,
+    private int horizontalFilter(BufferedImage bufImg, int startX, int stopX,
                                  int start, int stop, int y, double[] pContrib) {
         double valueRed = 0.0;
         double valueGreen = 0.0;
@@ -203,19 +204,19 @@ public class ImageThumb {
         for (i = startX, j = start; i <= stopX; i++, j++) {
             valueRGB = bufImg.getRGB(i, y);
 
-            valueRed += GetRedValue(valueRGB) * pContrib[j];
-            valueGreen += GetGreenValue(valueRGB) * pContrib[j];
-            valueBlue += GetBlueValue(valueRGB) * pContrib[j];
+            valueRed += getRedValue(valueRGB) * pContrib[j];
+            valueGreen += getGreenValue(valueRGB) * pContrib[j];
+            valueBlue += getBlueValue(valueRGB) * pContrib[j];
         }
 
-        valueRGB = ComRGB(Clip((int) valueRed), Clip((int) valueGreen),
-                Clip((int) valueBlue));
+        valueRGB = comRGB(clip((int) valueRed), clip((int) valueGreen),
+                clip((int) valueBlue));
         return valueRGB;
 
-    } // end of HorizontalFilter()
+    } // end of horizontalFilter()
 
     // ͼƬˮƽ�˲�
-    private BufferedImage HorizontalFiltering(BufferedImage bufImage, int iOutW) {
+    private BufferedImage horizontalFiltering(BufferedImage bufImage, int iOutW) {
         int dwInW = bufImage.getWidth();
         int dwInH = bufImage.getHeight();
         int value = 0;
@@ -247,15 +248,15 @@ public class ImageThumb {
             }
 
             if (start > 0 || stop < nDots - 1) {
-                CalTempContrib(start, stop);
+                calTempContrib(start, stop);
                 for (y = 0; y < dwInH; y++) {
-                    value = HorizontalFilter(bufImage, startX, stopX, start,
+                    value = horizontalFilter(bufImage, startX, stopX, start,
                             stop, y, tmpContrib);
                     pbOut.setRGB(x, y, value);
                 }
             } else {
                 for (y = 0; y < dwInH; y++) {
-                    value = HorizontalFilter(bufImage, startX, stopX, start,
+                    value = horizontalFilter(bufImage, startX, stopX, start,
                             stop, y, normContrib);
                     pbOut.setRGB(x, y, value);
                 }
@@ -264,9 +265,9 @@ public class ImageThumb {
 
         return pbOut;
 
-    } // end of HorizontalFiltering()
+    } // end of horizontalFiltering()
 
-    private int VerticalFilter(BufferedImage pbInImage, int startY, int stopY,
+    private int verticalFilter(BufferedImage pbInImage, int startY, int stopY,
                                int start, int stop, int x, double[] pContrib) {
         double valueRed = 0.0;
         double valueGreen = 0.0;
@@ -277,23 +278,23 @@ public class ImageThumb {
         for (i = startY, j = start; i <= stopY; i++, j++) {
             valueRGB = pbInImage.getRGB(x, i);
 
-            valueRed += GetRedValue(valueRGB) * pContrib[j];
-            valueGreen += GetGreenValue(valueRGB) * pContrib[j];
-            valueBlue += GetBlueValue(valueRGB) * pContrib[j];
-            // System.out.println(valueRed+"->"+Clip((int)valueRed)+"<-");
+            valueRed += getRedValue(valueRGB) * pContrib[j];
+            valueGreen += getGreenValue(valueRGB) * pContrib[j];
+            valueBlue += getBlueValue(valueRGB) * pContrib[j];
+            // System.out.println(valueRed+"->"+clip((int)valueRed)+"<-");
             //
-            // System.out.println(valueGreen+"->"+Clip((int)valueGreen)+"<-");
-            // System.out.println(valueBlue+"->"+Clip((int)valueBlue)+"<-"+"-->");
+            // System.out.println(valueGreen+"->"+clip((int)valueGreen)+"<-");
+            // System.out.println(valueBlue+"->"+clip((int)valueBlue)+"<-"+"-->");
         }
 
-        valueRGB = ComRGB(Clip((int) valueRed), Clip((int) valueGreen),
-                Clip((int) valueBlue));
+        valueRGB = comRGB(clip((int) valueRed), clip((int) valueGreen),
+                clip((int) valueBlue));
         // System.out.println(valueRGB);
         return valueRGB;
 
-    } // end of VerticalFilter()
+    } // end of verticalFilter()
 
-    private BufferedImage VerticalFiltering(BufferedImage pbImage, int iOutH) {
+    private BufferedImage verticalFiltering(BufferedImage pbImage, int iOutH) {
         int iW = pbImage.getWidth();
         int iH = pbImage.getHeight();
         int value = 0;
@@ -324,15 +325,15 @@ public class ImageThumb {
             }
 
             if (start > 0 || stop < nDots - 1) {
-                CalTempContrib(start, stop);
+                calTempContrib(start, stop);
                 for (int x = 0; x < iW; x++) {
-                    value = VerticalFilter(pbImage, startY, stopY, start, stop,
+                    value = verticalFilter(pbImage, startY, stopY, start, stop,
                             x, tmpContrib);
                     pbOut.setRGB(x, y, value);
                 }
             } else {
                 for (int x = 0; x < iW; x++) {
-                    value = VerticalFilter(pbImage, startY, stopY, start, stop,
+                    value = verticalFilter(pbImage, startY, stopY, start, stop,
                             x, normContrib);
                     pbOut.setRGB(x, y, value);
                 }
@@ -340,9 +341,9 @@ public class ImageThumb {
         }
         return pbOut;
 
-    } // end of VerticalFiltering()
+    } // end of verticalFiltering()
 
-    int Clip(int x) {
+    private int clip(int x) {
         if (x < 0)
             return 0;
         if (x > 255)
