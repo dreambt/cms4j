@@ -353,7 +353,7 @@ public class ArticleManager {
                 imageThumb.saveImageAsJpg(UPLOAD_PATH + "article/article-big/" + article.getImageName(), UPLOAD_PATH + "article/news-thumb/" + article.getImageName(), 274, 157);
                 imageThumb.saveImageAsJpg(UPLOAD_PATH + "article/article-big/" + article.getImageName(), UPLOAD_PATH + "article/digest-thumb/" + article.getImageName(), 134, 134);
             } catch (Exception e) {
-                logger.error("Post article error: {}",e.getMessage());
+                logger.error("Post article error: {}", e.getMessage());
             }
             // 关键词由任务生成
             article.setKeyword("");

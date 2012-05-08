@@ -2,7 +2,6 @@ package cn.edu.sdufe.cms.utilities.upload;
 
 import cn.edu.sdufe.cms.utilities.RandomString;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;

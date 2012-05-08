@@ -3,7 +3,6 @@ package cn.edu.sdufe.cms.common.dao.agency;
 import cn.edu.sdufe.cms.common.entity.agency.Teacher;
 import com.google.common.collect.Maps;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

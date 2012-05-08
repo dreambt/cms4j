@@ -33,8 +33,6 @@ public class NotifyMessageListener implements MessageListener {
 
     @Value("${path.upload.base}")
     private String UPLOAD_PATH;
-    @Value("${path.upload.dir}")
-    private String UPLOAD_DIR;
 
     /**
      * MessageListener回调函数.

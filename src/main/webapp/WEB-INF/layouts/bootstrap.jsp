@@ -33,7 +33,7 @@
     <link href="${ctx}/static/css/superfish.min.css" rel="stylesheet" type="text/css"  />
     <link href="${ctx}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="${ctx}/static/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css"/>
-    <link href="${ctx}/static/style/CMS.css" type="text/css" rel="stylesheet" media="screen" />
+    <link href="${ctx}/static/style/CMS.min.css" type="text/css" rel="stylesheet" media="screen" />
 
     <!-- ////////////////////////////////// -->
     <!-- //      Javascript Files        // -->
