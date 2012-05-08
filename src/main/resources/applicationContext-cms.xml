@@ -4,7 +4,6 @@
 
 	<description>导入CMS中的applicationContext文件列表</description>
 
-    <import resource="cache/applicationContext-memcached.xml" />
 	<import resource="email/applicationContext-email.xml" />
     <import resource="jms/applicationContext-jms.xml" />
 	<import resource="schedule/applicationContext-quartz-cron-local.xml" />
