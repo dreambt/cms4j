@@ -105,7 +105,7 @@
                 <c:forEach items="${infos}" var="info" begin="4" step="1" end="6">
                     <li class="counseling"><c:if test="${info.message!=''}"><a href="${ctx}/article/content/${info.id}"></c:if>${fn:substring(info.subject,0,15)}</a></li>
                 </c:forEach>
-                <li class="lastM"><span> <a href="#" class="more">更多...</a></span></li>
+                <li class="lastM"><span> <a href="${ctx}/article/listInfo" class="more">更多...</a></span></li>
             </ul>
         </div>
     </div>

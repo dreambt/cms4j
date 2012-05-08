@@ -45,7 +45,7 @@ public class GeneralController {
         model.addAttribute("news2", articleManager.getTitleByCategoryId(4L, 0, 10));
         model.addAttribute("infos", articleManager.getInfo());
         model.addAttribute("links", linkManager.getLinkByCategory(LinkCategoryEnum.LINK));
-        model.addAttribute("posts", articleManager.getTitleByCategoryId(1L, 0, 6));
+        model.addAttribute("posts", articleManager.getTitleByCategoryId(1L, 0, 5));
         return "index" + str;
     }
 
