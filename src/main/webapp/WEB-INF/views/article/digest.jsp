@@ -29,7 +29,7 @@
     <div id="article_load">
         <c:forEach items="${articles}" var="article" begin="0" step="1" varStatus="stat">
         <div class="blog-post digest">
-            <img src="${ctx}/static/uploads/gallery/thumb-134x134/${article.imageName}" alt="" class="imgleft" width="134px" height="134px"/>
+            <img src="${ctx}/static/uploads/article/digest-thumb/${article.imageName}" alt="" class="imgleft" width="134px" height="134px"/>
             <h2 style="font-size:18px;overflow:hidden"><a href="${ctx}/article/content/${article.id}" title="${article.subject}"><c:if test="${article.top}"><img src="${ctx}/static/images/top.gif" /></c:if>${fn:substring(article.subject,0,23)}<c:if test="${fn:length(article.subject)>23}">...</c:if></a></h2>
             <div class="blog-posted">
                 作者: ${article.user.username} &nbsp; | &nbsp; 发表时间: <fmt:formatDate value="${article.createdDate}" pattern="yyyy年MM月dd日"/> &nbsp; | &nbsp; 浏览次数: ${article.views} &nbsp; | &nbsp; 评论数: ${fn:length(article.commentList)}
@@ -85,9 +85,9 @@
                     //加载文章
                     $.each(data, function (index, content) {
                         if (content.top)
-                            articles.append($("<div class='blog-post digest'><img src='${ctx}/static/uploads/gallery/thumb-134x134/"+content.imageName+"' class='imgleft'/><h2 style='font-size:18px;overflow:hidden'><img src='${ctx}/static/images/top.gif' /><a href='${ctx}/article/content/" + content.id + "' title='" + content.subject + "'>" + content.subject.substr(0,23) + "</a></h2><div class='blog-posted'>作者: " + content.user.username + " &nbsp; | &nbsp; 发表时间: " + ChangeDateFormat(content.createdDate) + " &nbsp; | &nbsp; 浏览次数: " + content.views + " &nbsp; | &nbsp; 评论数: " + content.commentList.length + "</div><p>" + content.digest + "</p></div>"));
+                            articles.append($("<div class='blog-post digest'><img src='${ctx}/static/uploads/article/digest-thumb/"+content.imageName+"' class='imgleft'/><h2 style='font-size:18px;overflow:hidden'><img src='${ctx}/static/images/top.gif' /><a href='${ctx}/article/content/" + content.id + "' title='" + content.subject + "'>" + content.subject.substr(0,23) + "</a></h2><div class='blog-posted'>作者: " + content.user.username + " &nbsp; | &nbsp; 发表时间: " + ChangeDateFormat(content.createdDate) + " &nbsp; | &nbsp; 浏览次数: " + content.views + " &nbsp; | &nbsp; 评论数: " + content.commentList.length + "</div><p>" + content.digest + "</p></div>"));
                         else
-                            articles.append($("<div class='blog-post digest'><img src='${ctx}/static/uploads/gallery/thumb-134x134/"+content.imageName+"' class='imgleft'/><h2 style='font-size:18px;overflow:hidden'><a href='${ctx}/article/content/" + content.id + "' title='" + content.subject + "'>" + content.subject.substr(0,23) + "</a></h2><div class='blog-posted'>作者: " + content.user.username + " &nbsp; | &nbsp; 发表时间: " + ChangeDateFormat(content.createdDate) + " &nbsp; | &nbsp; 浏览次数: " + content.views + " &nbsp; | &nbsp; 评论数: " + content.commentList.length + "</div><p>" + content.digest + "</p></div>"));
+                            articles.append($("<div class='blog-post digest'><img src='${ctx}/static/uploads/article/digest-thumb/"+content.imageName+"' class='imgleft'/><h2 style='font-size:18px;overflow:hidden'><a href='${ctx}/article/content/" + content.id + "' title='" + content.subject + "'>" + content.subject.substr(0,23) + "</a></h2><div class='blog-posted'>作者: " + content.user.username + " &nbsp; | &nbsp; 发表时间: " + ChangeDateFormat(content.createdDate) + " &nbsp; | &nbsp; 浏览次数: " + content.views + " &nbsp; | &nbsp; 评论数: " + content.commentList.length + "</div><p>" + content.digest + "</p></div>"));
                     });
 
                     $(".blog-pagination").html("页码 &nbsp;:&nbsp;");
