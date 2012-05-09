@@ -161,17 +161,6 @@ public class CategoryManager {
         }
     }
 
-    /**
-     * 清理缓存
-     */
-    private void cleanCache() {
-        // TODO 测试是否还有效
-        //ehcacheManager = CacheManager.create();
-        //ehcacheManager.getEhcache("cn.edu.sdufe.cms.common.entity.article.Category.subCategories").removeAll();
-        //ehcacheManager.getCache("cn.edu.sdufe.cms.common.entity.article.Category.articleList").removeAll();
-        //ehcacheManager.getCache("cn.edu.sdufe.cms.common.entity.article.Category").removeAll();
-    }
-
     @Autowired
     public void setCategoryDao(@Qualifier("categoryDao") CategoryDao categoryDao) {
         this.categoryDao = categoryDao;

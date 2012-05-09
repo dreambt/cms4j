@@ -27,7 +27,6 @@ import java.util.Random;
 public class CaptchaContentServlet extends HttpServlet {
 
     private static ConfigurableCaptchaService captchaService = null;
-    ;
     private static ColorFactory cf = null;                   // 颜色
     private static RandomWordFactory wf = null;              // 字体
     private static Random r = new Random();
