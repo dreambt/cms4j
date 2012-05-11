@@ -106,12 +106,7 @@ public class CategoryManager {
     @Transactional(readOnly = false)
     public int update(Category category) {
         // 更新数据，先更新数据避免生成旧数据缓存
-        int num = categoryDao.update(category);
-
-        // 清理缓存
-        this.cleanCache();
-
-        return num;
+        return categoryDao.update(category);
     }
 
     /**
