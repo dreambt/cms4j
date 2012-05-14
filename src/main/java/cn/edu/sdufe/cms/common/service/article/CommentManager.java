@@ -71,7 +71,7 @@ public class CommentManager {
      */
     @Transactional(readOnly = false)
     public int save(Comment comment) {
-        logger.info("New Comment: ", comment.toString());
+        logger.info("New Comment: {}", comment.toString());
         return commentDao.save(comment);
     }
 
