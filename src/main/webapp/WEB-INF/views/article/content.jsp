@@ -131,7 +131,7 @@
        });   */
         $('#submit').click(function(){
             //alert(c.val().length);
-            if(subject.val() ==""){alert("请您填写您的邮箱！");return false;};
+            if(subject.val() ==""||!checkEmail(subject.val())){alert("请您填写您的邮箱！");return false;};
             if(myEditor.val()==""||myEditor.val().length<5||myEditor.val().length>200){alert("请您填写评论内容，字数为：5-200");return false;};
             if(c.val()==""){alert("请您填写验证码！");return false;};
         });
@@ -152,6 +152,16 @@
                 $(this).height($(this).height()*b);
             }
         });
+
+        //验证邮箱，正确返回true，错误返回false
+        function checkEmail(email){
+            var emailRegExp = new RegExp(            "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+            if (!emailRegExp.test(email)||email.indexOf('.')==-1){
+                return false;
+            }else{
+                return true;
+            }
+        }
     });
 </script>
 </body>
