@@ -112,7 +112,7 @@
     <!---教师风采---->
     <div id="left_b_index">
         <p class="title_index title-788"><strong>专家团队</strong></p>
-        <%@ include file="/WEB-INF/layouts/teacher.jsp" %>
+        <%@ include file="/WEB-INF/layouts/teacherIndex.jsp" %>
     </div>
 </div>
 <!---- left_r end---->
@@ -136,7 +136,7 @@
         <ul class="content span-4">
             <li class="serviceObj">民生银行等股份制银行</li>
             <li class="serviceObj">山东省农信社等省属银行</li>
-            <li class="serviceObj">山东省城市商业银行合作联盟</li>
+            <li class="serviceObj">山东省城市银行合作联盟</li>
             <li class="serviceObj">齐鲁银行等城市商业银行</li>
             <li class="serviceObj">小额贷款公司与村镇银行</li>
             <li class="serviceObj">证券公司及保险担保公司</li>

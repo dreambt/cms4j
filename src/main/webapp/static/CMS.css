@@ -269,8 +269,8 @@ a.agrayright{cursor:default;background-position:-51px 50%;}
 /* Header
 ------------------------------------------------------*/
 #header{height:134px; background:url(images/top-shadow.jpg) center 46px no-repeat;margin-bottom: 15px;}
-#top-header{height:108px; background:url(images/strip-line.gif) top repeat-x;}
-#bottom-header{width:950px;border-bottom:1px solid #969696; float:left;height: 24px;}
+#top-header{height:106px; background:url(images/strip-line.gif) top repeat-x;}
+#bottom-header{width:950px;border-bottom:1px solid #969696; float:left;height: 24px;margin: 0;padding-top:2px;}
 .logo{padding:35px 0px 0px 20px;display:block;}
 .logo a img{display:block;float: left;}
 .logo a h1{display:block;float: left;margin-top:6px;text-decoration: none;}
@@ -291,7 +291,7 @@ ul.content li span.time{float: right;display: block;color:#999;font-size: 11px;m
 .title_index:hover{color:#666;}
 .title_index a{color:#444;text-decoration: none;}
 .title_index a:hover{color:#666;}
-.title-788{width: 748px;}
+.title-788{width: 788px;}
 .title-748{width: 748px;}
 .title-268{width: 268px;}
 .title-468{width: 468px;}
@@ -320,7 +320,10 @@ a.institution:hover{text-decoration: underline;}
 
 /*---about页面----*/
 .imgabout{float: left;display: block;margin:0 10px 10px 0;}
-
+/*----导航修复----*/
+.sf-menu {
+    line-height:	1.5em;
+}
 /*  Homepage Slider
 ------------------------------------------------------*/
 #slideshow{

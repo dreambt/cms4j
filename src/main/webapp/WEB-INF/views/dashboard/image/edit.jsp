@@ -49,8 +49,7 @@
         //上传时选择文件校验
         $('#upload').live('change', function () {
             $(this).attr('alt',$(this).val());
-            if(!checkType($('#upload').val())){ alert("不能上传非gif、jpg、png、bmp类型的文件！请重新选择要上传的图片文件！");}else{
-            }
+            if(!checkType($('#upload').val())){ alert("不能上传非gif、jpg、png、bmp类型的文件！请重新选择要上传的图片文件！"); return false;}
         });
 
         //检验上传文件是否是图片
