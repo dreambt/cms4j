@@ -27,7 +27,9 @@
     <script type="text/javascript" src="${ctx}/static/jquery/1.7.1/jquery.min.js"></script>
     <script type="text/javascript" src="${ctx}/static/jquery/jquery-ui.min.js"></script>
     <!-- Load Interface Plugins -->
-    <script type="text/javascript" src="${ctx}/static/dashboard/js/plugins.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/uniform/jquery.uniform.js" charset="utf-8"></script>
+    <script type="text/javascript" src="${ctx}/static/js/tipsy/jquery.tipsy.js" charset="utf-8"></script>
+    <script type="text/javascript" src="${ctx}/static/jquery/jquery.iphoneui.js"></script>
     <script type="text/javascript" src="${ctx}/static/js/fancyBox/jquery.fancybox.js"></script>
     <script type="text/javascript" src="${ctx}/static/js/jqueryFileTree/jqueryFileTree.js"></script>
     <script type="text/javascript" src="${ctx}/static/jquery/jquery.dataTables.min.js"></script>
