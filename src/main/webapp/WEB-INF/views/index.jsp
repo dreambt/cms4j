@@ -43,7 +43,7 @@
                 <c:forEach items="${images}" var="image" begin="0" step="1" end="5">
                     <div class="slide-text">
                         <div class="PicTitle span-7"><a href="#"title="${image.title}">${fn:substring(image.title,0,20)}<c:if test="${fn:length(image.title)>20}">...</c:if></a></div>
-                        <img src="${ctx}/static/uploads/gallery/thumb-272x166/${image.imageUrl}" title="${image.title}" width="270px"
+                        <img src="${ctx}/static/uploads/gallery/thumb-272x166/${image.imageUrl}" title="${image.title}" alt="${image.title}" width="270px"
                              height="166px"/>
                     </div>
                 </c:forEach>
