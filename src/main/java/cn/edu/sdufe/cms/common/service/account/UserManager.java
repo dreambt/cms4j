@@ -140,8 +140,8 @@ public class UserManager {
     }
 
     /**
-     * 保存用户.
-     * 在保存用户时,发送用户修改通知消息, 由消息接收者异步进行较为耗时的通知邮件发送.
+     * 更新用户.
+     * 在更新用户时,发送用户修改通知消息, 由消息接收者异步进行较为耗时的通知邮件发送.
      * 如果企图修改超级用户,取出当前操作员用户,打印其信息然后抛出异常.
      *
      * @param user
@@ -153,20 +153,8 @@ public class UserManager {
             throw new ServiceException("不能修改超级管理员用户");
         }
 
-        //设定安全的密码，使用passwordService提供的salt并经过1024次 sha-1 hash
-        if (StringUtils.isNotBlank(user.getPlainPassword()) && shiroRealm != null) {
-            HashPassword hashPassword = shiroRealm.encrypt(user.getPlainPassword());
-            user.setSalt(hashPassword.getSalt());
-            user.setPassword(hashPassword.getPassword());
-        }
-
         logger.debug("== Update user={}.", user);
         userDao.update(user);
-
-        if (shiroRealm != null) {
-            shiroRealm.clearCachedAuthorizationInfo(user.getEmail());
-        }
-
         sendNotifyMessage(user);
     }
 
@@ -201,9 +189,16 @@ public class UserManager {
     public void repass(Long id) {
         User user = this.get(id);
         user.setPlainPassword(RandomString.get(8));
-        user.setSalt(RandomString.get(16));
+
+        //设定安全的密码，使用passwordService提供的salt并经过1024次 sha-1 hash
+        if (StringUtils.isNotBlank(user.getPlainPassword()) && shiroRealm != null) {
+            HashPassword hashPassword = shiroRealm.encrypt(user.getPlainPassword());
+            user.setSalt(hashPassword.getSalt());
+            user.setPassword(hashPassword.getPassword());
+        }
+
         logger.debug("== Reset user's password by id={}, email={}.", id, user.getEmail());
-        userDao.update(user);
+        this.update(user);
         sendNotifyMessage(user);
     }
 
