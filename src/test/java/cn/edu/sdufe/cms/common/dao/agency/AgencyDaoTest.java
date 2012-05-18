@@ -39,7 +39,7 @@ public class AgencyDaoTest extends SpringTransactionalTestCase {
     @Test
     public void testGetAllAgency() {
         List<Agency> agencies = agencyDao.getAllAgency();
-        Assert.assertEquals(1, agencies.size());
+        Assert.assertEquals(2, agencies.size());
     }
 
     @Test

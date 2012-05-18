@@ -16,6 +16,7 @@ public class AgencyData {
 
     public static Agency getRandomAgency() {
         Agency agency = new Agency();
+        agency.setId(3L);
         agency.setTitle("title");
         agency.setCategoryId(1L);
         agency.setImageUrl("title.jpg");
