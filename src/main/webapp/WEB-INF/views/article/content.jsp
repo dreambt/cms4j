@@ -108,11 +108,6 @@
 </div>
 <script>
     $(function () {
-        /*
-        $("#commentForm").validate({
-            rules:{message:{required:true,maxlength:600,minlength:5}}
-        });
-        */
         var subject=$('#subject');
         var myEditor=$('#myEditor');
         var c=$('#captcha');
@@ -121,28 +116,20 @@
         function focusEvent(domm){
               domm.focus(function(){$(this).css('border','1px solid #CCC');});
         }
-       // subject.live('change',function(){if(subject.val().length>5||subject.val().length<200||subject.val()!=""){subject.css('border','1px solid #CCC');}});
-        //表单校验
-      /* $('#submit').click(function(){
-           //alert(c.val().length);
-           if(subject.val() ==""){subject.css('border','1px solid #f00');return false;};
-           if(myEditor.val()==""||myEditor.val().length<5||myEditor.val().length>200){myEditor.css('border','1px solid #f00');return false;};
-           if(c.val()==""){c.css('border','1px solid #f00');return false;};
-       });   */
+
         $('#submit').click(function(){
-            //alert(c.val().length);
             if(subject.val() ==""||!checkEmail(subject.val())){alert("请您填写您的邮箱！");return false;};
             if(myEditor.val()==""||myEditor.val().length<5||myEditor.val().length>200){alert("请您填写评论内容，字数为：5-200");return false;};
             if(c.val()==""){alert("请您填写验证码！");return false;};
         });
+
         //totop
         $().UItoTop({ easingType:'easeOutQuart' });
 
         //验证码点击时显示
        var img="<img id='checkNum' src='${ctx}/captcha.png' alt='验证码'style='cursor:pointer;vertical-align:text-bottom;position:absolute'>";
-        $('#captcha').click(function(){$('#imgid').show().append(img)});
-        $('#captcha').blur(function(){$('#imgid').hide()});
-       // $('#captcha').focus(function(){$('#imgid').show().append(img)});
+        $('#captcha').click(function(){$('#imgid').show().append(img)}).blur(function(){$('#imgid').hide()});
+
         //设置图片宽度最大为676px
         $('img').each(function(i){
             //alert($(this).width());
@@ -155,7 +142,7 @@
 
         //验证邮箱，正确返回true，错误返回false
         function checkEmail(email){
-            var emailRegExp = new RegExp(            "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+            var emailRegExp = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
             if (!emailRegExp.test(email)||email.indexOf('.')==-1){
                 return false;
             }else{
