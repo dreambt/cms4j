@@ -80,10 +80,11 @@ public class ArchiveController {
      * @param dateTime
      */
     @RequestMapping(value = "save/{dateTime}", method = RequestMethod.GET)
-    public void saveArchiveByMonth(@PathVariable("dateTime") String dateTime) {
+    public String saveArchiveByMonth(@PathVariable("dateTime") String dateTime) {
         DateTimeFormatter pattern = DateTimeFormat.forPattern("yyyy-MM");
         DateTime time = DateTime.parse(dateTime, pattern);
         archiveManager.save(time);
+        return "redirect:/archive/list";
     }
 
     /**
