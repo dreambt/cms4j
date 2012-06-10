@@ -81,7 +81,7 @@ public class ArchiveController {
      */
     @RequestMapping(value = "save/{dateTime}", method = RequestMethod.GET)
     public String saveArchiveByMonth(@PathVariable("dateTime") String dateTime) {
-        DateTimeFormatter pattern = DateTimeFormat.forPattern("yyyy-MM");
+        DateTimeFormatter pattern = DateTimeFormat.forPattern("yyyyMM");
         DateTime time = DateTime.parse(dateTime, pattern);
         archiveManager.save(time);
         return "redirect:/archive/list";
