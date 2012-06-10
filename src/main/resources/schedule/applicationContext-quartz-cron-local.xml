@@ -28,10 +28,12 @@
 		<property name="jobDetail" ref="cronJobDetail" />
 		<!-- 周一至五,朝九晚五工作时间内每小时执行一次
 		<property name="cronExpression" value="0 0/60 9-17 ? * MON-FRI" />-->
-        <property name="cronExpression" value="0 0 0 L * ?" /><!-- 每月最后一日 -->
+        <!-- 每月最后一日
+        <property name="cronExpression" value="0 0 0 L * ?" /> -->
+        <property name="cronExpression" value="0 0 0 1 * ?" /><!-- 每月1号 -->
     </bean>
 
-	<!-- Cron JobDetajil, 基于MethodInvokingJobDetailFactoryBean调用普通Spring Bean -->
+	<!-- Cron JobDetail, 基于MethodInvokingJobDetailFactoryBean调用普通Spring Bean -->
 	<bean id="cronJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject" ref="cronJob" />
 		<property name="targetMethod" value="execute" />
