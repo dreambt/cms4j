@@ -47,11 +47,11 @@
             <br/>
             <h2>团队</h2>
             <p>现有专家30余人，包括“国家千人计划”特聘专家1人、教授8人、副教授及高级工程师16人；其中博士18人，5人为博士后，分别来自美国Texas州立大学、澳大利亚昆士兰大学、清华大学、山东大学、上海交通大学。承担各类科研课题20余项，发表论文50余篇；独立研究及与合作伙伴共同研发的多项成果已成功应用于交通银行、广发银行、恒丰银行、齐鲁银行、德州银行及小额贷款公司等非银行金融机构。</p>
-            <p><img src="${ctx}/static/uploads/teacher/about_xuruzhi.jpg" alt="" class="imgabout"/>
+            <p><img src="${ctx}/static/uploads/teacher/pic_xuruzhi.jpg" alt="" class="imgabout"/>
                 <strong>徐如志</strong><br/>
                 徐如志，中心主任，山东财政学院计算机信息工程学院院长、博士、教授、博士生导师。美国Arizona State University访问教授，IEEE会员，中国云计算机专家委员会委员，山东省计算机学会、管理学会学会常务理事。先后完成多项国家自然科学基金及国家“863”课题研究，发表论文50余篇，期中40余篇被SCI、EI等收录。目前主持国家及省部级科研课题4项。获山东省计算机应用优秀成果奖一等奖1项、省科技进步奖及其它重要奖励3项。
             </p>
-            <p><img src="${ctx}/static/uploads/teacher/about_guojianfeng.jpg" alt="" class="imgabout"/>
+            <p><img src="${ctx}/static/uploads/teacher/pic_guojianfeng.jpg" alt="" class="imgabout"/>
             <strong>郭建峰</strong><br/>
             郭建峰，中心副主任，为国家“千人计划”特聘专家。
         </p>

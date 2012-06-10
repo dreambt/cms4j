@@ -15,7 +15,7 @@
     <link rel="stylesheet" type="text/css" href="${ctx}/static/Ueditor/themes/default/ueditor.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/static/jquery-validation/1.9.0/validate.min.css">
     <script type="text/javascript" src="${ctx}/static/Ueditor/editor_config.js"></script>
-    <script type="text/javascript" src="${ctx}/static/Ueditor/editor_all.js"></script>
+    <script type="text/javascript" src="${ctx}/static/Ueditor/editor.min.js"></script>
     <script type="text/javascript" src="${ctx}/static/js/tipsy/jquery.tipsy.js" charset="utf-8"></script>
     <script type="text/javascript" src="${ctx}/static/jquery-validation/1.9.0/jquery.validate.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="${ctx}/static/jquery-validation/1.9.0/messages_cn.js" charset="utf-8"></script>
@@ -24,8 +24,7 @@
 <div id="main_container" class="main_container container_16 clearfix">
     <div class="flat_area grid_16">
         <h2>编辑文章</h2>
-        <p>请选择 <strong>文章分类</strong> <strong>是否置顶</strong> <strong>是否允许评论</strong> , 并填写 <strong>文章标题</strong> 和 <strong>文章内容</strong>.</p>
-        <P><strong>请您注意：</strong>发表文章时插入的图片宽度超过676像素，系统会自动以图片长宽比例将其缩小到宽度为676像素！</P>
+        <p>请选择 <strong>文章分类</strong> <strong>是否置顶</strong> <strong>是否允许评论</strong> , 并填写 <strong>文章标题</strong> 和 <strong>文章内容</strong>. 图片宽度超过676像素，系统会自动以图片长宽比例将其缩小到宽度为676像素！</p>
         <c:if test="${not empty info}">
             <div id="message" class="alert alert_blue">
                 <img height="24" width="24" src="${ctx}/static/dashboard/images/icons/Locked2.png"><strong>${info}</strong>
@@ -52,13 +51,12 @@
         <label>是否置顶</label> <input type="checkbox" name="top" value="${article.top}" <c:if test="${article.top}">checked="checked"</c:if> />
         <label>允许评论</label> <input type="checkbox" name="allowComment" value="true" <c:if test="${article.allowComment}">checked="checked"</c:if> /><br />
         <label>文章标题</label> <input type="text" id="text" name="subject" class="medium required" size="206" original-title="请输入文章标题" value="${article.subject}" />
-        <script type="text/plain" id="myEditor">${article.message}</script>
+            <script type="text/plain" id="myEditor">${article.message}</script>
             <script type="text/javascript">
-                var editor = new baidu.editor.ui.Editor({
-                    textarea: 'message',
-                    elementPathEnabled:false
+                var ue = new UE.ui.Editor({
+                    textarea: 'message'
                 });
-                editor.render("myEditor");
+                ue.render('myEditor');
             </script>
         </div>
     </div>

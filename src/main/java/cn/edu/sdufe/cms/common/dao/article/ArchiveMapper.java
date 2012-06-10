@@ -3,23 +3,19 @@ package cn.edu.sdufe.cms.common.dao.article;
 
 import cn.edu.sdufe.cms.common.dao.GenericDao;
 import cn.edu.sdufe.cms.common.entity.article.Archive;
-import cn.edu.sdufe.cms.common.entity.article.Article;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 归类的Dao
  * <p/>
- * User: pengfei.dongpf@gmail.com
+ * User: pengfei.dongpf@gmail.com, baitao.jibt@gmail.com
  * Date: 12-4-1
  * Time: 下午6:53
  */
-@Component
 public interface ArchiveMapper extends GenericDao<Archive, Long> {
-
-    List<Archive> getAll();
 
     /**
      * 获取标题为title的archive
@@ -27,39 +23,25 @@ public interface ArchiveMapper extends GenericDao<Archive, Long> {
     Archive getByTitle(String title);
 
     /**
-     * 获得前十条归类信息
+     * 获取标题为title的article id
+     */
+    List<Long> getArticleIdByTitle(String title);
+
+    /**
+     * 获得前n条归类信息
      *
      * @return
      */
-    List<Archive> getTopTen();
+    List<Archive> list(Map<String, Object> parameters);
 
     /**
-     * 根据归档编号获得文章编号，分页
-     *
-     * @return
+     * 新增相关文章
      */
-    List<Long> getArticleIdByArchiveId(@Param("archiveId") Long archiveId, @Param("offset") int offset, @Param("limit") int limit);
+    int addArticle(@Param("archiveId") Long archiveId, @Param("articleId") Long articleId);
 
     /**
-     * 根据归档编号获得文章编号
-     *
-     * @return
+     * 删除相关文章
      */
-    List<Long> getAllArticleIdByArchiveId(Long archiveId);
-
-    /**
-     * 新增归档文章对应表
-     */
-    int saveAA(Long archiveId, Long articleId);
-
-    /**
-     * 删除归档文章对应表
-     */
-    int deleteAAByArchiveId(Long archiveId);
-
-    /**
-     * 删除归档文章对应表
-     */
-    int deleteAAByArticleId(List<Article> articleList);
+    int deleteArticle(Long articleId);
 
 }

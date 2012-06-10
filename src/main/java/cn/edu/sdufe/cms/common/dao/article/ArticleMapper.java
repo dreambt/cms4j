@@ -3,18 +3,16 @@ package cn.edu.sdufe.cms.common.dao.article;
 import cn.edu.sdufe.cms.common.dao.GenericDao;
 import cn.edu.sdufe.cms.common.entity.article.Article;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;
 
 /**
  * 文章Dao
- * User: baitao.jibt (dreambt@gmail.com)
+ * User: baitao.jibt@gmail.com
  * Date: 12-3-20
  * Time: 下午18:34
  */
-@Component
 public interface ArticleMapper extends GenericDao<Article, Long> {
 
     /**
@@ -32,16 +30,6 @@ public interface ArticleMapper extends GenericDao<Article, Long> {
     List<Article> getTopTen();
 
     /**
-     * 获取分类id的文章标题
-     *
-     * @param categoryId
-     * @param offset
-     * @param limit
-     * @return
-     */
-    List<Article> getTitleByCategoryId(@Param("categoryId") Long categoryId, @Param("offset") int offset, @Param("limit") int limit);
-
-    /**
      * 获取分类ids的文章标题
      *
      * @return
@@ -57,6 +45,25 @@ public interface ArticleMapper extends GenericDao<Article, Long> {
      * @return
      */
     List<Article> getByCategoryId(@Param("categoryId") Long categoryId, @Param("offset") int offset, @Param("limit") int limit);
+
+    /**
+     * 根据归档编号获得文章
+     *
+     * @param archiveId
+     * @param offset
+     * @param limit
+     * @return
+     */
+    List<Article> getByArchiveId(@Param("archiveId") Long archiveId, @Param("offset") int offset, @Param("limit") int limit);
+
+    /**
+     * 根据归档编号获得文章编号
+     *
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    List<Long> getIdByMonth(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
     /**
      * 获得指定月份的所有文章

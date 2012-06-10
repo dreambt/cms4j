@@ -77,5 +77,6 @@ public interface GenericDao<T, PK extends Serializable> {
      *
      * @return List of populated objects
      */
-    List<T> search(Map<String, Object> parameters, @Param("offset") int offset, @Param("limit") int limit);
+    List<T> search(Map<String, Object> parameters);
+
 }

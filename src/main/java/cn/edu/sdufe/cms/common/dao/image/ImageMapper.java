@@ -2,7 +2,6 @@ package cn.edu.sdufe.cms.common.dao.image;
 
 import cn.edu.sdufe.cms.common.dao.GenericDao;
 import cn.edu.sdufe.cms.common.entity.image.Image;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -12,7 +11,6 @@ import java.util.List;
  * Date: 12-4-4
  * Time: 下午7:49
  */
-@Component
 public interface ImageMapper extends GenericDao<Image, Long> {
 
     /**

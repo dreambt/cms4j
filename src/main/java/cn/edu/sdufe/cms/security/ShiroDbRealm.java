@@ -201,4 +201,5 @@ public class ShiroDbRealm extends AuthorizingRealm {
             return EqualsBuilder.reflectionEquals(this, obj, "loginName");
         }
     }
+
 }

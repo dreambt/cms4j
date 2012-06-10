@@ -5,7 +5,6 @@ import cn.edu.sdufe.cms.common.service.article.CategoryManager;
 import cn.edu.sdufe.cms.common.service.image.ImageManager;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +36,7 @@ public class ImageController {
     @RequiresPermissions("gallery:list")
     @RequestMapping(value = "listAll", method = RequestMethod.GET)
     public String listAllImage(Model model) {
-        model.addAttribute("images", imageManager.findAll());
+        model.addAttribute("images", imageManager.getAll());
         return "dashboard/image/listAll";
     }
 
@@ -49,9 +48,9 @@ public class ImageController {
      */
     @RequestMapping(value = "album", method = RequestMethod.GET)
     public String album(Model model) {
-        Long total = imageManager.count().longValue();
+        long total = imageManager.count();
         int limit = 4;
-        Long pageCount;
+        long pageCount;
         if (total % limit == 0) {
             pageCount = total / limit;
         } else {
@@ -86,9 +85,9 @@ public class ImageController {
      */
     @RequestMapping(value = "photo", method = RequestMethod.GET)
     public String gallery(Model model) {
-        Long total = imageManager.count().longValue();
+        long total = imageManager.count();
         int limit = 12;
-        Long pageCount;
+        long pageCount;
         if (total % limit == 0) {
             pageCount = total / limit;
         } else {
@@ -152,7 +151,7 @@ public class ImageController {
         }
 
         // 保存
-        if (imageManager.save(file, request, image) <= 0) {
+        if (imageManager.save(file, image) <= 0) {
             redirectAttributes.addFlashAttribute("error", "添加图片信息失败");
         } else {
             redirectAttributes.addFlashAttribute("info", "添加图片信息成功");
@@ -216,12 +215,12 @@ public class ImageController {
     }
 
     @Autowired
-    public void setImageManager(@Qualifier("imageManager") ImageManager imageManager) {
+    public void setImageManager(ImageManager imageManager) {
         this.imageManager = imageManager;
     }
 
     @Autowired
-    public void setCategoryManager(@Qualifier("categoryManager") CategoryManager categoryManager) {
+    public void setCategoryManager(CategoryManager categoryManager) {
         this.categoryManager = categoryManager;
     }
 

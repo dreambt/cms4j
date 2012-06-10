@@ -2,51 +2,20 @@ package cn.edu.sdufe.cms.common.service.image;
 
 import cn.edu.sdufe.cms.common.dao.image.ImageMapper;
 import cn.edu.sdufe.cms.common.entity.image.Image;
-import cn.edu.sdufe.cms.jms.NotifyMessageProducer;
-import cn.edu.sdufe.cms.utilities.thumb.ImageThumb;
-import cn.edu.sdufe.cms.utilities.upload.UploadFile;
-import com.google.common.collect.Maps;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
+import cn.edu.sdufe.cms.common.service.GenericManager;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Map;
 
 /**
- * image 业务逻辑类
- * User: pengfei.dongpf@gmail.com
- * Date: 12-4-2
- * Time: 下午8:08
+ * Image Manager 接口
+ * <p/>
+ * User: baitao.jibt@gmail.com
+ * Date: 12-8-13
+ * Time: 上午9:42
  */
-@Component
-@Transactional(readOnly = true)
-public class ImageManager {
-
-    private static final Logger logger = LoggerFactory.getLogger(ImageManager.class);
-
-    private ImageMapper imageMapper = null;
-
-    private NotifyMessageProducer notifyProducer; //JMS消息发送
-
-    @Value("${path.upload.base}")
-    private String UPLOAD_PATH;
-
-    /**
-     * 获得编号为id的image
-     *
-     * @param id
-     * @return
-     */
-    public Image findOne(Long id) {
-        return imageMapper.get(id);
-    }
+public interface ImageManager extends GenericManager<Image, Long> {
 
     /**
      * 获得分页的image
@@ -55,39 +24,28 @@ public class ImageManager {
      * @param limit
      * @return
      */
-    public List<Image> getPagedImage(int offset, int limit) {
-        Map<String, Object> parameters = Maps.newHashMap();
-        return imageMapper.search(parameters, offset, limit);
-    }
+    List<Image> getPagedImage(int offset, int limit);
 
     /**
      * 获得image数量
      *
      * @return
      */
-    public Long count() {
-        return imageMapper.count();
-    }
+    long count();
 
     /**
      * 获得所有image
      *
      * @return
      */
-    public List<Image> findAll() {
-        return imageMapper.getAll();
-    }
+    List<Image> getAll();
 
     /**
      * 获得首页显示的image
      *
      * @return
      */
-    public List<Image> findByShowIndex() {
-        Map<String, Object> parameters = Maps.newHashMap();
-        parameters.put("showIndex", "1");
-        return imageMapper.search(parameters, 0, 10);
-    }
+    List<Image> findByShowIndex();
 
     /**
      * 添加image
@@ -95,28 +53,7 @@ public class ImageManager {
      * @param image
      * @return
      */
-    @Transactional(readOnly = false)
-    public int save(MultipartFile file, HttpServletRequest request, Image image) {
-        if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
-            UploadFile uploadFile = new UploadFile();
-            String fileName = uploadFile.uploadFile(file, request, UPLOAD_PATH + "gallery/gallery-big/");
-            image.setImageUrl(fileName);
-
-            ImageThumb imageThumb = new ImageThumb();
-            try {
-                imageThumb.saveImageAsJpg(UPLOAD_PATH + "gallery/gallery-big/" + fileName, UPLOAD_PATH + "gallery/thumb-50x57/" + fileName, 50, 57);
-                logger.info("Success to generate Thumb: {}", UPLOAD_PATH + "gallery/thumb-50x57/" + fileName);
-
-                // 异步生成其他缩略图
-                notifyProducer.sendQueueGenThumb(fileName);
-            } catch (Exception e) {
-                logger.info(e.getMessage());
-            }
-        } else {
-            image.setImageUrl("");
-        }
-        return imageMapper.save(image);
-    }
+    long save(MultipartFile file, Image image);
 
     /**
      * 修改image
@@ -126,101 +63,23 @@ public class ImageManager {
      * @param image
      * @return
      */
-    @Transactional(readOnly = false)
-    public int update(MultipartFile file, HttpServletRequest request, Image image) {
-        //首页显示
-        if (null == request.getParameter("showIndex")) {
-            image.setShowIndex(false);
-        } else {
-            image.setShowIndex(true);
-        }
-
-        //实现上传
-        if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
-            //存储旧图片名
-            String oldFileName = image.getImageUrl();
-            UploadFile uploadFile = new UploadFile();
-            String fileName = uploadFile.uploadFile(file, request, UPLOAD_PATH + "gallery/gallery-big/");
-            image.setImageUrl(fileName);
-
-            //图片来源路径
-            ImageThumb imageThumb = new ImageThumb();
-            try {
-                imageThumb.saveImageAsJpg(UPLOAD_PATH + "gallery/gallery-big/" + fileName, UPLOAD_PATH + "gallery/thumb-50x57/" + fileName, 50, 57);
-                logger.info("Success to generate Thumb: {}", UPLOAD_PATH + "gallery/thumb-50x57/" + fileName);
-
-                // 异步生成其他缩略图
-                notifyProducer.sendQueueGenThumb(fileName);
-
-                // 成功上传新图片以后再删除旧图片，防止事务失败无法回滚图片
-                // 删除时只删除数据库，硬盘文件起任务轮询删除
-                notifyProducer.sendQueueDelThumb(oldFileName);
-            } catch (Exception e) {
-                logger.info(e.getMessage());
-            }
-        }
-        return imageMapper.update(image);
-    }
+    long update(MultipartFile file, HttpServletRequest request, Image image);
 
     /**
-     * 修改image
-     *
-     * @param image
-     * @return
-     */
-    @Transactional(readOnly = false)
-    public int update(Image image) {
-        return imageMapper.update(image);
-    }
-
-    /**
-     * 修改image
+     * 修改 Image 的 boolean 字段
      *
      * @param column
      * @return
      */
-    @Transactional(readOnly = false)
-    public int update(Long id, String column) {
-        return imageMapper.updateBool(id, column);
-    }
-
-    /**
-     * 将编号为id的image的删除标记置为true
-     *
-     * @param id
-     */
-    @Transactional(readOnly = false)
-    public int delete(Long id) {
-        String fileName = imageMapper.get(id).getImageUrl();
-
-        int num = imageMapper.delete(id);
-        // 成功删除数据库记录时，异步删除所有缩略图
-        if (num > 0) {
-            // 删除时只删除数据库，硬盘文件起任务轮询删除
-            notifyProducer.sendQueueDelThumb(fileName);
-        }
-        return num;
-    }
+    long update(Long id, String column);
 
     /**
      * 批量改变评论的删除标志
      *
      * @param ids
      */
-    @Transactional(readOnly = false)
-    public void batchDelete(String[] ids) {
-        for (String id : ids) {
-            this.delete(Long.parseLong(id));
-        }
-    }
+    void batchDelete(String[] ids);
 
-    @Autowired
-    public void setImageMapper(@Qualifier("imageMapper") ImageMapper imageMapper) {
-        this.imageMapper = imageMapper;
-    }
+    void setImageMapper(ImageMapper imageMapper);
 
-    @Autowired
-    public void setNotifyProducer(NotifyMessageProducer notifyProducer) {
-        this.notifyProducer = notifyProducer;
-    }
 }

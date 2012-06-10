@@ -5,7 +5,7 @@ import cn.edu.sdufe.cms.common.entity.agency.Teacher;
 import cn.edu.sdufe.cms.common.entity.article.Article;
 import cn.edu.sdufe.cms.common.service.agency.AgencyManager;
 import cn.edu.sdufe.cms.common.service.agency.TeacherManager;
-import cn.edu.sdufe.cms.common.service.article.ArticleManager;
+import cn.edu.sdufe.cms.common.service.article.ArticleManagerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,7 +30,7 @@ import java.util.List;
 public class TeacherController {
 
     private TeacherManager teacherManager;
-    private ArticleManager articleManager;
+    private ArticleManagerImpl articleManagerImpl;
     private AgencyManager agencyManager;
 
     /**
@@ -42,7 +42,7 @@ public class TeacherController {
      */
     @RequestMapping(value = "content/{id}")
     public String contentOfTeacher(@PathVariable Long id, Model model) {
-        model.addAttribute("article", articleManager.findOne(teacherManager.getArticleId(id)));
+        model.addAttribute("article", articleManagerImpl.get(teacherManager.getArticleId(id)));
         return "article/content";
     }
 
@@ -150,8 +150,8 @@ public class TeacherController {
     }
 
     @Autowired
-    public void setArticleManager(ArticleManager articleManager) {
-        this.articleManager = articleManager;
+    public void setArticleManagerImpl(ArticleManagerImpl articleManagerImpl) {
+        this.articleManagerImpl = articleManagerImpl;
     }
 
     @Autowired

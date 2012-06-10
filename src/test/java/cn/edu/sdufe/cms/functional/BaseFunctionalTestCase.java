@@ -9,10 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springside.modules.test.data.DataFixtures;
 import org.springside.modules.test.functional.JettyFactory;
-import org.springside.modules.test.spring.SpringContextHolder;
 import org.springside.modules.utils.PropertiesLoader;
 
-import javax.sql.DataSource;
 import java.net.URL;
 import java.sql.Driver;
 

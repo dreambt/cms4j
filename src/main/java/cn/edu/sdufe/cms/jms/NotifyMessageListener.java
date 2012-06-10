@@ -73,6 +73,18 @@ public class NotifyMessageListener implements MessageListener {
                 new File(UPLOAD_PATH + "gallery/thumb-218x194", fileName).delete();
                 new File(UPLOAD_PATH + "gallery/thumb-272x166", fileName).delete();
                 logger.info("Success to delete Thumb: {}", UPLOAD_PATH + "gallery/thumb-*/" + fileName);
+            } else if ("gen_article_image".equals(objectType)) {
+                String fileName = mapMessage.getString("fileName");
+                ImageThumb imageThumb = new ImageThumb();
+                imageThumb.saveImageAsJpg(UPLOAD_PATH + "article/article-big/" + fileName, UPLOAD_PATH + "article/news-thumb/" + fileName, 274, 157);
+                imageThumb.saveImageAsJpg(UPLOAD_PATH + "article/article-big/" + fileName, UPLOAD_PATH + "article/digest-thumb/" + fileName, 134, 134);
+                logger.info("Success to generate Article Image: {}", UPLOAD_PATH + "article/*-*/" + fileName);
+            } else if ("del_article_image".equals(objectType)) {
+                String fileName = mapMessage.getString("fileName");
+                new File(UPLOAD_PATH + "article/article-big", fileName).delete();
+                new File(UPLOAD_PATH + "article/digest-thumb", fileName).delete();
+                new File(UPLOAD_PATH + "article/news-thumb", fileName).delete();
+                logger.info("Success to delete Article Image: {}", UPLOAD_PATH + "article/*-*/" + fileName);
             } else {
                 logger.error("Unknown objectType: " + mapMessage.toString());
             }

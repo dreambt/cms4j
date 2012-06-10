@@ -2,7 +2,6 @@ package cn.edu.sdufe.cms.common.dao.account;
 
 import cn.edu.sdufe.cms.common.dao.GenericDao;
 import cn.edu.sdufe.cms.common.entity.account.Group;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -13,7 +12,6 @@ import java.util.List;
  * Date: 12-3-29
  * Time: 下午5:06
  */
-@Component
 public interface GroupMapper extends GenericDao<Group, Long> {
 
     /**

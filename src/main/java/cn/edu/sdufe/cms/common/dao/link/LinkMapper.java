@@ -3,7 +3,6 @@ package cn.edu.sdufe.cms.common.dao.link;
 import cn.edu.sdufe.cms.common.dao.GenericDao;
 import cn.edu.sdufe.cms.common.entity.link.Link;
 import cn.edu.sdufe.cms.common.entity.link.LinkCategoryEnum;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -13,7 +12,6 @@ import java.util.List;
  * Date: 12-4-10
  * Time: 下午8:25
  */
-@Component
 public interface LinkMapper extends GenericDao<Link, Long> {
 
     /**

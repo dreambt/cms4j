@@ -4,7 +4,6 @@ import cn.edu.sdufe.cms.common.entity.image.Image;
 import cn.edu.sdufe.cms.common.service.image.ImageManager;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -76,11 +75,11 @@ public class ImageDetailController {
 
     @ModelAttribute("image")
     public Image getImage(@PathVariable Long id) {
-        return imageManager.findOne(id);
+        return imageManager.get(id);
     }
 
     @Autowired
-    public void setImageManager(@Qualifier("imageManager") ImageManager imageManager) {
+    public void setImageManager(ImageManager imageManager) {
         this.imageManager = imageManager;
     }
 

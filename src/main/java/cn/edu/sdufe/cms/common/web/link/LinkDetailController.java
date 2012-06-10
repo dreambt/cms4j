@@ -3,6 +3,7 @@ package cn.edu.sdufe.cms.common.web.link;
 import cn.edu.sdufe.cms.common.entity.link.Link;
 import cn.edu.sdufe.cms.common.entity.link.LinkCategoryEnum;
 import cn.edu.sdufe.cms.common.service.link.LinkManager;
+import cn.edu.sdufe.cms.common.service.link.LinkManagerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -61,11 +62,11 @@ public class LinkDetailController {
 
     @ModelAttribute("link")
     public Link getLink(@PathVariable Long id) {
-        return linkManager.getLink(id);
+        return linkManager.get(id);
     }
 
     @Autowired
-    public void setLinkManager(@Qualifier("linkManager") LinkManager linkManager) {
+    public void setLinkManager(LinkManager linkManager) {
         this.linkManager = linkManager;
     }
 }

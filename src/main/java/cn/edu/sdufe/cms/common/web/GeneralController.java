@@ -5,8 +5,8 @@ import cn.edu.sdufe.cms.common.service.article.ArticleManager;
 import cn.edu.sdufe.cms.common.service.article.CategoryManager;
 import cn.edu.sdufe.cms.common.service.image.ImageManager;
 import cn.edu.sdufe.cms.common.service.link.LinkManager;
+import cn.edu.sdufe.cms.common.service.link.LinkManagerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,11 +37,11 @@ public class GeneralController {
     public String index(Model model, @PathVariable("str") String str) {
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("images", imageManager.findByShowIndex());
-        model.addAttribute("news1", articleManager.getTitleByCategoryId(3L, 0, 5));
-        model.addAttribute("news2", articleManager.getTitleByCategoryId(4L, 0, 10));
+        model.addAttribute("news1", articleManager.getByCategoryId(3L, 0, 5));
+        model.addAttribute("news2", articleManager.getByCategoryId(4L, 0, 10));
         model.addAttribute("infos", articleManager.getInfo());
-        model.addAttribute("links", linkManager.getLinkByCategory(LinkCategoryEnum.LINK));
-        model.addAttribute("posts", articleManager.getTitleByCategoryId(1L, 0, 5));
+        model.addAttribute("links", linkManager.getByCategory(LinkCategoryEnum.LINK));
+        model.addAttribute("posts", articleManager.getByCategoryId(1L, 0, 5));
         return "index" + str;
     }
 
@@ -53,7 +53,7 @@ public class GeneralController {
     @RequestMapping(value = "/contact", method = RequestMethod.GET)
     public String contactUs(Model model) {
         model.addAttribute("categories", categoryManager.getNavCategory());
-        model.addAttribute("links", linkManager.getAllLink());
+        model.addAttribute("links", linkManager.getAll());
         return "contact";
     }
 
@@ -65,7 +65,7 @@ public class GeneralController {
     @RequestMapping(value = "/services", method = RequestMethod.GET)
     public String services(Model model) {
         model.addAttribute("categories", categoryManager.getNavCategory());
-        model.addAttribute("links", linkManager.getAllLink());
+        model.addAttribute("links", linkManager.getAll());
         return "services";
     }
 
@@ -77,7 +77,7 @@ public class GeneralController {
     @RequestMapping(value = "/about", method = RequestMethod.GET)
     public String ahoutUs(Model model) {
         model.addAttribute("categories", categoryManager.getNavCategory());
-        model.addAttribute("links", linkManager.getAllLink());
+        model.addAttribute("links", linkManager.getAll());
         return "about";
     }
 
@@ -107,22 +107,22 @@ public class GeneralController {
     }
 
     @Autowired
-    public void setCategoryManager(@Qualifier("categoryManager") CategoryManager categoryManager) {
+    public void setCategoryManager(CategoryManager categoryManager) {
         this.categoryManager = categoryManager;
     }
 
     @Autowired
-    public void setLinkManager(@Qualifier("linkManager") LinkManager linkManager) {
+    public void setLinkManager(LinkManagerImpl linkManager) {
         this.linkManager = linkManager;
     }
 
     @Autowired
-    public void setImageManager(@Qualifier("imageManager") ImageManager imageManager) {
+    public void setImageManager(ImageManager imageManager) {
         this.imageManager = imageManager;
     }
 
     @Autowired
-    public void setArticleManager(@Qualifier("articleManager") ArticleManager articleManager) {
+    public void setArticleManagerImpl(ArticleManager articleManager) {
         this.articleManager = articleManager;
     }
 

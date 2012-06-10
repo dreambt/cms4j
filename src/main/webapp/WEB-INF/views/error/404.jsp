@@ -44,7 +44,7 @@
         <p>对不起, ${message}. 如果有什么疑问, 可以 <a href="mailto:dreambt@gmail.com">联系我们</a> 或者 搜索:</p>
         <form>
             <input type="text" name="search" value="">
-            <button type="submit">搜索</button> or <a href="${ctx}"><button type="submit">返回首页</button></a>
+            <button type="submit">搜索</button></a>
         </form>
     </div>
 </article>

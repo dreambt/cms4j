@@ -104,16 +104,13 @@ ul.news-list li a:hover {text-decoration:underline;}
 .related-item-wrapper img{width:65px; height:65px;}
 
 /* 评论列表 */
-#commentList{width:602px; float:left; padding-bottom:30px;}
-#commentList-title{padding:3px 0px 4px 0px;  height:20px; font-weight:bold; color:#2f87aa; border-bottom:1px solid #969696;}
-.commentList-item-wrapper{font-size:11px;width: 98%;padding:8px 8px 8px 8px;float:left;color:#adacac;cursor:pointer;}
+#commentList-title{width:676px; float:left;padding:3px 0px 4px 0px;  height:20px; font-weight:bold; color:#2f87aa; border-bottom:1px solid #969696;}
+.commentList-item-wrapper{width:676px; float:left;font-size:11px;width: 98%;padding:8px 8px 8px 8px;float:left;color:#adacac;cursor:pointer;}
 .commentList-item-wrapper:hover{background-color:#f4f4f4; color:#6f6f6f;}
 .commentList-item-wrapper h4{color:#2f87aa;}
 
 /* 发表评论 */
-#comment{width:602px; float:left; padding-bottom:30px;}
-#comment-title{padding:3px 0px 4px 0px;  height:20px;font-weight:bold; color:#2f87aa; border-bottom:1px solid #969696;}
-.comment-item-wrapper{font-size:11px;width: 98%;padding:8px 8px 8px 8px;float:left;color:#adacac;cursor:pointer;}
+#addCommentContainer{width:676px;float:left;padding-top:10px;}
 
 #sponsors{height:118px;}
 .banner-img{padding:0px 12px;}

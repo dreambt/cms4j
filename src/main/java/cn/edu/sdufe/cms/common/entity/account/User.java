@@ -2,13 +2,15 @@ package cn.edu.sdufe.cms.common.entity.account;
 
 import cn.edu.sdufe.cms.common.entity.PersistableEntity;
 import cn.edu.sdufe.cms.utilities.IPEncodes;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.codehaus.jackson.annotate.JsonIgnore;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springside.modules.utils.Collections3;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +21,9 @@ import java.util.List;
  * Date: 12-3-20
  * Time: 下午19:55
  */
-public class User extends PersistableEntity {
+public class User extends PersistableEntity implements Serializable {
+
+    private static final long serialVersionUID = -4082457458619235442L;
 
     private String email;
     private String username;
@@ -181,7 +185,7 @@ public class User extends PersistableEntity {
      * 用户拥有的权限组名称字符串, 多个权限组名称用','分隔.
      */
     public String getGroupNames() {
-        return Collections3.extractToString(groupList, "name", ", ");
+        return Collections3.extractToString(groupList, "groupName", ", ");
     }
 
     @JsonIgnore
@@ -191,6 +195,7 @@ public class User extends PersistableEntity {
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this);
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
+
 }

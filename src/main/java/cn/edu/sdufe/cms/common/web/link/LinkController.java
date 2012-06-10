@@ -3,6 +3,7 @@ package cn.edu.sdufe.cms.common.web.link;
 import cn.edu.sdufe.cms.common.entity.link.Link;
 import cn.edu.sdufe.cms.common.entity.link.LinkCategoryEnum;
 import cn.edu.sdufe.cms.common.service.link.LinkManager;
+import cn.edu.sdufe.cms.common.service.link.LinkManagerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -33,7 +34,7 @@ public class LinkController {
      */
     @RequestMapping(value = "listAll")
     public String listAll(Model model) {
-        model.addAttribute("links", linkManager.getAllLink());
+        model.addAttribute("links", linkManager.getAll());
         model.addAttribute("linkCategories", LinkCategoryEnum.values());
         return "dashboard/link/listAll";
     }
@@ -74,7 +75,7 @@ public class LinkController {
      */
     @RequestMapping(value = "audit/{id}", method = RequestMethod.GET)
     public String audit(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
-        if (null == linkManager.getLink(id)) {
+        if (null == linkManager.get(id)) {
             redirectAttributes.addAttribute("error", "该链接不存在，请刷新重试");
             return "redirect:/link/listAll";
         }
@@ -122,7 +123,7 @@ public class LinkController {
     }
 
     @Autowired
-    public void setLinkManager(@Qualifier("linkManager") LinkManager linkManager) {
+    public void setLinkManager(LinkManager linkManager) {
         this.linkManager = linkManager;
     }
 }

@@ -29,7 +29,7 @@
         FROM cms_comment as C
         LEFT OUTER JOIN cms_article as A
         ON C.article_id=A.id
-        ORDER BY A.id DESC
+        ORDER BY C.id DESC
         LIMIT 30
 	</select>
 
@@ -107,6 +107,9 @@
     <update id="updateBool" parameterType="map">
         UPDATE cms_comment
         SET ${column}=1-${column}
+        <if test="column == 'deleted'">
+            ,status=0
+        </if>
         WHERE id=#{id}
     </update>
 

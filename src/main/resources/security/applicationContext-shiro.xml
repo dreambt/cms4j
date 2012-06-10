@@ -6,14 +6,14 @@
     <description>Shiro安全配置</description>
 
     <!-- Shiro's main business-tier object for web-enabled applications -->
-    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager" depends-on="userMapper">
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="shiroDbRealm"/>
         <property name="cacheManager" ref="shiroCacheManager"/>
     </bean>
 
     <!-- 項目自定义的Realm -->
-    <bean id="shiroDbRealm" class="cn.edu.sdufe.cms.security.ShiroDbRealm">
-        <property name="userManager" ref="userManager"/>
+    <bean id="shiroDbRealm" class="cn.edu.sdufe.cms.security.ShiroDbRealm" depends-on="userMapper">
+        <property name="userManager" ref="userManagerImpl"/>
         <property name="authorizationCachingEnabled" value="true"/>
     </bean>
 
@@ -89,12 +89,4 @@
     <!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
 
-    <!-- AOP式方法级权限检查 -->
-    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
-          depends-on="lifecycleBeanPostProcessor">
-        <property name="proxyTargetClass" value="true"/>
-    </bean>
-    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
-        <property name="securityManager" ref="securityManager"/>
-    </bean>
 </beans>

@@ -91,7 +91,7 @@ public class AgencyManager {
         //上传图片
         if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
             UploadFile uploadFile = new UploadFile();
-            String fileName = uploadFile.uploadFile(file, request, UPLOAD_PATH);
+            String fileName = uploadFile.uploadFile(file, UPLOAD_PATH);
             agency.setImageUrl(fileName);
         } else {
             agency.setImageUrl("");
@@ -115,7 +115,7 @@ public class AgencyManager {
         if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
             // 上传新图片
             UploadFile uploadFile = new UploadFile();
-            String fileName = uploadFile.uploadFile(file, request, UPLOAD_PATH);
+            String fileName = uploadFile.uploadFile(file, UPLOAD_PATH);
             agency.setImageUrl(fileName);
 
             //删除旧图片

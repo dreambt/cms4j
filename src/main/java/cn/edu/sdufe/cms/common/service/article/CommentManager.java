@@ -1,57 +1,27 @@
 package cn.edu.sdufe.cms.common.service.article;
 
-import cn.edu.sdufe.cms.common.dao.article.CommentMapper;
 import cn.edu.sdufe.cms.common.entity.article.Comment;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
+import cn.edu.sdufe.cms.common.service.GenericManager;
 
 import java.util.List;
 
 /**
- * 评论的业务逻辑
- * User: pengfei.dongpf@gmail.com
- * Date: 12-3-25
- * Time: 下午7:20
+ * 类功能
+ * <p/>
+ * User: baitao.jibt@gmail.com
+ * Date: 12-8-12
+ * Time: 下午3:36
  */
-@Component
-@Transactional(readOnly = true)
-public class CommentManager {
-
-    private static final Logger logger = LoggerFactory.getLogger(CommentManager.class);
-
-    private CommentMapper commentMapper;
-
-    /**
-     * 获取编号为id的评论
-     *
-     * @param id
-     * @return
-     */
-    public Comment get(Long id) {
-        return commentMapper.get(id);
-    }
+public interface CommentManager extends GenericManager<Comment, Long> {
 
     /**
      * 获取所有评论
      *
      * @return
      */
-    public List<Comment> getAll() {
-        return commentMapper.getAll();
-    }
+    List<Comment> getAll();
 
-    /**
-     * 获得评论总数
-     *
-     * @return
-     */
-    public Long count() {
-        return commentMapper.count();
-    }
+    long count();
 
     /**
      * 获得编号为id的文章的评论总数
@@ -59,21 +29,7 @@ public class CommentManager {
      * @param articleId
      * @return
      */
-    public Long count(Long articleId) {
-        return commentMapper.countByArticleId(articleId);
-    }
-
-    /**
-     * 新建评论
-     *
-     * @param comment
-     * @return
-     */
-    @Transactional(readOnly = false)
-    public int save(Comment comment) {
-        logger.info("New Comment: {}", comment.toString());
-        return commentMapper.save(comment);
-    }
+    long count(Long articleId);
 
     /**
      * 更新评论
@@ -82,11 +38,7 @@ public class CommentManager {
      * @param column
      * @return
      */
-    @Transactional(readOnly = false)
-    public int update(Long id, String column) {
-        logger.info("Update Comment: ", id + column);
-        return commentMapper.updateBool(id, column);
-    }
+    long updateBool(Long id, String column);
 
     /**
      * 批量改变评论的审核状态
@@ -94,40 +46,15 @@ public class CommentManager {
      * @param ids
      * @return
      */
-    @Transactional(readOnly = false)
-    public void batchAudit(String[] ids) {
-        for (String id : ids) {
-            commentMapper.updateBool(Long.parseLong(id), "status");
-            logger.info("Update Comment: id={}, column=status.", Long.parseLong(id));
-        }
-    }
+    void batchAudit(String[] ids);
 
     /**
      * 批量改变评论的删除标志
      *
      * @param ids
      */
-    @Transactional(readOnly = false)
-    public void batchDelete(String[] ids) {
-        for (String id : ids) {
-            commentMapper.updateBool(Long.parseLong(id), "deleted");
-            logger.info("Update Comment: id={}, column=deleted.", Long.parseLong(id));
-        }
-    }
+    void batchDelete(String[] ids);
 
-    /**
-     * 任务删除评论
-     *
-     * @return
-     */
-    @Transactional(readOnly = false)
-    public int delete() {
-        return commentMapper.deleteByTask();
-    }
-
-    @Autowired
-    public void setCommentMapper(@Qualifier("commentMapper") CommentMapper commentMapper) {
-        this.commentMapper = commentMapper;
-    }
+    long deleteByTask();
 
 }

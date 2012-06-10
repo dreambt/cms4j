@@ -4,7 +4,6 @@ import cn.edu.sdufe.cms.common.entity.article.Category;
 import cn.edu.sdufe.cms.common.entity.article.ShowTypeEnum;
 import cn.edu.sdufe.cms.common.service.article.CategoryManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -72,7 +71,7 @@ public class CategoryDetailController {
     }
 
     @Autowired
-    public void setCategoryManager(@Qualifier("categoryManager") CategoryManager categoryManager) {
+    public void setCategoryManager(CategoryManager categoryManager) {
         this.categoryManager = categoryManager;
     }
 }

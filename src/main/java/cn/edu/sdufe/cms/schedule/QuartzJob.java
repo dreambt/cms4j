@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 /**
  * 被Spring的Quartz MethodInvokingJobDetailFactoryBean定时执行的普通Spring Bean.<p />
  * 将业务逻辑写在这里是因为方法级别的权限检查，导致不能调用业务逻辑层
+ * <p/>
  * User: baitao.jibt (dreambt@gmail.com)
  * Date: 12-3-26
  * Time: 上午11:06
@@ -21,16 +22,9 @@ public class QuartzJob {
 
     private static final Logger logger = LoggerFactory.getLogger(QuartzJob.class);
 
-    @Autowired
     private UserMapper userMapper;
-
-    @Autowired
     public ArticleManager articleManager;
-
-    @Autowired
     private CommentMapper commentMapper;
-
-    @Autowired
     private ArchiveManager archiveManager;
 
     /**
@@ -38,21 +32,35 @@ public class QuartzJob {
      */
     public void execute() {
         // 查询当前系统用户数
-        Long userCount = userMapper.count();
-        logger.info("######### There are {} user in database. #########", userCount);
+        logger.info("######### There are {} user in database. #########", userMapper.count());
 
         // 归档
-        archiveManager.save();
+        archiveManager.updateLastMonth();
         logger.info("######### Archive was ready. #########");
 
         // 删除标记为deleted的记录
-        logger.info("######### There are {} article was deleted. #########", articleManager.delete());
+        logger.info("######### There are {} article was deleted. #########", articleManager.deleteByTask());
         logger.info("######### There are {} comment was deleted. #########", commentMapper.deleteByTask());
+    }
 
+    @Autowired
+    public void setUserMapper(UserMapper userMapper) {
+        this.userMapper = userMapper;
+    }
 
-        // 生成文章关键词
-        //count = articleManager.genKeyword();
-        //logger.info("为 {} 篇文章生成关键词.", count);
+    @Autowired
+    public void setArticleManagerImpl(ArticleManager articleManager) {
+        this.articleManager = articleManager;
+    }
+
+    @Autowired
+    public void setCommentMapper(CommentMapper commentMapper) {
+        this.commentMapper = commentMapper;
+    }
+
+    @Autowired
+    public void setArchiveManager(ArchiveManager archiveManager) {
+        this.archiveManager = archiveManager;
     }
 
 }

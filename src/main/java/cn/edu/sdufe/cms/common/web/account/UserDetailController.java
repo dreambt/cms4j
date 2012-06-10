@@ -4,7 +4,6 @@ import cn.edu.sdufe.cms.common.entity.account.User;
 import cn.edu.sdufe.cms.common.service.account.GroupManager;
 import cn.edu.sdufe.cms.common.service.account.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -71,17 +70,17 @@ public class UserDetailController {
     }
 
     @Autowired
-    public void setUserManager(@Qualifier("userManager") UserManager userManager) {
+    public void setUserManager(UserManager userManager) {
         this.userManager = userManager;
     }
 
     @Autowired
-    public void setGroupManager(@Qualifier("groupManager") GroupManager groupManager) {
+    public void setGroupManager(GroupManager groupManager) {
         this.groupManager = groupManager;
     }
 
     @Autowired
-    public void setGroupListEditor(@Qualifier("groupListEditor") GroupListEditor groupListEditor) {
+    public void setGroupListEditor(GroupListEditor groupListEditor) {
         this.groupListEditor = groupListEditor;
     }
 

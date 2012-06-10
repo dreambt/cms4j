@@ -1,67 +1,19 @@
 package cn.edu.sdufe.cms.common.service.article;
 
-import cn.edu.sdufe.cms.common.dao.article.ArchiveMapper;
-import cn.edu.sdufe.cms.common.dao.article.ArticleMapper;
-import cn.edu.sdufe.cms.common.entity.account.User;
 import cn.edu.sdufe.cms.common.entity.article.Article;
-import cn.edu.sdufe.cms.security.ShiroDbRealm;
-import cn.edu.sdufe.cms.utilities.analyzer.ArticleKeyword;
-import cn.edu.sdufe.cms.utilities.thumb.ImageThumb;
-import com.google.common.collect.Lists;
-import org.apache.commons.lang3.Validate;
-import org.apache.shiro.SecurityUtils;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-import org.springside.modules.beanvalidator.BeanValidators;
-import org.springside.modules.utils.Encodes;
+import cn.edu.sdufe.cms.common.service.GenericManager;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.ConstraintViolationException;
-import javax.validation.Validator;
-import java.io.File;
 import java.util.List;
 import java.util.Map;
 
 /**
- * 文章的业务逻辑
- * User: FlyFive
- * Date: 12-3-19
- * Time: 下午2:08
+ * 文章 Manager 接口
+ * <p/>
+ * User: baitao.jibt@gmail.com
+ * Date: 12-8-11
+ * Time: 下午9:50
  */
-@Component
-@Transactional(readOnly = true)
-public class ArticleManager {
-
-    private static final Logger logger = LoggerFactory.getLogger(ArticleManager.class);
-
-    private static final int KEYWORD_NUM = 10;
-
-    private ArticleMapper articleMapper = null;
-    private ArchiveMapper archiveMapper = null;
-    private ArchiveManager archiveManager = null;
-    private Validator validator = null;
-
-    @Value("${path.upload.base}")
-    private String UPLOAD_PATH;
-
-    /**
-     * 通过id获取文章
-     *
-     * @param id
-     * @return
-     */
-    public Article findOne(Long id) {
-        return articleMapper.get(id);
-    }
+public interface ArticleManager extends GenericManager<Article, Long> {
 
     /**
      * 通过id获取文章用于显示，带浏览次数统计
@@ -69,98 +21,38 @@ public class ArticleManager {
      * @param id
      * @return
      */
-    @Transactional(readOnly = false)
-    public Article findForView(Long id) {
-        Article article = articleMapper.get(id);
-
-        // 判断文章是否为空
-        if (null != article) {
-            // 记录文章访问次数
-            articleMapper.updateViews(id);
-            article.setViews(article.getViews() + 1);
-            article.setMessage(Encodes.unescapeHtml(article.getMessage()));
-        }
-
-        return article;
-    }
+    Article getForView(Long id);
 
     /**
-     * 获取分类categoryId下面的文章数量
+     * 获取分类categoryId的文章数
      *
-     * @param categoryId 分类编号
+     * @param categoryId
      * @return
      */
-    public Long count(Long categoryId) {
-        return articleMapper.countByCategoryId(categoryId);
-    }
+    long count(Long categoryId);
 
     /**
      * 使用默认的排序方式返回所有文章
      *
      * @return
      */
-    public List<Article> getAll(int offset, int limit) {
-        return articleMapper.getAll(offset, limit);
-    }
+    List<Article> getAll(int offset, int limit);
 
     /**
      * 获得最新的10篇文章
      *
      * @return
      */
-    public List<Article> findTopTen() {
-        return articleMapper.getTopTen();
-    }
+    List<Article> getTopTen();
 
-    /**
-     * 根据archive编号获得文章列表
-     *
-     * @param archiveId
-     * @param offset
-     * @param limit
-     * @return
-     */
-    public List<Article> findArticleByArchiveId(Long archiveId, int offset, int limit) {
-        List<Article> articles = Lists.newArrayList();
-        List<Long> ids = archiveManager.getArticleIdByArchiveId(archiveId, offset, limit);
-        for (Long id : ids) {
-            articles.add(articleMapper.get(id));
-        }
-        return articles;
-    }
-
-
-    /**
-     * 按照parameters搜索用户
-     *
-     * @param parameters
-     * @return
-     */
-    public List<Article> search(Map<String, Object> parameters, int offset, int limit) {
-        parameters.put("Direction", "DESC");
-        parameters.put("Sort", "id");
-        return articleMapper.search(parameters, offset, limit);
-    }
-
-    /**
-     * 通过分类categoryId查找文章标题
-     *
-     * @param categoryId
-     * @return
-     */
-    public List<Article> getTitleByCategoryId(Long categoryId, int offset, int limit) {
-        return articleMapper.getTitleByCategoryId(categoryId, offset, limit);
-    }
+    List<Article> getByArchiveId(Long archiveId, int offset, int limit);
 
     /**
      * 获得社会资讯下的最新文章
      *
      * @return
      */
-    public List<Article> getInfo() {
-        Long[] ids = {19L, 20L, 21L, 22L, 32L, 33L};
-        return articleMapper.getTitleByCategoryIds(ids);
-    }
+    List<Article> getInfo();
 
     /**
      * 通过分类categoryId查找文章列表
@@ -168,245 +60,55 @@ public class ArticleManager {
      * @param categoryId
      * @return
      */
-    public List<Article> findByCategoryId(Long categoryId, int offset, int limit) {
-        return articleMapper.getByCategoryId(categoryId, offset, limit);
-    }
-
-    /**
-     * 保存文章
-     *
-     * @param article
-     * @return
-     */
-    @Transactional(readOnly = false)
-    public int save(Article article, HttpServletRequest request) {
-        //是否置顶
-        if (null == request.getParameter("top")) {
-            article.setTop(false);
-        } else {
-            article.setTop(true);
-        }
-
-        //是否允许评论
-        if (null == request.getParameter("allowComment")) {
-            article.setAllowComment(false);
-        } else {
-            article.setAllowComment(true);
-        }
-
-        try {
-            // 生成默认摘要
-            String str = Jsoup.parse(article.getMessage()).text();
-            if (str.length() > 150) {
-                article.setDigest(str.substring(0, 150));
-            } else {
-                article.setDigest(str);
-            }
-
-            //文章中的首个图片
-            article.setImageName(this.getImageFromMessage(article.getMessage()));
-
-            //项目路径
-            ImageThumb imageThumb = new ImageThumb();
-            try {
-                imageThumb.saveImageAsJpg(UPLOAD_PATH + "article/article-big/" + article.getImageName(), UPLOAD_PATH + "article/news-thumb/" + article.getImageName(), 274, 157);
-                imageThumb.saveImageAsJpg(UPLOAD_PATH + "article/article-big/" + article.getImageName(), UPLOAD_PATH + "article/digest-thumb/" + article.getImageName(), 134, 134);
-            } catch (Exception e) {
-                logger.error("Thumb Image: {}", e.getMessage());
-            }
-
-            // 关键词由任务生成
-            article.setKeyword("");
-
-            // 文章作者
-            ShiroDbRealm.ShiroUser shiroUser = (ShiroDbRealm.ShiroUser) SecurityUtils.getSubject().getPrincipal();
-            article.setUser(new User(shiroUser.getId()));
-
-            // 进行HTML编码, 否则前台可能破页
-            article.setMessage(Encodes.escapeHtml(article.getMessage()));
-            article.setDigest(Encodes.escapeHtml(article.getDigest()));
-
-            //使用Hibernate Validator校验请求参数
-            Validate.notNull(article, "文章参数为空");
-            BeanValidators.validateWithException(validator, article);
-
-            return articleMapper.save(article);
-        } catch (ConstraintViolationException cve) {
-            logger.warn("操作员{}尝试发表文章, 缺少相关字段.", cve.getConstraintViolations().toString());
-            return 0;
-        }
-    }
-
-    /**
-     * 从正文html代码中获得图片路径
-     *
-     * @param message
-     * @return
-     */
-    public String getImageFromMessage(String message) {
-        Document document = Jsoup.parse(message);
-        Elements imgs = document.getElementsByTag("img");
-        if (null == imgs || imgs.size() == 0) {
-            return "noPic.jpg";
-        } else {
-            Element img = imgs.first();
-            String srcString = img.attr("src");
-            String imgName = srcString.substring(srcString.lastIndexOf("/") + 1, srcString.length());
-            return imgName;
-        }
-    }
-
-    /**
-     * 生成关键词
-     *
-     * @param article
-     * @param num     关键词个数
-     */
-    public void genKeyword(Article article, int num) {
-        ArticleKeyword articleKeyword = new ArticleKeyword();
-        String keyword = articleKeyword.getArticleKeyword(article.getSubject(), article.getMessage(), num);
-        article.setKeyword(keyword);
-        logger.info("为文章 {} 生成关键词：{}", article.getId(), keyword);
-    }
+    List<Article> getByCategoryId(Long categoryId, int offset, int limit);
 
     /**
      * 批量审核文章
      *
      * @param ids
      */
-    @Transactional(readOnly = false)
-    public void batchAudit(String[] ids) {
-        Article article = null;
-        for (String id : ids) {
-            if (id.length() == 0) {
-                continue;
-            }
-            articleMapper.updateBool(Long.parseLong(id), "status");
-        }
-    }
+    void batchAudit(String[] ids);
 
     /**
      * 批量改变文章的删除标志
      *
      * @param ids
      */
-    @Transactional(readOnly = false)
-    public void batchDelete(String[] ids) {
-        for (String id : ids) {
-            if (id.length() == 0) {
-                continue;
-            }
-            articleMapper.updateBool(Long.parseLong(id), "deleted");
-        }
-    }
+    void batchDelete(String[] ids);
 
     /**
-     * 更新文章
-     *
-     * @param article
-     */
-    @Transactional(readOnly = false)
-    public int update(Article article, HttpServletRequest request) {
-        //是否置顶
-        if (null == request.getParameter("top")) {
-            article.setTop(false);
-        } else {
-            article.setTop(true);
-        }
-
-        //是否允许评论
-        if (null == request.getParameter("allowComment")) {
-            article.setAllowComment(false);
-        } else {
-            article.setAllowComment(true);
-        }
-
-        try {
-            // 生成默认摘要
-            String str = Jsoup.parse(article.getMessage()).text();
-            if (str.length() > 150) {
-                article.setDigest(str.substring(0, 150));
-            } else {
-                article.setDigest(str);
-            }
-
-            //文章中的首个图片
-            article.setImageName(this.getImageFromMessage(article.getMessage()));
-            ImageThumb imageThumb = new ImageThumb();
-            try {
-                imageThumb.saveImageAsJpg(UPLOAD_PATH + "article/article-big/" + article.getImageName(), UPLOAD_PATH + "article/news-thumb/" + article.getImageName(), 274, 157);
-                imageThumb.saveImageAsJpg(UPLOAD_PATH + "article/article-big/" + article.getImageName(), UPLOAD_PATH + "article/digest-thumb/" + article.getImageName(), 134, 134);
-            } catch (Exception e) {
-                logger.error("Post article error: {}", e.getMessage());
-            }
-            // 关键词由任务生成
-            article.setKeyword("");
-
-            // 进行HTML编码, 否则前台可能破页
-            article.setMessage(Encodes.escapeHtml(article.getMessage()));
-            article.setDigest(Encodes.escapeHtml(article.getDigest()));
-
-            //使用Hibernate Validator校验请求参数
-            Validate.notNull(article, "文章参数为空");
-            BeanValidators.validateWithException(validator, article);
-
-            return articleMapper.update(article);
-        } catch (ConstraintViolationException cve) {
-            logger.warn("操作员{}尝试发表文章, 缺少相关字段.", cve.getConstraintViolations().toString());
-            return 0;
-        }
-    }
-
-    /**
-     * 更新文章
+     * 置顶编号为id的文章
      *
      * @param id
-     * @param column
+     * @return
      */
-    @Transactional(readOnly = false)
-    public int update(Long id, String column) {
-        return articleMapper.updateBool(id, column);
-    }
+    boolean top(Long id);
+
+    /**
+     * 审核编号为id的文章
+     *
+     * @param id
+     * @return
+     */
+    boolean audit(Long id);
+
+    /**
+     * 允许评论编号为id的文章
+     *
+     * @param id
+     * @return
+     */
+    boolean allowComment(Long id);
 
     /**
      * 任务删除文章
      *
      * @return
      */
-    @Transactional(readOnly = false)
-    public int delete() {
-        List<Article> articleList = articleMapper.getDeleted();
-        if (null == articleList || articleList.size() == 0) {
-            return 0;
-        }
-        archiveMapper.deleteAAByArticleId(articleList);
-        archiveManager.batchUpdate();
-        for (Article article : articleList) {
-            String imageName = article.getImageName();
-            new File(UPLOAD_PATH + "article/article-big", imageName).delete();
-            new File(UPLOAD_PATH + "article/digest-thumb", imageName).delete();
-            new File(UPLOAD_PATH + "article/news-thumb", imageName).delete();
-        }
-        return articleMapper.deleteByTask();
-    }
+    int deleteByTask();
 
-    @Autowired
-    public void setValidator(@Qualifier("validator") Validator validator) {
-        this.validator = validator;
-    }
+    List<Article> search(Map<String, Object> parameters);
 
-    @Autowired
-    public void setArticleMapper(@Qualifier("articleMapper") ArticleMapper articleMapper) {
-        this.articleMapper = articleMapper;
-    }
+    List<Article> search(Map<String, Object> parameters, int offset, int limit);
 
-    @Autowired
-    public void setArchiveMapper(ArchiveMapper archiveMapper) {
-        this.archiveMapper = archiveMapper;
-    }
-
-    @Autowired
-    public void setArchiveManager(ArchiveManager archiveManager) {
-        this.archiveManager = archiveManager;
-    }
 }

@@ -4,7 +4,6 @@ import cn.edu.sdufe.cms.common.entity.article.Category;
 import cn.edu.sdufe.cms.common.entity.article.ShowTypeEnum;
 import cn.edu.sdufe.cms.common.service.article.CategoryManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -83,7 +82,7 @@ public class CategoryController {
         if (null == categoryManager.get(id)) {
             redirectAttributes.addFlashAttribute("error", "该菜单已经删除，请刷新查看");
         }
-        int result = categoryManager.delete(id);
+        long result = categoryManager.delete(id);
         if (result == 0) {
             redirectAttributes.addFlashAttribute("info", "删除菜单成功！");
         } else if (result == 1) {
@@ -108,7 +107,7 @@ public class CategoryController {
     }
 
     @Autowired
-    public void setCategoryManager(@Qualifier("categoryManager") CategoryManager categoryManager) {
+    public void setCategoryManager(CategoryManager categoryManager) {
         this.categoryManager = categoryManager;
     }
 }

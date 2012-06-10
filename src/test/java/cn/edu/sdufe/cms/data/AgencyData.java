@@ -1,10 +1,6 @@
 package cn.edu.sdufe.cms.data;
 
 import cn.edu.sdufe.cms.common.entity.agency.Agency;
-import org.springside.modules.test.data.RandomData;
-
-import java.util.Date;
-import java.util.Random;
 
 /**
  * 组织机构的测试数据

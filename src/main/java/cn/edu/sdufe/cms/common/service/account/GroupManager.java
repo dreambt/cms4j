@@ -1,30 +1,17 @@
 package cn.edu.sdufe.cms.common.service.account;
 
-import cn.edu.sdufe.cms.common.dao.account.GroupMapper;
 import cn.edu.sdufe.cms.common.entity.account.Group;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 /**
- * 用户组管理类
+ * 用户 Manager 接口
  * <p/>
- * User: baitao.jibt (dreambt@gmail.com)
- * Date: 12-3-22
- * Time: 下午5:25
+ * User: baitao.jibt@gmail.com
+ * Date: 12-8-12
+ * Time: 下午4:12
  */
-@Component
-@Transactional(readOnly = true)
-public class GroupManager {
-
-    private static final Logger logger = LoggerFactory.getLogger(GroupManager.class);
-
-    private GroupMapper groupMapper;
+public interface GroupManager {
 
     /**
      * 获取用户组
@@ -32,33 +19,20 @@ public class GroupManager {
      * @param id
      * @return
      */
-    public Group getGroup(Long id) {
-        logger.info("Info: {}", "getGroup where id=" + id);
-        return groupMapper.get(id);
-    }
+    Group getGroup(Long id);
 
     /**
      * 获取所有用户组
      *
      * @return
      */
-    public List<Group> getAllGroup() {
-        logger.info("Info: {}", "getAllGroup");
-        return groupMapper.getAll();
-    }
+    List<Group> getAllGroup();
 
     /**
      * 获取用户组数量
      *
      * @return
      */
-    public Long getCount() {
-        logger.info("Info: {}", "getCount");
-        return groupMapper.count();
-    }
+    long count();
 
-    @Autowired
-    public void setGroupMapper(@Qualifier("groupMapper") GroupMapper groupMapper) {
-        this.groupMapper = groupMapper;
-    }
 }

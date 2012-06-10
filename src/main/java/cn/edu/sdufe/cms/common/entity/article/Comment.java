@@ -3,9 +3,11 @@ package cn.edu.sdufe.cms.common.entity.article;
 import cn.edu.sdufe.cms.common.entity.PersistableEntity;
 import cn.edu.sdufe.cms.utilities.IPEncodes;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
  * 评论Entity
@@ -14,7 +16,9 @@ import javax.validation.constraints.NotNull;
  * Date: 12-3-20
  * Time: 下午19:43
  */
-public class Comment extends PersistableEntity {
+public class Comment extends PersistableEntity implements Serializable {
+
+    private static final long serialVersionUID = -4082457458619235446L;
 
     private Article article;
     private int rate;
@@ -94,6 +98,7 @@ public class Comment extends PersistableEntity {
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this);
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
+
 }

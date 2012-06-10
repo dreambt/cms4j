@@ -42,7 +42,7 @@ public class AgencyController {
     public String listOfAgency(Model model) {
         model.addAttribute("agencies", agencyManager.getAllAgency());
         model.addAttribute("categories", categoryManager.getAllowPublishCategory());
-        model.addAttribute("links", linkManager.getAllLink());
+        model.addAttribute("links", linkManager.getAll());
         return "dashboard/agency/listAll";
     }
 
@@ -58,8 +58,8 @@ public class AgencyController {
     public String indexOfAgency(@PathVariable Long id, Model model) {
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("agency", agencyManager.getAgency(id));
-        model.addAttribute("links", linkManager.getLinkByCategory(LinkCategoryEnum.LINK));
-        model.addAttribute("companies", linkManager.getLinkByCategory(LinkCategoryEnum.COMPANY));
+        model.addAttribute("links", linkManager.getByCategory(LinkCategoryEnum.LINK));
+        model.addAttribute("companies", linkManager.getByCategory(LinkCategoryEnum.COMPANY));
         return "index-research";
     }
 

@@ -7,116 +7,96 @@
     <resultMap id="archiveDetailMap" type="Archive">
         <id property="id" column="id"/>
         <result property="title" column="title"/>
-        <result property="articleCount" column="article_count"/>
-        <result property="lastModifiedDate" column="last_modified_date"/>
-        <result property="createdDate" column="created_date"/>
+        <collection property="articleList" javaType="Article">
+            <result property="subject" column="subject"/>
+            <result property="digest" column="digest"/>
+            <result property="rate" column="rate"/>
+            <result property="rateTimes" column="rate_times"/>
+            <result property="views" column="views"/>
+        </collection>
     </resultMap>
 
-    <sql id="archiveColumns">id, title, article_count, created_date, last_modified_date</sql>
+    <sql id="archiveColumns">cms_archive.id,title</sql>
+    <sql id="articleColumns">subject,digest,rate,rate_times,views</sql>
 
     <!-- 获取Archive -->
-    <select id="get" parameterType="int" resultMap="archiveDetailMap">
-        select
-        <include refid="archiveColumns"/>
-        from cms_archive
-        where id=#{id}
-        order by id DESC
-        limit 1
-    </select>
-
-    <!-- 获取Archive -->
-    <select id="getByTitle" parameterType="String" resultType="Archive">
-        select
-        <include refid="archiveColumns"/>
-        from cms_archive
-        where title=#{title}
-        order by title ASC
-        limit 1
-    </select>
-
-    <!-- 获取Archive -->
-    <select id="getAll" resultMap="archiveDetailMap">
-        select
-        <include refid="archiveColumns"/>
-        from cms_archive
-        order by title ASC
-        LIMIT 30
-    </select>
-
-    <!-- 获取Top 10 -->
-    <select id="getTopTen" resultMap="archiveDetailMap">
-        SELECT
-        <include refid="archiveColumns"/>
+    <select id="get" parameterType="Long" resultMap="archiveDetailMap">
+        SELECT <include refid="archiveColumns"/>,<include refid="articleColumns"/>
         FROM cms_archive
-        ORDER BY title ASC
-        LIMIT 10
+        LEFT OUTER JOIN cms_archive_article ON archive_id = cms_archive.id
+        LEFT OUTER JOIN cms_article ON cms_article.id = article_id
+        WHERE cms_archive.id=#{id}
     </select>
 
-    <!-- 根据archive编号获得article编号, 分页 -->
-    <select id="getArticleIdByArchiveId" parameterType="map" resultType="Long">
-        select article_id
-        from cms_archive_article
-        where archive_id=#{archiveId}
-        order by archive_id DESC
-        LIMIT ${offset}, ${limit}
+    <!-- 获取Archive -->
+    <select id="getByTitle" parameterType="String" resultMap="archiveDetailMap">
+        SELECT <include refid="archiveColumns"/>,<include refid="articleColumns"/>
+        FROM cms_archive
+        LEFT OUTER JOIN cms_archive_article ON archive_id = cms_archive.id
+        LEFT OUTER JOIN cms_article ON cms_article.id = article_id
+        WHERE title=#{title}
+        ORDER BY id ASC
     </select>
 
-    <!-- 根据archive编号获得article编号 -->
-    <select id="getAllArticleIdByArchiveId" parameterType="Long" resultType="Long">
-        select article_id
-        from cms_archive_article
-        where archive_id=#{archiveId}
+    <!-- 获取Archive -->
+    <select id="getArticleIdByTitle" parameterType="String" resultType="Long">
+        SELECT cms_archive_article.article_id
+        FROM cms_archive_article
+        LEFT OUTER JOIN cms_archive ON archive_id = cms_archive.id
+        WHERE title=#{title}
+    </select>
+
+    <!-- 边栏list -->
+    <select id="list" parameterType="map" resultType="Archive">
+        SELECT id,title,count(id) as count
+        FROM cms_archive
+        LEFT OUTER JOIN cms_archive_article ON archive_id = cms_archive.id
+        GROUP BY title
+        ORDER BY title DESC
+        LIMIT ${offset},${limit}
     </select>
 
     <!-- 保存Archive -->
-    <insert id="save" parameterType="Archive">
+    <insert id="save" parameterType="Archive" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO cms_archive
-        (title, article_count, created_date)
+        (title, created_date)
         VALUES
-        (#{title}, #{articleCount}, null)
-    </insert>
-
-    <!-- 保存Archive_Article -->
-    <insert id="saveAA" parameterType="map">
-        INSERT INTO cms_archive_article
-        (archive_id, article_id)
-        VALUES
-        (#{archiveId}, #{articleId})
+        (#{title}, null)
     </insert>
 
     <!-- 删除Archive -->
     <delete id="delete" parameterType="Long">
         DELETE FROM cms_archive
         WHERE id=#{id}
-        LIMIT 1
     </delete>
 
-    <!-- 根据archive_id删除Archive_Article -->
-    <delete id="deleteAAByArchiveId" parameterType="Long">
+    <!-- 新增Archive_Article -->
+    <insert id="addArticle" parameterType="map">
+        INSERT INTO cms_archive_article(archive_id, article_id)
+        VALUES(#{archiveId}, #{articleId})
+    </insert>
+
+    <!-- 删除Archive_article -->
+    <delete id="deleteArticle" parameterType="Long">
         DELETE FROM cms_archive_article
-        WHERE archive_id=#{archiveId}
-        LIMIT 1
+        WHERE archive_id=#{articleId};
     </delete>
 
-    <!-- 根据article_id删除Archive_Article -->
-    <delete id="deleteAAByArticleId">
-        DELETE FROM cms_archive_article
-        WHERE article_id IN
-        <foreach item="item" collection="list" open="(" separator="," close=")">
-            #{item.id}
-        </foreach>
-    </delete>
-
-    <!-- 更新归档 -->
-    <update id="update" parameterType="Archive">
-        UPDATE cms_archive
-        <set>
-            <if test="articleCount != null and articleCount != ''">
-                article_count=#{articleCount},
+    <!-- 查询Archive -->
+    <select id="search" resultMap="archiveDetailMap">
+        SELECT <include refid="archiveColumns"/>
+        FROM cms_archive
+        <where>
+            <if test="id != null and id>0">
+                and id=#{id}
             </if>
-            last_modified_date=null
-        </set>
-        WHERE id=#{id}
-    </update>
-
+            <if test="title != null and title != ''">
+                and title=#{subject}
+            </if>
+        </where>
+        ORDER BY title ASC
+        <if test="title != null and title != ''">
+            LIMIT ${offset},${limit}
+        </if>
+    </select>
 </mapper>

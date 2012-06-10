@@ -5,7 +5,6 @@ import cn.edu.sdufe.cms.common.service.account.GroupManager;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springside.modules.utils.Collections3;
 
@@ -41,7 +40,8 @@ public class GroupListEditor extends PropertyEditorSupport {
     }
 
     @Autowired
-    public void setGroupManager(@Qualifier("groupManager") GroupManager groupManager) {
+    public void setGroupManager(GroupManager groupManager) {
         this.groupManager = groupManager;
     }
+
 }

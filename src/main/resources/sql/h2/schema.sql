@@ -32,7 +32,6 @@ DROP TABLE IF EXISTS `cms_archive`;
 CREATE TABLE IF NOT EXISTS `cms_archive` (
   `id` mediumint(8) NOT NULL AUTO_INCREMENT,
   `title` varchar(40) NOT NULL,
-  `article_count` tinyint(3) NOT NULL,
   `last_modified_date` timestamp DEFAULT NULL,
   `created_date` timestamp DEFAULT NULL,
   PRIMARY KEY (`id`)

@@ -5,7 +5,7 @@ import cn.edu.sdufe.cms.common.dao.article.ArticleMapper;
 import cn.edu.sdufe.cms.common.dao.article.CategoryMapper;
 import cn.edu.sdufe.cms.common.entity.agency.Teacher;
 import cn.edu.sdufe.cms.common.entity.article.Article;
-import cn.edu.sdufe.cms.common.service.article.ArticleManager;
+import cn.edu.sdufe.cms.common.service.article.ArticleManagerImpl;
 import cn.edu.sdufe.cms.utilities.upload.UploadFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +29,7 @@ public class TeacherManager {
 
     private static final Logger logger = LoggerFactory.getLogger(TeacherManager.class);
 
-    private ArticleManager articleManager;
+    private ArticleManagerImpl articleManagerImpl;
     private TeacherMapper teacherMapper;
     private ArticleMapper articleMapper;
     private CategoryMapper categoryMapper;
@@ -94,12 +94,28 @@ public class TeacherManager {
      */
     @Transactional(readOnly = false)
     public int updateTeacher(MultipartFile file, HttpServletRequest request, Teacher teacher) {
+        Article article = teacher.getArticle();
+
+        //是否置顶
+        if (null == request.getParameter("top")) {
+            article.setTop(false);
+        } else {
+            article.setTop(true);
+        }
+
+        //是否允许评论
+        if (null == request.getParameter("allowComment")) {
+            article.setAllowComment(false);
+        } else {
+            article.setAllowComment(true);
+        }
+
         // 保存文章
-        articleManager.update(teacher.getArticle(), request);
+        articleManagerImpl.update(article);
 
         if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
             UploadFile uploadFile = new UploadFile();
-            String fileName = uploadFile.uploadFile(file, request, UPLOAD_DIR);
+            String fileName = uploadFile.uploadFile(file, UPLOAD_DIR);
             teacher.setImageUrl(fileName);
         }
         return teacherMapper.update(teacher);
@@ -123,10 +139,25 @@ public class TeacherManager {
         article.setCategory(categoryMapper.get(13L));
         article.setSubject(teacher.getTeacherName());
         article.setStatus(true);
-        if (articleManager.save(article, request) > 0) {
+
+        //是否置顶
+        if (null == request.getParameter("top")) {
+            article.setTop(false);
+        } else {
+            article.setTop(true);
+        }
+
+        //是否允许评论
+        if (null == request.getParameter("allowComment")) {
+            article.setAllowComment(false);
+        } else {
+            article.setAllowComment(true);
+        }
+
+        if (articleManagerImpl.save(article) > 0) {
             if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
                 UploadFile uploadFile = new UploadFile();
-                String fileName = uploadFile.uploadFile(file, request, UPLOAD_DIR);
+                String fileName = uploadFile.uploadFile(file, UPLOAD_DIR);
                 teacher.setImageUrl(fileName);
             }
             teacher.setArticle(article);
@@ -136,8 +167,8 @@ public class TeacherManager {
     }
 
     @Autowired
-    public void setArticleManager(ArticleManager articleManager) {
-        this.articleManager = articleManager;
+    public void setArticleManagerImpl(ArticleManagerImpl articleManagerImpl) {
+        this.articleManagerImpl = articleManagerImpl;
     }
 
     @Autowired

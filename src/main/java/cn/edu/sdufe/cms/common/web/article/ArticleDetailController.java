@@ -1,11 +1,10 @@
 package cn.edu.sdufe.cms.common.web.article;
 
 import cn.edu.sdufe.cms.common.entity.article.Article;
-import cn.edu.sdufe.cms.common.service.article.ArticleManager;
+import cn.edu.sdufe.cms.common.service.article.ArticleManagerImpl;
 import cn.edu.sdufe.cms.common.service.article.CategoryManager;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,7 +19,7 @@ import javax.validation.Valid;
 
 /**
  * 文章更新控制器
- * User: baitao.jibt (dreambt@gmail.com)
+ * User: baitao.jibt@gmail.com
  * Date: 12-3-25
  * Time: 上午11:29
  */
@@ -28,7 +27,7 @@ import javax.validation.Valid;
 @RequestMapping(value = "/article/")
 public class ArticleDetailController {
 
-    private ArticleManager articleManager;
+    private ArticleManagerImpl articleManagerImpl;
     private CategoryManager categoryManager;
 
     /**
@@ -68,7 +67,22 @@ public class ArticleDetailController {
             redirectAttributes.addFlashAttribute("error", "该文章不存在，请刷新重试.");
             return "redirect:/article/listAll";
         }
-        if (bindingResult.hasErrors() || articleManager.update(article, request) <= 0) {
+
+        //是否置顶
+        if (null == request.getParameter("top")) {
+            article.setTop(false);
+        } else {
+            article.setTop(true);
+        }
+
+        //是否允许评论
+        if (null == request.getParameter("allowComment")) {
+            article.setAllowComment(false);
+        } else {
+            article.setAllowComment(true);
+        }
+
+        if (bindingResult.hasErrors() || articleManagerImpl.update(article) <= 0) {
             redirectAttributes.addFlashAttribute("error", "保存文章失败.");
             return "redirect:/article/listAll";
         } else {
@@ -79,16 +93,16 @@ public class ArticleDetailController {
 
     @ModelAttribute("article")
     public Article getArticle(@PathVariable("id") Long id) {
-        return articleManager.findOne(id);
+        return articleManagerImpl.get(id);
     }
 
     @Autowired
-    public void setArticleManager(@Qualifier("articleManager") ArticleManager articleManager) {
-        this.articleManager = articleManager;
+    public void setArticleManagerImpl(ArticleManagerImpl articleManagerImpl) {
+        this.articleManagerImpl = articleManagerImpl;
     }
 
     @Autowired
-    public void setCategoryManager(@Qualifier("categoryManager") CategoryManager categoryManager) {
+    public void setCategoryManager(CategoryManager categoryManager) {
         this.categoryManager = categoryManager;
     }
 

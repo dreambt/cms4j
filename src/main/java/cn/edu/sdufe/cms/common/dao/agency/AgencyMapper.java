@@ -2,7 +2,6 @@ package cn.edu.sdufe.cms.common.dao.agency;
 
 import cn.edu.sdufe.cms.common.dao.GenericDao;
 import cn.edu.sdufe.cms.common.entity.agency.Agency;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -12,7 +11,6 @@ import java.util.List;
  * Date: 12-4-23
  * Time: 下午1:16
  */
-@Component
 public interface AgencyMapper extends GenericDao<Agency, Long> {
 
     /**

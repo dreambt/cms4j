@@ -2,6 +2,9 @@ package cn.edu.sdufe.cms.common.entity.link;
 
 import cn.edu.sdufe.cms.common.entity.PersistableEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import java.io.Serializable;
 
 /**
  * link实体类
@@ -10,7 +13,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  * Date: 12-4-8
  * Time: 下午4:25
  */
-public class Link extends PersistableEntity {
+public class Link extends PersistableEntity implements Serializable {
+
+    private static final long serialVersionUID = -4082457458619235440L;
 
     private String title;
     private String url;
@@ -51,6 +56,7 @@ public class Link extends PersistableEntity {
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this);
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
+
 }

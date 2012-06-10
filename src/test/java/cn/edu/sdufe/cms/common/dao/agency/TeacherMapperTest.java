@@ -32,7 +32,7 @@ public class TeacherMapperTest extends SpringTransactionalTestCase {
     public void testGetTeacher() throws Exception {
         Teacher teacher = teacherMapper.get(1L);
         Assert.assertEquals("1", teacher.getArticle().getId().toString());
-        Assert.assertEquals("CFA 特许金融分析师1", teacher.getArticle().getSubject());
+        Assert.assertEquals("测试文章1-3月份已归档", teacher.getArticle().getSubject());
     }
 
     @Test

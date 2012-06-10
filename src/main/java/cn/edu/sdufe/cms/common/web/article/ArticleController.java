@@ -3,14 +3,14 @@ package cn.edu.sdufe.cms.common.web.article;
 import cn.edu.sdufe.cms.common.entity.article.Article;
 import cn.edu.sdufe.cms.common.service.account.UserManager;
 import cn.edu.sdufe.cms.common.service.article.ArchiveManager;
-import cn.edu.sdufe.cms.common.service.article.ArticleManager;
+import cn.edu.sdufe.cms.common.service.article.ArchiveManagerImpl;
+import cn.edu.sdufe.cms.common.service.article.ArticleManagerImpl;
 import cn.edu.sdufe.cms.common.service.article.CategoryManager;
 import cn.edu.sdufe.cms.common.service.link.LinkManager;
 import cn.edu.sdufe.cms.security.ShiroDbRealm;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +21,7 @@ import java.util.List;
 
 /**
  * 文章控制器
- * User: baitao.jibt (dreambt@gmail.com)
+ * User: baitao.jibt@gmail.com
  * Date: 12-3-18
  * Time: 上午11:29
  */
@@ -31,7 +31,7 @@ public class ArticleController {
 
     private static final int ARTICLE_NUM = 75;
 
-    private ArticleManager articleManager;
+    private ArticleManagerImpl articleManager;
     private CategoryManager categoryManager;
     private UserManager userManager;
     private ArchiveManager archiveManager;
@@ -45,7 +45,7 @@ public class ArticleController {
      */
     @RequestMapping(value = "content/{id}", method = RequestMethod.GET)
     public String contextOfArticle(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
-        Article article = articleManager.findForView(id);
+        Article article = articleManager.getForView(id);
         if (null == article) {
             redirectAttributes.addFlashAttribute("message", "不存在编号为 " + id + " 的文章");
             return "redirect:/error/404";
@@ -56,8 +56,8 @@ public class ArticleController {
         model.addAttribute("article", article);
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("archives", archiveManager.getTopTen());
-        model.addAttribute("newArticles", articleManager.findTopTen());
-        model.addAttribute("links", linkManager.getAllLink());
+        model.addAttribute("newArticles", articleManager.getTopTen());
+        model.addAttribute("links", linkManager.getAll());
         return "article/content";
     }
 
@@ -69,7 +69,7 @@ public class ArticleController {
      */
     @RequestMapping(value = "content/full/{id}", method = RequestMethod.GET)
     public String fullOfArticle(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
-        Article article = articleManager.findForView(id);
+        Article article = articleManager.getForView(id);
         if (null == article) {
             redirectAttributes.addFlashAttribute("message", "不存在编号为 " + id + " 的文章");
             return "redirect:/error/404";
@@ -79,7 +79,7 @@ public class ArticleController {
 
         model.addAttribute("article", article);
         model.addAttribute("categories", categoryManager.getNavCategory());
-        model.addAttribute("links", linkManager.getAllLink());
+        model.addAttribute("links", linkManager.getAll());
         return "article/fullwidth";
     }
 
@@ -120,7 +120,7 @@ public class ArticleController {
      */
     @RequestMapping(value = "listByCategory/{id}", method = RequestMethod.GET)
     public String listArticleByCategory(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("articles", articleManager.findByCategoryId(id, 0, 110));
+        model.addAttribute("articles", articleManager.getByCategoryId(id, 0, 110));
         return "dashboard/article/listAll";
     }
 
@@ -141,14 +141,14 @@ public class ArticleController {
         } else {
             pageCount = total / limit + 1;
         }
-        model.addAttribute("articles", articleManager.findByCategoryId(id, 0, limit));//文章列表
+        model.addAttribute("articles", articleManager.getByCategoryId(id, 0, limit));//文章列表
         model.addAttribute("categories", categoryManager.getNavCategory());//导航菜单
         model.addAttribute("category", categoryManager.get(id));//获取分类信息
         model.addAttribute("archives", archiveManager.getTopTen());//边栏归档日志
-        model.addAttribute("newArticles", articleManager.findTopTen());//边栏最新文章
+        model.addAttribute("newArticles", articleManager.getTopTen());//边栏最新文章
         model.addAttribute("total", total);
         model.addAttribute("pageCount", pageCount);
-        model.addAttribute("links", linkManager.getAllLink());//页脚友情链接
+        model.addAttribute("links", linkManager.getAll());//页脚友情链接
         return "article/list";
     }
 
@@ -163,7 +163,7 @@ public class ArticleController {
     @RequestMapping(value = "list/ajax/{id}", method = RequestMethod.GET)
     @ResponseBody
     public List<Article> ajaxListOfArticle(@PathVariable("id") Long id, @RequestParam("offset") int offset, @RequestParam("limit") int limit) {
-        return articleManager.findByCategoryId(id, offset, limit);
+        return articleManager.getByCategoryId(id, offset, limit);
     }
 
     /**
@@ -175,7 +175,7 @@ public class ArticleController {
      */
     @RequestMapping(value = "digest/{id}", method = RequestMethod.GET)
     public String digestOfArticle(@PathVariable("id") Long id, Model model) {
-        Long total = articleManager.count(id);
+        long total = articleManager.count(id);
         int limit = 6;
         Long pageCount;
         if (total % limit == 0) {
@@ -183,14 +183,14 @@ public class ArticleController {
         } else {
             pageCount = total / limit + 1;
         }
-        model.addAttribute("articles", articleManager.findByCategoryId(id, 0, limit));
+        model.addAttribute("articles", articleManager.getByCategoryId(id, 0, limit));
         model.addAttribute("category", categoryManager.get(id));//获取分类信息
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("archives", archiveManager.getTopTen());
-        model.addAttribute("newArticles", articleManager.findTopTen());
+        model.addAttribute("newArticles", articleManager.getTopTen());
         model.addAttribute("total", total);
         model.addAttribute("pageCount", pageCount);
-        model.addAttribute("links", linkManager.getAllLink());
+        model.addAttribute("links", linkManager.getAll());
         return "article/digest";
     }
 
@@ -205,7 +205,7 @@ public class ArticleController {
     @RequestMapping(value = "digest/ajax/{id}", method = RequestMethod.GET)
     @ResponseBody
     public List<Article> ajaxDigestOfArticle(@PathVariable("id") Long id, @RequestParam("offset") int offset, @RequestParam("limit") int limit) {
-        return articleManager.findByCategoryId(id, offset, limit);
+        return articleManager.getByCategoryId(id, offset, limit);
     }
 
     /**
@@ -215,7 +215,7 @@ public class ArticleController {
      */
     @RequestMapping(value = "listPost")
     public String listPost() {
-        return "redirect:/article/list/" + 1L;
+        return "redirect:/article/list/1";
     }
 
     /**
@@ -240,10 +240,10 @@ public class ArticleController {
         model.addAttribute("categories", categoryManager.getNavCategory());//导航菜单
         model.addAttribute("category", categoryManager.get(18L));//获取分类信息
         model.addAttribute("archives", archiveManager.getTopTen());//边栏归档日志
-        model.addAttribute("newArticles", articleManager.findTopTen());//边栏最新文章
+        model.addAttribute("newArticles", articleManager.getTopTen());//边栏最新文章
         model.addAttribute("total", total);
         model.addAttribute("pageCount", pageCount);
-        model.addAttribute("links", linkManager.getAllLink());//页脚友情链接
+        model.addAttribute("links", linkManager.getAll());//页脚友情链接
         return "article/list";
     }
 
@@ -278,8 +278,22 @@ public class ArticleController {
         // 文章作者
         article.setUser(userManager.get(shiroUser.getId()));
 
+        //是否置顶
+        if (null == request.getParameter("top")) {
+            article.setTop(false);
+        } else {
+            article.setTop(true);
+        }
+
+        //是否允许评论
+        if (null == request.getParameter("allowComment")) {
+            article.setAllowComment(false);
+        } else {
+            article.setAllowComment(true);
+        }
+
         // 保存
-        if (articleManager.save(article, request) <= 0) {
+        if (articleManager.save(article) <= 0) {
             redirectAttributes.addFlashAttribute("error", "创建文章失败");
             return "redirect:/article/create";
         } else {
@@ -325,11 +339,7 @@ public class ArticleController {
     @RequiresPermissions("article:edit")
     @RequestMapping(value = "top/{id}")
     public String topArticle(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
-        if (null == articleManager.findOne(id)) {
-            redirectAttributes.addFlashAttribute("error", "该文章不存在，请刷新重试");
-            return "redirect:/article/listAll";
-        }
-        if (articleManager.update(id, "top") > 0) {
+        if (articleManager.top(id)) {
             redirectAttributes.addFlashAttribute("info", "操作文章" + id + " 成功.");
         } else {
             redirectAttributes.addFlashAttribute("error", "操作文章 " + id + " 失败.");
@@ -346,11 +356,7 @@ public class ArticleController {
     @RequiresPermissions("article:edit")
     @RequestMapping(value = "allow/{id}")
     public String allowArticle(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
-        if (null == articleManager.findOne(id)) {
-            redirectAttributes.addFlashAttribute("error", "该文章不存在，请刷新重试");
-            return "redirect:/article/listAll";
-        }
-        if (articleManager.update(id, "allow_comment") > 0) {
+        if (articleManager.allowComment(id)) {
             redirectAttributes.addFlashAttribute("info", "操作文章" + id + " 成功.");
         } else {
             redirectAttributes.addFlashAttribute("error", "操作文章 " + id + " 失败.");
@@ -367,11 +373,7 @@ public class ArticleController {
     @RequiresPermissions("article:edit")
     @RequestMapping(value = "audit/{id}")
     public String auditArticle(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
-        if (null == articleManager.findOne(id)) {
-            redirectAttributes.addFlashAttribute("error", "该文章不存在，请刷新重试");
-            return "redirect:/article/listAll";
-        }
-        if (articleManager.update(id, "status") > 0) {
+        if (articleManager.audit(id)) {
             redirectAttributes.addFlashAttribute("info", "操作文章 " + id + " 成功.");
         } else {
             redirectAttributes.addFlashAttribute("error", "操作文章 " + id + " 失败.");
@@ -380,7 +382,7 @@ public class ArticleController {
     }
 
     /**
-     * 删除编号为id的文章
+     * 标记删除编号为id的文章
      *
      * @param id
      * @return
@@ -388,7 +390,7 @@ public class ArticleController {
     @RequiresPermissions("article:save")
     @RequestMapping(value = "delete/{id}")
     public String deleteArticle(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
-        if (articleManager.update(id, "deleted") > 0) {
+        if (articleManager.delete(id) > 0) {
             redirectAttributes.addFlashAttribute("info", "操作文章 " + id + " 成功.");
         } else {
             redirectAttributes.addFlashAttribute("error", "操作文章 " + id + " 成功.");
@@ -397,27 +399,28 @@ public class ArticleController {
     }
 
     @Autowired
-    public void setArticleManager(@Qualifier("articleManager") ArticleManager articleManager) {
+    public void setArticleManager(ArticleManagerImpl articleManager) {
         this.articleManager = articleManager;
     }
 
     @Autowired
-    public void setCategoryManager(@Qualifier("categoryManager") CategoryManager categoryManager) {
+    public void setCategoryManager(CategoryManager categoryManager) {
         this.categoryManager = categoryManager;
     }
 
     @Autowired
-    public void setUserManager(@Qualifier("userManager") UserManager userManager) {
+    public void setUserManager(UserManager userManager) {
         this.userManager = userManager;
     }
 
     @Autowired
-    public void setArchiveManager(@Qualifier("archiveManager") ArchiveManager archiveManager) {
+    public void setArchiveManager(ArchiveManagerImpl archiveManager) {
         this.archiveManager = archiveManager;
     }
 
     @Autowired
-    public void setLinkManager(@Qualifier("linkManager") LinkManager linkManager) {
+    public void setLinkManager(LinkManager linkManager) {
         this.linkManager = linkManager;
     }
+
 }

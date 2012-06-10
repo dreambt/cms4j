@@ -48,7 +48,7 @@
         <p>Sorry, it appears the page you were looking for doesn't exist anymore or might have been moved. If the problem persists, please contact our support at <a href="#">dreambt@gmail.com</a> or try searching:</p>
         <form>
             <input type="text" name="search" value="">
-            <button type="submit">Search</button> ro <a href="${ctx}"><button type="submit">返回首页</button></a>
+            <button type="submit">Search</button></a>
         </form>
     </div>
 

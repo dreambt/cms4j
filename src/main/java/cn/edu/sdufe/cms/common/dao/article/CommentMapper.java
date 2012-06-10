@@ -2,7 +2,6 @@ package cn.edu.sdufe.cms.common.dao.article;
 
 import cn.edu.sdufe.cms.common.dao.GenericDao;
 import cn.edu.sdufe.cms.common.entity.article.Comment;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -13,7 +12,6 @@ import java.util.List;
  * Date: 12-3-20
  * Time: 下午20:37
  */
-@Component
 public interface CommentMapper extends GenericDao<Comment, Long> {
 
     List<Comment> getAll();

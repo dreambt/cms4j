@@ -3,7 +3,6 @@ package cn.edu.sdufe.cms.utilities.upload;
 import cn.edu.sdufe.cms.utilities.RandomString;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.Date;
 
@@ -19,15 +18,9 @@ public class UploadFile {
      * 上传文件
      *
      * @param file
-     * @param request
      * @return
      */
-    public String uploadFile(MultipartFile file, HttpServletRequest request, String upload_dir) {
-        // 转型为MultipartHttpRequest：
-        //MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-
-        //上传路径
-        //String upload_dir = multipartRequest.getSession().getServletContext().getRealPath(upload_dir);
+    public String uploadFile(MultipartFile file, String upload_dir) {
 
         //原文件名
         String imageName = file.getOriginalFilename();

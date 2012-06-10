@@ -44,4 +44,5 @@ public class LoginController {
         model.addAttribute(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM, username);
         return "security/login";
     }
+
 }

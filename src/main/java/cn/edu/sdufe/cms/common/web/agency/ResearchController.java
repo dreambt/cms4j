@@ -35,8 +35,8 @@ public class ResearchController {
     @RequestMapping(value = "{id}")
     public String indexOfAgency(@PathVariable Long id, Model model) {
         model.addAttribute("categories", categoryManager.getNavCategory());
-        model.addAttribute("links", linkManager.getLinkByCategory(LinkCategoryEnum.LINK));
-        model.addAttribute("infos", articleManager.findByCategoryId(agencyManager.getAgency(id).getCategoryId(), 0, 6));
+        model.addAttribute("links", linkManager.getByCategory(LinkCategoryEnum.LINK));
+        model.addAttribute("infos", articleManager.getByCategoryId(agencyManager.getAgency(id).getCategoryId(), 0, 6));
         return "research" + id;
     }
 
@@ -51,7 +51,7 @@ public class ResearchController {
     }
 
     @Autowired
-    public void setArticleManager(ArticleManager articleManager) {
+    public void setArticleManagerImpl(ArticleManager articleManager) {
         this.articleManager = articleManager;
     }
 
@@ -59,4 +59,5 @@ public class ResearchController {
     public void setAgencyManager(AgencyManager agencyManager) {
         this.agencyManager = agencyManager;
     }
+
 }

@@ -3,6 +3,9 @@ package cn.edu.sdufe.cms.common.entity.agency;
 import cn.edu.sdufe.cms.common.entity.PersistableEntity;
 import cn.edu.sdufe.cms.common.entity.article.Article;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import java.io.Serializable;
 
 /**
  * 用途
@@ -10,7 +13,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  * Date: 12-4-23
  * Time: 下午3:28
  */
-public class Teacher extends PersistableEntity {
+public class Teacher extends PersistableEntity implements Serializable {
+
+    private static final long serialVersionUID = -4082457458619235444L;
 
     private String teacherName;
     private boolean top;
@@ -69,6 +74,7 @@ public class Teacher extends PersistableEntity {
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this);
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
+
 }

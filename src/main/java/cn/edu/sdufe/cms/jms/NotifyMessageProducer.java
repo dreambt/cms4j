@@ -32,6 +32,14 @@ public class NotifyMessageProducer {
         sendMessage2(fileName, notifyQueue);
     }
 
+    public void sendQueueGenArticleImage(final String fileName) {
+        sendMessage3(fileName, notifyQueue);
+    }
+
+    public void sendQueueDelArticleImage(final String fileName) {
+        sendMessage4(fileName, notifyQueue);
+    }
+
     public void sendTopic(final User user) {
         sendMessage(user, notifyTopic);
     }
@@ -86,6 +94,42 @@ public class NotifyMessageProducer {
                 message.setString("fileName", fileName);
 
                 message.setStringProperty("objectType", "del_thumb");
+
+                return message;
+            }
+        });
+    }
+
+    /**
+     * 生成文章图片
+     */
+    private void sendMessage3(final String fileName, Destination destination) {
+        jmsTemplate.send(destination, new MessageCreator() {
+            @Override
+            public Message createMessage(Session session) throws JMSException {
+
+                MapMessage message = session.createMapMessage();
+                message.setString("fileName", fileName);
+
+                message.setStringProperty("objectType", "gen_article_image");
+
+                return message;
+            }
+        });
+    }
+
+    /**
+     * 删除文章图片
+     */
+    private void sendMessage4(final String fileName, Destination destination) {
+        jmsTemplate.send(destination, new MessageCreator() {
+            @Override
+            public Message createMessage(Session session) throws JMSException {
+
+                MapMessage message = session.createMapMessage();
+                message.setString("fileName", fileName);
+
+                message.setStringProperty("objectType", "del_article_image");
 
                 return message;
             }

@@ -4,8 +4,10 @@ import cn.edu.sdufe.cms.common.entity.PersistableEntity;
 import cn.edu.sdufe.cms.common.entity.account.User;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.validator.constraints.NotBlank;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -15,7 +17,9 @@ import java.util.List;
  * Date: 12-3-20
  * Time: 下午19:40
  */
-public class Article extends PersistableEntity {
+public class Article extends PersistableEntity implements Serializable {
+
+    private static final long serialVersionUID = -4082457458619235448L;
 
     private Category category;
     private User user;
@@ -157,6 +161,7 @@ public class Article extends PersistableEntity {
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this);
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
+
 }

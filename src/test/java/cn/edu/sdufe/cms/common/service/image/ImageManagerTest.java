@@ -23,7 +23,7 @@ public class ImageManagerTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        imageManager = new ImageManager();
+        imageManager = new ImageManagerImpl();
         imageManager.setImageMapper(mockImageMapper);
     }
 

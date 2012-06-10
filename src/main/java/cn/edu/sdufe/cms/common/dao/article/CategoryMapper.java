@@ -2,7 +2,6 @@ package cn.edu.sdufe.cms.common.dao.article;
 
 import cn.edu.sdufe.cms.common.dao.GenericDao;
 import cn.edu.sdufe.cms.common.entity.article.Category;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -13,7 +12,6 @@ import java.util.List;
  * Date: 12-3-20
  * Time: 下午20:40
  */
-@Component
 public interface CategoryMapper extends GenericDao<Category, Long> {
 
     /**

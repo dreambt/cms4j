@@ -1,11 +1,13 @@
 package cn.edu.sdufe.cms.common.entity.article;
 
 import cn.edu.sdufe.cms.common.entity.PersistableEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.codehaus.jackson.annotate.JsonIgnore;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springside.modules.utils.Collections3;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -15,7 +17,9 @@ import java.util.List;
  * Date: 12-3-20
  * Time: 下午19:42
  */
-public class Category extends PersistableEntity {
+public class Category extends PersistableEntity implements Serializable {
+
+    private static final long serialVersionUID = -4082457458619235449L;
 
     private Long fatherCategoryId;
     private String categoryName;
@@ -133,6 +137,7 @@ public class Category extends PersistableEntity {
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this);
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
+
 }

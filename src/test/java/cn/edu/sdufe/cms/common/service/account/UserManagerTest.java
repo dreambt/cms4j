@@ -32,7 +32,7 @@ public class UserManagerTest {
         MockitoAnnotations.initMocks(this);
         ShiroTestHelper.mockSubject("Baitao.jibt");
 
-        userManager = new UserManager();
+        userManager = new UserManagerImpl();
         userManager.setUserMapper(mockUserMapper);
     }
 

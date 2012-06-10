@@ -2,10 +2,13 @@
 <decorators defaultdir="/WEB-INF/layouts/">
     <excludes>
         <pattern>/static/*</pattern>
+        <pattern>/jsp/*</pattern>
         <pattern>/rs/*</pattern>
         <pattern>/login*</pattern>
         <pattern>/**/*.html</pattern>
         <pattern>/error/*</pattern>
+        <pattern>/**/ajax/*</pattern>
+        <pattern>/comment/create</pattern>
     </excludes>
 
     <decorator name="default" page="default.jsp">
@@ -31,7 +34,7 @@
         <pattern>/article/listInfo</pattern>
         <pattern>/archive/list*</pattern>
         <pattern>/article/content*</pattern>
-        <pattern>/comment/create</pattern>        <pattern>/teacher/content/*</pattern>
+        <pattern>/teacher/content/*</pattern>
     </decorator>
 
     <decorator name="dashboard" page="dashboard/default.jsp">
