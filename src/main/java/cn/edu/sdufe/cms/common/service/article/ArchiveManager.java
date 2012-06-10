@@ -69,12 +69,43 @@ public class ArchiveManager {
     }
 
     /**
-     * 保存指定月份的归类
+     * 保存上个月的归类
      */
     @Transactional(readOnly = false)
     public void save() {
         DateTime dateTime = new DateTime();
         dateTime = dateTime.plusMonths(-1);
+        int year = dateTime.getYear();
+        int month = dateTime.getMonthOfYear();
+
+        String title = String.format("%04d年%02d月", year, month);
+        if (null != archiveDao.findByTitle(title)) {
+            return;
+        }
+
+        //获得指定月份的所有文章
+        List<Article> articles = articleDao.findByMonth(dateTime.toDate());
+        if (articles.size() > 0) {
+            Archive archive = new Archive();
+            archive.setTitle(title);
+            archive.setArticleCount(articles.size());
+            archiveDao.save(archive);
+            //加入归档文章对应表
+            Long archiveId = archiveDao.findByTitle(String.format("%04d年%02d月", year, month)).getId();
+            for (Article article : articles) {
+                Long articleId = article.getId();
+                archiveDao.saveAA(archiveId, articleId);
+            }
+        }
+    }
+
+    /**
+     * 保存指定月份的归档
+     *
+     * @param dateTime
+     */
+    @Transactional(readOnly = false)
+    public void save(DateTime dateTime) {
         int year = dateTime.getYear();
         int month = dateTime.getMonthOfYear();
 

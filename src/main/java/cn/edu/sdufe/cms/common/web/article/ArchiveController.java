@@ -5,6 +5,9 @@ import cn.edu.sdufe.cms.common.service.article.ArchiveManager;
 import cn.edu.sdufe.cms.common.service.article.ArticleManager;
 import cn.edu.sdufe.cms.common.service.article.CategoryManager;
 import cn.edu.sdufe.cms.common.service.link.LinkManager;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -69,6 +72,19 @@ public class ArchiveController {
         model.addAttribute("links", linkManager.getAllLink());//页脚友情链接
 
         return "article/list";
+    }
+
+    /**
+     * 按照指定月份归档
+     *
+     * @param dateTime
+     */
+    @RequestMapping(value = "save/{dateTime}", method = RequestMethod.GET)
+    public void saveArchiveByMonth(@PathVariable("dateTime") String dateTime) {
+        DateTimeFormatter pattern = DateTimeFormat.forPattern("yyyy-MM");
+        DateTime time = DateTime.parse(dateTime, pattern);
+        System.out.println(time);
+        archiveManager.save(time);
     }
 
     /**
