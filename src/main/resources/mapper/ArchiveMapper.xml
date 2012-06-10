@@ -31,7 +31,7 @@
         select <include refid="archiveColumns"/>
         from cms_archive
         where title=#{title}
-        order by id DESC
+        order by title ASC
         limit 1
 	</select>
 
@@ -41,7 +41,7 @@
     <select id="getAllArchive" resultMap="archiveDetailMap">
         select <include refid="archiveColumns"/>
         from cms_archive
-        order by id DESC
+        order by title ASC
         LIMIT 30
 	</select>
 
@@ -51,7 +51,7 @@
     <select id="getTopTenArchive" resultMap="archiveDetailMap">
         SELECT <include refid="archiveColumns"/>
         FROM cms_archive
-        ORDER BY id DESC
+        ORDER BY title ASC
         LIMIT 10
 	</select>
 
