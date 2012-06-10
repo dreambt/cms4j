@@ -83,7 +83,6 @@ public class ArchiveController {
     public void saveArchiveByMonth(@PathVariable("dateTime") String dateTime) {
         DateTimeFormatter pattern = DateTimeFormat.forPattern("yyyy-MM");
         DateTime time = DateTime.parse(dateTime, pattern);
-        System.out.println(time);
         archiveManager.save(time);
     }
 
