@@ -238,9 +238,9 @@ public class UserManager {
      * @param parameters
      * @return
      */
-    public List<User> search(Map<String, Object> parameters) {
+    public List<User> search(Map<String, Object> parameters, int offset, int limit) {
         logger.debug("== Find users by parameters={}.", parameters.toString());
-        return userMapper.search(parameters);
+        return userMapper.search(parameters, offset, limit);
     }
 
     /**
