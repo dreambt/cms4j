@@ -1,8 +1,6 @@
 package cn.edu.sdufe.cms.common.web;
 
 import cn.edu.sdufe.cms.common.entity.link.LinkCategoryEnum;
-import cn.edu.sdufe.cms.common.service.agency.AgencyManager;
-import cn.edu.sdufe.cms.common.service.article.ArchiveManager;
 import cn.edu.sdufe.cms.common.service.article.ArticleManager;
 import cn.edu.sdufe.cms.common.service.article.CategoryManager;
 import cn.edu.sdufe.cms.common.service.image.ImageManager;
@@ -28,8 +26,6 @@ public class GeneralController {
     private LinkManager linkManager;
     private ImageManager imageManager;
     private ArticleManager articleManager;
-    private AgencyManager agencyManager;
-    private ArchiveManager archiveManager;
 
     /**
      * 首页显示菜单，静态+动态
@@ -130,13 +126,4 @@ public class GeneralController {
         this.articleManager = articleManager;
     }
 
-    @Autowired
-    public void setAgencyManager(AgencyManager agencyManager) {
-        this.agencyManager = agencyManager;
-    }
-
-    @Autowired
-    public void setArchiveManager(ArchiveManager archiveManager) {
-        this.archiveManager = archiveManager;
-    }
 }

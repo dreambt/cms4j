@@ -28,7 +28,7 @@
     <!--
         根据编号获取教师信息
     -->
-    <select id="getTeacher" parameterType="Long" resultMap="teacherDetailMap">
+    <select id="get" parameterType="Long" resultMap="teacherDetailMap">
         SELECT
         <include refid="teacherColumns"/>, B.title, C.id AS art_id, C.subject AS art_subject, C.message AS art_message
         FROM cms_teacher AS A
@@ -42,7 +42,7 @@
     <!--
         根据教师编号获取对应的文章编号
     -->
-    <select id="getArticleId" parameterType="Long" resultType="Long">
+    <select id="getByArticleId" parameterType="Long" resultType="Long">
         SELECT article_id
         FROM cms_teacher
         WHERE id=#{id} and deleted=0
@@ -53,7 +53,7 @@
     <!--
         获得所有的教师信息
     -->
-    <select id="getAllTeacher" resultMap="teacherDetailMap">
+    <select id="getAll" resultMap="teacherDetailMap">
         SELECT
         <include refid="teacherColumns"/>, B.title, C.id as art_id
         FROM cms_teacher AS A
@@ -66,7 +66,7 @@
     <!--
         保存老师信息
     -->
-    <insert id="saveTeacher" parameterType="Teacher" useGeneratedKeys="true" keyProperty="id">
+    <insert id="save" parameterType="Teacher" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO cms_teacher
             (teacher_name, top, article_id, agency_id, image_url, deleted, created_date)
         VALUES
@@ -76,16 +76,15 @@
     <!--
         彻底删除老师信息
     -->
-    <delete id="deleteTeacher">
+    <delete id="delete">
         DELETE FROM cms_teacher
         WHERE deleted=1
-        LIMIT 500
     </delete>
 
     <!--
         更新老师信息
     -->
-    <update id="updateTeacher" parameterType="Teacher">
+    <update id="update" parameterType="Teacher">
         UPDATE cms_teacher
         <set>
             <if test="teacherName != null and teacherName != ''">
@@ -109,7 +108,7 @@
     <!--
         更新boolean字段
     -->
-    <update id="updateTeacherBool" parameterType="Map">
+    <update id="updateBool" parameterType="Map">
         UPDATE cms_teacher
         SET ${column}=1-${column}
         WHERE id=#{id}

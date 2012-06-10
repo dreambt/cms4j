@@ -4,6 +4,7 @@ package cn.edu.sdufe.cms.common.dao.article;
 import cn.edu.sdufe.cms.common.dao.GenericDao;
 import cn.edu.sdufe.cms.common.entity.article.Archive;
 import cn.edu.sdufe.cms.common.entity.article.Article;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -37,7 +38,7 @@ public interface ArchiveMapper extends GenericDao<Archive, Long> {
      *
      * @return
      */
-    List<Long> getArticleIdByArchiveId(Long archiveId, int offset, int limit);
+    List<Long> getArticleIdByArchiveId(@Param("archiveId") Long archiveId, @Param("offset") int offset, @Param("limit") int limit);
 
     /**
      * 根据归档编号获得文章编号

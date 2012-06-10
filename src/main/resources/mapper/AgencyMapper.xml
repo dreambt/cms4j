@@ -21,7 +21,7 @@
     <!--
         根据编号获取组织机构
     -->
-    <select id="getAgency" parameterType="Long" resultMap="agencyDetailMap">
+    <select id="get" parameterType="Long" resultMap="agencyDetailMap">
         SELECT
         <include refid="agencyColumns"/>
         FROM cms_agency
@@ -33,7 +33,7 @@
     <!--
         获得所有的组织机构
     -->
-    <select id="getAllAgency" resultMap="agencyDetailMap">
+    <select id="getAll" resultMap="agencyDetailMap">
         SELECT
         <include refid="agencyColumns"/>
         FROM cms_agency
@@ -44,7 +44,7 @@
     <!--
         保存组织机构
     -->
-    <insert id="saveAgency" parameterType="Agency" useGeneratedKeys="true" keyProperty="id">
+    <insert id="save" parameterType="Agency" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO cms_agency
             (title, category_id, image_url, introduction, rate, deleted, created_date)
         VALUES
@@ -54,16 +54,15 @@
     <!--
         彻底删除组织机构
     -->
-    <delete id="deleteAgency">
+    <delete id="delete">
         DELETE FROM cms_agency
         WHERE deleted=1
-        LIMIT 500
     </delete>
 
     <!--
         更新组织机构
     -->
-    <update id="updateAgency" parameterType="Agency">
+    <update id="update" parameterType="Agency">
         UPDATE cms_agency
         <set>
             <if test="title != null and title != ''">
@@ -83,7 +82,7 @@
     <!--
         更新boolean字段
     -->
-    <update id="updateAgencyBool" parameterType="Map">
+    <update id="updateBool" parameterType="Map">
         UPDATE cms_agency
         SET ${column}=1-${column}
         WHERE id=#{id}
@@ -92,7 +91,7 @@
     <!--
         增加访问次数
     -->
-    <update id="updateAgencyViews" parameterType="Long">
+    <update id="updateViews" parameterType="Long">
         UPDATE cms_agency
         SET rate=1+rate
         WHERE id=#{id}

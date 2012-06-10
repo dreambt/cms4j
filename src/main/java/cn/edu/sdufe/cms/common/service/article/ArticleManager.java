@@ -8,7 +8,6 @@ import cn.edu.sdufe.cms.security.ShiroDbRealm;
 import cn.edu.sdufe.cms.utilities.analyzer.ArticleKeyword;
 import cn.edu.sdufe.cms.utilities.thumb.ImageThumb;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import org.apache.commons.lang3.Validate;
 import org.apache.shiro.SecurityUtils;
 import org.jsoup.Jsoup;
@@ -137,10 +136,10 @@ public class ArticleManager {
      * @param parameters
      * @return
      */
-    public List<Article> search(Map<String, Object> parameters) {
+    public List<Article> search(Map<String, Object> parameters, int offset, int limit) {
         parameters.put("Direction", "DESC");
         parameters.put("Sort", "id");
-        return articleMapper.search(parameters);
+        return articleMapper.search(parameters, offset, limit);
     }
 
     /**
@@ -160,7 +159,7 @@ public class ArticleManager {
      */
     public List<Article> getInfo() {
         Long[] ids = {19L, 20L, 21L, 22L, 32L, 33L};
-        return articleMapper.getTitleByCategoryId(ids);
+        return articleMapper.getTitleByCategoryIds(ids);
     }
 
     /**
@@ -268,21 +267,6 @@ public class ArticleManager {
         String keyword = articleKeyword.getArticleKeyword(article.getSubject(), article.getMessage(), num);
         article.setKeyword(keyword);
         logger.info("为文章 {} 生成关键词：{}", article.getId(), keyword);
-    }
-
-    /**
-     * 批量生成关键词
-     */
-    public int genKeyword() {
-        Map<String, Object> parameters = Maps.newHashMap();
-        parameters.put("keyword", " ");
-        parameters.put("Direction", "ASC");
-        parameters.put("Sort", "id");
-        List<Article> articleList = articleMapper.search(parameters);
-        for (Article article : articleList) {
-            genKeyword(article, KEYWORD_NUM);
-        }
-        return articleList.size();
     }
 
     /**

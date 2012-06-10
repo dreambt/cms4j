@@ -102,17 +102,17 @@
         <include refid="imageColumns"/>
         FROM cms_image
         <where>
-            <if test="title != null and title != ''">
-                title link %#{title}%,
+            <if test="param1.title != null and param1.title != ''">
+                title link %#{param1.title}%,
             </if>
-            <if test="description != null and description != ''">
-                description link %#{description}%,
+            <if test="param1.description != null and param1.description != ''">
+                description link %#{param1.description}%,
             </if>
-            <if test="showIndex != null">
-                show_index=#{showIndex}
+            <if test="param1.showIndex != null">
+                show_index=#{param1.showIndex}
             </if>
         </where>
-        ORDER BY ${Sort} ${Direction}
+        ORDER BY id DESC
         LIMIT #{offset},#{limit}
     </select>
 </mapper>

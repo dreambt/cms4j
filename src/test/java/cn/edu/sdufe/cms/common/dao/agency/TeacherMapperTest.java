@@ -37,7 +37,7 @@ public class TeacherMapperTest extends SpringTransactionalTestCase {
 
     @Test
     public void testGetArticleId() throws Exception {
-        int result = teacherMapper.getArticleId(1L).intValue();
+        int result = teacherMapper.getByArticleId(1L).intValue();
         Assert.assertEquals(1, result);
     }
 

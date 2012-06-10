@@ -86,7 +86,7 @@ public class ImageManager {
     public List<Image> findByShowIndex() {
         Map<String, Object> parameters = Maps.newHashMap();
         parameters.put("showIndex", "1");
-        return imageMapper.search(parameters);
+        return imageMapper.search(parameters, 0, 10);
     }
 
     /**

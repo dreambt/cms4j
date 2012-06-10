@@ -52,7 +52,7 @@ public class TeacherManager {
      * @return
      */
     public Long getArticleId(Long id) {
-        return teacherMapper.getArticleId(id);
+        return teacherMapper.getByArticleId(id);
     }
 
     /**

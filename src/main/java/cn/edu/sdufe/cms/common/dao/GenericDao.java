@@ -77,14 +77,5 @@ public interface GenericDao<T, PK extends Serializable> {
      *
      * @return List of populated objects
      */
-    @Deprecated
-    List<T> search(Map<String, Object> parameters);
-
-    /**
-     * Generic method used to get all objects of a particular type. This
-     * is the same as lookup up all rows in a table.
-     *
-     * @return List of populated objects
-     */
     List<T> search(Map<String, Object> parameters, @Param("offset") int offset, @Param("limit") int limit);
 }

@@ -21,7 +21,7 @@ public interface TeacherMapper extends GenericDao<Teacher, Long> {
      * @param id
      * @return
      */
-    Long getArticleId(Long id);
+    Long getByArticleId(Long id);
 
     /**
      * 获得所有老师信息
