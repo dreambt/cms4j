@@ -1,6 +1,6 @@
 package cn.edu.sdufe.cms.common.service.article;
 
-import cn.edu.sdufe.cms.common.dao.article.CategoryDao;
+import cn.edu.sdufe.cms.common.dao.article.CategoryMapper;
 import cn.edu.sdufe.cms.common.entity.article.Category;
 import net.sf.ehcache.CacheManager;
 import org.slf4j.Logger;
@@ -27,7 +27,7 @@ public class CategoryManager {
 
     private CacheManager ehcacheManager;
 
-    private CategoryDao categoryDao;
+    private CategoryMapper categoryMapper;
 
     /**
      * 获得编号为id的分类
@@ -36,7 +36,7 @@ public class CategoryManager {
      * @return
      */
     public Category get(Long id) {
-        return categoryDao.findOne(id);
+        return categoryMapper.get(id);
     }
 
     /**
@@ -46,7 +46,7 @@ public class CategoryManager {
      * @return
      */
     public List<Category> getSubCategory(Long id) {
-        return categoryDao.getSubCategory(id);
+        return categoryMapper.getSubCategory(id);
     }
 
     /**
@@ -55,7 +55,7 @@ public class CategoryManager {
      * @return
      */
     public List<Category> getNavCategory() {
-        return categoryDao.getNavCategory();
+        return categoryMapper.getNavCategory();
     }
 
     /**
@@ -64,7 +64,7 @@ public class CategoryManager {
      * @return
      */
     public List<Category> getAllowPublishCategory() {
-        return categoryDao.getAllowPublishCategory();
+        return categoryMapper.getAllowPublishCategory();
     }
 
     /**
@@ -73,7 +73,7 @@ public class CategoryManager {
      * @return
      */
     public Long count() {
-        return categoryDao.count();
+        return categoryMapper.count();
     }
 
     /**
@@ -83,7 +83,7 @@ public class CategoryManager {
      * @return
      */
     public Long count(Long id) {
-        return categoryDao.count(id);
+        return categoryMapper.countByFatherCategoryId(id);
     }
 
     /**
@@ -94,7 +94,7 @@ public class CategoryManager {
      */
     @Transactional(readOnly = false)
     public int save(Category category) {
-        return categoryDao.save(category);
+        return categoryMapper.save(category);
     }
 
     /**
@@ -106,7 +106,7 @@ public class CategoryManager {
     @Transactional(readOnly = false)
     public int update(Category category) {
         // 更新数据，先更新数据避免生成旧数据缓存
-        return categoryDao.update(category);
+        return categoryMapper.update(category);
     }
 
     /**
@@ -157,8 +157,8 @@ public class CategoryManager {
     }
 
     @Autowired
-    public void setCategoryDao(@Qualifier("categoryDao") CategoryDao categoryDao) {
-        this.categoryDao = categoryDao;
+    public void setCategoryMapper(@Qualifier("categoryMapper") CategoryMapper categoryMapper) {
+        this.categoryMapper = categoryMapper;
     }
 
 }

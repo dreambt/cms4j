@@ -1,6 +1,6 @@
 package cn.edu.sdufe.cms.common.service.image;
 
-import cn.edu.sdufe.cms.common.dao.image.ImageDao;
+import cn.edu.sdufe.cms.common.dao.image.ImageMapper;
 import cn.edu.sdufe.cms.common.entity.image.Image;
 import cn.edu.sdufe.cms.jms.NotifyMessageProducer;
 import cn.edu.sdufe.cms.utilities.thumb.ImageThumb;
@@ -31,7 +31,7 @@ public class ImageManager {
 
     private static final Logger logger = LoggerFactory.getLogger(ImageManager.class);
 
-    private ImageDao imageDao = null;
+    private ImageMapper imageMapper = null;
 
     private NotifyMessageProducer notifyProducer; //JMS消息发送
 
@@ -45,7 +45,7 @@ public class ImageManager {
      * @return
      */
     public Image findOne(Long id) {
-        return imageDao.findOne(id);
+        return imageMapper.get(id);
     }
 
     /**
@@ -57,7 +57,7 @@ public class ImageManager {
      */
     public List<Image> getPagedImage(int offset, int limit) {
         Map<String, Object> parameters = Maps.newHashMap();
-        return imageDao.search(parameters, offset, limit);
+        return imageMapper.search(parameters, offset, limit);
     }
 
     /**
@@ -66,7 +66,7 @@ public class ImageManager {
      * @return
      */
     public Long count() {
-        return imageDao.count();
+        return imageMapper.count();
     }
 
     /**
@@ -75,7 +75,7 @@ public class ImageManager {
      * @return
      */
     public List<Image> findAll() {
-        return imageDao.findAll();
+        return imageMapper.getAll();
     }
 
     /**
@@ -86,7 +86,7 @@ public class ImageManager {
     public List<Image> findByShowIndex() {
         Map<String, Object> parameters = Maps.newHashMap();
         parameters.put("showIndex", "1");
-        return imageDao.search(parameters);
+        return imageMapper.search(parameters);
     }
 
     /**
@@ -115,7 +115,7 @@ public class ImageManager {
         } else {
             image.setImageUrl("");
         }
-        return imageDao.save(image);
+        return imageMapper.save(image);
     }
 
     /**
@@ -159,7 +159,7 @@ public class ImageManager {
                 logger.info(e.getMessage());
             }
         }
-        return imageDao.update(image);
+        return imageMapper.update(image);
     }
 
     /**
@@ -170,7 +170,7 @@ public class ImageManager {
      */
     @Transactional(readOnly = false)
     public int update(Image image) {
-        return imageDao.update(image);
+        return imageMapper.update(image);
     }
 
     /**
@@ -181,7 +181,7 @@ public class ImageManager {
      */
     @Transactional(readOnly = false)
     public int update(Long id, String column) {
-        return imageDao.update(id, column);
+        return imageMapper.updateBool(id, column);
     }
 
     /**
@@ -191,9 +191,9 @@ public class ImageManager {
      */
     @Transactional(readOnly = false)
     public int delete(Long id) {
-        String fileName = imageDao.findOne(id).getImageUrl();
+        String fileName = imageMapper.get(id).getImageUrl();
 
-        int num = imageDao.delete(id);
+        int num = imageMapper.delete(id);
         // 成功删除数据库记录时，异步删除所有缩略图
         if (num > 0) {
             // 删除时只删除数据库，硬盘文件起任务轮询删除
@@ -215,8 +215,8 @@ public class ImageManager {
     }
 
     @Autowired
-    public void setImageDao(@Qualifier("imageDao") ImageDao imageDao) {
-        this.imageDao = imageDao;
+    public void setImageMapper(@Qualifier("imageMapper") ImageMapper imageMapper) {
+        this.imageMapper = imageMapper;
     }
 
     @Autowired

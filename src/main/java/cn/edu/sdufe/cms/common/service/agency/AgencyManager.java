@@ -1,6 +1,6 @@
 package cn.edu.sdufe.cms.common.service.agency;
 
-import cn.edu.sdufe.cms.common.dao.agency.AgencyDao;
+import cn.edu.sdufe.cms.common.dao.agency.AgencyMapper;
 import cn.edu.sdufe.cms.common.entity.agency.Agency;
 import cn.edu.sdufe.cms.common.entity.article.Category;
 import cn.edu.sdufe.cms.common.entity.article.ShowTypeEnum;
@@ -30,7 +30,7 @@ public class AgencyManager {
 
     private static final Logger logger = LoggerFactory.getLogger(AgencyManager.class);
 
-    private AgencyDao agencyDao = null;
+    private AgencyMapper agencyMapper = null;
     private CategoryManager categoryManager = null;
 
     @Value("${path.upload.base}")
@@ -43,7 +43,7 @@ public class AgencyManager {
      * @return
      */
     public Agency getAgency(Long id) {
-        return agencyDao.getAgency(id);
+        return agencyMapper.get(id);
     }
 
     /**
@@ -52,7 +52,7 @@ public class AgencyManager {
      * @return
      */
     public List<Agency> getAllAgency() {
-        return agencyDao.getAllAgency();
+        return agencyMapper.getAll();
     }
 
     /**
@@ -63,7 +63,7 @@ public class AgencyManager {
      */
     @Transactional(readOnly = false)
     public int deleteAgency(Long id) {
-        return agencyDao.updateAgencyBool(id, "deleted");
+        return agencyMapper.updateBool(id, "deleted");
     }
 
     /**
@@ -97,7 +97,7 @@ public class AgencyManager {
             agency.setImageUrl("");
         }
         agency.setCategoryId(category.getId());
-        return agencyDao.save(agency);
+        return agencyMapper.save(agency);
 
     }
 
@@ -121,12 +121,12 @@ public class AgencyManager {
             //删除旧图片
             new File(UPLOAD_PATH + "agency", agency.getImageUrl()).delete();
         }
-        return agencyDao.updateAgency(agency);
+        return agencyMapper.update(agency);
     }
 
     @Autowired
-    public void setAgencyDao(AgencyDao agencyDao) {
-        this.agencyDao = agencyDao;
+    public void setAgencyMapper(AgencyMapper agencyMapper) {
+        this.agencyMapper = agencyMapper;
     }
 
     @Autowired

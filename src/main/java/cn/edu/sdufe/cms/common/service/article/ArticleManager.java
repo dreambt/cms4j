@@ -1,7 +1,7 @@
 package cn.edu.sdufe.cms.common.service.article;
 
-import cn.edu.sdufe.cms.common.dao.article.ArchiveDao;
-import cn.edu.sdufe.cms.common.dao.article.ArticleDao;
+import cn.edu.sdufe.cms.common.dao.article.ArchiveMapper;
+import cn.edu.sdufe.cms.common.dao.article.ArticleMapper;
 import cn.edu.sdufe.cms.common.entity.account.User;
 import cn.edu.sdufe.cms.common.entity.article.Article;
 import cn.edu.sdufe.cms.security.ShiroDbRealm;
@@ -46,8 +46,8 @@ public class ArticleManager {
 
     private static final int KEYWORD_NUM = 10;
 
-    private ArticleDao articleDao = null;
-    private ArchiveDao archiveDao = null;
+    private ArticleMapper articleMapper = null;
+    private ArchiveMapper archiveMapper = null;
     private ArchiveManager archiveManager = null;
     private Validator validator = null;
 
@@ -61,7 +61,7 @@ public class ArticleManager {
      * @return
      */
     public Article findOne(Long id) {
-        return articleDao.findOne(id);
+        return articleMapper.get(id);
     }
 
     /**
@@ -72,12 +72,12 @@ public class ArticleManager {
      */
     @Transactional(readOnly = false)
     public Article findForView(Long id) {
-        Article article = articleDao.findOne(id);
+        Article article = articleMapper.get(id);
 
         // 判断文章是否为空
         if (null != article) {
             // 记录文章访问次数
-            articleDao.update(id);
+            articleMapper.updateViews(id);
             article.setViews(article.getViews() + 1);
             article.setMessage(Encodes.unescapeHtml(article.getMessage()));
         }
@@ -92,7 +92,7 @@ public class ArticleManager {
      * @return
      */
     public Long count(Long categoryId) {
-        return articleDao.count(categoryId);
+        return articleMapper.countByCategoryId(categoryId);
     }
 
     /**
@@ -100,8 +100,8 @@ public class ArticleManager {
      *
      * @return
      */
-    public List<Article> findAll(int offset, int limit) {
-        return articleDao.findAll(offset, limit);
+    public List<Article> getAll(int offset, int limit) {
+        return articleMapper.getAll(offset, limit);
     }
 
     /**
@@ -110,7 +110,7 @@ public class ArticleManager {
      * @return
      */
     public List<Article> findTopTen() {
-        return articleDao.findTopTen();
+        return articleMapper.getTopTen();
     }
 
     /**
@@ -125,7 +125,7 @@ public class ArticleManager {
         List<Article> articles = Lists.newArrayList();
         List<Long> ids = archiveManager.getArticleIdByArchiveId(archiveId, offset, limit);
         for (Long id : ids) {
-            articles.add(articleDao.findOne(id));
+            articles.add(articleMapper.get(id));
         }
         return articles;
     }
@@ -140,7 +140,7 @@ public class ArticleManager {
     public List<Article> search(Map<String, Object> parameters) {
         parameters.put("Direction", "DESC");
         parameters.put("Sort", "id");
-        return articleDao.search(parameters);
+        return articleMapper.search(parameters);
     }
 
     /**
@@ -150,7 +150,7 @@ public class ArticleManager {
      * @return
      */
     public List<Article> getTitleByCategoryId(Long categoryId, int offset, int limit) {
-        return articleDao.findTitleByCategoryId(categoryId, offset, limit);
+        return articleMapper.getTitleByCategoryId(categoryId, offset, limit);
     }
 
     /**
@@ -160,7 +160,7 @@ public class ArticleManager {
      */
     public List<Article> getInfo() {
         Long[] ids = {19L, 20L, 21L, 22L, 32L, 33L};
-        return articleDao.findTitleByCategoryId(ids);
+        return articleMapper.getTitleByCategoryId(ids);
     }
 
     /**
@@ -170,7 +170,7 @@ public class ArticleManager {
      * @return
      */
     public List<Article> findByCategoryId(Long categoryId, int offset, int limit) {
-        return articleDao.findByCategoryId(categoryId, offset, limit);
+        return articleMapper.getByCategoryId(categoryId, offset, limit);
     }
 
     /**
@@ -231,7 +231,7 @@ public class ArticleManager {
             Validate.notNull(article, "文章参数为空");
             BeanValidators.validateWithException(validator, article);
 
-            return articleDao.save(article);
+            return articleMapper.save(article);
         } catch (ConstraintViolationException cve) {
             logger.warn("操作员{}尝试发表文章, 缺少相关字段.", cve.getConstraintViolations().toString());
             return 0;
@@ -278,7 +278,7 @@ public class ArticleManager {
         parameters.put("keyword", " ");
         parameters.put("Direction", "ASC");
         parameters.put("Sort", "id");
-        List<Article> articleList = articleDao.search(parameters);
+        List<Article> articleList = articleMapper.search(parameters);
         for (Article article : articleList) {
             genKeyword(article, KEYWORD_NUM);
         }
@@ -297,7 +297,7 @@ public class ArticleManager {
             if (id.length() == 0) {
                 continue;
             }
-            articleDao.update(Long.parseLong(id), "status");
+            articleMapper.updateBool(Long.parseLong(id), "status");
         }
     }
 
@@ -312,7 +312,7 @@ public class ArticleManager {
             if (id.length() == 0) {
                 continue;
             }
-            articleDao.update(Long.parseLong(id), "deleted");
+            articleMapper.updateBool(Long.parseLong(id), "deleted");
         }
     }
 
@@ -366,7 +366,7 @@ public class ArticleManager {
             Validate.notNull(article, "文章参数为空");
             BeanValidators.validateWithException(validator, article);
 
-            return articleDao.update(article);
+            return articleMapper.update(article);
         } catch (ConstraintViolationException cve) {
             logger.warn("操作员{}尝试发表文章, 缺少相关字段.", cve.getConstraintViolations().toString());
             return 0;
@@ -381,7 +381,7 @@ public class ArticleManager {
      */
     @Transactional(readOnly = false)
     public int update(Long id, String column) {
-        return articleDao.update(id, column);
+        return articleMapper.updateBool(id, column);
     }
 
     /**
@@ -391,11 +391,11 @@ public class ArticleManager {
      */
     @Transactional(readOnly = false)
     public int delete() {
-        List<Article> articleList = articleDao.findDeletedArticle();
+        List<Article> articleList = articleMapper.getDeleted();
         if (null == articleList || articleList.size() == 0) {
             return 0;
         }
-        archiveDao.deleteAAByArticleId(articleList);
+        archiveMapper.deleteAAByArticleId(articleList);
         archiveManager.batchUpdate();
         for (Article article : articleList) {
             String imageName = article.getImageName();
@@ -403,7 +403,7 @@ public class ArticleManager {
             new File(UPLOAD_PATH + "article/digest-thumb", imageName).delete();
             new File(UPLOAD_PATH + "article/news-thumb", imageName).delete();
         }
-        return articleDao.delete();
+        return articleMapper.deleteByTask();
     }
 
     @Autowired
@@ -412,13 +412,13 @@ public class ArticleManager {
     }
 
     @Autowired
-    public void setArticleDao(@Qualifier("articleDao") ArticleDao articleDao) {
-        this.articleDao = articleDao;
+    public void setArticleMapper(@Qualifier("articleMapper") ArticleMapper articleMapper) {
+        this.articleMapper = articleMapper;
     }
 
     @Autowired
-    public void setArchiveDao(ArchiveDao archiveDao) {
-        this.archiveDao = archiveDao;
+    public void setArchiveMapper(ArchiveMapper archiveMapper) {
+        this.archiveMapper = archiveMapper;
     }
 
     @Autowired

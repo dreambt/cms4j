@@ -2,13 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="Link">
+<mapper namespace="cn.edu.sdufe.cms.common.dao.link.LinkMapper">
+
     <resultMap id="linkDetailMap" type="Link">
         <id property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="url" column="url"/>
-        <result property="category" column="category" />
-        <result property="status" column="status" />
+        <result property="category" column="category"/>
+        <result property="status" column="status"/>
         <result property="lastModifiedDate" column="last_modified_date"/>
         <result property="createdDate" column="created_date"/>
     </resultMap>
@@ -18,50 +19,54 @@
     <!--
         根据id获取link
     -->
-    <select id="getLink" parameterType="int" resultMap="linkDetailMap">
-        SELECT <include refid="linkColumns"/>
+    <select id="get" parameterType="int" resultMap="linkDetailMap">
+        SELECT
+        <include refid="linkColumns"/>
         FROM cms_link
         WHERE id =#{id}
         ORDER BY id DESC
         LIMIT 1
-	</select>
+    </select>
 
     <!--
         获取所有link
     -->
-    <select id="getAllLink" resultMap="linkDetailMap">
-        SELECT <include refid="linkColumns"/>
+    <select id="getAll" resultMap="linkDetailMap">
+        SELECT
+        <include refid="linkColumns"/>
         FROM cms_link
         ORDER BY id DESC
         LIMIT 30
-	</select>
+    </select>
 
     <!--
         根据分类获得所有link
     -->
     <select id="getLinkByCategory" parameterType="String" resultMap="linkDetailMap">
-        SELECT <include refid="linkColumns"/>
+        SELECT
+        <include refid="linkColumns"/>
         FROM cms_link
         WHERE category=#{category} AND STATUS=1
         ORDER BY id DESC
         LIMIT 10
-	</select>
+    </select>
 
     <!--
         获取所有审核的link
     -->
     <select id="getAuditedLink" resultMap="linkDetailMap">
-        SELECT <include refid="linkColumns"/>
+        SELECT
+        <include refid="linkColumns"/>
         FROM cms_link
         WHERE STATUS=1
         ORDER BY id DESC
         LIMIT 30
-	</select>
+    </select>
 
     <!--
         新增image
     -->
-    <insert id="saveLink" parameterType="Link" useGeneratedKeys="true" keyProperty="id">
+    <insert id="save" parameterType="Link" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO cms_link (title, url, status, category, created_date)
 		VALUES (#{title}, #{url}, 0, #{category}, null)
 	</insert>
@@ -69,7 +74,7 @@
     <!--
         删除link
     -->
-    <delete id="deleteLink" parameterType="Long">
+    <delete id="delete" parameterType="Long">
 		DELETE FROM  cms_link
 		WHERE id = #{id}
 	</delete>
@@ -77,7 +82,7 @@
     <!--
         修改link
     -->
-    <update id="updateLink" parameterType="Link">
+    <update id="update" parameterType="Link">
         UPDATE cms_link
         <set>
             <if test="title != null and title !=''">
@@ -98,7 +103,7 @@
     </update>
 
     <!-- 更新图片bool字段 -->
-    <update id="updateLinkBool" parameterType="map">
+    <update id="updateBool" parameterType="map">
         UPDATE cms_link
         SET ${column}=1-${column}, last_modified_date=null
         WHERE id=#{id}
@@ -107,8 +112,9 @@
     <!--
          查询link
      -->
-    <select id="searchLink" parameterType="map" resultMap="linkDetailMap">
-        SELECT <include refid="linkColumns"/>
+    <select id="search" parameterType="map" resultMap="linkDetailMap">
+        SELECT
+        <include refid="linkColumns"/>
         FROM cms_link
         ORDER BY ${Sort} ${Direction}
     </select>

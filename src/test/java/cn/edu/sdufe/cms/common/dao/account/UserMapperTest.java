@@ -6,7 +6,6 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springside.modules.test.data.DataFixtures;
 import org.springside.modules.test.spring.SpringTransactionalTestCase;
@@ -18,12 +17,12 @@ import org.springside.modules.test.spring.SpringTransactionalTestCase;
  * Time: 下午7:01
  */
 @ContextConfiguration(locations = {"/applicationContext.xml"})
-public class UserDaoTest extends SpringTransactionalTestCase {
+public class UserMapperTest extends SpringTransactionalTestCase {
 
     @Autowired
-    private UserDao userDao=null;
+    private UserMapper userMapper = null;
 
-    private User user=null;
+    private User user = null;
 
     @Before
     public void setUp() throws Exception {
@@ -34,26 +33,26 @@ public class UserDaoTest extends SpringTransactionalTestCase {
     @Test
     public void getUser() throws Exception {
         // 获取
-        Assert.assertEquals("dreambt@126.com", userDao.findOne(1L).getEmail());
+        Assert.assertEquals("dreambt@126.com", userMapper.get(1L).getEmail());
     }
 
     @Test
     public void saveUser() throws Exception {
         //新建并保存带权限组的用户
-        Assert.assertEquals(1, userDao.save(user));
+        Assert.assertEquals(1, userMapper.save(user));
 
         // 获取
-        Assert.assertEquals(user.getEmail(), userDao.findOne(user.getId()).getEmail());
+        Assert.assertEquals(user.getEmail(), userMapper.get(user.getId()).getEmail());
     }
 
     @Test
-     public void updateUser() throws Exception {
+    public void updateUser() throws Exception {
         //更新用户
-        user = userDao.findOne(2L);
+        user = userMapper.get(2L);
         user.setUsername("baitao.jibt");
-        Assert.assertEquals(1, userDao.update(user));
+        Assert.assertEquals(1, userMapper.update(user));
 
         // 获取
-        Assert.assertEquals(user.getUsername(), userDao.findOne(user.getId()).getUsername());
+        Assert.assertEquals(user.getUsername(), userMapper.get(user.getId()).getUsername());
     }
 }

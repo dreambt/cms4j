@@ -1,6 +1,6 @@
 package cn.edu.sdufe.cms.common.service.article;
 
-import cn.edu.sdufe.cms.common.dao.article.CommentDao;
+import cn.edu.sdufe.cms.common.dao.article.CommentMapper;
 import cn.edu.sdufe.cms.common.entity.article.Comment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +23,7 @@ public class CommentManager {
 
     private static final Logger logger = LoggerFactory.getLogger(CommentManager.class);
 
-    private CommentDao commentDao;
+    private CommentMapper commentMapper;
 
     /**
      * 获取编号为id的评论
@@ -32,7 +32,7 @@ public class CommentManager {
      * @return
      */
     public Comment get(Long id) {
-        return commentDao.findOne(id);
+        return commentMapper.get(id);
     }
 
     /**
@@ -41,7 +41,7 @@ public class CommentManager {
      * @return
      */
     public List<Comment> getAll() {
-        return commentDao.findAll();
+        return commentMapper.getAll();
     }
 
     /**
@@ -50,7 +50,7 @@ public class CommentManager {
      * @return
      */
     public Long count() {
-        return commentDao.count();
+        return commentMapper.count();
     }
 
     /**
@@ -60,7 +60,7 @@ public class CommentManager {
      * @return
      */
     public Long count(Long articleId) {
-        return commentDao.count(articleId);
+        return commentMapper.countByArticleId(articleId);
     }
 
     /**
@@ -72,7 +72,7 @@ public class CommentManager {
     @Transactional(readOnly = false)
     public int save(Comment comment) {
         logger.info("New Comment: {}", comment.toString());
-        return commentDao.save(comment);
+        return commentMapper.save(comment);
     }
 
     /**
@@ -85,7 +85,7 @@ public class CommentManager {
     @Transactional(readOnly = false)
     public int update(Long id, String column) {
         logger.info("Update Comment: ", id + column);
-        return commentDao.update(id, column);
+        return commentMapper.updateBool(id, column);
     }
 
     /**
@@ -97,7 +97,7 @@ public class CommentManager {
     @Transactional(readOnly = false)
     public void batchAudit(String[] ids) {
         for (String id : ids) {
-            commentDao.update(Long.parseLong(id), "status");
+            commentMapper.updateBool(Long.parseLong(id), "status");
             logger.info("Update Comment: id={}, column=status.", Long.parseLong(id));
         }
     }
@@ -110,7 +110,7 @@ public class CommentManager {
     @Transactional(readOnly = false)
     public void batchDelete(String[] ids) {
         for (String id : ids) {
-            commentDao.update(Long.parseLong(id), "deleted");
+            commentMapper.updateBool(Long.parseLong(id), "deleted");
             logger.info("Update Comment: id={}, column=deleted.", Long.parseLong(id));
         }
     }
@@ -122,12 +122,12 @@ public class CommentManager {
      */
     @Transactional(readOnly = false)
     public int delete() {
-        return commentDao.delete();
+        return commentMapper.deleteByTask();
     }
 
     @Autowired
-    public void setCommentDao(@Qualifier("commentDao") CommentDao commentDao) {
-        this.commentDao = commentDao;
+    public void setCommentMapper(@Qualifier("commentMapper") CommentMapper commentMapper) {
+        this.commentMapper = commentMapper;
     }
 
 }

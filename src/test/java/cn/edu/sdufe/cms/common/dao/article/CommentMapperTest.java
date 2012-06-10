@@ -17,12 +17,12 @@ import org.springside.modules.test.spring.SpringTransactionalTestCase;
  * Time: 下午6:53
  */
 @ContextConfiguration(locations = {"/applicationContext.xml"})
-public class CommentDaoTest extends SpringTransactionalTestCase {
+public class CommentMapperTest extends SpringTransactionalTestCase {
 
-    private static Logger logger = LoggerFactory.getLogger(CommentDaoTest.class);
+    private static Logger logger = LoggerFactory.getLogger(CommentMapperTest.class);
 
     @Autowired
-    private CommentDao commentDao;
+    private CommentMapper commentMapper;
 
     @Before
     public void setUp() throws Exception {
@@ -31,8 +31,8 @@ public class CommentDaoTest extends SpringTransactionalTestCase {
 
     @Test
     public void testGetCount() throws Exception {
-        Long count = commentDao.count();
-        logger.info("Comment count: {}",count);
+        Long count = commentMapper.count();
+        logger.info("Comment count: {}", count);
         Assert.assertTrue(count > 0);
     }
 

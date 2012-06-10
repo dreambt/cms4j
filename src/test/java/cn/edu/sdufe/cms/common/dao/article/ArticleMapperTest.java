@@ -17,10 +17,10 @@ import org.springside.modules.test.spring.SpringTransactionalTestCase;
  * Time: 下午6:44
  */
 @ContextConfiguration(locations = {"/applicationContext.xml"})
-public class ArticleDaoTest extends SpringTransactionalTestCase {
+public class ArticleMapperTest extends SpringTransactionalTestCase {
 
     @Autowired
-    private ArticleDao articleDao;
+    private ArticleMapper articleMapper;
 
     @Before
     public void setUp() throws Exception {
@@ -31,7 +31,7 @@ public class ArticleDaoTest extends SpringTransactionalTestCase {
     public void crudEntityWithArticle() throws Exception {
         //新建并保存带权限组的用户
         Article article = ArticleData.getRandomArticle();
-        Assert.assertEquals(1, articleDao.update(article));
+        Assert.assertEquals(1, articleMapper.update(article));
 
         // 获取
 

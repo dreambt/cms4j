@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="ACCOUNT">
+<mapper namespace="cn.edu.sdufe.cms.common.dao.account.UserMapper">
+
     <resultMap id="userDetailMap" type="User">
         <id property="id" column="id"/>
         <result property="email" column="email"/>
@@ -20,18 +21,19 @@
         <result property="lastModifiedDate" column="last_modified_date"/>
         <result property="createdDate" column="created_date"/>
         <result property="deleted" column="deleted"/>
-        <collection property="groupList" column="group_id" javaType="ArrayList" ofType="Group" columnPrefix="group_" resultMap="groupDetailMap" />
+        <collection property="groupList" column="group_id" javaType="ArrayList" ofType="Group" columnPrefix="group_"
+                    resultMap="cn.edu.sdufe.cms.common.dao.account.GroupMapper.groupDetailMap"/>
     </resultMap>
 
     <!-- 获取用户数量 -->
-    <select id="getUserCount" resultType="Long">
+    <select id="count" resultType="Long">
         SELECT COUNT( id )
         FROM cms_user
         LIMIT 1
 	</select>
 
     <!-- 查询用户 -->
-    <select id="getUser" parameterType="Long" resultMap="userDetailMap">
+    <select id="get" parameterType="Long" resultMap="userDetailMap">
         SELECT U.id, U.group_id, email, username, PASSWORD , salt, STATUS , deleted,
         email_status, avatar_status, photo_url, time_offset, last_ip, last_time, last_act_time, created_date, last_modified_date,
         group_name as group_group_name, permission as group_permission
@@ -41,7 +43,7 @@
         WHERE U.id =#{id}
     </select>
 
-    <select id="getUserByEmail" parameterType="String" resultMap="userDetailMap">
+    <select id="getByEmail" parameterType="String" resultMap="userDetailMap">
         SELECT U.id, U.group_id, email, username, PASSWORD , salt, STATUS , deleted,
         group_name as group_group_name, permission as group_permission
         FROM cms_user AS U
@@ -51,7 +53,7 @@
     </select>
 
     <!-- 获取所有用户 -->
-    <select id="getAllUser" resultMap="userDetailMap">
+    <select id="getAll" resultMap="userDetailMap">
         SELECT U.id, U.group_id, email, username, PASSWORD , salt,STATUS , deleted,
         email_status, avatar_status, photo_url, time_offset, last_ip, last_time, last_act_time, created_date, last_modified_date,
         group_name as group_group_name, permission as group_permission
@@ -68,19 +70,19 @@
 	</select>
 
     <!-- 更新用户 -->
-    <insert id="saveUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+    <insert id="save" parameterType="User" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO cms_user (id, group_id, email, username, password, salt, status, email_status, avatar_status, photo_url, time_offset, last_ip, last_time, last_act_time, created_date, deleted)
         VALUES (#{id},#{groupId},#{email},#{username},#{password},#{salt},#{status},#{emailStatus},#{avatarStatus},#{photoURL},#{timeOffset},#{lastIP},#{lastTime},#{lastActTime},null,0)
 	</insert>
 
     <!-- 更新用户 -->
-    <delete id="deleteUser">
+    <delete id="deleteByTask">
         DELETE FROM cms_user
         WHERE deleted=1
 	</delete>
 
     <!-- 更新用户 -->
-    <update id="updateUser" parameterType="User">
+    <update id="update" parameterType="User">
         UPDATE cms_user
         <set>
             <if test="email != null and email !=''">
@@ -128,14 +130,14 @@
     </update>
 
     <!-- 更新用户bool字 -->
-    <update id="updateUserBool" parameterType="map">
+    <update id="updateBool" parameterType="map">
         UPDATE cms_user
         SET ${column}=1-${column}
         WHERE id=#{id}
     </update>
 
     <!-- 查询用户 -->
-    <select id="searchUser" parameterType="map" resultMap="userDetailMap">
+    <select id="search" parameterType="map" resultMap="userDetailMap">
         select *
         from cms_user
         <where>

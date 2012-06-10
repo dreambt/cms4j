@@ -1,6 +1,6 @@
 package cn.edu.sdufe.cms.common.service.account;
 
-import cn.edu.sdufe.cms.common.dao.account.GroupDao;
+import cn.edu.sdufe.cms.common.dao.account.GroupMapper;
 import cn.edu.sdufe.cms.common.entity.account.Group;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +24,7 @@ public class GroupManager {
 
     private static final Logger logger = LoggerFactory.getLogger(GroupManager.class);
 
-    private GroupDao groupDao;
+    private GroupMapper groupMapper;
 
     /**
      * 获取用户组
@@ -34,7 +34,7 @@ public class GroupManager {
      */
     public Group getGroup(Long id) {
         logger.info("Info: {}", "getGroup where id=" + id);
-        return groupDao.getGroup(id);
+        return groupMapper.get(id);
     }
 
     /**
@@ -44,7 +44,7 @@ public class GroupManager {
      */
     public List<Group> getAllGroup() {
         logger.info("Info: {}", "getAllGroup");
-        return groupDao.getAllGroup();
+        return groupMapper.getAll();
     }
 
     /**
@@ -54,11 +54,11 @@ public class GroupManager {
      */
     public Long getCount() {
         logger.info("Info: {}", "getCount");
-        return groupDao.count();
+        return groupMapper.count();
     }
 
     @Autowired
-    public void setGroupDao(@Qualifier("groupDao") GroupDao groupDao) {
-        this.groupDao = groupDao;
+    public void setGroupMapper(@Qualifier("groupMapper") GroupMapper groupMapper) {
+        this.groupMapper = groupMapper;
     }
 }

@@ -19,10 +19,10 @@ import java.util.List;
  * Time: 上午11:38
  */
 @ContextConfiguration(locations = {"classpath*:/applicationContext.xml"})
-public class AgencyDaoTest extends SpringTransactionalTestCase {
+public class AgencyMapperTest extends SpringTransactionalTestCase {
 
     @Autowired
-    private AgencyDao agencyDao;
+    private AgencyMapper agencyMapper;
     private Agency agency;
 
     @Before
@@ -32,36 +32,36 @@ public class AgencyDaoTest extends SpringTransactionalTestCase {
 
     @Test
     public void testGetAgency() {
-        Agency agency = agencyDao.getAgency(1L);
+        Agency agency = agencyMapper.get(1L);
         Assert.assertEquals("research", agency.getTitle());
     }
 
     @Test
     public void testGetAllAgency() {
-        List<Agency> agencies = agencyDao.getAllAgency();
+        List<Agency> agencies = agencyMapper.getAll();
         Assert.assertEquals(2, agencies.size());
     }
 
     @Test
     public void testSave() {
         agency = AgencyData.getRandomAgency();
-        int result = agencyDao.save(agency);
+        int result = agencyMapper.save(agency);
         Assert.assertEquals(1, result);
     }
 
     @Test
     public void testDeleteAgency() {
-        int result = agencyDao.deleteAgency();
+        int result = agencyMapper.delete(1L);
         Assert.assertEquals(1, result);
     }
 
     @Test
     public void testUpdateAgency() {
-        agency = agencyDao.getAgency(1L);
+        agency = agencyMapper.get(1L);
         agency.setTitle("b");
-        int result = agencyDao.updateAgency(agency);
+        int result = agencyMapper.update(agency);
         Assert.assertEquals(1, result);
-        agency = agencyDao.getAgency(1L);
+        agency = agencyMapper.get(1L);
         Assert.assertEquals("b", agency.getTitle());
     }
 }

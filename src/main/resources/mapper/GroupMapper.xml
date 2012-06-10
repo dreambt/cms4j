@@ -2,33 +2,33 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="ACCOUNT">
+<mapper namespace="cn.edu.sdufe.cms.common.dao.account.GroupMapper">
+
     <resultMap id="groupDetailMap" type="Group">
         <id property="id" column="id"/>
         <result property="groupName" column="group_name"/>
         <collection property="permissionList" javaType="String">
-            <result property="id" column="permission" />
+            <result property="id" column="permission"/>
         </collection>
     </resultMap>
 
     <!--获取用户组数量 -->
-    <select id="getGroupCount" resultType="Long">
+    <select id="count" resultType="Long">
         SELECT count(id)
         FROM cms_group
         LIMIT 1
 	</select>
 
     <!-- 获取用户组 -->
-    <select id="getGroup" parameterType="Long" resultMap="groupDetailMap">
+    <select id="get" parameterType="Long" resultMap="groupDetailMap">
         SELECT G.id, group_name, permission
         FROM cms_group as G
         LEFT OUTER JOIN cms_group_permission as P ON G.id=P.group_id
         WHERE G.id=#{groupId}
-        LIMIT 99
 	</select>
 
     <!-- 获取用户编号为id的用户组
-    <select id="getGroupByUserId" parameterType="Long" resultMap="groupDetailMap">
+    <select id="getByUserId" parameterType="Long" resultMap="groupDetailMap">
         SELECT group_id AS id, group_name
         FROM cms_user_group, cms_group
         WHERE cms_user_group.group_id = cms_group.id
@@ -37,7 +37,7 @@
 	</select>-->
 
     <!-- 获取用户组 -->
-    <select id="getAllGroup" resultMap="groupDetailMap">
+    <select id="getAll" resultMap="groupDetailMap">
         SELECT G.id, group_name, permission
         FROM cms_group as G
         LEFT OUTER JOIN cms_group_permission as P ON G.id=P.group_id
@@ -45,7 +45,7 @@
 	</select>
 
     <!-- 查询用户 -->
-    <select id="searchGroup" parameterType="map" resultType="ArrayList">
+    <select id="search" parameterType="map" resultType="ArrayList">
         SELECT *
         FROM cms_group
         <where>
@@ -56,7 +56,7 @@
                 and group_name=#{groupName}
             </if>
         </where>
-        ORDER BY ${Sort} ${Direction}
+        ORDER BY id DESC
     </select>
 
 </mapper>

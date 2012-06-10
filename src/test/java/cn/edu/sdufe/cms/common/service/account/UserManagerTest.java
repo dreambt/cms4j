@@ -1,6 +1,6 @@
 package cn.edu.sdufe.cms.common.service.account;
 
-import cn.edu.sdufe.cms.common.dao.account.UserDao;
+import cn.edu.sdufe.cms.common.dao.account.UserMapper;
 import cn.edu.sdufe.cms.common.entity.account.User;
 import cn.edu.sdufe.cms.common.service.ServiceException;
 import org.junit.After;
@@ -25,7 +25,7 @@ public class UserManagerTest {
     private UserManager userManager;
 
     @Mock
-    private UserDao mockUserDao;
+    private UserMapper mockUserMapper;
 
     @Before
     public void setUp() throws Exception {
@@ -33,7 +33,7 @@ public class UserManagerTest {
         ShiroTestHelper.mockSubject("Baitao.jibt");
 
         userManager = new UserManager();
-        userManager.setUserDao(mockUserDao);
+        userManager.setUserMapper(mockUserMapper);
     }
 
     @After

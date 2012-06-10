@@ -18,10 +18,10 @@ import org.springside.modules.test.spring.SpringTransactionalTestCase;
  * Time: 下午2:33
  */
 @ContextConfiguration(locations = {"classpath*:/applicationContext.xml"})
-public class TeacherDaoTest extends SpringTransactionalTestCase {
+public class TeacherMapperTest extends SpringTransactionalTestCase {
 
     @Autowired
-    private TeacherDao teacherDao;
+    private TeacherMapper teacherMapper;
 
     @Before
     public void setUp() throws Exception {
@@ -30,20 +30,20 @@ public class TeacherDaoTest extends SpringTransactionalTestCase {
 
     @Test
     public void testGetTeacher() throws Exception {
-        Teacher teacher = teacherDao.getTeacher(1L);
-        Assert.assertEquals("1",teacher.getArticle().getId().toString());
+        Teacher teacher = teacherMapper.get(1L);
+        Assert.assertEquals("1", teacher.getArticle().getId().toString());
         Assert.assertEquals("CFA 特许金融分析师1", teacher.getArticle().getSubject());
     }
 
     @Test
     public void testGetArticleId() throws Exception {
-        int result =  teacherDao.getArticleId(1L).intValue();
+        int result = teacherMapper.getArticleId(1L).intValue();
         Assert.assertEquals(1, result);
     }
 
     @Test
     public void testGetAllTeacher() throws Exception {
-        int result = teacherDao.getAllTeacher().size();
+        int result = teacherMapper.getAll().size();
         Assert.assertEquals(2, result);
     }
 
@@ -51,8 +51,8 @@ public class TeacherDaoTest extends SpringTransactionalTestCase {
     @Rollback(false)
     public void testSave() throws Exception {
         Teacher teacher = TeacherData.getTeacher();
-        int result = teacherDao.save(teacher);
+        int result = teacherMapper.save(teacher);
         //System.out.println(teacher.getId());
-       Assert.assertEquals(1, result);
+        Assert.assertEquals(1, result);
     }
 }

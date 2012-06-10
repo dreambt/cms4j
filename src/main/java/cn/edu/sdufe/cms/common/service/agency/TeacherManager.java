@@ -1,8 +1,8 @@
 package cn.edu.sdufe.cms.common.service.agency;
 
-import cn.edu.sdufe.cms.common.dao.agency.TeacherDao;
-import cn.edu.sdufe.cms.common.dao.article.ArticleDao;
-import cn.edu.sdufe.cms.common.dao.article.CategoryDao;
+import cn.edu.sdufe.cms.common.dao.agency.TeacherMapper;
+import cn.edu.sdufe.cms.common.dao.article.ArticleMapper;
+import cn.edu.sdufe.cms.common.dao.article.CategoryMapper;
 import cn.edu.sdufe.cms.common.entity.agency.Teacher;
 import cn.edu.sdufe.cms.common.entity.article.Article;
 import cn.edu.sdufe.cms.common.service.article.ArticleManager;
@@ -30,9 +30,9 @@ public class TeacherManager {
     private static final Logger logger = LoggerFactory.getLogger(TeacherManager.class);
 
     private ArticleManager articleManager;
-    private TeacherDao teacherDao;
-    private ArticleDao articleDao;
-    private CategoryDao categoryDao;
+    private TeacherMapper teacherMapper;
+    private ArticleMapper articleMapper;
+    private CategoryMapper categoryMapper;
     private String UPLOAD_DIR = "static/uploads/teacher/";
 
     /**
@@ -42,7 +42,7 @@ public class TeacherManager {
      * @return
      */
     public Teacher getTeacher(Long id) {
-        return teacherDao.getTeacher(id);
+        return teacherMapper.get(id);
     }
 
     /**
@@ -52,7 +52,7 @@ public class TeacherManager {
      * @return
      */
     public Long getArticleId(Long id) {
-        return teacherDao.getArticleId(id);
+        return teacherMapper.getArticleId(id);
     }
 
     /**
@@ -61,7 +61,7 @@ public class TeacherManager {
      * @return
      */
     public List<Teacher> getAllTeacher() {
-        return teacherDao.getAllTeacher();
+        return teacherMapper.getAll();
 
     }
 
@@ -70,7 +70,7 @@ public class TeacherManager {
      */
     @Transactional(readOnly = false)
     public int delete(long id) {
-        return teacherDao.updateTeacherBool(id, "deleted");
+        return teacherMapper.updateBool(id, "deleted");
     }
 
     /**
@@ -82,7 +82,7 @@ public class TeacherManager {
             if (id.length() == 0) {
                 continue;
             }
-            teacherDao.updateTeacherBool(Long.parseLong(id), "deleted");
+            teacherMapper.updateBool(Long.parseLong(id), "deleted");
         }
     }
 
@@ -102,7 +102,7 @@ public class TeacherManager {
             String fileName = uploadFile.uploadFile(file, request, UPLOAD_DIR);
             teacher.setImageUrl(fileName);
         }
-        return teacherDao.updateTeacher(teacher);
+        return teacherMapper.update(teacher);
     }
 
     /**
@@ -110,7 +110,7 @@ public class TeacherManager {
      */
     @Transactional(readOnly = false)
     public void showIndex(Long id) {
-        teacherDao.updateTeacherBool(id, "top");
+        teacherMapper.updateBool(id, "top");
     }
 
     /**
@@ -120,7 +120,7 @@ public class TeacherManager {
     @Transactional(readOnly = false)
     public int save(MultipartFile file, Teacher teacher, HttpServletRequest request) {
         Article article = teacher.getArticle();
-        article.setCategory(categoryDao.findOne(13L));
+        article.setCategory(categoryMapper.get(13L));
         article.setSubject(teacher.getTeacherName());
         article.setStatus(true);
         if (articleManager.save(article, request) > 0) {
@@ -130,7 +130,7 @@ public class TeacherManager {
                 teacher.setImageUrl(fileName);
             }
             teacher.setArticle(article);
-            return teacherDao.save(teacher);
+            return teacherMapper.save(teacher);
         }
         return 0;
     }
@@ -141,17 +141,17 @@ public class TeacherManager {
     }
 
     @Autowired
-    public void setTeacherDao(TeacherDao teacherDao) {
-        this.teacherDao = teacherDao;
+    public void setTeacherMapper(TeacherMapper teacherMapper) {
+        this.teacherMapper = teacherMapper;
     }
 
     @Autowired
-    public void setArticleDao(ArticleDao articleDao) {
-        this.articleDao = articleDao;
+    public void setArticleMapper(ArticleMapper articleMapper) {
+        this.articleMapper = articleMapper;
     }
 
     @Autowired
-    public void setCategoryDao(CategoryDao categoryDao) {
-        this.categoryDao = categoryDao;
+    public void setCategoryMapper(CategoryMapper categoryMapper) {
+        this.categoryMapper = categoryMapper;
     }
 }

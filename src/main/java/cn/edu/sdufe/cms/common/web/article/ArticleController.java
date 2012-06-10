@@ -92,7 +92,7 @@ public class ArticleController {
     @RequiresPermissions("article:list")
     @RequestMapping(value = {"listAll", ""})
     public String listAllArticle(Model model) {
-        model.addAttribute("articles", articleManager.findAll(0, ARTICLE_NUM));
+        model.addAttribute("articles", articleManager.getAll(0, ARTICLE_NUM));
         return "dashboard/article/listAll";
     }
 
@@ -107,7 +107,7 @@ public class ArticleController {
     @RequestMapping(value = "listAll/ajax")
     @ResponseBody
     public List<Article> ajaxAllArticle(@RequestParam("offset") int offset, @RequestParam("limit") int limit) {
-        return articleManager.findAll(offset, limit);
+        return articleManager.getAll(offset, limit);
     }
 
 

@@ -1,7 +1,7 @@
 package cn.edu.sdufe.cms.common.service.article;
 
-import cn.edu.sdufe.cms.common.dao.article.ArchiveDao;
-import cn.edu.sdufe.cms.common.dao.article.ArticleDao;
+import cn.edu.sdufe.cms.common.dao.article.ArchiveMapper;
+import cn.edu.sdufe.cms.common.dao.article.ArticleMapper;
 import cn.edu.sdufe.cms.common.entity.article.Archive;
 import cn.edu.sdufe.cms.common.entity.article.Article;
 import org.joda.time.DateTime;
@@ -27,8 +27,8 @@ public class ArchiveManager {
 
     private static final Logger logger = LoggerFactory.getLogger(ArchiveManager.class);
 
-    private ArchiveDao archiveDao;
-    private ArticleDao articleDao;
+    private ArchiveMapper archiveMapper;
+    private ArticleMapper articleMapper;
 
     /**
      * 获得所有归档
@@ -36,7 +36,7 @@ public class ArchiveManager {
      * @return
      */
     public List<Archive> getAll() {
-        return archiveDao.findAll();
+        return archiveMapper.getAll();
     }
 
     /**
@@ -45,7 +45,7 @@ public class ArchiveManager {
      * @return
      */
     public List<Archive> getTopTen() {
-        return archiveDao.getTopTen();
+        return archiveMapper.getTopTen();
     }
 
     /**
@@ -55,7 +55,7 @@ public class ArchiveManager {
      * @return
      */
     public Archive getByArchiveId(Long id) {
-        return archiveDao.findOne(id);
+        return archiveMapper.get(id);
     }
 
     /**
@@ -65,7 +65,7 @@ public class ArchiveManager {
      * @return
      */
     public List<Long> getArticleIdByArchiveId(Long archiveId, int offset, int limit) {
-        return archiveDao.getArticleIdByArchiveId(archiveId, offset, limit);
+        return archiveMapper.getArticleIdByArchiveId(archiveId, offset, limit);
     }
 
     /**
@@ -79,22 +79,22 @@ public class ArchiveManager {
         int month = dateTime.getMonthOfYear();
 
         String title = String.format("%04d年%02d月", year, month);
-        if (null != archiveDao.findByTitle(title)) {
+        if (null != archiveMapper.getByTitle(title)) {
             return;
         }
 
         //获得指定月份的所有文章
-        List<Article> articles = articleDao.findByMonth(dateTime.toDate());
+        List<Article> articles = articleMapper.getByMonth(dateTime.toDate());
         if (articles.size() > 0) {
             Archive archive = new Archive();
             archive.setTitle(title);
             archive.setArticleCount(articles.size());
-            archiveDao.save(archive);
+            archiveMapper.save(archive);
             //加入归档文章对应表
-            Long archiveId = archiveDao.findByTitle(String.format("%04d年%02d月", year, month)).getId();
+            Long archiveId = archiveMapper.getByTitle(String.format("%04d年%02d月", year, month)).getId();
             for (Article article : articles) {
                 Long articleId = article.getId();
-                archiveDao.saveAA(archiveId, articleId);
+                archiveMapper.saveAA(archiveId, articleId);
             }
         }
     }
@@ -110,25 +110,26 @@ public class ArchiveManager {
         int month = dateTime.getMonthOfYear();
 
         String title = String.format("%04d年%02d月", year, month);
-        if (null != archiveDao.findByTitle(title)) {
+        if (null != archiveMapper.getByTitle(title)) {
             return;
         }
 
         //获得指定月份的所有文章
-        List<Article> articles = articleDao.findByMonth(dateTime.toDate());
+        List<Article> articles = articleMapper.getByMonth(dateTime.toDate());
         if (articles.size() > 0) {
             Archive archive = new Archive();
             archive.setTitle(title);
             archive.setArticleCount(articles.size());
-            archiveDao.save(archive);
+            archiveMapper.save(archive);
             //加入归档文章对应表
-            Long archiveId = archiveDao.findByTitle(String.format("%04d年%02d月", year, month)).getId();
+            Long archiveId = archiveMapper.getByTitle(String.format("%04d年%02d月", year, month)).getId();
             for (Article article : articles) {
                 Long articleId = article.getId();
-                archiveDao.saveAA(archiveId, articleId);
+                archiveMapper.saveAA(archiveId, articleId);
             }
         }
     }
+
     /**
      * 删除编号为id的归类
      *
@@ -136,7 +137,7 @@ public class ArchiveManager {
      */
     @Transactional(readOnly = false)
     public void delete(Long id) {
-        archiveDao.delete(id);
+        archiveMapper.delete(id);
     }
 
     /**
@@ -144,11 +145,11 @@ public class ArchiveManager {
      */
     @Transactional(readOnly = false)
     public void update(Archive archive) {
-        List<Long> archives = archiveDao.getAllArticleIdByArchiveId(archive.getId());
+        List<Long> archives = archiveMapper.getAllArticleIdByArchiveId(archive.getId());
         if (null == archives || 0 == archives.size()) {
-            archiveDao.delete(archive.getId());
+            archiveMapper.delete(archive.getId());
         } else if (archive.getArticleCount() != archives.size()) {
-            archiveDao.updateArchive(archive);
+            archiveMapper.update(archive);
         }
     }
 
@@ -157,7 +158,7 @@ public class ArchiveManager {
      */
     @Transactional(readOnly = false)
     public void batchUpdate() {
-        List<Archive> archives = archiveDao.findAll();
+        List<Archive> archives = archiveMapper.getAll();
         if (null != archives) {
             for (Archive archive : archives) {
                 this.update(archive);
@@ -166,12 +167,12 @@ public class ArchiveManager {
     }
 
     @Autowired
-    public void setArchiveDao(@Qualifier("archiveDao") ArchiveDao archiveDao) {
-        this.archiveDao = archiveDao;
+    public void setArchiveMapper(@Qualifier("archiveMapper") ArchiveMapper archiveMapper) {
+        this.archiveMapper = archiveMapper;
     }
 
     @Autowired
-    public void setArticleDao(@Qualifier("articleDao") ArticleDao articleDao) {
-        this.articleDao = articleDao;
+    public void setArticleMapper(@Qualifier("articleMapper") ArticleMapper articleMapper) {
+        this.articleMapper = articleMapper;
     }
 }

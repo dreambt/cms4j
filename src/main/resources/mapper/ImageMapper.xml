@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="Image">
+<mapper namespace="cn.edu.sdufe.cms.common.dao.image.ImageMapper">
+
     <resultMap id="imageDetailMap" type="Image">
         <id property="id" column="id"/>
         <result property="title" column="title"/>
@@ -18,7 +19,7 @@
     <!--
         获取image数量
     -->
-    <select id="getImageCount" resultType="Long">
+    <select id="count" resultType="Long">
         SELECT COUNT(id)
         FROM cms_image
         LIMIT 1
@@ -27,28 +28,30 @@
     <!--
         获取image
     -->
-    <select id="getImage" parameterType="Long" resultMap="imageDetailMap">
-        SELECT <include refid="imageColumns"/>
+    <select id="get" parameterType="Long" resultMap="imageDetailMap">
+        SELECT
+        <include refid="imageColumns"/>
         FROM cms_image
         WHERE id =#{id}
         ORDER BY id DESC
         LIMIT 1
-	</select>
+    </select>
 
     <!--
         获取image
     -->
-    <select id="getAllImage" resultMap="imageDetailMap">
-        SELECT <include refid="imageColumns"/>
+    <select id="getAll" resultMap="imageDetailMap">
+        SELECT
+        <include refid="imageColumns"/>
         FROM cms_image
         ORDER BY id DESC
         LIMIT 30
-	</select>
+    </select>
 
     <!--
         新增image
     -->
-    <insert id="saveImage" parameterType="Image" useGeneratedKeys="true" keyProperty="id">
+    <insert id="save" parameterType="Image" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO cms_image (title, image_url, description, show_index, created_date)
 		values (#{title}, #{imageUrl}, #{description}, #{showIndex}, null)
 	</insert>
@@ -56,7 +59,7 @@
     <!--
         删除image
     -->
-    <delete id="deleteImage" parameterType="Long">
+    <delete id="delete" parameterType="Long">
         DELETE FROM cms_image
         WHERE id=#{id}
 	</delete>
@@ -64,7 +67,7 @@
     <!--
         修改image
     -->
-    <update id="updateImage" parameterType="Image">
+    <update id="update" parameterType="Image">
         UPDATE cms_image
         <set>
             <if test="title != null and title !=''">
@@ -82,10 +85,10 @@
             last_modified_date=null
         </set>
         WHERE id=#{id}
-	</update>
+    </update>
 
     <!-- 更新图片bool字 -->
-    <update id="updateImageBool" parameterType="map">
+    <update id="updateBool" parameterType="map">
         UPDATE cms_image
         SET ${column}=1-${column},last_modified_date=null
         WHERE id=#{id}
@@ -94,8 +97,9 @@
     <!--
          查询图片
      -->
-    <select id="searchImage" parameterType="map" resultMap="imageDetailMap">
-        SELECT <include refid="imageColumns"/>
+    <select id="search" parameterType="map" resultMap="imageDetailMap">
+        SELECT
+        <include refid="imageColumns"/>
         FROM cms_image
         <where>
             <if test="title != null and title != ''">

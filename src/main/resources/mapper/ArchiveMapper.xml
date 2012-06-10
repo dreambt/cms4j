@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="Archive">
+<mapper namespace="cn.edu.sdufe.cms.common.dao.article.ArchiveMapper">
+
     <resultMap id="archiveDetailMap" type="Archive">
         <id property="id" column="id"/>
         <result property="title" column="title"/>
@@ -13,51 +14,45 @@
 
     <sql id="archiveColumns">id, title, article_count, created_date, last_modified_date</sql>
 
-    <!--
-        获取Archive
-    -->
-    <select id="getArchive" parameterType="int" resultMap="archiveDetailMap">
-        select <include refid="archiveColumns"/>
+    <!-- 获取Archive -->
+    <select id="get" parameterType="int" resultMap="archiveDetailMap">
+        select
+        <include refid="archiveColumns"/>
         from cms_archive
         where id=#{id}
         order by id DESC
         limit 1
-	</select>
+    </select>
 
-    <!--
-        获取Archive
-    -->
-    <select id="getArchiveByTitle" parameterType="String" resultType="Archive">
-        select <include refid="archiveColumns"/>
+    <!-- 获取Archive -->
+    <select id="getByTitle" parameterType="String" resultType="Archive">
+        select
+        <include refid="archiveColumns"/>
         from cms_archive
         where title=#{title}
         order by title ASC
         limit 1
-	</select>
+    </select>
 
-    <!--
-        获取Archive
-    -->
-    <select id="getAllArchive" resultMap="archiveDetailMap">
-        select <include refid="archiveColumns"/>
+    <!-- 获取Archive -->
+    <select id="getAll" resultMap="archiveDetailMap">
+        select
+        <include refid="archiveColumns"/>
         from cms_archive
         order by title ASC
         LIMIT 30
-	</select>
+    </select>
 
-    <!--
-         获取Top 10
-     -->
-    <select id="getTopTenArchive" resultMap="archiveDetailMap">
-        SELECT <include refid="archiveColumns"/>
+    <!-- 获取Top 10 -->
+    <select id="getTopTen" resultMap="archiveDetailMap">
+        SELECT
+        <include refid="archiveColumns"/>
         FROM cms_archive
         ORDER BY title ASC
         LIMIT 10
-	</select>
+    </select>
 
-    <!--
-        根据archive编号获得article编号, 分页
-    -->
+    <!-- 根据archive编号获得article编号, 分页 -->
     <select id="getArticleIdByArchiveId" parameterType="map" resultType="Long">
         select article_id
         from cms_archive_article
@@ -66,28 +61,22 @@
         LIMIT ${offset}, ${limit}
     </select>
 
-    <!--
-        根据archive编号获得article编号
-    -->
+    <!-- 根据archive编号获得article编号 -->
     <select id="getAllArticleIdByArchiveId" parameterType="Long" resultType="Long">
         select article_id
         from cms_archive_article
         where archive_id=#{archiveId}
     </select>
 
-    <!--
-        保存Archive
-    -->
-    <insert id="saveArchive" parameterType="Archive">
+    <!-- 保存Archive -->
+    <insert id="save" parameterType="Archive">
         INSERT INTO cms_archive
         (title, article_count, created_date)
         VALUES
         (#{title}, #{articleCount}, null)
     </insert>
 
-    <!--
-        保存Archive_Article
-    -->
+    <!-- 保存Archive_Article -->
     <insert id="saveAA" parameterType="map">
         INSERT INTO cms_archive_article
         (archive_id, article_id)
@@ -95,27 +84,21 @@
         (#{archiveId}, #{articleId})
     </insert>
 
-    <!--
-        删除Archive
-    -->
-    <delete id="deleteArchive" parameterType="Long">
+    <!-- 删除Archive -->
+    <delete id="delete" parameterType="Long">
         DELETE FROM cms_archive
         WHERE id=#{id}
         LIMIT 1
     </delete>
 
-    <!--
-        根据archive_id删除Archive_Article
-    -->
+    <!-- 根据archive_id删除Archive_Article -->
     <delete id="deleteAAByArchiveId" parameterType="Long">
         DELETE FROM cms_archive_article
         WHERE archive_id=#{archiveId}
         LIMIT 1
     </delete>
 
-    <!--
-        根据article_id删除Archive_Article
-    -->
+    <!-- 根据article_id删除Archive_Article -->
     <delete id="deleteAAByArticleId">
         DELETE FROM cms_archive_article
         WHERE article_id IN
@@ -124,10 +107,8 @@
         </foreach>
     </delete>
 
-    <!--
-        更新归档
-    -->
-    <update id="updateArchive" parameterType="Archive">
+    <!-- 更新归档 -->
+    <update id="update" parameterType="Archive">
         UPDATE cms_archive
         <set>
             <if test="articleCount != null and articleCount != ''">

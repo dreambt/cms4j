@@ -1,6 +1,6 @@
 package cn.edu.sdufe.cms.common.service.account;
 
-import cn.edu.sdufe.cms.common.dao.account.UserDao;
+import cn.edu.sdufe.cms.common.dao.account.UserMapper;
 import cn.edu.sdufe.cms.common.entity.account.User;
 import cn.edu.sdufe.cms.common.service.ServiceException;
 import cn.edu.sdufe.cms.jms.NotifyMessageProducer;
@@ -35,7 +35,7 @@ public class UserManager {
 
     private static final Logger logger = LoggerFactory.getLogger(UserManager.class);
 
-    private UserDao userDao;
+    private UserMapper userMapper;
 
     private NotifyMessageProducer notifyProducer; //JMS消息发送
 
@@ -49,7 +49,7 @@ public class UserManager {
      */
     public User get(Long id) {
         logger.debug("== Find user by id={}.", id);
-        return userDao.findOne(id);
+        return userMapper.get(id);
     }
 
     /**
@@ -59,7 +59,7 @@ public class UserManager {
      */
     public List<User> getAll() {
         logger.debug("== Find all user.");
-        return userDao.findAll();
+        return userMapper.getAll();
     }
 
     /**
@@ -70,7 +70,7 @@ public class UserManager {
      */
     public User findUserByEmail(String email) {
         logger.debug("== Find user by email={}.", email);
-        return userDao.findByEmail(email);
+        return userMapper.getByEmail(email);
     }
 
     /**
@@ -80,7 +80,7 @@ public class UserManager {
      */
     public Long getCount() {
         logger.debug("== Find the number of user.");
-        return userDao.count();
+        return userMapper.count();
     }
 
     /**
@@ -110,7 +110,7 @@ public class UserManager {
         sendNotifyMessage(user);
 
         logger.debug("== Save user={}.", user.toString());
-        return userDao.save(user);
+        return userMapper.save(user);
     }
 
     /**
@@ -121,7 +121,7 @@ public class UserManager {
     @Transactional(readOnly = false)
     public int delete() throws InterruptedException {
         logger.debug("== Delete user.");
-        return userDao.delete();
+        return userMapper.deleteByTask();
     }
 
     /**
@@ -154,7 +154,7 @@ public class UserManager {
         }
 
         logger.debug("== Update user={}.", user);
-        userDao.update(user);
+        userMapper.update(user);
         sendNotifyMessage(user);
     }
 
@@ -167,7 +167,7 @@ public class UserManager {
     @Transactional(readOnly = false)
     public int update(Long id, String column) {
         logger.debug("== Update user's #{} by id={}.", column, id);
-        return userDao.update(id, column);
+        return userMapper.updateBool(id, column);
     }
 
     /**
@@ -213,7 +213,7 @@ public class UserManager {
             if (id.length() == 0) {
                 continue;
             }
-            userDao.update(Long.parseLong(id), "status");
+            userMapper.updateBool(Long.parseLong(id), "status");
         }
     }
 
@@ -228,7 +228,7 @@ public class UserManager {
             if (id.length() == 0) {
                 continue;
             }
-            userDao.update(Long.parseLong(id), "deleted");
+            userMapper.updateBool(Long.parseLong(id), "deleted");
         }
     }
 
@@ -240,7 +240,7 @@ public class UserManager {
      */
     public List<User> search(Map<String, Object> parameters) {
         logger.debug("== Find users by parameters={}.", parameters.toString());
-        return userDao.search(parameters);
+        return userMapper.search(parameters);
     }
 
     /**
@@ -262,8 +262,8 @@ public class UserManager {
     }
 
     @Autowired
-    public void setUserDao(@Qualifier("userDao") UserDao userDao) {
-        this.userDao = userDao;
+    public void setUserMapper(@Qualifier("userMapper") UserMapper userMapper) {
+        this.userMapper = userMapper;
     }
 
     @Autowired(required = false)

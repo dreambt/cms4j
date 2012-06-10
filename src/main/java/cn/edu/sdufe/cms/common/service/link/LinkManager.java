@@ -1,6 +1,6 @@
 package cn.edu.sdufe.cms.common.service.link;
 
-import cn.edu.sdufe.cms.common.dao.link.LinkDao;
+import cn.edu.sdufe.cms.common.dao.link.LinkMapper;
 import cn.edu.sdufe.cms.common.entity.link.Link;
 import cn.edu.sdufe.cms.common.entity.link.LinkCategoryEnum;
 import org.slf4j.Logger;
@@ -24,7 +24,7 @@ public class LinkManager {
 
     private static final Logger logger = LoggerFactory.getLogger(LinkManager.class);
 
-    private LinkDao linkDao;
+    private LinkMapper linkMapper;
 
     /**
      * 获得所有link
@@ -32,7 +32,7 @@ public class LinkManager {
      * @return
      */
     public List<Link> getAllLink() {
-        return linkDao.findAll();
+        return linkMapper.getAll();
     }
 
     /**
@@ -41,7 +41,7 @@ public class LinkManager {
      * @return
      */
     public List<Link> getLinkByCategory(LinkCategoryEnum category) {
-        return linkDao.getLinkByCategory(category);
+        return linkMapper.getLinkByCategory(category);
     }
 
     /**
@@ -51,7 +51,7 @@ public class LinkManager {
      * @return
      */
     public Link getLink(Long id) {
-        return linkDao.findOne(id);
+        return linkMapper.get(id);
     }
 
     /**
@@ -61,7 +61,7 @@ public class LinkManager {
      */
     @Transactional(readOnly = false)
     public int save(Link link) {
-        return linkDao.save(link);
+        return linkMapper.save(link);
     }
 
     /**
@@ -72,7 +72,7 @@ public class LinkManager {
      */
     @Transactional(readOnly = false)
     public int update(Link link) {
-        return linkDao.update(link);
+        return linkMapper.update(link);
     }
 
     /**
@@ -84,7 +84,7 @@ public class LinkManager {
      */
     @Transactional(readOnly = false)
     public int update(Long id, String column) {
-        return linkDao.update(id, column);
+        return linkMapper.updateBool(id, column);
     }
 
     /**
@@ -94,7 +94,7 @@ public class LinkManager {
      */
     @Transactional(readOnly = false)
     public int delete(Long id) {
-        return linkDao.delete(id);
+        return linkMapper.delete(id);
     }
 
     /**
@@ -110,8 +110,8 @@ public class LinkManager {
     }
 
     @Autowired
-    public void setLinkDao(@Qualifier("linkDao") LinkDao linkDao) {
-        this.linkDao = linkDao;
+    public void setLinkMapper(@Qualifier("linkMapper") LinkMapper linkMapper) {
+        this.linkMapper = linkMapper;
     }
 
 }

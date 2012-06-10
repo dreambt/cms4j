@@ -1,8 +1,7 @@
 package cn.edu.sdufe.cms.common.service.image;
 
-import cn.edu.sdufe.cms.common.dao.image.ImageDao;
+import cn.edu.sdufe.cms.common.dao.image.ImageMapper;
 import org.junit.Before;
-import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -18,14 +17,14 @@ public class ImageManagerTest {
     private ImageManager imageManager;
 
     @Mock
-    private ImageDao mockImageDao;
+    private ImageMapper mockImageMapper;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
         imageManager = new ImageManager();
-        imageManager.setImageDao(mockImageDao);
+        imageManager.setImageMapper(mockImageMapper);
     }
 
 }

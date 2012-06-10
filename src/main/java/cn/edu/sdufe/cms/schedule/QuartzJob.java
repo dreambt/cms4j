@@ -1,7 +1,7 @@
 package cn.edu.sdufe.cms.schedule;
 
-import cn.edu.sdufe.cms.common.dao.account.UserDao;
-import cn.edu.sdufe.cms.common.dao.article.CommentDao;
+import cn.edu.sdufe.cms.common.dao.account.UserMapper;
+import cn.edu.sdufe.cms.common.dao.article.CommentMapper;
 import cn.edu.sdufe.cms.common.service.article.ArchiveManager;
 import cn.edu.sdufe.cms.common.service.article.ArticleManager;
 import org.slf4j.Logger;
@@ -22,13 +22,13 @@ public class QuartzJob {
     private static final Logger logger = LoggerFactory.getLogger(QuartzJob.class);
 
     @Autowired
-    private UserDao userDao;
+    private UserMapper userMapper;
 
     @Autowired
     public ArticleManager articleManager;
 
     @Autowired
-    private CommentDao commentDao;
+    private CommentMapper commentMapper;
 
     @Autowired
     private ArchiveManager archiveManager;
@@ -38,7 +38,7 @@ public class QuartzJob {
      */
     public void execute() {
         // 查询当前系统用户数
-        Long userCount = userDao.count();
+        Long userCount = userMapper.count();
         logger.info("######### There are {} user in database. #########", userCount);
 
         // 归档
@@ -47,7 +47,7 @@ public class QuartzJob {
 
         // 删除标记为deleted的记录
         logger.info("######### There are {} article was deleted. #########", articleManager.delete());
-        logger.info("######### There are {} comment was deleted. #########", commentDao.delete());
+        logger.info("######### There are {} comment was deleted. #########", commentMapper.deleteByTask());
 
 
         // 生成文章关键词

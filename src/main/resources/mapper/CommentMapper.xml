@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="Comment">
+<mapper namespace="cn.edu.sdufe.cms.common.dao.article.CommentMapper">
+
     <resultMap id="commentDetailMap" type="Comment">
         <id property="id" column="id"/>
         <result property="username" column="username"/>
@@ -35,41 +36,44 @@
     <!--
          获取分类id的所有评论
      -->
-    <select id="getCommentByArticleId" parameterType="Long" resultMap="commentDetailMap">
-		SELECT <include refid="commentColumns"/>
-		FROM cms_comment
-		WHERE article_id =#{articleId}
-		AND STATUS =1
-		AND deleted =0
-		ORDER BY id DESC
-	</select>
+    <select id="getByArticleId" parameterType="Long" resultMap="commentDetailMap">
+        SELECT
+        <include refid="commentColumns"/>
+        FROM cms_comment
+        WHERE article_id =#{articleId}
+        AND STATUS =1
+        AND deleted =0
+        ORDER BY id DESC
+    </select>
 
     <!--
          编号为id的评论
      -->
-    <select id="getComment" parameterType="Long" resultMap="commentDetailMap">
-        SELECT <include refid="commentColumns"/>
+    <select id="get" parameterType="Long" resultMap="commentDetailMap">
+        SELECT
+        <include refid="commentColumns"/>
         FROM cms_comment
         WHERE id =#{id}
         LIMIT 1
-	</select>
+    </select>
 
     <!--
         获取最新10条评论
     -->
     <select id="getCommentRecent" resultType="ArrayList">
-        SELECT <include refid="commentColumns"/>
+        SELECT
+        <include refid="commentColumns"/>
         FROM cms_comment
         WHERE STATUS =1
         AND deleted =0
         ORDER BY id DESC
         LIMIT 10
-	</select>
+    </select>
 
     <!--
          获取评论数目
      -->
-    <select id="getCount" resultType="Long">
+    <select id="count" resultType="Long">
 		SELECT COUNT( id )
 		FROM cms_comment
 		WHERE STATUS =1
@@ -79,7 +83,7 @@
     <!--
          获取评论数目
      -->
-    <select id="getCountByArticleId" parameterType="Long" resultType="Long">
+    <select id="countByArticleId" parameterType="Long" resultType="Long">
 		SELECT COUNT( id )
 		FROM cms_comment
 		WHERE article_id =#{articleId}
@@ -88,28 +92,28 @@
 	</select>
 
     <!-- 插入评论 -->
-    <insert id="saveComment" parameterType="Comment" useGeneratedKeys="true" keyProperty="id">
+    <insert id="save" parameterType="Comment" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO cms_comment( id, article_id, username, message, post_ip, STATUS, created_date, deleted)
 		VALUES (#{id}, #{article.id}, #{username},#{message},#{postIP},0,null,0)
 	</insert>
 
     <!-- 删除评论 -->
-    <delete id="deleteComment">
+    <delete id="deleteByTask">
 		DELETE FROM cms_comment
 		WHERE deleted = 1
-        limit 500
 	</delete>
 
     <!-- 更新评论bool字段 -->
-    <update id="updateCommentBool" parameterType="map">
+    <update id="updateBool" parameterType="map">
         UPDATE cms_comment
         SET ${column}=1-${column}
         WHERE id=#{id}
     </update>
 
     <!-- 查询评论 -->
-    <select id="searchComment" parameterType="map" resultType="Comment">
-        SELECT <include refid="commentColumns"/>
+    <select id="search" parameterType="map" resultType="Comment">
+        SELECT
+        <include refid="commentColumns"/>
         FROM cms_comment
         <where>
             deleted=0 and STATUS=1
