@@ -56,13 +56,13 @@
                                       file:e:/apache-tomcat-7.0.29/application.server.properties"/>
 
         <!-- 数据源配置,使用应用内的DBCP数据库连接池 -->
-        <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
             <!-- Connection Info -->
             <property name="driverClassName" value="${jdbc.driver}"/>
             <property name="url" value="${jdbc.url}"/>
             <property name="username" value="${jdbc.username}"/>
             <property name="password" value="${jdbc.password}"/>
-            <property name="defaultAutoCommit" value="false"/>
+            <property name="maxActive" value="20"/>
         </bean>
 
         <!-- quartz使用的数据源配置 -->
@@ -107,7 +107,7 @@
           			  classpath*:/application.functional-local.properties"/>
 
         <!-- 数据源配置,使用应用内的DBCP数据库连接池 -->
-        <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
             <!-- Connection Info -->
             <property name="driverClassName" value="${jdbc.driver}"/>
             <property name="url" value="${jdbc.url}"/>
