@@ -1,7 +1,7 @@
 package cn.edu.sdufe.cms.common.entity.account;
 
 import cn.edu.sdufe.cms.common.entity.PersistableEntity;
-import cn.edu.sdufe.cms.utilities.IPEncodes;
+import cn.edu.sdufe.cms.utilities.encoder.IPEncodes;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;

@@ -1,5 +1,6 @@
 package cn.edu.sdufe.cms.utilities;
 
+import cn.edu.sdufe.cms.utilities.encoder.IPEncodes;
 import org.junit.Before;
 import org.junit.Test;
 
