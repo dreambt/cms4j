@@ -13,10 +13,10 @@
 <html>
 <head>
     <title>友情管理列表</title>
-    <link rel="stylesheet" type="text/css" href="${ctx}/static/jquery-validation/1.9.0/validate.min.css">
-    <script type="text/javascript" src="${ctx}/static/jquery-validation/1.9.0/jquery.validate.min.js"
+    <link rel="stylesheet" type="text/css" href="${ctx}/static/js/jquery-validation/validate.min.css">
+    <script type="text/javascript" src="${ctx}/static/js/jquery-validation/jquery.validate.min.js"
             charset="utf-8"></script>
-    <script type="text/javascript" src="${ctx}/static/jquery-validation/1.9.0/messages_cn.js" charset="utf-8"></script>
+    <script type="text/javascript" src="${ctx}/static/js/jquery-validation/messages_cn.js" charset="utf-8"></script>
 </head>
 <body>
 <div id="main_container" class="main_container container_16 clearfix">

@@ -31,7 +31,7 @@
     <!-- ////////////////////////////////// -->
     <!-- //      Javascript Files        // -->
     <!-- ////////////////////////////////// -->
-    <script src="${ctx}/static/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="${ctx}/static/js/jquery.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="${ctx}/static/js/DD_belatedPNG.js"></script>
     <script type="text/javascript">
         DD_belatedPNG.fix('.page-container-inner');

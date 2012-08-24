@@ -105,9 +105,9 @@
                     $('#lastmodefied').text(ChangeDateFormat(data.lastModifiedDate));
 
                     if(data.emailStatus)
-                        $('#emailstatus').attr("src","${ctx}/static/jquery-validation/1.9.0/images/checked.gif");
+                        $('#emailstatus').attr("src","${ctx}/static/js/jquery-validation/images/checked.gif");
                     else
-                        $('#emailstatus').attr("src", "${ctx}/static/jquery-validation/1.9.0/images/unchecked.gif");
+                        $('#emailstatus').attr("src", "${ctx}/static/js/jquery-validation/images/unchecked.gif");
 
                     if (data.status) {
                         $('#audit').show().text("反审核");

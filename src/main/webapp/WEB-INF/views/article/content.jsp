@@ -19,10 +19,10 @@
     <title>${article.subject} - ${article.category.categoryName}</title>
     <link rel="stylesheet" type="text/css" href="${ctx}/static/css/ui.totop.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/static/Ueditor/themes/default/ueditor.css">
-    <link href="${ctx}/static/jquery-validation/1.9.0/validate.min.css" type="text/css" rel="stylesheet"/>
+    <link href="${ctx}/static/js/jquery-validation/validate.min.css" type="text/css" rel="stylesheet"/>
     <link href="${ctx}/static/jquery/comment.css" type="text/css" rel="stylesheet"/>
-    <script src="${ctx}/static/jquery-validation/1.9.0/jquery.validate.min.js" type="text/javascript"></script>
-    <script src="${ctx}/static/jquery-validation/1.9.0/messages_cn.js" type="text/javascript"></script>
+    <script src="${ctx}/static/js/jquery-validation/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="${ctx}/static/js/jquery-validation/messages_cn.js" type="text/javascript"></script>
     <script src="${ctx}/static/jquery/comment.js" type="text/javascript"></script>
     <script src="${ctx}/static/js/jquery.ui.totop.js" type="text/javascript"></script>
 </head>

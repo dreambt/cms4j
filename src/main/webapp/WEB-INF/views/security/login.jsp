@@ -26,15 +26,15 @@
     <link rel="stylesheet" type="text/css" href="${ctx}/static/dashboard/css/buttons.css" media="screen">
     <!--[if IE 6]><link rel="stylesheet" type="text/css" href="${ctx}/static/dashboard/css/ie6.css" media="screen"/><![endif]-->
     <!--[if IE 7]><link rel="stylesheet" type="text/css" href="${ctx}/static/dashboard/css/ie.css" media="screen"/><![endif]-->
-    <link rel="stylesheet" type="text/css" href="${ctx}/static/jquery-validation/1.9.0/validate.css" />
-    <script type="text/javascript" src="${ctx}/static/jquery/1.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="${ctx}/static/js/jquery-validation/validate.css" />
+    <script type="text/javascript" src="${ctx}/static/js/jquery.min.js"></script>
     <!--[if (gte IE 6)&(lte IE 8)]><script type="text/javascript" src="${ctx}/static/js/selectivizr.js"></script><![endif]-->
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="${ctx}/static/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="${ctx}/static/js/uniform/jquery.uniform.js" charset="utf-8"></script>
     <script type="text/javascript" src="${ctx}/static/js/tipsy/jquery.tipsy.js"  charset="utf-8"></script>
     <script type="text/javascript" src="${ctx}/static/jquery/jquery.iphoneui.js"  charset="utf-8"></script>
-    <script src="${ctx}/static/jquery-validation/1.9.0/jquery.validate.min.js" type="text/javascript"></script>
-    <script src="${ctx}/static/jquery-validation/1.9.0/messages_cn.js" type="text/javascript"></script>
+    <script src="${ctx}/static/js/jquery-validation/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="${ctx}/static/js/jquery-validation/messages_cn.js" type="text/javascript"></script>
 </head>
 <body>
 <div id="login_box" class="round_all clearfix">

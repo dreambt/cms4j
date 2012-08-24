@@ -55,7 +55,7 @@
                     <tr class="gradeA">
                         <td><input type="checkbox" name="isSelected" value="${user.id}"></td>
                         <td>${user.username}</td>
-                        <td>${user.email} <c:choose><c:when test="${user.emailStatus}"><img src="${ctx}/static/jquery-validation/1.9.0/images/checked.gif"/></c:when><c:otherwise><img src="${ctx}/static/jquery-validation/1.9.0/images/unchecked.gif"/></c:otherwise></c:choose>
+                        <td>${user.email} <c:choose><c:when test="${user.emailStatus}"><img src="${ctx}/static/js/jquery-validation/images/checked.gif"/></c:when><c:otherwise><img src="${ctx}/static/js/jquery-validation/images/unchecked.gif"/></c:otherwise></c:choose>
                         </td>
                         <td><c:forEach items="${user.groupList}" begin="0" step="1" var="group">${group.groupName} </c:forEach></td>
                         <td><fmt:formatDate value="${user.createdDate}" type="both"/></td>

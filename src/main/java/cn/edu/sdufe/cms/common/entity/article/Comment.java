@@ -1,7 +1,7 @@
 package cn.edu.sdufe.cms.common.entity.article;
 
 import cn.edu.sdufe.cms.common.entity.PersistableEntity;
-import cn.edu.sdufe.cms.utilities.IPEncodes;
+import cn.edu.sdufe.cms.utilities.encoder.IPEncodes;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.validator.constraints.NotBlank;
