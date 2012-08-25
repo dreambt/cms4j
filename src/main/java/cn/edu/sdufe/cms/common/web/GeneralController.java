@@ -37,11 +37,11 @@ public class GeneralController {
     public String index(Model model, @PathVariable("str") String str) {
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("images", imageManager.findByShowIndex());
-        model.addAttribute("news1", articleManager.getByCategoryId(3L, 0, 5));
-        model.addAttribute("news2", articleManager.getByCategoryId(4L, 0, 10));
+        model.addAttribute("news1", articleManager.getByCategoryId(3L, 0, 6));
+        model.addAttribute("news2", articleManager.getByCategoryId(4L, 0, 8));
         model.addAttribute("infos", articleManager.getInfo());
         model.addAttribute("links", linkManager.getByCategory(LinkCategoryEnum.LINK));
-        model.addAttribute("posts", articleManager.getByCategoryId(1L, 0, 5));
+        model.addAttribute("posts", articleManager.getByCategoryId(1L, 0, 6));
         return "index" + str;
     }
 
@@ -55,18 +55,6 @@ public class GeneralController {
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("links", linkManager.getAll());
         return "contact";
-    }
-
-    /**
-     * 服务
-     *
-     * @return
-     */
-    @RequestMapping(value = "/services", method = RequestMethod.GET)
-    public String services(Model model) {
-        model.addAttribute("categories", categoryManager.getNavCategory());
-        model.addAttribute("links", linkManager.getAll());
-        return "services";
     }
 
     /**

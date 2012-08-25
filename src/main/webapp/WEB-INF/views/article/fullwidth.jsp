@@ -1,10 +1,9 @@
 <%--
   文章正文无sidebar
-  User: Deng Xiaolan (824688439@qq.com)
-  Date: 12-3-18
-  Time: 上午10:55
+  User: baitao.jibt@gmail.com
+  Date: 12-8-24
+  Time: 下午21:19
 --%>
-
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="sitemesh" uri="http://www.opensymphony.com/sitemesh/decorator" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -19,105 +18,91 @@
 <head>
     <title>${category.categoryName}</title>
     <link rel="stylesheet" type="text/css" href="${ctx}/static/css/ui.totop.css">
-    <link rel="stylesheet" type="text/css" href="${ctx}/static/Ueditor/themes/default/ueditor.css">
-    <link href="${ctx}/static/js/jquery-validation/validate.min.css" type="text/css" rel="stylesheet"/>
-    <link href="${ctx}/static/jquery-jRate/jquery.jRate.min.css" type="text/css" rel="stylesheet"/>
-    <script src="${ctx}/static/js/jquery-validation/jquery.validate.min.js" type="text/javascript"></script>
-    <script src="${ctx}/static/js/jquery-validation/messages_cn.js" type="text/javascript"></script>
-    <script src="${ctx}/static/jquery-jRate/jquery.jRate.min.js" type="text/javascript"></script>
     <script src="${ctx}/static/js/jquery.ui.totop.js" type="text/javascript"></script>
 </head>
 <body>
-<!-- BEGIN PAGE TITLE -->
-<div id="page-title">
-    <div class="title"><!-- your title page -->
-        <h2>${article.category.categoryName}</h2>
+<!-- 文章导航 -->
+<div class="row">
+    <div class="span13">
+        <ul class="breadcrumb">
+            <li><a href="#">首页</a> <span class="divider">/</span></li>
+            <li><a href="${ctx}/article/list/${article.category.id}">${article.category.categoryName}</a> <span class="divider">/</span></li>
+            <li class="active">${article.subject}</li>
+        </ul>
     </div>
-    <div class="desc">${article.digest}</div>
 </div>
-<!-- END OF PAGE TITLE -->
-<!-- BEGIN CONTENT -->
-<div id="content-inner-full">
-    <div class="maincontent">
+<div class="row">
+    <!-- 正文 -->
+    <div class="span13">
         <div class="blog-post">
-            <h2>${article.subject}</h2>
-            <div class="blog-posted-inner" style="width:908px;">
-                作者: ${article.user.username} &nbsp; | &nbsp; 发表时间: <fmt:formatDate value="${article.createdDate}" pattern="yyyy年MM月dd日 hh:mm:ss"/> &nbsp; |
-                &nbsp;浏览次数: ${article.views} <c:if test="${article.allowComment}">&nbsp; | &nbsp; 评论数: ${fn:length(article.commentList)}</c:if>
+            <h3>${article.subject}</h3>
+            <div class="blog-posted-inner">
+                作者: ${article.user.username} &nbsp; | &nbsp; 发表时间: <fmt:formatDate value="${article.createdDate}" pattern="yyyy年MM月dd日 hh:mm:ss"/> &nbsp; | &nbsp;
+                浏览次数: ${article.views} <c:if test="${article.allowComment}">&nbsp; | &nbsp; 评论数: ${fn:length(article.commentList)}</c:if>
             </div>
             ${article.message}
         </div>
         <c:if test="${not empty relatedArticles}">
-        <div id="recentPostList"><!-- relatedPostList -->
-            <div id="related-post-title"><h4>相关文章</h4></div>
-            <div class="related-item-wrapper">
-                <h4><a href="#">相关文章1</a></h4>
-                <img src="${ctx}/static/images/blog-pic2.jpg" alt="" class="imgleft"/>
-                <!-- some words -->
+            <div id="recentPostList"><!-- relatedPostList -->
+                <div id="related-post-title"><h4>相关文章</h4></div>
+                <div class="related-item-wrapper">
+                    <h4><a href="#">相关文章1</a></h4>
+                    <img src="${ctx}/static/images/blog-pic2.jpg" alt="" class="imgleft"/>
+                    <!-- some words -->
+                </div>
+                <div class="related-item-spacer">&nbsp;</div>
+                <div class="related-item-wrapper">
+                    <h4><a href="#">相关文章2</a></h4>
+                    <img src="${ctx}/static/images/blog-pic3.jpg" alt="" class="imgleft"/>
+                    <!-- some words -->
+                </div>
             </div>
-            <div class="related-item-spacer">&nbsp;</div>
-            <div class="related-item-wrapper">
-                <h4><a href="#">相关文章2</a></h4>
-                <img src="${ctx}/static/images/blog-pic3.jpg" alt="" class="imgleft"/>
-                <!-- some words -->
-            </div>
-        </div>
         </c:if>
         <c:if test="${article.allowComment}">
-            <div id="commentList">
-                <div id="commentList-title"><h4>相关评论</h4></div>
-                <c:choose><c:when test="${fn:length(article.commentList) > 0}">
-                    <c:forEach items="${article.commentList}" var="comment" begin="0" step="1" varStatus="stat">
-                        <c:if test="${comment.status&&!comment.deleted}">
-                            <div class="commentList-item-wrapper">
-                                <h4><a href="#">${comment.username}</a> 于 <fmt:formatDate value="${comment.createdDate}" pattern="yyyy-MM-dd"/> 发表评论：</h4>
-                                ${comment.message}
-                            </div>
-                        </c:if>
-                    </c:forEach>
-                </c:when>
-                <c:otherwise>
-                <div class="commentList-item-wrapper"><h4>暂时没有, 发表一下您的观点吧</h4></div></c:otherwise>
-                </c:choose>
+            <div id="disqus_container">
+                <a href="#" class="comment btn btn-primary" onclick="return false;">View</a>
+                <div id="disqus_thread"></div>
             </div>
-            <div id="comment">
-                <form:form id="commentForm" modelAttribute="comment" action="${ctx}/comment/create" method="post">
-                    <div id="comment-title"><h4>发表评论</h4></div>
-                    <div class="comment-item-wrapper">
-                        <input type="hidden" name="article.id" value="${article.id}"/>
-                        <script type="text/javascript" src="${ctx}/static/Ueditor/editor_config.js"></script>
-                        <script type="text/javascript" src="${ctx}/static/Ueditor/editor_all.js"></script>
-                        <script type="text/plain" id="myEditor"></script>
-                        <script type="text/javascript">
-                            var editor = new baidu.editor.ui.Editor({
-                                toolbars:[
-                                    ['Undo', 'Redo', '|', 'Bold', 'Italic', 'Underline', 'StrikeThrough', 'RemoveFormat', '|', 'ForeColor', 'BackColor', 'InsertUnorderedList', 'InsertOrderedList', '|', 'Emotion', 'Link', 'Unlink', 'Date', 'Time', 'BlockQuote', 'HighlightCode', 'Preview']
-                                ],
-                                minFrameHeight:200,
-                                maximumWords:500,
-                                textarea:'message',
-                                elementPathEnabled:false
-                            });
-                            editor.render("myEditor");
-                        </script>
-                        <label>邮箱: </label><input type="text" id="subject" name="username" class="required email"
-                                                  value="<shiro:principal property="loginName"/>"/>
-                        <label>验证码: </label><input type="text" id="code" name="code"/>
-                        <label>评分: </label>
-                        <div id="rating"></div>
-                        <input type="submit" class="input-submit" value=" 提 交 "/>
-                    </div>
-                </form:form>
-            </div>
+            <script type="text/javascript">
+                var show_comments = function () {
+                    var disqus_shortname = 'sdfie';
+                    var disqus_identifier = '${article.id}';
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function () {
+                        var dsq = document.createElement('script');
+                        dsq.type = 'text/javascript';
+                        dsq.async = true;
+                        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                };
+                $('#disqus_container>.comment').remove();
+                show_comments();
+                $(document).ready(function () {
+                    $('#disqus_container>.comment').click(function () {
+                        $(this).html('Loading....');
+                        show_comments();
+                        $(this).remove();
+                    });
+                });
+            </script>
         </c:if>
     </div>
 </div>
-<!-- END OF CONTENT -->
 <script>
     $(function () {
-        $("#rating").jRate();
-        $("#commentForm").validate();
+        //totop
         $().UItoTop({ easingType:'easeOutQuart' });
+
+        //设置图片宽度最大为676px
+        $('img').each(function(i){
+            //alert($(this).width());
+            if($(this).width()>676){
+                var b=676/($(this).width());
+                $(this).width(676);
+                $(this).height($(this).height()*b);
+            }
+        });
     });
 </script>
 </body>

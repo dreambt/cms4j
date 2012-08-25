@@ -73,9 +73,23 @@ public class ImageManagerImpl implements ImageManager {
 
     @Override
     public List<Image> getPagedImage(int offset, int limit) {
+        List<Image> imageList = Lists.newArrayList();
+        long start = System.currentTimeMillis();
         Map<String, Object> parameters = Maps.newHashMap();
         parameters.put("offset", offset);
         parameters.put("limit", limit);
+        String key = MemcachedObjectType.IMAGE.getPrefix() + "paged:offset:" + offset + "limit:" + limit;
+        String jsonString = spyMemcachedClient.get(key);
+
+        if (StringUtils.isBlank(jsonString)) {
+            imageList = imageMapper.search(parameters);
+            jsonString = jsonMapper.toJson(imageList);
+            spyMemcachedClient.set(key, MemcachedObjectType.IMAGE.getExpiredTime(), jsonString);
+        } else {
+            imageList = jsonMapper.fromJson(jsonString, jsonMapper.createCollectionType(List.class, Image.class));
+        }
+        long end = System.currentTimeMillis();
+        logger.debug("获取分页相册用时：{}ms. key: " + key, end - start);
         return imageMapper.search(parameters);
     }
 

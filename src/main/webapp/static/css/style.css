@@ -1,249 +1,111 @@
-/*----------------------------------------------------
-                 Agivee - CSS File
-------------------------------------------------------*/
+body{font-family:Tahoma,Arial,Verdana;font-size:12px;margin:0 auto;padding:0;}
+a{color:#000;}
 
-
-/* Global
-------------------------------------------------------*/
-html,body{height:100%}
-body{
-font-family:Tahoma, Arial, Verdana;
-font-size:12px;
-margin:0 auto;
-padding:0;
-background-image:url(../images/bg-body.jpg);
-background-repeat:repeat;
-color:#6f6f6f;
-height:100%;
-}
-*{
-margin:0;
-padding:0;
-}
-*:focus{
-outline:none; /* removes ugly dotted border but may make template more unsuable, up to you
-				 if you want to keep it! */
-}
-.clr{clear:both}
-form{margin:0; padding:0;}
-hr{
-border:0;
-color:#dedede;
-background-color: #dedede;
-height: 1px;
-margin:10px 0px 6px 0px;
-padding:0px;
-}
-
-
-/* Default Element Styles
-------------------------------------------------------*/
-/* heading */
-h1, h2, h3, h4, h5{margin-bottom:15px; font-family:Tahoma, Arial, Verdana; font-weight:normal; color:#444444;}
-h1{font-size:32px; line-height:30px;}
-h2{font-size:22px; line-height:28px;}
-h3{font-size:18px; line-height:20px;}
-h4{font-size:16px; line-height:18px; font-weight:bold;}
-h5{font-size:12px; margin:3px 0px; padding:0px;letter-spacing:1px;}
-
-
-/* lists, blockquotes and paragraphs */
-p, ul, ol, blockquote{
-font-size:12px;
-line-height:18px;
-margin-bottom:14px;
-color:#6f6f6f;
-}
-ul, ol{
-margin:10px 0 35px 40px;
-}
-li ol, li ul{
-font-size:1.0em;
-list-style:square;
-margin-bottom:0;
-margin-top:0;
-}
-li ol{list-style:decimal;}
-blockquote{
-font-style:italic;
-margin:0px;
-color:#6f6f6f;
-padding:2px 4px 2px 38px;
-background-image:url(../images/quote.gif);
-background-position:0px 5px;
-background-repeat:no-repeat;
-}
-
-/* code */
-code{
-font-family:Tahoma, Arial, Verdana;
-letter-spacing:1px;
-margin:25px 0 25px 0px;
-display:block;
-font-size:0.9em;
-border-left:4px solid #dddddd;
-padding:15px 10px;
-}
-
-
-/* Container
-------------------------------------------------------*/
-#page-container{width:988px; margin:0 auto;}
-.page-container-inner{width:988px; background-image:url(../images/bg-container.png); float:left;}
-.frame{width:920px; margin:0 auto;height: 139px;}
-
-
-/* Header
-------------------------------------------------------*/
-#header{height:139px; width:920px; background-image:url(../images/top-shadow.jpg); background-position:center 46px;  background-repeat:no-repeat;}
-#top-header{height:108px; background-image:url(../images/strip-line.gif); background-position:top; background-repeat:repeat-x;}
-#bottom-header{width:920px; border-bottom:1px solid #969696; float:left;height: 29px;}
-.logo{width:620px; padding:38px 0px 0px 20px; float:left;display:inline}
-.logo a{display: block;float: left;}
-.logo a img{display: block;float: left;}
-.logo a h1{display:block;float:left;margin-top: 10px;}
-
-/* Search styling */
-.search-fieldset{border:none;padding:0;height:24px;}
-#search-box{padding-bottom:18px; float:left; height:23px;}
-#search{float:right; width:auto;height:24px;}
-#s{font:12px Tahoma, Arial, Verdana; font-size:11px; color:#c8c9be;margin:0; padding:4px 30px 4px 3px; background-color:#fff; border:1px solid #d3d2d2; width:186px;}
-#s:focus{border:1px solid #adacac; color:#adacac;}
-#search .go{position:absolute; margin:3px 0 0 -26px;}
-
-/* Top Navigation bar menu styling */
-#nav-menu {width:900px; float:left; margin:5px 0px 5px 0px; list-style-type:none;}
-#nav {margin:0px; padding:0px 0px 0px 0px; float:left;}
-#nav ul{padding:0;margin:0;width:auto;list-style: none;height:30px;position: relative;}
-#nav li{list-style:none;float:left;text-align:center;padding:0;font:normal 11px Tahoma, Arial, Verdana;line-height:26px;}
-#nav li a {z-index: 10;display: block;float: left;height: 30px;position: relative;overflow: hidden;padding: 0 20px;color:#ffdbcd;text-decoration:none;}
-#nav li a:hover {display: block;float: left;height: 30px;position: relative;overflow: hidden;padding: 0 20px;color: #535353;}
-/* 干嘛用的？baitao.jibt */
-#nav .buttonStyle{
-    background-color: #ccc;
-    border: 1px solid #ccc;
-}
-/*   index frame
-----------------------------------------------------*/
-#index_left{width:711px;float: left;margin-top: 15px; }
-#index_right{width: 202px;margin-left: 7px;float: left;margin-top: 15px;}
-#left_l{width: 272px;float: left;}
-#left_r{width:432px;margin-left: 7px;float: left; }
-#left_b{width: 709px;float: left;border: 1px solid #ccc;}
-.container{border: 1px solid #ccc;margin-bottom: 8px;float: left;}
-a.more{display: block;float: right;padding-right: 10px;font-size:10px !important;color:#666 !important;text-decoration: none;}
-a.more:hover{color:#999 !important;text-decoration: none; }
-
-ul.content{list-style:none;float: left;margin:0 8px 10px;}
-ul.content li{line-height: 25px;background:url(../images/ico-2.gif) center left  no-repeat;padding-left:10px;}
-ul.content li a{color:#6F6F6F !important;}
-ul.content li a:hover{text-decoration: underline;}
-ul.content li .time{float: right;}
-.title_index{display: block;float: left;padding:5px 5px 5px 8px;font-size:12px;line-height:22px;color:#444;margin: 0 0 8px 0;;background: url("../images/title_bg.png")  repeat-x;}
-/*---left_l---*/
-#left_l .container_l{width: 270px;padding-bottom: 8px;}
-.container_l p.title_l{width:257px;display: block;float:left;}
-.container_l ul.l_content{width:250px;margin-bottom: 0;margin-top: 0;}
-p.researchDesc{padding:0 10px;display: block;float:left;margin: 0;}
-
-/*-----left_r------*/
-/*
-legend{padding:2px 10px;font-size:12px;line-height:22px;box-shadow:2px 2px 1px #666;border-radius:20px;background: url("../images/title_bg.png")  repeat-x;}
-legend a{color:#444 !important;}
-*/
-#left_r .container_r{width:430px;}
-.container_r p.title_m{width:417px;}
-.container_r p.title_m a{color:#666;text-decoration: none;}
-.container_r p.title_m a:hover{color:#ccc;text-decoration: underline}
-.container_r ul.left_r{width:390px;list-style: none;margin: 0;padding-left: 8px;}
-.container_r ul.left_r li{width: 390px;}
-.container_r ul.twoRow{width:190px;display: block;float: left;padding:0 0 8px 8px;margin:0;}
-.container_r ul.twoRow:last-child{margin-left: 10px;padding-left: 0;}
-.container_r ul.twoRow li{width:180px;}
-.container_r p.brief{width:384px;padding:8px;text-indent: 2em;margin: 0;}
-a.institution{padding: 0; width: 133px;text-align: center;display: block;float: left;line-height: 26px;color:#6F6F6F !important;}
-a.institution:hover{text-decoration: underline;}
-/*-----index_r-----*/
-#index_right .container_right{width: 200px;}
-#index_right .container_right:last-child{margin-bottom: 0;}
-.container_right p.title_rl{width:187px;}
-.container_right ul.r_content{width:180px;}
-.container_right .peixun{width:80px; !important;padding: 0px 10px;}
-.container_right .peixun:last-child{margin-bottom: 10px;}
 /*  Homepage Slider
 ------------------------------------------------------*/
-#slideshow{
-background-color:#666;
-width:272px;
-height: 190px;
-float:left;
-border-radius:5px 5px 0 0;
-}
-#slideshow-threed{
-width:920px;
-height:283px; 
-margin:15px 0px 0px 0px;
-float:left;
-}
-#box-nav-slider{
-background-image:url(../images/strip-line.gif);
-background-position:bottom;
-background-repeat:repeat-x;
-width:272px;
-height:17px;
-    position: relative;
-    float: left;
-    margin-bottom: 11px;
-}
-#slideshow-navigation a{
-background: url(../images/slide.png) no-repeat scroll 50% 50%;
-display:block;
-float:left;
-font-size:0px;
-width:9px;
-height:9px;
-margin:2px;
-outline-style:none;
-outline-width:medium;
-padding:2px;
-}
-#slideshow-navigation{float:right; padding-right:10px}
-#slideshow-navigation .activeSlide {background: url(../images/slide.png) no-repeat scroll 0% 50%;}
+#slideshow{margin-bottom: 0;height: 195px;}
 .slidehalf { margin-top:0px; margin-right:20px; float:left;} /* Editable Slider Image Position */
 .slidehalf2 { margin-top:0px; margin-right:0px; float:left;} /* Editable Slider Image Position */
-.slide-text .PicTitle{color:#fff;display:block;float:left;text-align:center;width: 270px;padding:5px 0;}
-.slide-text{width:270px;}
+.slide-text .PicTitle{text-align:center;padding:5px 0;background-color:#999;text-decoration: none;}
+.slide-text{width: 270px;}
+.slide-text .PicTitle a{color:#fff;text-align:center;text-decoration: none;}
+.slide-text .PicTitle a:hover{color:#ccc;}
 .slide-text p{font-size:12px; color:#b5b5b5; line-height:22px; padding-right:20px;}
 .slide-text a.read_more{color:#ff4e00; font-size:12px;}
 .flash-img {text-align:center; display:block; margin:100px auto 0 auto;}
 
-
-/* Content
+/*  友情链接
 ------------------------------------------------------*/
-#content{width:920px; padding:20px 0px 20px 0px; float:left;}
-.imgleft{float:left; padding-right:15px;}
-.imgright{float:right; padding-left:15px;}
-.imgleft-box{float:left; border:solid 1px #cfd4c3; padding:6px; margin-right:15px; background-color:#f9fbf4;}
-.imgright-box{float:right; border:solid 1px #cfd4c3; padding:6px; margin-left:15px; background-color:#f9fbf4;}
-#content1{float:left; width:284px;}
-#content2{float:left; width:284px; margin-left:34px;}
-#content3{float:left; width:284px; margin-left:34px;}
-.orange{color:#ff4e00;}
+#friLnk{display:block;margin:10px 0 0 0;padding:0;}
+#friLnk li.friLnkT{padding-left:56px;width:894px;height: 25px;line-height:25px;background: url(../images/friLnk.png) no-repeat center;}
 
-ul.content-list {margin:0px; padding:0px; list-style-type:none;}
-ul.content-list li {background-image:url(../images/arrow.gif); background-position:0px 6px; background-repeat:no-repeat; padding:0px 0px 12px 17px; line-height:18px;}
-ul.content-list li a {text-decoration:none;}
-ul.content-list li a:hover {text-decoration:underline;}
+/*  Footer
+------------------------------------------------------*/
+.footer {padding: 30px 20px;margin-top: 30px;border-top: 1px solid #e5e5e5;background-color: #f5f5f5;}
+.footer p {margin-bottom: 0;color: #777;}
 
-/* Featured Project */
-#featured{margin-top:3px; height:380px;}
-.bg-featured{background-image:url(../images/strip-line.gif); background-repeat:repeat; width:275px; height:157px; padding:5px 5px;}
-.featured-text{padding-top:5px;}
+/* Mini layout previews
+-------------------------------------------------- */
+.mini-layout {
+    border: 1px solid #ddd;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.075);
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.075);
+    box-shadow: 0 1px 2px rgba(0,0,0,.075);
+}
+.mini-layout,
+.mini-layout .mini-layout-body,
+.mini-layout.fluid .mini-layout-sidebar {
+    height: 300px;
+}
+.mini-layout {
+    margin-bottom: 20px;
+    padding: 9px;
+}
+.mini-layout div {
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+.mini-layout .mini-layout-body {
+    background-color: #dceaf4;
+    margin: 0 auto;
+    width: 70%;
+}
+.mini-layout.fluid .mini-layout-sidebar,
+.mini-layout.fluid .mini-layout-header,
+.mini-layout.fluid .mini-layout-body {
+    float: left;
+}
+.mini-layout.fluid .mini-layout-sidebar {
+    background-color: #bbd8e9;
+    width: 20%;
+}
+.mini-layout.fluid .mini-layout-body {
+    width: 77.5%;
+    margin-left: 2.5%;
+}
 
-/* Bottom Box */
-.imgleft-bottom{width:88px; height:90px; float:left; margin-right:15px;}
-#bottom-box{width:908px; margin-top:5px; padding:5px; border:1px solid #e5e6e2; float:left;}
-#bottom-box-inner{background-image:url(../images/strip-line.gif); background-repeat:repeat; width:908px; line-height:16px; float:left;}
-#bottom-box-inner h4{padding-top:8px; margin-bottom:8px; color:#ff4e00;}
-.box1{width:437px; font-size:11px; padding:10px 0px 10px 10px; float:left;}
-.box2{width:437px; margin-left:10px; font-size:11px; padding:10px 0px; float:left;}
+/*-----teacher名师风采1------*/
+a.abtn{display:block;height:130px;width:17px;overflow:hidden;background:url(../images/arrow3.png) no-repeat 0px 50%;}
+a.aleft{float:left;}
+a.agrayleft{cursor:default;background-position:-34px 50%;}
+a.aright{background-position:-17px 50%;}
+a.agrayright{cursor:default;background-position:-51px 50%;}
+.scrolllist{width:800px; height: 205px}
+.scrolllist .imglist_w{width:764px;height:205px;overflow:hidden;float:left;position:relative;/*必要元素*/}
+.scrolllist .imglist_w ul{width:20000px;position:absolute;top:0px;list-style: none;padding: 0;margin: 0}
+.scrolllist .imglist_w li{width:130px;float:left;padding:2px 4px 0 9px;z-index: 999;}
+.scrolllist .imglist_w li img{padding:2px;border:solid 1px #ddd;}
+.scrolllist .imglist_w li a{color:#3366cc;text-decoration:none;float:left;}
+.scrolllist .imglist_w li a:hover img{filter:alpha(opacity=86);-moz-opacity:0.86;opacity:0.86;}
+.scrolllist .imglist_w li p{line-height:24px;overflow:hidden;float:left;padding: 0;margin:0;width: 126px;text-align:center;text-indent:0;}
+
+/*-----teacher名师风采2------*/
+.scrolllist_index{width:1000px; height: 205px;}
+.scrolllist_index .imglist_w{width:964px;height:205px;overflow:hidden;float:left;position:relative;/*必要元素*/}
+.scrolllist_index .imglist_w ul.imglist{width:20000px;position:absolute;top:0px;list-style: none;padding: 0;margin: 0}
+.scrolllist_index .imglist_w li{width:126px;float:left;padding:1px 0px 0 0px;z-index: 999;}
+.scrolllist_index .imglist_w li img{padding:1px;border:solid 0px #ddd;}
+.scrolllist_index .imglist_w li a{color:#3366cc;text-decoration:none;float:left;}
+.scrolllist_index .imglist_w li a:hover img{filter:alpha(opacity=86);-moz-opacity:0.86;opacity:0.86;}
+.scrolllist_index .imglist_w li p{line-height:24px;overflow:hidden;float:left;padding: 0;margin:0;width: 126px;text-align:center;text-indent:0;}
+
+/*-----------研究所-----------*/
+#banner{margin:0 0 10px 0;border: 1px solid #ccc;}
+
+/*----摘要图片----*/
+.imgleft{float:left; padding:5px 12px 0px 0px;width: 134px;height: 134px;}
+.imgright{float:right; padding-left:12px;}
+
+/*---about页面----*/
+.imgabout{float: left;display: block;margin:0 10px 10px 0;}
+
+/* Header
+------------------------------------------------------*/
+#top-header{height:106px; background:url(../images/strip-line.gif) top repeat-x;}
+.logo{padding:35px 0px 0px 20px;display:block;}
+.logo a img{display:block;float: left;}
+.logo a h1{display:block;float: left;margin-top:6px;text-decoration: none;}

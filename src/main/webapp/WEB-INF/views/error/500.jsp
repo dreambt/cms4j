@@ -23,7 +23,6 @@
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
     <title>500 - 系统内部错误</title>
-
     <meta charset="UTF-8">
     <meta name="description" content="">
     <meta name="keywords" content="">
@@ -39,8 +38,8 @@
     <link rel="apple-touch-icon" href="${ctx}/static/apple-touch-icon.png">
 
     <!-- CSS Styles -->
-    <link rel="stylesheet" href="${ctx}/static/404/screen.css">
-    <link rel="stylesheet" href="${ctx}/static/404/colors.css">
+    <link rel="stylesheet" href="${ctx}/static/404/screen.min.css">
+    <link rel="stylesheet" href="${ctx}/static/404/colors.min.css">
 
     <!-- Google WebFonts -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700&v2' rel='stylesheet' type='text/css'>

@@ -1,9 +1,8 @@
 <%--
-  Created by IntelliJ IDEA.
-  User: User: Deng Xiaolan (824688439@qq.com)
-  Date: 12-3-19
-  Time: 下午1:52
-  To change this template use File | Settings | File Templates.
+  联系我们页面
+  User: baitao.jibt@gmail.com
+  Date: 12-8-25
+  Time: 下午14:32
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
@@ -13,87 +12,76 @@
 <html>
 <head>
     <title>联系我们</title>
-    <style type='text/css' media='screen,projection'>
-        <!--
-        fieldset { border:0;margin:0;padding:0; }
-        label {  padding-right:15px; float:left; width:70px; }
-        input.text{ width:290px;font:12px/12px 'courier new',courier,monospace;color:#333;padding:3px;margin:1px 0; }
-        -->
-    </style>
-    <script type="text/javascript" src="${ctx}/static/js/functionAddEvent.js"></script>
-    <script type="text/javascript" src="${ctx}/static/js/contact.js"></script>
-    <script type="text/javascript" src="${ctx}/static/js/xmlHttp.js"></script>
 </head>
 <body>
-            <!-- BEGIN PAGE TITLE -->
-            <div id="page-title">
-                <div class="title"><!-- your title page -->
-                    <h1>联系我们</h1>
-                </div>
-                <div class="desc"><!-- description about your page -->
-                    您的回复是对我们最大的支持, 欢迎社会各界与我们合作交流.
-                </div>
-            </div>
-            <!-- END OF PAGE TITLE -->
-
-            <!-- BEGIN CONTENT -->
-            <div id="content-inner">
-                <div id="content-map">
-                    <div class="maincontent">
-                        <h2>我们希望听到您的声音</h2>
-                        <p id="loadBar" style="display:none;">
-                            <strong>邮件发送中. 可能需要花费一些时间&#8230;</strong><br />
-                            <img src="${ctx}/static/images/loading.gif" alt="Loading..." title="Sending Email" />
-                        </p>
-                        <p id="emailSuccess" style="display:none;">
-                            <strong style="color:red;">邮件发送成功!</strong>
-                        </p>
-                        <p>
-                            Shungeng Road No.40, Jinan , Shandong, China<br />
-                            Phone: +86 1234 5678<br />
-                            Email: jrgczx@gmail.com
-                        </p>
-                        <h2>给我们发送邮件</h2>
-                        <div id="contactFormArea">
-                            <form action="scripts/contact.php" method="post" id="cForm">
-                                <fieldset>
-                                    <div class="form-row">
-                                        <div class="label">姓名</div>
-                                        <div class="input-container"><input class="input" type="text" size="25" name="posName" id="posName" /></div>
-                                    </div><!--END name //-->
-
-                                    <div class="form-row">
-                                        <div class="label">Email</div>
-                                        <div class="input-container"><input class="input" type="text" size="25" name="posEmail" id="posEmail" /></div>
-                                    </div><!--END email //-->
-
-                                    <div class="form-row">
-                                        <div class="label">主题</div>
-                                        <div class="input-container-last"><input class="input" type="text" size="25" name="posRegard" id="posRegard" /></div>
-                                    </div><!--END subject //-->
-
-                                    <div class="form-row-textarea">
-                                        <div class="label">内容</div>
-                                        <div class="input-container"><textarea cols="50" rows="4" name="posText" id="posText" class="textarea"></textarea>
-                                        </div>
-                                        <label for="selfCC">
-                                            <!--<input type="checkbox" name="selfCC" id="selfCC" value="send" /> Send CC to self-->
-                                            <input type="hidden" name="selfCC" id="selfCC" value="xxx" />
-                                        </label>
-                                    </div><!--END textarea //-->
-                                    <input class="input-submit" type="submit" name="sendContactEmail" id="sendContactEmail" value=" 发 送 " />
-                                </fieldset>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div id="side-map">
-                    <div class="maincontent">
-                        <h2>地理位置</h2>
-                        <div class="google-map"><p><img src="${ctx}/static/images/big-map.png" alt=""  /></p></div>
-                    </div>
+<!-- 联系我们 -->
+<div class="row">
+    <div class="span13">
+        <ul class="breadcrumb">
+            <li><a href="#">首页</a> <span class="divider">/</span></li>
+            <li>联系我们</li>
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <!-- 正文 -->
+    <div class="span7">
+        <h2>我们希望听到您的声音</h2>
+        <p>您的回复是对我们最大的支持, 欢迎社会各界与我们合作交流.</p>
+        <h3>给我们发送邮件</h3>
+        <form action="scripts/contact.php" method="post" id="cForm" class="form-horizontal">
+            <div class="control-group">
+                <label class="control-label" for="posName">姓名</label>
+                <div class="controls">
+                    <input type="text" id="posName" name="posName" placeholder="Username">
                 </div>
             </div>
-            <!-- END OF CONTENT -->
+            <div class="control-group">
+                <label class="control-label" for="posEmail">Email</label>
+                <div class="controls">
+                    <input type="text" id="posEmail" name="posEmail" placeholder="Email">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="posRegard">主题</label>
+                <div class="controls">
+                    <input type="text" class="input-xlarge" id="posRegard" name="posRegard" placeholder="山东省金融信息工程技术研究中心合作洽谈">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="posEmail">内容</label>
+                <div class="controls">
+                    <textarea class="input-xlarge" rows="4" id="posText" name="posText"></textarea>
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <input type="hidden" id="selfCC" name="selfCC" value="dreambt@126.com">
+                    <button type="submit" class="btn btn-primary">发 送</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="span6">
+        <div class="thumbnail">
+            <img src="${ctx}/static/images/big-map.png" alt=""  />
+            <div class="caption">
+                <h3>地理位置</h3>
+                <p>No.40, Shungeng Road, Jinan, Shandong, China<br />
+                   Phone: +86 1234 5678<br />
+                   Email: jrgczx@gmail.com</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="loadBar" class="alert alert-info" style="display:none;z-index:999;position:fixed;top:300px;left:50%;margin: 0 0 0 -125px;">
+    <p><strong>邮件发送中...可能需要花费一些时间</strong><br /><img src="${ctx}/static/images/loading.gif" alt="Loading..." title="Sending Email" /></p>
+</div>
+<div id="emailSuccess" class="alert alert-info" style="display:none;z-index:999;position:fixed;top:300px;left:50%;margin: 0 0 0 -125px;">
+    <p><strong style="color:red;">邮件发送成功!</strong></p>
+</div>
+<script type="text/javascript" src="${ctx}/static/js/functionAddEvent.js"></script>
+<script type="text/javascript" src="${ctx}/static/js/contact.js"></script>
+<script type="text/javascript" src="${ctx}/static/js/xmlHttp.js"></script>
 </body>
 </html>

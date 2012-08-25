@@ -1,10 +1,16 @@
-﻿<%@ page contentType="text/html;charset=UTF-8" %>
+﻿<%--
+  默认模板
+  User: baitao.jibt@gmail.com
+  Date: 12-8-24
+  Time: 下午15:51
+--%>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="sitemesh" uri="http://www.opensymphony.com/sitemesh/decorator" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
     <meta charset='utf-8'>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
@@ -17,46 +23,17 @@
     <meta name="description" content=""/>
     <title><sitemesh:title/> - 山东省金融信息工程技术研究中心</title>
     <link rel="shortcut icon" href="${ctx}/static/favicon.ico" type="image/x-icon" />
-
-    <!-- ////////////////////////////////// -->
-    <!-- //      Start Stylesheets       // -->
-    <!-- ////////////////////////////////// -->
-    <link href="${ctx}/static/blueprint/1.0.1/screen.min.css" type="text/css" rel="stylesheet" media="screen, projection" />
-    <link href="${ctx}/static/blueprint/1.0.1/screen-customized.min.css" type="text/css" rel="stylesheet" media="screen, projection" />
-    <link href="${ctx}/static/blueprint/1.0.1/print.min.css" type="text/css" rel="stylesheet" media="print" />
-    <!--[if lt IE 8]><link href="${ctx}/static/blueprint/1.0.1/ie.min.css" type="text/css" rel="stylesheet" media="screen, projection"><![endif]-->
-    <link href="${ctx}/static/css/superfish.min.css" rel="stylesheet" type="text/css"  />
-    <link href="${ctx}/static/CMS.min.css" type="text/css" rel="stylesheet" />
-
-    <!-- ////////////////////////////////// -->
-    <!-- //      Javascript Files        // -->
-    <!-- ////////////////////////////////// -->
+    <link href="${ctx}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="${ctx}/static/css/style.min.css" rel="stylesheet" type="text/css" />
     <script src="${ctx}/static/js/jquery.min.js" type="text/javascript"></script>
-    <script type="text/javascript" src="${ctx}/static/js/DD_belatedPNG.js"></script>
-    <script type="text/javascript">
-        DD_belatedPNG.fix('.page-container-inner');
-        DD_belatedPNG.fix('#slideshow-navigation a');
-        DD_belatedPNG.fix('#slideshow-navigation .activeSlide');
-        DD_belatedPNG.fix('img');
-    </script>
-    <script type="text/javascript" src="${ctx}/static/js/superfish.js"></script>
-    <script type="text/javascript">
-        // initialise plugins
-        $(function () {
-            $('ul.sf-menu').superfish();
-        });
-    </script>
+    <script src="${ctx}/static/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <sitemesh:head/>
 </head>
 <body>
-<div id="page-container">
-    <div class="page-container-inner">
-        <div class="container">
-            <%@ include file="/WEB-INF/layouts/header.jsp" %>
-            <sitemesh:body/>
-            <%@ include file="/WEB-INF/layouts/footer.jsp" %>
-        </div>
-    </div>
+<div class="container">
+    <%@ include file="/WEB-INF/layouts/header.jsp" %>
+    <sitemesh:body/>
+    <%@ include file="/WEB-INF/layouts/footer.jsp" %>
 </div>
 </body>
 </html>
