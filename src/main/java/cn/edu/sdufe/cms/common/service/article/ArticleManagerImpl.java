@@ -186,22 +186,6 @@ public class ArticleManagerImpl implements ArticleManager {
         return articleList;
     }
 
-    @Deprecated
-    @Override
-    public List<Article> search(Map<String, Object> parameters) {
-        return articleMapper.search(parameters);
-    }
-
-    @Deprecated
-    @Override
-    public List<Article> search(Map<String, Object> parameters, int offset, int limit) {
-        parameters.put("Direction", "DESC");
-        parameters.put("Sort", "id");
-        parameters.put("offset", offset);
-        parameters.put("limit", limit);
-        return articleMapper.search(parameters);
-    }
-
     @Override
     public List<Article> getInfo() {
         Long[] ids = {19L, 20L, 21L, 22L, 32L, 33L};

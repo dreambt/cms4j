@@ -53,7 +53,7 @@
                                       location="classpath*:/application.properties,
                                       classpath*:/application.local.properties,
                                       file:/opt/CMS/application.server.properties,
-                                      file:e:/apache-tomcat-7.0.29/application.server.properties"/>
+                                      file:e:/application.server.properties"/>
 
         <!-- 数据源配置,使用应用内的DBCP数据库连接池 -->
         <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">

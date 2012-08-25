@@ -1,8 +1,8 @@
 <%--
   查看所有文章
-  User: Deng Xiaolan (824688439@qq.com)
-  Date: 12-3-24
-  Time: 下午11:32
+  User: baitao.jibt@gmail.com
+  Date: 12-8-25
+  Time: 下午20:32
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
@@ -15,26 +15,10 @@
     <title>文章列表</title>
 </head>
 <body>
-<div id="main_container" class="main_container container_16 clearfix">
-    <div class="flat_area grid_16">
-        <h2>文章列表</h2>
-        <p>下面列出了所有文章列表, 您可以对文章进行 <strong>修改</strong> <strong>置顶</strong> <strong>审核</strong> 和 <strong>删除</strong>.</p>
-        <c:if test="${not empty info}">
-            <div id="message" class="alert alert_blue">
-                <img height="24" width="24" src="${ctx}/static/dashboard/images/icons/Locked2.png"><strong>${info}</strong>
-            </div>
-        </c:if>
-        <c:if test="${not empty error}">
-            <div id="message" class="alert alert_red">
-                <img height="24" width="24" src="${ctx}/static/dashboard/images/icons/Locked2.png"><strong>${error}</strong>
-            </div>
-        </c:if>
-    </div>
-</div>
-<div class="main_container container_16 clearfix">
-    <form:form modelAttribute="article" id="articleForm" method="post">
-        <div class="box grid_16 round_all">
-            <table class="display table">
+<div class="row">
+    <div class="span12">
+        <form:form modelAttribute="article" id="articleForm" method="post">
+            <table class="table table-hover">
                 <thead>
                 <tr>
                     <th>选择</th>
@@ -69,10 +53,14 @@
                 </c:forEach>
                 </tbody>
             </table>
-        </div>
-        <button class="button_colour" id="auditAll"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/BendedArrowRight.png"/><span>批量审核</span></button>
-        <button class="button_colour" id="deleteAll"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/BendedArrowRight.png"/><span>批量删除</span></button>
-    </form:form>
+            <div class="control-group">
+                <div class="controls">
+                    <button class="btn btn-primary" id="auditAll"><i class="icon-flag icon-white"></i> 批量审核</button>
+                    <button class="btn btn-primary" id="deleteAll"><i class="icon-remove icon-white"></i> 批量删除</button>
+                </div>
+            </div>
+        </form:form>
+    </div>
 </div>
 <script>
     $(function () {

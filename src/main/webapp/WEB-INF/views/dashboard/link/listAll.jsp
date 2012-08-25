@@ -1,9 +1,9 @@
 <%--
-  User: Deng Xiaolan (824688439@qq.com)
-  Date: 12-4-8
-  Time: 下午12:36
+  查看友情链接
+  User: baitao.jibt@gmail.com
+  Date: 12-8-25
+  Time: 下午21:25
 --%>
-
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -12,35 +12,13 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-    <title>友情管理列表</title>
-    <link rel="stylesheet" type="text/css" href="${ctx}/static/js/jquery-validation/validate.min.css">
-    <script type="text/javascript" src="${ctx}/static/js/jquery-validation/jquery.validate.min.js"
-            charset="utf-8"></script>
-    <script type="text/javascript" src="${ctx}/static/js/jquery-validation/messages_cn.js" charset="utf-8"></script>
+    <title>友情链接列表</title>
 </head>
 <body>
-<div id="main_container" class="main_container container_16 clearfix">
-    <div class="flat_area grid_10">
-        <h2>友情管理列表</h2>
-        <p>下面列出了所有友情链接, 您可以对友情链接进行 <strong>修改</strong>、<strong>审核</strong><strong>和删除</strong>.点击链接名称或URL可以直接进入相应的网站.</p>
-        <c:if test="${not empty info}">
-            <div id="message" class="alert alert_blue">
-                <img height="24" width="24"
-                     src="${ctx}/static/dashboard/images/icons/Locked2.png"><strong>${info}</strong>
-            </div>
-        </c:if>
-        <c:if test="${not empty error}">
-            <div id="message" class="alert alert_red">
-                <img height="24" width="24"
-                     src="${ctx}/static/dashboard/images/icons/Locked2.png"><strong>${error}</strong>
-            </div>
-        </c:if>
-    </div>
-</div>
-<div class="main_container container_16 clearfix">
-    <form action="${ctx}/link/batchDelete" id="LnkList" method="post">
-        <div class="box grid_16 round_all">
-            <table class="display table">
+<div class="row">
+    <div class="span12">
+        <form action="${ctx}/link/batchDelete" id="LnkList" method="post">
+            <table class="table table-hover">
                 <thead>
                 <tr>
                     <th>选择</th>
@@ -68,11 +46,14 @@
                 </c:forEach>
                 </tbody>
             </table>
-        </div>
-        <button class="button_colour" id="deleteAll"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/BendedArrowRight.png"/>
-            <span>批量删除</span>
-        </button>
-    </form>
+            <div class="control-group">
+                <div class="controls">
+                    <button class="btn btn-primary" id="auditAll"><i class="icon-flag icon-white"></i> 批量审核</button>
+                    <button class="btn btn-primary" id="deleteAll"><i class="icon-remove icon-white"></i> 批量删除</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 <script>
     $(function () {

@@ -1,8 +1,8 @@
 %--
 评论管理
-User: Deng Xiaolan (824688439@qq.com)
-Date: 12-3-24
-Time: 下午9:03
+  User: baitao.jibt@gmail.com
+  Date: 12-8-25
+  Time: 下午21:25
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
@@ -13,32 +13,13 @@ Time: 下午9:03
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-    <title>后台评论管理</title>
+    <title>评论列表</title>
 </head>
 <body>
-<div id="main_container" class="main_container container_16 clearfix">
-    <div class="flat_area grid_16">
-        <h2>评论列表</h2>
-
-        <p>下面列出了所有评论列表，您可以对评论进行<strong>审核</strong>&nbsp;<strong>删除</strong>，误审核的评论可以反审核，误删除的评论可以恢复</p>
-        <c:if test="${not empty info}">
-            <div id="message" class="alert alert_blue">
-                <img height="24" width="24"
-                     src="${ctx}/static/dashboard/images/icons/Locked2.png"><strong>${info}</strong>
-            </div>
-        </c:if>
-        <c:if test="${not empty error}">
-            <div id="message" class="alert alert_red">
-                <img height="24" width="24"
-                     src="${ctx}/static/dashboard/images/icons/Locked2.png"><strong>${error}</strong>
-            </div>
-        </c:if>
-    </div>
-</div>
-<div class="main_container container_16 clearfix">
-    <form:form id="commentForm" name="comment" method="post">
-        <div class="box grid_16 round_all">
-            <table class="display table">
+<div class="row">
+    <div class="span12">
+        <form:form id="commentForm" name="comment" method="post">
+            <table class="table table-hover">
                 <thead>
                 <tr>
                     <th>选择</th>
@@ -66,16 +47,27 @@ Time: 下午9:03
                 </c:forEach>
                 </tbody>
             </table>
-        </div>
-        <button class="button_colour" id="auditAll"><img height="24" width="24" alt="Bended Arrow Right"
-                                                         src="${ctx}/static/dashboard/images/icons/BendedArrowRight.png"><span>批量审核</span>
-        </button>
-        <button class="button_colour" id="deleteAll"><img height="24" width="24" alt="Bended Arrow Right"
-                                                          src="${ctx}/static/dashboard/images/icons/BendedArrowRight.png"><span>批量删除</span>
-        </button>
-    </form:form>
+            <div class="control-group">
+                <div class="controls">
+                    <button class="btn btn-primary" id="auditAll"><i class="icon-flag icon-white"></i> 批量审核</button>
+                    <button class="btn btn-primary" id="deleteAll"><i class="icon-remove icon-white"></i> 批量删除</button>
+                </div>
+            </div>
+        </form:form>
+    </div>
 </div>
-<div id="dialog" title="留言内容"></div>
+<div class="modal hide fade" id="dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">留言内容</h3>
+    </div>
+    <div class="modal-body">
+        <p>One fine body…</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+    </div>
+</div>
 <script type="text/javascript">
     $(".alert").delay(1500).fadeOut("slow");
 
@@ -94,23 +86,9 @@ Time: 下午9:03
         }
     });
 
-    $("#dialog").dialog({
-        autoOpen:false,
-        width:600,
-        maxWidth:800,
-        maxHeight:600,
-        show:"fade",
-        hide:"fade",
-        buttons:{
-            Ok:function () {
-                $(this).dialog("close");
-            }
-        },
-        modal:true
-    });
-
     $(".opener").click(function () {
-        $("#dialog").html($(this).attr("value")).dialog("open");
+        $("#dialog div:eq(1)").html($(this).attr("value"));
+        $('#dialog').modal('show');
         return false;
     });
 </script>

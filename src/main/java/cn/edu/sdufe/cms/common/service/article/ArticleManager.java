@@ -107,8 +107,4 @@ public interface ArticleManager extends GenericManager<Article, Long> {
      */
     int deleteByTask();
 
-    List<Article> search(Map<String, Object> parameters);
-
-    List<Article> search(Map<String, Object> parameters, int offset, int limit);
-
 }

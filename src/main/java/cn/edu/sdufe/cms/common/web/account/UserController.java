@@ -16,15 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * Urls:
- * List   page        : GET  /account/user/
- * Create page        : GET  /account/user/create
- * Create action      : POST /account/user/save
- * Update page        : GET  /account/user/update/{id}
- * Update action      : POST /account/user/save/{id}
- * Delete action      : POST /account/user/delete/{id}
- * CheckLoginName ajax: GET  /account/user/checkLoginName?oldLoginName=a&loginName=b
- * <p/>
  * User: baitao.jibt (dreambt@gmail.com)
  * Date: 12-3-29
  * Time: 下午17:26
@@ -53,7 +44,7 @@ public class UserController {
     @RequestMapping(value = {"list", ""})
     public String list(Model model) {
         model.addAttribute("users", userManager.getAll());
-        return "dashboard/account/user/list";
+        return "dashboard/account/user/listAll";
     }
 
     /**

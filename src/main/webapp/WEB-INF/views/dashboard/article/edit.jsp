@@ -21,49 +21,36 @@
     <script type="text/javascript" src="${ctx}/static/js/jquery-validation/messages_cn.js" charset="utf-8"></script>
 </head>
 <body>
-<div id="main_container" class="main_container container_16 clearfix">
-    <div class="flat_area grid_16">
-        <h2>编辑文章</h2>
-        <p>请选择 <strong>文章分类</strong> <strong>是否置顶</strong> <strong>是否允许评论</strong> , 并填写 <strong>文章标题</strong> 和 <strong>文章内容</strong>. 图片宽度超过676像素，系统会自动以图片长宽比例将其缩小到宽度为676像素！</p>
-        <c:if test="${not empty info}">
-            <div id="message" class="alert alert_blue">
-                <img height="24" width="24" src="${ctx}/static/dashboard/images/icons/Locked2.png"><strong>${info}</strong>
-            </div>
-        </c:if>
-        <c:if test="${not empty error}">
-            <div id="message" class="alert alert_red">
-                <img height="24" width="24" src="${ctx}/static/dashboard/images/icons/Locked2.png"><strong>${error}</strong>
-            </div>
-        </c:if>
-    </div>
-</div>
-<div class="main_container container_16 clearfix">
-<form:form id="articleForm" modelAttribute="article" action="${ctx}/article/save/${article.id}" method="post">
-<div class="box gird_16">
-    <h2 class="box_head grad_colour round_top">编辑文章</h2>
-    <div class="toggle_container">
-        <div class="block">
+<div class="row">
+    <div class="span12">
+    <form:form id="articleForm" class="form-inline" modelAttribute="article" action="${ctx}/article/save/${article.id}" method="post">
         <input type="hidden" name="article.id" value="${article.id}"/>
-        <label>文章分类</label> <form:select path="category.id">
+        <form:select path="category.id" cssClass="input-medium">
         <c:forEach items="${categories}" begin="0" step="1" var="categorie" varStatus="stat">
             <option value="${categorie.id}" <c:if test="${categorie.id eq article.category.id}">selected="selected"</c:if>>${categorie.categoryName}</option>
-        </c:forEach></form:select>
-        <label>是否置顶</label> <input type="checkbox" name="top" value="${article.top}" <c:if test="${article.top}">checked="checked"</c:if> />
-        <label>允许评论</label> <input type="checkbox" name="allowComment" value="true" <c:if test="${article.allowComment}">checked="checked"</c:if> /><br />
-        <label>文章标题</label> <input type="text" id="text" name="subject" class="medium required" size="206" original-title="请输入文章标题" value="${article.subject}" />
-            <script type="text/plain" id="myEditor">${article.message}</script>
-            <script type="text/javascript">
-                var ue = new UE.ui.Editor({
-                    textarea: 'message'
-                });
-                ue.render('myEditor');
-            </script>
+        </c:forEach>
+        </form:select>
+        <input type="text" id="text" name="subject" class="medium required" size="206" original-title="请输入文章标题" value="${article.subject}" placeholder="文章标题" />
+        <label class="checkbox">
+            <input type="checkbox" name="top" value="${article.top}" <c:if test="${article.top}">checked="checked"</c:if> /> 置顶
+        </label>
+        <label class="checkbox">
+            <input type="checkbox" name="allowComment" value="true" <c:if test="${article.allowComment}">checked="checked"</c:if> /> 允许评论
+        </label>
+        <script type="text/plain" id="myEditor">${article.message}</script>
+        <script type="text/javascript">
+            var ue = new UE.ui.Editor({
+                textarea: 'message'
+            });
+            ue.render('myEditor');
+        </script>
+        <div class="control-group">
+            <div class="controls">
+                <button class="btn btn-primary" id="publish" type="submit"><i class="icon-ok icon-white"></i> 发 布</button>
+                <button class="btn" type="reset"><i class="icon-refresh"></i> 草 稿</button>
+            </div>
         </div>
-    </div>
-</div>
-<button class="button_colour" id="publish" type="submit"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/BendedArrowRight.png"><span>发 布</span></button>
-<button class="button_colour" type="reset"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/BendedArrowRight.png"><span>草 稿</span></button>
-</form:form>
+    </form:form>
 </div>
 <script type="text/javascript">
     var URL = "${ctx}/../..";

@@ -1,54 +1,27 @@
 <%--
-  老师管理列表
-  User: dengxiaolan(824688439@qq.com)
-  Date: 12-4-27
-  Time: 上午11:49.
+  教师列表
+  User: baitao.jibt@gmail.com
+  Date: 12-8-25
+  Time: 下午21:25
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-    <title>相册管理列表</title>
-    <script type="text/javascript" src="${ctx}/static/jquery/jquery.mousewheel-3.0.6.pack.js"></script>
-
-    <!-- Add fancyBox -->
+    <title>教师列表</title>
     <link rel="stylesheet" href="${ctx}/static/js/fancyBox/jquery.fancybox.css?v=2.0.5" type="text/css" media="screen" />
-    <script type="text/javascript" src="${ctx}/static/js/fancyBox/jquery.fancybox.pack.js?v=2.0.5"></script>
-
-    <!-- Optionally add button and/or thumbnail helpers -->
     <link rel="stylesheet" href="${ctx}/static/js/fancyBox/helpers/jquery.fancybox-buttons.css?v=2.0.5" type="text/css" media="screen" />
-    <script type="text/javascript" src="${ctx}/static/js/fancyBox/helpers/jquery.fancybox-buttons.js?v=2.0.5"></script>
-
     <link rel="stylesheet" href="${ctx}/static/js/fancyBox/helpers/jquery.fancybox-thumbs.css?v=2.0.5" type="text/css" media="screen" />
-    <script type="text/javascript" src="${ctx}/static/js/fancyBox/helpers/jquery.fancybox-thumbs.js?v=2.0.5"></script>
 </head>
 <body>
-<div id="main_container" class="main_container container_16 clearfix">
-    <div class="flat_area grid_16">
-        <h2>老师列表</h2>
-
-        <p>老师列表</p>
-        <c:if test="${not empty info}">
-            <div id="info" class="alert alert_blue">
-                <img height="24" width="24"
-                     src="${ctx}/static/dashboard/images/icons/Locked2.png"><strong>${info}</strong>
-            </div>
-        </c:if>
-        <c:if test="${not empty error}">
-            <div id="error" class="alert alert_red">
-                <img height="24" width="24"
-                     src="${ctx}/static/dashboard/images/icons/Locked2.png"><strong>${error}</strong>
-            </div>
-        </c:if>
-    </div>
-</div>
-<div class="main_container container_16 clearfix">
-    <form:form id="imageList" name="imageList" method="post">
-        <div class="box grid_16 round_all">
-            <table class="display table">
+<div class="row">
+    <div class="span12">
+        <form:form id="imageList" name="imageList" method="post">
+            <table class="table table-hover">
                 <thead>
                 <tr>
                     <th>选择</th>
@@ -77,12 +50,19 @@
                 </c:forEach>
                 </tbody>
             </table>
-        </div>
-        <button class="button_colour" id="deleteAll"><img height="24" width="24" alt="Bended Arrow Right"
-                                                          src="${ctx}/static/dashboard/images/icons/BendedArrowRight.png"/><span>批量删除</span>
-        </button>
-    </form:form>
+            <div class="control-group">
+                <div class="controls">
+                    <button class="btn btn-primary" id="auditAll"><i class="icon-flag icon-white"></i> 批量审核</button>
+                    <button class="btn btn-primary" id="deleteAll"><i class="icon-remove icon-white"></i> 批量删除</button>
+                </div>
+            </div>
+        </form:form>
+    </div>
 </div>
+<script type="text/javascript" src="${ctx}/static/jquery/jquery.mousewheel-3.0.6.pack.js"></script>
+<script type="text/javascript" src="${ctx}/static/js/fancyBox/jquery.fancybox.pack.js?v=2.0.5"></script>
+<script type="text/javascript" src="${ctx}/static/js/fancyBox/helpers/jquery.fancybox-buttons.js?v=2.0.5"></script>
+<script type="text/javascript" src="${ctx}/static/js/fancyBox/helpers/jquery.fancybox-thumbs.js?v=2.0.5"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         $(".fancy_box").fancybox({
@@ -112,15 +92,12 @@
             }
         });
         $('.delete').click(function(){
-
             if(confirm('确定删除？')){
                 return true;
             }else{
                 return false;
             }
         });
-        //提示信息
-        $(".alert").delay(1500).fadeOut("slow");
     });
 </script>
 </body>

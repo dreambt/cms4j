@@ -5,17 +5,6 @@
   Time: 下午14:08
 --%>
 <%@ page language="java" pageEncoding="UTF-8" %>
-<!-- 友情链接 -->
-<div class="row">
-    <span class="span13">
-        <ul id="friLnk" class="unstyled">
-            <li class="friLnkT"><strong>友情链接</strong></li>
-            <c:forEach items="${links}" var="link" begin="0" step="1">
-                <li style="display:inline-block;*display:inline"><a href="${link.url}" target="_blank">${link.title}</a></li>
-            </c:forEach>
-        </ul>
-    </span>
-</div>
 <!-- 页脚 -->
 <footer class="footer">
         <p class="pull-right"><a href="#">回到页首</a></p>

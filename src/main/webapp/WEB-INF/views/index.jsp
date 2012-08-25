@@ -10,7 +10,7 @@
 <html>
 <head>
     <title>首页</title>
-    <script src="${ctx}/static/js/jquery.cycle.all.js" type="text/javascript"></script>
+    <script src="${ctx}/static/js/jquery/jquery.cycle.all.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(function () {
             $('#slideshow').cycle({
