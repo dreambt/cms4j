@@ -2,7 +2,7 @@ package cn.edu.sdufe.cms.common.dao.link;
 
 import cn.edu.sdufe.cms.common.dao.GenericDao;
 import cn.edu.sdufe.cms.common.entity.link.Link;
-import cn.edu.sdufe.cms.common.entity.link.LinkCategoryEnum;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -19,13 +19,6 @@ public interface LinkMapper extends GenericDao<Link, Long> {
      *
      * @return
      */
-    public List<Link> getAll();
-
-    /**
-     * 根据分类获得连接
-     *
-     * @return
-     */
-    public List<Link> getLinkByCategory(LinkCategoryEnum category);
+    public List<Link> getAll(@Param("offset") int offset, @Param("limit") int limit, @Param("sort") String sort, @Param("direction") String direction);
 
 }

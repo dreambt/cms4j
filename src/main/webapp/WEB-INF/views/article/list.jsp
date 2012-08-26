@@ -5,6 +5,7 @@
   Time: 下午16:49
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -20,7 +21,7 @@
 <div class="row">
     <div class="span13">
         <ul class="breadcrumb">
-            <li><a href="#">首页</a> <span class="divider">/</span></li>
+            <li><a href="#">首${url}页</a> <span class="divider">/</span></li>
             <li class="active"><c:choose><c:when test="${archive eq null}">${category.categoryName}</c:when><c:otherwise>${archive.title}</c:otherwise></c:choose></li>
         </ul>
     </div>
@@ -40,18 +41,9 @@
         <!-- 分页 -->
         <div class="pagination pagination-right">
             <ul id="pagination">
-                <c:choose>
-                    <c:when test="${total <= 110}">
-                        <c:forEach begin="1" end="${pageCount>1?pageCount:1}" step="1" varStatus="var">
-                            <li><a href="#">${var.index}</a></li>
-                        </c:forEach>
-                    </c:when>
-                    <c:otherwise>
-                        <c:forEach begin="1" end="11" step="1" varStatus="var">
-                            <li><a href="#">${var.index}</a></li>
-                        </c:forEach>
-                    </c:otherwise>
-                </c:choose>
+                <c:forEach begin="1" end="${total/12>11?11:1+total/12}" step="1" varStatus="var">
+                    <li><a href="#">${var.index}</a></li>
+                </c:forEach>
             </ul>
         </div>
     </div>
@@ -81,8 +73,9 @@
 
             $.ajax({
                 <c:choose>
-                    <c:when test="${archive eq null}">url:"${ctx}/article/list/ajax/${category.id}?offset=" + (intPageIndex - 1) * limit + "&limit=" + limit,</c:when>
-                    <c:otherwise>url:"${ctx}/archive/list/ajax/${archive.id}?offset=" + (intPageIndex - 1) * limit + "&limit=" + limit,</c:otherwise>
+                    <c:when test="${archive ne null}">url:"${ctx}/archive/list/ajax/${archive.id}?offset=" + (intPageIndex - 1) * limit + "&limit=" + limit,</c:when>
+                    <c:when test="${url ne null}">url:"${ctx}/article/${url}/ajax?offset=" + (intPageIndex - 1) * limit + "&limit=" + limit,</c:when>
+                    <c:otherwise>url:"${ctx}/article/list/ajax/${category.id}?offset=" + (intPageIndex - 1) * limit + "&limit=" + limit,</c:otherwise>
                 </c:choose>
                 timeout:3000,
                 success:function (data) {

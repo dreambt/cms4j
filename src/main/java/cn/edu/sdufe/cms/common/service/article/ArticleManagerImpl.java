@@ -34,7 +34,6 @@ import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -55,12 +54,25 @@ public class ArticleManagerImpl implements ArticleManager {
 
     private JsonMapper jsonMapper = JsonMapper.nonDefaultMapper();
 
+    /**
+     * key list
+     * article:id:{id}
+     * article:count:all
+     * article:count:{categary}
+     * article:all:{offset}:{limit}:{sort}:{direction}
+     * article:archive:{archiveId}:{offset}:{limit}
+     * article:info:19
+     * article:category:{categoryId}:{offset}:{limit}
+     */
     private SpyMemcachedClient spyMemcachedClient;
 
     private NotifyMessageProducer notifyProducer; //JMS消息发送
 
     @Value("${path.upload.base}")
     private String UPLOAD_PATH;
+
+    @Value("${paged.article.limit}")
+    public int LIMIT;
 
     @Override
     public Article get(Long id) {
@@ -77,7 +89,7 @@ public class ArticleManagerImpl implements ArticleManager {
             article = jsonMapper.fromJson(jsonString, Article.class);
         }
         long end = System.currentTimeMillis();
-        logger.debug("获取文章 #{} 用时：{}ms. key: " + key, id, end - start);
+        logger.info("获取文章 #{} 用时：{}ms. key: " + key, id, end - start);
         return article;
     }
 
@@ -85,7 +97,6 @@ public class ArticleManagerImpl implements ArticleManager {
     @Transactional(readOnly = false)
     public Article getForView(Long id) {
         Article article = this.get(id);
-
         if (null == article) {
             logger.error("ArticleManagerImpl.getForView() 找不到编号为 {} 的文章.", id);
             return null;
@@ -97,9 +108,27 @@ public class ArticleManagerImpl implements ArticleManager {
         article.setViews(article.getViews() + 1);
         article.setMessage(Encodes.unescapeHtml(article.getMessage()));
         long end = System.currentTimeMillis();
-        logger.debug("更新文章 {} 的访问次数用时：{}ms.", id, end - start);
-
+        logger.info("更新文章 #{} 的访问次数 用时：{}ms.", id, end - start);
         return article;
+    }
+
+    @Override
+    public long count() {
+        long num = 0L;
+        long start = System.currentTimeMillis();
+        String key = MemcachedObjectType.ARTICLE.getPrefix() + "count:all";
+        String jsonString = spyMemcachedClient.get(key);
+
+        if (StringUtils.isBlank(jsonString)) {
+            num = articleMapper.count();
+            jsonString = jsonMapper.toJson(num);
+            spyMemcachedClient.set(key, MemcachedObjectType.ARTICLE.getExpiredTime(), jsonString);
+        } else {
+            num = jsonMapper.fromJson(jsonString, Long.class);
+        }
+        long end = System.currentTimeMillis();
+        logger.info("获取文章数 用时：{}ms. key: {}.", end - start, key);
+        return num;
     }
 
     @Override
@@ -117,56 +146,68 @@ public class ArticleManagerImpl implements ArticleManager {
             num = jsonMapper.fromJson(jsonString, Long.class);
         }
         long end = System.currentTimeMillis();
-        logger.debug("获取文章 {} 的文章数用时：{}ms. key: " + key, categoryId, end - start);
+        logger.info("获取分类 #{} 的文章数 用时：{}ms. key: " + key, categoryId, end - start);
         return num;
     }
 
     @Override
-    public List<Article> getAll(int offset, int limit) {
-        List<Article> articleList = Lists.newArrayList();
+    public long count(Long[] ids) {
+        long num = 0L;
         long start = System.currentTimeMillis();
-        String key = MemcachedObjectType.ARTICLE.getPrefix() + "all:" + offset + ":" + limit;
+        String key = MemcachedObjectType.ARTICLE.getPrefix() + "count:" + ids.toString();
         String jsonString = spyMemcachedClient.get(key);
 
         if (StringUtils.isBlank(jsonString)) {
-            articleList = articleMapper.getAll(offset, limit);
+            num = articleMapper.countByCategoryIds(ids);
+            jsonString = jsonMapper.toJson(num);
+            spyMemcachedClient.set(key, MemcachedObjectType.ARTICLE.getExpiredTime(), jsonString);
+        } else {
+            num = jsonMapper.fromJson(jsonString, Long.class);
+        }
+        long end = System.currentTimeMillis();
+        logger.info("获取分类 #{} 的文章数 用时：{}ms. key: " + key, ids.toString(), end - start);
+        return num;
+    }
+
+    @Override
+    public List<Article> getAll() {
+        return this.getAll(0, LIMIT, "id", "DESC");
+    }
+
+    @Override
+    public List<Article> getAll(int offset, int limit) {
+        return this.getAll(offset, limit, "id", "DESC");
+    }
+
+    @Override
+    public List<Article> getAll(int offset, int limit, String sort, String direction) {
+        List<Article> articleList = Lists.newArrayList();
+        long start = System.currentTimeMillis();
+        String key = MemcachedObjectType.ARTICLE.getPrefix() + "all:" + offset + ":" + limit + ":" + sort + ":" + direction;
+        String jsonString = spyMemcachedClient.get(key);
+
+        if (StringUtils.isBlank(jsonString)) {
+            articleList = articleMapper.getAll(offset, limit, sort, direction);
             jsonString = jsonMapper.toJson(articleList);
             spyMemcachedClient.set(key, MemcachedObjectType.ARTICLE.getExpiredTime(), jsonString);
         } else {
             articleList = jsonMapper.fromJson(jsonString, jsonMapper.createCollectionType(List.class, Article.class));
         }
         long end = System.currentTimeMillis();
-        logger.debug("获取 Top 10 文章用时：{}ms. key: " + key, end - start);
+        logger.info("获取文章列表 用时：{}ms. key: {}.", end - start, key);
         return articleList;
     }
 
     @Override
-    public List<Article> getTopTen() {
-        List<Article> articleList = Lists.newArrayList();
-        long start = System.currentTimeMillis();
-        String key = MemcachedObjectType.ARTICLE.getPrefix() + "topten";
-        String jsonString = spyMemcachedClient.get(key);
-
-        if (StringUtils.isBlank(jsonString)) {
-            articleList = articleMapper.getTopTen();
-            jsonString = jsonMapper.toJson(articleList);
-            spyMemcachedClient.set(key, MemcachedObjectType.ARTICLE.getExpiredTime(), jsonString);
-        } else {
-            articleList = jsonMapper.fromJson(jsonString, jsonMapper.createCollectionType(List.class, Article.class));
-        }
-        long end = System.currentTimeMillis();
-        logger.debug("获取 Top 10 文章用时：{}ms. key: " + key, end - start);
-        return articleList;
+    public List<Article> getNewTop(int limit) {
+        return this.getAll(0, limit, "id", "DESC");
     }
 
-    /**
-     * 根据archive编号获得文章列表
-     *
-     * @param archiveId
-     * @param offset
-     * @param limit
-     * @return
-     */
+    @Override
+    public List<Article> getHotTop(int limit) {
+        return this.getAll(0, limit, "views", "DESC");
+    }
+
     @Override
     public List<Article> getByArchiveId(Long archiveId, int offset, int limit) {
         List<Article> articleList = Lists.newArrayList();
@@ -182,28 +223,7 @@ public class ArticleManagerImpl implements ArticleManager {
             articleList = jsonMapper.fromJson(jsonString, jsonMapper.createCollectionType(List.class, Article.class));
         }
         long end = System.currentTimeMillis();
-        logger.debug("获取分类 {} 的文章用时：{}ms. key: " + key, archiveId, end - start);
-        return articleList;
-    }
-
-    @Override
-    public List<Article> getInfo() {
-        Long[] ids = {19L, 20L, 21L, 22L, 32L, 33L};
-
-        List<Article> articleList = Lists.newArrayList();
-        long start = System.currentTimeMillis();
-        String key = MemcachedObjectType.ARTICLE.getPrefix() + "info:19";
-        String jsonString = spyMemcachedClient.get(key);
-
-        if (StringUtils.isBlank(jsonString)) {
-            articleList = articleMapper.getTitleByCategoryIds(ids);
-            jsonString = jsonMapper.toJson(articleList);
-            spyMemcachedClient.set(key, MemcachedObjectType.ARTICLE.getExpiredTime(), jsonString);
-        } else {
-            articleList = jsonMapper.fromJson(jsonString, jsonMapper.createCollectionType(List.class, Article.class));
-        }
-        long end = System.currentTimeMillis();
-        logger.debug("获取分类 19、20、21、22、32、33 的文章用时：{}ms. key: " + key, end - start);
+        logger.info("获取归档 #{} 的文章 用时：{}ms. key: " + key, archiveId, end - start);
         return articleList;
     }
 
@@ -222,7 +242,26 @@ public class ArticleManagerImpl implements ArticleManager {
             articleList = jsonMapper.fromJson(jsonString, jsonMapper.createCollectionType(List.class, Article.class));
         }
         long end = System.currentTimeMillis();
-        logger.debug("获取分类 {} 的文章用时：{}ms. key: " + key, categoryId, end - start);
+        logger.info("获取分类 #{} 的文章 用时：{}ms. key: " + key, categoryId, end - start);
+        return articleList;
+    }
+
+    @Override
+    public List<Article> getByCategoryIds(Long[] ids, int offset, int limit) {
+        List<Article> articleList = Lists.newArrayList();
+        long start = System.currentTimeMillis();
+        String key = MemcachedObjectType.ARTICLE.getPrefix() + "categorys:" + ids.toString() + ":" + offset + ":" + limit;
+        String jsonString = spyMemcachedClient.get(key);
+
+        if (StringUtils.isBlank(jsonString)) {
+            articleList = articleMapper.getByCategoryIds(ids, offset, limit);
+            jsonString = jsonMapper.toJson(articleList);
+            spyMemcachedClient.set(key, MemcachedObjectType.ARTICLE.getExpiredTime(), jsonString);
+        } else {
+            articleList = jsonMapper.fromJson(jsonString, jsonMapper.createCollectionType(List.class, Article.class));
+        }
+        long end = System.currentTimeMillis();
+        logger.info("获取分类 19、20、21、22、32、33 的文章 用时：{}ms. key: " + key, end - start);
         return articleList;
     }
 
@@ -295,14 +334,14 @@ public class ArticleManagerImpl implements ArticleManager {
     private String genKeywords(Article article, int num) {
         ArticleKeyword articleKeyword = new ArticleKeyword();
         String keywords = articleKeyword.getArticleKeyword(article.getSubject(), article.getMessage(), num);
-        logger.debug("为文章 {} 生成关键词：{}.", article.getId(), keywords);
+        logger.info("为文章 #{} 生成关键词：{}.", article.getId(), keywords);
         return keywords;
     }
 
     @Override
     @Transactional(readOnly = false)
     public void batchAudit(String[] ids) {
-        logger.info("批量审核文章 article.id={}.", ids.toString());
+        logger.info("批量审核文章 #{}.", ids.toString());
         for (String id : ids) {
             if (id.length() == 0) {
                 continue;
@@ -314,7 +353,7 @@ public class ArticleManagerImpl implements ArticleManager {
     @Override
     @Transactional(readOnly = false)
     public void batchDelete(String[] ids) {
-        logger.info("批量删除文章 article.id={}.", ids.toString());
+        logger.info("批量删除文章 #{}.", ids.toString());
         for (String id : ids) {
             if (id.length() == 0) {
                 continue;
@@ -326,7 +365,7 @@ public class ArticleManagerImpl implements ArticleManager {
     @Override
     @Transactional(readOnly = false)
     public boolean top(Long id) {
-        logger.info("置顶文章 article.id={}.", id);
+        logger.info("置顶文章 #{}.", id);
         try {
             return articleMapper.updateBool(id, "top") > 0;
         } catch (Exception e) {
@@ -337,7 +376,7 @@ public class ArticleManagerImpl implements ArticleManager {
     @Override
     @Transactional(readOnly = false)
     public boolean audit(Long id) {
-        logger.info("审核文章 article.id={}.", id);
+        logger.info("审核文章 #{}.", id);
         try {
             return articleMapper.updateBool(id, "status") > 0;
         } catch (Exception e) {
@@ -348,7 +387,7 @@ public class ArticleManagerImpl implements ArticleManager {
     @Override
     @Transactional(readOnly = false)
     public boolean allowComment(Long id) {
-        logger.info("允许评论文章 article.id={}.", id);
+        logger.info("允许评论文章 #{}.", id);
         try {
             return articleMapper.updateBool(id, "allow_comment") > 0;
         } catch (Exception e) {
@@ -359,7 +398,7 @@ public class ArticleManagerImpl implements ArticleManager {
     @Override
     @Transactional(readOnly = false)
     public long update(Article article) {
-        logger.info("更新文章 article={}.", article.toString());
+        logger.info("更新文章 #{}.", article.toString());
         try {
             // 生成默认摘要
             String str = Jsoup.parse(article.getMessage()).text();
@@ -393,7 +432,7 @@ public class ArticleManagerImpl implements ArticleManager {
     @Override
     @Transactional(readOnly = false)
     public long delete(Long id) {
-        logger.info("删除文章 article.id={}.", id);
+        logger.info("删除文章 #{}.", id);
         return articleMapper.updateBool(id, "deleted");
     }
 
@@ -424,6 +463,15 @@ public class ArticleManagerImpl implements ArticleManager {
         }
 
         return articleMapper.deleteByTask();
+    }
+
+    /**
+     * TODO 清理 Memcached 缓存
+     */
+    private void clearMemcached() {
+        String key = MemcachedObjectType.ARTICLE.getPrefix();
+        String jsonString = spyMemcachedClient.get(key);
+        //spyMemcachedClient.set();
     }
 
     @Autowired

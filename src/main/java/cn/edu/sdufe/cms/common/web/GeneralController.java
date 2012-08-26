@@ -1,6 +1,5 @@
 package cn.edu.sdufe.cms.common.web;
 
-import cn.edu.sdufe.cms.common.entity.link.LinkCategoryEnum;
 import cn.edu.sdufe.cms.common.service.article.ArticleManager;
 import cn.edu.sdufe.cms.common.service.article.CategoryManager;
 import cn.edu.sdufe.cms.common.service.image.ImageManager;
@@ -35,12 +34,13 @@ public class GeneralController {
      */
     @RequestMapping(value = "/index{str}", method = RequestMethod.GET)
     public String index(Model model, @PathVariable("str") String str) {
+        Long[] ids = {19L, 20L, 21L, 22L, 32L, 33L};
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("images", imageManager.findByShowIndex());
         model.addAttribute("news1", articleManager.getByCategoryId(3L, 0, 6));
         model.addAttribute("news2", articleManager.getByCategoryId(4L, 0, 8));
-        model.addAttribute("infos", articleManager.getInfo());
-        model.addAttribute("links", linkManager.getByCategory(LinkCategoryEnum.LINK));
+        model.addAttribute("infos", articleManager.getByCategoryIds(ids, 0, 7));
+        model.addAttribute("links", linkManager.getAll());
         model.addAttribute("posts", articleManager.getByCategoryId(1L, 0, 6));
         return "index" + str;
     }

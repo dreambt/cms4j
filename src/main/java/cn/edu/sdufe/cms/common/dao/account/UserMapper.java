@@ -2,6 +2,7 @@ package cn.edu.sdufe.cms.common.dao.account;
 
 import cn.edu.sdufe.cms.common.dao.GenericDao;
 import cn.edu.sdufe.cms.common.entity.account.User;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public interface UserMapper extends GenericDao<User, Long> {
 
-    List<User> getAll();
+    List<User> getAll(@Param("offset") int offset, @Param("limit") int limit, @Param("sort") String sort, @Param("direction") String direction);
 
     /**
      * 获取邮箱为email的用户，仅用于登录

@@ -116,13 +116,17 @@
     <%@ include file="/WEB-INF/layouts/footer.jsp" %>
 </div>
 <c:if test="${not empty info}">
-    <div id="message" class="alert alert_blue">
-        <strong>${info}</strong>
+    <div class="tips alert alert-info fade in">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <h4>提示!</h4>
+        ${info}
     </div>
 </c:if>
 <c:if test="${not empty error}">
-    <div id="message" class="alert alert_red">
-        <strong>${error}</strong>
+    <div class="tips alert alert-error fade in">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <h4>出错啦!</h4>
+        ${error}
     </div>
 </c:if>
 <script src="${ctx}/static/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>

@@ -49,7 +49,7 @@ public class GroupManagerImpl implements GroupManager {
             group = jsonMapper.fromJson(jsonString, Group.class);
         }
         long end = System.currentTimeMillis();
-        logger.debug("获取用户组 #{} 用时：{}ms. key: " + key, id, end - start);
+        logger.info("获取用户组 #{} 用时：{}ms. key: " + key, id, end - start);
         return group;
     }
 
@@ -68,7 +68,7 @@ public class GroupManagerImpl implements GroupManager {
             groupList = jsonMapper.fromJson(jsonString, jsonMapper.createCollectionType(List.class, Group.class));
         }
         long end = System.currentTimeMillis();
-        logger.debug("获取所有用户组用时：{}ms. key: " + key, end - start);
+        logger.info("获取所有用户组用时：{}ms. key: " + key, end - start);
         return groupList;
     }
 
@@ -87,7 +87,7 @@ public class GroupManagerImpl implements GroupManager {
             num = jsonMapper.fromJson(jsonString, Long.class);
         }
         long end = System.currentTimeMillis();
-        logger.debug("获取用户数用时：{}ms. key: " + key, end - start);
+        logger.info("获取用户数用时：{}ms. key: " + key, end - start);
         return num;
     }
 

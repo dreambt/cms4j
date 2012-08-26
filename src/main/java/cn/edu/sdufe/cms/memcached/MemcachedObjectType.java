@@ -9,14 +9,15 @@ package cn.edu.sdufe.cms.memcached;
  */
 public enum MemcachedObjectType {
 
-    USER("user:", 60 * 1 * 1),
-    GROUP("group:", 60 * 1 * 1),
-    ARTICLE("article:", 60 * 24 * 7),
-    ARCHIVE("archive:", 60 * 24 * 7),
-    COMMENT("comment:", 60 * 24 * 1),
-    CATEGORY("category:", 60 * 24 * 7),
-    LINK("link:", 60 * 24 * 7),
-    IMAGE("inage:", 60 * 24 * 1);
+    // 时间单位：s
+    USER("user:", 60 * 60 * 1),
+    GROUP("group:", 60 * 60 * 1),
+    ARTICLE("article:", 60 * 60 * 24),
+    ARCHIVE("archive:", 60 * 60 * 24),
+    COMMENT("comment:", 60 * 60 * 24),
+    CATEGORY("category:", 60 * 60 * 24),
+    LINK("link:", 60 * 60 * 24),
+    IMAGE("image:", 60 * 60 * 24);
 
     private String prefix;
     private int expiredTime;

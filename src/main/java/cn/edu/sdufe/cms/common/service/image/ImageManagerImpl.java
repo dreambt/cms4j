@@ -47,6 +47,9 @@ public class ImageManagerImpl implements ImageManager {
     @Value("${path.upload.base}")
     private String UPLOAD_PATH;
 
+    @Value("${paged.image.limit}")
+    public int LIMIT;
+
     public Image get(Long id) {
         Image image = null;
         long start = System.currentTimeMillis();
@@ -61,7 +64,7 @@ public class ImageManagerImpl implements ImageManager {
             image = jsonMapper.fromJson(jsonString, Image.class);
         }
         long end = System.currentTimeMillis();
-        logger.debug("获取相册 #{} 用时：{}ms. key: " + key, id, end - start);
+        logger.info("获取相册 #{} 用时：{}ms. key: " + key, id, end - start);
         return image;
     }
 
@@ -69,28 +72,6 @@ public class ImageManagerImpl implements ImageManager {
     @Deprecated
     public long save(Image object) {
         return 0;
-    }
-
-    @Override
-    public List<Image> getPagedImage(int offset, int limit) {
-        List<Image> imageList = Lists.newArrayList();
-        long start = System.currentTimeMillis();
-        Map<String, Object> parameters = Maps.newHashMap();
-        parameters.put("offset", offset);
-        parameters.put("limit", limit);
-        String key = MemcachedObjectType.IMAGE.getPrefix() + "paged:offset:" + offset + "limit:" + limit;
-        String jsonString = spyMemcachedClient.get(key);
-
-        if (StringUtils.isBlank(jsonString)) {
-            imageList = imageMapper.search(parameters);
-            jsonString = jsonMapper.toJson(imageList);
-            spyMemcachedClient.set(key, MemcachedObjectType.IMAGE.getExpiredTime(), jsonString);
-        } else {
-            imageList = jsonMapper.fromJson(jsonString, jsonMapper.createCollectionType(List.class, Image.class));
-        }
-        long end = System.currentTimeMillis();
-        logger.debug("获取分页相册用时：{}ms. key: " + key, end - start);
-        return imageMapper.search(parameters);
     }
 
     public long count() {
@@ -107,26 +88,36 @@ public class ImageManagerImpl implements ImageManager {
             num = jsonMapper.fromJson(jsonString, Long.class);
         }
         long end = System.currentTimeMillis();
-        logger.debug("获取相册数用时：{}ms. key: " + key, end - start);
+        logger.info("获取相册数 用时：{}ms. key: " + key, end - start);
         return num;
     }
 
     @Override
     public List<Image> getAll() {
+        return this.getAll(0, LIMIT, "id", "DESC");
+    }
+
+    @Override
+    public List<Image> getAll(int offset, int limit) {
+        return this.getAll(offset, limit, "id", "DESC");
+    }
+
+    @Override
+    public List<Image> getAll(int offset, int limit, String sort, String direction) {
         List<Image> imageList = Lists.newArrayList();
         long start = System.currentTimeMillis();
-        String key = MemcachedObjectType.IMAGE.getPrefix() + "all";
+        String key = MemcachedObjectType.IMAGE.getPrefix() + "all:" + offset + ":" + limit + ":" + sort + ":" + direction;
         String jsonString = spyMemcachedClient.get(key);
 
         if (StringUtils.isBlank(jsonString)) {
-            imageList = imageMapper.getAll();
+            imageList = imageMapper.getAll(offset, limit, sort, direction);
             jsonString = jsonMapper.toJson(imageList);
             spyMemcachedClient.set(key, MemcachedObjectType.IMAGE.getExpiredTime(), jsonString);
         } else {
             imageList = jsonMapper.fromJson(jsonString, jsonMapper.createCollectionType(List.class, Image.class));
         }
         long end = System.currentTimeMillis();
-        logger.debug("获取所有相册用时：{}ms. key: " + key, end - start);
+        logger.info("获取所有相册 用时：{}ms. key: " + key, end - start);
         return imageList;
     }
 
@@ -149,7 +140,7 @@ public class ImageManagerImpl implements ImageManager {
             imageList = jsonMapper.fromJson(jsonString, jsonMapper.createCollectionType(List.class, Image.class));
         }
         long end = System.currentTimeMillis();
-        logger.debug("获取首页显示的相册用时：{}ms. key: " + key, end - start);
+        logger.info("获取首页显示的相册 用时：{}ms. key: " + key, end - start);
         return imageList;
     }
 
@@ -225,14 +216,14 @@ public class ImageManagerImpl implements ImageManager {
     @Override
     @Transactional(readOnly = false)
     public long update(Long id, String column) {
-        logger.info("更新相册 image.id={} 的 {} 属性.", id, column);
+        logger.info("更新相册 #{} 的 {} 属性.", id, column);
         return imageMapper.updateBool(id, column);
     }
 
     @Override
     @Transactional(readOnly = false)
     public long delete(Long id) {
-        logger.info("删除相册 image.id={}.", id);
+        logger.info("删除相册 #{}.", id);
         String fileName = imageMapper.get(id).getImageUrl();
 
         int num = imageMapper.delete(id);
@@ -247,7 +238,7 @@ public class ImageManagerImpl implements ImageManager {
     @Override
     @Transactional(readOnly = false)
     public void batchDelete(String[] ids) {
-        logger.info("批量删除相册 image.id={}.", ids.toString());
+        logger.info("批量删除相册 #{}.", ids.toString());
         for (String id : ids) {
             this.delete(Long.parseLong(id));
         }

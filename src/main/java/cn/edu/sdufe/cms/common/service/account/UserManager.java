@@ -24,6 +24,26 @@ public interface UserManager extends GenericManager<User, Long> {
     List<User> getAll();
 
     /**
+     * 使用默认的排序方式指定偏移的所有用户
+     *
+     * @param offset
+     * @param limit
+     * @return
+     */
+    List<User> getAll(int offset, int limit);
+
+    /**
+     * 按指定的排序方式指定偏移的所有用户
+     *
+     * @param offset
+     * @param limit
+     * @param sort
+     * @param direction
+     * @return
+     */
+    List<User> getAll(int offset, int limit, String sort, String direction);
+
+    /**
      * 通过邮箱获取用户
      *
      * @param email

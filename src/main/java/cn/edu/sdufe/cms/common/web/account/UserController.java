@@ -3,6 +3,7 @@ package cn.edu.sdufe.cms.common.web.account;
 import cn.edu.sdufe.cms.common.entity.account.User;
 import cn.edu.sdufe.cms.common.service.account.GroupManager;
 import cn.edu.sdufe.cms.common.service.account.UserManager;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,16 +36,35 @@ public class UserController {
     }
 
     /**
-     * 显示所有用户
+     * 获取所有用户
      *
      * @param model
      * @return
      */
     @RequiresPermissions("user:list")
-    @RequestMapping(value = {"list", ""})
-    public String list(Model model) {
+    @RequestMapping(value = {"list", ""}, method = RequestMethod.GET)
+    public String listAll(Model model) {
         model.addAttribute("users", userManager.getAll());
+        model.addAttribute("total", userManager.count());
         return "dashboard/account/user/listAll";
+    }
+
+    /**
+     * 获取所有用户
+     *
+     * @param offset
+     * @param limit
+     * @return
+     */
+    @RequiresPermissions("article:list")
+    @RequestMapping(value = "listAll/ajax")
+    @ResponseBody
+    public List<User> ajaxAllUser(@RequestParam("offset") int offset, @RequestParam("limit") int limit, String sort, String direction) {
+        if (StringUtils.isNotBlank(sort) && StringUtils.isNotBlank(direction)) {
+            return userManager.getAll(offset, limit, sort, direction);
+        } else {
+            return userManager.getAll(offset, limit);
+        }
     }
 
     /**
@@ -105,7 +125,7 @@ public class UserController {
             return "redirect:/account/user/list";
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "重置密码失败.");
-            return "dashboard/account/user/edit";
+            return "redirect:/account/user/edit/" + id;
         }
     }
 
@@ -144,7 +164,7 @@ public class UserController {
     }
 
     @RequiresPermissions("user:edit")
-    @RequestMapping(value = "auditAll")
+    @RequestMapping(value = "batchAudit")
     public String batchAuditUser(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         String[] isSelected = request.getParameterValues("isSelected");
         if (isSelected == null) {
@@ -158,7 +178,7 @@ public class UserController {
     }
 
     @RequiresPermissions("user:save")
-    @RequestMapping(value = "deleteAll")
+    @RequestMapping(value = "batchDelete")
     public String batchDeleteUser(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         String[] isSelected = request.getParameterValues("isSelected");
         if (isSelected == null) {

@@ -2,6 +2,7 @@ package cn.edu.sdufe.cms.common.dao.image;
 
 import cn.edu.sdufe.cms.common.dao.GenericDao;
 import cn.edu.sdufe.cms.common.entity.image.Image;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,8 +17,12 @@ public interface ImageMapper extends GenericDao<Image, Long> {
     /**
      * 获得所有的连接
      *
+     * @param offset
+     * @param limit
+     * @param sort
+     * @param direction
      * @return
      */
-    List<Image> getAll();
+    List<Image> getAll(@Param("offset") int offset, @Param("limit") int limit, @Param("sort") String sort, @Param("direction") String direction);
 
 }

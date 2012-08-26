@@ -18,23 +18,13 @@ public interface ArticleMapper extends GenericDao<Article, Long> {
     /**
      * 获得所有文章
      *
+     * @param offset
+     * @param limit
+     * @param sort
+     * @param direction
      * @return
      */
-    List<Article> getAll(@Param("offset") int offset, @Param("limit") int limit);
-
-    /**
-     * 获得最新的10篇文章
-     *
-     * @return
-     */
-    List<Article> getTopTen();
-
-    /**
-     * 获取分类ids的文章标题
-     *
-     * @return
-     */
-    List<Article> getTitleByCategoryIds(Long[] ids);
+    List<Article> getAll(@Param("offset") int offset, @Param("limit") int limit, @Param("sort") String sort, @Param("direction") String direction);
 
     /**
      * 获取分类id的文章列表
@@ -45,6 +35,13 @@ public interface ArticleMapper extends GenericDao<Article, Long> {
      * @return
      */
     List<Article> getByCategoryId(@Param("categoryId") Long categoryId, @Param("offset") int offset, @Param("limit") int limit);
+
+    /**
+     * 获取分类ids的文章标题
+     *
+     * @return
+     */
+    List<Article> getByCategoryIds(@Param("ids") Long[] ids, @Param("offset") int offset, @Param("limit") int limit);
 
     /**
      * 根据归档编号获得文章
@@ -86,6 +83,14 @@ public interface ArticleMapper extends GenericDao<Article, Long> {
      * @return
      */
     Long countByCategoryId(Long categoryId);
+
+    /**
+     * 获取 ids 分类下文章数量
+     *
+     * @param ids
+     * @return
+     */
+    Long countByCategoryIds(Long[] ids);
 
     /**
      * 更新文章views字段

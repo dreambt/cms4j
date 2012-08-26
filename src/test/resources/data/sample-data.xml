@@ -93,7 +93,7 @@
 
 
     <!-- link -->
-    <CMS_LINK ID="1" TITLE="山东财经大学" URL="http://www.sdufe.edu.cn" CATEGORY="LINK" STATUS="1" CREATED_DATE="1987-06-01 00:00:00" LAST_MODIFIED_DATE="1987-06-01 00:00:00" />
+    <CMS_LINK ID="1" TITLE="山东财经大学" URL="http://www.sdufe.edu.cn" STATUS="1" CREATED_DATE="1987-06-01 00:00:00" LAST_MODIFIED_DATE="1987-06-01 00:00:00" />
 
 
     <!-- teacher -->

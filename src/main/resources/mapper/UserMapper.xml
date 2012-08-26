@@ -47,8 +47,8 @@
         SELECT U.id, U.group_id, email, username, PASSWORD , salt, STATUS , deleted,
         group_name as group_group_name, permission as group_permission
         FROM cms_user AS U
-        LEFT OUTER JOIN cms_group AS G ON G.id = U.group_id
-        LEFT OUTER JOIN cms_group_permission AS P ON P.group_id = U.group_id
+        INNER JOIN cms_group AS G ON G.id = U.group_id
+        INNER JOIN cms_group_permission AS P ON P.group_id = U.group_id
         WHERE email =#{email}
     </select>
 
@@ -56,10 +56,11 @@
     <select id="getAll" resultMap="userDetailMap">
         SELECT U.id, U.group_id, email, username, PASSWORD , salt,STATUS , deleted,
         email_status, avatar_status, photo_url, time_offset, last_ip, last_time, last_act_time, created_date, last_modified_date,
-        group_name as group_group_name, permission as group_permission
+        group_name as group_group_name, 'user:list' as group_permission
         FROM cms_user AS U
-        LEFT OUTER JOIN cms_group AS G ON G.id = U.group_id
-        LEFT OUTER JOIN cms_group_permission AS P ON P.group_id = G.id
+        INNER JOIN cms_group AS G ON G.id = U.group_id
+        ORDER BY ${sort} ${direction}
+        LIMIT #{offset},#{limit}
     </select>
 
     <!-- 获取已标记为删除的用户id -->

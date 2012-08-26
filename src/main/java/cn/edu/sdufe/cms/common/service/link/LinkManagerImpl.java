@@ -2,7 +2,6 @@ package cn.edu.sdufe.cms.common.service.link;
 
 import cn.edu.sdufe.cms.common.dao.link.LinkMapper;
 import cn.edu.sdufe.cms.common.entity.link.Link;
-import cn.edu.sdufe.cms.common.entity.link.LinkCategoryEnum;
 import cn.edu.sdufe.cms.memcached.MemcachedObjectType;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
@@ -10,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springside.modules.mapper.JsonMapper;
@@ -35,41 +35,54 @@ public class LinkManagerImpl implements LinkManager {
 
     private LinkMapper linkMapper;
 
+    @Value("${paged.link.limit}")
+    public int LIMIT;
+
     @Override
-    public List<Link> getAll() {
-        List<Link> linkList = Lists.newArrayList();
+    public long count() {
+        long num = 0L;
         long start = System.currentTimeMillis();
-        String key = MemcachedObjectType.LINK.getPrefix() + "all";
+        String key = MemcachedObjectType.LINK.getPrefix() + "count:all";
         String jsonString = spyMemcachedClient.get(key);
 
         if (StringUtils.isBlank(jsonString)) {
-            linkList = linkMapper.getAll();
-            jsonString = jsonMapper.toJson(linkList);
+            num = linkMapper.count();
+            jsonString = jsonMapper.toJson(num);
             spyMemcachedClient.set(key, MemcachedObjectType.LINK.getExpiredTime(), jsonString);
         } else {
-            linkList = jsonMapper.fromJson(jsonString, jsonMapper.createCollectionType(List.class, Link.class));
+            num = jsonMapper.fromJson(jsonString, Long.class);
         }
         long end = System.currentTimeMillis();
-        logger.debug("获取所有友情链接 {} 用时：{}ms. key: " + key, end - start);
-        return linkList;
+        logger.info("获取友情链接数 用时：{}ms. key: {}.", end - start, key);
+        return num;
     }
 
     @Override
-    public List<Link> getByCategory(LinkCategoryEnum category) {
+    public List<Link> getAll() {
+        return this.getAll(0, LIMIT, "id", "DESC");
+    }
+
+    @Override
+    public List<Link> getAll(int offset, int limit) {
+        return this.getAll(offset, limit, "id", "DESC");
+    }
+
+    @Override
+    public List<Link> getAll(int offset, int limit, String sort, String direction) {
         List<Link> linkList = Lists.newArrayList();
         long start = System.currentTimeMillis();
-        String key = MemcachedObjectType.LINK.getPrefix() + "category:" + category.toString();
+        String key = MemcachedObjectType.LINK.getPrefix() + "all:" + offset + ":" + limit + ":" + sort + ":" + direction;
         String jsonString = spyMemcachedClient.get(key);
 
         if (StringUtils.isBlank(jsonString)) {
-            linkList = linkMapper.getLinkByCategory(category);
+            linkList = linkMapper.getAll(offset, limit, sort, direction);
             jsonString = jsonMapper.toJson(linkList);
             spyMemcachedClient.set(key, MemcachedObjectType.LINK.getExpiredTime(), jsonString);
         } else {
             linkList = jsonMapper.fromJson(jsonString, jsonMapper.createCollectionType(List.class, Link.class));
         }
         long end = System.currentTimeMillis();
-        logger.debug("获取类型为 {} 的友情链接用时：{}ms. key: " + key, category.toString(), end - start);
+        logger.info("获取所有友情链接 {} 用时：{}ms. key: " + key, end - start);
         return linkList;
     }
 
@@ -87,7 +100,7 @@ public class LinkManagerImpl implements LinkManager {
             link = jsonMapper.fromJson(jsonString, Link.class);
         }
         long end = System.currentTimeMillis();
-        logger.debug("获取友情链接 {} 用时：{}ms. key: " + key, id, end - start);
+        logger.info("获取友情链接 #{} 用时：{}ms. key: " + key, id, end - start);
         return link;
     }
 
@@ -105,21 +118,30 @@ public class LinkManagerImpl implements LinkManager {
 
     @Override
     @Transactional(readOnly = false)
-    public long update(Long id, String column) {
-        logger.info("保存友情链接 link.id={} 的属性 {}.", id, column);
+    public long updateBool(Long id, String column) {
+        logger.info("保存友情链接 #{} 的属性 {}.", id, column);
         return linkMapper.updateBool(id, column);
     }
 
     @Transactional(readOnly = false)
     public long delete(Long id) {
-        logger.info("删除友情链接 link.id={}.", id);
+        logger.info("删除友情链接 #{}.", id);
         return linkMapper.delete(id);
     }
 
     @Override
     @Transactional(readOnly = false)
+    public void batchAudit(String[] ids) {
+        logger.info("批量审核友情链接 #{}.", ids.toString());
+        for (String id : ids) {
+            this.updateBool(Long.parseLong(id), "status");
+        }
+    }
+
+    @Override
+    @Transactional(readOnly = false)
     public void batchDelete(String[] ids) {
-        logger.info("批量删除友情链接 link.id={}.", ids.toString());
+        logger.info("批量删除友情链接 #{}.", ids.toString());
         for (String id : ids) {
             this.delete(Long.parseLong(id));
         }

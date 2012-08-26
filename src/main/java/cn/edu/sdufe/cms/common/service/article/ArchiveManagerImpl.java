@@ -56,7 +56,7 @@ public class ArchiveManagerImpl implements ArchiveManager {
             archive = jsonMapper.fromJson(jsonString, Archive.class);
         }
         long end = System.currentTimeMillis();
-        logger.debug("获取归档 #{} 用时：{}ms. key: " + key, id, end - start);
+        logger.info("获取归档 #{} 用时：{}ms. key: " + key, id, end - start);
         return archive;
     }
 
@@ -79,7 +79,7 @@ public class ArchiveManagerImpl implements ArchiveManager {
             archiveList = jsonMapper.fromJson(jsonString, jsonMapper.createCollectionType(List.class, Archive.class));
         }
         long end = System.currentTimeMillis();
-        logger.debug("获取 Top 10 归档用时：{}ms. key: " + key, end - start);
+        logger.info("获取 Top 10 归档用时：{}ms. key: " + key, end - start);
         return archiveList;
     }
 

@@ -1,6 +1,7 @@
 package cn.edu.sdufe.cms.common.service.image;
 
 import cn.edu.sdufe.cms.common.dao.image.ImageMapper;
+import cn.edu.sdufe.cms.common.entity.article.Article;
 import cn.edu.sdufe.cms.common.entity.image.Image;
 import cn.edu.sdufe.cms.common.service.GenericManager;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,27 +19,38 @@ import java.util.List;
 public interface ImageManager extends GenericManager<Image, Long> {
 
     /**
-     * 获得分页的image
-     *
-     * @param offset
-     * @param limit
-     * @return
-     */
-    List<Image> getPagedImage(int offset, int limit);
-
-    /**
-     * 获得image数量
+     * 获得 image 数量
      *
      * @return
      */
     long count();
 
     /**
-     * 获得所有image
+     * 获得所有 image
      *
      * @return
      */
     List<Image> getAll();
+
+    /**
+     * 使用默认的排序方式指定偏移的所有 image
+     *
+     * @param offset
+     * @param limit
+     * @return
+     */
+    List<Image> getAll(int offset, int limit);
+
+    /**
+     * 按指定的排序方式指定偏移的所有 image
+     *
+     * @param offset
+     * @param limit
+     * @param sort
+     * @param direction
+     * @return
+     */
+    List<Image> getAll(int offset, int limit, String sort, String direction);
 
     /**
      * 获得首页显示的image

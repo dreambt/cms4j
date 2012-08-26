@@ -3,6 +3,7 @@ package cn.edu.sdufe.cms.common.web.image;
 import cn.edu.sdufe.cms.common.entity.image.Image;
 import cn.edu.sdufe.cms.common.service.article.CategoryManager;
 import cn.edu.sdufe.cms.common.service.image.ImageManager;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,9 +36,30 @@ public class ImageController {
      */
     @RequiresPermissions("gallery:list")
     @RequestMapping(value = "listAll", method = RequestMethod.GET)
-    public String listAllImage(Model model) {
+    public String listAll(Model model) {
         model.addAttribute("images", imageManager.getAll());
+        model.addAttribute("total", imageManager.count());
         return "dashboard/image/listAll";
+    }
+
+    /**
+     * 后台获取所有文章图片
+     *
+     * @param offset
+     * @param limit
+     * @param sort
+     * @param direction
+     * @return
+     */
+    @RequiresPermissions("gallery:list")
+    @RequestMapping(value = "listAll/ajax")
+    @ResponseBody
+    public List<Image> ajaxListAll(@RequestParam("offset") int offset, @RequestParam("limit") int limit, String sort, String direction) {
+        if (StringUtils.isNotBlank(sort) && StringUtils.isNotBlank(direction)) {
+            return imageManager.getAll(offset, limit, sort, direction);
+        } else {
+            return imageManager.getAll(offset, limit);
+        }
     }
 
     /**
@@ -48,18 +70,9 @@ public class ImageController {
      */
     @RequestMapping(value = "album", method = RequestMethod.GET)
     public String album(Model model) {
-        long total = imageManager.count();
-        int limit = 4;
-        long pageCount;
-        if (total % limit == 0) {
-            pageCount = total / limit;
-        } else {
-            pageCount = total / limit + 1;
-        }
-        model.addAttribute("images", imageManager.getPagedImage(0, limit));
+        model.addAttribute("images", imageManager.getAll(0, 10));
         model.addAttribute("categories", categoryManager.getNavCategory());
-        model.addAttribute("total", total);
-        model.addAttribute("pageCount", pageCount);
+        model.addAttribute("total", imageManager.count());
         return "album";
     }
 
@@ -73,7 +86,7 @@ public class ImageController {
     @RequestMapping(value = "album/ajax", method = RequestMethod.GET)
     @ResponseBody
     public List<Image> ajaxAlbumPaged(@RequestParam("offset") int offset, @RequestParam("limit") int limit) {
-        List<Image> images = imageManager.getPagedImage(offset, limit);
+        List<Image> images = imageManager.getAll(offset, limit);
         return images;
     }
 
@@ -85,19 +98,10 @@ public class ImageController {
      */
     @RequestMapping(value = "photo", method = RequestMethod.GET)
     public String gallery(Model model) {
-        long total = imageManager.count();
-        int limit = 12;
-        long pageCount;
-        if (total % limit == 0) {
-            pageCount = total / limit;
-        } else {
-            pageCount = total / limit + 1;
-        }
-        List<Image> images = imageManager.getPagedImage(0, limit);
+        List<Image> images = imageManager.getAll(0, 12);
         model.addAttribute("images", images);
         model.addAttribute("categories", categoryManager.getNavCategory());
-        model.addAttribute("total", total);
-        model.addAttribute("pageCount", pageCount);
+        model.addAttribute("total", imageManager.count());
         return "photo";
     }
 
@@ -111,7 +115,7 @@ public class ImageController {
     @RequestMapping(value = "photo/ajax", method = RequestMethod.GET)
     @ResponseBody
     public List<Image> ajaxPhotoPaged(@RequestParam("offset") int offset, @RequestParam("limit") int limit) {
-        List<Image> images = imageManager.getPagedImage(offset, limit);
+        List<Image> images = imageManager.getAll(offset, limit);
         return images;
     }
 

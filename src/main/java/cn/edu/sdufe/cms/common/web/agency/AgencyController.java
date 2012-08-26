@@ -2,7 +2,6 @@ package cn.edu.sdufe.cms.common.web.agency;
 
 import cn.edu.sdufe.cms.common.entity.agency.Agency;
 import cn.edu.sdufe.cms.common.entity.article.Category;
-import cn.edu.sdufe.cms.common.entity.link.LinkCategoryEnum;
 import cn.edu.sdufe.cms.common.service.agency.AgencyManager;
 import cn.edu.sdufe.cms.common.service.article.CategoryManager;
 import cn.edu.sdufe.cms.common.service.link.LinkManager;
@@ -46,7 +45,6 @@ public class AgencyController {
         return "dashboard/agency/listAll";
     }
 
-
     /**
      * 根据编号打开对应的研究所首页
      *
@@ -58,8 +56,6 @@ public class AgencyController {
     public String indexOfAgency(@PathVariable Long id, Model model) {
         model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("agency", agencyManager.getAgency(id));
-        model.addAttribute("links", linkManager.getByCategory(LinkCategoryEnum.LINK));
-        model.addAttribute("companies", linkManager.getByCategory(LinkCategoryEnum.COMPANY));
         return "index-research";
     }
 

@@ -50,7 +50,7 @@ public class CategoryManagerImpl implements CategoryManager {
             category = jsonMapper.fromJson(jsonString, Category.class);
         }
         long end = System.currentTimeMillis();
-        logger.debug("获取分类 #{} 用时：{}ms. key: " + key, id, end - start);
+        logger.info("获取分类 #{} 用时：{}ms. key: " + key, id, end - start);
         return category;
     }
 
@@ -69,7 +69,7 @@ public class CategoryManagerImpl implements CategoryManager {
             categoryList = jsonMapper.fromJson(jsonString, jsonMapper.createCollectionType(List.class, Category.class));
         }
         long end = System.currentTimeMillis();
-        logger.debug("获取分类 {} 的子分类用时：{}ms. key: " + key, end - start);
+        logger.info("获取分类 {} 的子分类用时：{}ms. key: " + key, end - start);
         return categoryList;
     }
 
@@ -88,7 +88,7 @@ public class CategoryManagerImpl implements CategoryManager {
             categoryList = jsonMapper.fromJson(jsonString, jsonMapper.createCollectionType(List.class, Category.class));
         }
         long end = System.currentTimeMillis();
-        logger.debug("获取导航分类用时：{}ms. key: " + key, end - start);
+        logger.info("获取导航分类用时：{}ms. key: " + key, end - start);
         return categoryList;
     }
 
@@ -107,7 +107,7 @@ public class CategoryManagerImpl implements CategoryManager {
             categoryList = jsonMapper.fromJson(jsonString, jsonMapper.createCollectionType(List.class, Category.class));
         }
         long end = System.currentTimeMillis();
-        logger.debug("获取允许发表文章的分类用时：{}ms. key: " + key, end - start);
+        logger.info("获取允许发表文章的分类用时：{}ms. key: " + key, end - start);
         return categoryList;
     }
 
@@ -126,7 +126,7 @@ public class CategoryManagerImpl implements CategoryManager {
             num = jsonMapper.fromJson(jsonString, Long.class);
         }
         long end = System.currentTimeMillis();
-        logger.debug("获取分类数用时：{}ms. key: " + key, end - start);
+        logger.info("获取分类数用时：{}ms. key: " + key, end - start);
         return num;
     }
 
@@ -145,7 +145,7 @@ public class CategoryManagerImpl implements CategoryManager {
             num = jsonMapper.fromJson(jsonString, Long.class);
         }
         long end = System.currentTimeMillis();
-        logger.debug("获取分类 {} 的子分类数用时：{}ms. key: " + key, id, end - start);
+        logger.info("获取分类 {} 的子分类数用时：{}ms. key: " + key, id, end - start);
         return num;
     }
 

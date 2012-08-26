@@ -2,7 +2,6 @@
 -- Table `cms_category`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `cms_category` ;
-
 CREATE  TABLE IF NOT EXISTS `cms_category` (
   `id` MEDIUMINT(8) NOT NULL AUTO_INCREMENT COMMENT '栏目ID' ,
   `father_category_id` MEDIUMINT(8) NOT NULL DEFAULT 0 COMMENT '上级栏目ID' ,
@@ -27,7 +26,6 @@ COMMENT = '栏目表';
 -- Table `cms_article`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `cms_article` ;
-
 CREATE  TABLE IF NOT EXISTS `cms_article` (
   `id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '帖子ID' ,
   `user_id` MEDIUMINT(8) NOT NULL COMMENT '用户id' ,
@@ -66,7 +64,6 @@ COMMENT = '文章表';
 -- Table `cms_user`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `cms_user` ;
-
 CREATE  TABLE IF NOT EXISTS `cms_user` (
   `id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '用户id' ,
   `group_id` MEDIUMINT(8) UNSIGNED NOT NULL COMMENT '用户组id' ,
@@ -95,7 +92,6 @@ COMMENT = '用户表';
 -- Table `cms_comment`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `cms_comment` ;
-
 CREATE  TABLE IF NOT EXISTS `cms_comment` (
   `id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '评论ID' ,
   `article_id` MEDIUMINT(8) NOT NULL ,
@@ -115,7 +111,6 @@ DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 -- Table `cms_manage_log`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `cms_manage_log` ;
-
 CREATE  TABLE IF NOT EXISTS `cms_manage_log` (
   `id` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT '管理日志ID' ,
   `user_id` MEDIUMINT(8) NOT NULL ,
@@ -131,7 +126,6 @@ DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 -- Table `cms_group`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `cms_group` ;
-
 CREATE  TABLE IF NOT EXISTS `cms_group` (
   `id` MEDIUMINT(8) NOT NULL AUTO_INCREMENT ,
   `group_name` VARCHAR(40) NOT NULL ,
@@ -144,7 +138,6 @@ DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 -- Table `cms_group_permission`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `cms_group_permission` ;
-
 CREATE  TABLE IF NOT EXISTS `cms_group_permission` (
   `id` MEDIUMINT(8) NOT NULL AUTO_INCREMENT ,
   `group_id` MEDIUMINT(8) NOT NULL ,
@@ -158,7 +151,6 @@ DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 -- Table `cms_archive`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `cms_archive` ;
-
 CREATE  TABLE IF NOT EXISTS `cms_archive` (
   `id` MEDIUMINT(8) NOT NULL  AUTO_INCREMENT ,
   `title` VARCHAR(40) NOT NULL ,
@@ -173,7 +165,6 @@ DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 -- Table `cms_archive_article`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `cms_archive_article` ;
-
 CREATE  TABLE IF NOT EXISTS `cms_archive_article` (
   `archive_id` MEDIUMINT(8) NOT NULL ,
   `article_id` MEDIUMINT(8) NOT NULL ,
@@ -186,7 +177,6 @@ DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 -- Table `cms_image`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `cms_image` ;
-
 CREATE  TABLE IF NOT EXISTS `cms_image` (
   `id` MEDIUMINT(8) NOT NULL  AUTO_INCREMENT ,
   `title` VARCHAR(40) NOT NULL ,
@@ -203,12 +193,10 @@ DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 -- Table `cms_link`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `cms_link`;
-
 CREATE TABLE IF NOT EXISTS `cms_link` (
   `id` MEDIUMINT(8) NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(20) NOT NULL,
   `url` VARCHAR(80) NOT NULL,
-  `category` VARCHAR(20) NOT NULL,
   `status` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '0=未审核 1=已审核' ,
   `last_modified_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后修改时间' ,
   `created_date` TIMESTAMP NOT NULL DEFAULT 0 COMMENT '创建时间' ,
@@ -221,7 +209,6 @@ DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci;
 -- Table `cms_agency`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `cms_agency`;
-
 CREATE TABLE IF NOT EXISTS `cms_agency` (
   `id` MEDIUMINT(8) NOT NULL AUTO_INCREMENT,
   `title` varchar(20) NOT NULL,
@@ -241,7 +228,6 @@ DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 -- Table `cms_teacher`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `cms_teacher`;
-
 CREATE TABLE IF NOT EXISTS `cms_teacher` (
   `id` MEDIUMINT(8) NOT NULL AUTO_INCREMENT,
   `teacher_name` varchar(20) NOT NULL,

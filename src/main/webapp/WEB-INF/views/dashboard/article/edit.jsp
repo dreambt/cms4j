@@ -1,8 +1,8 @@
 <%--
   编辑文章
-  User: Deng Xiaolan (824688439@qq.com)
-  Date: 12-3-24
-  Time: 上午10:40
+  User: baitao.jibt@gmail.com
+  Date: 12-8-27
+  Time: 上午9:21
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 

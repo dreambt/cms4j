@@ -45,7 +45,7 @@ public class ArchiveController {
     public String articleListOfArchive(Model model) {
         model.addAttribute("archives", archiveManager.getTopTen());
         model.addAttribute("categories", categoryManager.getNavCategory());
-        model.addAttribute("newArticles", articleManager.getTopTen());
+        model.addAttribute("newArticles", articleManager.getNewTop(10));
         return "article/archives";
     }
 
@@ -58,21 +58,12 @@ public class ArchiveController {
     @RequestMapping(value = "list/{id}")
     public String articleListByArchiveId(Model model, @PathVariable("id") Long id) {
         Archive archive = archiveManager.get(id);
-        Long total = Long.valueOf(archive.getArticleList().size());
-        int limit = 10;
-        Long pageCount;
-        if (total % limit == 0) {
-            pageCount = total / limit;
-        } else {
-            pageCount = total / limit + 1;
-        }
-        model.addAttribute("articles", articleManager.getByArchiveId(id, 0, limit));//文章列表
+        model.addAttribute("articles", articleManager.getByArchiveId(id, 0, 12));//文章列表
         model.addAttribute("categories", categoryManager.getNavCategory());//导航菜单
         model.addAttribute("archive", archive);
         model.addAttribute("archives", archiveManager.getTopTen());//边栏归档日志
-        model.addAttribute("newArticles", articleManager.getTopTen());//边栏最新文章
-        model.addAttribute("total", total);
-        model.addAttribute("pageCount", pageCount);
+        model.addAttribute("newArticles", articleManager.getNewTop(10));//边栏最新文章
+        model.addAttribute("total", Long.valueOf(archive.getArticleList().size()));
         model.addAttribute("links", linkManager.getAll());//页脚友情链接
 
         return "article/list";

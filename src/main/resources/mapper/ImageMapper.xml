@@ -16,18 +16,14 @@
 
     <sql id="imageColumns">id, title, image_url, description, show_index, created_date, last_modified_date</sql>
 
-    <!--
-        获取image数量
-    -->
+    <!-- 获取image数量 -->
     <select id="count" resultType="Long">
         SELECT COUNT(id)
         FROM cms_image
         LIMIT 1
 	</select>
 
-    <!--
-        获取image
-    -->
+    <!-- 获取image -->
     <select id="get" parameterType="Long" resultMap="imageDetailMap">
         SELECT
         <include refid="imageColumns"/>
@@ -37,36 +33,28 @@
         LIMIT 1
     </select>
 
-    <!--
-        获取image
-    -->
+    <!-- 获取image -->
     <select id="getAll" resultMap="imageDetailMap">
         SELECT
         <include refid="imageColumns"/>
         FROM cms_image
-        ORDER BY id DESC
-        LIMIT 30
+        ORDER BY ${sort} ${direction}
+        LIMIT #{offset},#{limit}
     </select>
 
-    <!--
-        新增image
-    -->
+    <!-- 新增image -->
     <insert id="save" parameterType="Image" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO cms_image (title, image_url, description, show_index, created_date)
 		values (#{title}, #{imageUrl}, #{description}, #{showIndex}, null)
 	</insert>
 
-    <!--
-        删除image
-    -->
+    <!-- 删除image -->
     <delete id="delete" parameterType="Long">
         DELETE FROM cms_image
         WHERE id=#{id}
 	</delete>
 
-    <!--
-        修改image
-    -->
+    <!-- 修改image -->
     <update id="update" parameterType="Image">
         UPDATE cms_image
         <set>
@@ -94,9 +82,7 @@
         WHERE id=#{id}
     </update>
 
-    <!--
-         查询图片
-     -->
+    <!-- 查询图片 -->
     <select id="search" parameterType="map" resultMap="imageDetailMap">
         SELECT
         <include refid="imageColumns"/>

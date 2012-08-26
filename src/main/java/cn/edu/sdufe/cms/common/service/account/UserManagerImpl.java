@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springside.modules.mapper.JsonMapper;
@@ -47,6 +48,10 @@ public class UserManagerImpl implements UserManager {
 
     private ShiroDbRealm shiroRealm;
 
+    @Value("${paged.user.limit}")
+    public int LIMIT;
+
+    @Override
     public User get(Long id) {
         User user = null;
         long start = System.currentTimeMillis();
@@ -61,26 +66,36 @@ public class UserManagerImpl implements UserManager {
             user = jsonMapper.fromJson(jsonString, User.class);
         }
         long end = System.currentTimeMillis();
-        logger.debug("获取用户 #{} 用时：{}ms. key: " + key, id, end - start);
+        logger.info("获取用户 #{} 用时：{}ms. key: " + key, id, end - start);
         return user;
     }
 
     @Override
     public List<User> getAll() {
+        return this.getAll(0, LIMIT, "id", "ASC");
+    }
+
+    @Override
+    public List<User> getAll(int offset, int limit) {
+        return this.getAll(offset, limit, "id", "ASC");
+    }
+
+    @Override
+    public List<User> getAll(int offset, int limit, String sort, String direction) {
         List<User> userList = Lists.newArrayList();
         long start = System.currentTimeMillis();
-        String key = MemcachedObjectType.USER.getPrefix() + "all";
+        String key = MemcachedObjectType.USER.getPrefix() + "all:" + offset + ":" + limit + ":" + sort + ":" + direction;
         String jsonString = spyMemcachedClient.get(key);
 
         if (org.apache.commons.lang3.StringUtils.isBlank(jsonString)) {
-            userList = userMapper.getAll();
+            userList = userMapper.getAll(offset, limit, sort, direction);
             jsonString = jsonMapper.toJson(userList);
             spyMemcachedClient.set(key, MemcachedObjectType.USER.getExpiredTime(), jsonString);
         } else {
             userList = jsonMapper.fromJson(jsonString, jsonMapper.createCollectionType(List.class, User.class));
         }
         long end = System.currentTimeMillis();
-        logger.debug("获取所有用户用时：{}ms. key: " + key, end - start);
+        logger.info("获取所有用户 用时：{}ms. key: " + key, end - start);
         return userList;
     }
 
@@ -99,7 +114,7 @@ public class UserManagerImpl implements UserManager {
             user = jsonMapper.fromJson(jsonString, User.class);
         }
         long end = System.currentTimeMillis();
-        logger.debug("获取用户 user.email={} 用时：{}ms. key: " + key, email, end - start);
+        logger.info("获取用户 user.email={} 用时：{}ms. key: " + key, email, end - start);
         return user;
     }
 
@@ -118,7 +133,7 @@ public class UserManagerImpl implements UserManager {
             num = jsonMapper.fromJson(jsonString, Long.class);
         }
         long end = System.currentTimeMillis();
-        logger.debug("获取用户数用时：{}ms. key: " + key, end - start);
+        logger.info("获取用户数 用时：{}ms. key: " + key, end - start);
         return num;
     }
 
@@ -181,7 +196,7 @@ public class UserManagerImpl implements UserManager {
     @Override
     @Transactional(readOnly = false)
     public long update(Long id, String column) {
-        logger.info("更新用户 user.id={} 的 {} 属性.", id, column);
+        logger.info("更新用户 #{} 的 {} 属性.", id, column);
         return userMapper.updateBool(id, column);
     }
 
@@ -208,15 +223,14 @@ public class UserManagerImpl implements UserManager {
             user.setPassword(hashPassword.getPassword());
         }
 
-        logger.info("重置用户密码 user.id={}, user.email={}.", id, user.getEmail());
+        logger.info("重置用户密码 #{}, user.email={}.", id, user.getEmail());
         this.update(user);
-        sendNotifyMessage(user);
     }
 
     @Override
     @Transactional(readOnly = false)
     public void batchAudit(String[] ids) {
-        logger.info("批量审核用户 user.id={}.", ids.toString());
+        logger.info("批量审核用户 #{}.", ids.toString());
         for (String id : ids) {
             if (id.length() == 0) {
                 continue;
@@ -228,7 +242,7 @@ public class UserManagerImpl implements UserManager {
     @Override
     @Transactional(readOnly = false)
     public void batchDelete(String[] ids) {
-        logger.info("批量删除用户 user.id={}.", ids.toString());
+        logger.info("批量删除用户 #{}.", ids.toString());
         for (String id : ids) {
             if (id.length() == 0) {
                 continue;
@@ -241,7 +255,7 @@ public class UserManagerImpl implements UserManager {
     public List<User> search(Map<String, Object> parameters, int offset, int limit) {
         parameters.put("offset", offset);
         parameters.put("limit", limit);
-        logger.debug("Find users by parameters={}.", parameters.toString());
+        logger.info("Find users by parameters={}.", parameters.toString());
         return userMapper.search(parameters);
     }
 

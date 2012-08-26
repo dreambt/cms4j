@@ -1,7 +1,6 @@
 package cn.edu.sdufe.cms.common.service.link;
 
 import cn.edu.sdufe.cms.common.entity.link.Link;
-import cn.edu.sdufe.cms.common.entity.link.LinkCategoryEnum;
 import cn.edu.sdufe.cms.common.service.GenericManager;
 
 import java.util.List;
@@ -16,23 +15,50 @@ import java.util.List;
 public interface LinkManager extends GenericManager<Link, Long> {
 
     /**
-     * 获得所有link
+     * 获取 link 数
+     *
+     * @return
+     */
+    long count();
+
+    /**
+     * 获得所有 link
      *
      * @return
      */
     List<Link> getAll();
 
     /**
-     * 根据分类获得link
+     * 使用默认的排序方式指定偏移的所有 link
      *
+     * @param offset
+     * @param limit
      * @return
      */
-    List<Link> getByCategory(LinkCategoryEnum category);
-
-    long update(Long id, String column);
+    List<Link> getAll(int offset, int limit);
 
     /**
-     * 批量删除link
+     * 按指定的排序方式指定偏移的所有 link
+     *
+     * @param offset
+     * @param limit
+     * @param sort
+     * @param direction
+     * @return
+     */
+    List<Link> getAll(int offset, int limit, String sort, String direction);
+
+    long updateBool(Long id, String column);
+
+    /**
+     * 批量审核 link
+     *
+     * @param ids
+     */
+    void batchAudit(String[] ids);
+
+    /**
+     * 批量删除 link
      *
      * @param ids
      */

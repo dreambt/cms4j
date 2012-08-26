@@ -26,7 +26,6 @@
     <link href="${ctx}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="${ctx}/static/css/style.min.css" rel="stylesheet" type="text/css" />
     <script src="${ctx}/static/js/jquery.min.js" type="text/javascript"></script>
-    <script src="${ctx}/static/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <sitemesh:head/>
 </head>
 <body>
@@ -46,5 +45,20 @@
     </div>
     <%@ include file="/WEB-INF/layouts/footer.jsp" %>
 </div>
+<c:if test="${not empty info}">
+    <div class="tips alert alert-info fade in">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <h4>提示!</h4>
+            ${info}
+    </div>
+</c:if>
+<c:if test="${not empty error}">
+    <div class="tips alert alert-error fade in">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <h4>出错啦!</h4>
+            ${error}
+    </div>
+</c:if>
+<script src="${ctx}/static/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 </body>
 </html>

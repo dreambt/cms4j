@@ -46,18 +46,9 @@
         <!-- 分页 -->
         <div class="pagination pagination-right">
             <ul id="pagination">
-                <c:choose>
-                    <c:when test="${total <= 110}">
-                        <c:forEach begin="1" end="${pageCount>1?pageCount:1}" step="1" varStatus="var">
-                            <li><a href="#">${var.index}</a></li>
-                        </c:forEach>
-                    </c:when>
-                    <c:otherwise>
-                        <c:forEach begin="1" end="11" step="1" varStatus="var">
-                            <li><a href="#">${var.index}</a></li>
-                        </c:forEach>
-                    </c:otherwise>
-                </c:choose>
+                <c:forEach begin="1" end="${total/6>11?11:1+total/6}" step="1" varStatus="var">
+                    <li><a href="#">${var.index}</a></li>
+                </c:forEach>
             </ul>
         </div>
     </div>

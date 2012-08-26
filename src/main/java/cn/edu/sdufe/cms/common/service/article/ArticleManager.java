@@ -4,7 +4,6 @@ import cn.edu.sdufe.cms.common.entity.article.Article;
 import cn.edu.sdufe.cms.common.service.GenericManager;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 文章 Manager 接口
@@ -24,7 +23,14 @@ public interface ArticleManager extends GenericManager<Article, Long> {
     Article getForView(Long id);
 
     /**
-     * 获取分类categoryId的文章数
+     * 获取文章数
+     *
+     * @return
+     */
+    long count();
+
+    /**
+     * 获取分类 categoryId 的文章数
      *
      * @param categoryId
      * @return
@@ -32,35 +38,85 @@ public interface ArticleManager extends GenericManager<Article, Long> {
     long count(Long categoryId);
 
     /**
-     * 使用默认的排序方式返回所有文章
+     * 获取分类 ids 的文章数
      *
+     * @param ids
+     * @return
+     */
+    long count(Long[] ids);
+
+    /**
+     * 使用默认的排序方式的所有文章
+     *
+     * @return
+     */
+    List<Article> getAll();
+
+    /**
+     * 使用默认的排序方式指定偏移的所有文章
+     *
+     * @param offset
+     * @param limit
      * @return
      */
     List<Article> getAll(int offset, int limit);
 
     /**
-     * 获得最新的10篇文章
+     * 按指定的排序方式指定偏移的所有文章
      *
+     * @param offset
+     * @param limit
+     * @param sort
+     * @param direction
      * @return
      */
-    List<Article> getTopTen();
+    List<Article> getAll(int offset, int limit, String sort, String direction);
 
+    /**
+     * 获得最新的 limit 篇文章
+     *
+     * @param limit
+     * @return
+     */
+    List<Article> getNewTop(int limit);
+
+    /**
+     * 获得最热的 limit 篇文章
+     *
+     * @param limit
+     * @return
+     */
+    List<Article> getHotTop(int limit);
+
+    /**
+     * 根据archive编号获得文章列表
+     *
+     * @param archiveId
+     * @param offset
+     * @param limit
+     * @return
+     */
     List<Article> getByArchiveId(Long archiveId, int offset, int limit);
+
+    /**
+     * 通过分类categoryId查找文章列表(分页)
+     *
+     * @param categoryId
+     * @param offset
+     * @param limit
+     * @return
+     */
+    List<Article> getByCategoryId(Long categoryId, int offset, int limit);
 
     /**
      * 获得社会资讯下的最新文章
      *
+     * @param ids
+     * @param offset
+     * @param limit
      * @return
      */
-    List<Article> getInfo();
-
-    /**
-     * 通过分类categoryId查找文章列表
-     *
-     * @param categoryId
-     * @return
-     */
-    List<Article> getByCategoryId(Long categoryId, int offset, int limit);
+    List<Article> getByCategoryIds(Long[] ids, int offset, int limit);
 
     /**
      * 批量审核文章

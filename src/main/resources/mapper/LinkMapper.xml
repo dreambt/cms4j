@@ -8,17 +8,14 @@
         <id property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="url" column="url"/>
-        <result property="category" column="category"/>
         <result property="status" column="status"/>
         <result property="lastModifiedDate" column="last_modified_date"/>
         <result property="createdDate" column="created_date"/>
     </resultMap>
 
-    <sql id="linkColumns">id, title, url, category, STATUS , created_date, last_modified_date</sql>
+    <sql id="linkColumns">id, title, url, STATUS, created_date, last_modified_date</sql>
 
-    <!--
-        根据id获取link
-    -->
+    <!-- 根据id获取link -->
     <select id="get" parameterType="int" resultMap="linkDetailMap">
         SELECT
         <include refid="linkColumns"/>
@@ -28,32 +25,23 @@
         LIMIT 1
     </select>
 
-    <!--
-        获取所有link
-    -->
+    <!-- 获取 link 数量 -->
+    <select id="count" resultType="Long">
+        SELECT COUNT( id )
+        FROM cms_link
+        LIMIT 1
+	</select>
+
+    <!-- 获取所有link -->
     <select id="getAll" resultMap="linkDetailMap">
         SELECT
         <include refid="linkColumns"/>
         FROM cms_link
-        ORDER BY id DESC
-        LIMIT 30
+        ORDER BY ${sort} ${direction}
+        LIMIT #{offset},#{limit}
     </select>
 
-    <!--
-        根据分类获得所有link
-    -->
-    <select id="getLinkByCategory" parameterType="String" resultMap="linkDetailMap">
-        SELECT
-        <include refid="linkColumns"/>
-        FROM cms_link
-        WHERE category=#{category} AND STATUS=1
-        ORDER BY id DESC
-        LIMIT 10
-    </select>
-
-    <!--
-        获取所有审核的link
-    -->
+    <!-- 获取所有审核的link -->
     <select id="getAuditedLink" resultMap="linkDetailMap">
         SELECT
         <include refid="linkColumns"/>
@@ -63,25 +51,19 @@
         LIMIT 30
     </select>
 
-    <!--
-        新增image
-    -->
+    <!-- 新增link -->
     <insert id="save" parameterType="Link" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO cms_link (title, url, status, category, created_date)
-		VALUES (#{title}, #{url}, 0, #{category}, null)
+        INSERT INTO cms_link (title, url, status, created_date)
+		VALUES (#{title}, #{url}, 0, null)
 	</insert>
 
-    <!--
-        删除link
-    -->
+    <!-- 删除link -->
     <delete id="delete" parameterType="Long">
 		DELETE FROM  cms_link
 		WHERE id = #{id}
 	</delete>
 
-    <!--
-        修改link
-    -->
+    <!-- 修改link -->
     <update id="update" parameterType="Link">
         UPDATE cms_link
         <set>
@@ -93,9 +75,6 @@
             </if>
             <if test="status != null">
                 status=#{status},
-            </if>
-            <if test="category != null and category !=''">
-                category=#{category},
             </if>
             last_modified_date=null
         </set>
@@ -109,9 +88,7 @@
         WHERE id=#{id}
     </update>
 
-    <!--
-         查询link
-     -->
+    <!-- 查询link -->
     <select id="search" parameterType="map" resultMap="linkDetailMap">
         SELECT
         <include refid="linkColumns"/>

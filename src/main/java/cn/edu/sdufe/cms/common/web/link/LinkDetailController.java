@@ -1,11 +1,8 @@
 package cn.edu.sdufe.cms.common.web.link;
 
 import cn.edu.sdufe.cms.common.entity.link.Link;
-import cn.edu.sdufe.cms.common.entity.link.LinkCategoryEnum;
 import cn.edu.sdufe.cms.common.service.link.LinkManager;
-import cn.edu.sdufe.cms.common.service.link.LinkManagerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -37,7 +34,6 @@ public class LinkDetailController {
     @RequestMapping(value = "edit/{id}")
     public String edit(@Valid @ModelAttribute Link link, Model model) {
         model.addAttribute("link", link);
-        model.addAttribute("linkCategories", LinkCategoryEnum.values());
         return "dashboard/link/edit";
     }
 

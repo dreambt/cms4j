@@ -7,7 +7,6 @@
 --
 -- 表的结构 `cms_agency`
 --
-
 DROP TABLE IF EXISTS `cms_agency`;
 CREATE TABLE IF NOT EXISTS `cms_agency` (
   `id` mediumint(8) NOT NULL AUTO_INCREMENT,
@@ -27,7 +26,6 @@ CREATE TABLE IF NOT EXISTS `cms_agency` (
 --
 -- 表的结构 `cms_archive`
 --
-
 DROP TABLE IF EXISTS `cms_archive`;
 CREATE TABLE IF NOT EXISTS `cms_archive` (
   `id` mediumint(8) NOT NULL AUTO_INCREMENT,
@@ -42,7 +40,6 @@ CREATE TABLE IF NOT EXISTS `cms_archive` (
 --
 -- 表的结构 `cms_archive_article`
 --
-
 DROP TABLE IF EXISTS `cms_archive_article`;
 CREATE TABLE IF NOT EXISTS `cms_archive_article` (
   `archive_id` mediumint(8) NOT NULL,
@@ -55,7 +52,6 @@ CREATE TABLE IF NOT EXISTS `cms_archive_article` (
 --
 -- 表的结构 `cms_article`
 --
-
 DROP TABLE IF EXISTS `cms_article`;
 CREATE TABLE IF NOT EXISTS `cms_article` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
@@ -83,7 +79,6 @@ CREATE TABLE IF NOT EXISTS `cms_article` (
 --
 -- 表的结构 `cms_category`
 --
-
 DROP TABLE IF EXISTS `cms_category`;
 CREATE TABLE IF NOT EXISTS `cms_category` (
   `id` mediumint(8) NOT NULL AUTO_INCREMENT,
@@ -107,7 +102,6 @@ CREATE TABLE IF NOT EXISTS `cms_category` (
 --
 -- 表的结构 `cms_comment`
 --
-
 DROP TABLE IF EXISTS `cms_comment`;
 CREATE TABLE IF NOT EXISTS `cms_comment` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
@@ -127,7 +121,6 @@ CREATE TABLE IF NOT EXISTS `cms_comment` (
 --
 -- 表的结构 `cms_group`
 --
-
 DROP TABLE IF EXISTS `cms_group`;
 CREATE TABLE IF NOT EXISTS `cms_group` (
   `id` mediumint(8) NOT NULL AUTO_INCREMENT,
@@ -140,7 +133,6 @@ CREATE TABLE IF NOT EXISTS `cms_group` (
 --
 -- 表的结构 `cms_group_permission`
 --
-
 DROP TABLE IF EXISTS `cms_group_permission`;
 CREATE TABLE IF NOT EXISTS `cms_group_permission` (
   `id` mediumint(8) NOT NULL AUTO_INCREMENT,
@@ -154,7 +146,6 @@ CREATE TABLE IF NOT EXISTS `cms_group_permission` (
 --
 -- 表的结构 `cms_image`
 --
-
 DROP TABLE IF EXISTS `cms_image`;
 CREATE TABLE IF NOT EXISTS `cms_image` (
   `id` mediumint(8) NOT NULL AUTO_INCREMENT,
@@ -172,13 +163,11 @@ CREATE TABLE IF NOT EXISTS `cms_image` (
 --
 -- 表的结构 `cms_link`
 --
-
 DROP TABLE IF EXISTS `cms_link`;
 CREATE TABLE IF NOT EXISTS `cms_link` (
   `id` mediumint(8) NOT NULL AUTO_INCREMENT,
   `title` varchar(20) NOT NULL,
   `url` varchar(80) NOT NULL,
-  `category` varchar(20) NOT NULL,
   `status` tinyint(1) NOT NULL,
   `last_modified_date` timestamp DEFAULT NULL,
   `created_date` timestamp DEFAULT NULL,
@@ -190,7 +179,6 @@ CREATE TABLE IF NOT EXISTS `cms_link` (
 --
 -- 表的结构 `cms_manage_log`
 --
-
 DROP TABLE IF EXISTS `cms_manage_log`;
 CREATE TABLE IF NOT EXISTS `cms_manage_log` (
   `id` mediumint(8) unsigned NOT NULL,
@@ -206,7 +194,6 @@ CREATE TABLE IF NOT EXISTS `cms_manage_log` (
 --
 -- 表的结构 `cms_teacher`
 --
-
 DROP TABLE IF EXISTS `cms_teacher`;
 CREATE TABLE IF NOT EXISTS `cms_teacher` (
   `id` mediumint(8) NOT NULL AUTO_INCREMENT,
@@ -226,7 +213,6 @@ CREATE TABLE IF NOT EXISTS `cms_teacher` (
 --
 -- 表的结构 `cms_user`
 --
-
 DROP TABLE IF EXISTS `cms_user`;
 CREATE TABLE IF NOT EXISTS `cms_user` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,

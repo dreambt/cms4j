@@ -1,6 +1,5 @@
 package cn.edu.sdufe.cms.common.web.agency;
 
-import cn.edu.sdufe.cms.common.entity.link.LinkCategoryEnum;
 import cn.edu.sdufe.cms.common.service.agency.AgencyManager;
 import cn.edu.sdufe.cms.common.service.article.ArticleManager;
 import cn.edu.sdufe.cms.common.service.article.CategoryManager;
@@ -35,7 +34,6 @@ public class ResearchController {
     @RequestMapping(value = "{id}")
     public String indexOfAgency(@PathVariable Long id, Model model) {
         model.addAttribute("categories", categoryManager.getNavCategory());
-        model.addAttribute("links", linkManager.getByCategory(LinkCategoryEnum.LINK));
         model.addAttribute("infos", articleManager.getByCategoryId(agencyManager.getAgency(id).getCategoryId(), 0, 6));
         return "research" + id;
     }
