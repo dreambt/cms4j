@@ -62,7 +62,7 @@ public class AgencyManager {
      * @return
      */
     @Transactional(readOnly = false)
-    public int deleteAgency(Long id) {
+    public long deleteAgency(Long id) {
         return agencyMapper.updateBool(id, "deleted");
     }
 
@@ -73,7 +73,7 @@ public class AgencyManager {
      * @return
      */
     @Transactional(readOnly = false)
-    public int saveAgency(MultipartFile file, HttpServletRequest request, Agency agency) {
+    public long saveAgency(MultipartFile file, HttpServletRequest request, Agency agency) {
         //构造研究所对应的分类
         Category category = new Category();
         category.setFatherCategoryId(18L);
@@ -110,7 +110,7 @@ public class AgencyManager {
      * @return
      */
     @Transactional(readOnly = false)
-    public int updateAgency(MultipartFile file, HttpServletRequest request, Agency agency) {
+    public long updateAgency(MultipartFile file, HttpServletRequest request, Agency agency) {
         //实现上传
         if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
             // 上传新图片

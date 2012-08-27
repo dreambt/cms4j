@@ -3,7 +3,9 @@ package cn.edu.sdufe.cms.common.service.article;
 import cn.edu.sdufe.cms.common.dao.article.CategoryMapper;
 import cn.edu.sdufe.cms.common.entity.article.Category;
 import cn.edu.sdufe.cms.memcached.MemcachedObjectType;
+import cn.edu.sdufe.cms.utilities.freemarker.FreemakerHelper;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +17,7 @@ import org.springside.modules.mapper.JsonMapper;
 import org.springside.modules.memcached.SpyMemcachedClient;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 分类 Manager 实现类
@@ -23,7 +26,6 @@ import java.util.List;
  * Time: 上午11:03
  */
 @Component
-//默认将类中的所有public方法纳入事务管理中
 @Transactional(readOnly = true)
 public class CategoryManagerImpl implements CategoryManager {
 
@@ -32,6 +34,8 @@ public class CategoryManagerImpl implements CategoryManager {
     private JsonMapper jsonMapper = JsonMapper.nonDefaultMapper();
 
     private SpyMemcachedClient spyMemcachedClient;
+
+    private FreemakerHelper freemakerHelper;
 
     private CategoryMapper categoryMapper;
 
@@ -152,14 +156,18 @@ public class CategoryManagerImpl implements CategoryManager {
     @Transactional(readOnly = false)
     public long save(Category category) {
         logger.info("保存分类 category={}.", category.toString());
-        return categoryMapper.save(category);
+        long num = categoryMapper.save(category);
+        generateContent();
+        return num;
     }
 
     @Transactional(readOnly = false)
     public long update(Category category) {
         logger.info("更新分类 category={}.", category.toString());
         // 更新数据，先更新数据避免生成旧数据缓存
-        return categoryMapper.update(category);
+        long num = categoryMapper.update(category);
+        generateContent();
+        return num;
     }
 
     @Transactional(readOnly = false)
@@ -200,6 +208,20 @@ public class CategoryManagerImpl implements CategoryManager {
         }
     }
 
+    /**
+     * 生成 category 静态页面
+     */
+    private void generateContent() {
+        Map context = Maps.newHashMap();
+        List<Category> categories = this.getNavCategory();
+        try {
+            context.put("categories", categories);
+            freemakerHelper.generateContent(context, "menu.ftl", "/layouts/menu.html");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Autowired
     public void setCategoryMapper(CategoryMapper categoryMapper) {
         this.categoryMapper = categoryMapper;
@@ -208,6 +230,11 @@ public class CategoryManagerImpl implements CategoryManager {
     @Autowired
     public void setSpyMemcachedClient(@Qualifier("spyMemcachedClient") SpyMemcachedClient spyMemcachedClient) {
         this.spyMemcachedClient = spyMemcachedClient;
+    }
+
+    @Autowired
+    public void setFreemakerHelper(FreemakerHelper freemakerHelper) {
+        this.freemakerHelper = freemakerHelper;
     }
 
 }

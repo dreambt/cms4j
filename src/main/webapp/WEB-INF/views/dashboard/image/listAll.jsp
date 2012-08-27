@@ -43,7 +43,7 @@
                     <td><a href="${ctx}/static/uploads/gallery/thumb-50x57/${image.imageUrl}" class="opener" value="${image.description}">点击查看</a> </td>
                     <td><a href="${ctx}/static/uploads/gallery/gallery-big/${image.imageUrl}">${image.imageUrl}</a></td>
                     <td><fmt:formatDate value="${image.createdDate}" type="both"></fmt:formatDate></td>
-                    <td><c:choose><c:when test="${image.showIndex}"><a href="${ctx}/gallery/showIndex/${image.id}">显示</a></c:when><c:otherwise><a href="${ctx}/gallery/showIndex/${image.id}">不显示</a></c:otherwise></c:choose></td>
+                    <td><c:choose><c:when test="${image.showIndex}"><a href="${ctx}/gallery/showIndex/${image.id}"><span class="label label-success">显示</span></a></c:when><c:otherwise><a href="${ctx}/gallery/showIndex/${image.id}"><span class="label label-important">不显示</span></a></c:otherwise></c:choose></td>
                     <td><a href="${ctx}/gallery/edit/${image.id}">【编辑】</a><a href="${ctx}/gallery/delete/${image.id}" class="delete">【删除】</a></td>
                 </tr>
                 </c:forEach>
@@ -66,7 +66,7 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="${ctx}/static/js/jquery/jquery.mousewheel-3.0.6.pack.js"></script>
+<script type="text/javascript" src="${ctx}/static/js/jquery.mousewheel-3.0.6.pack.js"></script>
 <script type="text/javascript" src="${ctx}/static/js/fancyBox/jquery.fancybox.pack.js?v=2.0.5"></script>
 <script type="text/javascript" src="${ctx}/static/js/fancyBox/helpers/jquery.fancybox-buttons.js?v=2.0.5"></script>
 <script type="text/javascript" src="${ctx}/static/js/fancyBox/helpers/jquery.fancybox-thumbs.js?v=2.0.5"></script>
@@ -100,9 +100,9 @@
                     $.each(data, function (index, content) {
                         var htmlStr="<tr><td><input type='checkbox' name='isSelected' value='" + content.id + "'></td><td><a href='${ctx}/static/uploads/gallery/gallery-big/" + content.imageUrl + "' rel='fancybox-thumb' class='fancy_box'><img src='${ctx}/static/uploads/gallery/thumb-50x57/" + content.imageUrl + "' width='50px'/></a></td><td><a href='#'>" + content.title + "</a></td><td><a href='${ctx}/static/uploads/gallery/thumb-50x57/" + content.imageUrl + "' class='opener' value='" + content.description + "'>点击查看</a> </td><td><a href='${ctx}/static/uploads/gallery/gallery-big/" + content.imageUrl + "'>" + content.imageUrl + "</a></td><td>" + ChangeDateFormat(content.createdDate) + "</td>";
                         if (content.showIndex)
-                            htmlStr+="<td><a href='${ctx}/gallery/showIndex/" + content.id + "'>显示</a></td>";
+                            htmlStr+="<td><a href='${ctx}/gallery/showIndex/" + content.id + "'><span class='label label-success'>显示</span></a></td>";
                         else
-                            htmlStr+="<td><a href='${ctx}/gallery/showIndex/" + content.id + "'>不显示</a></td>";
+                            htmlStr+="<td><a href='${ctx}/gallery/showIndex/" + content.id + "'><span class='label label-important'>不显示</span></a></td>";
                         htmlStr+="<td><a href='${ctx}/gallery/edit/" + content.id + "'>【编辑】</a><a href='${ctx}/gallery/delete/${image.id}' class='delete'>【删除】</a></td></tr>";
                         articles.append($(htmlStr));
                     });

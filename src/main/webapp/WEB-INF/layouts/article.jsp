@@ -26,14 +26,15 @@
     <link href="${ctx}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="${ctx}/static/css/style.min.css" rel="stylesheet" type="text/css" />
     <script src="${ctx}/static/js/jquery.min.js" type="text/javascript"></script>
-    <script src="${ctx}/static/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <sitemesh:head/>
 </head>
 <body>
 <div class="container">
-    <%@ include file="/WEB-INF/layouts/header.jsp" %>
+    <%@ include file="/static/uploads/layouts/menu.html" %>
     <sitemesh:body/>
+    <%@ include file="/static/uploads/layouts/link.html" %>
     <%@ include file="/WEB-INF/layouts/footer.jsp" %>
 </div>
+<script src="${ctx}/static/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <%--
-  添加和编辑老师
+  添加和编辑教师
   User: dengxiaolan(824688439@qq.com)
   Date: 12-4-27
   Time: 上午11:49.
@@ -11,71 +11,66 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-    <title>添加和修改老师信息</title>
-    <link rel="stylesheet" type="text/css" href="${ctx}/static/Ueditor/themes/default/ueditor.css">
+    <title>修改教师</title>
     <link rel="stylesheet" type="text/css" href="${ctx}/static/js/jquery-validation/validate.min.css">
-    <script type="text/javascript" src="${ctx}/static/Ueditor/editor_config.js"></script>
-    <script type="text/javascript" src="${ctx}/static/Ueditor/editor_all.js"></script>
-    <script type="text/javascript" src="${ctx}/static/js/tipsy/jquery.tipsy.js" charset="utf-8"></script>
-    <script type="text/javascript" src="${ctx}/static/js/jquery-validation/jquery.validate.min.js" charset="utf-8"></script>
-    <script type="text/javascript" src="${ctx}/static/js/jquery-validation/messages_cn.js" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="${ctx}/static/js/markitup/style.min.css">
 </head>
 <body>
-<div id="main_container" class="main_container container_16 clearfix">
-    <div class="flat_area grid_16">
-        <h2>编辑老师信息</h2>
-        <p><strong>是否置顶</strong> <strong>是否允许评论</strong> , 并填写 <strong>文章标题</strong> 和 <strong>文章内容</strong>.</p>
-        <P><strong>请您注意：</strong>发表时插入的图片宽度超过612像素，系统会自动以图片长宽比例将其缩小到宽度为612像素！</P>
-        <c:if test="${not empty info}">
-            <div id="message" class="alert alert_blue">
-                <img height="24" width="24" src="${ctx}/static/dashboard/images/icons/Locked2.png"><strong>${info}</strong>
-            </div>
-        </c:if>
-        <c:if test="${not empty error}">
-            <div id="message" class="alert alert_red">
-                <img height="24" width="24" src="${ctx}/static/dashboard/images/icons/Locked2.png"><strong>${error}</strong>
-            </div>
-        </c:if>
-    </div>
-</div>
-<div class="main_container container_16 clearfix">
-    <form:form id="teacherForm" modelAttribute="teacher" action="${ctx}/teacher/save/${teacher.id}" method="post" enctype="multipart/form-data">
-        <div class="box gird_16">
-            <h2 class="box_head grad_colour round_top">编辑老师介绍信息</h2>
-            <div class="toggle_container">
-                <div class="block">
-                    <input type="hidden" name="id" value="${teacher.id}" id="teacherID"/>
-                    <input type="hidden" name="article.id" value="${teacher.article.id}" id="articleID"/>
-                    <label>上传头像：</label>
-                    <input type="file" id="upload" name="file" alt="${teacher.imageUrl}"><br/>
-                    <label>老师姓名：</label> <input type="text" id="teacherName" name="teacherName" class="required" original-title="请输入老师姓名" value="${teacher.teacherName}" />
-                    <input type="hidden" id="allowComment" value="false"/>
-                    <label for="top">是否置顶</label> <input id="top" type="checkbox" name="top" value="${teacher.top}" <c:if test="${teacher.top}">checked="checked"</c:if> />
-                    <br />
-                    <label>所属研究所</label>
-                    <form:select path="agency.id">
-                        <c:forEach items="${agencies}" begin="0" step="1" var="agency" varStatus="stat">
-                            <option value="${agency.id}" <c:if test="${agency.categoryId eq teacher.agency.categoryId}">selected="selected"</c:if>>${agency.title}</option>
-                        </c:forEach>
-                    </form:select>
-                    <script type="text/plain" id="myEditor">${teacher.article.message}</script>
-                    <script type="text/javascript">
-                        var editor = new baidu.editor.ui.Editor({
-                            textarea: 'article.message',
-                            elementPathEnabled:false
-                        });
-                        editor.render("myEditor");
-                    </script>
-                </div>
+<form:form id="teacherForm" modelAttribute="teacher" action="${ctx}/teacher/save/${teacher.id}" method="post" enctype="multipart/form-data" cssClass="form-horizontal">
+<div class="row">
+    <div class="span4">
+        <div class="control-group">
+            <label class="control-label" for="upload">上传头像</label>
+            <div class="controls">
+                <input type="hidden" name="id" value="${teacher.id}" id="teacherID"/>
+                <input type="hidden" name="article.id" value="${teacher.article.id}" id="articleID"/>
+                <input type="file" id="upload" name="file" alt="${teacher.imageUrl}">
             </div>
         </div>
-        <button class="button_colour" id="publish" type="submit"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/BendedArrowRight.png"><span>发 布</span></button>
-        <button class="button_colour" type="reset"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/BendedArrowRight.png"><span>草 稿</span></button>
-    </form:form>
+        <div class="control-group">
+            <label class="control-label" for="teacherName">教师姓名</label>
+            <div class="controls">
+                <input type="text" id="teacherName" name="teacherName" class="required" original-title="请输入老师姓名" placeholder="${teacher.teacherName}" />
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="top">是否置顶</label>
+            <div class="controls">
+                <input id="top" type="checkbox" name="top" value="${teacher.top}" <c:if test="${teacher.top}">checked="checked"</c:if> />
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">所属研究所</label>
+            <div class="controls">
+                <form:select path="agency.id">
+                    <c:forEach items="${agencies}" begin="0" step="1" var="agency" varStatus="stat">
+                        <option value="${agency.id}" <c:if test="${agency.categoryId eq teacher.agency.categoryId}">selected="selected"</c:if>>${agency.title}</option>
+                    </c:forEach>
+                </form:select>
+            </div>
+        </div>
+    </div>
+    <div class="span8">
+        <textarea id="markdown" name="message" cols="80" rows="20">${article.message}</textarea>
+        <div class="control-group">
+            <div class="controls">
+                <button class="btn btn-primary" id="publish" type="submit"><i class="icon-ok icon-white"></i> 发 布</button>
+                <button class="btn" type="reset"><i class="icon-refresh"></i> 草 稿</button>
+            </div>
+        </div>
+    </div>
 </div>
+</form:form>
+<script type="text/javascript" src="${ctx}/static/js/jquery.loading.js"></script>
+<script type="text/javascript" src="${ctx}/static/js/jquery.json-2.3.min.js"></script>
+<script type="text/javascript" src="${ctx}/static/js/markitup/jquery.markitup.js"></script>
+<script type="text/javascript" src="${ctx}/static/js/tipsy/jquery.tipsy.js" charset="utf-8"></script>
+<script type="text/javascript" src="${ctx}/static/js/jquery-validation/jquery.validate.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="${ctx}/static/js/jquery-validation/messages_cn.js" charset="utf-8"></script>
 <script type="text/javascript">
-    var URL = "${ctx}/../..";
     $(function () {
+        $('#markdown').markItUp(myMarkdownSettings);
+
         $("#teacherForm").validate({
             event:'submit',
             rules:{subject:{required:true, maxlength:8}}
@@ -119,4 +114,4 @@
     });
 </script>
 </body>
-</html>>
+</html>

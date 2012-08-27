@@ -3,7 +3,9 @@ package cn.edu.sdufe.cms.common.service.link;
 import cn.edu.sdufe.cms.common.dao.link.LinkMapper;
 import cn.edu.sdufe.cms.common.entity.link.Link;
 import cn.edu.sdufe.cms.memcached.MemcachedObjectType;
+import cn.edu.sdufe.cms.utilities.freemarker.FreemakerHelper;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +18,7 @@ import org.springside.modules.mapper.JsonMapper;
 import org.springside.modules.memcached.SpyMemcachedClient;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * link业务逻辑层
@@ -32,6 +35,8 @@ public class LinkManagerImpl implements LinkManager {
     private JsonMapper jsonMapper = JsonMapper.nonDefaultMapper();
 
     private SpyMemcachedClient spyMemcachedClient;
+
+    private FreemakerHelper freemakerHelper;
 
     private LinkMapper linkMapper;
 
@@ -107,26 +112,34 @@ public class LinkManagerImpl implements LinkManager {
     @Transactional(readOnly = false)
     public long save(Link link) {
         logger.info("保存友情链接 link={}.", link.toString());
-        return linkMapper.save(link);
+        long num = linkMapper.save(link);
+        generateContent();
+        return num;
     }
 
     @Transactional(readOnly = false)
     public long update(Link link) {
         logger.info("保存友情链接 link={}.", link.toString());
-        return linkMapper.update(link);
+        long num = linkMapper.update(link);
+        generateContent();
+        return num;
     }
 
     @Override
     @Transactional(readOnly = false)
     public long updateBool(Long id, String column) {
         logger.info("保存友情链接 #{} 的属性 {}.", id, column);
-        return linkMapper.updateBool(id, column);
+        long num = linkMapper.updateBool(id, column);
+        generateContent();
+        return num;
     }
 
     @Transactional(readOnly = false)
     public long delete(Long id) {
         logger.info("删除友情链接 #{}.", id);
-        return linkMapper.delete(id);
+        long num = linkMapper.delete(id);
+        generateContent();
+        return num;
     }
 
     @Override
@@ -147,6 +160,20 @@ public class LinkManagerImpl implements LinkManager {
         }
     }
 
+    /**
+     * 生成 link 静态页面
+     */
+    private void generateContent() {
+        Map context = Maps.newHashMap();
+        List<Link> links = this.getAll(0, Integer.MAX_VALUE);
+        try {
+            context.put("links", links);
+            freemakerHelper.generateContent(context, "link.ftl", "/layouts/link.html");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Autowired
     public void setLinkMapper(LinkMapper linkMapper) {
         this.linkMapper = linkMapper;
@@ -155,6 +182,11 @@ public class LinkManagerImpl implements LinkManager {
     @Autowired
     public void setSpyMemcachedClient(@Qualifier("spyMemcachedClient") SpyMemcachedClient spyMemcachedClient) {
         this.spyMemcachedClient = spyMemcachedClient;
+    }
+
+    @Autowired
+    public void setFreemakerHelper(FreemakerHelper freemakerHelper) {
+        this.freemakerHelper = freemakerHelper;
     }
 
 }

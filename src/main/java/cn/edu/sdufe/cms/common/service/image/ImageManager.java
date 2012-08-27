@@ -1,7 +1,6 @@
 package cn.edu.sdufe.cms.common.service.image;
 
 import cn.edu.sdufe.cms.common.dao.image.ImageMapper;
-import cn.edu.sdufe.cms.common.entity.article.Article;
 import cn.edu.sdufe.cms.common.entity.image.Image;
 import cn.edu.sdufe.cms.common.service.GenericManager;
 import org.springframework.web.multipart.MultipartFile;

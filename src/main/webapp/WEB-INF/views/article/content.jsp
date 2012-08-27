@@ -91,7 +91,7 @@
     <%@include file="/WEB-INF/layouts/sidebar.jsp" %>
 </div>
 <script src="${ctx}/static/js/easing.js" type="text/javascript"></script>
-<script src="${ctx}/static/js/jquery/jquery.ui.totop.js" type="text/javascript"></script>
+<script src="${ctx}/static/js/jquery.ui.totop.js" type="text/javascript"></script>
 <script>
     $(function () {
         //totop

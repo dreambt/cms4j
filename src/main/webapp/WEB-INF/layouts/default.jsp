@@ -30,19 +30,9 @@
 </head>
 <body>
 <div class="container">
-    <%@ include file="/WEB-INF/layouts/header.jsp" %>
+    <%@ include file="/static/uploads/layouts/menu.html" %>
     <sitemesh:body/>
-    <!-- 友情链接 -->
-    <div class="row">
-    <span class="span13">
-        <ul id="friLnk" class="unstyled">
-            <li class="friLnkT"><strong>友情链接</strong></li>
-            <c:forEach items="${links}" var="link" begin="0" step="1">
-                <li style="display:inline-block;*display:inline"><a href="${link.url}" target="_blank">${link.title}</a></li>
-            </c:forEach>
-        </ul>
-    </span>
-    </div>
+    <%@ include file="/static/uploads/layouts/link.html" %>
     <%@ include file="/WEB-INF/layouts/footer.jsp" %>
 </div>
 <c:if test="${not empty info}">

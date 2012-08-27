@@ -16,7 +16,7 @@
     <sql id="linkColumns">id, title, url, STATUS, created_date, last_modified_date</sql>
 
     <!-- 根据id获取link -->
-    <select id="get" parameterType="int" resultMap="linkDetailMap">
+    <select id="get" parameterType="long" resultMap="linkDetailMap">
         SELECT
         <include refid="linkColumns"/>
         FROM cms_link
@@ -26,7 +26,7 @@
     </select>
 
     <!-- 获取 link 数量 -->
-    <select id="count" resultType="Long">
+    <select id="count" resultType="long">
         SELECT COUNT( id )
         FROM cms_link
         LIMIT 1
@@ -58,7 +58,7 @@
 	</insert>
 
     <!-- 删除link -->
-    <delete id="delete" parameterType="Long">
+    <delete id="delete" parameterType="long">
 		DELETE FROM  cms_link
 		WHERE id = #{id}
 	</delete>

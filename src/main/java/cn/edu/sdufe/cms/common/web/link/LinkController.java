@@ -34,8 +34,9 @@ public class LinkController {
     @RequiresPermissions("link:list")
     @RequestMapping(value = {"", "listAll"})
     public String listAll(Model model) {
-        model.addAttribute("total", linkManager.count());
-        model.addAttribute("links", linkManager.getAll());
+        List<Link> links = linkManager.getAll();
+        model.addAttribute("links", links);
+        model.addAttribute("total", links.size());
         return "dashboard/link/listAll";
     }
 
@@ -90,7 +91,7 @@ public class LinkController {
      *
      * @return
      */
-    @RequestMapping(value = "audit/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "audit/{id}", method = RequestMethod.GET)
     public String audit(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         if (null == linkManager.get(id)) {
             redirectAttributes.addAttribute("error", "该链接不存在，请刷新重试");
@@ -109,7 +110,7 @@ public class LinkController {
      *
      * @param id
      */
-    @RequestMapping(value = "delete/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "delete/{id}", method = RequestMethod.GET)
     public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         if (linkManager.delete(id) > 0) {
             redirectAttributes.addFlashAttribute("info", "删除链接成功");
@@ -126,7 +127,7 @@ public class LinkController {
      * @param redirectAttributes
      * @return
      */
-    @RequestMapping(value = "batchAudit", method = RequestMethod.POST)
+    @RequestMapping(value = "batchAudit", method = RequestMethod.GET)
     public String batchAuditLink(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         String[] isSelected = request.getParameterValues("isSelected");
         if (isSelected == null) {
@@ -146,7 +147,7 @@ public class LinkController {
      * @param redirectAttributes
      * @return
      */
-    @RequestMapping(value = "batchDelete", method = RequestMethod.POST)
+    @RequestMapping(value = "batchDelete", method = RequestMethod.GET)
     public String batchDeleteLink(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         String[] isSelected = request.getParameterValues("isSelected");
         if (isSelected == null) {

@@ -26,6 +26,6 @@ public interface AgencyMapper extends GenericDao<Agency, Long> {
      * @param id
      * @return
      */
-    int updateViews(Long id);
+    long updateViews(Long id);
 
 }

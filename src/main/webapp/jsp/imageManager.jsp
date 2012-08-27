@@ -6,7 +6,7 @@
 <%@ page import="java.util.regex.Pattern" %>
 <%
     //仅做示例用，请自行修改
-    String path = "e:/apache-tomcat-7.0.29/static/uploads/article/article-big";
+    String path = "e:/static/uploads/article/article-big";
     String imgStr = "";
     String realpath = path;//request.getRealPath("/") + path;
     String abpath = request.getRealPath("/");

@@ -32,7 +32,7 @@
     <script type="text/javascript" src="${ctx}/static/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="${ctx}/static/js/uniform/jquery.uniform.js" charset="utf-8"></script>
     <script type="text/javascript" src="${ctx}/static/js/tipsy/jquery.tipsy.js"  charset="utf-8"></script>
-    <script type="text/javascript" src="${ctx}/static/jquery/jquery.iphoneui.js"  charset="utf-8"></script>
+    <script type="text/javascript" src="${ctx}/static/js/jquery.iphoneui.js"  charset="utf-8"></script>
     <script src="${ctx}/static/js/jquery-validation/jquery.validate.min.js" type="text/javascript"></script>
     <script src="${ctx}/static/js/jquery-validation/messages_cn.js" type="text/javascript"></script>
 </head>

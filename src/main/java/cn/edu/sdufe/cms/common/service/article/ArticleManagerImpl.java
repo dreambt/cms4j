@@ -183,11 +183,29 @@ public class ArticleManagerImpl implements ArticleManager {
     public List<Article> getAll(int offset, int limit, String sort, String direction) {
         List<Article> articleList = Lists.newArrayList();
         long start = System.currentTimeMillis();
-        String key = MemcachedObjectType.ARTICLE.getPrefix() + "all:" + offset + ":" + limit + ":" + sort + ":" + direction;
+        String key = MemcachedObjectType.ARTICLE.getPrefix() + "all:" + offset + ":" + limit + ":" + sort + ":" + direction + ":false";
         String jsonString = spyMemcachedClient.get(key);
 
         if (StringUtils.isBlank(jsonString)) {
-            articleList = articleMapper.getAll(offset, limit, sort, direction);
+            articleList = articleMapper.getAll(offset, limit, sort, direction, 0);// 包含标记删除和未审核的文章
+            jsonString = jsonMapper.toJson(articleList);
+            spyMemcachedClient.set(key, MemcachedObjectType.ARTICLE.getExpiredTime(), jsonString);
+        } else {
+            articleList = jsonMapper.fromJson(jsonString, jsonMapper.createCollectionType(List.class, Article.class));
+        }
+        long end = System.currentTimeMillis();
+        logger.info("获取文章列表 用时：{}ms. key: {}.", end - start, key);
+        return articleList;
+    }
+
+    private List<Article> getTop(int offset, int limit, String sort, String direction) {
+        List<Article> articleList = Lists.newArrayList();
+        long start = System.currentTimeMillis();
+        String key = MemcachedObjectType.ARTICLE.getPrefix() + "all:" + offset + ":" + limit + ":" + sort + ":" + direction + ":true";
+        String jsonString = spyMemcachedClient.get(key);
+
+        if (StringUtils.isBlank(jsonString)) {
+            articleList = articleMapper.getAll(offset, limit, sort, direction, 1);// 不包含标记删除和未审核的文章
             jsonString = jsonMapper.toJson(articleList);
             spyMemcachedClient.set(key, MemcachedObjectType.ARTICLE.getExpiredTime(), jsonString);
         } else {
@@ -200,12 +218,12 @@ public class ArticleManagerImpl implements ArticleManager {
 
     @Override
     public List<Article> getNewTop(int limit) {
-        return this.getAll(0, limit, "id", "DESC");
+        return this.getTop(0, limit, "id", "DESC");
     }
 
     @Override
     public List<Article> getHotTop(int limit) {
-        return this.getAll(0, limit, "views", "DESC");
+        return this.getTop(0, limit, "views", "DESC");
     }
 
     @Override
@@ -250,7 +268,15 @@ public class ArticleManagerImpl implements ArticleManager {
     public List<Article> getByCategoryIds(Long[] ids, int offset, int limit) {
         List<Article> articleList = Lists.newArrayList();
         long start = System.currentTimeMillis();
-        String key = MemcachedObjectType.ARTICLE.getPrefix() + "categorys:" + ids.toString() + ":" + offset + ":" + limit;
+
+        // 数组转字符串
+        StringBuffer sb = new StringBuffer(ids[0] + ",");
+        for (int i = 1; i < ids.length; i++) {
+            sb.append(",");
+            sb.append(ids[i]);
+        }
+
+        String key = MemcachedObjectType.ARTICLE.getPrefix() + "categorys:" + sb.toString() + ":" + offset + ":" + limit;
         String jsonString = spyMemcachedClient.get(key);
 
         if (StringUtils.isBlank(jsonString)) {
@@ -468,10 +494,8 @@ public class ArticleManagerImpl implements ArticleManager {
     /**
      * TODO 清理 Memcached 缓存
      */
-    private void clearMemcached() {
-        String key = MemcachedObjectType.ARTICLE.getPrefix();
-        String jsonString = spyMemcachedClient.get(key);
-        //spyMemcachedClient.set();
+    private void clearMemcached(String key) {
+        spyMemcachedClient.incr(key, 1, 0);
     }
 
     @Autowired

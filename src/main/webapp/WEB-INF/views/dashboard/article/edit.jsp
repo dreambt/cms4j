@@ -12,13 +12,8 @@
 <html>
 <head>
     <title>编辑文章</title>
-    <link rel="stylesheet" type="text/css" href="${ctx}/static/Ueditor/themes/default/ueditor.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/static/js/jquery-validation/validate.min.css">
-    <script type="text/javascript" src="${ctx}/static/Ueditor/editor_config.js"></script>
-    <script type="text/javascript" src="${ctx}/static/Ueditor/editor.min.js"></script>
-    <script type="text/javascript" src="${ctx}/static/js/tipsy/jquery.tipsy.js" charset="utf-8"></script>
-    <script type="text/javascript" src="${ctx}/static/js/jquery-validation/jquery.validate.min.js" charset="utf-8"></script>
-    <script type="text/javascript" src="${ctx}/static/js/jquery-validation/messages_cn.js" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="${ctx}/static/js/markitup/style.min.css">
 </head>
 <body>
 <div class="row">
@@ -37,13 +32,7 @@
         <label class="checkbox">
             <input type="checkbox" name="allowComment" value="true" <c:if test="${article.allowComment}">checked="checked"</c:if> /> 允许评论
         </label>
-        <script type="text/plain" id="myEditor">${article.message}</script>
-        <script type="text/javascript">
-            var ue = new UE.ui.Editor({
-                textarea: 'message'
-            });
-            ue.render('myEditor');
-        </script>
+        <textarea id="markdown" name="message" cols="80" rows="20">${article.message}</textarea>
         <div class="control-group">
             <div class="controls">
                 <button class="btn btn-primary" id="publish" type="submit"><i class="icon-ok icon-white"></i> 发 布</button>
@@ -51,10 +40,18 @@
             </div>
         </div>
     </form:form>
+    </div>
 </div>
+<script type="text/javascript" src="${ctx}/static/js/jquery.loading.js"></script>
+<script type="text/javascript" src="${ctx}/static/js/jquery.json-2.3.min.js"></script>
+<script type="text/javascript" src="${ctx}/static/js/markitup/jquery.markitup.js"></script>
+<script type="text/javascript" src="${ctx}/static/js/tipsy/jquery.tipsy.js" charset="utf-8"></script>
+<script type="text/javascript" src="${ctx}/static/js/jquery-validation/jquery.validate.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="${ctx}/static/js/jquery-validation/messages_cn.js" charset="utf-8"></script>
 <script type="text/javascript">
-    var URL = "${ctx}/../..";
     $(function () {
+        $('#markdown').markItUp(myMarkdownSettings);
+
         $("#articleForm").validate({
             event:'submit',
             rules:{subject:{required:true, maxlength:26}}

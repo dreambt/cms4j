@@ -1,10 +1,7 @@
 package cn.edu.sdufe.cms.common.web;
 
 import cn.edu.sdufe.cms.common.service.article.ArticleManager;
-import cn.edu.sdufe.cms.common.service.article.CategoryManager;
 import cn.edu.sdufe.cms.common.service.image.ImageManager;
-import cn.edu.sdufe.cms.common.service.link.LinkManager;
-import cn.edu.sdufe.cms.common.service.link.LinkManagerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class GeneralController {
 
-    private CategoryManager categoryManager;
-    private LinkManager linkManager;
     private ImageManager imageManager;
     private ArticleManager articleManager;
 
@@ -35,12 +30,10 @@ public class GeneralController {
     @RequestMapping(value = "/index{str}", method = RequestMethod.GET)
     public String index(Model model, @PathVariable("str") String str) {
         Long[] ids = {19L, 20L, 21L, 22L, 32L, 33L};
-        model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("images", imageManager.findByShowIndex());
         model.addAttribute("news1", articleManager.getByCategoryId(3L, 0, 6));
         model.addAttribute("news2", articleManager.getByCategoryId(4L, 0, 8));
         model.addAttribute("infos", articleManager.getByCategoryIds(ids, 0, 7));
-        model.addAttribute("links", linkManager.getAll());
         model.addAttribute("posts", articleManager.getByCategoryId(1L, 0, 6));
         return "index" + str;
     }
@@ -52,8 +45,6 @@ public class GeneralController {
      */
     @RequestMapping(value = "/contact", method = RequestMethod.GET)
     public String contactUs(Model model) {
-        model.addAttribute("categories", categoryManager.getNavCategory());
-        model.addAttribute("links", linkManager.getAll());
         return "contact";
     }
 
@@ -64,8 +55,6 @@ public class GeneralController {
      */
     @RequestMapping(value = "/about", method = RequestMethod.GET)
     public String ahoutUs(Model model) {
-        model.addAttribute("categories", categoryManager.getNavCategory());
-        model.addAttribute("links", linkManager.getAll());
         return "about";
     }
 
@@ -92,16 +81,6 @@ public class GeneralController {
     @RequestMapping(value = "/web/mashup-client")
     public String mashupClient() {
         return "web/mashup-client";
-    }
-
-    @Autowired
-    public void setCategoryManager(CategoryManager categoryManager) {
-        this.categoryManager = categoryManager;
-    }
-
-    @Autowired
-    public void setLinkManager(LinkManagerImpl linkManager) {
-        this.linkManager = linkManager;
     }
 
     @Autowired

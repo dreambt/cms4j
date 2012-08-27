@@ -1,7 +1,6 @@
 package cn.edu.sdufe.cms.common.web.image;
 
 import cn.edu.sdufe.cms.common.entity.image.Image;
-import cn.edu.sdufe.cms.common.service.article.CategoryManager;
 import cn.edu.sdufe.cms.common.service.image.ImageManager;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -26,7 +25,6 @@ import java.util.List;
 public class ImageController {
 
     private ImageManager imageManager;
-    private CategoryManager categoryManager;
 
     /**
      * 后台显示所有图片
@@ -71,7 +69,6 @@ public class ImageController {
     @RequestMapping(value = "album", method = RequestMethod.GET)
     public String album(Model model) {
         model.addAttribute("images", imageManager.getAll(0, 10));
-        model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("total", imageManager.count());
         return "album";
     }
@@ -100,7 +97,6 @@ public class ImageController {
     public String gallery(Model model) {
         List<Image> images = imageManager.getAll(0, 12);
         model.addAttribute("images", images);
-        model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("total", imageManager.count());
         return "photo";
     }
@@ -221,11 +217,6 @@ public class ImageController {
     @Autowired
     public void setImageManager(ImageManager imageManager) {
         this.imageManager = imageManager;
-    }
-
-    @Autowired
-    public void setCategoryManager(CategoryManager categoryManager) {
-        this.categoryManager = categoryManager;
     }
 
 }

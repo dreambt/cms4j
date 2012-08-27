@@ -36,7 +36,7 @@ public interface GenericDao<T, PK extends Serializable> {
      *
      * @return 记录数
      */
-    Long count();
+    long count();
 
     /**
      * Generic method to save an object - handles insert.  will set modified_time to

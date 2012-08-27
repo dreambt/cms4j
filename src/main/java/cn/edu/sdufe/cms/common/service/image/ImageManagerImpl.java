@@ -226,7 +226,7 @@ public class ImageManagerImpl implements ImageManager {
         logger.info("删除相册 #{}.", id);
         String fileName = imageMapper.get(id).getImageUrl();
 
-        int num = imageMapper.delete(id);
+        long num = imageMapper.delete(id);
         // 成功删除数据库记录时，异步删除所有缩略图
         if (num > 0) {
             // 删除时只删除数据库，硬盘文件起任务轮询删除

@@ -69,7 +69,7 @@ public class TeacherManager {
      * @param id
      */
     @Transactional(readOnly = false)
-    public int delete(long id) {
+    public long delete(long id) {
         return teacherMapper.updateBool(id, "deleted");
     }
 
@@ -93,7 +93,7 @@ public class TeacherManager {
      * @return
      */
     @Transactional(readOnly = false)
-    public int updateTeacher(MultipartFile file, HttpServletRequest request, Teacher teacher) {
+    public long updateTeacher(MultipartFile file, HttpServletRequest request, Teacher teacher) {
         Article article = teacher.getArticle();
 
         //是否置顶
@@ -134,7 +134,7 @@ public class TeacherManager {
      * @return
      */
     @Transactional(readOnly = false)
-    public int save(MultipartFile file, Teacher teacher, HttpServletRequest request) {
+    public long save(MultipartFile file, Teacher teacher, HttpServletRequest request) {
         Article article = teacher.getArticle();
         article.setCategory(categoryMapper.get(13L));
         article.setSubject(teacher.getTeacherName());

@@ -3,8 +3,6 @@ package cn.edu.sdufe.cms.common.web.agency;
 import cn.edu.sdufe.cms.common.entity.agency.Agency;
 import cn.edu.sdufe.cms.common.entity.article.Category;
 import cn.edu.sdufe.cms.common.service.agency.AgencyManager;
-import cn.edu.sdufe.cms.common.service.article.CategoryManager;
-import cn.edu.sdufe.cms.common.service.link.LinkManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,8 +26,6 @@ import javax.servlet.http.HttpServletRequest;
 public class AgencyController {
 
     private AgencyManager agencyManager;
-    private CategoryManager categoryManager;
-    private LinkManager linkManager;
 
     /**
      * 显示所有组织机构
@@ -40,8 +36,6 @@ public class AgencyController {
     @RequestMapping(value = {"", "listAll"})
     public String listOfAgency(Model model) {
         model.addAttribute("agencies", agencyManager.getAllAgency());
-        model.addAttribute("categories", categoryManager.getAllowPublishCategory());
-        model.addAttribute("links", linkManager.getAll());
         return "dashboard/agency/listAll";
     }
 
@@ -54,7 +48,6 @@ public class AgencyController {
      */
     @RequestMapping(value = "show/{id}")
     public String indexOfAgency(@PathVariable Long id, Model model) {
-        model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("agency", agencyManager.getAgency(id));
         return "index-research";
     }
@@ -115,13 +108,4 @@ public class AgencyController {
         this.agencyManager = agencyManager;
     }
 
-    @Autowired
-    public void setCategoryManager(CategoryManager categoryManager) {
-        this.categoryManager = categoryManager;
-    }
-
-    @Autowired
-    public void setLinkManager(LinkManager linkManager) {
-        this.linkManager = linkManager;
-    }
 }

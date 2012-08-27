@@ -38,7 +38,7 @@ public class ArchiveMapperTest extends SpringTransactionalTestCase {
 
     @Test
     public void testDelete() throws Exception {
-        int num = archiveMapper.delete(1L);
+        long num = archiveMapper.delete(1L);
         assertEquals(1, num);
     }
 

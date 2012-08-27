@@ -3,7 +3,6 @@
   User: Deng Xiaolan (824688439@qq.com)
   Date: 12-4-23
   Time: 下午3:49
-  To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
@@ -15,36 +14,41 @@
 <head>
     <title>添加机构</title>
     <link rel="stylesheet" type="text/css" href="${ctx}/static/js/jquery-validation/validate.min.css">
-    <script type="text/javascript" src="${ctx}/static/js/jquery-validation/jquery.validate.min.js" charset="utf-8"></script>
-    <script type="text/javascript" src="${ctx}/static/js/jquery-validation/messages_cn.js" charset="utf-8"></script>
 </head>
-
 <body>
-<div id="main_container" class="main_container container_16 clearfix">
-    <div class="flat_area grid_10">
-        <h2>添加研究所</h2>
-        <p>添加研究所，上传的研究所banner图片的规格为：<strong>920px*196px</strong></p>
-    </div>
-</div>
-<div class="main_container container_16 clearfix">
-    <form:form id="agency" modelAttribute="agency" action="${ctx}/agency/save/${agency.id}" method="post" enctype="multipart/form-data">
-        <div class="box grid_16">
-            <h2 class="box_head grad_colour round_top">添加研究所</h2>
-            <div class="toggle_container">
-                <div class="info" style="float:left;margin-left: 15%;margin-top: 15px;">
-                    <input id="picID" type="hidden" name="id" value="${agency.id}"/>
-                    研究所图片：<br/><input type="file" id="upload" name="file" alt="${agency.imageUrl}"><br> <br>
-                    研究所名称：<br/><input type="text" class="required" name="title" size="52" value="${agency.title}"> <br/> <br/>
-                    研究所描述：<br/><textarea type="text" class="required" name="introduction" cols="55" rows="5">${agency.introduction}</textarea>
-                    <br/> <br/>
-                    <br/><br/>
-                    <!--<img src="#" style="display: block;float: left;">-->
-                </div>
+<div class="row">
+    <div class="span12">
+    <form:form id="agency" modelAttribute="agency" action="${ctx}/agency/save/${agency.id}" method="post" enctype="multipart/form-data" cssClass="form-horizontal">
+        <div class="control-group">
+            <label class="control-label" for="upload">研究所图片</label>
+            <div class="controls">
+                <input id="picID" type="hidden" name="id" value="${agency.id}"/>
+                <input type="file" id="upload" name="file" alt="${agency.imageUrl}">
             </div>
         </div>
-        <button type="submit" style="margin-left: 23%;width: 100px;" id="submit">提交</button>
+        <div class="control-group">
+            <label class="control-label" for="title">研究所名称</label>
+            <div class="controls">
+                <input type="text" class="required" id="title" name="title" size="52" value="${agency.title}">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="introduction">研究所描述</label>
+            <div class="controls">
+                <textarea type="text" class="required" id="introduction" name="introduction" cols="55" rows="5">${agency.introduction}</textarea>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <button class="btn btn-primary" id="publish" type="submit"><i class="icon-ok icon-white"></i> 确 定</button>
+                <button class="btn" type="reset"><i class="icon-refresh"></i> 重 置</button>
+            </div>
+        </div>
     </form:form>
+    </div>
 </div>
+<script type="text/javascript" src="${ctx}/static/js/jquery-validation/jquery.validate.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="${ctx}/static/js/jquery-validation/messages_cn.js" charset="utf-8"></script>
 <script type="text/javascript ">
     $(function(){
         $('form#agency').validate({

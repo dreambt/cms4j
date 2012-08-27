@@ -14,32 +14,45 @@
 <head>
     <title>用户设置</title>
     <link rel="stylesheet" type="text/css" href="${ctx}/static/js/jquery-validation/validate.min.css">
-    <script type="text/javascript" src="${ctx}/static/js/jquery-validation/jquery.validate.min.js" charset="utf-8"></script>
-    <script type="text/javascript" src="${ctx}/static/js/jquery-validation/messages_cn.js" charset="utf-8"></script>
 </head>
 <body>
-<div id="main_container" class="main_container container_16 clearfix">
-    <div class="flat_area grid_16">
-        <h2>用户设置</h2>
-        <p>用户注册后，登录密码将发送到 <strong>注册邮箱</strong> , 请及时通知用户修改密码.</p>
-    </div>
-</div>
-<div class="main_container container_16 clearfix">
-<form:form id="userInfo" modelAttribute="user" action="${ctx}/account/user/save/${user.id}" method="post">
-    <div class="box gird_16">
-        <h2 class="box_head grad_colour round_top">用户信息</h2>
-        <div class="toggle_container">
-            <div class="block">
-            <input type="hidden" id="user_id" name="id" value="${user.id}"/>
-            <label for="email" class="field">邮  箱: </label><c:choose><c:when test="${user.id > 0}">${user.email}</c:when><c:otherwise><input id="email" name="email" class="required email" size="40" /></c:otherwise></c:choose><br />
-            <label for="username" class="field">用户名: </label><input id="username" name="username" class="required" size="40" minlength="2" value="${user.username}" /><br />
-            <label class="field">用户组: </label><form:radiobuttons path="groupList" items="${allGroups}" itemLabel="groupName" itemValue="id" />
+<div class="row">
+    <div class="span12">
+    <form:form id="userInfo" modelAttribute="user" action="${ctx}/account/user/save/${user.id}" method="post" cssClass="form-horizontal">
+        <div class="control-group">
+            <label class="control-label" for="email">邮  箱</label>
+            <div class="controls">
+                <input type="hidden" id="user_id" name="id" value="${user.id}"/>
+                <c:choose><c:when test="${user.id > 0}">${user.email}</c:when><c:otherwise><input id="email" name="email" class="required email" size="40" placeholder="Email" /></c:otherwise></c:choose>
             </div>
         </div>
+        <div class="control-group">
+            <label class="control-label" for="username">用户名</label>
+            <div class="controls">
+                <input id="username" name="username" class="required" size="40" minlength="2" value="${user.username}" placeholder="用户名" />
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">用户组</label>
+            <div class="controls">
+                <c:forEach var="group" items="${allGroups}">
+                    <label class="checkbox inline">
+                        <form:radiobutton path="groupList" value="${group.id}" /> ${group.groupName}
+                    </label>
+                </c:forEach>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <button class="btn btn-primary" id="publish" type="submit"><i class="icon-ok icon-white"></i> 确 定</button>
+                <button class="btn" type="reset"><i class="icon-refresh"></i> 重 置</button>
+            </div>
+        </div>
+    </form:form>
     </div>
-    <button type="submit" id="create"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/User2.png"><span>保存修改</span></button>
-</form:form>
 </div>
+<script type="text/javascript" src="${ctx}/static/js/jquery-validation/jquery.validate.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="${ctx}/static/js/jquery-validation/messages_cn.js" charset="utf-8"></script>
 <script>
     $(function () {
         $("#email").focus();

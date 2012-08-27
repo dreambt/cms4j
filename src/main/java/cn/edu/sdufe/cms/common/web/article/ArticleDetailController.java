@@ -1,7 +1,7 @@
 package cn.edu.sdufe.cms.common.web.article;
 
 import cn.edu.sdufe.cms.common.entity.article.Article;
-import cn.edu.sdufe.cms.common.service.article.ArticleManagerImpl;
+import cn.edu.sdufe.cms.common.service.article.ArticleManager;
 import cn.edu.sdufe.cms.common.service.article.CategoryManager;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ import javax.validation.Valid;
 @RequestMapping(value = "/article/")
 public class ArticleDetailController {
 
-    private ArticleManagerImpl articleManagerImpl;
+    private ArticleManager articleManager;
     private CategoryManager categoryManager;
 
     /**
@@ -82,7 +82,7 @@ public class ArticleDetailController {
             article.setAllowComment(true);
         }
 
-        if (bindingResult.hasErrors() || articleManagerImpl.update(article) <= 0) {
+        if (bindingResult.hasErrors() || articleManager.update(article) <= 0) {
             redirectAttributes.addFlashAttribute("error", "保存文章失败.");
             return "redirect:/article/listAll";
         } else {
@@ -93,12 +93,12 @@ public class ArticleDetailController {
 
     @ModelAttribute("article")
     public Article getArticle(@PathVariable("id") Long id) {
-        return articleManagerImpl.get(id);
+        return articleManager.get(id);
     }
 
     @Autowired
-    public void setArticleManagerImpl(ArticleManagerImpl articleManagerImpl) {
-        this.articleManagerImpl = articleManagerImpl;
+    public void setArticleManager(ArticleManager articleManager) {
+        this.articleManager = articleManager;
     }
 
     @Autowired

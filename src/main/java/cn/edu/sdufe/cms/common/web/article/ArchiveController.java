@@ -4,8 +4,6 @@ import cn.edu.sdufe.cms.common.entity.article.Archive;
 import cn.edu.sdufe.cms.common.entity.article.Article;
 import cn.edu.sdufe.cms.common.service.article.ArchiveManager;
 import cn.edu.sdufe.cms.common.service.article.ArticleManager;
-import cn.edu.sdufe.cms.common.service.article.CategoryManager;
-import cn.edu.sdufe.cms.common.service.link.LinkManager;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -13,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springside.modules.mapper.JsonMapper;
 
 import java.util.List;
 
@@ -29,11 +26,7 @@ import java.util.List;
 public class ArchiveController {
 
     private ArchiveManager archiveManager;
-    private CategoryManager categoryManager;
     private ArticleManager articleManager;
-    private LinkManager linkManager;
-
-    private static JsonMapper mapper = JsonMapper.nonEmptyMapper();
 
     /**
      * 显示所有归类
@@ -44,7 +37,6 @@ public class ArchiveController {
     @RequestMapping(value = "list")
     public String articleListOfArchive(Model model) {
         model.addAttribute("archives", archiveManager.getTopTen());
-        model.addAttribute("categories", categoryManager.getNavCategory());
         model.addAttribute("newArticles", articleManager.getNewTop(10));
         return "article/archives";
     }
@@ -59,13 +51,10 @@ public class ArchiveController {
     public String articleListByArchiveId(Model model, @PathVariable("id") Long id) {
         Archive archive = archiveManager.get(id);
         model.addAttribute("articles", articleManager.getByArchiveId(id, 0, 12));//文章列表
-        model.addAttribute("categories", categoryManager.getNavCategory());//导航菜单
         model.addAttribute("archive", archive);
         model.addAttribute("archives", archiveManager.getTopTen());//边栏归档日志
         model.addAttribute("newArticles", articleManager.getNewTop(10));//边栏最新文章
         model.addAttribute("total", Long.valueOf(archive.getArticleList().size()));
-        model.addAttribute("links", linkManager.getAll());//页脚友情链接
-
         return "article/list";
     }
 
@@ -102,17 +91,8 @@ public class ArchiveController {
     }
 
     @Autowired
-    public void setCategoryManager(CategoryManager categoryManager) {
-        this.categoryManager = categoryManager;
-    }
-
-    @Autowired
     public void setArticleManagerImpl(ArticleManager articleManager) {
         this.articleManager = articleManager;
     }
 
-    @Autowired
-    public void setLinkManager(LinkManager linkManager) {
-        this.linkManager = linkManager;
-    }
 }

@@ -22,9 +22,10 @@ public interface ArticleMapper extends GenericDao<Article, Long> {
      * @param limit
      * @param sort
      * @param direction
+     * @param status
      * @return
      */
-    List<Article> getAll(@Param("offset") int offset, @Param("limit") int limit, @Param("sort") String sort, @Param("direction") String direction);
+    List<Article> getAll(@Param("offset") int offset, @Param("limit") int limit, @Param("sort") String sort, @Param("direction") String direction, @Param("status") int status);
 
     /**
      * 获取分类id的文章列表

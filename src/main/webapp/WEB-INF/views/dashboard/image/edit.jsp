@@ -1,10 +1,11 @@
 <%--
- 上传图片到相册
-  User: Deng Xiaolan (824688439@qq.com)
-  Date: 12-4-2
-  Time: 下午8:24
+  上传图片到相册
+  User: baitao.jibt@gmail.com
+  Date: 12-8-27
+  Time: 下午16:00
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -13,39 +14,49 @@
 <head>
     <title>上传活动图片</title>
     <link rel="stylesheet" type="text/css" href="${ctx}/static/js/jquery-validation/validate.min.css">
-    <script type="text/javascript" src="${ctx}/static/js/jquery-validation/jquery.validate.min.js" charset="utf-8"></script>
-    <script type="text/javascript" src="${ctx}/static/js/jquery-validation/messages_cn.js" charset="utf-8"></script>
 </head>
 <body>
-<div id="main_container" class="main_container container_16 clearfix">
-    <div class="flat_area grid_16">
-        <h2>上传活动图片</h2>
-        <p>上传活动图片</p>
-    </div>
-</div>
-<div class="main_container container_16 clearfix">
-    <form:form id="image" modelAttribute="image" action="${ctx}/gallery/save/${image.id}" method="post"
-               enctype="multipart/form-data">
-        <div class="box grid_16">
-            <h2 class="box_head grad_colour round_top">上传活动图片</h2>
-            <div class="toggle_container">
-                <div class="info" style="float:left;margin-left: 15%;margin-top: 15px;">
-                    <input id="picID" type="hidden" name="id" value="${image.id}" />
-                    <input type="file" id="upload" name="file" value="" alt="${image.imageUrl}"><br> <br>
-                    图片标题：<br/><input type="text" class="required" name="title" size="52" value="${image.title}"> <br/> <br/>
-                    首页展示：<input type="checkbox" name="showIndex" style="float: none" value="${image.showIndex}" <c:if test="${image.showIndex}">checked="checked"</c:if>>  <br/> <br/>
-                    描述信息：<br/><textarea type="text" class="required" name="description" cols="55" rows="5">${image.description}</textarea>
-                    <br/><br/>
-                    <!--<img src="#" style="display: block;float: left;">-->
-                </div>
+<div class="row">
+    <div class="span12">
+    <form:form id="image" modelAttribute="image" action="${ctx}/gallery/save/${image.id}" method="post" enctype="multipart/form-data" cssClass="form-horizontal">
+        <div class="control-group">
+            <label class="control-label" for="upload">图片标题</label>
+            <div class="controls">
+                <input id="picID" type="hidden" name="id" value="${image.id}" />
+                <input type="file" id="upload" name="file" value="" alt="${image.imageUrl}">
             </div>
         </div>
-        <button type="submit" style="margin-left: 23%;width: 100px;" id="submit">提交</button>
+        <div class="control-group">
+            <label class="control-label" for="title">图片标题</label>
+            <div class="controls">
+                <input type="text" class="required" id="title" name="title" size="52" value="${image.title}">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="showIndex">首页展示</label>
+            <div class="controls">
+                <input type="checkbox" id="showIndex" name="showIndex" style="float: none" value="${image.showIndex}" <c:if test="${image.showIndex}">checked="checked"</c:if>>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="description">描述信息</label>
+            <div class="controls">
+                <textarea type="text" class="required" id="description" name="description" cols="55" rows="5">${image.description}</textarea>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <button class="btn btn-primary" id="publish" type="submit"><i class="icon-ok icon-white"></i> 确 定</button>
+                <button class="btn" type="reset"><i class="icon-refresh"></i> 重 置</button>
+            </div>
+        </div>
     </form:form>
+    </div>
 </div>
+<script type="text/javascript" src="${ctx}/static/js/jquery-validation/jquery.validate.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="${ctx}/static/js/jquery-validation/messages_cn.js" charset="utf-8"></script>
 <script type="text/javascript">
     $(function () {
-           // $('#uniform-upload span.filename').text(${image.imageUrl});
         //上传时选择文件校验
         $('#upload').live('change', function () {
             $(this).attr('alt',$(this).val());

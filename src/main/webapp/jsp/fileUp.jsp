@@ -11,12 +11,13 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="java.util.regex.Matcher" %>
 <%@ page import="java.util.regex.Pattern" %>
+<%@ page import="cn.edu.sdufe.cms.utilities.RandomString" %>
 
 <%
     //仅做示例用，请自行修改
     //保存文件路径
     String filePath = "jsp";
-    String realPath = "e:/apache-tomcat-7.0.29/static/uploads/" + filePath;
+    String realPath = "e:/static/uploads/" + filePath;
     request.setCharacterEncoding("utf-8");
     //判断路径是否存在，不存在则创建
     File dir = new File(realPath);
@@ -35,6 +36,7 @@
         String fileName = "";
         String state = "SUCCESS";
         String contentType = "";
+        String ftype = "";
 
         while (fii.hasNext()) {
             FileItemStream fis = fii.next();
@@ -49,7 +51,9 @@
                     }
                     contentType = fileName.substring(fileName.lastIndexOf("."), fileName.length());
 
-                    url = realPath + "/" + new Date().getTime() + fileName.substring(fileName.lastIndexOf("."), fileName.length());
+                    ftype = matcher.group();
+                    fileName = new Date().getTime() + "-" + RandomString.get(6) + "." + ftype;
+                    url = realPath + "\\" + fileName;
 
                     BufferedInputStream in = new BufferedInputStream(fis.openStream());//获得文件输入流
                     FileOutputStream a = new FileOutputStream(new File(url));

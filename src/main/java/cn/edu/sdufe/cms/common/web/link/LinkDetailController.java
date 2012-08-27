@@ -21,8 +21,8 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping(value = "/link")
 public class LinkDetailController {
-    private LinkManager linkManager;
 
+    private LinkManager linkManager;
 
     /**
      * 跳转到修改link页面
@@ -55,7 +55,6 @@ public class LinkDetailController {
         return "redirect:/link/listAll";
     }
 
-
     @ModelAttribute("link")
     public Link getLink(@PathVariable Long id) {
         return linkManager.get(id);
@@ -65,4 +64,5 @@ public class LinkDetailController {
     public void setLinkManager(LinkManager linkManager) {
         this.linkManager = linkManager;
     }
+
 }

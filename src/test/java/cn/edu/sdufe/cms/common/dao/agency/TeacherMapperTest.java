@@ -51,8 +51,9 @@ public class TeacherMapperTest extends SpringTransactionalTestCase {
     @Rollback(false)
     public void testSave() throws Exception {
         Teacher teacher = TeacherData.getTeacher();
-        int result = teacherMapper.save(teacher);
+        long result = teacherMapper.save(teacher);
         //System.out.println(teacher.getId());
         Assert.assertEquals(1, result);
     }
+
 }

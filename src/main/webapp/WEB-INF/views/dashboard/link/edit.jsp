@@ -1,7 +1,7 @@
 <%--
-  User: Deng Xiaolan (824688439@qq.com)
-  Date: 12-4-8
-  Time: 下午12:36
+  User: baitao.jibt@gmail.com
+  Date: 12-8-27
+  Time: 上午11:39
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
@@ -12,34 +12,35 @@
 <head>
     <title>添加友情链接</title>
     <link rel="stylesheet" type="text/css" href="${ctx}/static/js/jquery-validation/validate.min.css">
-    <script type="text/javascript" src="${ctx}/static/js/jquery-validation/jquery.validate.min.js" charset="utf-8"></script>
-    <script type="text/javascript" src="${ctx}/static/js/jquery-validation/messages_cn.js" charset="utf-8"></script>
 </head>
-
 <body>
-<div id="main_container" class="main_container container_16 clearfix">
-    <div class="flat_area grid_10">
-        <h2>添加友情链接</h2>
-        <p>aaaaaaaaaaaaaaaa</p>
-    </div>
-</div>
-<div class="main_container container_16 clearfix">
-    <form:form modelAttribute="link" name="linkForm" action="${ctx}/link/save/${link.id}" id="LnkAdd">
-        <div class="box gird_16">
-            <h2 class="box_head grad_colour round_top">链接信息</h2>
-            <div class="toggle_container">
-                <div class="block">
-                    <input type="hidden" name="isSelected" value="${link.id}"/>
-                    <label class="field">链接分类: </label>
-                    <form:select path="category" items="${linkCategories}" itemLabel="displayName" itemValue="value"></form:select><br/><br/>
-                    <label for="lnkName" class="field">链接名称: </label><input id="lnkName" name="title" class="required" size="40" value="${link.title}"/><br />
-                    <label for="URL" class="field">URL: </label><input id="URL" name="url" class="required" size="40" value="${link.url}" /><br />
-                </div>
+<div class="row">
+    <div class="span12">
+    <form:form modelAttribute="link" name="linkForm" action="${ctx}/link/save/${link.id}" id="LnkAdd" cssClass="form-horizontal">
+        <div class="control-group">
+            <label class="control-label" for="lnkName">链接名称</label>
+            <div class="controls">
+                <input type="hidden" name="isSelected" value="${link.id}"/>
+                <input type="text" id="lnkName" name="title" placeholder="${link.title}">
             </div>
         </div>
-        <button type="submit" id="create"><img height="24" width="24" alt="Bended Arrow Right" src="${ctx}/static/dashboard/images/icons/User2.png"><span>保存</span></button>
+        <div class="control-group">
+            <label class="control-label" for="URL">URL</label>
+            <div class="controls">
+                <input type="text" id="URL" name="url" placeholder="${link.url}">
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <button class="btn btn-primary" id="publish" type="submit"><i class="icon-ok icon-white"></i> 确 定</button>
+                <button class="btn" type="reset"><i class="icon-refresh"></i> 重 置</button>
+            </div>
+        </div>
     </form:form>
+    </div>
 </div>
+<script type="text/javascript" src="${ctx}/static/js/jquery-validation/jquery.validate.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="${ctx}/static/js/jquery-validation/messages_cn.js" charset="utf-8"></script>
 <script>
     $(function () {
         $("#lnkName").focus();

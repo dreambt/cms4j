@@ -21,7 +21,7 @@
     	for(int i=0;i<arr.length;i++){
 
     		//保存文件路径
-    		String savePath = "e:/apache-tomcat-7.0.29/static/uploads/" + filePath;//保存路径
+    		String savePath = "e:/static/uploads/" + filePath;//保存路径
     		//格式验证
     		Pattern reg=Pattern.compile("[.]jpg|png|jpeg|gif$");
     		Matcher matcher=reg.matcher(arr[i]);

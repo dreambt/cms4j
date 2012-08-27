@@ -6,7 +6,6 @@ import cn.edu.sdufe.cms.common.service.article.ArchiveManager;
 import cn.edu.sdufe.cms.common.service.article.ArchiveManagerImpl;
 import cn.edu.sdufe.cms.common.service.article.ArticleManagerImpl;
 import cn.edu.sdufe.cms.common.service.article.CategoryManager;
-import cn.edu.sdufe.cms.common.service.link.LinkManager;
 import cn.edu.sdufe.cms.security.ShiroDbRealm;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -34,7 +33,6 @@ public class ArticleController {
     private CategoryManager categoryManager;
     private UserManager userManager;
     private ArchiveManager archiveManager;
-    private LinkManager linkManager;
 
     /**
      * 获取编号为id的文章正文
@@ -53,7 +51,6 @@ public class ArticleController {
         //article.setMessage(Encodes.unescapeHtml(article.getMessage()));
 
         model.addAttribute("article", article);
-        model.addAttribute("categories", categoryManager.getNavCategory());// TODO delete 菜单
         model.addAttribute("archives", archiveManager.getTopTen());
         model.addAttribute("newArticles", articleManager.getNewTop(10));
         return "article/content";
@@ -76,7 +73,6 @@ public class ArticleController {
         //article.setMessage(Encodes.unescapeHtml(article.getMessage()));
 
         model.addAttribute("article", article);
-        model.addAttribute("categories", categoryManager.getNavCategory());// TODO delete 菜单
         return "article/fullwidth";
     }
 
@@ -137,7 +133,6 @@ public class ArticleController {
     @RequestMapping(value = "list/{id}", method = RequestMethod.GET)
     public String listOfArticle(@PathVariable("id") Long id, Model model) {
         model.addAttribute("articles", articleManager.getByCategoryId(id, 0, 12));//文章列表(首页显示)
-        model.addAttribute("categories", categoryManager.getNavCategory());//导航菜单     // TODO delete 菜单
         model.addAttribute("category", categoryManager.get(id));//获取分类信息
         model.addAttribute("archives", archiveManager.getTopTen());//边栏归档日志
         model.addAttribute("newArticles", articleManager.getNewTop(10));//边栏最新文章
@@ -170,7 +165,6 @@ public class ArticleController {
     public String digestOfArticle(@PathVariable("id") Long id, Model model) {
         model.addAttribute("articles", articleManager.getByCategoryId(id, 0, 6));
         model.addAttribute("category", categoryManager.get(id));//获取分类信息
-        model.addAttribute("categories", categoryManager.getNavCategory());        // TODO delete 菜单
         model.addAttribute("archives", archiveManager.getTopTen());
         model.addAttribute("newArticles", articleManager.getNewTop(10));
         model.addAttribute("total", articleManager.count(id));
@@ -212,12 +206,11 @@ public class ArticleController {
         // TODO 应该用fatherCategoryId的 , 不然，下次增加新分类后没法查询完整数据
         Long[] ids = {19L, 20L, 21L, 22L, 32L, 33L};
         model.addAttribute("articles", articleManager.getByCategoryIds(ids, 0, 12));//文章列表
-        model.addAttribute("categories", categoryManager.getNavCategory());//导航菜单        // TODO delete 菜单
         model.addAttribute("category", categoryManager.get(18L));//获取分类信息
         model.addAttribute("archives", archiveManager.getTopTen());//边栏归档日志
         model.addAttribute("newArticles", articleManager.getNewTop(10));//边栏最新文章
         model.addAttribute("total", articleManager.count(ids));
-        model.addAttribute("url","listInfo");
+        model.addAttribute("url", "listInfo");
         return "article/list";
     }
 
@@ -246,7 +239,6 @@ public class ArticleController {
     public String createArticle(Model model) {
         // 不用报错，Neither BindingResult nor plain target object for bean name 'article' available as request attribute
         model.addAttribute("article", new Article());
-        model.addAttribute("categories", categoryManager.getAllowPublishCategory());
         return "dashboard/article/edit";
     }
 
@@ -291,7 +283,7 @@ public class ArticleController {
     }
 
     @RequiresPermissions("article:edit")
-    @RequestMapping(value = "batchAudit", method = RequestMethod.POST)
+    @RequestMapping(value = "batchAudit", method = RequestMethod.GET)
     public String batchAuditArticle(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         String[] isSelected = request.getParameterValues("isSelected");
         if (isSelected == null) {
@@ -305,7 +297,7 @@ public class ArticleController {
     }
 
     @RequiresPermissions("article:save")
-    @RequestMapping(value = "batchDelete", method = RequestMethod.POST)
+    @RequestMapping(value = "batchDelete", method = RequestMethod.GET)
     public String batchDeleteArticle(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         String[] isSelected = request.getParameterValues("isSelected");
         if (isSelected == null) {
@@ -325,7 +317,7 @@ public class ArticleController {
      * @return
      */
     @RequiresPermissions("article:edit")
-    @RequestMapping(value = "top/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "top/{id}", method = RequestMethod.GET)
     public String topArticle(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         if (articleManager.top(id)) {
             redirectAttributes.addFlashAttribute("info", "操作文章" + id + " 成功.");
@@ -342,7 +334,7 @@ public class ArticleController {
      * @return
      */
     @RequiresPermissions("article:edit")
-    @RequestMapping(value = "allow/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "allow/{id}", method = RequestMethod.GET)
     public String allowArticle(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         if (articleManager.allowComment(id)) {
             redirectAttributes.addFlashAttribute("info", "操作文章" + id + " 成功.");
@@ -359,7 +351,7 @@ public class ArticleController {
      * @return
      */
     @RequiresPermissions("article:edit")
-    @RequestMapping(value = "audit/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "audit/{id}", method = RequestMethod.GET)
     public String auditArticle(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         if (articleManager.audit(id)) {
             redirectAttributes.addFlashAttribute("info", "操作文章 " + id + " 成功.");
@@ -376,7 +368,7 @@ public class ArticleController {
      * @return
      */
     @RequiresPermissions("article:save")
-    @RequestMapping(value = "delete/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "delete/{id}", method = RequestMethod.GET)
     public String deleteArticle(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         if (articleManager.delete(id) > 0) {
             redirectAttributes.addFlashAttribute("info", "操作文章 " + id + " 成功.");
@@ -404,11 +396,6 @@ public class ArticleController {
     @Autowired
     public void setArchiveManager(ArchiveManagerImpl archiveManager) {
         this.archiveManager = archiveManager;
-    }
-
-    @Autowired
-    public void setLinkManager(LinkManager linkManager) {
-        this.linkManager = linkManager;
     }
 
 }

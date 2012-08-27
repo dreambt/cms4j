@@ -1,6 +1,5 @@
 package cn.edu.sdufe.cms.common.web.agency;
 
-import cn.edu.sdufe.cms.common.entity.agency.Agency;
 import cn.edu.sdufe.cms.common.entity.agency.Teacher;
 import cn.edu.sdufe.cms.common.entity.article.Article;
 import cn.edu.sdufe.cms.common.service.agency.AgencyManager;
@@ -17,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * 用途
@@ -68,8 +66,7 @@ public class TeacherController {
     public String create(Model model) {
         model.addAttribute("teacher", new Teacher());
         model.addAttribute("article", new Article());
-        List<Agency> agencyList = agencyManager.getAllAgency();
-        model.addAttribute("agencies", agencyList);
+        model.addAttribute("agencies", agencyManager.getAllAgency());
         return "dashboard/teacher/edit";
     }
 

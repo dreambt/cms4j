@@ -11,9 +11,12 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="java.util.regex.Matcher" %>
 <%@ page import="java.util.regex.Pattern" %>
+<%@ page import="cn.edu.sdufe.cms.utilities.RandomString" %>
+<%@ page import="javax.imageio.ImageIO" %>
+<%@ page import="java.awt.image.BufferedImage" %>
 <%
     //保存文件路径
-    String webPath = "e:/apache-tomcat-7.0.29/static/uploads/"; //相对项目文件夹的完整路径
+    String webPath = "e:/static/uploads/"; //相对项目文件夹的完整路径
     String filePath = "article/article-big";
     String realPath = webPath + filePath;
 
@@ -31,7 +34,7 @@
         String url = "";    //图片地址
         String fileName = "";
         String originalName = "";
-        String state = "SUCCESS";
+        String state = "success";
         String ftype = "";
 
         try {
@@ -47,7 +50,7 @@
                         break;
                     }
                     ftype = matcher.group();
-                    fileName = new Date().getTime() + ftype;
+                    fileName = new Date().getTime() + "-" + RandomString.get(6) + ftype;
                     url = realPath + "\\" + fileName;
 
                     BufferedInputStream in = new BufferedInputStream(fis.openStream());//获得文件输入流
@@ -82,8 +85,10 @@
         } catch (Exception e) {
             e.printStackTrace();
         }
+        BufferedImage srcImage = ImageIO.read(new File(url));
+        int imageWidth = srcImage.getWidth(null);
+        int imageHeight = srcImage.getHeight(null);
         title = title.replace("&", "&amp;").replace("'", "&qpos;").replace("\"", "&quot;").replace("<", "&lt;").replace(">", "&gt;");
-        response.getWriter().print("{'original':'" + originalName + "','url':'" + filePath + "/" + fileName + "','title':'" + title + "','state':'" + state + "'}");
-
+        response.getWriter().print("<textarea>{\"status\":\"" + state + "\",\"src\":\"" + filePath + "/" + fileName + "\",\"width\":\"" + imageWidth + "\",\"height\":\"" + imageHeight + "\",\"original\":\"" + originalName + "\",\"title\":\"" + title + "\"}</textarea>");
     }
 %>

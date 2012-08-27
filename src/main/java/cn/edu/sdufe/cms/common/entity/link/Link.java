@@ -20,7 +20,6 @@ public class Link extends PersistableEntity implements Serializable {
     private String title;
     private String url;
     private boolean status;
-    private String category;
 
     public String getTitle() {
         return title;
@@ -44,14 +43,6 @@ public class Link extends PersistableEntity implements Serializable {
 
     public void setStatus(boolean status) {
         this.status = status;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
     }
 
     @Override

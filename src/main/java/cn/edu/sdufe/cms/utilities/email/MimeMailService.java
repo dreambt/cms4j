@@ -67,7 +67,6 @@ public class MimeMailService {
      * 使用Freemarker生成html格式内容.
      */
     private String generateContent(String username) throws MessagingException {
-
         try {
             Map context = Collections.singletonMap("username", username);
             return FreeMarkerTemplateUtils.processTemplateIntoString(template, context);

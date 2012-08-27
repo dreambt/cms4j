@@ -45,13 +45,13 @@ public class AgencyMapperTest extends SpringTransactionalTestCase {
     @Test
     public void testSave() {
         agency = AgencyData.getRandomAgency();
-        int result = agencyMapper.save(agency);
+        long result = agencyMapper.save(agency);
         Assert.assertEquals(1, result);
     }
 
     @Test
     public void testDeleteAgency() {
-        int result = agencyMapper.delete(1L);
+        long result = agencyMapper.delete(1L);
         Assert.assertEquals(1, result);
     }
 
@@ -59,7 +59,7 @@ public class AgencyMapperTest extends SpringTransactionalTestCase {
     public void testUpdateAgency() {
         agency = agencyMapper.get(1L);
         agency.setTitle("b");
-        int result = agencyMapper.update(agency);
+        long result = agencyMapper.update(agency);
         Assert.assertEquals(1, result);
         agency = agencyMapper.get(1L);
         Assert.assertEquals("b", agency.getTitle());

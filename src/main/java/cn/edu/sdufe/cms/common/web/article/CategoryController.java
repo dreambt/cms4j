@@ -110,4 +110,5 @@ public class CategoryController {
     public void setCategoryManager(CategoryManager categoryManager) {
         this.categoryManager = categoryManager;
     }
+
 }
