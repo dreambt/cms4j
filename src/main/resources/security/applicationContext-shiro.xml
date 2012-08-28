@@ -8,13 +8,12 @@
     <!-- Shiro's main business-tier object for web-enabled applications -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="shiroDbRealm"/>
-        <property name="cacheManager" ref="shiroCacheManager"/>
+        <property name="cacheManager" ref="shiroEhcacheManager"/>
     </bean>
 
     <!-- 項目自定义的Realm -->
-    <bean id="shiroDbRealm" class="cn.edu.sdufe.cms.security.ShiroDbRealm" depends-on="userMapper,groupMapper">
+    <bean id="shiroDbRealm" class="cn.im47.cms.security.ShiroDbRealm" depends-on="userMapper,groupMapper">
         <property name="userManager" ref="userManagerImpl"/>
-        <property name="authorizationCachingEnabled" value="true"/>
     </bean>
 
     <!-- Shiro Filter -->
@@ -78,12 +77,9 @@
         </property>
     </bean>
 
-    <!-- 用户授权信息Cache-->
-    <bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
-        <property name="cacheManager" ref="shiroEhcacheManager"/>
-    </bean>
-    <bean id="shiroEhcacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-        <property name="configLocation" value="classpath:/security/ehcache-shiro.xml"/>
+    <!-- 用户授权/认证信息Cache, 采用EhCache -->
+    <bean id="shiroEhcacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManagerConfigFile" value="classpath:security/ehcache-shiro.xml"/>
     </bean>
 
     <!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="cn.edu.sdufe.cms.common.dao.image.ImageMapper">
+<mapper namespace="cn.edu.sdufe.cms.cn.im47.cms.common.dao.image.ImageMapper">
 
     <resultMap id="imageDetailMap" type="Image">
         <id property="id" column="id"/>

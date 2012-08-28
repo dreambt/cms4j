@@ -1,38 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd"
-	default-lazy-init="true">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd"
+       default-lazy-init="true">
 
-	<description>Email配置</description>
+    <description>Email配置</description>
 
-	<!-- 邮件发送器 -->
-	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="smtp.gmail.com" />
-		<property name="username" value="baitao.jibt" />
-		<property name="password" value="Z9rD{2@G0y#aSk0" />
-		<property name="javaMailProperties">
-			<props>
-				<prop key="mail.smtp.auth">true</prop>
-				<!-- 使用gmail smtp server的必须参数-->
-				<prop key="mail.smtp.starttls.enable">true</prop>
-			</props>
-		</property>
-	</bean>
-
-	<!-- MIME邮件服务类 -->
-	<bean id="mimeMailService" class="cn.edu.sdufe.cms.utilities.email.MimeMailService">
-		<property name="mailSender" ref="mailSender" />
-		<property name="freemarkerConfiguration" ref="freemarkerConfiguration"/>
-	</bean>
-
-    <!-- 用户密码MIME邮件服务类 -->
-    <bean id="userRecoveryMailService" class="cn.edu.sdufe.cms.utilities.email.UserRecoveryMailService">
-        <property name="mailSender" ref="mailSender" />
+    <!-- MIME邮件服务类 -->
+    <bean id="mimeMailService" class="cn.im47.cms.utilities.email.MimeMailService">
+        <property name="mailSender" ref="mailSender"/>
         <property name="freemarkerConfiguration" ref="freemarkerConfiguration"/>
     </bean>
 
-	<!-- 用于生成HTML邮件内容的Freemarker配置 -->
-	<bean id="freemarkerConfiguration" class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
-		<property name="templateLoaderPath" value="classpath:/email" />
-	</bean>
+    <!-- 用户密码MIME邮件服务类 -->
+    <bean id="userRecoveryMailService" class="cn.im47.cms.utilities.email.UserRecoveryMailService">
+        <property name="mailSender" ref="mailSender"/>
+        <property name="freemarkerConfiguration" ref="freemarkerConfiguration"/>
+    </bean>
+
+    <!-- 用于生成HTML邮件内容的Freemarker配置 -->
+    <bean id="freemarkerConfiguration" class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
+        <property name="templateLoaderPath" value="classpath:/email"/>
+    </bean>
+
+    <beans profile="production,development">
+        <!-- 邮件发送器 -->
+        <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+            <property name="host" value="smtp.gmail.com"/>
+            <property name="username" value="baitao.jibt"/>
+            <property name="password" value="Z9rD{2@G0y#aSk0"/>
+            <property name="defaultEncoding" value="UTF-8"/>
+            <property name="javaMailProperties">
+                <props>
+                    <prop key="mail.smtp.auth">true</prop>
+                    <!-- 使用gmail smtp server的必须参数-->
+                    <prop key="mail.smtp.starttls.enable">true</prop>
+                </props>
+            </property>
+        </bean>
+    </beans>
+
+    <beans profile="functional,test">
+        <!-- 发送至greenmail的邮件发送器 -->
+        <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+            <!-- 配置greenmail simulatore中的默认值 -->
+            <property name="host" value="localhost"/>
+            <property name="port" value="3025"/>
+            <property name="username" value="greenmail@localhost.com"/>
+            <property name="password" value="greenmail"/>
+            <property name="defaultEncoding" value="UTF-8"/>
+            <property name="javaMailProperties">
+                <props>
+                    <prop key="mail.smtp.auth">true</prop>
+                </props>
+            </property>
+        </bean>
+
+        <!-- greenmail smtp邮件服务器模拟器  -->
+        <bean id="greenmail" class="org.springside.modules.test.mail.MailServerSimulator" lazy-init="false"/>
+    </beans>
 </beans>

@@ -14,16 +14,16 @@
 			password="${jdbc.password}">
 		</jdbcConnection>
 
-		<javaModelGenerator targetPackage="cn.edu.sdufe.cms.common.entity" targetProject="MAVEN">
+		<javaModelGenerator targetPackage="cn.edu.sdufe.cms.cn.im47.cms.common.entity" targetProject="MAVEN">
 			<property name="enableSubPackages" value="true" />
-			<property name="rootClass" value="cn.edu.sdufe.cms.common.entity.IdEntity" />
+			<property name="rootClass" value="cn.edu.sdufe.cms.cn.im47.cms.common.entity.IdEntity" />
 		</javaModelGenerator>
 
 		<sqlMapGenerator targetPackage="mapper" targetProject="MAVEN">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 
-		<javaClientGenerator type="XMLMAPPER" targetPackage="cn.edu.sdufe.cms.common.dao" targetProject="MAVEN">
+		<javaClientGenerator type="XMLMAPPER" targetPackage="cn.edu.sdufe.cms.cn.im47.cms.common.dao" targetProject="MAVEN">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="cn.edu.sdufe.cms.common.dao.article.CategoryMapper">
+<mapper namespace="cn.edu.sdufe.cms.cn.im47.cms.common.dao.article.CategoryMapper">
 
     <resultMap id="categoryDetailMap" type="Category">
         <id property="id" column="id"/>
@@ -31,7 +31,7 @@
             <result property="deleted" column="deleted"/>
         </collection>
         <collection property="articleList" javaType="Article"
-                    resultMap="cn.edu.sdufe.cms.common.dao.article.ArticleMapper.articleDetailMap"
+                    resultMap="cn.edu.sdufe.cms.cn.im47.cms.common.dao.article.ArticleMapper.articleDetailMap"
                     columnPrefix="article_"/>
     </resultMap>
 

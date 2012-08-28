@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="cn.edu.sdufe.cms.common.dao.account.GroupMapper">
+<mapper namespace="cn.edu.sdufe.cms.cn.im47.cms.common.dao.account.GroupMapper">
 
     <resultMap id="groupDetailMap" type="Group">
         <id property="id" column="id"/>

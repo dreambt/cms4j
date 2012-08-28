@@ -4,6 +4,6 @@
 
 <configuration>
     <typeAliases>
-        <!--<typeAlias alias="Teacher" type="cn.edu.sdufe.cms.common.entity.agency.Teacher"/>-->
+        <!--<typeAlias alias="Teacher" type="Teacher"/>-->
     </typeAliases>
 </configuration>
