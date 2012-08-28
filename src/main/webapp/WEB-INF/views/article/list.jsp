@@ -8,7 +8,6 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
@@ -21,7 +20,7 @@
 <div class="row">
     <div class="span13">
         <ul class="breadcrumb">
-            <li><a href="#">首${url}页</a> <span class="divider">/</span></li>
+            <li><a href="${ctx}/">首页</a> <span class="divider">/</span></li>
             <li class="active"><c:choose><c:when test="${archive eq null}">${category.categoryName}</c:when><c:otherwise>${archive.title}</c:otherwise></c:choose></li>
         </ul>
     </div>

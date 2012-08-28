@@ -18,7 +18,7 @@
     <div class="navbar">
         <div class="navbar-inner">
             <ul class="nav" role="navigation">
-                <li class="active"><a href="${ctx}">首页</a></li>
+                <li class="active"><a href="${ctx}/">首页</a></li>
                 <c:forEach items="${categories}" var="category" begin="0" step="1" varStatus="stauts">
                     <c:choose>
                         <c:when test="${category.showType eq 'NONE'}"><li class="dropdown"><a id="drop${stauts.index}" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">${category.categoryName} <b class="caret"></b></a></c:when>

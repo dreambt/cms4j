@@ -8,7 +8,8 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
+
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -41,8 +42,8 @@
                         <td>${user.email} <c:choose><c:when test="${user.emailStatus}"><i class='icon-ok'></i></c:when><c:otherwise><i class='icon-remove'></i></c:otherwise></c:choose>
                         </td>
                         <td><c:forEach items="${user.groupList}" begin="0" step="1" var="group">${group.groupName} </c:forEach></td>
-                        <td><fmt:formatDate value="${user.createdDate}" type="both"/></td>
-                        <td><fmt:formatDate value="${user.lastTime}" type="both"/></td>
+                        <td><joda:format value="${user.createdDate}" pattern="yyyy年MM月dd日 hh:mm:ss"/></td>
+                        <td><joda:format value="${user.lastTime}" pattern="yyyy年MM月dd日 hh:mm:ss"/></td>
                         <td>${user.lastLoginIP}</td>
                         <td><a href="${ctx}/account/user/audit/${user.id}"><c:choose><c:when test="${user.status}"><span class="label label-success">已审核</span></c:when><c:otherwise><span class="label label-important">未审核</span></c:otherwise></c:choose></a></td>
                         <td><a href="${ctx}/account/user/repass/${user.id}">【密码找回】</a> <a href="${ctx}/account/user/edit/${user.id}">【编辑】</a> <a href="${ctx}/account/user/delete/${user.id}"><c:choose><c:when test="${user.deleted}">【恢复】</c:when><c:otherwise>【删除】</c:otherwise></c:choose></a></td>

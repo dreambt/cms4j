@@ -9,7 +9,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
+
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -40,7 +41,7 @@
                         <td>${comment.username}</td>
                         <td><a class="opener" href="#" value='${comment.message}'>点击查看</a></td>
                         <td>${comment.postHostIP}</td>
-                        <td><fmt:formatDate value="${comment.createdDate}" type="both"></fmt:formatDate></td>
+                        <td><joda:format value="${comment.createdDate}" pattern="yyyy年MM月dd日 hh:mm:ss"/></td>
                         <td><a href="${ctx}/comment/audit/${comment.id}"><c:choose><c:when test="${comment.status}"><span class="green_text">已审核</span></c:when><c:otherwise><span class="red_text">未审核</span></c:otherwise></c:choose></a></td>
                         <td><a href="${ctx}/comment/delete/${comment.id}"><c:choose><c:when test="${comment.deleted}">【恢复】</c:when><c:otherwise>【删除】</c:otherwise></c:choose></a></td>
                     </tr>

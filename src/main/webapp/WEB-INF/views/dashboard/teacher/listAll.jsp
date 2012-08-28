@@ -8,7 +8,8 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
+
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -42,7 +43,7 @@
                         <td><a href="${ctx}/article/content/${teacher.article.id}" target="_blank">${teacher.teacherName}</a></td>
                         <td><a href="${ctx}/agency/show/${teacher.agency.id}" target="_blank">${teacher.agency.title}</a> </td>
                         <td><a href="${ctx}/static/uploads/teacher/${teacher.imageUrl}">${teacher.imageUrl}</a></td>
-                        <td><fmt:formatDate value="${teacher.createdDate}" type="both"></fmt:formatDate></td>
+                        <td><joda:format value="${teacher.createdDate}" pattern="yyyy年MM月dd日 hh:mm:ss"/></td>
                         <td><a href="${ctx}/teacher/showIndex/${teacher.id}"><c:choose><c:when test="${teacher.top eq true}">显示</c:when><c:otherwise>不显示</c:otherwise></c:choose></a></td>
                         <td><a href="${ctx}/teacher/edit/${teacher.id}">【编辑】</a> <c:if test="${teacher.deleted eq true}"> <a href="${ctx}/teacher/delete/${teacher.id}">【恢复】</a></c:if>
                             <c:if test="${teacher.deleted eq false}"> <a href="${ctx}/teacher/delete/${teacher.id}">【删除】</a></c:if></td>

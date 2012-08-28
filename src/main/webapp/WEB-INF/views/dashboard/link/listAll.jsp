@@ -8,7 +8,8 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
+
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -37,8 +38,8 @@
                         <td><input type="checkbox" name="isSelected" value="${link.id}"></td>
                         <td><a href="${link.url}" target="_blank">${link.title}</a></td>
                         <td><a href="${link.url}" target="_blank" >${link.url}</a></td>
-                        <td><fmt:formatDate value="${link.createdDate}" type="both"></fmt:formatDate></td>
-                        <td><fmt:formatDate value="${link.lastModifiedDate}" type="both"></fmt:formatDate></td>
+                        <td><joda:format value="${link.createdDate}" pattern="yyyy年MM月dd日 hh:mm:ss"/></td>
+                        <td><joda:format value="${link.lastModifiedDate}" pattern="yyyy年MM月dd日 hh:mm:ss"/></td>
                         <td><a href="${ctx}/link/audit/${link.id}"><c:choose><c:when test="${link.status}"><span class="label label-success">已审核</span></c:when><c:otherwise><span class="label label-important">未审核</span></c:otherwise></c:choose></a></td>
                         <td><a href="${ctx}/link/edit/${link.id}">【修改】</a> <a href="${ctx}/link/delete/${link.id}">【删除】</a></td>
                     </tr>

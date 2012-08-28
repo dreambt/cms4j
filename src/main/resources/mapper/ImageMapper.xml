@@ -10,8 +10,8 @@
         <result property="imageUrl" column="image_url"/>
         <result property="description" column="description"/>
         <result property="showIndex" column="show_index"/>
-        <result property="lastModifiedDate" column="last_modified_date"/>
-        <result property="createdDate" column="created_date"/>
+        <result property="lastModifiedDate" column="last_modified_date" typeHandler="org.apache.ibatis.type.LocalDateTimeTypeHandler"/>
+        <result property="createdDate" column="created_date" typeHandler="org.apache.ibatis.type.LocalDateTimeTypeHandler"/>
     </resultMap>
 
     <sql id="imageColumns">id, title, image_url, description, show_index, created_date, last_modified_date</sql>
@@ -84,8 +84,7 @@
 
     <!-- 查询图片 -->
     <select id="search" parameterType="map" resultMap="imageDetailMap">
-        SELECT
-        <include refid="imageColumns"/>
+        SELECT <include refid="imageColumns"/>
         FROM cms_image
         <where>
             <if test="title != null and title != ''">

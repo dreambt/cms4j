@@ -8,7 +8,7 @@
 <%@ taglib prefix="sitemesh" uri="http://www.opensymphony.com/sitemesh/decorator" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
@@ -25,7 +25,7 @@
 <div class="row">
     <div class="span13">
         <ul class="breadcrumb">
-            <li><a href="#">首页</a> <span class="divider">/</span></li>
+            <li><a href="${ctx}/">首页</a> <span class="divider">/</span></li>
             <li><a href="${ctx}/article/list/${article.category.id}">${article.category.categoryName}</a> <span class="divider">/</span></li>
             <li class="active">${article.subject}</li>
         </ul>
@@ -37,7 +37,7 @@
         <div class="blog-post">
             <h3>${article.subject}</h3>
             <div class="blog-posted-inner">
-                作者: ${article.user.username} &nbsp; | &nbsp; 发表时间: <fmt:formatDate value="${article.createdDate}" pattern="yyyy年MM月dd日 hh:mm:ss"/> &nbsp; | &nbsp;
+                作者: ${article.user.username} &nbsp; | &nbsp; 发表时间: <joda:format value="${article.createdDate}" pattern="yyyy年MM月dd日 hh:mm:ss"/> &nbsp; | &nbsp;
                 浏览次数: ${article.views} <c:if test="${article.allowComment}">&nbsp; | &nbsp; 评论数: ${fn:length(article.commentList)}</c:if>
             </div>
             ${article.message}

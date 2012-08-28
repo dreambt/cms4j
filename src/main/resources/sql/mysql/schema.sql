@@ -35,6 +35,7 @@ CREATE  TABLE IF NOT EXISTS `cms_article` (
   `image_name` VARCHAR(50) NOT NULL COMMENT '文章图片',
   `digest` VARCHAR(255) NOT NULL ,
   `keyword` VARCHAR(255) NOT NULL DEFAULT 0 COMMENT '帖子标签' ,
+  `url` varchar(40) NOT NULL,
   `top` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '是否是首贴' ,
   `rate` TINYINT(3) NOT NULL DEFAULT 0 COMMENT '评分分数' ,
   `rate_times` INT(11) NOT NULL DEFAULT 0 COMMENT '评分次数' ,

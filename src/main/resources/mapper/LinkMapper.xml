@@ -9,8 +9,8 @@
         <result property="title" column="title"/>
         <result property="url" column="url"/>
         <result property="status" column="status"/>
-        <result property="lastModifiedDate" column="last_modified_date"/>
-        <result property="createdDate" column="created_date"/>
+        <result property="lastModifiedDate" column="last_modified_date" typeHandler="org.apache.ibatis.type.LocalDateTimeTypeHandler"/>
+        <result property="createdDate" column="created_date" typeHandler="org.apache.ibatis.type.LocalDateTimeTypeHandler"/>
     </resultMap>
 
     <sql id="linkColumns">id, title, url, STATUS, created_date, last_modified_date</sql>

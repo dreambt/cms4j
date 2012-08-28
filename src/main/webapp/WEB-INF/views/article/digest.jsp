@@ -7,7 +7,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
 
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
@@ -20,7 +20,7 @@
 <div class="row">
     <div class="span13">
         <ul class="breadcrumb">
-            <li><a href="#">首页</a> <span class="divider">/</span></li>
+            <li><a href="${ctx}/">首页</a> <span class="divider">/</span></li>
             <li class="active"><c:choose><c:when test="${archive eq null}">${category.categoryName}</c:when><c:otherwise>${archive.title}</c:otherwise></c:choose></li>
         </ul>
     </div>
@@ -36,7 +36,7 @@
                     <img src="${ctx}/static/uploads/article/digest-thumb/${article.imageName}" alt="" class="imgleft" width="134px" height="134px"/>
                     <div class="caption">
                         <h5 style="margin:0"><a href="${ctx}/article/content/${article.id}" title="${article.subject}"><c:if test="${article.top}"><img src="${ctx}/static/images/top.gif" /></c:if>${fn:substring(article.subject,0,23)}<c:if test="${fn:length(article.subject)>23}">...</c:if></a></h5>
-                        <div>作者: ${article.user.username} &nbsp; | &nbsp; 发表时间: <fmt:formatDate value="${article.createdDate}" pattern="yyyy年MM月dd日"/> &nbsp; | &nbsp; 浏览次数: ${article.views}</div>
+                        <div>作者: ${article.user.username} &nbsp; | &nbsp; 发表时间: <joda:format value="${article.createdDate}" pattern="yyyy年MM月dd日"/> &nbsp; | &nbsp; 浏览次数: ${article.views}</div>
                         <p>${article.digest}</p>
                     </div>
                 </div>

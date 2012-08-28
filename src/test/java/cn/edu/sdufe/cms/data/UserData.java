@@ -4,6 +4,7 @@ import cn.edu.sdufe.cms.common.entity.account.Group;
 import cn.edu.sdufe.cms.common.entity.account.Permission;
 import cn.edu.sdufe.cms.common.entity.account.User;
 import com.google.common.collect.Lists;
+import org.joda.time.LocalDateTime;
 import org.springside.modules.test.data.RandomData;
 
 import java.util.Calendar;
@@ -39,7 +40,7 @@ public class UserData {
         user.setPhotoURL("1.jpg");
         user.setTimeOffset("0800");
         user.setLastIP(134744072L);
-        Date now = Calendar.getInstance().getTime();
+        LocalDateTime now = new LocalDateTime();
         user.setLastTime(now);
         user.setLastActTime(now);
         return user;

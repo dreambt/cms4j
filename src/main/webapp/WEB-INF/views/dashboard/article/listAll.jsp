@@ -8,7 +8,8 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
+
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -44,8 +45,8 @@
                         <td>${article.category.categoryName}</td>
                         <td>${article.rate}</td>
                         <td>${article.views}</td>
-                        <td><fmt:formatDate value="${article.createdDate}" type="date"/></td>
-                        <td><fmt:formatDate value="${article.lastModifiedDate}" type="date"/></td>
+                        <td><joda:format value="${article.createdDate}" pattern="yyyy年MM月dd日 hh:mm:ss"/></td>
+                        <td><joda:format value="${article.lastModifiedDate}" pattern="yyyy年MM月dd日 hh:mm:ss"/></td>
                         <td><a href="${ctx}/article/audit/${article.id}"><c:choose><c:when test="${article.status}"><span class="label label-success">已审核</span></c:when><c:otherwise><span class="label label-important">未审核</span></c:otherwise></c:choose></a></td>
                         <td><a href="${ctx}/article/allow/${article.id}"><c:choose><c:when test="${article.allowComment}"><span class="label label-success">允许</span></c:when><c:otherwise><span class="label label-important">不允许</span></c:otherwise></c:choose></a></td>
                         <td><a href="${ctx}/article/edit/${article.id}">【编辑】</a><a href="${ctx}/article/top/${article.id}"><c:choose><c:when test="${article.top}">【置顶】</c:when><c:otherwise>【未置顶】</c:otherwise></c:choose></a>

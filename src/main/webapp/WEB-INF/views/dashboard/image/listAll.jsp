@@ -7,7 +7,8 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
+
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -42,7 +43,7 @@
                     <td><a href="#">${image.title}</a></td>
                     <td><a href="${ctx}/static/uploads/gallery/thumb-50x57/${image.imageUrl}" class="opener" value="${image.description}">点击查看</a> </td>
                     <td><a href="${ctx}/static/uploads/gallery/gallery-big/${image.imageUrl}">${image.imageUrl}</a></td>
-                    <td><fmt:formatDate value="${image.createdDate}" type="both"></fmt:formatDate></td>
+                    <td><joda:format value="${image.createdDate}" pattern="yyyy年MM月dd日 hh:mm:ss"/></td>
                     <td><c:choose><c:when test="${image.showIndex}"><a href="${ctx}/gallery/showIndex/${image.id}"><span class="label label-success">显示</span></a></c:when><c:otherwise><a href="${ctx}/gallery/showIndex/${image.id}"><span class="label label-important">不显示</span></a></c:otherwise></c:choose></td>
                     <td><a href="${ctx}/gallery/edit/${image.id}">【编辑】</a><a href="${ctx}/gallery/delete/${image.id}" class="delete">【删除】</a></td>
                 </tr>

@@ -11,6 +11,7 @@ import cn.edu.sdufe.cms.utilities.RandomString;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springside.modules.mapper.JsonMapper;
 import org.springside.modules.memcached.SpyMemcachedClient;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -152,8 +152,9 @@ public class UserManagerImpl implements UserManager {
         user.setPhotoURL("default.jpg");
         user.setLastIP(134744072L);
         user.setTimeOffset("0800");
-        user.setLastTime(new Date());
-        user.setLastActTime(new Date());
+        LocalDateTime now = new LocalDateTime();
+        user.setLastTime(now);
+        user.setLastActTime(now);
 
         // 发送通知邮件
         sendNotifyMessage(user);

@@ -62,6 +62,7 @@ CREATE TABLE IF NOT EXISTS `cms_article` (
   `image_name` varchar(50) NOT NULL,
   `digest` varchar(255) NOT NULL,
   `keyword` varchar(255) NOT NULL,
+  `url` varchar(40) NOT NULL,
   `top` tinyint(1) NOT NULL,
   `rate` tinyint(3) NOT NULL,
   `rate_times` int(11) NOT NULL,

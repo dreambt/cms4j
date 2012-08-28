@@ -10,8 +10,8 @@
         <result property="top" column="top"/>
         <result property="imageUrl" column="image_url"/>
         <result property="deleted" column="deleted"/>
-        <result property="createdDate" column="created_date"/>
-        <result property="lastModifiedDate" column="last_modified_date"/>
+        <result property="createdDate" column="created_date" typeHandler="org.apache.ibatis.type.LocalDateTimeTypeHandler"/>
+        <result property="lastModifiedDate" column="last_modified_date" typeHandler="org.apache.ibatis.type.LocalDateTimeTypeHandler"/>
         <association property="article" column="article_id" javaType="Article" columnPrefix="art_">
             <result property="id" column="id"/>
             <result property="subject" column="subject"/>

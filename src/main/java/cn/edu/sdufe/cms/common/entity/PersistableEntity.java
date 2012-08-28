@@ -1,6 +1,10 @@
 package cn.edu.sdufe.cms.common.entity;
 
-import java.util.Date;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.joda.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.joda.ser.LocalDateTimeSerializer;
+import org.joda.time.LocalDateTime;
 
 /**
  * 统一定义的entity基类.
@@ -11,42 +15,28 @@ import java.util.Date;
  */
 public abstract class PersistableEntity extends IdEntity {
 
-    private Date createdDate;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime createdDate;
 
-    private Date lastModifiedDate;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime lastModifiedDate;
 
-    public Date getCreatedDate() {
+    public LocalDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(final Date createdDate) {
+    public void setCreatedDate(final LocalDateTime createdDate) {
         this.createdDate = null == createdDate ? null : createdDate;
     }
 
-    public Date getLastModifiedDate() {
+    public LocalDateTime getLastModifiedDate() {
         return lastModifiedDate;
     }
 
-    public void setLastModifiedDate(final Date lastModifiedDate) {
+    public void setLastModifiedDate(final LocalDateTime lastModifiedDate) {
         this.lastModifiedDate = null == lastModifiedDate ? null : lastModifiedDate;
     }
-
-    //    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-//    public DateTime getCreatedDate() {
-//        return null == createdDate ? null : new DateTime(createdDate);
-//    }
-//
-//    public void setCreatedDate(final DateTime createdDate) {
-//        this.createdDate = null == createdDate ? null : createdDate.toDate();
-//    }
-//
-//    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-//    public DateTime getLastModifiedDate() {
-//        return null == lastModifiedDate ? null : new DateTime(lastModifiedDate);
-//    }
-//
-//    public void setLastModifiedDate(final DateTime lastModifiedDate) {
-//        this.lastModifiedDate = null == lastModifiedDate ? null : lastModifiedDate.toDate();
-//    }
 
 }

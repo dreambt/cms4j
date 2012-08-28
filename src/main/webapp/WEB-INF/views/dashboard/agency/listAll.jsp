@@ -8,7 +8,8 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
+
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -40,8 +41,8 @@
                 <td><a href="${ctx}/static/uploads/agency/${agency.imageUrl}" rel="fancybox-thumb" class="fancy_box"><img src="${ctx}/static/uploads/agency/${agency.imageUrl}" width="80px" height="30px"/></a></td>
                 <td><a href="${ctx}/agency/show/${agency.id}" target="_blank">${agency.title}</a></td>
                 <td><a href="#" class="opener" value="${agency.introduction}">点击查看</a> </td>
-                <td><fmt:formatDate value="${agency.createdDate}" type="both"></fmt:formatDate></td>
-                <td><fmt:formatDate value="${agency.lastModifiedDate}" type="both"></fmt:formatDate></td>
+                <td><joda:format value="${agency.createdDate}" pattern="yyyy年MM月dd日 hh:mm:ss"/></td>
+                <td><joda:format value="${agency.lastModifiedDate}" pattern="yyyy年MM月dd日 hh:mm:ss"/></td>
                 <td><a href="${ctx}/agency/edit/${agency.id}" class="edit">【编辑】</a>
                     <a href="${ctx}/agency/delete/${agency.id}"><c:choose><c:when test="${agency.deleted}">【恢复】</c:when><c:otherwise>【删除】</c:otherwise></c:choose></a>
                 </td>

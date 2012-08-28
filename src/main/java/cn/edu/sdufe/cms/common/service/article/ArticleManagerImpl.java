@@ -7,7 +7,9 @@ import cn.edu.sdufe.cms.jms.NotifyMessageProducer;
 import cn.edu.sdufe.cms.memcached.MemcachedObjectType;
 import cn.edu.sdufe.cms.security.ShiroDbRealm;
 import cn.edu.sdufe.cms.utilities.analyzer.ArticleKeyword;
+import cn.edu.sdufe.cms.utilities.freemarker.FreemakerHelper;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
@@ -29,11 +31,15 @@ import org.springside.modules.beanvalidator.BeanValidators;
 import org.springside.modules.mapper.JsonMapper;
 import org.springside.modules.memcached.SpyMemcachedClient;
 import org.springside.modules.utils.Encodes;
+import org.tautua.markdownpapers.Markdown;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -48,11 +54,11 @@ public class ArticleManagerImpl implements ArticleManager {
 
     private static final Logger logger = LoggerFactory.getLogger(ArticleManagerImpl.class);
 
+    private JsonMapper jsonMapper = JsonMapper.nonDefaultMapper();
+
     private ArticleMapper articleMapper;
     private ArchiveManager archiveManager;
     private Validator validator = null;
-
-    private JsonMapper jsonMapper = JsonMapper.nonDefaultMapper();
 
     /**
      * key list
@@ -67,6 +73,8 @@ public class ArticleManagerImpl implements ArticleManager {
     private SpyMemcachedClient spyMemcachedClient;
 
     private NotifyMessageProducer notifyProducer; //JMS消息发送
+
+    private FreemakerHelper freemakerHelper;
 
     @Value("${path.upload.base}")
     private String UPLOAD_PATH;
@@ -305,10 +313,13 @@ public class ArticleManagerImpl implements ArticleManager {
             }
 
             //文章中的首个图片
-            article.setImageName(this.getImageFromMessage(article.getMessage()));
+            String firstImage = this.getImageFromMessage(article.getMessage());
+            article.setImageName(firstImage);
 
             // 任务删除文章图片
-            notifyProducer.sendQueueGenArticleImage(article.getImageName());
+            if (StringUtils.isNotBlank(firstImage)) {
+                notifyProducer.sendQueueGenArticleImage(article.getImageName());
+            }
 
             // 文章作者
             ShiroDbRealm.ShiroUser shiroUser = (ShiroDbRealm.ShiroUser) SecurityUtils.getSubject().getPrincipal();
@@ -325,7 +336,9 @@ public class ArticleManagerImpl implements ArticleManager {
             Validate.notNull(article, "文章参数为空");
             BeanValidators.validateWithException(validator, article);
 
-            return articleMapper.save(article);
+            long num = articleMapper.save(article);
+            generateContent(article);
+            return num;
         } catch (ConstraintViolationException cve) {
             logger.warn("操作员 {} 尝试发表文章, 缺少相关字段.", cve.getConstraintViolations().toString());
             return 0;
@@ -342,7 +355,7 @@ public class ArticleManagerImpl implements ArticleManager {
         Document document = Jsoup.parse(message);
         Elements imgs = document.getElementsByTag("img");
         if (null == imgs || imgs.size() == 0) {
-            return "noPic.jpg";
+            return "";
         } else {
             Element img = imgs.first();
             String srcString = img.attr("src");
@@ -448,7 +461,9 @@ public class ArticleManagerImpl implements ArticleManager {
             Validate.notNull(article, "文章参数为空");
             BeanValidators.validateWithException(validator, article);
 
-            return articleMapper.update(article);
+            long num = articleMapper.update(article);
+            generateContent(article);
+            return num;
         } catch (ConstraintViolationException cve) {
             logger.warn("操作员{}尝试发表文章, 缺少相关字段.", cve.getConstraintViolations().toString());
             return 0;
@@ -498,6 +513,26 @@ public class ArticleManagerImpl implements ArticleManager {
         spyMemcachedClient.incr(key, 1, 0);
     }
 
+    /**
+     * 生成文章静态页面
+     */
+    private void generateContent(Article article) {
+        Map context = Maps.newHashMap();
+        int year = article.getCreatedDate().getYear();
+        int month = article.getCreatedDate().getMonthOfYear();
+        try {
+            Markdown md = new Markdown();
+            StringReader in = new StringReader(article.getMessage());
+            StringWriter out = new StringWriter();
+            md.transform(in, out);
+            article.setMessage(out.toString());
+            context.put("article", article);
+            freemakerHelper.generateContent(context, "article.ftl", "/posts/" + year + "/" + month + "/" + article.getUrl() + ".html");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Autowired
     public void setValidator(@Qualifier("validator") Validator validator) {
         this.validator = validator;
@@ -521,6 +556,11 @@ public class ArticleManagerImpl implements ArticleManager {
     @Autowired
     public void setNotifyProducer(NotifyMessageProducer notifyProducer) {
         this.notifyProducer = notifyProducer;
+    }
+
+    @Autowired
+    public void setFreemakerHelper(FreemakerHelper freemakerHelper) {
+        this.freemakerHelper = freemakerHelper;
     }
 
 }

@@ -15,8 +15,8 @@
         <result property="allowComment" column="allow_comment"/>
         <result property="allowPublish" column="allow_publish"/>
         <result property="showNav" column="show_nav"/>
-        <result property="lastModifiedDate" column="last_modified_date"/>
-        <result property="createdDate" column="created_date"/>
+        <result property="lastModifiedDate" column="last_modified_date" typeHandler="org.apache.ibatis.type.LocalDateTimeTypeHandler"/>
+        <result property="createdDate" column="created_date" typeHandler="org.apache.ibatis.type.LocalDateTimeTypeHandler"/>
         <result property="deleted" column="deleted"/>
         <collection property="subCategories" javaType="Category" columnPrefix="sub_">
             <id property="id" column="id"/>
@@ -26,8 +26,8 @@
             <result property="url" column="url"/>
             <result property="allowComment" column="allow_comment"/>
             <result property="allowPublish" column="allow_publish"/>
-            <result property="lastModifiedDate" column="last_modified_date"/>
-            <result property="createdDate" column="created_date"/>
+            <result property="lastModifiedDate" column="last_modified_date" typeHandler="org.apache.ibatis.type.LocalDateTimeTypeHandler"/>
+            <result property="createdDate" column="created_date" typeHandler="org.apache.ibatis.type.LocalDateTimeTypeHandler"/>
             <result property="deleted" column="deleted"/>
         </collection>
         <collection property="articleList" javaType="Article"

@@ -1,10 +1,13 @@
 package cn.edu.sdufe.cms.data;
 
 import cn.edu.sdufe.cms.common.entity.article.Article;
+import cn.edu.sdufe.cms.common.entity.article.Category;
 import cn.edu.sdufe.cms.common.entity.article.Comment;
 import com.google.common.collect.Lists;
+import org.joda.time.LocalDateTime;
 import org.springside.modules.test.data.RandomData;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,12 +29,18 @@ public class ArticleData {
 
         Article article = new Article();
         article.setId(1L);
+
+        Category category = CategoryData.getRandomCategory();
+        article.setCategory(category);
         article.setSubject(subject);
         article.setMessage(message);
         article.setDigest("");
         article.setKeyword("");
+        article.setUrl("jbt");
         article.setStatus(true);
-
+        LocalDateTime now = new LocalDateTime();
+        article.setCreatedDate(now);
+        article.setLastModifiedDate(now);
         return article;
     }
 

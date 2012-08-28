@@ -8,6 +8,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -18,7 +19,7 @@
 <div class="row">
     <div class="span13">
         <ul class="breadcrumb">
-            <li><a href="#">首页</a> <span class="divider">/</span></li>
+            <li><a href="${ctx}/">首页</a> <span class="divider">/</span></li>
             <li>联系我们</li>
         </ul>
     </div>

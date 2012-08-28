@@ -3,15 +3,19 @@ package cn.edu.sdufe.cms.common.entity.account;
 import cn.edu.sdufe.cms.common.entity.PersistableEntity;
 import cn.edu.sdufe.cms.utilities.encoder.IPEncodes;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.joda.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.joda.ser.LocalDateTimeSerializer;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.joda.time.LocalDateTime;
 import org.springside.modules.utils.Collections3;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,8 +43,14 @@ public class User extends PersistableEntity implements Serializable {
     private List<Group> groupList = Lists.newArrayList();
     private Long lastIP;
     private String lastLoginIP;
-    private Date lastTime;
-    private Date lastActTime;
+
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime lastTime;
+
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime lastActTime;
 
     public User() {
     }
@@ -157,19 +167,19 @@ public class User extends PersistableEntity implements Serializable {
         this.lastIP = IPEncodes.ipToLong(lastLoginIP);
     }
 
-    public Date getLastTime() {
+    public LocalDateTime getLastTime() {
         return lastTime;
     }
 
-    public void setLastTime(Date lastTime) {
+    public void setLastTime(LocalDateTime lastTime) {
         this.lastTime = lastTime;
     }
 
-    public Date getLastActTime() {
+    public LocalDateTime getLastActTime() {
         return lastActTime;
     }
 
-    public void setLastActTime(Date lastActTime) {
+    public void setLastActTime(LocalDateTime lastActTime) {
         this.lastActTime = lastActTime;
     }
 

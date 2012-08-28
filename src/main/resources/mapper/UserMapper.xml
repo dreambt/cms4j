@@ -16,10 +16,8 @@
         <result property="photoURL" column="photo_url"/>
         <result property="timeOffset" column="time_offset"/>
         <result property="lastIP" column="last_ip"/>
-        <result property="lastTime" column="last_time"/>
-        <result property="lastActTime" column="last_act_time"/>
-        <result property="lastModifiedDate" column="last_modified_date"/>
-        <result property="createdDate" column="created_date"/>
+        <result property="lastModifiedDate" column="last_modified_date" typeHandler="org.apache.ibatis.type.LocalDateTimeTypeHandler"/>
+        <result property="createdDate" column="created_date" typeHandler="org.apache.ibatis.type.LocalDateTimeTypeHandler"/>
         <result property="deleted" column="deleted"/>
         <collection property="groupList" column="group_id" javaType="ArrayList" ofType="Group" columnPrefix="group_"
                     resultMap="cn.edu.sdufe.cms.common.dao.account.GroupMapper.groupDetailMap"/>

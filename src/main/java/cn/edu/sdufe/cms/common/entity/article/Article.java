@@ -29,6 +29,7 @@ public class Article extends PersistableEntity implements Serializable {
     private String imageName;
     private String digest;
     private String keyword;
+    private String url;
     private boolean status;
     private int rate;
     private int rateTimes;
@@ -101,6 +102,14 @@ public class Article extends PersistableEntity implements Serializable {
 
     public void setKeyword(String keyword) {
         this.keyword = keyword;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public boolean isStatus() {

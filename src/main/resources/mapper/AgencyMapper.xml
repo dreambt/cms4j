@@ -12,8 +12,8 @@
         <result property="introduction" column="introduction"/>
         <result property="rate" column="rate"/>
         <result property="deleted" column="deleted"/>
-        <result property="createdDate" column="created_date"/>
-        <result property="lastModifiedDate" column="last_modified_date"/>
+        <result property="createdDate" column="created_date" typeHandler="org.apache.ibatis.type.LocalDateTimeTypeHandler"/>
+        <result property="lastModifiedDate" column="last_modified_date" typeHandler="org.apache.ibatis.type.LocalDateTimeTypeHandler"/>
     </resultMap>
 
     <sql id="agencyColumns">id, title, category_id, image_url, introduction, rate, deleted , created_date, last_modified_date</sql>

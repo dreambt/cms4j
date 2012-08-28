@@ -7,6 +7,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -21,7 +22,7 @@
 <div class="row">
     <div class="span13">
         <ul class="breadcrumb">
-            <li><a href="#">首页</a> <span class="divider">/</span></li>
+            <li><a href="${ctx}/">首页</a> <span class="divider">/</span></li>
             <li>画廊</li>
         </ul>
     </div>
