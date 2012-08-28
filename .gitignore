@@ -6,7 +6,7 @@
 *.iml
 logs/
 target/
-
+src/main/webapp/static/uploads/
 
 #################
 ## Eclipse

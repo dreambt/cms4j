@@ -1,35 +1,19 @@
-# Content Management System
+﻿# Content Management System
 
      开源内容管理系统.
 
 # Team
 
-## Team Leader + DEV
-
-### 纪柏涛
+## 纪柏涛
 
 [http://www.im47.cn](http://www.im47.cn)
 dreambt@gmail.com
 
-## DEV
+## 其他贡献者列表（排名按提交代码量排序）
 
-### 董鹏飞
+[贡献者列表](https://github.com/dreambt/cms4j/graphs/contributors)
 
-826323891@qq.com
-
-## UED
-
-### 邓小兰
-
-824688439@qq.com
-
-## 各路酱油帝（排名按提交代码量排序）
-
-### 何梦
-
-### 宋丽荣
-
-### 王可竣
+董鹏飞、邓小兰、何梦、宋丽荣、王可竣
 
 # How to use the Content Management System website
 
