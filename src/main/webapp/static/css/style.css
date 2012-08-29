@@ -17,7 +17,7 @@ a{color:#000;}
 /*  友情链接
 ------------------------------------------------------*/
 #friLnk{display:block;margin:10px 0 0 0;padding:0;}
-#friLnk li.friLnkT{padding-left:56px;width:894px;height: 25px;line-height:25px;background: url(../images/friLnk.png) no-repeat center;}
+#friLnk li.friLnkT{padding-left:56px;width:894px;height: 25px;line-height:25px;background:url(../images/friLnk.png) 2px 13px no-repeat;}
 
 /*  Footer
 ------------------------------------------------------*/

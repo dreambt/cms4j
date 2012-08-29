@@ -52,7 +52,12 @@
     </bean>
     <!-- end -->
 
-    <!-- 文件上传 -->
-    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+    <!-- Configure the multipart resolver -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+          p:maxUploadSize="1000000"/>
+
+    <!-- http://stackoverflow.com/questions/6479712/why-is-jackson-wrapping-my-objects-with-an-extra-layer-named-after-the-class -->
+    <bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView"
+          p:extractValueFromSingleKeyModel="true"/>
 
 </beans>

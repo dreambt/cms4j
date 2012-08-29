@@ -82,7 +82,7 @@
     </div>
     <a class="abtn aright" href="#right" title="右移"></a>
 </div>
-<script type="text/javascript" src="${ctx}/static/js/slider.js"></script>
+<script type="text/javascript" src="${ctx}/static/js/slider.min.js"></script>
 <script type="text/javascript">
     $(function(){
         //默认状态下左右滚动

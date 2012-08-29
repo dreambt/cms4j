@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context antiJARLocking="true" path="/" aliases="/static=e:/static"/>
+<Context antiJARLocking="true" path="/" aliases="/static=e:/jetty/static"/>

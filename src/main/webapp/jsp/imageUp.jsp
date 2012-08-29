@@ -16,7 +16,7 @@
 <%@ page import="java.awt.image.BufferedImage" %>
 <%
     //保存文件路径
-    String webPath = "e:/static/uploads/"; //相对项目文件夹的完整路径
+    String webPath = "e:/jetty/static/uploads/"; //相对项目文件夹的完整路径
     String filePath = "article/article-big";
     String realPath = webPath + filePath;
 

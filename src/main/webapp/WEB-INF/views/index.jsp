@@ -9,19 +9,6 @@
 <html>
 <head>
     <title>首页</title>
-    <script src="${ctx}/static/js/jquery.cycle.all.js" type="text/javascript"></script>
-    <script type="text/javascript">
-        $(function () {
-            $('#slideshow').cycle({
-                timeout:5000, // milliseconds between slide transitions (0 to disable auto advance)
-                fx:'fade', // choose your transition type, ex: fade, scrollUp, shuffle, etc...
-                pager:'#pager', // selector for element to use as pager container
-                pause:0, // true to enable "pause on hover"
-                pauseOnPagerHover:0 // true to pause when hovering over pager link
-            });
-            $('.anno').cycle();
-        });
-    </script>
 </head>
 <body>
 <div class="row">
@@ -248,7 +235,20 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="${ctx}/static/js/slider.js"></script>
+<script type="text/javascript" src="${ctx}/static/js/jquery.cycle.all.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#slideshow').cycle({
+            timeout:5000, // milliseconds between slide transitions (0 to disable auto advance)
+            fx:'fade', // choose your transition type, ex: fade, scrollUp, shuffle, etc...
+            pager:'#pager', // selector for element to use as pager container
+            pause:0, // true to enable "pause on hover"
+            pauseOnPagerHover:0 // true to pause when hovering over pager link
+        });
+        $('.anno').cycle();
+    });
+</script>
+<script type="text/javascript" src="${ctx}/static/js/slider.min.js"></script>
 <script type="text/javascript">
     $(function(){
         //默认状态下左右滚动

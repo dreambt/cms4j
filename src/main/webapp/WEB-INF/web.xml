@@ -143,6 +143,20 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+    <!-- Gzip compression for jetty -->
+    <filter>
+        <filter-name>jettyGzipFilter</filter-name>
+        <filter-class>org.eclipse.jetty.servlets.GzipFilter</filter-class>
+        <init-param>
+            <param-name>mimeTypes</param-name>
+            <param-value>text/javascript,application/x-javascript,text/html,text/css,image/gif,image/jpg,image/jpeg,image/png</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>jettyGzipFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <!-- session超时定义,单位为分钟 -->
     <session-config>
         <session-timeout>20</session-timeout>
