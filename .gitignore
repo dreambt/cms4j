@@ -2,6 +2,7 @@
 ## Idea
 #################
 
+pom.xml
 .idea/
 *.iml
 logs/

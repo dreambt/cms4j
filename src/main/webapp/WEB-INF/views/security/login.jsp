@@ -19,39 +19,52 @@
     <title>后台登录</title>
     <link rel="shortcut icon" href="${ctx}/static/favicon.ico" type="image/x-icon" />
     <link href="${ctx}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="${ctx}/static/css/style.min.css" rel="stylesheet" type="text/css" />
+    <link href="${ctx}/static/css/admin.min.css" rel="stylesheet" type="text/css" />
     <script src="${ctx}/static/js/jquery.min.js" type="text/javascript"></script>
 </head>
 <body>
 <div class="row">
-    <div class="span12">
-    <form:form id="loginForm" action="${ctx}/login" method="post">
-        <%
-            String error = (String) request.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);
-            if(error != null){
-                if(error.contains("DisabledAccountException")){
-        %>
-        <div id="message" class="alert alert_red">
-            <img height="24" width="24" src="${ctx}/static/dashboard/images/icons/Locked2.png"><strong>用户已被屏蔽,请登录其他用户.</strong>
-        </div>
-        <%
-        }else{
-        %>
-        <div id="message" class="alert alert_red">
-            <img height="24" width="24" src="${ctx}/static/dashboard/images/icons/Locked2.png"><strong>登录失败，请重试.</strong>
-        </div>
-        <%
+    <div class="span4 offset6">
+        <div id="login" class="accounts-form">
+            <h2>用户登录</h2>
+            <hr class="small" />
+            <%
+                String error = (String) request.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);
+                if(error != null){
+                    if(error.contains("DisabledAccountException")){
+            %>
+            <div id="message" class="alert alert_red">
+                用户已被屏蔽,请登录其他用户.
+            </div>
+            <%
+            }else{
+            %>
+            <div id="message" class="alert alert_red">
+                登录失败，请重试.
+            </div>
+            <%
+                    }
                 }
-            }
-        %>
-        <label class="fields"><strong>用户名</strong><input type="text" id="username" name="username" value="${username}" class="indent round_all required email2 email"></label>
-        <label class="fields"><strong>密码</strong><input type="password" id="password" name="password" class="indent round_all required"></label>
-        <button type="submit" class="button_colour round_all"><img width="24" height="24" src="${ctx}/static/dashboard/images/icons/Locked2.png"><span> 登  录</span></button>
-        <div id="bar" class="round_bottom">
-            <label><input type="checkbox" id="rememberMe" name="rememberMe">记住密码</label>
-            <label><a href="${ctx}/">找回密码</a></label>
+            %>
+            <form:form id="loginForm" action="${ctx}/login" method="post">
+                <div style='display:none'><input type='hidden' name='csrfmiddlewaretoken' value='c1b1696edcea586856677cc78ad76833' /></div>
+                <div class="all-errors">
+                </div>
+                <div class="input">
+                    <input type="text" name="username" id="id_email" maxlength="75" value="${username}" class="required email" placeholder="Email"  />
+                </div>
+                <div class="input">
+                    <input type="password" name="password" id="id_password" class="required" placeholder="Password" />
+                </div>
+                <div class="actions clearfix">
+                    <input type="submit" value="登录" id="submit" class="btn btn-success" />
+                </div>
+                <div id="bar" class="round_bottom">
+                    <label><input type="checkbox" id="rememberMe" name="rememberMe">记住密码</label>
+                    <label><a href="${ctx}/">找回密码</a></label>
+                </div>
+            </form:form>
         </div>
-    </form:form>
     </div>
 </div>
 <script src="${ctx}/static/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
