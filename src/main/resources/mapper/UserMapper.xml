@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="cn.edu.sdufe.cms.cn.im47.cms.common.dao.account.UserMapper">
+<mapper namespace="cn.im47.cms.common.dao.account.UserMapper">
 
     <resultMap id="userDetailMap" type="User">
         <id property="id" column="id"/>
@@ -20,7 +20,7 @@
         <result property="createdDate" column="created_date" typeHandler="org.apache.ibatis.type.LocalDateTimeTypeHandler"/>
         <result property="deleted" column="deleted"/>
         <collection property="groupList" column="group_id" javaType="ArrayList" ofType="Group" columnPrefix="group_"
-                    resultMap="cn.edu.sdufe.cms.cn.im47.cms.common.dao.account.GroupMapper.groupDetailMap"/>
+                    resultMap="cn.im47.cms.common.dao.account.GroupMapper.groupDetailMap"/>
     </resultMap>
 
     <!-- 获取用户数量 -->

@@ -9,7 +9,7 @@
 <footer class="footer">
         <p class="pull-right"><a href="#">回到页首</a></p>
         <p>地址: 山东省济南市市中区舜耕路40号山东财经大学&nbsp;|&nbsp; 电话: 0531-82917318   &nbsp;|&nbsp; 开发维护: <a href="mailto:baitao.jibt@gmail.com">baitao.jibt[at]gmail.com</a></p>
-        <p>Copyright © 2012 <a href="http://dreambt.github.com/cms4j" target="_blank">cms4j</a>. All Rights Reserved.</p>
+        <p>Copyright © 2012 <a href="http://dreambt.github.com/cms4j" target="_blank">cms4j</a> Build 20120829. All Rights Reserved.</p>
 </footer>
 <script type="text/javascript">
     var _gaq = _gaq || [];

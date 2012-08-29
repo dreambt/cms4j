@@ -5,7 +5,7 @@ import cn.im47.cms.common.entity.agency.Agency;
 import cn.im47.cms.common.entity.article.Category;
 import cn.im47.cms.common.entity.article.ShowTypeEnum;
 import cn.im47.cms.common.service.article.CategoryManager;
-import cn.edu.sdufe.cms.utilities.upload.UploadFile;
+import cn.im47.commons.utilities.upload.UploadFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

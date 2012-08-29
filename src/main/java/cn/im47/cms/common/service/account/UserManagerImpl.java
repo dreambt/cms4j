@@ -6,7 +6,7 @@ import cn.im47.cms.common.service.ServiceException;
 import cn.im47.cms.jms.NotifyMessageProducer;
 import cn.im47.cms.memcached.MemcachedObjectType;
 import cn.im47.cms.security.ShiroDbRealm;
-import cn.edu.sdufe.cms.utilities.RandomString;
+import cn.im47.commons.utilities.RandomString;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;

@@ -167,7 +167,7 @@ public class LinkManagerImpl implements LinkManager {
         List<Link> links = this.getAll(0, Integer.MAX_VALUE);
         try {
             context.put("links", links);
-            freemakerHelper.generateContent(context, "link.ftl", "/layouts/link.html");
+            freemakerHelper.generateContent(context, "link.ftl", "../layouts/link.html");
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -11,7 +11,7 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="java.util.regex.Matcher" %>
 <%@ page import="java.util.regex.Pattern" %>
-<%@ page import="cn.edu.sdufe.cms.utilities.RandomString" %>
+<%@ page import="cn.im47.commons.utilities.RandomString" %>
 <%@ page import="javax.imageio.ImageIO" %>
 <%@ page import="java.awt.image.BufferedImage" %>
 <%

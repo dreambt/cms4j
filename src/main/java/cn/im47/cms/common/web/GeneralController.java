@@ -27,15 +27,15 @@ public class GeneralController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/index{str}", method = RequestMethod.GET)
-    public String index(Model model, @PathVariable("str") String str) {
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    public String index(Model model) {
         Long[] ids = {19L, 20L, 21L, 22L, 32L, 33L};
         model.addAttribute("images", imageManager.findByShowIndex());
         model.addAttribute("news1", articleManager.getByCategoryId(3L, 0, 6));
         model.addAttribute("news2", articleManager.getByCategoryId(4L, 0, 8));
         model.addAttribute("infos", articleManager.getByCategoryIds(ids, 0, 7));
         model.addAttribute("posts", articleManager.getByCategoryId(1L, 0, 6));
-        return "index" + str;
+        return "index";
     }
 
     /**

@@ -2,7 +2,7 @@ package cn.im47.cms.jms;
 
 import cn.im47.cms.utilities.email.MimeMailService;
 import cn.im47.cms.utilities.email.UserRecoveryMailService;
-import cn.edu.sdufe.cms.utilities.thumb.ImageThumb;
+import cn.im47.commons.utilities.thumb.ImageThumb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

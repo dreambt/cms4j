@@ -215,7 +215,7 @@ public class CategoryManagerImpl implements CategoryManager {
         List<Category> categories = this.getNavCategory();
         try {
             context.put("categories", categories);
-            freemakerHelper.generateContent(context, "menu.ftl", "/layouts/menu.html");
+            freemakerHelper.generateContent(context, "menu.ftl", "../layouts/menu.html");
         } catch (Exception e) {
             e.printStackTrace();
         }

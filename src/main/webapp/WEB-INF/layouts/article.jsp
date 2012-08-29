@@ -30,9 +30,9 @@
 </head>
 <body>
 <div class="container">
-    <%@ include file="/static/uploads/layouts/menu.html" %>
+    <%@ include file="/static/layouts/menu.html" %>
     <sitemesh:body/>
-    <%@ include file="/static/uploads/layouts/link.html" %>
+    <%@ include file="/static/layouts/link.html" %>
     <%@ include file="/WEB-INF/layouts/footer.jsp" %>
 </div>
 <script src="${ctx}/static/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>

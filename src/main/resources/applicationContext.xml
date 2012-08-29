@@ -12,7 +12,7 @@
     <description>Spring公共配置</description>
 
     <!-- 使用annotation 自动注册bean,并检查@Required,@Autowired的属性已被注入 -->
-    <context:component-scan base-package="cn.edu.sdufe.cms">
+    <context:component-scan base-package="cn.im47.cms">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
@@ -20,13 +20,13 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="configLocation" value="classpath:/mapper/Configuration.xml"/>
-        <property name="typeAliasesPackage" value="cn.edu.sdufe.cms.cn.im47.cms.common.entity"/>
+        <property name="typeAliasesPackage" value="cn.im47.cms.common.entity"/>
         <property name="mapperLocations" value="classpath:/mapper/*Mapper.xml"/>
     </bean>
 
     <!-- scan for mappers and let them be autowired -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="cn.edu.sdufe.cms.cn.im47.cms.common.dao"/>
+        <property name="basePackage" value="cn.im47.cms.common.dao"/>
     </bean>
 
     <!-- Freemarker 配置 -->

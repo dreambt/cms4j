@@ -8,14 +8,14 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
     <!-- 自动扫描且只扫描@Controller -->
-    <context:component-scan base-package="cn.edu.sdufe.cms.common.web" use-default-filters="false">
+    <context:component-scan base-package="cn.im47.cms.common.web" use-default-filters="false">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
     <mvc:annotation-driven>
         <!-- TODO 暂时解决Spring 输出 JSON 乱码问题 -->
         <mvc:message-converters>
-            <bean class="cn.edu.sdufe.cms.utilities.patch.MappingJacksonHttpMessageConverter"/>
+            <bean class="cn.im47.commons.utilities.patch.MappingJacksonHttpMessageConverter"/>
         </mvc:message-converters>
     </mvc:annotation-driven>
 
@@ -29,10 +29,11 @@
     </bean>
 
     <!-- 定义无Controller的path<->view直接映射 -->
-    <mvc:view-controller path="/" view-name="index"/>
+    <mvc:view-controller path="/" view-name="forward:/index"/>
     <mvc:view-controller path="/web/mashup-client" view-name="/web/mashup-client"/>
     <mvc:view-controller path="/dashboard" view-name="forward:/dashboard/index"/>
     <mvc:resources mapping="/static/**" location="/static/"/>
+
     <!-- 支持 Shiro对Controller的方法级AOP安全控制 begin-->
     <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
           depends-on="lifecycleBeanPostProcessor">

@@ -1,7 +1,7 @@
 package cn.im47.cms.common.entity.account;
 
 import cn.im47.cms.common.entity.PersistableEntity;
-import cn.edu.sdufe.cms.utilities.encoder.IPEncodes;
+import cn.im47.commons.utilities.encoder.IPEncodes;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

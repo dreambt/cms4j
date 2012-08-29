@@ -6,7 +6,7 @@ import cn.im47.cms.common.dao.article.CategoryMapper;
 import cn.im47.cms.common.entity.agency.Teacher;
 import cn.im47.cms.common.entity.article.Article;
 import cn.im47.cms.common.service.article.ArticleManagerImpl;
-import cn.edu.sdufe.cms.utilities.upload.UploadFile;
+import cn.im47.commons.utilities.upload.UploadFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

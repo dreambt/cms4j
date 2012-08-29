@@ -5,39 +5,26 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-    <meta name="robots" content="none"/>
-    <!-- iPhone, iPad and Android specific settings -->
-    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1;">
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta http-equiv="Cache-Control" content="no-store"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+    <meta name="robots" content="index, follow"/>
+    <meta name="keywords" content=""/>
+    <meta name="title" content=""/>
+    <meta name="description" content=""/>
     <title>后台登录</title>
     <link rel="shortcut icon" href="${ctx}/static/favicon.ico" type="image/x-icon" />
-    <!-- Create an icon and splash screen for iPhone and iPad -->
-    <link rel="apple-touch-icon" href="images/iOS_icon.png">
-    <link rel="apple-touch-startup-image" href="images/iOS_startup.png">
-    <link rel="stylesheet" type="text/css" href="${ctx}/static/dashboard/css/reset.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="${ctx}/static/dashboard/css/text.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="${ctx}/static/dashboard/css/main.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="${ctx}/static/dashboard/css/theme/theme_base.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="${ctx}/static/dashboard/css/buttons.css" media="screen">
-    <!--[if IE 6]><link rel="stylesheet" type="text/css" href="${ctx}/static/dashboard/css/ie6.css" media="screen"/><![endif]-->
-    <!--[if IE 7]><link rel="stylesheet" type="text/css" href="${ctx}/static/dashboard/css/ie.css" media="screen"/><![endif]-->
-    <link rel="stylesheet" type="text/css" href="${ctx}/static/js/jquery-validation/validate.css" />
-    <script type="text/javascript" src="${ctx}/static/js/jquery.min.js"></script>
-    <!--[if (gte IE 6)&(lte IE 8)]><script type="text/javascript" src="${ctx}/static/js/selectivizr.js"></script><![endif]-->
-    <script type="text/javascript" src="${ctx}/static/js/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="${ctx}/static/js/uniform/jquery.uniform.js" charset="utf-8"></script>
-    <script type="text/javascript" src="${ctx}/static/js/tipsy/jquery.tipsy.js"  charset="utf-8"></script>
-    <script type="text/javascript" src="${ctx}/static/js/jquery.iphoneui.js"  charset="utf-8"></script>
-    <script src="${ctx}/static/js/jquery-validation/jquery.validate.min.js" type="text/javascript"></script>
-    <script src="${ctx}/static/js/jquery-validation/messages_cn.js" type="text/javascript"></script>
+    <link href="${ctx}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="${ctx}/static/css/style.min.css" rel="stylesheet" type="text/css" />
+    <script src="${ctx}/static/js/jquery.min.js" type="text/javascript"></script>
 </head>
 <body>
-<div id="login_box" class="round_all clearfix">
+<div class="row">
+    <div class="span12">
     <form:form id="loginForm" action="${ctx}/login" method="post">
         <%
             String error = (String) request.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);
@@ -65,13 +52,14 @@
             <label><a href="${ctx}/">找回密码</a></label>
         </div>
     </form:form>
-    <a href="${ctx}" id="login_logo"><span>CMS4j</span></a>
-    <script>
-        $(function() {
-            $("#loginForm").validate();
-            $(".alert").delay(1500).fadeOut("slow");
-        });
-    </script>
+    </div>
 </div>
+<script src="${ctx}/static/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script>
+    $(function() {
+        $("#loginForm").validate();
+        $(".alert").delay(1500).fadeOut("slow");
+    });
+</script>
 </body>
 </html>

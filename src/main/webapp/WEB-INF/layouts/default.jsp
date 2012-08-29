@@ -12,7 +12,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     <meta http-equiv="Cache-Control" content="no-store"/>
     <meta http-equiv="Pragma" content="no-cache"/>
@@ -30,9 +30,9 @@
 </head>
 <body>
 <div class="container">
-    <%@ include file="/static/uploads/layouts/menu.html" %>
+    <%@ include file="/static/layouts/menu.html" %>
     <sitemesh:body/>
-    <%@ include file="/static/uploads/layouts/link.html" %>
+    <%@ include file="/static/layouts/link.html" %>
     <%@ include file="/WEB-INF/layouts/footer.jsp" %>
 </div>
 <c:if test="${not empty info}">
