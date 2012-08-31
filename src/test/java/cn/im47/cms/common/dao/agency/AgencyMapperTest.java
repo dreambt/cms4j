@@ -1,7 +1,7 @@
 package cn.im47.cms.common.dao.agency;
 
-import cn.im47.cms.common.entity.agency.Agency;
 import cn.im47.cms.common.data.AgencyData;
+import cn.im47.cms.common.entity.agency.Agency;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

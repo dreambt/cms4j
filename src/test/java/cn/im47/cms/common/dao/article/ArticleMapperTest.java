@@ -1,7 +1,7 @@
 package cn.im47.cms.common.dao.article;
 
-import cn.im47.cms.common.entity.article.Article;
 import cn.im47.cms.common.data.ArticleData;
+import cn.im47.cms.common.entity.article.Article;
 import junit.framework.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

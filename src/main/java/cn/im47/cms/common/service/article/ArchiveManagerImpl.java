@@ -180,20 +180,6 @@ public class ArchiveManagerImpl implements ArchiveManager {
         return 0;
     }
 
-    @Deprecated
-    @Override
-    public List<Archive> search(Map<String, Object> parameters) {
-        return archiveMapper.search(parameters);
-    }
-
-    @Deprecated
-    @Override
-    public List<Archive> search(Map<String, Object> parameters, int offset, int limit) {
-        parameters.put("offset", offset);
-        parameters.put("limit", limit);
-        return this.search(parameters);
-    }
-
     @Autowired
     public void setArchiveMapper(ArchiveMapper archiveMapper) {
         this.archiveMapper = archiveMapper;

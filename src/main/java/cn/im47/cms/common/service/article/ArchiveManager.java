@@ -5,7 +5,6 @@ import cn.im47.cms.common.service.GenericManager;
 import org.joda.time.DateTime;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * 归类业务逻辑层接口
@@ -41,9 +40,5 @@ public interface ArchiveManager extends GenericManager<Archive, Long> {
      * @param dateTime
      */
     long save(DateTime dateTime);
-
-    List<Archive> search(Map<String, Object> parameters);
-
-    List<Archive> search(Map<String, Object> parameters, int offset, int limit);
 
 }

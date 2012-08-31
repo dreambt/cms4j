@@ -21,6 +21,7 @@ import org.springside.modules.cache.memcached.SpyMemcachedClient;
 import org.springside.modules.mapper.JsonMapper;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -45,10 +46,10 @@ public class ImageManagerImpl implements ImageManager {
     private ImageMapper imageMapper;
 
     @Value("${path.upload.base}")
-    private String UPLOAD_PATH;
+    private String uploadPath;
 
     @Value("${paged.image.limit}")
-    public int LIMIT;
+    public int imageLimit;
 
     public Image get(Long id) {
         Image image = null;
@@ -94,7 +95,7 @@ public class ImageManagerImpl implements ImageManager {
 
     @Override
     public List<Image> getAll() {
-        return this.getAll(0, LIMIT, "id", "DESC");
+        return this.getAll(0, imageLimit, "id", "DESC");
     }
 
     @Override
@@ -150,13 +151,13 @@ public class ImageManagerImpl implements ImageManager {
         logger.info("保存相册 image={}.", image.toString());
         if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
             UploadFile uploadFile = new UploadFile();
-            String fileName = uploadFile.uploadFile(file, UPLOAD_PATH + "gallery/gallery-big/");
+            String fileName = uploadFile.uploadFile(file, uploadPath + "gallery/gallery-big/");
             image.setImageUrl(fileName);
 
             ImageThumb imageThumb = new ImageThumb();
             try {
-                imageThumb.saveImageAsJpg(UPLOAD_PATH + "gallery/gallery-big/" + fileName, UPLOAD_PATH + "gallery/thumb-50x57/" + fileName, 50, 57);
-                logger.info("成功创建缩略图: {}.", UPLOAD_PATH + "gallery/thumb-50x57/" + fileName);
+                imageThumb.saveImageAsJpg(uploadPath + "gallery/gallery-big/" + fileName, uploadPath + "gallery/thumb-50x57/" + fileName, 50, 57);
+                logger.info("成功创建缩略图: {}.", uploadPath + "gallery/thumb-50x57/" + fileName);
 
                 // 异步生成其他缩略图
                 notifyProducer.sendQueueGenThumb(fileName);
@@ -185,14 +186,14 @@ public class ImageManagerImpl implements ImageManager {
             //存储旧图片名
             String oldFileName = image.getImageUrl();
             UploadFile uploadFile = new UploadFile();
-            String fileName = uploadFile.uploadFile(file, UPLOAD_PATH + "gallery/gallery-big/");
+            String fileName = uploadFile.uploadFile(file, uploadPath + "gallery/gallery-big/");
             image.setImageUrl(fileName);
 
             //图片来源路径
             ImageThumb imageThumb = new ImageThumb();
             try {
-                imageThumb.saveImageAsJpg(UPLOAD_PATH + "gallery/gallery-big/" + fileName, UPLOAD_PATH + "gallery/thumb-50x57/" + fileName, 50, 57);
-                logger.info("成功创建缩略图: {}", UPLOAD_PATH + "gallery/thumb-50x57/" + fileName);
+                imageThumb.saveImageAsJpg(uploadPath + "gallery/gallery-big/" + fileName, uploadPath + "gallery/thumb-50x57/" + fileName, 50, 57);
+                logger.info("成功创建缩略图: {}", uploadPath + "gallery/thumb-50x57/" + fileName);
 
                 // 异步生成其他缩略图
                 notifyProducer.sendQueueGenThumb(fileName);
@@ -238,7 +239,7 @@ public class ImageManagerImpl implements ImageManager {
     @Override
     @Transactional(readOnly = false)
     public void batchDelete(String[] ids) {
-        logger.info("批量删除相册 #{}.", ids.toString());
+        logger.info("批量删除相册 #{}.", Arrays.toString(ids));
         for (String id : ids) {
             this.delete(Long.parseLong(id));
         }

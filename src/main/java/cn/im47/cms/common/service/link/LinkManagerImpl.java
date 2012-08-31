@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springside.modules.cache.memcached.SpyMemcachedClient;
 import org.springside.modules.mapper.JsonMapper;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -144,7 +145,7 @@ public class LinkManagerImpl implements LinkManager {
     @Override
     @Transactional(readOnly = false)
     public void batchAudit(String[] ids) {
-        logger.info("批量审核友情链接 #{}.", ids.toString());
+        logger.info("批量审核友情链接 #{}.", Arrays.toString(ids));
         for (String id : ids) {
             this.updateBool(Long.parseLong(id), "status");
         }
@@ -153,7 +154,7 @@ public class LinkManagerImpl implements LinkManager {
     @Override
     @Transactional(readOnly = false)
     public void batchDelete(String[] ids) {
-        logger.info("批量删除友情链接 #{}.", ids.toString());
+        logger.info("批量删除友情链接 #{}.", Arrays.toString(ids));
         for (String id : ids) {
             this.delete(Long.parseLong(id));
         }

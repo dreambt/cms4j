@@ -34,7 +34,7 @@
         <property name="freemarkerConfiguration" ref="freemarkerConfig"/>
     </bean>
     <bean id="freemarkerConfig" class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean">
-        <property name="templateLoaderPath" value="classpath:/freemarker" />
+        <property name="templateLoaderPath" value="classpath:/freemarker"/>
     </bean>
 
     <!-- 事务管理器配置, 使用jdbc事务 -->
@@ -50,10 +50,10 @@
     <!-- 使用annotation定义事务 -->
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
 
-	<!-- 定义aspectj -->
+    <!-- 定义aspectj -->
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 
-	<!-- hibernate validator -->
+    <!-- hibernate validator -->
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
 
     <!-- production/local development环境 -->
@@ -95,7 +95,7 @@
         <!-- 嵌入式内存中数据库 -->
         <jdbc:embedded-database id="dataSource" type="H2">
             <jdbc:script location="classpath:sql/h2/schema.sql"/>
-			<jdbc:script location="classpath:data/import-data.sql" />
+            <jdbc:script location="classpath:data/import-data.sql"/>
         </jdbc:embedded-database>
 
         <jdbc:embedded-database id="quartzDataSource" type="H2">
@@ -129,11 +129,11 @@
 
         <!-- 初始化数据结构 -->
         <jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
-			<jdbc:script location="classpath:sql/h2/schema.sql" />
+            <jdbc:script location="classpath:sql/h2/schema.sql"/>
         </jdbc:initialize-database>
 
         <jdbc:initialize-database data-source="quartzDataSource" ignore-failures="ALL">
-			<jdbc:script location="classpath:sql/h2/quartz.sql" />
+            <jdbc:script location="classpath:sql/h2/quartz.sql"/>
         </jdbc:initialize-database>
     </beans>
 </beans>

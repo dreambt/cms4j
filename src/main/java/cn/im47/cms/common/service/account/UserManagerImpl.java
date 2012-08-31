@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springside.modules.cache.memcached.SpyMemcachedClient;
 import org.springside.modules.mapper.JsonMapper;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -48,7 +49,7 @@ public class UserManagerImpl implements UserManager {
     private ShiroDbRealm shiroRealm;
 
     @Value("${paged.user.limit}")
-    public int LIMIT;
+    public int userLimit;
 
     @Override
     public User get(Long id) {
@@ -71,7 +72,7 @@ public class UserManagerImpl implements UserManager {
 
     @Override
     public List<User> getAll() {
-        return this.getAll(0, LIMIT, "id", "ASC");
+        return this.getAll(0, userLimit, "id", "ASC");
     }
 
     @Override
@@ -232,7 +233,7 @@ public class UserManagerImpl implements UserManager {
     @Override
     @Transactional(readOnly = false)
     public void batchAudit(String[] ids) {
-        logger.info("批量审核用户 #{}.", ids.toString());
+        logger.info("批量审核用户 #{}.", Arrays.toString(ids));
         for (String id : ids) {
             if (id.length() == 0) {
                 continue;
@@ -244,7 +245,7 @@ public class UserManagerImpl implements UserManager {
     @Override
     @Transactional(readOnly = false)
     public void batchDelete(String[] ids) {
-        logger.info("批量删除用户 #{}.", ids.toString());
+        logger.info("批量删除用户 #{}.", Arrays.toString(ids));
         for (String id : ids) {
             if (id.length() == 0) {
                 continue;

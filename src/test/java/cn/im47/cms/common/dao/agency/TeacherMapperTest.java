@@ -1,7 +1,7 @@
 package cn.im47.cms.common.dao.agency;
 
-import cn.im47.cms.common.entity.agency.Teacher;
 import cn.im47.cms.common.data.TeacherData;
+import cn.im47.cms.common.entity.agency.Teacher;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;

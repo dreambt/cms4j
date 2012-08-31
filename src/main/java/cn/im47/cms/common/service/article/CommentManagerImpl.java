@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springside.modules.cache.memcached.SpyMemcachedClient;
 import org.springside.modules.mapper.JsonMapper;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -133,14 +134,14 @@ public class CommentManagerImpl implements CommentManager {
     @Override
     @Transactional(readOnly = false)
     public long updateBool(Long id, String column) {
-        logger.info("保存评论 comment.id={} 的 {} 属性.", id, column);
+        logger.info("保存评论 #{} 的 {} 属性.", id, column);
         return commentMapper.updateBool(id, column);
     }
 
     @Override
     @Transactional(readOnly = false)
     public void batchAudit(String[] ids) {
-        logger.info("批量更新评论 comment.id={}.", ids.toString());
+        logger.info("批量更新评论 #{}.", Arrays.toString(ids));
         for (String id : ids) {
             commentMapper.updateBool(Long.parseLong(id), "status");
         }
@@ -149,7 +150,7 @@ public class CommentManagerImpl implements CommentManager {
     @Override
     @Transactional(readOnly = false)
     public void batchDelete(String[] ids) {
-        logger.info("批量删除评论 comment.id={}.", ids.toString());
+        logger.info("批量删除评论 #{}.", Arrays.toString(ids));
         for (String id : ids) {
             commentMapper.updateBool(Long.parseLong(id), "deleted");
         }
@@ -157,7 +158,7 @@ public class CommentManagerImpl implements CommentManager {
 
     @Transactional(readOnly = false)
     public long delete(Long id) {
-        logger.info("删除评论 comment.id={}.", id);
+        logger.info("删除评论 #{}.", id);
         return commentMapper.delete(id);
     }
 

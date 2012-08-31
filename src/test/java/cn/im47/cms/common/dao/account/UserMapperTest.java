@@ -1,7 +1,7 @@
 package cn.im47.cms.common.dao.account;
 
-import cn.im47.cms.common.entity.account.User;
 import cn.im47.cms.common.data.UserData;
+import cn.im47.cms.common.entity.account.User;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;

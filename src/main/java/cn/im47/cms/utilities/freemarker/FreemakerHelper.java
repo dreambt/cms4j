@@ -28,10 +28,10 @@ public class FreemakerHelper {
     private Configuration freemarkerConfiguration;
 
     @Value("${path.upload.base}")
-    private String UPLOAD_PATH;
+    private String uploadPath;
 
     @Value("${website.domain}")
-    private String WEB_URL;
+    private String webUrl;
 
     private Template template;
     private static HtmlCompressor compressor = new HtmlCompressor();
@@ -49,15 +49,16 @@ public class FreemakerHelper {
      * 使用Freemarker生成html格式内容.
      */
     public void generateContent(Map<String, Object> context, String templateFile, String targetFile) throws Exception {
+        BufferedWriter out = null;
         try {
             template = freemarkerConfiguration.getTemplate(templateFile, DEFAULT_ENCODING);
 
-            File htmlFile = new File(UPLOAD_PATH + targetFile);
+            File htmlFile = new File(uploadPath + targetFile);
             htmlFile.createNewFile();
-            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(htmlFile), DEFAULT_ENCODING));//设置Encoding
+            out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(htmlFile), DEFAULT_ENCODING));//设置Encoding
 
             // 处理模版
-            context.put("ctx", WEB_URL);
+            context.put("ctx", webUrl);
             String htmlStr = FreeMarkerTemplateUtils.processTemplateIntoString(template, context);
 
             // html 压缩
@@ -74,6 +75,8 @@ public class FreemakerHelper {
         } catch (NullPointerException e) {
             logger.error("FreeMarker 处理失败. 空指针异常！", e);
             throw new Exception("FreeMarker 处理失败. 空指针异常！", e);
+        } finally {
+            out.close();
         }
     }
 

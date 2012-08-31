@@ -37,6 +37,7 @@ import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -76,10 +77,10 @@ public class ArticleManagerImpl implements ArticleManager {
     private FreemakerHelper freemakerHelper;
 
     @Value("${path.upload.base}")
-    private String UPLOAD_PATH;
+    private String uploadPath;
 
     @Value("${paged.article.limit}")
-    public int LIMIT;
+    private int aticleLimit;
 
     @Override
     public Article get(Long id) {
@@ -161,7 +162,7 @@ public class ArticleManagerImpl implements ArticleManager {
     public long count(Long[] ids) {
         long num = 0L;
         long start = System.currentTimeMillis();
-        String key = MemcachedObjectType.ARTICLE.getPrefix() + "count:" + ids.toString();
+        String key = MemcachedObjectType.ARTICLE.getPrefix() + "count:" + Arrays.toString(ids).replaceAll(" ", "");
         String jsonString = spyMemcachedClient.get(key);
 
         if (StringUtils.isBlank(jsonString)) {
@@ -172,13 +173,13 @@ public class ArticleManagerImpl implements ArticleManager {
             num = jsonMapper.fromJson(jsonString, Long.class);
         }
         long end = System.currentTimeMillis();
-        logger.info("获取分类 #{} 的文章数 用时：{}ms. key: " + key, ids.toString(), end - start);
+        logger.info("获取分类 #{} 的文章数 用时：{}ms. key: " + key, Arrays.toString(ids), end - start);
         return num;
     }
 
     @Override
     public List<Article> getAll() {
-        return this.getAll(0, LIMIT, "id", "DESC");
+        return this.getAll(0, aticleLimit, "id", "DESC");
     }
 
     @Override
@@ -358,8 +359,7 @@ public class ArticleManagerImpl implements ArticleManager {
         } else {
             Element img = imgs.first();
             String srcString = img.attr("src");
-            String imgName = srcString.substring(srcString.lastIndexOf("/") + 1, srcString.length());
-            return imgName;
+            return srcString.substring(srcString.lastIndexOf('/') + 1, srcString.length());
         }
     }
 
@@ -379,7 +379,7 @@ public class ArticleManagerImpl implements ArticleManager {
     @Override
     @Transactional(readOnly = false)
     public void batchAudit(String[] ids) {
-        logger.info("批量审核文章 #{}.", ids.toString());
+        logger.info("批量审核文章 #{}.", Arrays.toString(ids));
         for (String id : ids) {
             if (id.length() == 0) {
                 continue;
@@ -391,7 +391,7 @@ public class ArticleManagerImpl implements ArticleManager {
     @Override
     @Transactional(readOnly = false)
     public void batchDelete(String[] ids) {
-        logger.info("批量删除文章 #{}.", ids.toString());
+        logger.info("批量删除文章 #{}.", Arrays.toString(ids));
         for (String id : ids) {
             if (id.length() == 0) {
                 continue;
@@ -507,10 +507,10 @@ public class ArticleManagerImpl implements ArticleManager {
 
     /**
      * TODO 清理 Memcached 缓存
+     private void clearMemcached(String key) {
+     spyMemcachedClient.incr(key, 1, 0);
+     }
      */
-    private void clearMemcached(String key) {
-        spyMemcachedClient.incr(key, 1, 0);
-    }
 
     /**
      * 生成文章静态页面
@@ -528,7 +528,7 @@ public class ArticleManagerImpl implements ArticleManager {
             context.put("article", article);
             freemakerHelper.generateContent(context, "article.ftl", "/posts/" + year + "/" + month + "/" + article.getUrl() + ".html");
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("异常: ", e.getMessage());
         }
     }
 

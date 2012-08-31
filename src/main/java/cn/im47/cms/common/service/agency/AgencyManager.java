@@ -30,11 +30,11 @@ public class AgencyManager {
 
     private static final Logger logger = LoggerFactory.getLogger(AgencyManager.class);
 
-    private AgencyMapper agencyMapper = null;
-    private CategoryManager categoryManager = null;
+    private AgencyMapper agencyMapper;
+    private CategoryManager categoryManager;
 
     @Value("${path.upload.base}")
-    private String UPLOAD_PATH;
+    private String uploadPath;
 
     /**
      * 根据编号获得组织机构
@@ -91,7 +91,7 @@ public class AgencyManager {
         //上传图片
         if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
             UploadFile uploadFile = new UploadFile();
-            String fileName = uploadFile.uploadFile(file, UPLOAD_PATH);
+            String fileName = uploadFile.uploadFile(file, uploadPath);
             agency.setImageUrl(fileName);
         } else {
             agency.setImageUrl("");
@@ -115,11 +115,11 @@ public class AgencyManager {
         if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
             // 上传新图片
             UploadFile uploadFile = new UploadFile();
-            String fileName = uploadFile.uploadFile(file, UPLOAD_PATH);
+            String fileName = uploadFile.uploadFile(file, uploadPath);
             agency.setImageUrl(fileName);
 
             //删除旧图片
-            new File(UPLOAD_PATH + "agency", agency.getImageUrl()).delete();
+            new File(uploadPath + "agency", agency.getImageUrl()).delete();
         }
         return agencyMapper.update(agency);
     }

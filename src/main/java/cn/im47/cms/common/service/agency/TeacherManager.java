@@ -1,7 +1,6 @@
 package cn.im47.cms.common.service.agency;
 
 import cn.im47.cms.common.dao.agency.TeacherMapper;
-import cn.im47.cms.common.dao.article.ArticleMapper;
 import cn.im47.cms.common.dao.article.CategoryMapper;
 import cn.im47.cms.common.entity.agency.Teacher;
 import cn.im47.cms.common.entity.article.Article;
@@ -31,9 +30,9 @@ public class TeacherManager {
 
     private ArticleManagerImpl articleManagerImpl;
     private TeacherMapper teacherMapper;
-    private ArticleMapper articleMapper;
     private CategoryMapper categoryMapper;
-    private String UPLOAD_DIR = "static/uploads/teacher/";
+
+    private String uploadPath = "static/uploads/teacher/";
 
     /**
      * 根据编号获得老师信息
@@ -115,7 +114,7 @@ public class TeacherManager {
 
         if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
             UploadFile uploadFile = new UploadFile();
-            String fileName = uploadFile.uploadFile(file, UPLOAD_DIR);
+            String fileName = uploadFile.uploadFile(file, uploadPath);
             teacher.setImageUrl(fileName);
         }
         return teacherMapper.update(teacher);
@@ -157,7 +156,7 @@ public class TeacherManager {
         if (articleManagerImpl.save(article) > 0) {
             if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
                 UploadFile uploadFile = new UploadFile();
-                String fileName = uploadFile.uploadFile(file, UPLOAD_DIR);
+                String fileName = uploadFile.uploadFile(file, uploadPath);
                 teacher.setImageUrl(fileName);
             }
             teacher.setArticle(article);
@@ -177,12 +176,8 @@ public class TeacherManager {
     }
 
     @Autowired
-    public void setArticleMapper(ArticleMapper articleMapper) {
-        this.articleMapper = articleMapper;
-    }
-
-    @Autowired
     public void setCategoryMapper(CategoryMapper categoryMapper) {
         this.categoryMapper = categoryMapper;
     }
+
 }

@@ -179,14 +179,15 @@ public class CategoryManagerImpl implements CategoryManager {
     @Override
     @Transactional(readOnly = false)
     public long delete(Category category) {
-        logger.info("删除分类 category={}.", category.toString());
         // 指定的分类不存在
         if (null == category) {
+            logger.warn("删除分类失败：分类为空.");
             return 3;
         }
 
         // 检查该分类下面的文章，如果有文章则不能删除
         if (category.getArticleList().size() > 0) {
+            logger.warn("删除分类失败：分类下面有文章.");
             return 1;
         }
 
@@ -199,10 +200,12 @@ public class CategoryManagerImpl implements CategoryManager {
         }
 
         if (flag) {// 没有子分类
+            logger.info("删除分类成功 category={}.", category.toString());
             category.setDeleted(true);
             this.update(category);
             return 0;
         } else {// 有子分类
+            logger.warn("删除分类失败：分类下面有子分类.");
             return 2;
         }
     }
@@ -217,7 +220,7 @@ public class CategoryManagerImpl implements CategoryManager {
             context.put("categories", categories);
             freemakerHelper.generateContent(context, "menu.ftl", "../layouts/menu.html");
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("异常: ", e.getMessage());
         }
     }
 
