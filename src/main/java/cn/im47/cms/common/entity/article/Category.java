@@ -1,6 +1,6 @@
 package cn.im47.cms.common.entity.article;
 
-import cn.im47.cms.common.entity.PersistableEntity;
+import cn.im47.commons.entity.PersistableEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;

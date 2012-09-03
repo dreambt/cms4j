@@ -154,7 +154,7 @@
     </filter>
     <filter-mapping>
         <filter-name>jettyGzipFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/static/*</url-pattern>
     </filter-mapping>
 
     <!-- session超时定义,单位为分钟 -->

@@ -1,6 +1,6 @@
 package cn.im47.cms.common.entity.agency;
 
-import cn.im47.cms.common.entity.PersistableEntity;
+import cn.im47.commons.entity.PersistableEntity;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 

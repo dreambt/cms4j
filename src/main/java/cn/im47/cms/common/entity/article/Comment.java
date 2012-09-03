@@ -1,6 +1,6 @@
 package cn.im47.cms.common.entity.article;
 
-import cn.im47.cms.common.entity.PersistableEntity;
+import cn.im47.commons.entity.PersistableEntity;
 import cn.im47.commons.utilities.encoder.IPEncodes;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;

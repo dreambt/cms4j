@@ -1,6 +1,6 @@
 package cn.im47.cms.common.entity.article;
 
-import cn.im47.cms.common.entity.IdEntity;
+import cn.im47.commons.entity.IdEntity;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;

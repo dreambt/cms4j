@@ -1,6 +1,6 @@
 package cn.im47.cms.common.entity.account;
 
-import cn.im47.cms.common.entity.IdEntity;
+import cn.im47.commons.entity.IdEntity;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
