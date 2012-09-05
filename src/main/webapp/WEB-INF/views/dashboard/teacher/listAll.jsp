@@ -60,7 +60,7 @@
         </form:form>
     </div>
 </div>
-<script type="text/javascript" src="${ctx}/static/js/jquery.mousewheel-3.0.6.pack.js"></script>
+<script type="text/javascript" src="${ctx}/static/js/fancyBox/jquery.mousewheel-3.0.6.pack.js"></script>
 <script type="text/javascript" src="${ctx}/static/js/fancyBox/jquery.fancybox.pack.js?v=2.0.5"></script>
 <script type="text/javascript" src="${ctx}/static/js/fancyBox/helpers/jquery.fancybox-buttons.js?v=2.0.5"></script>
 <script type="text/javascript" src="${ctx}/static/js/fancyBox/helpers/jquery.fancybox-thumbs.js?v=2.0.5"></script>
@@ -85,6 +85,7 @@
                 }
             }
         });
+
         $('#deleteAll').click(function () {
             if (confirm("确定批量删除吗？")) {
                 $("#imageList").attr("action", "${ctx}/teacher/batchDelete").submit();
@@ -92,6 +93,7 @@
                 return false;
             }
         });
+
         $('.delete').click(function(){
             if(confirm('确定删除？')){
                 return true;
