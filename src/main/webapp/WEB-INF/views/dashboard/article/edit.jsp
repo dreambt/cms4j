@@ -45,7 +45,6 @@
 <script type="text/javascript" src="${ctx}/static/js/jquery.loading.js"></script>
 <script type="text/javascript" src="${ctx}/static/js/jquery.json-2.3.min.js"></script>
 <script type="text/javascript" src="${ctx}/static/js/markitup/jquery.markitup.js"></script>
-<script type="text/javascript" src="${ctx}/static/js/tipsy/jquery.tipsy.js" charset="utf-8"></script>
 <script type="text/javascript" src="${ctx}/static/js/jquery-validation/jquery.validate.min.js" charset="utf-8"></script>
 <script type="text/javascript" src="${ctx}/static/js/jquery-validation/messages_cn.js" charset="utf-8"></script>
 <script type="text/javascript">
