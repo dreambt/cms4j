@@ -18,7 +18,7 @@
 <body>
 <div class="row">
     <div class="span12">
-    <form:form id="userInfo" modelAttribute="user" action="${ctx}/account/user/save/${user.id}" method="post" cssClass="form-horizontal">
+    <form:form id="userInfo" modelAttribute="user" action="${ctx}/account/user/${action}" method="post" cssClass="form-horizontal">
         <div class="control-group">
             <label class="control-label" for="email">邮  箱</label>
             <div class="controls">

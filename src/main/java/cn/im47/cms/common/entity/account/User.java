@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * 用户Entity
  * <p/>
- * User: baitao.jibt (dreambt@gmail.com)
+ * User: baitao.jibt@gmail.com
  * Date: 12-3-20
  * Time: 下午19:55
  */

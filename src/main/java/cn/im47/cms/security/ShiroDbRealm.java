@@ -23,7 +23,7 @@ import java.io.Serializable;
 
 /**
  * 自实现用户与权限查询.
- * User: baitao.jibt (dreambt@gmail.com)
+ * User: baitao.jibt@gmail.com
  * Date: 12-3-18
  * Time: 下午13:59
  */

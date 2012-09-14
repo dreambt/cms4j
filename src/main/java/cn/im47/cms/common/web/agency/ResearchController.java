@@ -21,15 +21,9 @@ public class ResearchController {
     private ArticleManager articleManager;
     private AgencyManager agencyManager;
 
-    /**
-     * 根据编号打开对应的研究所首页
-     *
-     * @param id
-     * @return
-     */
     @RequestMapping(value = "{id}")
     public String indexOfAgency(@PathVariable Long id, Model model) {
-        model.addAttribute("infos", articleManager.getByCategoryId(agencyManager.getAgency(id).getCategoryId(), 0, 6));
+        model.addAttribute("infos", articleManager.getByCategoryId(agencyManager.get(id).getCategoryId(), 0, 6));
         return "research" + id;
     }
 

@@ -31,12 +31,6 @@ public class ArchiveMapperTest extends SpringTransactionalTestCase {
     }
 
     @Test
-    public void testGetIdByTitle() throws Exception {
-        List<Long> ids = archiveMapper.getArticleIdByTitle("2012年03月");
-        assertEquals(2, ids.size());
-    }
-
-    @Test
     public void testDelete() throws Exception {
         long num = archiveMapper.delete(1L);
         assertEquals(1, num);

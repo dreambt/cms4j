@@ -2,6 +2,7 @@ package cn.im47.cms.common.web.link;
 
 import cn.im47.cms.common.entity.link.Link;
 import cn.im47.cms.common.service.link.LinkManager;
+import cn.im47.cms.common.vo.ResponseMessage;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +26,6 @@ public class LinkController {
 
     private LinkManager linkManager;
 
-    /**
-     * 显示所有未删除的 link
-     *
-     * @param model
-     * @return
-     */
     @RequiresPermissions("link:list")
     @RequestMapping(value = {"", "listAll"})
     public String listAll(Model model) {
@@ -40,13 +35,6 @@ public class LinkController {
         return "dashboard/link/listAll";
     }
 
-    /**
-     * 获取所有 link
-     *
-     * @param offset
-     * @param limit
-     * @return
-     */
     @RequiresPermissions("link:list")
     @RequestMapping(value = "listAll/ajax")
     @ResponseBody
@@ -58,26 +46,17 @@ public class LinkController {
         }
     }
 
-    /**
-     * 跳转新建link页面
-     *
-     * @return
-     */
+    @RequiresPermissions("link:create")
     @RequestMapping(value = "create", method = RequestMethod.GET)
-    public String create(Model model) {
+    public String createForm(Model model) {
         model.addAttribute("link", new Link());
+        model.addAttribute("action", "create");
         return "dashboard/link/edit";
     }
 
-    /**
-     * 新建link
-     *
-     * @param link
-     * @param redirectAttributes
-     * @return
-     */
-    @RequestMapping(value = "save", method = RequestMethod.POST)
-    public String save(Link link, RedirectAttributes redirectAttributes) {
+    @RequiresPermissions("link:create")
+    @RequestMapping(value = "create", method = RequestMethod.POST)
+    public String create(Link link, RedirectAttributes redirectAttributes) {
         if (linkManager.save(link) > 0) {
             redirectAttributes.addFlashAttribute("info", "链接新建成功");
         } else {
@@ -86,47 +65,41 @@ public class LinkController {
         return "redirect:/link/listAll";
     }
 
-    /**
-     * 审核编号为id的评论
-     *
-     * @return
-     */
-    @RequestMapping(value = "audit/{id}", method = RequestMethod.GET)
-    public String audit(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+    @RequiresPermissions("link:update")
+    @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
+    public String updateForm(@PathVariable Long id, Model model) {
+        Link link = linkManager.get(id);
+        model.addAttribute("link", link);
+        model.addAttribute("action", "update");
+        return "dashboard/link/edit";
+    }
+
+    @RequiresPermissions("link:save")
+    @RequestMapping(value = "audit/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseMessage audit(@PathVariable("id") Long id) {
         if (null == linkManager.get(id)) {
-            redirectAttributes.addAttribute("error", "该链接不存在，请刷新重试");
-            return "redirect:/link/listAll";
+            return new ResponseMessage("该链接不存在，请刷新重试");
         }
         if (linkManager.updateBool(id, "status") > 0) {
-            redirectAttributes.addFlashAttribute("info", "操作链接" + id + " 成功.");
+            return new ResponseMessage();
         } else {
-            redirectAttributes.addFlashAttribute("info", "操作链接" + id + " 失败.");
+            return new ResponseMessage("审核链接" + id + " 失败.");
         }
-        return "redirect:/link/listAll";
     }
 
-    /**
-     * 删除编号为id的link
-     *
-     * @param id
-     */
-    @RequestMapping(value = "delete/{id}", method = RequestMethod.GET)
-    public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+    @RequiresPermissions("link:save")
+    @RequestMapping(value = "delete/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseMessage delete(@PathVariable Long id) {
         if (linkManager.delete(id) > 0) {
-            redirectAttributes.addFlashAttribute("info", "删除链接成功");
+            return new ResponseMessage();
         } else {
-            redirectAttributes.addFlashAttribute("error", "删除链接失败");
+            return new ResponseMessage("删除链接" + id + "失败.");
         }
-        return "redirect:/link/listAll";
     }
 
-    /**
-     * 批量审核 link
-     *
-     * @param request
-     * @param redirectAttributes
-     * @return
-     */
+    @RequiresPermissions("link:save")
     @RequestMapping(value = "batchAudit", method = RequestMethod.GET)
     public String batchAuditLink(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         String[] isSelected = request.getParameterValues("isSelected");
@@ -140,13 +113,7 @@ public class LinkController {
         }
     }
 
-    /**
-     * 批量删除 link
-     *
-     * @param request
-     * @param redirectAttributes
-     * @return
-     */
+    @RequiresPermissions("link:save")
     @RequestMapping(value = "batchDelete", method = RequestMethod.GET)
     public String batchDeleteLink(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         String[] isSelected = request.getParameterValues("isSelected");

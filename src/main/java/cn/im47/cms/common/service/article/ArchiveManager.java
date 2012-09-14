@@ -34,11 +34,4 @@ public interface ArchiveManager extends GenericManager<Archive, Long> {
      */
     long updateByMonth(DateTime dateTime);
 
-    /**
-     * 保存指定月份的归档
-     *
-     * @param dateTime
-     */
-    long save(DateTime dateTime);
-
 }

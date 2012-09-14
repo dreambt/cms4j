@@ -3,13 +3,12 @@ package cn.im47.cms.common.web.account;
 import cn.im47.cms.common.entity.account.User;
 import cn.im47.cms.common.service.account.GroupManager;
 import cn.im47.cms.common.service.account.UserManager;
-import org.apache.commons.lang3.StringUtils;
+import cn.im47.cms.common.vo.ResponseMessage;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -17,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * User: baitao.jibt (dreambt@gmail.com)
+ * User: baitao.jibt@gmail.com
  * Date: 12-3-29
  * Time: 下午17:26
  */
@@ -28,69 +27,33 @@ public class UserController {
     private UserManager userManager;
     private GroupManager groupManager;
 
-    private GroupListEditor groupListEditor;
-
-    @InitBinder
-    public void initBinder(WebDataBinder b) {
-        b.registerCustomEditor(List.class, "groupList", groupListEditor);
-    }
-
-    /**
-     * 获取所有用户
-     *
-     * @param model
-     * @return
-     */
     @RequiresPermissions("user:list")
     @RequestMapping(value = {"list", ""}, method = RequestMethod.GET)
     public String listAll(Model model) {
-        model.addAttribute("users", userManager.getAll());
+        model.addAttribute("users", userManager.getAll(0, 10, "id", "DESC"));
         model.addAttribute("total", userManager.count());
         return "dashboard/account/user/listAll";
     }
 
-    /**
-     * 获取所有用户
-     *
-     * @param offset
-     * @param limit
-     * @return
-     */
     @RequiresPermissions("article:list")
     @RequestMapping(value = "listAll/ajax")
     @ResponseBody
-    public List<User> ajaxAllUser(@RequestParam("offset") int offset, @RequestParam("limit") int limit, String sort, String direction) {
-        if (StringUtils.isNotBlank(sort) && StringUtils.isNotBlank(direction)) {
-            return userManager.getAll(offset, limit, sort, direction);
-        } else {
-            return userManager.getAll(offset, limit);
-        }
+    public List<User> ajaxAllUser(@RequestParam("offset") int offset, @RequestParam("limit") int limit, @RequestParam(value = "sort", defaultValue = "id") String sort, @RequestParam(value = "direction", defaultValue = "DESC") String direction) {
+        return userManager.getAll(offset, limit, sort, direction);
     }
 
-    /**
-     * 添加用户
-     *
-     * @param model
-     * @return
-     */
     @RequiresPermissions("user:create")
-    @RequestMapping(value = "create")
+    @RequestMapping(value = "create", method = RequestMethod.GET)
     public String createForm(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("allGroups", groupManager.getAllGroup());
+        model.addAttribute("action", "create");
         return "dashboard/account/user/edit";
     }
 
-    /**
-     * 保存新建用户
-     *
-     * @param user
-     * @param redirectAttributes
-     * @return
-     */
-    @RequiresPermissions("user:save")
-    @RequestMapping(value = "save")
-    public String save(User user, RedirectAttributes redirectAttributes, BindingResult bindingResult, Model model, HttpServletRequest request) {
+    @RequiresPermissions("user:create")
+    @RequestMapping(value = "create", method = RequestMethod.POST)
+    public String create(User user, RedirectAttributes redirectAttributes, BindingResult bindingResult, Model model, HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             return createForm(model);
         }
@@ -105,14 +68,21 @@ public class UserController {
         }
     }
 
-    /**
-     * 密码找回
-     *
-     * @param id
-     * @param redirectAttributes
-     * @return
-     */
-    @RequiresPermissions("user:edit")
+    @RequiresPermissions("user:update")
+    @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
+    public String updateForm(@ModelAttribute("user") User user, Model model) {
+        if (null == user) {
+            model.addAttribute("info", "该用户不存在，请刷新重试");
+            return "redirect:/account/user/list";
+        }
+        model.addAttribute("user", user);
+        model.addAttribute("action", "update");
+        model.addAttribute("allGroups", groupManager.getAllGroup());
+        return "dashboard/account/user/edit";
+    }
+
+    // TODO 找回密码时发送确认邮件，点击邮件再修改密码！
+    @RequiresPermissions("user:save")
     @RequestMapping(value = "repass/{id}")
     public String repass(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         try {
@@ -129,42 +99,30 @@ public class UserController {
         }
     }
 
-    /**
-     * 审核编号为id的文章
-     *
-     * @param id
-     * @return
-     */
-    @RequiresPermissions("user:edit")
-    @RequestMapping(value = "audit/{id}")
-    public String auditArticle(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
-        if (userManager.update(id, "status") > 0) {
-            redirectAttributes.addFlashAttribute("info", "操作用户 " + id + " 成功.");
-        } else {
-            redirectAttributes.addFlashAttribute("error", "操作用户 " + id + " 失败.");
-        }
-        return "redirect:/account/user/list";
-    }
-
-    /**
-     * 删除编号为id的文章
-     *
-     * @param id
-     * @return
-     */
     @RequiresPermissions("user:save")
-    @RequestMapping(value = "delete/{id}")
-    public String deleteArticle(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
-        if (userManager.update(id, "deleted") > 0) {
-            redirectAttributes.addFlashAttribute("info", "操作用户 " + id + " 成功.");
+    @RequestMapping(value = "audit/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseMessage auditArticle(@PathVariable("id") Long id) {
+        if (userManager.update(id, "status") > 0) {
+            return new ResponseMessage();
         } else {
-            redirectAttributes.addFlashAttribute("error", "操作用户 " + id + " 失败.");
+            return new ResponseMessage("审核用户 " + id + " 失败.");
         }
-        return "redirect:/account/user/list";
     }
 
-    @RequiresPermissions("user:edit")
-    @RequestMapping(value = "batchAudit")
+    @RequiresPermissions("user:save")
+    @RequestMapping(value = "delete/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseMessage deleteArticle(@PathVariable("id") Long id) {
+        if (userManager.update(id, "deleted") > 0) {
+            return new ResponseMessage();
+        } else {
+            return new ResponseMessage("删除用户 " + id + " 失败.");
+        }
+    }
+
+    @RequiresPermissions("user:save")
+    @RequestMapping(value = "batchAudit", method = RequestMethod.POST)
     public String batchAuditUser(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         String[] isSelected = request.getParameterValues("isSelected");
         if (isSelected == null) {
@@ -178,7 +136,7 @@ public class UserController {
     }
 
     @RequiresPermissions("user:save")
-    @RequestMapping(value = "batchDelete")
+    @RequestMapping(value = "batchDelete", method = RequestMethod.POST)
     public String batchDeleteUser(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         String[] isSelected = request.getParameterValues("isSelected");
         if (isSelected == null) {
@@ -199,7 +157,6 @@ public class UserController {
         } else if (userManager.findUserByEmail(email) == null) {
             return "true";
         }
-
         return "false";
     }
 
@@ -211,11 +168,6 @@ public class UserController {
     @Autowired
     public void setGroupManager(GroupManager groupManager) {
         this.groupManager = groupManager;
-    }
-
-    @Autowired
-    public void setGroupListEditor(GroupListEditor groupListEditor) {
-        this.groupListEditor = groupListEditor;
     }
 
 }

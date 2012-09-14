@@ -3,6 +3,7 @@ package cn.im47.cms.common.service.article;
 import cn.im47.cms.common.dao.article.ArchiveMapper;
 import cn.im47.cms.common.dao.article.ArticleMapper;
 import cn.im47.cms.common.entity.article.Archive;
+import cn.im47.cms.common.entity.article.Article;
 import cn.im47.cms.memcached.MemcachedObjectType;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -92,36 +93,6 @@ public class ArchiveManagerImpl implements ArchiveManager {
 
     @Override
     @Transactional(readOnly = false)
-    public long save(DateTime dateTime) {
-        int year = dateTime.getYear();
-        int month = dateTime.getMonthOfYear();
-
-        String title = String.format("%04d年%02d月", year, month);
-        logger.info("保存 archive.title={}.", title);
-        if (null != archiveMapper.getByTitle(title)) {
-            return this.updateByMonth(dateTime);
-        }
-
-        //获得指定月份的所有文章
-        List<Long> ids = articleMapper.getIdByMonth(new DateTime(year, month, 1, 0, 0).toDate(), new DateTime(year, month + 1, 1, 0, 0).minusMillis(1).toDate());
-        if (ids.size() > 0) {
-            Archive archive = new Archive();
-            archive.setTitle(title);
-            archiveMapper.save(archive);
-            archive = archiveMapper.getByTitle(title);
-
-            //加入归档文章对应表
-            for (Long id : ids) {
-                archiveMapper.addArticle(archive.getId(), id);
-            }
-            return ids.size();
-        } else {
-            return 0;
-        }
-    }
-
-    @Override
-    @Transactional(readOnly = false)
     public long updateLastMonth() {
         DateTime dateTime = new DateTime().plusMonths(-1);
         logger.info("更新归档 archive.dateTime={}.", dateTime.toString());
@@ -129,35 +100,60 @@ public class ArchiveManagerImpl implements ArchiveManager {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public long updateByMonth(DateTime dateTime) {
         int year = dateTime.getYear();
         int month = dateTime.getMonthOfYear();
 
         String title = String.format("%04d年%02d月", year, month);
         Archive archive = archiveMapper.getByTitle(title);
-        if (null == archive) {
-            return this.save(dateTime);
-        }
-
-        logger.info("整理归档 archive.dateTime={}.", title);
-
-        List<Long> ids = archiveMapper.getArticleIdByTitle(title);
         List<Long> eids = articleMapper.getIdByMonth(new DateTime(year, month, 1, 0, 0).toDate(), new DateTime(year, month + 1, 1, 0, 0).minusMillis(1).toDate());
+        if (null == archive) {
+            logger.info("新建归档 archive.title={}.", title);
+            if (eids.size() > 0) {
+                archive = new Archive();
+                archive.setTitle(title);
+                archiveMapper.save(archive);
 
-        // 待删除id
-        List<Long> deleteId = Collections3.subtract(ids, eids);
-        logger.info("删除 archive.id={}.", deleteId.toString());
-        for (Long id : deleteId) {
-            archiveMapper.deleteArticle(id);
-        }
+                //加入归档文章对应表
+                for (Long id : eids) {
+                    archiveMapper.addArticle(archive.getId(), id);
+                }
+                return eids.size();
+            }
+        } else {
+            logger.info("整理归档 archive.title={}.", title);
+            List<Long> ids = Lists.newArrayList();
+            for (Article article : archive.getArticleList()) {
+                ids.add(article.getId());
+            }
 
-        // 待新增id
-        List<Long> addId = Collections3.subtract(eids, ids);
-        logger.info("保存 archive.id={}.", addId.toString());
-        for (Long id : addId) {
-            archiveMapper.addArticle(archive.getId(), id);
+            // 待新增id
+            List<Long> addId = Collections3.subtract(eids, ids);
+            if (addId.size() > 0) {
+                logger.info("保存 archive.id={} article.id={}.", archive.getId(), addId.toString());
+                for (Long id : addId) {
+                    archiveMapper.addArticle(archive.getId(), id);
+                }
+            }
+
+            // 待删除id
+            List<Long> deleteId = Collections3.subtract(ids, eids);
+            if (deleteId.size() > 0) {
+                logger.info("删除 archive.id={} article.id={}.", archive.getId(), deleteId.toString());
+                for (Long id : deleteId) {
+                    archiveMapper.deleteArticle2(archive.getId(), id);
+                }
+            }
+
+            // 没有归档文章则删除归档记录
+            if (0 == eids.size()) {
+                archiveMapper.delete(archive.getId());
+            }
+
+            return 1;
         }
-        return 1;
+        return 0;
     }
 
     @Override

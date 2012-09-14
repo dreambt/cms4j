@@ -5,7 +5,7 @@
   Time: 下午16:49
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
-
+<%@ page session="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
@@ -40,7 +40,8 @@
         <!-- 分页 -->
         <div class="pagination pagination-right">
             <ul id="pagination">
-                <c:forEach begin="1" end="${total/12>11?11:1+total/12}" step="1" varStatus="var">
+
+                <c:forEach begin="1" end="${total/12>11?11:0.9+total/12}" step="1" varStatus="var">
                     <li><a href="#">${var.index}</a></li>
                 </c:forEach>
             </ul>
@@ -50,16 +51,6 @@
     <%@include file="/WEB-INF/layouts/sidebar.jsp" %>
 </div>
 <script type="text/javascript">
-    function ChangeDateFormat(cellval) {
-        var date = new Date(parseInt(cellval + 3600000, 10));
-        var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
-        var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-        //var hour = date.getHours();
-        //var min = date.getMinutes();
-        //var sec = date.getSeconds();
-        return date.getFullYear() + "年" + month + "月" + currentDate + "日";// + hour + ":" + min + ":" + sec;
-    }
-
     $(function () {
         var articles = $("#article_load");
         var pager = $("#pagination");

@@ -2,7 +2,7 @@ package cn.im47.cms.common.web.image;
 
 import cn.im47.cms.common.entity.image.Image;
 import cn.im47.cms.common.service.image.ImageManager;
-import org.apache.commons.lang3.StringUtils;
+import cn.im47.cms.common.vo.ResponseMessage;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -26,118 +27,64 @@ public class ImageController {
 
     private ImageManager imageManager;
 
-    /**
-     * 后台显示所有图片
-     *
-     * @param model
-     * @return
-     */
     @RequiresPermissions("gallery:list")
     @RequestMapping(value = "listAll", method = RequestMethod.GET)
     public String listAll(Model model) {
-        model.addAttribute("images", imageManager.getAll());
+        model.addAttribute("images", imageManager.getAll(0, 6, "id", "DESC"));
         model.addAttribute("total", imageManager.count());
         return "dashboard/image/listAll";
     }
 
-    /**
-     * 后台获取所有文章图片
-     *
-     * @param offset
-     * @param limit
-     * @param sort
-     * @param direction
-     * @return
-     */
     @RequiresPermissions("gallery:list")
-    @RequestMapping(value = "listAll/ajax")
+    @RequestMapping(value = "listAll/ajax", method = RequestMethod.GET)
     @ResponseBody
-    public List<Image> ajaxListAll(@RequestParam("offset") int offset, @RequestParam("limit") int limit, String sort, String direction) {
-        if (StringUtils.isNotBlank(sort) && StringUtils.isNotBlank(direction)) {
-            return imageManager.getAll(offset, limit, sort, direction);
-        } else {
-            return imageManager.getAll(offset, limit);
-        }
+    public List<Image> ajaxListAll(@RequestParam("offset") int offset, @RequestParam("limit") int limit,
+                                   @RequestParam(value = "sort", defaultValue = "id") String sort,
+                                   @RequestParam(value = "direction", defaultValue = "DESC") String direction) {
+        return imageManager.getAll(offset, limit, sort, direction);
     }
 
-    /**
-     * 前台显示图片
-     *
-     * @param model
-     * @return
-     */
     @RequestMapping(value = "album", method = RequestMethod.GET)
     public String album(Model model) {
-        model.addAttribute("images", imageManager.getAll(0, 10));
+        model.addAttribute("images", imageManager.getAll(0, 6, "id", "DESC"));
         model.addAttribute("total", imageManager.count());
         return "album";
     }
 
-    /**
-     * 获得分页image
-     *
-     * @param offset
-     * @param limit
-     * @return
-     */
     @RequestMapping(value = "album/ajax", method = RequestMethod.GET)
     @ResponseBody
     public List<Image> ajaxAlbumPaged(@RequestParam("offset") int offset, @RequestParam("limit") int limit) {
-        List<Image> images = imageManager.getAll(offset, limit);
+        List<Image> images = imageManager.getAll(offset, limit, "id", "DESC");
         return images;
     }
 
-    /**
-     * 前台显示图片
-     *
-     * @param model
-     * @return
-     */
     @RequestMapping(value = "photo", method = RequestMethod.GET)
     public String gallery(Model model) {
-        List<Image> images = imageManager.getAll(0, 12);
+        List<Image> images = imageManager.getAll(0, 12, "id", "DESC");
         model.addAttribute("images", images);
         model.addAttribute("total", imageManager.count());
         return "photo";
     }
 
-    /**
-     * 获得分页image
-     *
-     * @param offset
-     * @param limit
-     * @return
-     */
     @RequestMapping(value = "photo/ajax", method = RequestMethod.GET)
     @ResponseBody
     public List<Image> ajaxPhotoPaged(@RequestParam("offset") int offset, @RequestParam("limit") int limit) {
-        List<Image> images = imageManager.getAll(offset, limit);
+        List<Image> images = imageManager.getAll(offset, limit, "id", "DESC");
         return images;
     }
 
-    /**
-     * 打开新建image的页面
-     *
-     * @return
-     */
     @RequiresPermissions("gallery:create")
     @RequestMapping(value = "create", method = RequestMethod.GET)
-    public String create(Model model) {
+    public String createForm(Model model) {
         model.addAttribute("image", new Image());
+        model.addAttribute("action", "create");
         return "dashboard/image/edit";
     }
 
-    /**
-     * 保存图片信息
-     *
-     * @param image
-     * @param redirectAttributes
-     * @return
-     */
-    @RequiresPermissions("gallery:save")
-    @RequestMapping(value = "save", method = RequestMethod.POST)
-    public String save(@RequestParam(value = "file", required = false) MultipartFile file,
-                       HttpServletRequest request, Image image, RedirectAttributes redirectAttributes) {
+    @RequiresPermissions("gallery:create")
+    @RequestMapping(value = "create", method = RequestMethod.POST)
+    public String create(@Valid Image image, @RequestParam(value = "file", required = false) MultipartFile file,
+                         HttpServletRequest request, RedirectAttributes redirectAttributes) {
         if (null == file) {
             redirectAttributes.addFlashAttribute("error", "请选择上传的图片");
             return "redirect:/gallery/listAll";
@@ -159,30 +106,37 @@ public class ImageController {
         return "redirect:/gallery/listAll";
     }
 
-    /**
-     * 删除编号为id的image
-     *
-     * @param id
-     * @param redirectAttributes
-     * @return
-     */
-    @RequiresPermissions("gallery:save")
-    @RequestMapping(value = "delete/{id}")
-    public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        if (imageManager.delete(id) > 0) {
-            redirectAttributes.addFlashAttribute("info", "删除图片 " + id + " 成功.");
-        } else {
-            redirectAttributes.addFlashAttribute("error", "删除图片 " + id + " 失败.");
-        }
-
-        return "redirect:/gallery/listAll";
+    @RequiresPermissions("gallery:update")
+    @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
+    public String updateForm(@PathVariable Long id, Model model) {
+        Image image = imageManager.get(id);
+        model.addAttribute("image", image);
+        model.addAttribute("action", "update");
+        return "dashboard/image/edit";
     }
 
-    /**
-     * 批量删除
-     *
-     * @return
-     */
+    @RequiresPermissions("gallery:save")
+    @RequestMapping(value = "showIndex/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseMessage showIndex(@PathVariable Long id) {
+        if (imageManager.update(id, "show_index") > 0) {
+            return new ResponseMessage();
+        } else {
+            return new ResponseMessage("首页显示 " + id + " 失败");
+        }
+    }
+
+    @RequiresPermissions("gallery:save")
+    @RequestMapping(value = "delete/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseMessage delete(@PathVariable Long id) {
+        if (imageManager.delete(id) > 0) {
+            return new ResponseMessage();
+        } else {
+            return new ResponseMessage("删除图片 " + id + " 失败.");
+        }
+    }
+
     @RequiresPermissions("gallery:save")
     @RequestMapping(value = "batchDelete", method = RequestMethod.POST)
     public String batchDeleteComment(HttpServletRequest request, RedirectAttributes redirectAttributes) {
@@ -192,24 +146,6 @@ public class ImageController {
         } else {
             imageManager.batchDelete(isSelected);
             redirectAttributes.addFlashAttribute("info", "批量删除图片成功.");
-        }
-        return "redirect:/gallery/listAll";
-    }
-
-    /**
-     * 首页显示
-     *
-     * @param id
-     * @param redirectAttributes
-     * @return
-     */
-    @RequiresPermissions("gallery:edit")
-    @RequestMapping(value = "showIndex/{id}")
-    public String showIndex(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        if (imageManager.update(id, "show_index") > 0) {
-            redirectAttributes.addFlashAttribute("info", "首页显示" + id + "成功");
-        } else {
-            redirectAttributes.addFlashAttribute("error", "首页显示" + id + "失败");
         }
         return "redirect:/gallery/listAll";
     }

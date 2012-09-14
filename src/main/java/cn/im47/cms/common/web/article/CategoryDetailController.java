@@ -1,15 +1,14 @@
 package cn.im47.cms.common.web.article;
 
 import cn.im47.cms.common.entity.article.Category;
-import cn.im47.cms.common.entity.article.ShowTypeEnum;
 import cn.im47.cms.common.service.article.CategoryManager;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -21,38 +20,14 @@ import javax.validation.Valid;
  * Time: 下午5:50
  */
 @Controller
-@RequestMapping(value = "/category/")
+@RequestMapping(value = "/category")
 public class CategoryDetailController {
 
     private CategoryManager categoryManager;
 
-    /**
-     * 修改分类
-     *
-     * @param model
-     * @return
-     */
-    @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
-    public String edit(@Valid @ModelAttribute("category") Category category, Model model) {
-        if (null == category) {
-            model.addAttribute("error", "该分类不存在，请刷新重试.");
-            return "dashboard/category/listAll";
-        }
-        model.addAttribute("category", category);
-        model.addAttribute("showTypes", ShowTypeEnum.values());
-        model.addAttribute("fatherCategories", categoryManager.getNavCategory());
-        return "dashboard/category/edit";
-    }
-
-    /**
-     * 修改保存分类
-     *
-     * @param category
-     * @param redirectAttributes
-     * @return
-     */
-    @RequestMapping(value = "save/{id}")
-    public String save(@Valid @ModelAttribute("category") Category category, RedirectAttributes redirectAttributes) {
+    @RequiresPermissions("category:update")
+    @RequestMapping(value = "update", method = RequestMethod.POST)
+    public String update(@Valid @ModelAttribute("category") Category category, RedirectAttributes redirectAttributes) {
         if (null == category) {
             redirectAttributes.addFlashAttribute("error", "该菜单不存在，请刷新重试.");
             return "redirect:/category/listAll";
@@ -66,8 +41,11 @@ public class CategoryDetailController {
     }
 
     @ModelAttribute("category")
-    public Category getCategory(@PathVariable("id") Long id) {
-        return categoryManager.get(id);
+    public Category getCategory(@RequestParam(value = "id", required = false) Long id) {
+        if (id != null) {
+            return categoryManager.get(id);
+        }
+        return null;
     }
 
     @Autowired

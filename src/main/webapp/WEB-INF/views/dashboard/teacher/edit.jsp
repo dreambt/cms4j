@@ -16,7 +16,7 @@
     <link rel="stylesheet" type="text/css" href="${ctx}/static/js/markitup/style.min.css">
 </head>
 <body>
-<form:form id="teacherForm" modelAttribute="teacher" action="${ctx}/teacher/save/${teacher.id}" method="post" enctype="multipart/form-data" cssClass="form-horizontal">
+<form:form id="teacherForm" modelAttribute="teacher" action="${ctx}/teacher/${action}" method="post" enctype="multipart/form-data" cssClass="form-horizontal">
 <div class="row">
     <div class="span4">
         <div class="control-group">
@@ -51,7 +51,7 @@
         </div>
     </div>
     <div class="span8">
-        <textarea id="markdown" name="message" cols="80" rows="20">${article.message}</textarea>
+        <textarea id="markdown" name="message" style="width:750px" rows="8">${article.message}</textarea>
         <div class="control-group">
             <div class="controls">
                 <button class="btn btn-primary" id="publish" type="submit"><i class="icon-ok icon-white"></i> 发 布</button>

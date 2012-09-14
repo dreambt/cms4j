@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 /**
  * 被Spring各种Scheduler反射调用的Service POJO
  * <p/>
- * User: baitao.jibt (dreambt@gmail.com)
+ * User: baitao.jibt@gmail.com
  * Date: 12-3-26
  * Time: 上午11:06
  */

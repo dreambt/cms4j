@@ -39,14 +39,13 @@
                     <tr>
                         <td><input type="checkbox" name="isSelected" value="${user.id}"></td>
                         <td>${user.username}</td>
-                        <td>${user.email} <c:choose><c:when test="${user.emailStatus}"><i class='icon-ok'></i></c:when><c:otherwise><i class='icon-remove'></i></c:otherwise></c:choose>
-                        </td>
+                        <td>${user.email} <c:if test="${user.emailStatus}"><i class='icon-ok'></i></c:if></td>
                         <td><c:forEach items="${user.groupList}" begin="0" step="1" var="group">${group.groupName} </c:forEach></td>
-                        <td><joda:format value="${user.createdDate}" pattern="yyyy年MM月dd日 hh:mm:ss"/></td>
-                        <td><joda:format value="${user.lastTime}" pattern="yyyy年MM月dd日 hh:mm:ss"/></td>
+                        <td><joda:format value="${user.createdDate}" pattern="yyyy年MM月dd日"/></td>
+                        <td><joda:format value="${user.lastTime}" pattern="yyyy年MM月dd日 kk:mm:ss"/></td>
                         <td>${user.lastLoginIP}</td>
-                        <td><a href="${ctx}/account/user/audit/${user.id}"><c:choose><c:when test="${user.status}"><span class="label label-success">已审核</span></c:when><c:otherwise><span class="label label-important">未审核</span></c:otherwise></c:choose></a></td>
-                        <td><a href="${ctx}/account/user/repass/${user.id}">【密码找回】</a> <a href="${ctx}/account/user/edit/${user.id}">【编辑】</a> <a href="${ctx}/account/user/delete/${user.id}"><c:choose><c:when test="${user.deleted}">【恢复】</c:when><c:otherwise>【删除】</c:otherwise></c:choose></a></td>
+                        <td><c:choose><c:when test="${user.status}"><span id="${user.id}" class="label label-success audit">已审核</span></c:when><c:otherwise><span id="${user.id}" class="label label-important audit">未审核</span></c:otherwise></c:choose></td>
+                        <td><a href="${ctx}/account/user/repass/${user.id}"><span class='label label-info'>密码找回</span></a> <a href="${ctx}/account/user/update/${user.id}"><span class='label label-info'>编辑</span></a> <c:choose><c:when test="${user.deleted}"><span id="${user.id}" class="label label-inverse delete">恢复</span></c:when><c:otherwise><span id="${user.id}" class="label label-warning delete">删除</span></c:otherwise></c:choose></td>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -61,7 +60,7 @@
         <!-- 分页 -->
         <div class="pagination pagination-right">
             <ul id="pagination">
-                <c:forEach begin="1" end="${total/10>11?11:1+total/10}" step="1" varStatus="var">
+                <c:forEach begin="1" end="${total/10>11?11:0.9+total/10}" step="1" varStatus="var">
                     <li><a href="#">${var.index}</a></li>
                 </c:forEach>
             </ul>
@@ -69,16 +68,14 @@
     </div>
 </div>
 <script type="text/javascript">
-    function ChangeDateFormat(cellval) {
-        var date = new Date(parseInt(cellval + 3600000, 10));
-        var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
-        var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-        //var hour = date.getHours();
-        //var min = date.getMinutes();
-        //var sec = date.getSeconds();
-        return date.getFullYear() + "年" + month + "月" + currentDate + "日";// + hour + ":" + min + ":" + sec;
+    function buttonClick(){
+        $(".audit").click(function(){
+            PostByAjax("${ctx}/account/user/audit/"+$(this).attr("id"));
+        });
+        $(".delete").click(function(){
+            PostByAjax("${ctx}/account/user/delete/"+$(this).attr("id"));
+        });
     }
-
     $(function () {
         var articles = $("#article_load");
         var pager = $("#pagination");
@@ -99,18 +96,16 @@
                         var htmlStr="<tr><td><input type='checkbox' name='isSelected' value='" + content.id + "'></td><td>" + content.username + "</td><td>" + content.email;
                         if (content.emailStatus)
                             htmlStr+=" <i class='icon-ok'></i>";
-                        else
-                            htmlStr+=" <i class='icon-remove'></i>";
-                        htmlStr+="</td><td>" + content.groupList + "</td><td>" + ChangeDateFormat(content.createdDate) + "</td><td>" + ChangeDateFormat(content.lastTime) + "</td><td>" + content.lastLoginIP + "</td>";
+                        htmlStr+="</td><td>" + content.groupList[0].groupName + "</td><td>" +ChangeDateFormat(content.createdDate) + "</td><td>" + ChangeDateTimeFormat(content.lastTime) + "</td><td>" + content.lastLoginIP + "</td>";
                         if (content.status)
-                            htmlStr+="<td><a href='${ctx}/account/user/audit/" + content.id + "'><span class='label label-success'>已审核</span></a></td>";
+                            htmlStr+="<td><span id='"+ content.id +"' class='label label-success audit'>已审核</span></td>";
                         else
-                            htmlStr+="<td><a href='${ctx}/account/user/audit/" + content.id + "'><span class='label label-important'>未审核</span></a></td>";
-                        htmlStr+="<td><a href='${ctx}/account/user/repass/" + content.id + "'>【密码找回】</a> <a href='${ctx}/account/user/edit/" + content.id + "'>【编辑】</a> ";
+                            htmlStr+="<td><span id='"+ content.id +"' class='label label-important audit'>未审核</span></td>";
+                        htmlStr+="<td><a href='${ctx}/account/user/repass/" + content.id + "'><span class='label label-info'>密码找回</span></a> <a href='${ctx}/account/user/update/" + content.id + "'><span class='label label-info'>编辑</span></a> ";
                         if (content.deleted)
-                            htmlStr+="<a href='${ctx}/account/user/delete/" + content.id + "'>【恢复】</a></td></tr>";
+                            htmlStr+="<span id='"+ content.id +"' class='label label-inverse delete'>恢复</span></td></tr>";
                         else
-                            htmlStr+="<a href='${ctx}/account/user/delete/" + content.id + "'>【删除】</a></td></tr>"
+                            htmlStr+="<span id='"+ content.id +"' class='label label-warning delete'>删除</span></td></tr>";
                         articles.append($(htmlStr));
                     });
 
@@ -144,26 +139,24 @@
                             pager.append(a);
                         } //else
                     } //for
+                    buttonClick();
                 }
             });
         };
         $("#pagination li").click(function () {
             PageClick($(this).text(), ${total}, 5);
         });
-
+        buttonClick();
         $('#auditAll').click(function () {
             if (confirm("确定批量审核吗？")) {
                 $("#articleForm").attr("action", "${ctx}/account/user/batchAudit").submit();
-                alert("操作成功，请等待缓存失效！");
             } else {
                 return false;
             }
         });
-
         $('#deleteAll').click(function () {
             if (confirm("确定批量删除吗？")) {
                 $("#articleForm").attr("action", "${ctx}/account/user/batchDelete").submit();
-                alert("操作成功，请等待缓存失效！");
             } else {
                 return false;
             }

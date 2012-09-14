@@ -17,7 +17,7 @@ import java.io.File;
  * 消息的异步被动接收者.
  * 使用Spring的MessageListenerContainer侦听消息并调用本Listener进行处理.
  * <p/>
- * User: baitao.jibt (dreambt@gmail.com)
+ * User: baitao.jibt@gmail.com
  * Date: 12-3-22
  * Time: 下午16:39
  */

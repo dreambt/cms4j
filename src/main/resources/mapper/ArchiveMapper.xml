@@ -7,7 +7,8 @@
     <resultMap id="archiveDetailMap" type="Archive">
         <id property="id" column="id"/>
         <result property="title" column="title"/>
-        <collection property="articleList" javaType="Article">
+        <collection property="articleList" javaType="Article" columnPrefix="art_">
+            <id property="id" column="id"/>
             <result property="subject" column="subject"/>
             <result property="digest" column="digest"/>
             <result property="rate" column="rate"/>
@@ -16,41 +17,33 @@
         </collection>
     </resultMap>
 
-    <sql id="archiveColumns">cms_archive.id,title</sql>
-    <sql id="articleColumns">subject,digest,rate,rate_times,views</sql>
+    <sql id="archiveColumns">A.id,A.title</sql>
+    <sql id="articleColumns">B.id AS art_id,subject  AS art_subject,digest AS art_digest,rate AS art_rate,rate_times AS art_rate_times,views AS art_views</sql>
 
     <!-- 获取Archive -->
     <select id="get" parameterType="Long" resultMap="archiveDetailMap">
         SELECT <include refid="archiveColumns"/>,<include refid="articleColumns"/>
-        FROM cms_archive
-        LEFT OUTER JOIN cms_archive_article ON archive_id = cms_archive.id
-        LEFT OUTER JOIN cms_article ON cms_article.id = article_id
-        WHERE cms_archive.id=#{id}
+        FROM cms_archive AS A
+        LEFT OUTER JOIN cms_archive_article AS AA ON AA.archive_id = A.id
+        LEFT OUTER JOIN cms_article AS B ON B.id = AA.article_id
+        WHERE A.id=#{id}
     </select>
 
     <!-- 获取Archive -->
     <select id="getByTitle" parameterType="String" resultMap="archiveDetailMap">
         SELECT <include refid="archiveColumns"/>,<include refid="articleColumns"/>
-        FROM cms_archive
-        LEFT OUTER JOIN cms_archive_article ON archive_id = cms_archive.id
-        LEFT OUTER JOIN cms_article ON cms_article.id = article_id
+        FROM cms_archive AS A
+        LEFT OUTER JOIN cms_archive_article AS AA ON AA.archive_id = A.id
+        LEFT OUTER JOIN cms_article AS B ON B.id = AA.article_id
         WHERE title=#{title}
         ORDER BY id ASC
-    </select>
-
-    <!-- 获取Archive -->
-    <select id="getArticleIdByTitle" parameterType="String" resultType="Long">
-        SELECT cms_archive_article.article_id
-        FROM cms_archive_article
-        LEFT OUTER JOIN cms_archive ON archive_id = cms_archive.id
-        WHERE title=#{title}
     </select>
 
     <!-- 边栏list -->
     <select id="list" parameterType="map" resultType="Archive">
         SELECT id,title,count(id) as count
-        FROM cms_archive
-        LEFT OUTER JOIN cms_archive_article ON archive_id = cms_archive.id
+        FROM cms_archive AS A
+        LEFT OUTER JOIN cms_archive_article ON archive_id = A.id
         GROUP BY title
         ORDER BY title DESC
         LIMIT ${offset},${limit}
@@ -79,13 +72,19 @@
     <!-- 删除Archive_article -->
     <delete id="deleteArticle" parameterType="Long">
         DELETE FROM cms_archive_article
-        WHERE archive_id=#{articleId};
+        WHERE archive_id=#{archiveId};
+    </delete>
+
+    <!-- 删除Archive_article -->
+    <delete id="deleteArticle2" parameterType="Long">
+        DELETE FROM cms_archive_article
+        WHERE archive_id=#{archiveId} and article_id=#{articleId};
     </delete>
 
     <!-- 查询Archive -->
     <select id="search" resultMap="archiveDetailMap">
         SELECT <include refid="archiveColumns"/>
-        FROM cms_archive
+        FROM cms_archive AS A
         <where>
             <if test="id != null and id>0">
                 and id=#{id}

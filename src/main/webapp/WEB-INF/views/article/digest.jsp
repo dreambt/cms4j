@@ -5,6 +5,7 @@
   Time: 下午20:52
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page session="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
@@ -36,7 +37,7 @@
                     <img src="${ctx}/static/uploads/article/digest-thumb/${article.imageName}" alt="" class="imgleft" width="134px" height="134px"/>
                     <div class="caption">
                         <h5 style="margin:0"><a href="${ctx}/article/content/${article.id}" title="${article.subject}"><c:if test="${article.top}"><img src="${ctx}/static/images/top.gif" /></c:if>${fn:substring(article.subject,0,23)}<c:if test="${fn:length(article.subject)>23}">...</c:if></a></h5>
-                        <div>作者: ${article.user.username} &nbsp; | &nbsp; 发表时间: <joda:format value="${article.createdDate}" pattern="yyyy年MM月dd日"/> &nbsp; | &nbsp; 浏览次数: ${article.views}</div>
+                        <div>作者: ${article.user.username}&nbsp;|&nbsp;发表时间:<joda:format value="${article.createdDate}" pattern="yyyy年MM月dd日"/>&nbsp;|&nbsp;浏览次数: ${article.views}</div>
                         <p>${article.digest}</p>
                     </div>
                 </div>
@@ -46,7 +47,7 @@
         <!-- 分页 -->
         <div class="pagination pagination-right">
             <ul id="pagination">
-                <c:forEach begin="1" end="${total/6>11?11:1+total/6}" step="1" varStatus="var">
+                <c:forEach begin="1" end="${total/6>11?11:0.9+total/6}" step="1" varStatus="var">
                     <li><a href="#">${var.index}</a></li>
                 </c:forEach>
             </ul>
@@ -56,16 +57,6 @@
     <%@include file="/WEB-INF/layouts/sidebar.jsp" %>
 </div>
 <script type="text/javascript">
-    function ChangeDateFormat(cellval) {
-        var date = new Date(parseInt(cellval + 3600000, 10));
-        var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
-        var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-        //var hour = date.getHours();
-        //var min = date.getMinutes();
-        //var sec = date.getSeconds();
-        return date.getFullYear() + "年" + month + "月" + currentDate + "日";// + hour + ":" + min + ":" + sec;
-    }
-
     $(function () {
         var articles = $("#article_load");
         var pager = $("#pagination");
@@ -78,15 +69,15 @@
 
             $.ajax({
                 url:"${ctx}/article/digest/ajax/${category.id}?offset=" + (intPageIndex - 1) * limit + "&limit=" + limit,
-                timeout:3000,
-                success:function (data) {
+                timeout:3000
+                }).done(function (data) {
                     //加载文章
                     articles.html("");
                     $.each(data, function (index, content) {
                         if (content.top)
-                            articles.append($("<div class='thumbnail' style='margin-bottom:5px'><img src='${ctx}/static/uploads/article/digest-thumb/"+content.imageName+"' alt='' class='imgleft' width='134px' height='134px'/><div class='caption'><h5 style='margin:0'><a href='${ctx}/article/content/" + content.id + "' title='" + content.subject + "'><img src='${ctx}/static/images/top.gif' />" + content.subject.substr(0,23) + "</a></h5><div>作者: " + content.user.username + " &nbsp; | &nbsp; 发表时间: " + ChangeDateFormat(content.createdDate) + " &nbsp; | &nbsp; 浏览次数: " + content.views + "</div><p>" + content.digest + "</p></div></div>"));
+                            articles.append($("<div class='thumbnail' style='margin-bottom:5px'><img src='${ctx}/static/uploads/article/digest-thumb/"+content.imageName+"' alt='' class='imgleft' width='134px' height='134px'/><div class='caption'><h5 style='margin:0'><a href='${ctx}/article/content/" + content.id + "' title='" + content.subject + "'><img src='${ctx}/static/images/top.gif' />" + content.subject.substr(0,23) + "</a></h5><div>作者: " + content.user.username + " &nbsp; | &nbsp; 发表时间: " + ChangeDateTimeFormat(content.createdDate) + " &nbsp; | &nbsp; 浏览次数: " + content.views + "</div><p>" + content.digest + "</p></div></div>"));
                         else
-                            articles.append($("<div class='thumbnail' style='margin-bottom:5px'><img src='${ctx}/static/uploads/article/digest-thumb/"+content.imageName+"' alt='' class='imgleft' width='134px' height='134px'/><div class='caption'><h5 style='margin:0'><a href='${ctx}/article/content/" + content.id + "' title='" + content.subject + "'>" + content.subject.substr(0,23) + "</a></h5><div>作者: " + content.user.username + " &nbsp; | &nbsp; 发表时间: " + ChangeDateFormat(content.createdDate) + " &nbsp; | &nbsp; 浏览次数: " + content.views + "</div><p>" + content.digest + "</p></div></div>"));
+                            articles.append($("<div class='thumbnail' style='margin-bottom:5px'><img src='${ctx}/static/uploads/article/digest-thumb/"+content.imageName+"' alt='' class='imgleft' width='134px' height='134px'/><div class='caption'><h5 style='margin:0'><a href='${ctx}/article/content/" + content.id + "' title='" + content.subject + "'>" + content.subject.substr(0,23) + "</a></h5><div>作者: " + content.user.username + " &nbsp; | &nbsp; 发表时间: " + ChangeDateTimeFormat(content.createdDate) + " &nbsp; | &nbsp; 浏览次数: " + content.views + "</div><p>" + content.digest + "</p></div></div>"));
                     });
 
                     //将总记录数结果 得到 总页码数
@@ -119,7 +110,6 @@
                             pager.append(a);
                         } //else
                     } //for
-                }
             });
         };
         $("#pagination li").click(function () {

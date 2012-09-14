@@ -48,9 +48,6 @@ public class ImageManagerImpl implements ImageManager {
     @Value("${path.upload.base}")
     private String uploadPath;
 
-    @Value("${paged.image.limit}")
-    public int imageLimit;
-
     public Image get(Long id) {
         Image image = null;
         long start = System.currentTimeMillis();
@@ -91,16 +88,6 @@ public class ImageManagerImpl implements ImageManager {
         long end = System.currentTimeMillis();
         logger.info("获取相册数 用时：{}ms. key: " + key, end - start);
         return num;
-    }
-
-    @Override
-    public List<Image> getAll() {
-        return this.getAll(0, imageLimit, "id", "DESC");
-    }
-
-    @Override
-    public List<Image> getAll(int offset, int limit) {
-        return this.getAll(offset, limit, "id", "DESC");
     }
 
     @Override

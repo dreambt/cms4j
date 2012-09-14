@@ -5,6 +5,7 @@
   Time: 下午21:19
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page session="false" %>
 <%@ taglib prefix="sitemesh" uri="http://www.opensymphony.com/sitemesh/decorator" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -17,8 +18,7 @@
 <html>
 <head>
     <title>${category.categoryName}</title>
-    <link rel="stylesheet" type="text/css" href="${ctx}/static/css/ui.totop.css">
-    <script src="${ctx}/static/js/jquery.ui.totop.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="${ctx}/static/js/totop/ui.totop.css">
 </head>
 <body>
 <!-- 文章导航 -->
@@ -37,7 +37,7 @@
         <div class="blog-post">
             <h3>${article.subject}</h3>
             <div class="blog-posted-inner">
-                作者: ${article.user.username} &nbsp; | &nbsp; 发表时间: <joda:format value="${article.createdDate}" pattern="yyyy年MM月dd日 hh:mm:ss"/> &nbsp; | &nbsp;
+                作者: ${article.user.username} &nbsp; | &nbsp; 发表时间: <joda:format value="${article.createdDate}" pattern="yyyy年MM月dd日 kk:mm:ss"/> &nbsp; | &nbsp;
                 浏览次数: ${article.views} <c:if test="${article.allowComment}">&nbsp; | &nbsp; 评论数: ${fn:length(article.commentList)}</c:if>
             </div>
             ${article.message}
@@ -105,5 +105,6 @@
         });
     });
 </script>
+<script src="${ctx}/static/js/totop/jquery.ui.totop.js" type="text/javascript"></script>
 </body>
 </html>

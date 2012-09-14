@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * 用户 Manager 实现类
  * <p/>
- * User: baitao.jibt (dreambt@gmail.com)
+ * User: baitao.jibt@gmail.com
  * Date: 12-3-22
  * Time: 下午5:25
  */

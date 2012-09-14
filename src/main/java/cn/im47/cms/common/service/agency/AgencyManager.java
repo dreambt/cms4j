@@ -42,7 +42,7 @@ public class AgencyManager {
      * @param id
      * @return
      */
-    public Agency getAgency(Long id) {
+    public Agency get(Long id) {
         return agencyMapper.get(id);
     }
 

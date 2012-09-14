@@ -23,11 +23,6 @@ public interface ArchiveMapper extends GenericDao<Archive, Long> {
     Archive getByTitle(String title);
 
     /**
-     * 获取标题为title的article id
-     */
-    List<Long> getArticleIdByTitle(String title);
-
-    /**
      * 获得前n条归类信息
      *
      * @return
@@ -42,6 +37,7 @@ public interface ArchiveMapper extends GenericDao<Archive, Long> {
     /**
      * 删除相关文章
      */
-    int deleteArticle(Long articleId);
+    int deleteArticle(@Param("archiveId") Long archiveId);
+    int deleteArticle2(@Param("archiveId") Long archiveId, @Param("articleId") Long articleId);
 
 }

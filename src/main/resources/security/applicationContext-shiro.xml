@@ -31,8 +31,7 @@
                 /account/** = user
                 <!-- 文章管理 -->
                 /article/create = perms["article:create"]
-                /article/edit/** = perms["article:edit"]
-                /article/save/** = perms["article:edit"]
+                /article/update/** = perms["article:update"]
                 /article/delete/** = perms["article:save"]
                 /article/allow/** = perms["article:save"]
                 /article/top/** = perms["article:save"]
@@ -42,16 +41,9 @@
                 /article/listAll = perms["article:list"]
                 <!-- 归档管理 -->
                 /archive/save/** = perms["article:list"]
-                <!-- 评论管理 -->
-                /comment/delete/** = perms["comment:save"]
-                /comment/audit/** = perms["comment:save"]
-                /comment/batchDelete/** = perms["comment:save"]
-                /comment/batchAudit/** = perms["comment:save"]
-                /comment/listAll = perms["comment:list"]
                 <!-- 用户管理 -->
                 /account/user/create = perms["user:create"]
-                /account/user/edit/** = perms["user:edit"]
-                /account/user/save/** = perms["user:edit"]
+                /account/user/update/** = perms["user:update"]
                 /account/user/delete/** = perms["user:save"]
                 /account/user/audit/** = perms["user:save"]
                 /account/user/batchDelete/** = perms["user:save"]
@@ -59,19 +51,26 @@
                 /account/user/listAll = perms["user:list"]
                 <!-- 相册管理 -->
                 /gallery/create = perms["gallery:create"]
-                /gallery/edit/** = perms["gallery:edit"]
-                /gallery/save/** = perms["gallery:edit"]
+                /gallery/update/** = perms["gallery:update"]
                 /gallery/showIndex/** = perms["gallery:save"]
                 /gallery/delete/** = perms["gallery:save"]
                 /gallery/batchDelete/** = perms["gallery:save"]
                 /gallery/listAll = perms["gallery:list"]
                 <!-- 菜单管理 -->
+                /category/create = perms["category:create"]
+                /category/update/** = perms["category:update"]
                 /category/**= perms["category:list"]
                 <!-- 友情链接管理 -->
+                /link/create = perms["link:create"]
+                /link/update/** = perms["link:update"]
                 /link/** = perms["link:list"]
                 <!-- 研究所管理 -->
+                /agency/create = perms["agency:create"]
+                /agency/update/** = perms["agency:update"]
                 /agency/** = perms["agency:list"]
                 <!-- 老师管理 -->
+                /teacher/create = perms["teacher:create"]
+                /teacher/update/** = perms["teacher:update"]
                 /teacher/** = perms["teacher:list"]
             </value>
         </property>

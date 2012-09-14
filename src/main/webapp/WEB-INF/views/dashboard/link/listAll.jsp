@@ -38,10 +38,10 @@
                         <td><input type="checkbox" name="isSelected" value="${link.id}"></td>
                         <td><a href="${link.url}" target="_blank">${link.title}</a></td>
                         <td><a href="${link.url}" target="_blank" >${link.url}</a></td>
-                        <td><joda:format value="${link.createdDate}" pattern="yyyy年MM月dd日 hh:mm:ss"/></td>
-                        <td><joda:format value="${link.lastModifiedDate}" pattern="yyyy年MM月dd日 hh:mm:ss"/></td>
-                        <td><a href="${ctx}/link/audit/${link.id}"><c:choose><c:when test="${link.status}"><span class="label label-success">已审核</span></c:when><c:otherwise><span class="label label-important">未审核</span></c:otherwise></c:choose></a></td>
-                        <td><a href="${ctx}/link/edit/${link.id}">【修改】</a> <a href="${ctx}/link/delete/${link.id}">【删除】</a></td>
+                        <td><joda:format value="${link.createdDate}" pattern="yyyy年MM月dd日"/></td>
+                        <td><joda:format value="${link.lastModifiedDate}" pattern="yyyy年MM月dd日 kk:mm:ss"/></td>
+                        <td><c:choose><c:when test="${link.status}"><span id="${link.id}" class="label label-success audit">已审核</span></c:when><c:otherwise><span id="${link.id}" class="label label-important audit">未审核</span></c:otherwise></c:choose></td>
+                        <td><a href="${ctx}/link/update/${link.id}"><span class='label label-info'>修改</span></a> <span id="${link.id}" class='label label-warning delete'>删除</span></td>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -56,7 +56,7 @@
         <!-- 分页 -->
         <div class="pagination pagination-right">
             <ul id="pagination">
-                <c:forEach begin="1" end="${total/10>11?11:1+total/10}" step="1" varStatus="var">
+                <c:forEach begin="1" end="${total/10>11?11:0.9+total/10}" step="1" varStatus="var">
                     <li><a href="#">${var.index}</a></li>
                 </c:forEach>
             </ul>
@@ -64,16 +64,6 @@
     </div>
 </div>
 <script type="text/javascript">
-    function ChangeDateFormat(cellval) {
-        var date = new Date(parseInt(cellval + 3600000, 10));
-        var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
-        var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-        //var hour = date.getHours();
-        //var min = date.getMinutes();
-        //var sec = date.getSeconds();
-        return date.getFullYear() + "年" + month + "月" + currentDate + "日";// + hour + ":" + min + ":" + sec;
-    }
-
     $(function () {
         var articles = $("#link_load");
         var pager = $("#pagination");
@@ -91,12 +81,12 @@
                     //加载文章
                     articles.html("");
                     $.each(data, function (index, content) {
-                        var htmlStr="<tr><td><input type='checkbox' name='isSelected' value='" + content.id + "'></td><td><a href='" + content.url + "' target='_blank'>" + content.title + "</a></td><td><a href='" + content.url + "' target='_blank'>" + content.url + "</a></td><td>" + ChangeDateFormat(content.createdDate) + "</td><td>" + ChangeDateFormat(content.lastModifiedDate) + "</td>";
+                        var htmlStr="<tr><td><input type='checkbox' name='isSelected' value='" + content.id + "'></td><td><a href='" + content.url + "' target='_blank'>" + content.title + "</a></td><td><a href='" + content.url + "' target='_blank'>" + content.url + "</a></td><td>" + ChangeDateFormat(content.createdDate) + "</td><td>" + ChangeDateTimeFormat(content.lastModifiedDate) + "</td>";
                         if (content.status)
-                            htmlStr+="<td><a href='${ctx}/link/audit/" + content.id + "'><span class='label label-success'>已审核</span></a></td>";
+                            htmlStr+="<td><span id='" + content.id + "' class='label label-success audit'>已审核</span></td>";
                         else
-                            htmlStr+="<td><a href='${ctx}/link/audit/" + content.id + "'><span class='label label-important'>未审核</span></a></td>";
-                        htmlStr+="<td><a href='${ctx}/link/edit/" + content.id + "'>【修改】</a> <a href='${ctx}/link/delete/" + content.id + "'>【删除】</a></td></tr>";
+                            htmlStr+="<td><span id='" + content.id + "' class='label label-important audit'>未审核</span></td>";
+                        htmlStr+="<td><a href='${ctx}/link/update/" + content.id + "'><span class='label label-info'>修改</span></a> <span id='" + content.id + "' class='label label-warning delete'>删除</span></td></tr>";
                         articles.append($(htmlStr));
                     });
 

@@ -13,7 +13,7 @@
 <div class="row">
 <div class="span13">
     <div id="top-header">
-        <div class="logo"><a href="index.html"><img src="${ctx}/static/images/logo.jpg" alt="" style="vertical-align:middle;margin-right: 10px;margin-bottom:0px;" /><h1>山东省金融信息工程技术研究中心</h1></a></div>
+        <div class="logo"><a href="${ctx}"><img src="${ctx}/static/images/logo.jpg" alt="" style="vertical-align:middle;margin-right: 10px;margin-bottom:0px;" /><h1>山东省金融信息工程技术研究中心</h1></a></div>
     </div>
     <div class="navbar">
         <div class="navbar-inner">

@@ -8,14 +8,14 @@ import cn.im47.cms.common.service.article.ArticleManagerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springside.modules.utils.Encodes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 /**
  * 用途
@@ -31,37 +31,18 @@ public class TeacherController {
     private ArticleManagerImpl articleManagerImpl;
     private AgencyManager agencyManager;
 
-    /**
-     * 根据编号获得老师信息
-     *
-     * @param id
-     * @param model
-     * @return
-     */
     @RequestMapping(value = "content/{id}")
     public String contentOfTeacher(@PathVariable Long id, Model model) {
         model.addAttribute("article", articleManagerImpl.get(teacherManager.getArticleId(id)));
         return "article/content";
     }
 
-    /**
-     * 显示所有teacher
-     *
-     * @param model
-     * @return
-     */
     @RequestMapping(value = "listAll")
     public String listAll(Model model) {
         model.addAttribute("teachers", teacherManager.getAllTeacher());
         return "dashboard/teacher/listAll";
     }
 
-    /**
-     * 创建老师
-     *
-     * @param model
-     * @return
-     */
     @RequestMapping(value = "create")
     public String create(Model model) {
         model.addAttribute("teacher", new Teacher());
@@ -70,15 +51,6 @@ public class TeacherController {
         return "dashboard/teacher/edit";
     }
 
-    /**
-     * 保存老师
-     *
-     * @param file
-     * @param teacher
-     * @param request
-     * @param redirectAttributes
-     * @return
-     */
     @RequestMapping(value = "save")
     public String save(@RequestParam(value = "file") MultipartFile file, Teacher teacher, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         if (teacherManager.save(file, teacher, request) > 0) {
@@ -89,13 +61,45 @@ public class TeacherController {
         return "redirect:/teacher/listAll";
     }
 
-    /**
-     * 删除一个老师
-     *
-     * @param id
-     * @param redirectAttributes
-     * @return
-     */
+    @RequestMapping(value = "edit/{id}")
+    public String edit(@Valid @ModelAttribute Teacher teacher, Model model) {
+        if (teacher.isDeleted()) {
+            model.addAttribute("error", "该老师已经删除不能修改");
+            return "redirect:/teacher/listAll";
+        } else {
+            // 反解析，否则编辑器会显示HTML代码 baitao.jibt@gmail.com
+            Article article = teacher.getArticle();
+            article.setMessage(Encodes.unescapeHtml(article.getMessage()));
+            teacher.setArticle(article);
+
+            model.addAttribute("agencies", agencyManager.getAllAgency());
+            return "dashboard/teacher/edit";
+        }
+    }
+
+    @RequestMapping(value = "save/{id}")
+    public String update(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request,
+                         @Valid @ModelAttribute("teacher") Teacher teacher, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors() || teacher.isDeleted()) {
+            redirectAttributes.addFlashAttribute("error", "该老师已不存在");
+            return "redirect:/teacher/listAll";
+        }
+
+        //是否置顶
+        if (null == request.getParameter("top")) {
+            teacher.setTop(false);
+        } else {
+            teacher.setTop(true);
+        }
+
+        if (teacherManager.updateTeacher(file, request, teacher) <= 0) {
+            redirectAttributes.addFlashAttribute("error", "修改老师失败");
+        } else {
+            redirectAttributes.addFlashAttribute("info", "修改老师成功");
+        }
+        return "redirect:/teacher/listAll";
+    }
+
     @RequestMapping(value = "delete/{id}", method = RequestMethod.GET)
     public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         if (teacherManager.delete(id) > 0) {
@@ -106,13 +110,6 @@ public class TeacherController {
         return "redirect:/teacher/listAll";
     }
 
-    /**
-     * 批量删除
-     *
-     * @param request
-     * @param redirectAttributes
-     * @return
-     */
     @RequestMapping(value = "batchDelete")
     public String deleteAllTeacher(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         String[] isSelected = request.getParameterValues("isSelected");
@@ -126,13 +123,6 @@ public class TeacherController {
         }
     }
 
-    /**
-     * 老师置顶
-     *
-     * @param request
-     * @param redirectAttributes
-     * @return
-     */
     @RequestMapping(value = "showIndex/{id}")
     public String showIndex(@PathVariable Long id, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         teacherManager.showIndex(id);
@@ -140,6 +130,13 @@ public class TeacherController {
         return "redirect:/teacher/listAll";
     }
 
+    @ModelAttribute("teacher")
+    public Teacher getTeacher(@RequestParam(value = "id", required = false) Long id) {
+        if (id != null) {
+            return teacherManager.getTeacher(id);
+        }
+        return null;
+    }
 
     @Autowired
     public void setTeacherManager(TeacherManager teacherManager) {

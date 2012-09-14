@@ -5,7 +5,7 @@
   Time: 下午16:09
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
-
+<%@ page session="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
@@ -16,7 +16,7 @@
 <html>
 <head>
     <title>${article.subject} - ${article.category.categoryName}</title>
-    <link rel="stylesheet" type="text/css" href="${ctx}/static/css/ui.totop.css">
+    <link rel="stylesheet" type="text/css" href="${ctx}/static/js/totop/ui.totop.min.css">
 </head>
 <body>
 <!-- 文章导航 -->
@@ -35,7 +35,7 @@
         <div class="blog-post">
             <h3>${article.subject}</h3>
             <div class="blog-posted-inner">
-                作者: ${article.user.username} &nbsp; | &nbsp; 发表时间: <joda:format value="${article.createdDate}" pattern="yyyy年MM月dd日 hh:mm:ss"/> &nbsp; | &nbsp;
+                作者: ${article.user.username} &nbsp; | &nbsp; 发表时间: <joda:format value="${article.createdDate}" pattern="yyyy年MM月dd日 kk:mm:ss"/> &nbsp; | &nbsp;
                 浏览次数: ${article.views} <c:if test="${article.allowComment}">&nbsp; | &nbsp; 评论数: ${fn:length(article.commentList)}</c:if>
             </div>
             ${article.message}
@@ -90,7 +90,7 @@
     <%@include file="/WEB-INF/layouts/sidebar.jsp" %>
 </div>
 <script src="${ctx}/static/js/easing.js" type="text/javascript"></script>
-<script src="${ctx}/static/js/jquery.ui.totop.js" type="text/javascript"></script>
+<script src="${ctx}/static/js/totop/jquery.ui.totop.js" type="text/javascript"></script>
 <script>
     $(function () {
         //totop

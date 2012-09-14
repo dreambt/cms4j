@@ -28,7 +28,6 @@
                     <th>选择</th>
                     <th>缩略图</th>
                     <th>标题</th>
-                    <th>描述</th>
                     <th>URL</th>
                     <th>上传时间</th>
                     <th>首页显示</th>
@@ -41,11 +40,10 @@
                     <td><input type="checkbox" name="isSelected"  value="${image.id}"></td>
                     <td><a href="${ctx}/static/uploads/gallery/gallery-big/${image.imageUrl}" rel="fancybox-thumb" class="fancy_box"><img src="${ctx}/static/uploads/gallery/thumb-50x57/${image.imageUrl}" width="50px"/></a></td>
                     <td><a href="#">${image.title}</a></td>
-                    <td><a href="${ctx}/static/uploads/gallery/thumb-50x57/${image.imageUrl}" class="opener" value="${image.description}">点击查看</a> </td>
                     <td><a href="${ctx}/static/uploads/gallery/gallery-big/${image.imageUrl}">${image.imageUrl}</a></td>
-                    <td><joda:format value="${image.createdDate}" pattern="yyyy年MM月dd日 hh:mm:ss"/></td>
-                    <td><c:choose><c:when test="${image.showIndex}"><a href="${ctx}/gallery/showIndex/${image.id}"><span class="label label-success">显示</span></a></c:when><c:otherwise><a href="${ctx}/gallery/showIndex/${image.id}"><span class="label label-important">不显示</span></a></c:otherwise></c:choose></td>
-                    <td><a href="${ctx}/gallery/edit/${image.id}">【编辑】</a><a href="${ctx}/gallery/delete/${image.id}" class="delete">【删除】</a></td>
+                    <td><joda:format value="${image.createdDate}" pattern="yyyy年MM月dd日"/></td>
+                    <td><c:choose><c:when test="${image.showIndex}"><span id="${image.id}" class="label label-success showIndex">显示</span></c:when><c:otherwise><span id="${image.id}" class="label label-important showIndex">不显示</span></c:otherwise></c:choose></td>
+                    <td><a href="${ctx}/gallery/update/${image.id}"><span class='label label-info'>编辑</span></a> <span id="${image.id}" class='label label-warning delete'>删除</span></td>
                 </tr>
                 </c:forEach>
                 </tbody>
@@ -60,7 +58,7 @@
         <!-- 分页 -->
         <div class="pagination pagination-right">
             <ul id="pagination">
-                <c:forEach begin="1" end="${total/6>11?11:1+total/6}" step="1" varStatus="var">
+                <c:forEach begin="1" end="${total/6>11?11:0.9+total/6}" step="1" varStatus="var">
                     <li><a href="#">${var.index}</a></li>
                 </c:forEach>
             </ul>
@@ -72,16 +70,15 @@
 <script type="text/javascript" src="${ctx}/static/js/fancyBox/helpers/jquery.fancybox-buttons.js?v=2.0.5"></script>
 <script type="text/javascript" src="${ctx}/static/js/fancyBox/helpers/jquery.fancybox-thumbs.js?v=2.0.5"></script>
 <script type="text/javascript">
-    function ChangeDateFormat(cellval) {
-        var date = new Date(parseInt(cellval + 3600000, 10));
-        var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
-        var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-        //var hour = date.getHours();
-        //var min = date.getMinutes();
-        //var sec = date.getSeconds();
-        return date.getFullYear() + "年" + month + "月" + currentDate + "日";// + hour + ":" + min + ":" + sec;
+    function buttonClick(){
+        $(".showIndex").click(function(){
+            PostByAjax("${ctx}/gallery/showIndex/"+$(this).attr("id"));
+        });
+        $(".delete").click(function(){
+            PostByAjax("${ctx}/gallery/delete/"+$(this).attr("id"));
+            $(this).parent().parent().remove();
+        });
     }
-
     $(function () {
         var articles = $("#image_load");
         var pager = $("#pagination");
@@ -99,12 +96,12 @@
                     //加载文章
                     articles.html("");
                     $.each(data, function (index, content) {
-                        var htmlStr="<tr><td><input type='checkbox' name='isSelected' value='" + content.id + "'></td><td><a href='${ctx}/static/uploads/gallery/gallery-big/" + content.imageUrl + "' rel='fancybox-thumb' class='fancy_box'><img src='${ctx}/static/uploads/gallery/thumb-50x57/" + content.imageUrl + "' width='50px'/></a></td><td><a href='#'>" + content.title + "</a></td><td><a href='${ctx}/static/uploads/gallery/thumb-50x57/" + content.imageUrl + "' class='opener' value='" + content.description + "'>点击查看</a> </td><td><a href='${ctx}/static/uploads/gallery/gallery-big/" + content.imageUrl + "'>" + content.imageUrl + "</a></td><td>" + ChangeDateFormat(content.createdDate) + "</td>";
+                        var htmlStr="<tr><td><input type='checkbox' name='isSelected' value='" + content.id + "'></td><td><a href='${ctx}/static/uploads/gallery/gallery-big/" + content.imageUrl + "' rel='fancybox-thumb' class='fancy_box'><img src='${ctx}/static/uploads/gallery/thumb-50x57/" + content.imageUrl + "' width='50px'/></a></td><td><a href='#'>" + content.title + "</a></td><td><a href='${ctx}/static/uploads/gallery/gallery-big/" + content.imageUrl + "'>" + content.imageUrl + "</a></td><td>" + ChangeDateFormat(content.createdDate) + "</td>";
                         if (content.showIndex)
-                            htmlStr+="<td><a href='${ctx}/gallery/showIndex/" + content.id + "'><span class='label label-success'>显示</span></a></td>";
+                            htmlStr+="<td><span id='" + content.id + "' class='label label-success showIndex'>显示</span></td>";
                         else
-                            htmlStr+="<td><a href='${ctx}/gallery/showIndex/" + content.id + "'><span class='label label-important'>不显示</span></a></td>";
-                        htmlStr+="<td><a href='${ctx}/gallery/edit/" + content.id + "'>【编辑】</a><a href='${ctx}/gallery/delete/${image.id}' class='delete'>【删除】</a></td></tr>";
+                            htmlStr+="<td><span id='" + content.id + "' class='label label-important showIndex'>不显示</span></td>";
+                        htmlStr+="<td><a href='${ctx}/gallery/update/" + content.id + "'><span class='label label-info'>编辑</span></a> <span id='" + content.id + "' class='label label-warning delete'>删除</span></td></tr>";
                         articles.append($(htmlStr));
                     });
 
@@ -138,14 +135,15 @@
                             pager.append(a);
                         } //else
                     } //for
+                    buttonClick();
                 }
             });
         };
-
         $("#pagination li").click(function () {
             PageClick($(this).text(), ${total}, 5);
         });
 
+        buttonClick();
         $('#auditAll').click(function () {
             if (confirm("确定批量审核吗？")) {
                 $("#articleForm").attr("action", "${ctx}/article/batchAudit").submit();

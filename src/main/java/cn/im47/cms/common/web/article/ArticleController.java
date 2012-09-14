@@ -6,6 +6,7 @@ import cn.im47.cms.common.service.article.ArchiveManager;
 import cn.im47.cms.common.service.article.ArchiveManagerImpl;
 import cn.im47.cms.common.service.article.ArticleManagerImpl;
 import cn.im47.cms.common.service.article.CategoryManager;
+import cn.im47.cms.common.vo.ResponseMessage;
 import cn.im47.cms.security.ShiroDbRealm;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springside.modules.utils.Encodes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -34,12 +36,6 @@ public class ArticleController {
     private UserManager userManager;
     private ArchiveManager archiveManager;
 
-    /**
-     * 获取编号为id的文章正文
-     *
-     * @param id
-     * @return
-     */
     @RequestMapping(value = "content/{id}", method = RequestMethod.GET)
     public String contextOfArticle(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
         Article article = articleManager.getForView(id);
@@ -56,12 +52,6 @@ public class ArticleController {
         return "article/content";
     }
 
-    /**
-     * 获取编号为id的文章正文
-     *
-     * @param id
-     * @return
-     */
     @RequestMapping(value = "content/full/{id}", method = RequestMethod.GET)
     public String fullOfArticle(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
         Article article = articleManager.getForView(id);
@@ -76,12 +66,6 @@ public class ArticleController {
         return "article/fullwidth";
     }
 
-    /**
-     * 后台获取所有文章列表
-     *
-     * @param model
-     * @return
-     */
     @RequiresPermissions("article:list")
     @RequestMapping(value = {"listAll", ""})
     public String listAllArticle(Model model) {
@@ -90,15 +74,6 @@ public class ArticleController {
         return "dashboard/article/listAll";
     }
 
-    /**
-     * 后台获取所有文章列表
-     *
-     * @param offset
-     * @param limit
-     * @param sort
-     * @param direction
-     * @return
-     */
     @RequiresPermissions("article:list")
     @RequestMapping(value = "listAll/ajax")
     @ResponseBody
@@ -110,26 +85,12 @@ public class ArticleController {
         }
     }
 
-    /**
-     * 获取菜单编号为id的所有文章列表
-     *
-     * @param id
-     * @param model
-     * @return
-     */
     @RequestMapping(value = "listByCategory/{id}", method = RequestMethod.GET)
     public String listArticleByCategory(@PathVariable("id") Long id, Model model) {
         model.addAttribute("articles", articleManager.getByCategoryId(id, 0, 110));
         return "dashboard/article/listAll";
     }
 
-    /**
-     * 获取菜单编号为id的所有文章列表
-     *
-     * @param id
-     * @param model
-     * @return
-     */
     @RequestMapping(value = "list/{id}", method = RequestMethod.GET)
     public String listOfArticle(@PathVariable("id") Long id, Model model) {
         model.addAttribute("articles", articleManager.getByCategoryId(id, 0, 12));//文章列表(首页显示)
@@ -140,27 +101,12 @@ public class ArticleController {
         return "article/list";
     }
 
-    /**
-     * 获取菜单编号为id的所有文章列表
-     *
-     * @param id
-     * @param offset
-     * @param limit
-     * @return
-     */
     @RequestMapping(value = "list/ajax/{id}", method = RequestMethod.GET)
     @ResponseBody
     public List<Article> ajaxListOfArticle(@PathVariable("id") Long id, @RequestParam("offset") int offset, @RequestParam("limit") int limit) {
         return articleManager.getByCategoryId(id, offset, limit);
     }
 
-    /**
-     * 获取菜单编号为id的所有文章摘要
-     *
-     * @param id
-     * @param model
-     * @return
-     */
     @RequestMapping(value = "digest/{id}", method = RequestMethod.GET)
     public String digestOfArticle(@PathVariable("id") Long id, Model model) {
         model.addAttribute("articles", articleManager.getByCategoryId(id, 0, 6));
@@ -171,36 +117,17 @@ public class ArticleController {
         return "article/digest";
     }
 
-    /**
-     * 获取菜单编号为id的所有文章摘要
-     *
-     * @param id
-     * @param offset
-     * @param limit
-     * @return
-     */
     @RequestMapping(value = "digest/ajax/{id}")
     @ResponseBody
     public List<Article> ajaxDigestOfArticle(@PathVariable("id") Long id, @RequestParam("offset") int offset, @RequestParam("limit") int limit) {
         return articleManager.getByCategoryId(id, offset, limit);
     }
 
-    /**
-     * 获得公告
-     *
-     * @return
-     */
     @RequestMapping(value = "listPost")
     public String listPost() {
         return "redirect:/article/list/1";
     }
 
-    /**
-     * 显示首页资讯
-     *
-     * @param model
-     * @return
-     */
     @RequestMapping(value = "listInfo", method = RequestMethod.GET)
     public String listInfo(Model model) {
         // TODO 应该用fatherCategoryId的 , 不然，下次增加新分类后没法查询完整数据
@@ -214,13 +141,6 @@ public class ArticleController {
         return "article/list";
     }
 
-    /**
-     * 显示首页资讯
-     *
-     * @param offset
-     * @param limit
-     * @return
-     */
     @RequestMapping(value = "listInfo/ajax")
     @ResponseBody
     public List<Article> ajaxListInfo(@RequestParam("offset") int offset, @RequestParam("limit") int limit) {
@@ -228,30 +148,18 @@ public class ArticleController {
         return articleManager.getByCategoryIds(ids, offset, limit);
     }
 
-    /**
-     * 发表新文章
-     *
-     * @param model
-     * @return
-     */
     @RequiresPermissions("article:create")
     @RequestMapping(value = "create", method = RequestMethod.GET)
-    public String createArticle(Model model) {
+    public String createForm(Model model) {
         // 不用报错，Neither BindingResult nor plain target object for bean name 'article' available as request attribute
         model.addAttribute("article", new Article());
+        model.addAttribute("action", "create");
         return "dashboard/article/edit";
     }
 
-    /**
-     * 保存新文章
-     *
-     * @param article
-     * @param redirectAttributes
-     * @return
-     */
-    @RequiresPermissions("article:save")
-    @RequestMapping(value = "save", method = RequestMethod.POST)
-    public String save(Article article, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+    @RequiresPermissions("article:create")
+    @RequestMapping(value = "create", method = RequestMethod.POST)
+    public String create(Article article, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         // 获取用户登录信息
         ShiroDbRealm.ShiroUser shiroUser = (ShiroDbRealm.ShiroUser) SecurityUtils.getSubject().getPrincipal();
 
@@ -282,8 +190,29 @@ public class ArticleController {
         }
     }
 
-    @RequiresPermissions("article:edit")
-    @RequestMapping(value = "batchAudit", method = RequestMethod.GET)
+    @RequiresPermissions("article:update")
+    @RequestMapping(value = {"update/{id}"}, method = RequestMethod.GET)
+    public String updateForm(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
+        Article article = articleManager.get(id);
+
+        // 编辑不存在的文章，给出提示
+        if (null == article) {
+            redirectAttributes.addFlashAttribute("error", "文章不存在.");
+            return "redirect:/article/listAll";
+        }
+
+        // 反解析，否则编辑器会显示HTML代码
+        article.setMessage(Encodes.unescapeHtml(article.getMessage()));
+
+        // 获取所有分类
+        model.addAttribute("categories", categoryManager.getAllowPublishCategory());
+        model.addAttribute("article", article);
+        model.addAttribute("action", "update");
+        return "dashboard/article/edit";
+    }
+
+    @RequiresPermissions("article:save")
+    @RequestMapping(value = "batchAudit", method = RequestMethod.POST)
     public String batchAuditArticle(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         String[] isSelected = request.getParameterValues("isSelected");
         if (isSelected == null) {
@@ -297,7 +226,7 @@ public class ArticleController {
     }
 
     @RequiresPermissions("article:save")
-    @RequestMapping(value = "batchDelete", method = RequestMethod.GET)
+    @RequestMapping(value = "batchDelete", method = RequestMethod.POST)
     public String batchDeleteArticle(HttpServletRequest request, RedirectAttributes redirectAttributes) {
         String[] isSelected = request.getParameterValues("isSelected");
         if (isSelected == null) {
@@ -310,72 +239,48 @@ public class ArticleController {
         }
     }
 
-    /**
-     * 置顶编号为id的文章
-     *
-     * @param id
-     * @return
-     */
-    @RequiresPermissions("article:edit")
-    @RequestMapping(value = "top/{id}", method = RequestMethod.GET)
-    public String topArticle(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
-        if (articleManager.top(id)) {
-            redirectAttributes.addFlashAttribute("info", "操作文章" + id + " 成功.");
-        } else {
-            redirectAttributes.addFlashAttribute("error", "操作文章 " + id + " 失败.");
-        }
-        return "redirect:/article/listAll";
-    }
-
-    /**
-     * 修改编号为id的文章是否允许评论
-     *
-     * @param id
-     * @return
-     */
-    @RequiresPermissions("article:edit")
-    @RequestMapping(value = "allow/{id}", method = RequestMethod.GET)
-    public String allowArticle(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
-        if (articleManager.allowComment(id)) {
-            redirectAttributes.addFlashAttribute("info", "操作文章" + id + " 成功.");
-        } else {
-            redirectAttributes.addFlashAttribute("error", "操作文章 " + id + " 失败.");
-        }
-        return "redirect:/article/listAll";
-    }
-
-    /**
-     * 审核编号为id的文章
-     *
-     * @param id
-     * @return
-     */
-    @RequiresPermissions("article:edit")
-    @RequestMapping(value = "audit/{id}", method = RequestMethod.GET)
-    public String auditArticle(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
-        if (articleManager.audit(id)) {
-            redirectAttributes.addFlashAttribute("info", "操作文章 " + id + " 成功.");
-        } else {
-            redirectAttributes.addFlashAttribute("error", "操作文章 " + id + " 失败.");
-        }
-        return "redirect:/article/listAll";
-    }
-
-    /**
-     * 标记删除编号为id的文章
-     *
-     * @param id
-     * @return
-     */
     @RequiresPermissions("article:save")
-    @RequestMapping(value = "delete/{id}", method = RequestMethod.GET)
-    public String deleteArticle(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
-        if (articleManager.delete(id) > 0) {
-            redirectAttributes.addFlashAttribute("info", "操作文章 " + id + " 成功.");
+    @RequestMapping(value = "top/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseMessage topArticle(@PathVariable("id") Long id) {
+        if (articleManager.top(id)) {
+            return new ResponseMessage();
         } else {
-            redirectAttributes.addFlashAttribute("error", "操作文章 " + id + " 成功.");
+            return new ResponseMessage("置顶文章 " + id + " 置顶失败.");
         }
-        return "redirect:/article/listAll";
+    }
+
+    @RequiresPermissions("article:save")
+    @RequestMapping(value = "allow/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseMessage allowArticle(@PathVariable("id") Long id) {
+        if (articleManager.allowComment(id)) {
+            return new ResponseMessage();
+        } else {
+            return new ResponseMessage("允许评论文章 " + id + " 失败.");
+        }
+    }
+
+    @RequiresPermissions("article:save")
+    @RequestMapping(value = "audit/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseMessage auditArticle(@PathVariable("id") Long id) {
+        if (articleManager.audit(id)) {
+            return new ResponseMessage();
+        } else {
+            return new ResponseMessage("审核文章 " + id + " 失败.");
+        }
+    }
+
+    @RequiresPermissions("article:save")
+    @RequestMapping(value = "delete/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseMessage deleteArticle(@PathVariable("id") Long id) {
+        if (articleManager.delete(id) > 0) {
+            return new ResponseMessage();
+        } else {
+            return new ResponseMessage("删除文章 " + id + " 失败.");
+        }
     }
 
     @Autowired

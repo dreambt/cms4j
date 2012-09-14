@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 评论Dao
  * <p/>
- * User: baitao.jibt (dreambt@gmail.com)
+ * User: baitao.jibt@gmail.com
  * Date: 12-3-20
  * Time: 下午20:37
  */

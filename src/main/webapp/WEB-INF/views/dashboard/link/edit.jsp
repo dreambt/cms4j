@@ -16,11 +16,11 @@
 <body>
 <div class="row">
     <div class="span12">
-    <form:form modelAttribute="link" name="linkForm" action="${ctx}/link/save/${link.id}" id="LnkAdd" cssClass="form-horizontal">
+    <form:form modelAttribute="link" name="linkForm" action="${ctx}/link/${action}" id="LnkAdd" cssClass="form-horizontal">
         <div class="control-group">
             <label class="control-label" for="lnkName">链接名称</label>
             <div class="controls">
-                <input type="hidden" name="isSelected" value="${link.id}"/>
+                <input type="hidden" name="id" value="${link.id}"/>
                 <input type="text" id="lnkName" name="title" placeholder="${link.title}">
             </div>
         </div>

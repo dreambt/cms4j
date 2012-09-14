@@ -2,12 +2,13 @@ package cn.im47.cms.common.web.link;
 
 import cn.im47.cms.common.entity.link.Link;
 import cn.im47.cms.common.service.link.LinkManager;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -24,29 +25,9 @@ public class LinkDetailController {
 
     private LinkManager linkManager;
 
-    /**
-     * 跳转到修改link页面
-     *
-     * @param link
-     * @param model
-     * @return
-     */
-    @RequestMapping(value = "edit/{id}")
-    public String edit(@Valid @ModelAttribute Link link, Model model) {
-        model.addAttribute("link", link);
-        return "dashboard/link/edit";
-    }
-
-    /**
-     * 保存修改的link
-     *
-     * @param id
-     * @param link
-     * @param redirectAttributes
-     * @return
-     */
-    @RequestMapping(value = "save/{id}")
-    public String save(@PathVariable Long id, @Valid @ModelAttribute Link link, RedirectAttributes redirectAttributes) {
+    @RequiresPermissions("link:update")
+    @RequestMapping(value = "update", method = RequestMethod.POST)
+    public String update(@Valid @ModelAttribute Link link, RedirectAttributes redirectAttributes) {
         if (null == link) {
             redirectAttributes.addAttribute("error", "该链接不存在，请刷新重试");
             return "redirect:/link/listAll";
@@ -56,8 +37,11 @@ public class LinkDetailController {
     }
 
     @ModelAttribute("link")
-    public Link getLink(@PathVariable Long id) {
-        return linkManager.get(id);
+    public Link getLink(@RequestParam(value = "id", required = false) Long id) {
+        if (id != null) {
+            return linkManager.get(id);
+        }
+        return null;
     }
 
     @Autowired

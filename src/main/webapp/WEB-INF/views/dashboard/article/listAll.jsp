@@ -33,6 +33,7 @@
                     <th>最后修改</th>
                     <th>审核状态</th>
                     <th>评论状态</th>
+                    <th>置顶状态</th>
                     <th>可用操作</th>
                 </tr>
                 </thead>
@@ -45,12 +46,12 @@
                         <td>${article.category.categoryName}</td>
                         <td>${article.rate}</td>
                         <td>${article.views}</td>
-                        <td><joda:format value="${article.createdDate}" pattern="yyyy年MM月dd日 hh:mm:ss"/></td>
-                        <td><joda:format value="${article.lastModifiedDate}" pattern="yyyy年MM月dd日 hh:mm:ss"/></td>
-                        <td><a href="${ctx}/article/audit/${article.id}"><c:choose><c:when test="${article.status}"><span class="label label-success">已审核</span></c:when><c:otherwise><span class="label label-important">未审核</span></c:otherwise></c:choose></a></td>
-                        <td><a href="${ctx}/article/allow/${article.id}"><c:choose><c:when test="${article.allowComment}"><span class="label label-success">允许</span></c:when><c:otherwise><span class="label label-important">不允许</span></c:otherwise></c:choose></a></td>
-                        <td><a href="${ctx}/article/edit/${article.id}">【编辑】</a><a href="${ctx}/article/top/${article.id}"><c:choose><c:when test="${article.top}">【置顶】</c:when><c:otherwise>【未置顶】</c:otherwise></c:choose></a>
-                            <a href="${ctx}/article/delete/${article.id}"><c:choose><c:when test="${article.deleted}">【恢复】</c:when><c:otherwise>【删除】</c:otherwise></c:choose></a></td>
+                        <td><joda:format value="${article.createdDate}" pattern="yyyy年MM月dd日"/></td>
+                        <td><joda:format value="${article.lastModifiedDate}" pattern="yyyy年MM月dd日 kk:mm:ss"/></td>
+                        <td><c:choose><c:when test="${article.status}"><span id="${article.id}" class="label label-success audit">已审核</span></c:when><c:otherwise><span id="${article.id}" class="label label-important audit">未审核</span></c:otherwise></c:choose></td>
+                        <td><c:choose><c:when test="${article.allowComment}"><span id="${article.id}" class="label label-success allow">允许</span></c:when><c:otherwise><span id="${article.id}" class="label label-important allow">不允许</span></c:otherwise></c:choose></td>
+                        <td><c:choose><c:when test="${article.top}"><span id="${article.id}" class="label label-success top">已置顶</span></c:when><c:otherwise><span id="${article.id}" class="label label-important top">未置顶</span></c:otherwise></c:choose></td>
+                        <td><a href="${ctx}/article/update/${article.id}"><span class='label label-info'>编辑</span></a> <c:choose><c:when test="${article.deleted}"><span id="${article.id}" class='label label-inverse delete'>恢复</span></c:when><c:otherwise><span id="${article.id}" class='label label-warning delete'>删除</span></c:otherwise></c:choose></td>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -65,7 +66,7 @@
         <!-- 分页 -->
         <div class="pagination pagination-right">
             <ul id="pagination">
-                <c:forEach begin="1" end="${total/10>11?11:1+total/10}" step="1" varStatus="var">
+                <c:forEach begin="1" end="${total/10>11?11:0.9+total/10}" step="1" varStatus="var">
                     <li><a href="#">${var.index}</a></li>
                 </c:forEach>
             </ul>
@@ -73,16 +74,20 @@
     </div>
 </div>
 <script type="text/javascript">
-    function ChangeDateFormat(cellval) {
-        var date = new Date(parseInt(cellval + 3600000, 10));
-        var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
-        var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-        //var hour = date.getHours();
-        //var min = date.getMinutes();
-        //var sec = date.getSeconds();
-        return date.getFullYear() + "年" + month + "月" + currentDate + "日";// + hour + ":" + min + ":" + sec;
+    function buttonClick(){
+        $(".audit").click(function(){
+            PostByAjax("${ctx}/article/audit/"+$(this).attr("id"));
+        });
+        $(".delete").click(function(){
+            PostByAjax("${ctx}/article/delete/"+$(this).attr("id"));
+        });
+        $(".allow").click(function(){
+            PostByAjax("${ctx}/article/allow/"+$(this).attr("id"));
+        });
+        $(".top").click(function(){
+            PostByAjax("${ctx}/article/top/"+$(this).attr("id"));
+        });
     }
-
     $(function () {
         var articles = $("#article_load");
         var pager = $("#pagination");
@@ -95,81 +100,80 @@
 
             $.ajax({
                 url:"${ctx}/article/listAll/ajax?offset=" + (intPageIndex - 1) * limit + "&limit=" + limit,// TODO sort & direction
-                timeout:3000,
-                success:function (data) {
-                    //加载文章
-                    articles.html("");
-                    $.each(data, function (index, content) {
-                        var htmlStr="<tr><td><input type='checkbox' name='isSelected' value='" + content.id + "'></td><td><a href='${ctx}/article/content/" + content.id + "' target='_blank'>" + content.subject + "</a></td><td>" + content.user.username + "</td><td>" + content.category.categoryName + "</td><td>" + content.rate + "</td><td>" + content.views + "</td><td>" + ChangeDateFormat(content.createdDate) + "</td><td>" + ChangeDateFormat(content.lastModifiedDate) + "</td>";
-                        if (content.status)
-                            htmlStr+="<td><a href='${ctx}/article/audit/" + content.id + "'><span class='label label-success'>已审核</span></a></td>";
-                        else
-                            htmlStr+="<td><a href='${ctx}/article/audit/" + content.id + "'><span class='label label-important'>未审核</span></a></td>";
-                        if (content.allowComment)
-                            htmlStr+="<td><a href='${ctx}/article/allow/" + content.id + "'><span class='label label-success'>允许</span></a></td>";
-                        else
-                            htmlStr+="<td><a href='${ctx}/article/allow/" + content.id + "'><span class='label label-important'>不允许</span></a></td>";
-                        if (content.top)
-                            htmlStr+="<td><a href='${ctx}/article/edit/" + content.id + "'>【编辑】</a><a href='${ctx}/article/top/" + content.id + "'>【置顶】</a>";
-                        else
-                            htmlStr+="<td><a href='${ctx}/article/edit/" + content.id + "'>【编辑】</a><a href='${ctx}/article/top/" + content.id + "'>【未置顶】</a>";
-                        if (content.deleted)
-                            htmlStr+="<a href='${ctx}/article/delete/" + content.id + "'>【恢复】</a></td></tr>";
-                        else
-                            htmlStr+="<a href='${ctx}/article/delete/" + content.id + "'>【删除】</a></td></tr>";
-                        articles.append($(htmlStr));
-                    });
+                timeout:3000
+            }).done(function (data) {
+                //加载文章
+                articles.html("");
+                $.each(data, function (index, content) {
+                    var htmlStr="<tr><td><input type='checkbox' name='isSelected' value='" + content.id + "'></td><td><a href='${ctx}/article/content/" + content.id + "' target='_blank'>" + content.subject + "</a></td><td>" + content.user.username + "</td><td>" + content.category.categoryName + "</td><td>" + content.rate + "</td><td>" + content.views + "</td><td>" + ChangeDateFormat(content.createdDate) + "</td><td>" + ChangeDateTimeFormat(content.lastModifiedDate) + "</td>";
+                    if (content.status)
+                        htmlStr+="<td><span id='" + content.id + "' class='label label-success audit'>已审核</span></td>";
+                    else
+                        htmlStr+="<td><span id='" + content.id + "' class='label label-important audit'>未审核</span></td>";
+                    if (content.allowComment)
+                        htmlStr+="<td><span id='" + content.id + "' class='label label-success allow'>允许</span></td>";
+                    else
+                        htmlStr+="<td><span id='" + content.id + "' class='label label-important allow'>不允许</span></td>";
+                    if (content.top)
+                        htmlStr+="<td><span id='" + content.id + "' class='label label-success top'>已置顶</span></td>";
+                    else
+                        htmlStr+="<td><span id='" + content.id + "' class='label label-important top'>未置顶</span></td>";
+                    if (content.deleted)
+                        htmlStr+="<td><a href='${ctx}/article/update/" + content.id + "'><span class='label label-info'>编辑</span></a> <span id='" + content.id + "' class='label label-inverse delete'>恢复</span></td></tr>";
+                    else
+                        htmlStr+="<td><a href='${ctx}/article/update/" + content.id + "'><span class='label label-info'>编辑</span></a> <span id='" + content.id + "' class='label label-warning delete'>删除</span></td></tr>";
+                    articles.append($(htmlStr));
+                });
 
-                    //将总记录数结果 得到 总页码数
-                    var pageS = total;
-                    if (pageS % limit == 0) pageS = pageS / limit;
-                    else pageS = parseInt(total / limit) + 1;
+                //将总记录数结果 得到 总页码数
+                var pageS = total;
+                if (pageS % limit == 0) pageS = pageS / limit;
+                else pageS = parseInt(total / limit) + 1;
 
-                    //设置分页的格式  这里可以根据需求完成自己想要的结果
-                    var interval = parseInt(spanInterval); //设置间隔
-                    var start = Math.max(1, intPageIndex - interval); //设置起始页
-                    var end = Math.min(intPageIndex + interval, pageS);//设置末页
+                //设置分页的格式  这里可以根据需求完成自己想要的结果
+                var interval = parseInt(spanInterval); //设置间隔
+                var start = Math.max(1, intPageIndex - interval); //设置起始页
+                var end = Math.min(intPageIndex + interval, pageS);//设置末页
 
-                    if (intPageIndex < interval + 1) {
-                        end = (2 * interval + 1) > pageS ? pageS : (2 * interval + 1);
-                    }
-
-                    if ((intPageIndex + interval) > pageS) {
-                        start = (pageS - 2 * interval) < 1 ? 1 : (pageS - 2 * interval);
-                    }
-
-                    //生成页码
-                    pager.html("");
-                    for (var j = start; j < end + 1; j++) {
-                        if (j == intPageIndex) {
-                            pager.append("<li class='active'><a href='#'>" + j + "</a></li>");
-                        } else {
-                            var a = $("<li><a href='#'>" + j + "</a></li>").click(function () {
-                                PageClick($(this).text(), total, spanInterval);
-                            });
-                            pager.append(a);
-                        } //else
-                    } //for
+                if (intPageIndex < interval + 1) {
+                    end = (2 * interval + 1) > pageS ? pageS : (2 * interval + 1);
                 }
+
+                if ((intPageIndex + interval) > pageS) {
+                    start = (pageS - 2 * interval) < 1 ? 1 : (pageS - 2 * interval);
+                }
+
+                //生成页码
+                pager.html("");
+                for (var j = start; j < end + 1; j++) {
+                    if (j == intPageIndex) {
+                        pager.append("<li class='active'><a href='#'>" + j + "</a></li>");
+                    } else {
+                        var a = $("<li><a href='#'>" + j + "</a></li>").click(function () {
+                            PageClick($(this).text(), total, spanInterval);
+                        });
+                        pager.append(a);
+                    } //else
+                } //for
+                buttonClick();
             });
         };
         $("#pagination li").click(function () {
             PageClick($(this).text(), ${total}, 5);
         });
 
+        buttonClick();
         $('#auditAll').click(function () {
             if (confirm("确定批量审核吗？")) {
                 $("#articleForm").attr("action", "${ctx}/article/batchAudit").submit();
-                alert("操作成功，请等待缓存失效！");
             } else {
                 return false;
             }
         });
-	
+
         $('#deleteAll').click(function () {
             if (confirm("确定批量删除吗？")) {
                 $("#articleForm").attr("action", "${ctx}/article/batchDelete").submit();
-                alert("操作成功，请等待缓存失效！");
             } else {
                 return false;
             }

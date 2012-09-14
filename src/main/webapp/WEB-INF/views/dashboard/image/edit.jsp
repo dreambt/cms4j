@@ -18,7 +18,7 @@
 <body>
 <div class="row">
     <div class="span12">
-    <form:form id="image" modelAttribute="image" action="${ctx}/gallery/save/${image.id}" method="post" enctype="multipart/form-data" cssClass="form-horizontal">
+    <form:form id="image" modelAttribute="image" action="${ctx}/gallery/${action}" method="post" enctype="multipart/form-data" cssClass="form-horizontal">
         <div class="control-group">
             <label class="control-label" for="upload">图片标题</label>
             <div class="controls">
@@ -35,13 +35,13 @@
         <div class="control-group">
             <label class="control-label" for="showIndex">首页展示</label>
             <div class="controls">
-                <input type="checkbox" id="showIndex" name="showIndex" style="float: none" value="${image.showIndex}" <c:if test="${image.showIndex}">checked="checked"</c:if>>
+                <input type="checkbox" id="showIndex" name="showIndex" value="${image.showIndex}" <c:if test="${image.showIndex}">checked="checked"</c:if>>
             </div>
         </div>
         <div class="control-group">
             <label class="control-label" for="description">描述信息</label>
             <div class="controls">
-                <textarea type="text" class="required" id="description" name="description" cols="55" rows="5">${image.description}</textarea>
+                <textarea class="required" id="description" name="description" style="width:750px" rows="8">${image.description}</textarea>
             </div>
         </div>
         <div class="control-group">

@@ -4,11 +4,13 @@
         <pattern>/static/*</pattern>
         <pattern>/jsp/*</pattern>
         <pattern>/rs/*</pattern>
-        <pattern>/login*</pattern>
         <pattern>/**/*.html</pattern>
         <pattern>/error/*</pattern>
         <pattern>/**/ajax/*</pattern>
-        <pattern>/comment/create</pattern>
+        <pattern>/**/delete/*</pattern>
+        <pattern>/**/audit/*</pattern>
+        <pattern>/**/top/*</pattern>
+        <pattern>/**/allow/*</pattern>
     </excludes>
 
     <decorator name="default" page="default.jsp">
@@ -32,7 +34,6 @@
     <decorator name="dashboard" page="admin.jsp">
         <pattern>/dashboard*</pattern>
         <pattern>/article*</pattern>
-        <pattern>/comment*</pattern>
         <pattern>/category*</pattern>
         <pattern>/attachment*</pattern>
         <pattern>/account*</pattern>

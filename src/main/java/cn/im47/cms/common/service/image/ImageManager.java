@@ -25,22 +25,6 @@ public interface ImageManager extends GenericManager<Image, Long> {
     long count();
 
     /**
-     * 获得所有 image
-     *
-     * @return
-     */
-    List<Image> getAll();
-
-    /**
-     * 使用默认的排序方式指定偏移的所有 image
-     *
-     * @param offset
-     * @param limit
-     * @return
-     */
-    List<Image> getAll(int offset, int limit);
-
-    /**
      * 按指定的排序方式指定偏移的所有 image
      *
      * @param offset

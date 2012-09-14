@@ -28,12 +28,7 @@ public class ArchiveController {
     private ArchiveManager archiveManager;
     private ArticleManager articleManager;
 
-    /**
-     * 显示所有归类
-     *
-     * @param model
-     * @return
-     */
+    // TODO
     @RequestMapping(value = "list")
     public String articleListOfArchive(Model model) {
         model.addAttribute("archives", archiveManager.getTopTen());
@@ -41,12 +36,6 @@ public class ArchiveController {
         return "article/archives";
     }
 
-    /**
-     * 显示归档编号为id的文章列表
-     *
-     * @param model
-     * @return
-     */
     @RequestMapping(value = "list/{id}")
     public String articleListByArchiveId(Model model, @PathVariable("id") Long id) {
         Archive archive = archiveManager.get(id);
@@ -58,30 +47,17 @@ public class ArchiveController {
         return "article/list";
     }
 
-    /**
-     * 获取归档编号为id的文章列表
-     *
-     * @param id
-     * @param offset
-     * @param limit
-     * @return
-     */
     @RequestMapping(value = "list/ajax/{id}", method = RequestMethod.GET)
     @ResponseBody
     public List<Article> ajaxListOfArticleByArchive(@PathVariable("id") Long id, @RequestParam("offset") int offset, @RequestParam("limit") int limit) {
         return articleManager.getByArchiveId(id, offset, limit);
     }
 
-    /**
-     * 按照指定月份归档
-     *
-     * @param dateTime
-     */
     @RequestMapping(value = "save/{dateTime}", method = RequestMethod.GET)
     public String saveArchiveByMonth(@PathVariable("dateTime") String dateTime) {
         DateTimeFormatter pattern = DateTimeFormat.forPattern("yyyyMM");
         DateTime time = DateTime.parse(dateTime, pattern);
-        archiveManager.save(time);
+        archiveManager.updateByMonth(time);
         return "redirect:/archive/list";
     }
 

@@ -25,12 +25,6 @@ public class CommentController {
 
     private CommentManager commentManager;
 
-    /**
-     * 添加评论 AJAX
-     *
-     * @param comment
-     * @return
-     */
     @RequestMapping(value = "create")
     @ResponseBody
     public ResponseMessage createCommentAjax(Comment comment, HttpServletRequest request) {
@@ -57,12 +51,6 @@ public class CommentController {
         }
     }
 
-    /**
-     * 显示所有的评论
-     *
-     * @param model
-     * @return
-     */
     @RequiresPermissions("comment:list")
     @RequestMapping(value = {"listAll", ""})
     public String listAllComment(Model model) {
@@ -70,11 +58,6 @@ public class CommentController {
         return "dashboard/comment/listAll";
     }
 
-    /**
-     * 审核编号为id的评论
-     *
-     * @return
-     */
     @RequestMapping(value = "audit/{id}", method = RequestMethod.GET)
     public String auditComment(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         if (null == commentManager.get(id)) {
@@ -89,11 +72,6 @@ public class CommentController {
         return "redirect:/comment/listAll";
     }
 
-    /**
-     * 删除编号为id的评论
-     *
-     * @return
-     */
     @RequiresPermissions("comment:save")
     @RequestMapping(value = "delete/{id}")
     public String deleteComment(@PathVariable("id") Long id, @ModelAttribute("comment") Comment comment, RedirectAttributes redirectAttributes) {
@@ -105,12 +83,6 @@ public class CommentController {
         return "redirect:/comment/listAll";
     }
 
-    /**
-     * 批量审核
-     *
-     * @param request
-     * @return
-     */
     @RequiresPermissions("comment:edit")
     @RequestMapping(value = "batchAudit", method = RequestMethod.POST)
     public String batchAuditComment(HttpServletRequest request, RedirectAttributes redirectAttributes) {
@@ -124,11 +96,6 @@ public class CommentController {
         return "redirect:/comment/listAll";
     }
 
-    /**
-     * 批量删除
-     *
-     * @return
-     */
     @RequiresPermissions("comment:save")
     @RequestMapping(value = "batchDelete", method = RequestMethod.POST)
     public String batchDeleteComment(HttpServletRequest request, RedirectAttributes redirectAttributes) {

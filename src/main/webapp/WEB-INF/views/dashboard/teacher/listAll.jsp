@@ -43,9 +43,9 @@
                         <td><a href="${ctx}/article/content/${teacher.article.id}" target="_blank">${teacher.teacherName}</a></td>
                         <td><a href="${ctx}/agency/show/${teacher.agency.id}" target="_blank">${teacher.agency.title}</a> </td>
                         <td><a href="${ctx}/static/uploads/teacher/${teacher.imageUrl}">${teacher.imageUrl}</a></td>
-                        <td><joda:format value="${teacher.createdDate}" pattern="yyyy年MM月dd日 hh:mm:ss"/></td>
+                        <td><joda:format value="${teacher.createdDate}" pattern="yyyy年MM月dd日"/></td>
                         <td><a href="${ctx}/teacher/showIndex/${teacher.id}"><c:choose><c:when test="${teacher.top eq true}">显示</c:when><c:otherwise>不显示</c:otherwise></c:choose></a></td>
-                        <td><a href="${ctx}/teacher/edit/${teacher.id}">【编辑】</a> <c:if test="${teacher.deleted eq true}"> <a href="${ctx}/teacher/delete/${teacher.id}">【恢复】</a></c:if>
+                        <td><a href="${ctx}/teacher/update/${teacher.id}">【编辑】</a> <c:if test="${teacher.deleted eq true}"> <a href="${ctx}/teacher/delete/${teacher.id}">【恢复】</a></c:if>
                             <c:if test="${teacher.deleted eq false}"> <a href="${ctx}/teacher/delete/${teacher.id}">【删除】</a></c:if></td>
                     </tr>
                 </c:forEach>

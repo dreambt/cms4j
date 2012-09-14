@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * 文章显示类型枚举
  * <p/>
- * User: baitao.jibt (dreambt@gmail.com)
+ * User: baitao.jibt@gmail.com
  * Date: 12-3-23
  * Time: 下午00:12
  */

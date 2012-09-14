@@ -28,7 +28,7 @@ import java.util.Map;
 /**
  * 安全相关实体的管理类,包括用户和权限组.
  * <p/>
- * User: baitao.jibt (dreambt@gmail.com)
+ * User: baitao.jibt@gmail.com
  * Date: 12-3-22
  * Time: 下午5:25
  */
@@ -68,16 +68,6 @@ public class UserManagerImpl implements UserManager {
         long end = System.currentTimeMillis();
         logger.info("获取用户 #{} 用时：{}ms. key: " + key, id, end - start);
         return user;
-    }
-
-    @Override
-    public List<User> getAll() {
-        return this.getAll(0, userLimit, "id", "ASC");
-    }
-
-    @Override
-    public List<User> getAll(int offset, int limit) {
-        return this.getAll(offset, limit, "id", "ASC");
     }
 
     @Override

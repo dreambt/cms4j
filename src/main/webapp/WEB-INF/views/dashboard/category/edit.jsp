@@ -15,14 +15,14 @@
     <title>菜单管理 - 添加菜单</title>
 </head>
 <body>
-<form:form id="categoryForm" modelAttribute="category" action="${ctx}/category/save/${category.id}" method="post" cssClass="form-horizontal">
+<form:form id="categoryForm" modelAttribute="category" action="${ctx}/category/${action}" method="post" cssClass="form-horizontal">
 <div class="row">
     <div class="span6">
         <div class="control-group">
             <label class="control-label" for="fatherCategoryId">父级菜单</label>
             <div class="controls">
                 <input type="hidden" name="id" value="${category.id}">
-                <input type="hidden" name="id" value="${category.fatherCategoryId}">
+                <input type="hidden" name="fid" value="${category.fatherCategoryId}">
                 <select id="fatherCategoryId" name="fatherCategoryId">
                     <option value="1" <c:if test="${category.fatherCategoryId==1}">selected="selected"</c:if>>无</option>
                     <c:forEach items="${fatherCategories}" var="fatherCategory" begin="0" step="1">
@@ -69,7 +69,7 @@
         <div class="control-group">
             <label class="control-label" for="description">描述信息</label>
             <div class="controls">
-                <textarea id="description" name="description" cols="140" rows="10">${category.description}</textarea>
+                <textarea id="description" name="description" style="width:750px" rows="8">${category.description}</textarea>
             </div>
         </div>
         <div class="control-group">

@@ -27,7 +27,7 @@ public class ArchiveManagerTest extends SpringTransactionalTestCase {
     // 更新已生成过归档的日志
     @Test
     public void testSave() throws Exception {
-        long num = archiveManager.save(new DateTime("2012-03-01T00:00:00"));
+        long num = archiveManager.updateByMonth(new DateTime("2012-03-01T00:00:00"));
         assertEquals(1, num);
 
         Archive archive = archiveManager.get(1L);
@@ -38,7 +38,7 @@ public class ArchiveManagerTest extends SpringTransactionalTestCase {
     // 生成新归档
     @Test
     public void testSave1() throws Exception {
-        long num = archiveManager.save(new DateTime("2012-06-01T00:00:00"));
+        long num = archiveManager.updateByMonth(new DateTime("2012-06-01T00:00:00"));
         assertEquals(1, num);
 
         Archive archive = archiveManager.get(2L);

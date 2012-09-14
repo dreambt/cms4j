@@ -12,14 +12,14 @@
 <html>
 <head>
     <title>编辑文章</title>
-    <link rel="stylesheet" type="text/css" href="${ctx}/static/js/jquery-validation/validate.min.css">
+    <link rel="stylesheet" type="text/css" href="${ctx}/static/js/validation/validate.min.css">
     <link rel="stylesheet" type="text/css" href="${ctx}/static/js/markitup/style.min.css">
 </head>
 <body>
 <div class="row">
     <div class="span12">
-    <form:form id="articleForm" class="form-inline" modelAttribute="article" action="${ctx}/article/save/${article.id}" method="post">
-        <input type="hidden" name="article.id" value="${article.id}"/>
+    <form:form id="articleForm" class="form-inline" modelAttribute="article" action="${ctx}/article/${action}" method="post">
+        <input type="hidden" name="id" value="${article.id}"/>
         <form:select path="category.id" cssClass="input-medium">
         <c:forEach items="${categories}" begin="0" step="1" var="categorie" varStatus="stat">
             <option value="${categorie.id}" <c:if test="${categorie.id eq article.category.id}">selected="selected"</c:if>>${categorie.categoryName}</option>
@@ -32,7 +32,7 @@
         <label class="checkbox">
             <input type="checkbox" name="allowComment" value="true" <c:if test="${article.allowComment}">checked="checked"</c:if> /> 允许评论
         </label>
-        <textarea id="markdown" name="message" cols="80" rows="20">${article.message}</textarea>
+        <textarea id="markdown" name="message" style="width:750px" rows="8">${article.message}</textarea>
         <div class="control-group">
             <div class="controls">
                 <button class="btn btn-primary" id="publish" type="submit"><i class="icon-ok icon-white"></i> 发 布</button>

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * 通用控制器
- * User: baitao.jibt (dreambt@gmail.com)
+ * User: baitao.jibt@gmail.com
  * Date: 12-3-18
  * Time: 下午8:57
  */
@@ -21,12 +21,6 @@ public class GeneralController {
     private ImageManager imageManager;
     private ArticleManager articleManager;
 
-    /**
-     * 首页显示菜单，静态+动态
-     *
-     * @param model
-     * @return
-     */
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index(Model model) {
         Long[] ids = {19L, 20L, 21L, 22L, 32L, 33L};
@@ -38,31 +32,16 @@ public class GeneralController {
         return "index";
     }
 
-    /**
-     * 联系我们
-     *
-     * @return
-     */
     @RequestMapping(value = "/contact", method = RequestMethod.GET)
     public String contactUs(Model model) {
         return "contact";
     }
 
-    /**
-     * 关于我们专用
-     *
-     * @return
-     */
     @RequestMapping(value = "/about", method = RequestMethod.GET)
     public String ahoutUs(Model model) {
         return "about";
     }
 
-    /**
-     * 找不到页面
-     *
-     * @return
-     */
     @RequestMapping(value = "/error/404", method = RequestMethod.GET)
     public String notFound() {
         return "error/404";

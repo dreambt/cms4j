@@ -18,7 +18,7 @@
 <body>
 <div class="row">
     <div class="span12">
-    <form:form id="agency" modelAttribute="agency" action="${ctx}/agency/save/${agency.id}" method="post" enctype="multipart/form-data" cssClass="form-horizontal">
+    <form:form id="agency" modelAttribute="agency" action="${ctx}/agency/${action}" method="post" enctype="multipart/form-data" cssClass="form-horizontal">
         <div class="control-group">
             <label class="control-label" for="upload">研究所图片</label>
             <div class="controls">
@@ -35,7 +35,7 @@
         <div class="control-group">
             <label class="control-label" for="introduction">研究所描述</label>
             <div class="controls">
-                <textarea type="text" class="required" id="introduction" name="introduction" cols="55" rows="5">${agency.introduction}</textarea>
+                <textarea type="text" class="required" id="introduction" name="introduction" style="width:750px" rows="8">${agency.introduction}</textarea>
             </div>
         </div>
         <div class="control-group">

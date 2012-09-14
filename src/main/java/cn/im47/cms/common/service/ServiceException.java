@@ -5,7 +5,7 @@ package cn.im47.cms.common.service;
  * <p/>
  * 继承自RuntimeException, 从由Spring管理事务的函数中抛出时会触发事务回滚.
  * <p/>
- * User: baitao.jibt (dreambt@gmail.com)
+ * User: baitao.jibt@gmail.com
  * Date: 12-4-6
  * Time: 下午14:55
  */

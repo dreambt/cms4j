@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * 用户Dao
- * User: baitao.jibt (dreambt@gmail.com)
+ * User: baitao.jibt@gmail.com
  * Date: 12-3-20
  * Time: 下午20:34
  */

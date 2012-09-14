@@ -26,7 +26,7 @@
                 </div>
                 <div id="collapse${category.id}" class="accordion-body collapse">
                     <div class="accordion-inner">
-                        <h5><a href="${ctx}/">${category.categoryName}</a> <a href="${ctx}/category/edit/${category.id}"><span>【修改】</span></a> <a href="${ctx}/category/delete/${category.id}"><span>【删除】</span></a></h5>
+                        <h5><a href="${ctx}/">${category.categoryName}</a> <a href="${ctx}/category/update/${category.id}"><span>【修改】</span></a> <a href="${ctx}/category/delete/${category.id}"><span>【删除】</span></a></h5>
                         <c:if test="${fn:length(category.subCategories) > 0}">
                         <table class="table table-hover">
                             <thead>
@@ -49,7 +49,7 @@
                                     <td><c:choose><c:when test="${subCategory.allowComment}"><i class="icon-ok"></i></c:when><c:otherwise><i class="icon-remove"></i></c:otherwise></c:choose></td>
                                     <td><c:choose><c:when test="${subCategory.allowPublish}"><i class="icon-ok"></i></c:when><c:otherwise><i class="icon-remove"></i></c:otherwise></c:choose></td>
                                     <td><c:forEach items="${showTypes}" var="showType" begin="0" step="1"><c:if test="${showType.value==subCategory.showType.value}">${showType.displayName}</c:if></c:forEach></td>
-                                    <td><a href="${ctx}/category/edit/${subCategory.id}" type="submit">【修改】</a> <a href="${ctx}/category/delete/${subCategory.id}" type="submit" class="delete">【删除】</a></td>
+                                    <td><a href="${ctx}/category/update/${subCategory.id}" type="submit">修改</a> <a href="${ctx}/category/delete/${subCategory.id}" type="submit" class="delete">删除</a></td>
                                 </tr>
                             </c:forEach>
                             </tbody>
