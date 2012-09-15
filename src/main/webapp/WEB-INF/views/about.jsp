@@ -17,7 +17,7 @@
 <body>
 <!-- 导航 -->
 <div class="row">
-    <div class="span13">
+    <div class="span12">
         <ul class="breadcrumb">
             <li><a href="${ctx}/">首页</a> <span class="divider">/</span></li>
             <li>关于我们</li>
@@ -25,7 +25,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="span13">
+    <div class="span12">
             <h3>中心背景</h3>
             <p>山东省金融信息工程技术培训中心是经山东省科技厅批准，依托山东财经大学金融、财税、会计、管理、数学和信息技术等雄厚的学科资源，联合行业内相关优势企业成立的一个开放的专业从事与金融信息化和金融风险管理相关的理论与应用技术研究、教育培训与咨询服务的组织。</p>
             <p>中心旨在建设具有解决国内金融领域信息化重大问题的、综合研究能力强的、在国内外有较大影响的金融信息工程产学研机构。我们的目标是成为金融信息工程理论与方法的创新研究基地、金融信息化高端人才的培养基地、金融信息化产业的中试基地、金融信息工程研究与应用的人才库和知识库。</p>
@@ -44,7 +44,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="span13">
+    <div class="span12">
         <p><img src="${ctx}/static/uploads/teacher/pic_xuruzhi.jpg" alt="" class="imgabout"/>
             <h5>徐如志</h5>
             徐如志，中心主任，山东财政学院计算机信息工程学院院长、博士、教授、博士生导师。美国Arizona State University访问教授，IEEE会员，中国云计算机专家委员会委员，山东省计算机学会、管理学会学会常务理事。先后完成多项国家自然科学基金及国家“863”课题研究，发表论文50余篇，期中40余篇被SCI、EI等收录。目前主持国家及省部级科研课题4项。获山东省计算机应用优秀成果奖一等奖1项、省科技进步奖及其它重要奖励3项。
@@ -52,7 +52,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="span13">
+    <div class="span12">
         <p><img src="${ctx}/static/uploads/teacher/pic_guojianfeng.jpg" alt="" class="imgabout"/>
             <h5>郭建峰</h5>
             郭建峰，中心副主任，为国家“千人计划”特聘专家。

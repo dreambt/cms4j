@@ -21,7 +21,7 @@
 <body>
 <!-- 文章导航 -->
 <div class="row">
-    <div class="span13">
+    <div class="span12">
         <ul class="breadcrumb">
             <li><a href="${ctx}/">首页</a> <span class="divider">/</span></li>
             <li><a href="${ctx}/article/list/${article.category.id}">${article.category.categoryName}</a> <span class="divider">/</span></li>

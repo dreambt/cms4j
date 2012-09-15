@@ -2,7 +2,7 @@
 <#escape x as x?html>
 <!-- 友情链接 -->
 <div class="row">
-    <span class="span13">
+    <span class="span12">
         <ul id="friLnk" class="nav nav-pills">
             <li class="friLnkT"><strong>友情链接</strong></li>
             <#list links as link>

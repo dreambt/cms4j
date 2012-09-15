@@ -20,7 +20,7 @@
 <body>
 <!-- 导航 -->
 <div class="row">
-    <div class="span13">
+    <div class="span12">
         <ul class="breadcrumb">
             <li><a href="${ctx}/">首页</a> <span class="divider">/</span></li>
             <li>画廊</li>
@@ -30,7 +30,7 @@
 <!-- 画廊 -->
 <div class="row">
     <!-- 左边 -->
-    <div class="span13 list">
+    <div class="span12 list">
         <!-- 列表 -->
         <ul id="album_load" class="thumbnails">
             <c:forEach items="${images}" var="image" begin="0" step="1" varStatus="var">

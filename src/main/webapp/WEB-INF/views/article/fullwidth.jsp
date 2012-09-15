@@ -23,7 +23,7 @@
 <body>
 <!-- 文章导航 -->
 <div class="row">
-    <div class="span13">
+    <div class="span12">
         <ul class="breadcrumb">
             <li><a href="${ctx}/">首页</a> <span class="divider">/</span></li>
             <li><a href="${ctx}/article/list/${article.category.id}">${article.category.categoryName}</a> <span class="divider">/</span></li>
@@ -33,7 +33,7 @@
 </div>
 <div class="row">
     <!-- 正文 -->
-    <div class="span13">
+    <div class="span12">
         <div class="blog-post">
             <h3>${article.subject}</h3>
             <div class="blog-posted-inner">

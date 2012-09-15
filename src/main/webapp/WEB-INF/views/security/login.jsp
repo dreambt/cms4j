@@ -63,6 +63,7 @@
 <script src="${ctx}/static/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <script>
     $(function() {
+        $(".login-page").addClass("active");
         $("#loginForm").validate();
         $(".alert").delay(1500).fadeOut("slow");
     });

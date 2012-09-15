@@ -10,7 +10,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
-<div class="span4">
+<div class="span3">
     <div class="well">
         <ul class="nav nav-list">
             <li class="nav-header">搜索文章</li>

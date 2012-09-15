@@ -3,70 +3,19 @@ a{color:#000;}
 
 /*  Homepage Slider
 ------------------------------------------------------*/
-#slideshow{margin-bottom: 0;height: 195px;}
-.slidehalf { margin-top:0px; margin-right:20px; float:left;} /* Editable Slider Image Position */
-.slidehalf2 { margin-top:0px; margin-right:0px; float:left;} /* Editable Slider Image Position */
-.slide-text .PicTitle{text-align:center;padding:5px 0;background-color:#999;text-decoration: none;}
-.slide-text{width: 270px;}
-.slide-text .PicTitle a{color:#fff;text-align:center;text-decoration: none;}
-.slide-text .PicTitle a:hover{color:#ccc;}
-.slide-text p{font-size:12px; color:#b5b5b5; line-height:22px; padding-right:20px;}
-.slide-text a.read_more{color:#ff4e00; font-size:12px;}
-.flash-img {text-align:center; display:block; margin:100px auto 0 auto;}
+#rslides .PicTitle{width: 270px;text-align:center;padding:0;background-color:#999;text-decoration: none;}
+#rslides .PicTitle a{color:#fff;text-align:center;text-decoration: none;}
+#rslides .PicTitle a:hover{color:#ccc;}
 
 /*  友情链接
 ------------------------------------------------------*/
 #friLnk{display:block;margin:10px 0 0 0;padding:0;}
-#friLnk li.friLnkT{padding-left:56px;width:894px;height: 25px;line-height:25px;background:url(../images/friLnk.png) 2px 13px no-repeat;}
+#friLnk li.friLnkT{padding-left:56px;width:100%;height: 25px;line-height:25px;background:url(../images/friLnk.png) 2px 13px no-repeat;}
 
 /*  Footer
 ------------------------------------------------------*/
 .footer {padding: 30px 20px;margin-top: 30px;border-top: 1px solid #e5e5e5;background-color: #f5f5f5;}
 .footer p {margin-bottom: 0;color: #777;}
-
-/* Mini layout previews
--------------------------------------------------- */
-.mini-layout {
-    border: 1px solid #ddd;
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    border-radius: 6px;
-    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.075);
-    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.075);
-    box-shadow: 0 1px 2px rgba(0,0,0,.075);
-}
-.mini-layout,
-.mini-layout .mini-layout-body,
-.mini-layout.fluid .mini-layout-sidebar {
-    height: 300px;
-}
-.mini-layout {
-    margin-bottom: 20px;
-    padding: 9px;
-}
-.mini-layout div {
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-}
-.mini-layout .mini-layout-body {
-    background-color: #dceaf4;
-    margin: 0 auto;
-    width: 70%;
-}
-.mini-layout.fluid .mini-layout-sidebar,
-.mini-layout.fluid .mini-layout-header,
-.mini-layout.fluid .mini-layout-body {
-    float: left;
-}
-.mini-layout.fluid .mini-layout-sidebar {
-    background-color: #bbd8e9;
-    width: 20%;
-}
-.mini-layout.fluid .mini-layout-body {
-    width: 77.5%;
-    margin-left: 2.5%;
-}
 
 /*-----teacher名师风采1------*/
 a.abtn{display:block;height:130px;width:17px;overflow:hidden;background:url(../images/arrow3.png) no-repeat 0px 50%;}
@@ -74,8 +23,8 @@ a.aleft{float:left;}
 a.agrayleft{cursor:default;background-position:-34px 50%;}
 a.aright{background-position:-17px 50%;}
 a.agrayright{cursor:default;background-position:-51px 50%;}
-.scrolllist{width:800px; height: 205px}
-.scrolllist .imglist_w{width:764px;height:205px;overflow:hidden;float:left;position:relative;/*必要元素*/}
+.scrolllist{width:100%; height: 205px}
+.scrolllist .imglist_w{width:96%;height:205px;overflow:hidden;float:left;position:relative;/*必要元素*/}
 .scrolllist .imglist_w ul{width:20000px;position:absolute;top:0px;list-style: none;padding: 0;margin: 0}
 .scrolllist .imglist_w li{width:130px;float:left;padding:2px 4px 0 9px;z-index: 999;}
 .scrolllist .imglist_w li img{padding:2px;border:solid 1px #ddd;}
@@ -84,8 +33,8 @@ a.agrayright{cursor:default;background-position:-51px 50%;}
 .scrolllist .imglist_w li p{line-height:24px;overflow:hidden;float:left;padding: 0;margin:0;width: 126px;text-align:center;text-indent:0;}
 
 /*-----teacher名师风采2------*/
-.scrolllist_index{width:1000px; height: 205px;}
-.scrolllist_index .imglist_w{width:964px;height:205px;overflow:hidden;float:left;position:relative;/*必要元素*/}
+.scrolllist_index{width:100%; height: 205px;}
+.scrolllist_index .imglist_w{width:96%;height:205px;overflow:hidden;float:left;position:relative;/*必要元素*/}
 .scrolllist_index .imglist_w ul.imglist{width:20000px;position:absolute;top:0px;list-style: none;padding: 0;margin: 0}
 .scrolllist_index .imglist_w li{width:126px;float:left;padding:1px 0px 0 0px;z-index: 999;}
 .scrolllist_index .imglist_w li img{padding:1px;border:solid 0px #ddd;}

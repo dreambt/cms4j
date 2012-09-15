@@ -38,6 +38,7 @@ public interface ArchiveMapper extends GenericDao<Archive, Long> {
      * 删除相关文章
      */
     int deleteArticle(@Param("archiveId") Long archiveId);
+
     int deleteArticle2(@Param("archiveId") Long archiveId, @Param("articleId") Long articleId);
 
 }

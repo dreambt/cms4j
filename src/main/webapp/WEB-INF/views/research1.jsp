@@ -17,13 +17,13 @@
 </head>
 <body>
 <div class="row">
-    <div class="span13">
-        <img id="banner" src="${ctx}/static/uploads/agency/1336285832603-xUv61T.jpg"/>
+    <div class="span12">
+        <img id="banner" src="${ctx}/static/uploads/agency/1336285832603-xUv61T.png"/>
     </div>
 </div>
 <div class="row">
     <!-- 左栏 -->
-    <div class="span10" style="width:835px">
+    <div class="span10">
         <div class="row">
             <!-- 左左栏 -->
             <div class="span4">
@@ -44,7 +44,7 @@
                 </div>
             </div>
             <!-- 左中栏 -->
-            <div class="span6" style="width:515px">
+            <div class="span6">
                 <!-- 学术研究 -->
                 <div class="popover top" style="display:block;position:relative;width:100%;z-index:999">
                     <h3 class="popover-title">学术研究</h3>
@@ -66,16 +66,16 @@
                     <div class="popover-content">
                         <div class="row">
                             <div class="span3">
-                                <ul class="unstyled">
+                                <ul class="unstyled" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
                                     <c:forEach items="${infos}" var="info" begin="0" step="1" end="2">
-                                        <li class="counseling"><c:if test="${info.message!=''}"><a href="${ctx}/article/content/${info.id}">${fn:substring(info.subject,0,15)}</a></c:if></li>
+                                        <li class="counseling"><c:if test="${info.message!=''}"><a href="${ctx}/article/content/${info.id}" title="${info.subject}">${info.subject}</a></c:if></li>
                                     </c:forEach>
                                 </ul>
                             </div>
                             <div class="span3">
-                                <ul class="unstyled">
+                                <ul class="unstyled" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
                                     <c:forEach items="${infos}" var="info" begin="3" step="1" end="5">
-                                        <li class="counseling"><c:if test="${info.message!=''}"><a href="${ctx}/article/content/${info.id}">${fn:substring(info.subject,0,15)}</a></c:if></li>
+                                        <li class="counseling"><c:if test="${info.message!=''}"><a href="${ctx}/article/content/${info.id}" title="${info.subject}">${info.subject}</a></c:if></li>
                                     </c:forEach>
                                 </ul>
                             </div>
@@ -87,7 +87,7 @@
         <!-- 专家团队 -->
         <div class="row">
             <div class="span10">
-                <div class="popover top" style="display:block;position:relative;width:100%;z-index:999;width:835px">
+                <div class="popover top" style="display:block;position:relative;width:100%;z-index:999">
                     <h3 class="popover-title">专家团队</h3>
                     <div class="popover-content">
                         <div class="scrolllist" id="teacher">
@@ -124,7 +124,7 @@
         </div>
     </div>
     <!-- 右栏 -->
-    <div class="span3" style="width:165px">
+    <div class="span2">
         <!-- 教育培训 -->
         <div class="popover top" style="display:block;position:relative;width:100%;z-index:999">
             <h3 class="popover-title">教育培训</h3>

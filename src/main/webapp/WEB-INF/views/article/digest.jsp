@@ -19,7 +19,7 @@
 <body>
 <!-- 文章导航 -->
 <div class="row">
-    <div class="span13">
+    <div class="span12">
         <ul class="breadcrumb">
             <li><a href="${ctx}/">首页</a> <span class="divider">/</span></li>
             <li class="active"><c:choose><c:when test="${archive eq null}">${category.categoryName}</c:when><c:otherwise>${archive.title}</c:otherwise></c:choose></li>

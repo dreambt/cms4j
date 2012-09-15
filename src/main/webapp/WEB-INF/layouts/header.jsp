@@ -11,7 +11,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <!-- 页眉 -->
 <div class="row">
-<div class="span13">
+<div class="span12">
     <div id="top-header">
         <div class="logo"><a href="${ctx}"><img src="${ctx}/static/images/logo.jpg" alt="" style="vertical-align:middle;margin-right: 10px;margin-bottom:0px;" /><h1>山东省金融信息工程技术研究中心</h1></a></div>
     </div>
@@ -48,6 +48,9 @@
                     </c:if>
                     </li>
                 </c:forEach>
+            </ul>
+            <ul class="nav pull-right">
+                <li class="login-page"><a href="${ctx}/login">后台登录</a></li>
             </ul>
         </div>
     </div>

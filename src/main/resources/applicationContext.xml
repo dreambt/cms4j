@@ -58,7 +58,7 @@
 
     <!-- production/local development环境 -->
     <beans profile="production,development">
-        <context:property-placeholder ignore-unresolvable="true"
+        <context:property-placeholder ignore-resource-not-found="true"
                                       location="classpath*:/application.properties,
                                       file:/opt/CMS/application.server.properties,
                                       file:e:/application.server.properties"/>
@@ -80,6 +80,9 @@
             <property name="username" value="${quartz.jdbc.username}"/>
             <property name="password" value="${quartz.jdbc.password}"/>
         </bean>
+
+        <!-- 数据源配置,使用应用服务器的数据库连接池 -->
+        <!--<jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/ExampleDB" />-->
     </beans>
 
     <!-- unit test环境 -->

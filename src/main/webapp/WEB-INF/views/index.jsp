@@ -2,42 +2,40 @@
 <%@ page session="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="sitemesh-page" uri="http://www.opensymphony.com/sitemesh/page" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
     <title>首页</title>
+    <link href="${ctx}/static/js/responsiveslides/responsiveslides.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div class="row">
-    <div class="span10" style="width:835px">
+    <div class="span10">
         <div class="row">
             <!-- 左左栏 -->
-            <div class="span4">
+            <div class="span3">
                 <!-- 首页相册 -->
                 <div class="popover top" style="display:block;position:relative;width:100%;z-index:999">
                     <h3 class="popover-title">新闻图片</h3>
                     <div class="popover-content">
-                        <div id="slideshow">
-                            <c:forEach items="${images}" var="image" begin="0" step="1" end="5">
-                                <div class="slide-text">
-                                    <div class="PicTitle"><a href="#"title="${image.title}">${fn:substring(image.title,0,20)}<c:if test="${fn:length(image.title)>20}">...</c:if></a></div>
-                                    <img src="${ctx}/static/uploads/gallery/thumb-272x166/${image.imageUrl}" title="${image.title}" alt="${image.title}" width="270px"
-                                         height="166px"/>
-                                </div>
-                            </c:forEach>
-                        </div>
+                        <ul id="rslides">
+                        <c:forEach items="${images}" var="image" begin="0" step="1" end="5">
+                            <div class="PicTitle"><a href="#"title="${image.title}">${fn:substring(image.title,0,20)}<c:if test="${fn:length(image.title)>20}">...</c:if>
+                            <img src="${ctx}/static/uploads/gallery/thumb-272x166/${image.imageUrl}" title="${image.title}" alt="${image.title}" width="270px" height="166px"/></a></div>
+                        </c:forEach>
+                        </ul>
                     </div>
                 </div>
                 <!-- 新闻动态 -->
                 <div class="popover top" style="display:block;position:relative;width:100%;z-index:999">
                     <h3 class="popover-title">新闻动态</h3>
                     <div class="popover-content">
-                        <ul class="unstyled">
+                        <ul class="unstyled" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
                             <c:forEach items="${news1}" var="new1" begin="0" step="1">
-                                <li><a href="${ctx}/article/content/${new1.id}">${fn:substring(new1.subject,0,20)}<c:if test="${fn:length(new1.subject)>16}">...</c:if></a></li>
+                                <li><a href="${ctx}/article/content/${new1.id}" title="${new1.subject}">${new1.subject}</a></li>
                             </c:forEach>
                         </ul>
                     </div>
@@ -46,16 +44,16 @@
                 <div class="popover top" style="display:block;position:relative;width:100%;z-index:999">
                     <h3 class="popover-title">通知公告</h3>
                     <div class="popover-content">
-                        <ul class="unstyled">
+                        <ul class="unstyled" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
                             <c:forEach items="${posts}" var="post" begin="0" step="1">
-                                <li><a href="${ctx}/article/content/${post.id}">${fn:substring(post.subject,0,20)}<c:if test="${fn:length(post.subject)>16}">...</c:if></a></li>
+                                <li><a href="${ctx}/article/content/${post.id}" title="${post.subject}">${post.subject}</a></li>
                             </c:forEach>
                         </ul>
                     </div>
                 </div>
             </div>
             <!---左中栏----->
-            <div class="span6" style="width:515px">
+            <div class="span7">
                 <!-- 中心简介 -->
                 <div class="popover top" style="display:block;position:relative;width:100%;z-index:999">
                     <h3 class="popover-title">中心简介</h3>
@@ -80,16 +78,16 @@
                     <div class="popover-content">
                         <div class="row">
                             <div class="span3">
-                                <ul class="unstyled">
+                                <ul class="unstyled" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
                                     <c:forEach items="${infos}" var="info" begin="0" step="1" end="3">
-                                        <li class="counseling"><c:if test="${info.message!=''}"><a href="${ctx}/article/content/${info.id}">${fn:substring(info.subject,0,15)}</a></c:if></li>
+                                        <li class="counseling"><c:if test="${info.message!=''}"><a href="${ctx}/article/content/${info.id}" title="${info.subject}">${info.subject}</a></c:if></li>
                                     </c:forEach>
                                 </ul>
                             </div>
                             <div class="span3">
-                                <ul class="unstyled">
+                                <ul class="unstyled" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
                                     <c:forEach items="${infos}" var="info" begin="4" step="1" end="6">
-                                        <li class="counseling"><c:if test="${info.message!=''}"><a href="${ctx}/article/content/${info.id}">${fn:substring(info.subject,0,15)}</a></c:if></li>
+                                        <li class="counseling"><c:if test="${info.message!=''}"><a href="${ctx}/article/content/${info.id}" title="${info.subject}">${info.subject}</a></c:if></li>
                                     </c:forEach>
                                     <li class="lastM"><span> <a href="${ctx}/article/listInfo" class="more">更多...</a></span></li>
                                 </ul>
@@ -101,7 +99,7 @@
         </div>
     </div>
     <!-- 右边栏 -->
-    <div class="span3" style="width:165px">
+    <div class="span2">
         <!-- 研究机构 -->
         <div class="popover top" style="display:block;position:relative;width:98%;z-index:999">
             <h3 class="popover-title">研究机构</h3>
@@ -139,9 +137,9 @@
         <div class="popover top" style="display:block;position:relative;width:98%;z-index:999">
             <h3 class="popover-title">行业资讯</h3>
             <div class="popover-content">
-                <ul class="unstyled">
+                <ul class="unstyled" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
                     <c:forEach items="${news2}" var="new2" begin="0" step="1">
-                        <li><a href="${ctx}/article/content/${new2.id}">${fn:substring(new2.subject,0,10)}<c:if test="${fn:length(new2.subject)>10}">...</c:if></a></li>
+                        <li><a href="${ctx}/article/content/${new2.id}" title="${new2.subject}">${new2.subject}</a></li>
                     </c:forEach>
                 </ul>
             </div>
@@ -150,7 +148,7 @@
 </div>
 <!-- 专家团队 -->
 <div class="row">
-    <div class="span13">
+    <div class="span12">
         <div class="popover top" style="display:block;position:relative;width:100%;z-index:999">
             <h3 class="popover-title">专家团队</h3>
             <div class="popover-content">
@@ -235,23 +233,12 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="${ctx}/static/js/jquery.cycle.all.js"></script>
-<script type="text/javascript">
-    $(function () {
-        $('#slideshow').cycle({
-            timeout:5000, // milliseconds between slide transitions (0 to disable auto advance)
-            fx:'fade', // choose your transition type, ex: fade, scrollUp, shuffle, etc...
-            pager:'#pager', // selector for element to use as pager container
-            pause:0, // true to enable "pause on hover"
-            pauseOnPagerHover:0 // true to pause when hovering over pager link
-        });
-        $('.anno').cycle();
-    });
-</script>
+<script type="text/javascript" src="${ctx}/static/js/responsiveslides/responsiveslides.min.js"></script>
 <script type="text/javascript" src="${ctx}/static/js/slider.min.js"></script>
 <script type="text/javascript">
     $(function(){
-        //默认状态下左右滚动
+        $(".index-page").addClass("active");
+        $("#rslides").responsiveSlides();
         $("#teacher").Xslider({
             unitdisplayed:5,
             numtoMove:1,

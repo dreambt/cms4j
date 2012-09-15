@@ -18,11 +18,6 @@ java -jar yuicompressor-2.4.7.jar -o ..\src\main\webapp\static\404\colors.min.cs
 echo Compressing.... static\404\screen.css
 java -jar yuicompressor-2.4.7.jar -o ..\src\main\webapp\static\404\screen.min.css ..\src\main\webapp\static\404\screen.css
 
-echo ### bootstrap datepicker ###
-echo Compressing.... static\bootstrap\css\datepicker.css
-java -jar yuicompressor-2.4.7.jar -o ..\src\main\webapp\static\bootstrap\css\datepicker.min.css ..\src\main\webapp\static\bootstrap\css\datepicker.css
-echo Compressing.... static\bootstrap\js\bootstrap-datepicker.js
-java -jar yuicompressor-2.4.7.jar -o ..\src\main\webapp\static\bootstrap\js\bootstrap-datepicker.min.js ..\src\main\webapp\static\bootstrap\js\bootstrap-datepicker.js
 
 echo Compressing.... static\js\markitup\style.css
 java -jar yuicompressor-2.4.7.jar -o ..\src\main\webapp\static\js\markitup\style.min.css ..\src\main\webapp\static\js\markitup\style.css
