@@ -13,9 +13,9 @@
 <html>
 <head>
     <title>画廊</title>
-    <link rel="stylesheet" href="${ctx}/static/js/fancyBox/jquery.fancybox.css?v=2.1.0" type="text/css" media="screen" />
-    <link rel="stylesheet" href="${ctx}/static/js/fancyBox/helpers/jquery.fancybox-buttons.css?v=2.1.0" type="text/css" media="screen" />
-    <link rel="stylesheet" href="${ctx}/static/js/fancyBox/helpers/jquery.fancybox-thumbs.css?v=2.1.0" type="text/css" media="screen" />
+    <link rel="stylesheet" href="${ctx}/static/fancyBox/jquery.fancybox.css?v=2.1.0" type="text/css" media="screen" />
+    <link rel="stylesheet" href="${ctx}/static/fancyBox/helpers/jquery.fancybox-buttons.css?v=2.1.0" type="text/css" media="screen" />
+    <link rel="stylesheet" href="${ctx}/static/fancyBox/helpers/jquery.fancybox-thumbs.css?v=2.1.0" type="text/css" media="screen" />
 </head>
 <body>
 <!-- 导航 -->
@@ -47,12 +47,7 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="${ctx}/static/js/fancyBox/jquery.mousewheel-3.0.6.pack.js"></script>
-<script type="text/javascript" src="${ctx}/static/js/fancyBox/jquery.fancybox.pack.js?v=2.1.0"></script>
-<script type="text/javascript" src="${ctx}/static/js/fancyBox/helpers/jquery.fancybox-buttons.js?v=2.1.0"></script>
-<script type="text/javascript" src="${ctx}/static/js/fancyBox/helpers/jquery.fancybox-thumbs.js?v=2.1.0"></script>
-<script type="text/javascript" src="${ctx}/static/js/jquery.infinitescroll.min.js"></script>
-<script type="text/javascript" src="${ctx}/static/js/jquery.masonry.min.js"></script>
+<script type="text/javascript" src="${ctx}/min?t=js&f=/fancyBox/jquery.mousewheel-3.0.6.pack.js,/fancyBox/jquery.fancybox.pack.js,/fancyBox/helpers/jquery.fancybox-buttons.js,/fancyBox/helpers/jquery.fancybox-thumbs.js,/js/jquery.infinitescroll.js,/js/jquery.masonry.js"></script>
 <script type="text/javascript">
     $(function () {
         // 分页
@@ -99,6 +94,7 @@
             PageClick($(this).text(), ${total}, 5);
         });
 
+        // 瀑布流
         albums.infinitescroll({
             navSelector  : "div.page .pages",
             nextSelector : "div.page .pages a:first",
@@ -118,13 +114,7 @@
             nextEffect:'none',
             helpers:{
                 title:{
-                    type:'outside'
-                },
-                overlay:{
-                    opacity:0.8,
-                    css:{
-                        'background-color':'#000'
-                    }
+                    type:'float'
                 },
                 thumbs:{
                     width:50,

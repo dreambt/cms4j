@@ -16,7 +16,6 @@
 <html>
 <head>
     <title>${article.subject} - ${article.category.categoryName}</title>
-    <link rel="stylesheet" type="text/css" href="${ctx}/static/js/totop/ui.totop.min.css">
 </head>
 <body>
 <!-- 文章导航 -->
@@ -89,8 +88,6 @@
     <!-- 边栏 -->
     <%@include file="/WEB-INF/layouts/sidebar.jsp" %>
 </div>
-<script src="${ctx}/static/js/easing.js" type="text/javascript"></script>
-<script src="${ctx}/static/js/totop/jquery.ui.totop.js" type="text/javascript"></script>
 <script>
     $(function () {
         //totop

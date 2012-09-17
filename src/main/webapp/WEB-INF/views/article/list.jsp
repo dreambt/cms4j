@@ -33,14 +33,13 @@
         <div>
             <ul id="article_load" class="nav nav-tabs nav-stacked">
                 <c:forEach items="${articles}" var="article" begin="0" step="1" varStatus="stat">
-                    <li><a href="${ctx}/article/content/${article.id}"><c:if test="${article.top}"><img src="${ctx}/static/images/top.gif" /></c:if>${article.subject} (浏览: ${article.views})</a></li>
+                    <li><a href="${ctx}/article/content/${article.id}"><c:if test="${article.top}"><img src="${ctx}/static/images/top.gif" /> </c:if>${article.subject} (浏览: ${article.views})</a></li>
                 </c:forEach>
             </ul>
         </div>
         <!-- 分页 -->
         <div class="pagination pagination-right">
             <ul id="pagination">
-
                 <c:forEach begin="1" end="${total/12>11?11:0.9+total/12}" step="1" varStatus="var">
                     <li><a href="#">${var.index}</a></li>
                 </c:forEach>

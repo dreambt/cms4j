@@ -23,11 +23,8 @@
     <meta name="description" content=""/>
     <title><sitemesh:title/> - 山东省金融信息工程技术研究中心</title>
     <link rel="shortcut icon" href="${ctx}/static/favicon.ico" type="image/x-icon" />
-    <link href="${ctx}/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="${ctx}/static/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
-    <link href="${ctx}/static/style/main.min.css" rel="stylesheet" type="text/css" />
-    <script src="${ctx}/static/js/jquery.min.js" type="text/javascript"></script>
-    <script src="${ctx}/static/js/main.min.js" type="text/javascript"></script>
+    <link href="${ctx}/min?t=css&f=/style/bootstrap.css,/style/bootstrap-responsive.css,/slides/responsiveslides.css,/style/main.css" rel="stylesheet" type="text/css" />
+    <script src="${ctx}/min?t=js&f=/js/jquery.js,/js/main.js,/js/bootstrap.js,/slides/responsiveslides.js,/js/slider.js" type="text/javascript"></script>
     <sitemesh:head/>
 </head>
 <body>
@@ -51,6 +48,5 @@
             ${error}
     </div>
 </c:if>
-<script src="${ctx}/static/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 </body>
 </html>

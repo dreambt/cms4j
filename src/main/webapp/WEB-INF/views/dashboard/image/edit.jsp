@@ -13,7 +13,7 @@
 <html>
 <head>
     <title>上传活动图片</title>
-    <link rel="stylesheet" type="text/css" href="${ctx}/static/js/jquery-validation/validate.min.css">
+    <link rel="stylesheet" type="text/css" href="${ctx}/static/js/validation/validate.min.css">
 </head>
 <body>
 <div class="row">
@@ -53,8 +53,7 @@
     </form:form>
     </div>
 </div>
-<script type="text/javascript" src="${ctx}/static/js/jquery-validation/jquery.validate.min.js" charset="utf-8"></script>
-<script type="text/javascript" src="${ctx}/static/js/jquery-validation/messages_cn.js" charset="utf-8"></script>
+<script type="text/javascript" src="${ctx}/min?t=js&f=/js/validation/jquery.validate.js,/js/validation/messages_cn.js" charset="utf-8"></script>
 <script type="text/javascript">
     $(function () {
         //上传时选择文件校验

@@ -81,8 +81,6 @@
 <div id="emailSuccess" class="alert alert-info" style="display:none;z-index:999;position:fixed;top:300px;left:50%;margin: 0 0 0 -125px;">
     <p><strong style="color:red;">邮件发送成功!</strong></p>
 </div>
-<script type="text/javascript" src="${ctx}/static/js/functionAddEvent.js"></script>
-<script type="text/javascript" src="${ctx}/static/js/contact.js"></script>
-<script type="text/javascript" src="${ctx}/static/js/xmlHttp.js"></script>
+<script type="text/javascript" src="${ctx}/min?t=js&f=/js/functionAddEvent.js,/js/contact.js,/js/xmlHttp.js"></script>
 </body>
 </html>

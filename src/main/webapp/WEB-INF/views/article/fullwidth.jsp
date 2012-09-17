@@ -18,7 +18,6 @@
 <html>
 <head>
     <title>${category.categoryName}</title>
-    <link rel="stylesheet" type="text/css" href="${ctx}/static/js/totop/ui.totop.css">
 </head>
 <body>
 <!-- 文章导航 -->
@@ -105,6 +104,5 @@
         });
     });
 </script>
-<script src="${ctx}/static/js/totop/jquery.ui.totop.js" type="text/javascript"></script>
 </body>
 </html>

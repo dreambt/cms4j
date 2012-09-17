@@ -76,6 +76,16 @@
         <url-pattern>/remote-content</url-pattern>
     </servlet-mapping>
 
+    <!-- 合并 js 和 CSS 文件 -->
+    <servlet>
+        <servlet-name>Merpressor</servlet-name>
+        <servlet-class>cn.im47.commons.utilities.merpressor.Merpressor</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Merpressor</servlet-name>
+        <url-pattern>/min</url-pattern>
+    </servlet-mapping>
+
     <!-- 验证码 Servlet 配置-->
     <servlet>
         <servlet-name>CaptchaContentServlet</servlet-name>
@@ -148,7 +158,9 @@
         <init-param>
             <param-name>mimeTypes</param-name>
             <param-value>
-                text/html,text/plain,text/xml,application/xhtml+xml,text/css,application/javascript,application/json,image/svg+xml
+                text/html,text/plain,text/xml,application/xhtml+xml,text/css,
+                application/javascript,application/json,
+                image/svg+xml,image/gif,image/jpeg,image/png
             </param-value>
         </init-param>
     </filter>

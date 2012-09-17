@@ -9,7 +9,6 @@
 <html>
 <head>
     <title>首页</title>
-    <link href="${ctx}/static/js/responsiveslides/responsiveslides.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div class="row">
@@ -233,8 +232,6 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="${ctx}/static/js/responsiveslides/responsiveslides.min.js"></script>
-<script type="text/javascript" src="${ctx}/static/js/slider.min.js"></script>
 <script type="text/javascript">
     $(function(){
         $(".index-page").addClass("active");

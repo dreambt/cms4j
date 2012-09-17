@@ -42,11 +42,7 @@
     </form:form>
     </div>
 </div>
-<script type="text/javascript" src="${ctx}/static/js/jquery.loading.js"></script>
-<script type="text/javascript" src="${ctx}/static/js/jquery.json-2.3.min.js"></script>
-<script type="text/javascript" src="${ctx}/static/js/markitup/jquery.markitup.js"></script>
-<script type="text/javascript" src="${ctx}/static/js/jquery-validation/jquery.validate.min.js" charset="utf-8"></script>
-<script type="text/javascript" src="${ctx}/static/js/jquery-validation/messages_cn.js" charset="utf-8"></script>
+<script type="text/javascript" src="${ctx}/min?t=js&f=/js/jquery.loading.js,/js/jquery.json-2.3.js,/js/markitup/jquery.markitup.js,/js/validation/jquery.validate.js,/js/validation/messages_cn.js" charset="utf-8"></script>
 <script type="text/javascript">
     $(function () {
         $('#markdown').markItUp(myMarkdownSettings);

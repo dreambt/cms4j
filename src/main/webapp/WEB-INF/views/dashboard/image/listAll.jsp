@@ -14,9 +14,9 @@
 <html>
 <head>
     <title>相册列表</title>
-    <link rel="stylesheet" href="${ctx}/static/js/fancyBox/jquery.fancybox.css?v=2.0.5" type="text/css" media="screen" />
-    <link rel="stylesheet" href="${ctx}/static/js/fancyBox/helpers/jquery.fancybox-buttons.css?v=2.0.5" type="text/css" media="screen" />
-    <link rel="stylesheet" href="${ctx}/static/js/fancyBox/helpers/jquery.fancybox-thumbs.css?v=2.0.5" type="text/css" media="screen" />
+    <link rel="stylesheet" href="${ctx}/static/fancyBox/jquery.fancybox.css?v=2.0.5" type="text/css" media="screen" />
+    <link rel="stylesheet" href="${ctx}/static/fancyBox/helpers/jquery.fancybox-buttons.css?v=2.0.5" type="text/css" media="screen" />
+    <link rel="stylesheet" href="${ctx}/static/fancyBox/helpers/jquery.fancybox-thumbs.css?v=2.0.5" type="text/css" media="screen" />
 </head>
 <body>
 <div class="row">
@@ -65,10 +65,7 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="${ctx}/static/js/fancyBox/jquery.mousewheel-3.0.6.pack.js"></script>
-<script type="text/javascript" src="${ctx}/static/js/fancyBox/jquery.fancybox.pack.js?v=2.0.5"></script>
-<script type="text/javascript" src="${ctx}/static/js/fancyBox/helpers/jquery.fancybox-buttons.js?v=2.0.5"></script>
-<script type="text/javascript" src="${ctx}/static/js/fancyBox/helpers/jquery.fancybox-thumbs.js?v=2.0.5"></script>
+<script type="text/javascript" src="${ctx}/min?t=js&f=/fancyBox/jquery.mousewheel-3.0.6.pack.js,/fancyBox/jquery.fancybox.pack.js,/fancyBox/helpers/jquery.fancybox-buttons.js,/fancyBox/helpers/jquery.fancybox-thumbs.js"></script>
 <script type="text/javascript">
     function buttonClick(){
         $(".showIndex").click(function(){
