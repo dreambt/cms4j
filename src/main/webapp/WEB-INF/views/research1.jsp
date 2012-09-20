@@ -18,7 +18,7 @@
 <body>
 <div class="row">
     <div class="span12">
-        <img id="banner" src="${ctx}/static/uploads/agency/1336285832603-xUv61T.png"/>
+        <img id="banner" src="${ctx}/static/uploads/agency/1336285832603-xUv61T.jpg"/>
     </div>
 </div>
 <div class="row">
