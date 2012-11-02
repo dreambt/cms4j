@@ -1,6 +1,6 @@
 package cn.im47.cms.common.data;
 
-import cn.im47.cms.common.entity.article.Category;
+import cn.im47.cms.common.entity.category.Category;
 import org.springside.modules.test.data.RandomData;
 
 /**

@@ -49,9 +49,11 @@
                     </li>
                 </c:forEach>
             </ul>
-            <ul class="nav pull-right">
-                <li class="login-page"><a href="${ctx}/login">后台登录</a></li>
-            </ul>
+            <form name="s" class="form-search">
+                <input type="text" class="input-medium search-query" id="q" name="wd" autocomplete="on" value="Search"
+                       onblur="if (this.value == ''){this.value = 'Search'; }"
+                       onfocus="if (this.value == 'Search') {this.value = ''; }">&nbsp;<input type="image" class="go" onclick="window.open('http://www.google.com.hk/search?q='+s.wd.value,'')" src="${ctx}/static/images/search-icon.gif"/>
+            </form>
         </div>
     </div>
 </div>

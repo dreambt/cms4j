@@ -1,8 +1,9 @@
-package cn.im47.cms.common.service.account;
+package cn.im47.cms.common.service.account.impl;
 
 import cn.im47.cms.common.dao.account.UserMapper;
 import cn.im47.cms.common.entity.account.User;
 import cn.im47.cms.common.service.ServiceException;
+import cn.im47.cms.common.service.account.UserManager;
 import cn.im47.cms.jms.NotifyMessageProducer;
 import cn.im47.cms.memcached.MemcachedObjectType;
 import cn.im47.cms.security.ShiroDbRealm;

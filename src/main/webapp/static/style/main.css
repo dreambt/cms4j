@@ -91,3 +91,30 @@ a.agrayright{cursor:default;background-position:-51px 50%;}
 .video .img{background-position:-255px 0;}
 .article .text{}
 
+/* aboutUs
+ ---------------------------------------- */
+.page {
+    background: #fff;
+    padding: 30px 0 60px;
+    margin: 10px 0 10px 0;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.25);
+}
+.page-header {
+    padding-bottom: 17px;
+    margin: 18px 20px;
+    border-bottom: 1px solid #eeeeee;
+}
+.page .row {
+    margin-left: 0px;
+}
+.page .team img {
+    float: left;
+    margin-right: 10px;
+}
+.page .team p {
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+.page-ex {
+    padding: 30px 12% 60px;
+}

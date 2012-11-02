@@ -1,7 +1,8 @@
-package cn.im47.cms.common.service.link;
+package cn.im47.cms.common.service.link.impl;
 
 import cn.im47.cms.common.dao.link.LinkMapper;
 import cn.im47.cms.common.entity.link.Link;
+import cn.im47.cms.common.service.link.LinkManager;
 import cn.im47.cms.memcached.MemcachedObjectType;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;

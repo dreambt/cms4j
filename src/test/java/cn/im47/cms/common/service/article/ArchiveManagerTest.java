@@ -48,7 +48,7 @@ public class ArchiveManagerTest extends SpringTransactionalTestCase {
 
     @Test
     public void testGetTopTen() throws Exception {
-        List<Archive> archiveList = archiveManager.getTopTen();
+        List<Archive> archiveList = archiveManager.getTop(10);
         assertEquals(1, archiveList.size());
     }
 

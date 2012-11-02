@@ -3,9 +3,9 @@ package cn.im47.cms.common.web.article;
 import cn.im47.cms.common.entity.article.Article;
 import cn.im47.cms.common.service.account.UserManager;
 import cn.im47.cms.common.service.article.ArchiveManager;
-import cn.im47.cms.common.service.article.ArchiveManagerImpl;
-import cn.im47.cms.common.service.article.ArticleManagerImpl;
-import cn.im47.cms.common.service.article.CategoryManager;
+import cn.im47.cms.common.service.article.impl.ArchiveManagerImpl;
+import cn.im47.cms.common.service.article.impl.ArticleManagerImpl;
+import cn.im47.cms.common.service.category.CategoryManager;
 import cn.im47.cms.common.vo.ResponseMessage;
 import cn.im47.cms.security.ShiroDbRealm;
 import org.apache.commons.lang3.StringUtils;
@@ -47,8 +47,8 @@ public class ArticleController {
         //article.setMessage(Encodes.unescapeHtml(article.getMessage()));
 
         model.addAttribute("article", article);
-        model.addAttribute("archives", archiveManager.getTopTen());
-        model.addAttribute("newArticles", articleManager.getNewTop(10));
+        model.addAttribute("archives", archiveManager.getTop(8));
+        model.addAttribute("newArticles", articleManager.getNewTop(8));
         return "article/content";
     }
 
@@ -67,7 +67,7 @@ public class ArticleController {
     }
 
     @RequiresPermissions("article:list")
-    @RequestMapping(value = {"listAll", ""})
+    @RequestMapping(value = {"listAll", ""}, method = RequestMethod.GET)
     public String listAllArticle(Model model) {
         model.addAttribute("articles", articleManager.getAll());
         model.addAttribute("total", articleManager.count());
@@ -95,8 +95,8 @@ public class ArticleController {
     public String listOfArticle(@PathVariable("id") Long id, Model model) {
         model.addAttribute("articles", articleManager.getByCategoryId(id, 0, 12));//文章列表(首页显示)
         model.addAttribute("category", categoryManager.get(id));//获取分类信息
-        model.addAttribute("archives", archiveManager.getTopTen());//边栏归档日志
-        model.addAttribute("newArticles", articleManager.getNewTop(10));//边栏最新文章
+        model.addAttribute("archives", archiveManager.getTop(8));//边栏归档日志
+        model.addAttribute("newArticles", articleManager.getNewTop(8));//边栏最新文章
         model.addAttribute("total", articleManager.count(id));
         return "article/list";
     }
@@ -111,8 +111,8 @@ public class ArticleController {
     public String digestOfArticle(@PathVariable("id") Long id, Model model) {
         model.addAttribute("articles", articleManager.getByCategoryId(id, 0, 6));
         model.addAttribute("category", categoryManager.get(id));//获取分类信息
-        model.addAttribute("archives", archiveManager.getTopTen());
-        model.addAttribute("newArticles", articleManager.getNewTop(10));
+        model.addAttribute("archives", archiveManager.getTop(8));
+        model.addAttribute("newArticles", articleManager.getNewTop(8));
         model.addAttribute("total", articleManager.count(id));
         return "article/digest";
     }
@@ -134,8 +134,8 @@ public class ArticleController {
         Long[] ids = {19L, 20L, 21L, 22L, 32L, 33L};
         model.addAttribute("articles", articleManager.getByCategoryIds(ids, 0, 12));//文章列表
         model.addAttribute("category", categoryManager.get(18L));//获取分类信息
-        model.addAttribute("archives", archiveManager.getTopTen());//边栏归档日志
-        model.addAttribute("newArticles", articleManager.getNewTop(10));//边栏最新文章
+        model.addAttribute("archives", archiveManager.getTop(8));//边栏归档日志
+        model.addAttribute("newArticles", articleManager.getNewTop(8));//边栏最新文章
         model.addAttribute("total", articleManager.count(ids));
         model.addAttribute("url", "listInfo");
         return "article/list";

@@ -1,7 +1,8 @@
-package cn.im47.cms.common.service.article;
+package cn.im47.cms.common.service.category.impl;
 
-import cn.im47.cms.common.dao.article.CategoryMapper;
-import cn.im47.cms.common.entity.article.Category;
+import cn.im47.cms.common.dao.category.CategoryMapper;
+import cn.im47.cms.common.entity.category.Category;
+import cn.im47.cms.common.service.category.CategoryManager;
 import cn.im47.cms.memcached.MemcachedObjectType;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -215,7 +216,7 @@ public class CategoryManagerImpl implements CategoryManager {
      */
     private void generateContent() {
         Map context = Maps.newHashMap();
-        List<Category> categories = this.getNavCategory();
+        List<Category> categories = categoryMapper.getNavCategory();
         try {
             context.put("categories", categories);
             freemakerHelper.generateContent(context, "menu.ftl", "../layouts/menu.html");

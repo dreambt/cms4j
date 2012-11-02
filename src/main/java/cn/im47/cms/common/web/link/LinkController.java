@@ -27,7 +27,7 @@ public class LinkController {
     private LinkManager linkManager;
 
     @RequiresPermissions("link:list")
-    @RequestMapping(value = {"", "listAll"})
+    @RequestMapping(value = {"", "listAll"}, method = RequestMethod.GET)
     public String listAll(Model model) {
         List<Link> links = linkManager.getAll();
         model.addAttribute("links", links);

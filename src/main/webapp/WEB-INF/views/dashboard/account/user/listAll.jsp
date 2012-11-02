@@ -135,6 +135,7 @@
                         } else {
                             var a = $("<li><a href='#'>" + j + "</a></li>").click(function () {
                                 PageClick($(this).text(), total, spanInterval);
+                                return false;
                             });
                             pager.append(a);
                         } //else
@@ -145,6 +146,7 @@
         };
         $("#pagination li").click(function () {
             PageClick($(this).text(), ${total}, 5);
+            return false;
         });
         buttonClick();
         $('#auditAll').click(function () {

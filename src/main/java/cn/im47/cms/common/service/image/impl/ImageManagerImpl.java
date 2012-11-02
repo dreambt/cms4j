@@ -1,7 +1,8 @@
-package cn.im47.cms.common.service.image;
+package cn.im47.cms.common.service.image.impl;
 
 import cn.im47.cms.common.dao.image.ImageMapper;
 import cn.im47.cms.common.entity.image.Image;
+import cn.im47.cms.common.service.image.ImageManager;
 import cn.im47.cms.jms.NotifyMessageProducer;
 import cn.im47.cms.memcached.MemcachedObjectType;
 import cn.im47.commons.utilities.thumb.ImageThumb;

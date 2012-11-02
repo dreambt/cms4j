@@ -4,7 +4,7 @@ import cn.im47.cms.common.entity.agency.Teacher;
 import cn.im47.cms.common.entity.article.Article;
 import cn.im47.cms.common.service.agency.AgencyManager;
 import cn.im47.cms.common.service.agency.TeacherManager;
-import cn.im47.cms.common.service.article.ArticleManagerImpl;
+import cn.im47.cms.common.service.article.impl.ArticleManagerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,19 +31,19 @@ public class TeacherController {
     private ArticleManagerImpl articleManagerImpl;
     private AgencyManager agencyManager;
 
-    @RequestMapping(value = "content/{id}")
+    @RequestMapping(value = "content/{id}", method = RequestMethod.GET)
     public String contentOfTeacher(@PathVariable Long id, Model model) {
         model.addAttribute("article", articleManagerImpl.get(teacherManager.getArticleId(id)));
         return "article/content";
     }
 
-    @RequestMapping(value = "listAll")
+    @RequestMapping(value = {"", "listAll"}, method = RequestMethod.GET)
     public String listAll(Model model) {
         model.addAttribute("teachers", teacherManager.getAllTeacher());
         return "dashboard/teacher/listAll";
     }
 
-    @RequestMapping(value = "create")
+    @RequestMapping(value = "create", method = RequestMethod.GET)
     public String create(Model model) {
         model.addAttribute("teacher", new Teacher());
         model.addAttribute("article", new Article());

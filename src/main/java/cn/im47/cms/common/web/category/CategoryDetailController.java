@@ -1,7 +1,7 @@
-package cn.im47.cms.common.web.article;
+package cn.im47.cms.common.web.category;
 
-import cn.im47.cms.common.entity.article.Category;
-import cn.im47.cms.common.service.article.CategoryManager;
+import cn.im47.cms.common.entity.category.Category;
+import cn.im47.cms.common.service.category.CategoryManager;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

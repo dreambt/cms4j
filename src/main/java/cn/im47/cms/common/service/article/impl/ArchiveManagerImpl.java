@@ -1,9 +1,10 @@
-package cn.im47.cms.common.service.article;
+package cn.im47.cms.common.service.article.impl;
 
 import cn.im47.cms.common.dao.article.ArchiveMapper;
 import cn.im47.cms.common.dao.article.ArticleMapper;
 import cn.im47.cms.common.entity.article.Archive;
 import cn.im47.cms.common.entity.article.Article;
+import cn.im47.cms.common.service.article.ArchiveManager;
 import cn.im47.cms.memcached.MemcachedObjectType;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -62,10 +63,10 @@ public class ArchiveManagerImpl implements ArchiveManager {
     }
 
     @Override
-    public List<Archive> getTopTen() {
+    public List<Archive> getTop(int limit) {
         Map<String, Object> parameters = Maps.newHashMap();
         parameters.put("offset", 0);
-        parameters.put("limit", 10);
+        parameters.put("limit", limit);
 
         List<Archive> archiveList = Lists.newArrayList();
         long start = System.currentTimeMillis();

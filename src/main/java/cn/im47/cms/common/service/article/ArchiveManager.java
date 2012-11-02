@@ -20,7 +20,7 @@ public interface ArchiveManager extends GenericManager<Archive, Long> {
      *
      * @return
      */
-    List<Archive> getTopTen();
+    List<Archive> getTop(int limit);
 
     /**
      * 保存上个月的归类

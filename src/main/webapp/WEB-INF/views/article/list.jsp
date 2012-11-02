@@ -49,9 +49,18 @@
     <!-- 边栏 -->
     <%@include file="/WEB-INF/layouts/sidebar.jsp" %>
 </div>
+<script id="t-list" type="template">
+    {each list}
+    {if $value.top === 'true'}
+    <li><a href='${ctx}/article/content/{$value.id}'><img src='${ctx}/static/images/top.gif' /> {$value.subject} (浏览: {$value.views})</a></li>
+    {else}
+    <li><a href='${ctx}/article/content/{$value.id}'>{$value.subject} (浏览: {$value.views})</a></li>
+    {/if}
+    {/each}
+</script>
 <script type="text/javascript">
     $(function () {
-        var articles = $("#article_load");
+        var loadList = $("#article_load");
         var pager = $("#pagination");
         pager.find("li:first").addClass('active');
         PageClick = function (pageIndex, total, spanInterval) {
@@ -66,16 +75,18 @@
                     <c:when test="${url ne null}">url:"${ctx}/article/${url}/ajax?offset=" + (intPageIndex - 1) * limit + "&limit=" + limit,</c:when>
                     <c:otherwise>url:"${ctx}/article/list/ajax/${category.id}?offset=" + (intPageIndex - 1) * limit + "&limit=" + limit,</c:otherwise>
                 </c:choose>
-                timeout:3000,
-                success:function (data) {
+                timeout:3000
+            }).done(function (data) {
                     //加载文章
-                    articles.html("");
-                    $.each(data, function (index, content) {
-                        if(content.top)
-                            articles.append($("<li><a href='${ctx}/article/content/" + content.id + "'><img src='${ctx}/static/images/top.gif' /> " + content.subject + " (浏览: " + content.views + ")</a></li>"));
-                        else
-                            articles.append($("<li><a href='${ctx}/article/content/" + content.id + "'>" + content.subject + " (浏览: " + content.views + ")</a></li>"));
-                    });
+                    loadList.html("123");
+                    loadList.append(template('t-list', {title: '标签', list: data}));
+                        alert(template('t-list', {title: '标签',list: data}));
+                    <%--$.each(data, function (index, content) {--%>
+                        <%--if(content.top)--%>
+                            <%--loadList.append($("<li><a href='${ctx}/article/content/" + content.id + "'><img src='${ctx}/static/images/top.gif' /> " + content.subject + " (浏览: " + content.views + ")</a></li>"));--%>
+                        <%--else--%>
+                            <%--loadList.append($("<li><a href='${ctx}/article/content/" + content.id + "'>" + content.subject + " (浏览: " + content.views + ")</a></li>"));--%>
+                    <%--});--%>
 
                     //将总记录数结果 得到 总页码数
                     var pageS = total;
@@ -103,15 +114,16 @@
                         } else {
                             var a = $("<li><a href='#'>" + j + "</a></li>").click(function () {
                                 PageClick($(this).text(), total, spanInterval);
+								return false;
                             });
                             pager.append(a);
                         } //else
-                    } //for
-                }
+                    } //for				
             });
         };
         $("#pagination li").click(function () {
             PageClick($(this).text(), ${total}, 5);
+			return false;
         });
     });
 </script>

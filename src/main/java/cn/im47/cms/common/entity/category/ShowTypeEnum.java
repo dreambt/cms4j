@@ -1,4 +1,4 @@
-package cn.im47.cms.common.entity.article;
+package cn.im47.cms.common.entity.category;
 
 import com.google.common.collect.Maps;
 

@@ -1,8 +1,10 @@
-package cn.im47.cms.common.service.article;
+package cn.im47.cms.common.service.article.impl;
 
 import cn.im47.cms.common.dao.article.ArticleMapper;
 import cn.im47.cms.common.entity.account.User;
 import cn.im47.cms.common.entity.article.Article;
+import cn.im47.cms.common.service.article.ArchiveManager;
+import cn.im47.cms.common.service.article.ArticleManager;
 import cn.im47.cms.jms.NotifyMessageProducer;
 import cn.im47.cms.memcached.MemcachedObjectType;
 import cn.im47.cms.security.ShiroDbRealm;

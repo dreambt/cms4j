@@ -1,7 +1,8 @@
-package cn.im47.cms.common.service.article;
+package cn.im47.cms.common.service.article.impl;
 
 import cn.im47.cms.common.dao.article.CommentMapper;
 import cn.im47.cms.common.entity.article.Comment;
+import cn.im47.cms.common.service.article.CommentManager;
 import cn.im47.cms.memcached.MemcachedObjectType;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;

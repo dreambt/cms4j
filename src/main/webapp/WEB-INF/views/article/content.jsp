@@ -56,40 +56,28 @@
             </div>
         </c:if>
         <c:if test="${article.allowComment}">
-            <div id="disqus_container">
-                <a href="#" class="comment btn btn-primary" onclick="return false;">View</a>
-                <div id="disqus_thread"></div>
-            </div>
-            <script type="text/javascript">
-                var show_comments = function () {
-                    var disqus_shortname = 'sdfie';
-                    var disqus_identifier = '${article.id}';
-                    /* * * DON'T EDIT BELOW THIS LINE * * */
-                    (function () {
-                        var dsq = document.createElement('script');
-                        dsq.type = 'text/javascript';
-                        dsq.async = true;
-                        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-                    })();
-                };
-                $('#disqus_container>.comment').remove();
-                show_comments();
-                $(document).ready(function () {
-                    $('#disqus_container>.comment').click(function () {
-                        $(this).html('Loading....');
-                        show_comments();
-                        $(this).remove();
-                    });
-                });
-            </script>
+            <!-- Duoshuo Comment BEGIN -->
+	<div class="ds-thread" data-thread-key="" 
+	data-title="" data-author-key="" data-url=""></div>
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"sdfie"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = 'http://static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- Duoshuo Comment END -->
         </c:if>
     </div>
     <!-- 边栏 -->
     <%@include file="/WEB-INF/layouts/sidebar.jsp" %>
 </div>
 <script>
-    $(function () {
+    $(function() {
         //totop
         $().UItoTop({ easingType:'easeOutQuart' });
 

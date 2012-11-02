@@ -1,8 +1,8 @@
-package cn.im47.cms.common.web.article;
+package cn.im47.cms.common.web.category;
 
-import cn.im47.cms.common.entity.article.Category;
-import cn.im47.cms.common.entity.article.ShowTypeEnum;
-import cn.im47.cms.common.service.article.CategoryManager;
+import cn.im47.cms.common.entity.category.Category;
+import cn.im47.cms.common.entity.category.ShowTypeEnum;
+import cn.im47.cms.common.service.category.CategoryManager;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,7 +28,7 @@ public class CategoryController {
 
     private CategoryManager categoryManager;
 
-    @RequestMapping(value = "listAll", method = RequestMethod.GET)
+    @RequestMapping(value = {"", "listAll"}, method = RequestMethod.GET)
     public String list(Model model) {
         model.addAttribute("showTypes", ShowTypeEnum.values());
         model.addAttribute("categories", categoryManager.getNavCategory());

@@ -1,6 +1,7 @@
 package cn.im47.cms.common.service.image;
 
 import cn.im47.cms.common.dao.image.ImageMapper;
+import cn.im47.cms.common.service.image.impl.ImageManagerImpl;
 import org.junit.Before;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;

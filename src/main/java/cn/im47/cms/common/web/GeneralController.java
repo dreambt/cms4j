@@ -33,13 +33,18 @@ public class GeneralController {
     }
 
     @RequestMapping(value = "/contact", method = RequestMethod.GET)
-    public String contactUs(Model model) {
+    public String contactUs() {
         return "contact";
     }
 
     @RequestMapping(value = "/about", method = RequestMethod.GET)
-    public String ahoutUs(Model model) {
+    public String ahout() {
         return "about";
+    }
+
+    @RequestMapping(value = "/aboutUs", method = RequestMethod.GET)
+    public String ahoutUs() {
+        return "aboutUs";
     }
 
     @RequestMapping(value = "/error/404", method = RequestMethod.GET)

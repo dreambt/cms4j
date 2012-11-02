@@ -1,7 +1,8 @@
-package cn.im47.cms.common.service.account;
+package cn.im47.cms.common.service.account.impl;
 
 import cn.im47.cms.common.dao.account.GroupMapper;
 import cn.im47.cms.common.entity.account.Group;
+import cn.im47.cms.common.service.account.GroupManager;
 import cn.im47.cms.memcached.MemcachedObjectType;
 import com.google.common.collect.Lists;
 import org.slf4j.Logger;

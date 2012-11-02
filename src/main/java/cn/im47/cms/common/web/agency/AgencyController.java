@@ -1,7 +1,7 @@
 package cn.im47.cms.common.web.agency;
 
 import cn.im47.cms.common.entity.agency.Agency;
-import cn.im47.cms.common.entity.article.Category;
+import cn.im47.cms.common.entity.category.Category;
 import cn.im47.cms.common.service.agency.AgencyManager;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +29,13 @@ public class AgencyController {
     private AgencyManager agencyManager;
 
     @RequiresPermissions("agency:list")
-    @RequestMapping(value = {"", "listAll"})
+    @RequestMapping(value = {"", "listAll"}, method = RequestMethod.GET)
     public String listOfAgency(Model model) {
         model.addAttribute("agencies", agencyManager.getAllAgency());
         return "dashboard/agency/listAll";
     }
 
-    @RequestMapping(value = "show/{id}")
+    @RequestMapping(value = "show/{id}", method = RequestMethod.GET)
     public String indexOfAgency(@PathVariable Long id, Model model) {
         model.addAttribute("agency", agencyManager.get(id));
         return "index-research";

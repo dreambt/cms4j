@@ -92,6 +92,7 @@
         };
         $("#pagination li").click(function () {
             PageClick($(this).text(), ${total}, 5);
+            return false;
         });
 
         // 瀑布流

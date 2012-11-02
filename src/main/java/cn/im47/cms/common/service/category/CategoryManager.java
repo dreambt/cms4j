@@ -1,6 +1,6 @@
-package cn.im47.cms.common.service.article;
+package cn.im47.cms.common.service.category;
 
-import cn.im47.cms.common.entity.article.Category;
+import cn.im47.cms.common.entity.category.Category;
 import cn.im47.cms.common.service.GenericManager;
 
 import java.util.List;

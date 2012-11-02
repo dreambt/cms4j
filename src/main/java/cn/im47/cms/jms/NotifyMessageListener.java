@@ -60,7 +60,6 @@ public class NotifyMessageListener implements MessageListener {
                 String fileName = mapMessage.getString("fileName");
                 ImageThumb imageThumb = new ImageThumb();
                 imageThumb.saveImageAsJpg(UPLOAD_PATH + "gallery/gallery-big/" + fileName, UPLOAD_PATH + "gallery/thumb-134x134/" + fileName, 134, 134);
-                imageThumb.saveImageAsJpg(UPLOAD_PATH + "gallery/gallery-big/" + fileName, UPLOAD_PATH + "gallery/thumb-224x136/" + fileName, 224, 136);
                 imageThumb.saveImageAsJpg(UPLOAD_PATH + "gallery/gallery-big/" + fileName, UPLOAD_PATH + "gallery/thumb-218x194/" + fileName, 218, 194);
                 imageThumb.saveImageAsJpg(UPLOAD_PATH + "gallery/gallery-big/" + fileName, UPLOAD_PATH + "gallery/thumb-272x166/" + fileName, 272, 166);
                 logger.info("Success to generate Thumb: {}", UPLOAD_PATH + "gallery/thumb-*/" + fileName);
@@ -69,7 +68,6 @@ public class NotifyMessageListener implements MessageListener {
                 new File(UPLOAD_PATH + "gallery/gallery-big", fileName).delete();
                 new File(UPLOAD_PATH + "gallery/thumb-50x57", fileName).delete();
                 new File(UPLOAD_PATH + "gallery/thumb-134x134", fileName).delete();
-                new File(UPLOAD_PATH + "gallery/thumb-224x136", fileName).delete();
                 new File(UPLOAD_PATH + "gallery/thumb-218x194", fileName).delete();
                 new File(UPLOAD_PATH + "gallery/thumb-272x166", fileName).delete();
                 logger.info("Success to delete Thumb: {}", UPLOAD_PATH + "gallery/thumb-*/" + fileName);

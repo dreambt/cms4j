@@ -56,9 +56,11 @@
                         </li>
                     </#list>
                 </ul>
-                <ul class="nav pull-right">
-                    <li class="login-page"><a href="${ctx}/login">后台登录</a></li>
-                </ul>
+                <form class="navbar-search pull-right">
+                    <input type="text" class="input-medium search-query" id="s" value="Search"
+                           onblur="if (this.value == ''){this.value = 'Search'; }"
+                           onfocus="if (this.value == 'Search') {this.value = ''; }">&nbsp;<input type="image" class="go" src="${ctx}/static/images/search-icon.gif"/>
+                </form>
             </div>
         </div>
     </div>

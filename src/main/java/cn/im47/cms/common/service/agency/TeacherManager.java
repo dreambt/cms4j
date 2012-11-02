@@ -1,10 +1,10 @@
 package cn.im47.cms.common.service.agency;
 
 import cn.im47.cms.common.dao.agency.TeacherMapper;
-import cn.im47.cms.common.dao.article.CategoryMapper;
+import cn.im47.cms.common.dao.category.CategoryMapper;
 import cn.im47.cms.common.entity.agency.Teacher;
 import cn.im47.cms.common.entity.article.Article;
-import cn.im47.cms.common.service.article.ArticleManagerImpl;
+import cn.im47.cms.common.service.article.impl.ArticleManagerImpl;
 import cn.im47.commons.utilities.upload.UploadFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

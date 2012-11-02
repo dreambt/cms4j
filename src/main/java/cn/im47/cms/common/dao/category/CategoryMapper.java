@@ -1,7 +1,7 @@
-package cn.im47.cms.common.dao.article;
+package cn.im47.cms.common.dao.category;
 
 import cn.im47.cms.common.dao.GenericDao;
-import cn.im47.cms.common.entity.article.Category;
+import cn.im47.cms.common.entity.category.Category;
 
 import java.util.List;
 

@@ -8,11 +8,14 @@
 <html lang="zh-CN">
 <head>
     <title>后台登录</title>
+    <link href="${ctx}/static/js/validation/validate.min.css" rel="stylesheet" type="text/css" />
+    <script src="${ctx}/static/js/validation/jquery.validate.js" type="text/javascript"></script>
+    <script src="${ctx}/static/js/validation/messages_bs_cn.js" type="text/javascript"></script>
 </head>
 <body>
 <div class="row">
     <div class="span6 offset3">
-        <div id="login" class="accounts-form">
+        <div id="login">
             <h2>用户登录</h2>
             <hr class="small" />
             <%
@@ -62,7 +65,6 @@
 </div>
 <script>
     $(function() {
-        $(".login-page").addClass("active");
         $("#loginForm").validate();
         $(".alert").delay(1500).fadeOut("slow");
     });

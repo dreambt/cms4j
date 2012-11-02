@@ -1,7 +1,7 @@
 package cn.im47.cms.common.data;
 
 import cn.im47.cms.common.entity.article.Article;
-import cn.im47.cms.common.entity.article.Category;
+import cn.im47.cms.common.entity.category.Category;
 import cn.im47.cms.common.entity.article.Comment;
 import com.google.common.collect.Lists;
 import org.joda.time.LocalDateTime;

@@ -15,17 +15,17 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-    <meta http-equiv="Cache-Control" content="no-store"/>
-    <meta http-equiv="Pragma" content="no-cache"/>
-    <meta http-equiv="Expires" content="0"/>
+    <meta http-equiv="Cache-Control" content="max-age=604800"/>
+    <meta http-equiv="Last-Modified" content="Fri, 12 May 2012 18:53:33 GMT"/>
     <meta name="robots" content="index, follow"/>
     <meta name="keywords" content=""/>
     <meta name="title" content=""/>
     <meta name="description" content=""/>
     <title><sitemesh:title/> - 后台管理</title>
     <link rel="shortcut icon" href="${ctx}/static/favicon.ico" type="image/x-icon" />
-    <link href="${ctx}/min?t=css&f=/style/bootstrap.css,/style/bootstrap-responsive.css,/js/msgUI/msgGrowl.css,/style/admin.css" rel="stylesheet" type="text/css" />
-    <script src="${ctx}/min?t=js&f=/js/jquery.js,/js/bootstrap.js,/js/msgUI/msgGrowl.js,/js/main.js" type="text/javascript"></script>
+    <link href="${ctx}/min?t=css&f=/style/bootstrap.css,/style/bootstrap-responsive.css,/js/slides/responsiveslides.css,/js/msgUI/msgGrowl.css,/totop/ui.totop.css,/style/main.css" rel="stylesheet" type="text/css" />
+    <link href="${ctx}/static/style/admin.css" rel="stylesheet" type="text/css" />
+    <script src="${ctx}/min?t=js&f=/js/jquery.js,/js/slides/responsiveslides.js,/js/slider.js,/js/easing.js,/totop/jquery.ui.totop.js,/js/jquery.MyQRCode.js,/js/msgUI/msgGrowl.js,/js/main.js,/js/bootstrap.js,/js/template.js" type="text/javascript"></script>
     <sitemesh:head/>
 </head>
 <body data-spy="scroll" data-target=".bs-docs-sidebar">
@@ -35,8 +35,8 @@
         <div class="container">
             <div class="nav-collapse collapse">
                 <ul class="nav">
-                    <li><a href="${ctx}/dashboard/index">后台首页</a>
-                    </li>
+                    <li><a href="${ctx}/index">网站首页</a></li>
+                    <li><a href="${ctx}/dashboard/index">后台首页</a></li>
                     <shiro:hasPermission name="article:list">
                         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">文章管理 <b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -90,7 +90,7 @@
                             </ul>
                         </li>
                     </shiro:hasPermission>
-                    <li><a href="${ctx}/index">返回网站首页</a>
+                    <li><a href="${ctx}/logout">退出登录</a></li>
                 </ul>
             </div>
         </div>

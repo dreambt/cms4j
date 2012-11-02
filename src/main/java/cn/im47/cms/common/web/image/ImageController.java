@@ -28,7 +28,7 @@ public class ImageController {
     private ImageManager imageManager;
 
     @RequiresPermissions("gallery:list")
-    @RequestMapping(value = "listAll", method = RequestMethod.GET)
+    @RequestMapping(value = {"", "listAll"}, method = RequestMethod.GET)
     public String listAll(Model model) {
         model.addAttribute("images", imageManager.getAll(0, 6, "id", "DESC"));
         model.addAttribute("total", imageManager.count());

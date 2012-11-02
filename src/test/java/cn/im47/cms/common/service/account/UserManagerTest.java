@@ -3,6 +3,7 @@ package cn.im47.cms.common.service.account;
 import cn.im47.cms.common.dao.account.UserMapper;
 import cn.im47.cms.common.entity.account.User;
 import cn.im47.cms.common.service.ServiceException;
+import cn.im47.cms.common.service.account.impl.UserManagerImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;

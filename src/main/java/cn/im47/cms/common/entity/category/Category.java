@@ -1,5 +1,6 @@
-package cn.im47.cms.common.entity.article;
+package cn.im47.cms.common.entity.category;
 
+import cn.im47.cms.common.entity.article.Article;
 import cn.im47.commons.entity.PersistableEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;

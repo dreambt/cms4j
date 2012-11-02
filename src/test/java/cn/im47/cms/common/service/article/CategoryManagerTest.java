@@ -1,6 +1,7 @@
 package cn.im47.cms.common.service.article;
 
-import cn.im47.cms.common.entity.article.Category;
+import cn.im47.cms.common.entity.category.Category;
+import cn.im47.cms.common.service.category.CategoryManager;
 import junit.framework.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

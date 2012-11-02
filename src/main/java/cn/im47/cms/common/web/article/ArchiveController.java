@@ -29,20 +29,20 @@ public class ArchiveController {
     private ArticleManager articleManager;
 
     // TODO
-    @RequestMapping(value = "list")
+    @RequestMapping(value = {"", "list"}, method = RequestMethod.GET)
     public String articleListOfArchive(Model model) {
-        model.addAttribute("archives", archiveManager.getTopTen());
-        model.addAttribute("newArticles", articleManager.getNewTop(10));
+        model.addAttribute("archives", archiveManager.getTop(8));
+        model.addAttribute("newArticles", articleManager.getNewTop(8));
         return "article/archives";
     }
 
-    @RequestMapping(value = "list/{id}")
+    @RequestMapping(value = "list/{id}", method = RequestMethod.GET)
     public String articleListByArchiveId(Model model, @PathVariable("id") Long id) {
         Archive archive = archiveManager.get(id);
         model.addAttribute("articles", articleManager.getByArchiveId(id, 0, 12));//文章列表
         model.addAttribute("archive", archive);
-        model.addAttribute("archives", archiveManager.getTopTen());//边栏归档日志
-        model.addAttribute("newArticles", articleManager.getNewTop(10));//边栏最新文章
+        model.addAttribute("archives", archiveManager.getTop(8));//边栏归档日志
+        model.addAttribute("newArticles", articleManager.getNewTop(8));//边栏最新文章
         model.addAttribute("total", Long.valueOf(archive.getArticleList().size()));
         return "article/list";
     }

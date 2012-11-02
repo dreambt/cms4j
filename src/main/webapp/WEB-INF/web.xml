@@ -135,6 +135,10 @@
     <filter>
         <filter-name>cacheControlHeaderFilter</filter-name>
         <filter-class>cn.im47.commons.web.CacheControlHeaderFilter</filter-class>
+        <init-param>
+            <param-name>expiresSeconds</param-name>
+            <param-value>31536000</param-value>
+        </init-param>
     </filter>
     <filter-mapping>
         <filter-name>cacheControlHeaderFilter</filter-name>
@@ -160,13 +164,17 @@
             <param-value>
                 text/html,text/plain,text/xml,application/xhtml+xml,text/css,
                 application/javascript,application/json,
-                image/svg+xml,image/gif,image/jpeg,image/png
+                image/svg+xml,image/gif,image/jpg,image/jpeg,image/png
             </param-value>
         </init-param>
     </filter>
     <filter-mapping>
         <filter-name>jettyGzipFilter</filter-name>
         <url-pattern>/static/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>jettyGzipFilter</filter-name>
+        <url-pattern>/min/*</url-pattern>
     </filter-mapping>
 
     <!-- session超时定义,单位为分钟 -->
