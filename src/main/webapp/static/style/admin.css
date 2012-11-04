@@ -1,6 +1,6 @@
 /* 审核、允许评论、置顶、删除 鼠标指针样式
 ------------------------------------------------------*/
-.audit,.allow,.top,.delete{cursor: pointer;}
+.audit,.allow,.top,.delete, .opened{cursor: pointer;}
 
 /*  Footer
 ------------------------------------------------------*/

@@ -1,9 +1,42 @@
 -- -----------------------------------------------------
+-- Table `cms_class`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `cms_course` ;
+CREATE  TABLE IF NOT EXISTS `cms_course` (
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `class_name` VARCHAR(40) NOT NULL COMMENT '课程名称' ,
+  `class_type` VARCHAR(20) NOT NULL DEFAULT 0 COMMENT '授课方式' ,
+  `class_date` VARCHAR(50) NOT NULL DEFAULT 0 COMMENT '授课开始日期' ,
+  `class_days` VARCHAR(50) NOT NULL DEFAULT 0 COMMENT '授课时长' ,
+  `class_time` VARCHAR(50) NOT NULL DEFAULT 0 COMMENT '总课时' ,
+  `class_price` INT(11) NOT NULL DEFAULT 1000 COMMENT '价格' ,
+  `allow_apply` TINYINT(1) NOT NULL DEFAULT 1 COMMENT '是否允许申请',
+  `opened` TINYINT(1) NOT NULL DEFAULT 1 COMMENT '是否已开课',
+  `top` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '是否置顶显示',
+  `description1` TEXT NOT NULL COMMENT '课程描述',
+  `description2` TEXT NOT NULL COMMENT '涛峰优势',
+  `description3` TEXT NOT NULL COMMENT '招生对象',
+  `description4` TEXT NOT NULL COMMENT '费用优惠',
+  `description5` TEXT NOT NULL COMMENT '课程教材',
+  `description6` TEXT NOT NULL COMMENT '实验设备',
+  `description7` TEXT NOT NULL COMMENT '任职岗位',
+  `description8` TEXT NOT NULL COMMENT '课程大纲',
+  `description9` TEXT NOT NULL COMMENT '实训项目',
+  `last_modified_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后修改时间' ,
+  `created_date` TIMESTAMP NOT NULL DEFAULT 0 COMMENT '创建时间' ,
+  `deleted` TINYINT(1) NOT NULL DEFAULT 0 COMMENT '是否删除' ,
+  PRIMARY KEY (`id`)
+)ENGINE = InnoDB
+DEFAULT CHARSET=UTF8 COLLATE=utf8_general_ci
+COMMENT = '课程设置表';
+
+
+-- -----------------------------------------------------
 -- Table `cms_category`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `cms_category` ;
 CREATE  TABLE IF NOT EXISTS `cms_category` (
-  `id` MEDIUMINT(8) NOT NULL AUTO_INCREMENT COMMENT '栏目ID' ,
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '栏目ID' ,
   `father_category_id` MEDIUMINT(8) NOT NULL DEFAULT 0 COMMENT '上级栏目ID' ,
   `category_name` VARCHAR(255) NOT NULL COMMENT '栏目名称' ,
   `display_order` SMALLINT(6) NOT NULL DEFAULT 1 COMMENT '显示顺序' ,

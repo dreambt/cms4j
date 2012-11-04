@@ -17,7 +17,7 @@
             <!-- 左左栏 -->
             <div class="span3">
                 <!-- 首页相册 -->
-                <div class="popover top" style="display:block;position:relative;width:100%;z-index:999">
+                <div class="popover bottom" style="display:block;position:relative;width:100%;z-index:999">
                     <h3 class="popover-title">新闻图片</h3>
                     <div class="popover-content">
                         <ul id="rslides">
@@ -29,23 +29,23 @@
                     </div>
                 </div>
                 <!-- 新闻动态 -->
-                <div class="popover top" style="display:block;position:relative;width:100%;z-index:999">
+                <div class="popover bottom" style="display:block;position:relative;width:100%;z-index:999">
                     <h3 class="popover-title">新闻动态</h3>
                     <div class="popover-content">
                         <ul class="unstyled" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
                             <c:forEach items="${news1}" var="new1" begin="0" step="1">
-                                <li><a href="${ctx}/article/content/${new1.id}" title="${new1.subject}">${new1.subject}</a></li>
+                                <li><a href="${ctx}/article/${new1.id}" title="${new1.subject}">${new1.subject}</a></li>
                             </c:forEach>
                         </ul>
                     </div>
                 </div>
                 <!-- 通知公告 -->
-                <div class="popover top" style="display:block;position:relative;width:100%;z-index:999">
+                <div class="popover bottom" style="display:block;position:relative;width:100%;z-index:999">
                     <h3 class="popover-title">通知公告</h3>
                     <div class="popover-content">
                         <ul class="unstyled" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
                             <c:forEach items="${posts}" var="post" begin="0" step="1">
-                                <li><a href="${ctx}/article/content/${post.id}" title="${post.subject}">${post.subject}</a></li>
+                                <li><a href="${ctx}/article/${post.id}" title="${post.subject}">${post.subject}</a></li>
                             </c:forEach>
                         </ul>
                     </div>
@@ -54,7 +54,7 @@
             <!---左中栏----->
             <div class="span7">
                 <!-- 中心简介 -->
-                <div class="popover top" style="display:block;position:relative;width:100%;z-index:999">
+                <div class="popover bottom" style="display:block;position:relative;width:100%;z-index:999">
                     <h3 class="popover-title">中心简介</h3>
                     <div class="popover-content">
                         山东省金融信息工程技术研究中心依托山东财经大学的金融、财税、会计、管理、数学和信息技术等雄厚的学科资源，联合行业内相关优势企业，面向我国金融信息化、金融风险管理、金融服务创新与金融服务外包产业发展的实际需要,
@@ -62,7 +62,7 @@
                     </div>
                 </div>
                 <!-- 学术研究 -->
-                <div class="popover top" style="display:block;position:relative;width:100%;z-index:999">
+                <div class="popover bottom" style="display:block;position:relative;width:100%;z-index:999">
                     <h3 class="popover-title">学术研究</h3>
                     <div class="popover-content">
                         <a href="${ctx}/research/1"><strong>金融风险管理研究所</strong></a> 围绕新资本协议框架，基于流程银行的最佳实践，研究经济及金融一体化趋势下金融风险的识别、度量和控制理论与应用。<br />
@@ -72,21 +72,21 @@
                     </div>
                 </div>
                 <!-- 咨询服务 -->
-                <div class="popover top" style="display:block;position:relative;width:100%;z-index:999">
+                <div class="popover bottom" style="display:block;position:relative;width:100%;z-index:999">
                     <h3 class="popover-title">咨询服务</h3>
                     <div class="popover-content">
                         <div class="row">
                             <div class="span3">
                                 <ul class="unstyled" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
                                     <c:forEach items="${infos}" var="info" begin="0" step="1" end="3">
-                                        <li class="counseling"><c:if test="${info.message!=''}"><a href="${ctx}/article/content/${info.id}" title="${info.subject}">${info.subject}</a></c:if></li>
+                                        <li class="counseling"><c:if test="${info.message!=''}"><a href="${ctx}/article/${info.id}" title="${info.subject}">${info.subject}</a></c:if></li>
                                     </c:forEach>
                                 </ul>
                             </div>
                             <div class="span3">
                                 <ul class="unstyled" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
                                     <c:forEach items="${infos}" var="info" begin="4" step="1" end="6">
-                                        <li class="counseling"><c:if test="${info.message!=''}"><a href="${ctx}/article/content/${info.id}" title="${info.subject}">${info.subject}</a></c:if></li>
+                                        <li class="counseling"><c:if test="${info.message!=''}"><a href="${ctx}/article/${info.id}" title="${info.subject}">${info.subject}</a></c:if></li>
                                     </c:forEach>
                                     <li class="lastM"><span> <a href="${ctx}/article/listInfo" class="more">更多...</a></span></li>
                                 </ul>
@@ -100,7 +100,7 @@
     <!-- 右边栏 -->
     <div class="span2">
         <!-- 研究机构 -->
-        <div class="popover top" style="display:block;position:relative;width:98%;z-index:999">
+        <div class="popover bottom" style="display:block;position:relative;width:98%;z-index:999">
             <h3 class="popover-title">研究机构</h3>
             <div class="popover-content">
                 <ul class="unstyled">
@@ -117,7 +117,7 @@
             </div>
         </div>
         <!-- 服务对象 -->
-        <div class="popover top" style="display:block;position:relative;width:98%;z-index:999">
+        <div class="popover bottom" style="display:block;position:relative;width:98%;z-index:999">
             <h3 class="popover-title">服务对象</h3>
             <div class="popover-content">
                 <ul class="unstyled">
@@ -133,12 +133,12 @@
             </div>
         </div>
         <!-- 行业资讯 -->
-        <div class="popover top" style="display:block;position:relative;width:98%;z-index:999">
+        <div class="popover bottom" style="display:block;position:relative;width:98%;z-index:999">
             <h3 class="popover-title">行业资讯</h3>
             <div class="popover-content">
                 <ul class="unstyled" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
                     <c:forEach items="${news2}" var="new2" begin="0" step="1">
-                        <li><a href="${ctx}/article/content/${new2.id}" title="${new2.subject}">${new2.subject}</a></li>
+                        <li><a href="${ctx}/article/${new2.id}" title="${new2.subject}">${new2.subject}</a></li>
                     </c:forEach>
                 </ul>
             </div>
@@ -148,7 +148,7 @@
 <!-- 专家团队 -->
 <div class="row">
     <div class="span12">
-        <div class="popover top" style="display:block;position:relative;width:100%;z-index:999">
+        <div class="popover bottom" style="display:block;position:relative;width:100%;z-index:999">
             <h3 class="popover-title">专家团队</h3>
             <div class="popover-content">
                 <div class="scrolllist_index" id="teacher">
@@ -156,23 +156,23 @@
                     <div class="imglist_w">
                         <ul class="imglist">
                             <li>
-                                <a target="_self" href="${ctx}/article/content/74" title="聂培尧"><img width="120" height="166" alt="聂培尧" src="${ctx}/static/uploads/teacher/pic_niepeiyao.jpg"></a>
+                                <a target="_self" href="${ctx}/article/74" title="聂培尧"><img width="120" height="166" alt="聂培尧" src="${ctx}/static/uploads/teacher/pic_niepeiyao.jpg"></a>
                                 <p>聂培尧</p>
                             </li>
                             <li>
-                                <a target="_self" href="${ctx}/article/content/73" title="中心主任徐如志"><img width="120" height="166" alt="徐如志" src="${ctx}/static/uploads/teacher/pic_xuruzhi.jpg"></a>
+                                <a target="_self" href="${ctx}/article/73" title="中心主任徐如志"><img width="120" height="166" alt="徐如志" src="${ctx}/static/uploads/teacher/pic_xuruzhi.jpg"></a>
                                 <p>徐如志</p>
                             </li>
                             <li>
-                                <a target="_self" href="${ctx}/article/content/75" title="中心副主任郭建峰"><img width="120" height="166" alt="郭建峰" src="${ctx}/static/uploads/teacher/pic_guojianfeng.jpg"></a>
+                                <a target="_self" href="${ctx}/article/75" title="中心副主任郭建峰"><img width="120" height="166" alt="郭建峰" src="${ctx}/static/uploads/teacher/pic_guojianfeng.jpg"></a>
                                 <p>郭建峰</p>
                             </li>
                             <li>
-                                <a target="_self" href="${ctx}/article/content/70" title="山东舜德数据管理软件工程有限公司总经理"><img width="120" height="166" alt="田茂圣" src="${ctx}/static/uploads/teacher/pic_tianmaosheng.jpg"></a>
+                                <a target="_self" href="${ctx}/article/70" title="山东舜德数据管理软件工程有限公司总经理"><img width="120" height="166" alt="田茂圣" src="${ctx}/static/uploads/teacher/pic_tianmaosheng.jpg"></a>
                                 <p>田茂圣</p>
                             </li>
                             <li>
-                                <a target="_self" href="${ctx}/article/content/72" title="赵志崑副教授，工学博士，硕士生导师"><img width="120" height="166" alt="赵志崑" src="${ctx}/static/uploads/teacher/pic_zhaozhikun.jpg"></a>
+                                <a target="_self" href="${ctx}/article/72" title="赵志崑副教授，工学博士，硕士生导师"><img width="120" height="166" alt="赵志崑" src="${ctx}/static/uploads/teacher/pic_zhaozhikun.jpg"></a>
                                 <p>赵志崑</p>
                             </li>
                             <li>
@@ -180,23 +180,23 @@
                                 <p>张抗抗</p>
                             </li>
                             <li>
-                                <a target="_self" href="${ctx}/article/content/66" title="盛秋戬"><img width="120" height="166" alt="盛秋戬" src="${ctx}/static/uploads/teacher/pic_shengqiujian.jpg"></a>
+                                <a target="_self" href="${ctx}/article/66" title="盛秋戬"><img width="120" height="166" alt="盛秋戬" src="${ctx}/static/uploads/teacher/pic_shengqiujian.jpg"></a>
                                 <p>盛秋戬</p>
                             </li>
                             <li>
-                                <a target="_self" href="${ctx}/article/content/71" title="林培光副教授"><img width="120" height="166" alt="林培光" src="${ctx}/static/uploads/teacher/pic_linpeiguang.jpg"></a>
+                                <a target="_self" href="${ctx}/article/71" title="林培光副教授"><img width="120" height="166" alt="林培光" src="${ctx}/static/uploads/teacher/pic_linpeiguang.jpg"></a>
                                 <p>林培光</p>
                             </li>
                             <li>
-                                <a target="_self" href="${ctx}/article/content/68" title="刘文金"><img width="120" height="166" alt="刘文金" src="${ctx}/static/uploads/teacher/pic_liuwenjin.jpg"></a>
+                                <a target="_self" href="${ctx}/article/68" title="刘文金"><img width="120" height="166" alt="刘文金" src="${ctx}/static/uploads/teacher/pic_liuwenjin.jpg"></a>
                                 <p>刘文金</p>
                             </li>
                             <li>
-                                <a target="_self" href="${ctx}/article/content/69" title="王帅强"><img width="120" height="166" alt="王帅强" src="${ctx}/static/uploads/teacher/pic_wangshuaiqiang.jpg"></a>
+                                <a target="_self" href="${ctx}/article/69" title="王帅强"><img width="120" height="166" alt="王帅强" src="${ctx}/static/uploads/teacher/pic_wangshuaiqiang.jpg"></a>
                                 <p>王帅强</p>
                             </li>
                             <li>
-                                <a target="_blank" href="${ctx}/article/content/67" title="万海山"><img width="120" height="166" alt="万海山" src="${ctx}/static/uploads/teacher/pic_wanhaishan.jpg"></a>
+                                <a target="_blank" href="${ctx}/article/67" title="万海山"><img width="120" height="166" alt="万海山" src="${ctx}/static/uploads/teacher/pic_wanhaishan.jpg"></a>
                                 <p>万海山</p>
                             </li>
                             <li>
@@ -208,15 +208,15 @@
                                 <p>张燕</p>
                             </li>
                             <li>
-                                <a target="_blank" href="${ctx}/article/content/62" title="赵华伟"><img width="120" height="166" alt="赵华伟" src="${ctx}/static/uploads/teacher/pic_zhaohuawei.jpg"></a>
+                                <a target="_blank" href="${ctx}/article/62" title="赵华伟"><img width="120" height="166" alt="赵华伟" src="${ctx}/static/uploads/teacher/pic_zhaohuawei.jpg"></a>
                                 <p>赵华伟</p>
                             </li>
                             <li>
-                                <a target="_blank" href="${ctx}/article/content/64" title="聂秀山博士， 副教授"><img width="120" height="166" alt="聂秀山" src="${ctx}/static/uploads/teacher/pic_niexiushan.jpg"></a>
+                                <a target="_blank" href="${ctx}/article/64" title="聂秀山博士， 副教授"><img width="120" height="166" alt="聂秀山" src="${ctx}/static/uploads/teacher/pic_niexiushan.jpg"></a>
                                 <p>聂秀山</p>
                             </li>
                             <li>
-                                <a target="_blank" href="${ctx}/article/content/65" title="王倩"><img width="120" height="166" alt="王倩" src="${ctx}/static/uploads/teacher/pic_wangqian.jpg"></a>
+                                <a target="_blank" href="${ctx}/article/65" title="王倩"><img width="120" height="166" alt="王倩" src="${ctx}/static/uploads/teacher/pic_wangqian.jpg"></a>
                                 <p>王倩</p>
                             </li>
                             <!--

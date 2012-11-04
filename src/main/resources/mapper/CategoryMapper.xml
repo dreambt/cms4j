@@ -54,6 +54,19 @@
         LIMIT 0 , 50
 	</select>
 
+    <!-- 获取分类id的所有兄弟分类 -->
+    <select id="getSiblingCategory" parameterType="Long" resultMap="categoryDetailMap">
+        SELECT id, category_name, show_type, url, show_nav, deleted
+        FROM cms_category
+        WHERE father_category_id = (
+            SELECT father_category_id
+            FROM cms_category
+            WHERE id =#{id} )
+        AND deleted =0
+        ORDER BY display_order ASC
+        LIMIT 0 , 50
+	</select>
+
     <!-- 获取导航分类 -->
     <select id="getNavCategory" resultMap="categoryDetailMap">
         SELECT A.id,A.display_order,A.category_name,A.show_type,A.url,A.allow_comment,A.allow_publish,A.show_nav,A.deleted,
@@ -72,6 +85,7 @@
         FROM cms_category
         WHERE allow_publish =1
         AND deleted =0
+        ORDER BY father_category_id ASC,display_order ASC
         LIMIT 0 , 50
 	</select>
 
@@ -125,20 +139,17 @@
             <if test="url != null and url !=''">
                 url=#{url},
             </if>
-            <if test="description != null and description !=''">
+            <if test="description != null">
                 description=#{description},
             </if>
-            <if test="allowComment != null and allowComment !=''">
+            <if test="allowComment != null">
                 allow_comment=#{allowComment},
             </if>
-            <if test="allowPublish != null and allowPublish !=''">
+            <if test="allowPublish != null">
                 allow_publish=#{allowPublish},
             </if>
             <if test="showNav != null and showNav !=''">
                 show_nav=#{showNav},
-            </if>
-            <if test="allowComment != null and allowComment !=''">
-                allow_comment=#{allowComment},
             </if>
             <if test="deleted != null and deleted !=''">
                 deleted=#{deleted},

@@ -41,7 +41,7 @@
         <div class="control-group">
             <label class="control-label" for="description">描述信息</label>
             <div class="controls">
-                <textarea class="required" id="description" name="description" style="width:750px" rows="8">${image.description}</textarea>
+                <textarea class="required" id="description" name="description" style="width:350px" rows="8">${image.description}</textarea>
             </div>
         </div>
         <div class="control-group">

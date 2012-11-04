@@ -17,7 +17,9 @@ public enum ShowTypeEnum {
 
     LIST("LIST", "列表"), DIGEST("DIGEST", "摘要"), FULL("FULL", "全屏"),
 
-    CONTENT("CONTENT", "内容"), ALBUM("ALBUM", "相册"), GALLERY("GALLERY", "画廊");
+    CONTENT("CONTENT", "内容"), GALLERY("GALLERY", "相册"),
+
+    COURSE("COURSE", "课程");
 
     private static Map<String, ShowTypeEnum> valueMap = Maps.newHashMap();
 

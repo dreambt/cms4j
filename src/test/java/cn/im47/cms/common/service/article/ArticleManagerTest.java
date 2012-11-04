@@ -3,7 +3,7 @@ package cn.im47.cms.common.service.article;
 import cn.im47.cms.common.data.ArticleData;
 import cn.im47.cms.common.data.ShiroUserData;
 import cn.im47.cms.common.entity.article.Article;
-import cn.im47.cms.security.ShiroDbRealm;
+import cn.im47.cms.common.service.account.ShiroDbRealm;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

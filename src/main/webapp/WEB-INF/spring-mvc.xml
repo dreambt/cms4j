@@ -32,7 +32,6 @@
     <!-- 定义无Controller的path<->view直接映射 -->
     <mvc:view-controller path="/" view-name="forward:/index"/>
     <mvc:view-controller path="/web/mashup-client" view-name="/web/mashup-client"/>
-    <mvc:view-controller path="/dashboard" view-name="forward:/dashboard/index"/>
     <mvc:resources mapping="/static/**" location="/static/"/>
 
     <!-- 支持 Shiro对Controller的方法级AOP安全控制 begin-->

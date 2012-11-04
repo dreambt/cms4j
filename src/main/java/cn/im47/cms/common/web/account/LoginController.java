@@ -1,7 +1,7 @@
 package cn.im47.cms.common.web.account;
 
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
+import org.apache.shiro.web.filter.authc.CaptchaFormAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,15 +21,15 @@ public class LoginController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
         if (SecurityUtils.getSubject().isAuthenticated()) {
-            return "redirect:/dashboard/index";
+            return "redirect:/dashboard";
         } else {
             return "security/login";
         }
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String fail(@RequestParam(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM) String username, Model model) {
-        model.addAttribute(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM, username);
+    public String fail(@RequestParam(CaptchaFormAuthenticationFilter.DEFAULT_USERNAME_PARAM) String username, Model model) {
+        model.addAttribute(CaptchaFormAuthenticationFilter.DEFAULT_USERNAME_PARAM, username);
         return "security/login";
     }
 

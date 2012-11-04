@@ -26,8 +26,8 @@
                         <c:when test="${category.showType eq 'DIGEST'}"><li class="dropdown"><a id="drop${stauts.index}" href="${ctx}/article/digest/${category.id}" role="button" class="dropdown-toggle" data-toggle="dropdown">${category.categoryName} <b class="caret"></b></a></c:when>
                         <c:when test="${category.showType eq 'GALLERY'}"><li class="dropdown"><a id="drop${stauts.index}" href="${ctx}/gallery/photo/${category.url}" role="button" class="dropdown-toggle" data-toggle="dropdown">${category.categoryName} <b class="caret"></b></a></c:when>
                         <c:when test="${category.showType eq 'ALBUM'}"><li class="dropdown"><a id="drop${stauts.index}" href="${ctx}/gallery/album/${category.url}" role="button" class="dropdown-toggle" data-toggle="dropdown">${category.categoryName} <b class="caret"></b></a></c:when>
-                        <c:when test="${category.showType eq 'CONTENT'}"><li class="dropdown"><a id="drop${stauts.index}" href="${ctx}/article/content/${category.url}" role="button" class="dropdown-toggle" data-toggle="dropdown">${category.categoryName} <b class="caret"></b></a></c:when>
-                        <c:when test="${category.showType eq 'FULL'}"><li class="dropdown"><a id="drop${stauts.index}" href="${ctx}/article/content/full/${category.url}" role="button" class="dropdown-toggle" data-toggle="dropdown">${category.categoryName} <b class="caret"></b></a></c:when>
+                        <c:when test="${category.showType eq 'CONTENT'}"><li class="dropdown"><a id="drop${stauts.index}" href="${ctx}/article/${category.url}" role="button" class="dropdown-toggle" data-toggle="dropdown">${category.categoryName} <b class="caret"></b></a></c:when>
+                        <c:when test="${category.showType eq 'FULL'}"><li class="dropdown"><a id="drop${stauts.index}" href="${ctx}/article/full/${category.url}" role="button" class="dropdown-toggle" data-toggle="dropdown">${category.categoryName} <b class="caret"></b></a></c:when>
                         <c:when test="${category.showType eq 'LINK'}"><li><a href="${category.url}" role="button">${category.categoryName}</a></li></c:when>
                     </c:choose>
                     <c:if test="${fn:length(category.subCategories) > 0}">
@@ -39,8 +39,8 @@
                             <c:when test="${subCategory.showType eq 'DIGEST'}"><li><a tabindex="-1" href="${ctx}/article/digest/${subCategory.id}">${subCategory.categoryName}</a></li></c:when>
                             <c:when test="${subCategory.showType eq 'GALLERY'}"><li><a tabindex="-1" href="${ctx}/gallery/photo/${subCategory.url}">${subCategory.categoryName}</a></li></c:when>
                             <c:when test="${subCategory.showType eq 'ALBUM'}"><li><a tabindex="-1" href="${ctx}/gallery/album/${subCategory.url}">${subCategory.categoryName}</a></li></c:when>
-                            <c:when test="${subCategory.showType eq 'CONTENT'}"><li><a tabindex="-1" href="${ctx}/article/content/${subCategory.url}">${subCategory.categoryName}</a></li></c:when>
-                            <c:when test="${subCategory.showType eq 'FULL'}"><li><a tabindex="-1" href="${ctx}/article/content/full/${subCategory.url}">${subCategory.categoryName}</a></li></c:when>
+                            <c:when test="${subCategory.showType eq 'CONTENT'}"><li><a tabindex="-1" href="${ctx}/article/${subCategory.url}">${subCategory.categoryName}</a></li></c:when>
+                            <c:when test="${subCategory.showType eq 'FULL'}"><li><a tabindex="-1" href="${ctx}/article/full/${subCategory.url}">${subCategory.categoryName}</a></li></c:when>
                             <c:when test="${subCategory.showType eq 'LINK'}"><li><a tabindex="-1" href="${subCategory.url}">${subCategory.categoryName}</a></li></c:when>
                             </c:choose>
                             </c:forEach>

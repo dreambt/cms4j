@@ -23,9 +23,10 @@
     <meta name="description" content=""/>
     <title><sitemesh:title/> - 后台管理</title>
     <link rel="shortcut icon" href="${ctx}/static/favicon.ico" type="image/x-icon" />
-    <link href="${ctx}/min?t=css&f=/style/bootstrap.css,/style/bootstrap-responsive.css,/js/slides/responsiveslides.css,/js/msgUI/msgGrowl.css,/totop/ui.totop.css,/style/main.css" rel="stylesheet" type="text/css" />
-    <link href="${ctx}/static/style/admin.css" rel="stylesheet" type="text/css" />
-    <script src="${ctx}/min?t=js&f=/js/jquery.js,/js/slides/responsiveslides.js,/js/slider.js,/js/easing.js,/totop/jquery.ui.totop.js,/js/jquery.MyQRCode.js,/js/msgUI/msgGrowl.js,/js/main.js,/js/bootstrap.js,/js/template.js" type="text/javascript"></script>
+    <link href="${ctx}/min?t=css&f=/style/bootstrap.css,/style/bootstrap-responsive.css,/style/datepicker.css,/js/msgUI/msgGrowl.css,/js/validation/validate.css,/style/admin.css,/kindeditor/themes/default/default.css" rel="stylesheet" type="text/css" />
+    <script src="${ctx}/min?t=js&f=/js/jquery.js,/js/bootstrap.js,/js/bootstrap-datepicker.js,/js/easing.js,/js/msgUI/msgGrowl.js,/js/main.js" type="text/javascript"></script>
+    <script src="${ctx}/static/js/validation/jquery.validate.js" type="text/javascript"></script>
+    <script src="${ctx}/static/js/validation/messages_bs_cn.js" type="text/javascript"></script>
     <sitemesh:head/>
 </head>
 <body data-spy="scroll" data-target=".bs-docs-sidebar">
@@ -36,13 +37,21 @@
             <div class="nav-collapse collapse">
                 <ul class="nav">
                     <li><a href="${ctx}/index">网站首页</a></li>
-                    <li><a href="${ctx}/dashboard/index">后台首页</a></li>
+                    <li><a href="${ctx}/dashboard">后台首页</a></li>
                     <shiro:hasPermission name="article:list">
                         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">文章管理 <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="${ctx}/article/create">发表文章</a></li>
                                 <li><a href="${ctx}/article/listAll">文章列表</a></li>
                                 <li><a href="${ctx}/attachment/list">附件管理</a></li>
+                            </ul>
+                        </li>
+                    </shiro:hasPermission>
+                    <shiro:hasPermission name="course:list">
+                        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">课程管理 <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="${ctx}/course/create">添加课程</a></li>
+                                <li><a href="${ctx}/course/listAll">课程列表</a></li>
                             </ul>
                         </li>
                     </shiro:hasPermission>
@@ -99,7 +108,6 @@
 <header class="jumbotron subhead" id="overview">
     <div class="container">
         <h1><sitemesh:title/></h1>
-        <p class="lead">开源地址：<a href="http://dreambt.github.com/cms4j">http://dreambt.github.com/cms4j</a></p>
     </div>
 </header>
 <div class="container">

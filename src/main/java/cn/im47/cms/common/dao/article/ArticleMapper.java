@@ -38,6 +38,37 @@ public interface ArticleMapper extends GenericDao<Article, Long> {
     List<Article> getByCategoryId(@Param("categoryId") Long categoryId, @Param("offset") int offset, @Param("limit") int limit);
 
     /**
+     * 获取分类id的文章列表
+     *
+     * @param categoryId
+     * @param offset
+     * @param limit
+     * @return
+     */
+    List<Article> getByCategoryIdAndStatus(@Param("categoryId") Long categoryId, @Param("offset") int offset, @Param("limit") int limit, @Param("status") boolean status);
+
+    /**
+     * 获取分类id的文章列表
+     *
+     * @param categoryId
+     * @param offset
+     * @param limit
+     * @return
+     */
+    List<Article> getByCategoryIdAndDeleted(@Param("categoryId") Long categoryId, @Param("offset") int offset, @Param("limit") int limit, @Param("deleted") boolean deleted);
+
+    /**
+     * 获取分类id的文章列表
+     *
+     * @param categoryId
+     * @param offset
+     * @param limit
+     * @return
+     */
+    List<Article> getByCategoryIdAndStatusAndDeleted(@Param("categoryId") Long categoryId, @Param("offset") int offset, @Param("limit") int limit, @Param("status") boolean status, @Param("deleted") boolean deleted);
+
+
+    /**
      * 获取分类ids的文章标题
      *
      * @return

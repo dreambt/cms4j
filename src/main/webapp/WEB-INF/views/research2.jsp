@@ -28,7 +28,7 @@
             <!-- 左左栏 -->
             <div class="span4">
                 <!-- 关于我们 -->
-                <div class="popover top" style="display:block;position:relative;width:100%;z-index:999">
+                <div class="popover bottom" style="display:block;position:relative;width:100%;z-index:999">
                     <h3 class="popover-title">关于我们</h3>
                     <div class="popover-content">
            		<p>金融数据管理研究所主要致力于解决银行、证券、保险、财政、税务等金融领域信息化建设中的数据治理、数据整合、数据仓库建设、数据挖掘技术与数据应用问题，研究面向金融领域的金融信息系统虚拟化技术、大数据存储技术、DW/DM/OLAP等数据的抽取、转换、加工、展现技术，数据分析模型及智能分析算法等，为金融机构提供各类营运业务分析和管理决策服务，全面提升金融机构的业务能力和管理水平。研究所依托山东财经大学的学科优势，与相关企业、科研单位开展产学研合作，为金融机构提供技术解决方案、专业培训、发展规划和咨询服务，促进科技成果的转化与应用。</p>
@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <!-- 产学研合作 -->
-                <div class="popover top" style="display:block;position:relative;width:100%;z-index:999">
+                <div class="popover bottom" style="display:block;position:relative;width:100%;z-index:999">
                     <h3 class="popover-title">产学研合作</h3>
                     <div class="popover-content">
 	            	本研究所与山东省城商联盟、山东省农信社等多家金融机构，山东舜德数据管理公司和SaS China等多家国内外企业建立了长期的紧密合作关系。承担国家自然基金项目1项、教育部科技发展计划项目2项、山东省自然基金项目2项。独立研究及与合作伙伴共同研发的成果已取得软件著作权2项，申报国家发明专利2项，“基于商务智能的分析型客户关系管理系统”等多项成果已成功应用于工商银行、交通银行和德州商行等多家金融机构。</p>
@@ -46,7 +46,7 @@
             <!-- 左中栏 -->
             <div class="span6">
                 <!-- 学术研究 -->
-                <div class="popover top" style="display:block;position:relative;width:100%;z-index:999">
+                <div class="popover bottom" style="display:block;position:relative;width:100%;z-index:999">
                     <h3 class="popover-title">学术研究</h3>
                     <div class="popover-content">
                         <p>依托省部共建的经济运行分析高性能计算实验室和校企共建的商务智能与数据挖掘实验室，研究金融业大数据的分布式存储和检索方法、金融信息分析与建模、大数据中心构建方法、面向个性化金融服务的数据集成、数据仓库、海量数据挖掘方法研究、对用户信息及其行为习惯的挖掘等。主要研究内容：</p>
@@ -61,21 +61,21 @@
                     </div>
                 </div>
                 <!-- 咨询服务 -->
-                <div class="popover top" style="display:block;position:relative;width:100%;z-index:999">
+                <div class="popover bottom" style="display:block;position:relative;width:100%;z-index:999">
                     <h3 class="popover-title">咨询服务</h3>
                     <div class="popover-content">
                         <div class="row">
                             <div class="span3">
                                 <ul class="unstyled" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
                                     <c:forEach items="${infos}" var="info" begin="0" step="1" end="2">
-                                        <li class="counseling"><c:if test="${info.message!=''}"><a href="${ctx}/article/content/${info.id}" title="${info.subject}">${info.subject}</a></c:if></li>
+                                        <li class="counseling"><c:if test="${info.message!=''}"><a href="${ctx}/article/${info.id}" title="${info.subject}">${info.subject}</a></c:if></li>
                                     </c:forEach>
                                 </ul>
                             </div>
                             <div class="span3">
                                 <ul class="unstyled" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
                                     <c:forEach items="${infos}" var="info" begin="3" step="1" end="5">
-                                        <li class="counseling"><c:if test="${info.message!=''}"><a href="${ctx}/article/content/${info.id}" title="${info.subject}">${info.subject}</a></c:if></li>
+                                        <li class="counseling"><c:if test="${info.message!=''}"><a href="${ctx}/article/${info.id}" title="${info.subject}">${info.subject}</a></c:if></li>
                                     </c:forEach>
                                 </ul>
                             </div>
@@ -87,7 +87,7 @@
         <!-- 专家团队 -->
         <div class="row">
             <div class="span10">
-                <div class="popover top" style="display:block;position:relative;width:100%;z-index:999">
+                <div class="popover bottom" style="display:block;position:relative;width:100%;z-index:999">
                     <h3 class="popover-title">专家团队</h3>
                     <div class="popover-content">
                         <div class="scrolllist" id="teacher">
@@ -95,23 +95,23 @@
                             <div class="imglist_w">
                                 <ul class="imglist">
                                     <li>
-                                        <a target="_self" href="${ctx}/article/content/66" title="盛秋戬"><img width="120" height="166" alt="盛秋戬" src="${ctx}/static/uploads/teacher/pic_shengqiujian.jpg"></a>
+                                        <a target="_self" href="${ctx}/article/66" title="盛秋戬"><img width="120" height="166" alt="盛秋戬" src="${ctx}/static/uploads/teacher/pic_shengqiujian.jpg"></a>
                                         <p>盛秋戬</p>
                                     </li>
                                     <li>
-                                        <a target="_self" href="${ctx}/article/content/68" title="刘文金"><img width="120" height="166" alt="刘文金" src="${ctx}/static/uploads/teacher/pic_liuwenjin.jpg"></a>
+                                        <a target="_self" href="${ctx}/article/68" title="刘文金"><img width="120" height="166" alt="刘文金" src="${ctx}/static/uploads/teacher/pic_liuwenjin.jpg"></a>
                                         <p>刘文金</p>
                                     </li>
                                     <li>
-                                        <a target="_self" href="${ctx}/article/content/69" title="王帅强"><img width="120" height="166" alt="王帅强" src="${ctx}/static/uploads/teacher/pic_wangshuaiqiang.jpg"></a>
+                                        <a target="_self" href="${ctx}/article/69" title="王帅强"><img width="120" height="166" alt="王帅强" src="${ctx}/static/uploads/teacher/pic_wangshuaiqiang.jpg"></a>
                                         <p>王帅强</p>
                                     </li>
                                     <li>
-                                        <a target="_self" href="${ctx}/article/content/71" title="林培光"><img width="120" height="166" alt="林培光" src="${ctx}/static/uploads/teacher/pic_guojianfeng.jpg"></a>
+                                        <a target="_self" href="${ctx}/article/71" title="林培光"><img width="120" height="166" alt="林培光" src="${ctx}/static/uploads/teacher/pic_guojianfeng.jpg"></a>
                                         <p>林培光</p>
                                     </li>
                                     <li>
-                                        <a target="_self" href="${ctx}/article/content/70" title="田茂圣"><img width="120" height="166" alt="田茂圣" src="${ctx}/static/uploads/teacher/pic_tianmaosheng.jpg"></a>
+                                        <a target="_self" href="${ctx}/article/70" title="田茂圣"><img width="120" height="166" alt="田茂圣" src="${ctx}/static/uploads/teacher/pic_tianmaosheng.jpg"></a>
                                         <p>田茂圣</p>
                                     </li>
                                 </ul>
@@ -126,7 +126,7 @@
     <!-- 右栏 -->
     <div class="span2">
         <!-- 教育培训 -->
-        <div class="popover top" style="display:block;position:relative;width:100%;z-index:999">
+        <div class="popover bottom" style="display:block;position:relative;width:100%;z-index:999">
             <h3 class="popover-title">教育培训</h3>
             <div class="popover-content">
                 <h6>金融商务智能解决方案</h6>
@@ -138,7 +138,7 @@
             </div>
         </div>
         <!-- 服务对象 -->
-        <div class="popover top" style="display:block;position:relative;width:100%;z-index:999">
+        <div class="popover bottom" style="display:block;position:relative;width:100%;z-index:999">
             <h3 class="popover-title">服务对象</h3>
             <div class="popover-content">
                 <ul class="unstyled">

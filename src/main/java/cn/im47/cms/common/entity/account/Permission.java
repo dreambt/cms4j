@@ -37,6 +37,9 @@ public enum Permission {
     LINK_CREATE("link:create", "新建链接"), LINK_EDIT("link:update", "修改链接"),
     LINK_SAVE("link:save", "保存链接"), LINK_LIST("link:list", "查看链接"),
 
+    COURSE_CREATE("course:create", "新建课程"), COURSE_EDIT("course:update", "修改课程"),
+    COURSE_SAVE("course:save", "保存课程"), COURSE_LIST("course:list", "查看课程"),
+
     AGENCY_CREATE("agency:create", "新建研究所"), AGENCY_EDIT("agency:update", "修改研究所"),
     AGENCY_SAVE("agency:save", "保存研究所"), AGENCY_LIST("agency:list", "查看研究所"),
 

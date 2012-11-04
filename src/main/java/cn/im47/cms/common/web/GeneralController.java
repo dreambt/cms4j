@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class GeneralController {
 
+    @Autowired
     private ImageManager imageManager;
+
+    @Autowired
     private ArticleManager articleManager;
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
@@ -65,16 +68,6 @@ public class GeneralController {
     @RequestMapping(value = "/web/mashup-client")
     public String mashupClient() {
         return "web/mashup-client";
-    }
-
-    @Autowired
-    public void setImageManager(ImageManager imageManager) {
-        this.imageManager = imageManager;
-    }
-
-    @Autowired
-    public void setArticleManagerImpl(ArticleManager articleManager) {
-        this.articleManager = articleManager;
     }
 
 }

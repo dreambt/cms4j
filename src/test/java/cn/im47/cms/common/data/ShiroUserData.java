@@ -1,6 +1,6 @@
 package cn.im47.cms.common.data;
 
-import cn.im47.cms.security.ShiroDbRealm;
+import cn.im47.cms.common.service.account.ShiroDbRealm;
 import org.springside.modules.test.data.RandomData;
 
 /**

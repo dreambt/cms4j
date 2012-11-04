@@ -7,6 +7,18 @@ a{color:#000;}
 #rslides .PicTitle a{color:#fff;text-align:center;text-decoration: none;}
 #rslides .PicTitle a:hover{color:#ccc;}
 
+/*  Fix 边栏边框
+------------------------------------------------------*/
+.sidebar-nav {
+    padding: 9px 0;
+}
+
+/*  Fix 导航栏下边距
+------------------------------------------------------*/
+.navbar {
+    margin-bottom: 10px;
+}
+
 /*  友情链接
 ------------------------------------------------------*/
 #friLnk{display:block;margin:10px 0 0 0;padding:0;}

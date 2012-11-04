@@ -20,14 +20,14 @@
                             <li class="dropdown"><a id="drop${category.id}" href="${ctx}/article/digest/${category.id}" role="button" class="dropdown-toggle" data-toggle="dropdown">${category.categoryName} <b class="caret"></b></a>
                         <#elseif (showType = 'GALLERY')>
                             <li class="dropdown"><a id="drop${category.id}" href="${ctx}/gallery/photo/${category.url}" role="button" class="dropdown-toggle" data-toggle="dropdown">${category.categoryName} <b class="caret"></b></a>
-                        <#elseif (showType = 'ALBUM')>
-                            <li class="dropdown"><a id="drop${category.id}" href="${ctx}/gallery/album/${category.url}" role="button" class="dropdown-toggle" data-toggle="dropdown">${category.categoryName} <b class="caret"></b></a>
                         <#elseif (showType = 'CONTENT')>
-                            <li class="dropdown"><a id="drop${category.id}" href="${ctx}/article/content/${category.url}" role="button" class="dropdown-toggle" data-toggle="dropdown">${category.categoryName} <b class="caret"></b></a>
+                            <li><a href="${ctx}/article/${category.url}" role="button" >${category.categoryName}</a>
                         <#elseif (showType = 'FULL')>
-                            <li class="dropdown"><a id="drop${category.id}" href="${ctx}/article/content/full/${category.url}" role="button" class="dropdown-toggle" data-toggle="dropdown">${category.categoryName} <b class="caret"></b></a>
-                        <#elseif (showType = 'LINK')>
-                            <li><a href="${category.url}" role="button">${category.categoryName}</a></li>
+                            <li><a href="${ctx}/article/full/${category.url}" role="button">${category.categoryName}</a>
+                        <#elseif (showType = 'COURSE')>
+            		        <li><a href="${ctx}/course/list" role="button">${category.categoryName}</a></li>
+			            <#elseif (showType = 'LINK')>
+                            <li><a href="${category.url}" role="button" target="_blank">${category.categoryName}</a></li>
                         </#if>
                         <#if (category.subCategories?size > 0)>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="drop${category.id}">
@@ -41,14 +41,14 @@
                                     <li><a tabindex="-1" href="${ctx}/article/digest/${subCategory.id}">${subCategory.categoryName}</a></li>
                                 <#elseif (showType = 'GALLERY')>
                                     <li><a tabindex="-1" href="${ctx}/gallery/photo/${subCategory.url}">${subCategory.categoryName}</a></li>
-                                <#elseif (showType = 'ALBUM')>
-                                    <li><a tabindex="-1" href="${ctx}/gallery/album/${subCategory.url}">${subCategory.categoryName}</a></li>
                                 <#elseif (showType = 'CONTENT')>
-                                    <li><a tabindex="-1" href="${ctx}/article/content/${subCategory.url}">${subCategory.categoryName}</a></li>
+                                    <li><a tabindex="-1" href="${ctx}/article/${subCategory.url}">${subCategory.categoryName}</a></li>
                                 <#elseif (showType = 'FULL')>
-                                    <li><a tabindex="-1" href="${ctx}/article/content/full/${subCategory.url}">${subCategory.categoryName}</a></li>
+                                    <li><a tabindex="-1" href="${ctx}/article/full/${subCategory.url}">${subCategory.categoryName}</a></li>
+				                <#elseif (showType = 'COURSE')>
+            			            <li><a tabindex="-1" href="${ctx}/course/list">${subCategory.categoryName}</a></li>
                                 <#elseif (showType = 'LINK')>
-                                    <li><a tabindex="-1" href="${subCategory.url}">${subCategory.categoryName}</a></li>
+                                    <li><a tabindex="-1" href="${subCategory.url}" target="_blank">${subCategory.categoryName}</a></li>
                                 </#if>
                             </#list>
                             </ul>

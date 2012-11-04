@@ -3,13 +3,11 @@ package cn.im47.cms.common.entity.article;
 import cn.im47.cms.common.entity.account.User;
 import cn.im47.cms.common.entity.category.Category;
 import cn.im47.commons.entity.PersistableEntity;
-import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * 文章Entity
@@ -37,7 +35,6 @@ public class Article extends PersistableEntity implements Serializable {
     private boolean deleted;
     private boolean allowComment;
     private int views;
-    private List<Comment> commentList = Lists.newArrayList();
 
     public Category getCategory() {
         return category;
@@ -159,14 +156,6 @@ public class Article extends PersistableEntity implements Serializable {
 
     public void setViews(int views) {
         this.views = views;
-    }
-
-    public List<Comment> getCommentList() {
-        return commentList;
-    }
-
-    public void setCommentList(List<Comment> commentList) {
-        this.commentList = commentList;
     }
 
     @Override

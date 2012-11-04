@@ -109,6 +109,36 @@ public interface ArticleManager extends GenericManager<Article, Long> {
     List<Article> getByCategoryId(Long categoryId, int offset, int limit);
 
     /**
+     * 通过分类categoryId查找文章列表(分页)(指定审核状态)
+     *
+     * @param categoryId
+     * @param offset
+     * @param limit
+     * @return
+     */
+    List<Article> getByCategoryIdAndStatus(Long categoryId, int offset, int limit, boolean status);
+
+    /**
+     * 通过分类categoryId查找文章列表(分页)(指定删除状态)
+     *
+     * @param categoryId
+     * @param offset
+     * @param limit
+     * @return
+     */
+    List<Article> getByCategoryIdAndDeleted(Long categoryId, int offset, int limit, boolean deleted);
+
+    /**
+     * 通过分类categoryId查找文章列表(分页)(指定审核状态和删除状态)
+     *
+     * @param categoryId
+     * @param offset
+     * @param limit
+     * @return
+     */
+    List<Article> getByCategoryIdAndStatusAndDeleted(Long categoryId, int offset, int limit, boolean status, boolean deleted);
+
+    /**
      * 获得社会资讯下的最新文章
      *
      * @param ids

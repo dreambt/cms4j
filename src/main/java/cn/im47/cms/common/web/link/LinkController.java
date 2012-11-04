@@ -36,7 +36,7 @@ public class LinkController {
     }
 
     @RequiresPermissions("link:list")
-    @RequestMapping(value = "listAll/ajax")
+    @RequestMapping(value = "listAll.json")
     @ResponseBody
     public List<Link> ajaxAllUser(@RequestParam("offset") int offset, @RequestParam("limit") int limit, String sort, String direction) {
         if (StringUtils.isNotBlank(sort) && StringUtils.isNotBlank(direction)) {
@@ -89,14 +89,15 @@ public class LinkController {
     }
 
     @RequiresPermissions("link:save")
-    @RequestMapping(value = "delete/{id}", method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseMessage delete(@PathVariable Long id) {
+    @RequestMapping(value = "delete/{id}", method = RequestMethod.GET)
+    //@ResponseBody
+    public String delete(@PathVariable Long id) {
         if (linkManager.delete(id) > 0) {
-            return new ResponseMessage();
+            //return new ResponseMessage();
         } else {
-            return new ResponseMessage("删除链接" + id + "失败.");
+            //return new ResponseMessage("删除链接" + id + "失败.");
         }
+        return "redirect:/link/listAll";
     }
 
     @RequiresPermissions("link:save")

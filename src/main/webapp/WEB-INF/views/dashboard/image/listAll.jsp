@@ -87,7 +87,7 @@
             var limit = 6;//每页显示文章数量
 
             $.ajax({
-                url:"${ctx}/gallery/listAll/ajax?offset=" + (intPageIndex - 1) * limit + "&limit=" + limit,// TODO sort & direction
+                url:"${ctx}/gallery/listAll.json?offset=" + (intPageIndex - 1) * limit + "&limit=" + limit,// TODO sort & direction
                 timeout:3000,
                 success:function (data) {
                     //加载文章

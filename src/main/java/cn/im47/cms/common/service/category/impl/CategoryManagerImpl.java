@@ -78,6 +78,11 @@ public class CategoryManagerImpl implements CategoryManager {
     }
 
     @Override
+    public List<Category> getSiblingCategory(Long id) {
+        return categoryMapper.getSiblingCategory(id);
+    }
+
+    @Override
     public List<Category> getNavCategory() {
         List<Category> categoryList = Lists.newArrayList();
         long start = System.currentTimeMillis();

@@ -3,13 +3,12 @@ package cn.im47.cms.common.service.account.impl;
 import cn.im47.cms.common.dao.account.UserMapper;
 import cn.im47.cms.common.entity.account.User;
 import cn.im47.cms.common.service.ServiceException;
+import cn.im47.cms.common.service.account.ShiroDbRealm;
 import cn.im47.cms.common.service.account.UserManager;
 import cn.im47.cms.jms.NotifyMessageProducer;
 import cn.im47.cms.memcached.MemcachedObjectType;
-import cn.im47.cms.security.ShiroDbRealm;
 import cn.im47.commons.utilities.RandomString;
 import com.google.common.collect.Lists;
-import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
@@ -21,6 +20,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springside.modules.cache.memcached.SpyMemcachedClient;
 import org.springside.modules.mapper.JsonMapper;
+import org.springside.modules.security.utils.Digests;
+import org.springside.modules.utils.Encodes;
 
 import java.util.Arrays;
 import java.util.List;
@@ -37,6 +38,10 @@ import java.util.Map;
 @Transactional(readOnly = true)
 public class UserManagerImpl implements UserManager {
 
+    public static final String HASH_ALGORITHM = "SHA-1";
+    public static final int HASH_INTERATIONS = 1024;
+    private static final int SALT_SIZE = 8;
+
     private static final Logger logger = LoggerFactory.getLogger(UserManager.class);
 
     private UserMapper userMapper;
@@ -46,8 +51,6 @@ public class UserManagerImpl implements UserManager {
     private SpyMemcachedClient spyMemcachedClient;
 
     private NotifyMessageProducer notifyProducer; //JMS消息发送
-
-    private ShiroDbRealm shiroRealm;
 
     @Value("${paged.user.limit}")
     public int userLimit;
@@ -130,15 +133,8 @@ public class UserManagerImpl implements UserManager {
 
     @Transactional(readOnly = false)
     public long save(User user) {
-        user.setPlainPassword(RandomString.get(8));
-        user.setSalt(RandomString.get(16));
-
-        //设定安全的密码，使用passwordService提供的salt并经过1024次 sha-1 hash
-        if (StringUtils.isNotBlank(user.getPlainPassword()) && shiroRealm != null) {
-            ShiroDbRealm.HashPassword hashPassword = shiroRealm.encrypt(user.getPlainPassword());
-            user.setSalt(hashPassword.getSalt());
-            user.setPassword(hashPassword.getPassword());
-        }
+        user.setPlainPassword(RandomString.get(8));// 设定随机密码
+        entryptPassword(user);// 加密
 
         user.setPhotoURL("default.jpg");
         user.setLastIP(134744072L);
@@ -165,8 +161,8 @@ public class UserManagerImpl implements UserManager {
     @Transactional(readOnly = false)
     public long delete(Long id) {
         // 判断用户是否为超级管理员
-        if (id == 1) {
-            logger.warn("操作员 {} 尝试删除超级管理员用户.", SecurityUtils.getSubject().getPrincipal());
+        if (isSupervisor(id)) {
+            logger.warn("操作员 {} 尝试删除超级管理员用户.", this.getCurrentUserName());
             throw new ServiceException("不能删除超级管理员用户.");
         }
         return this.update(id, "deleted");
@@ -174,8 +170,9 @@ public class UserManagerImpl implements UserManager {
 
     @Transactional(readOnly = false)
     public long update(User user) {
-        if (isSupervisor(user)) {
-            logger.warn("操作员 {} 尝试修改超级管理员用户.", SecurityUtils.getSubject().getPrincipal());
+        // 判断用户是否为超级管理员
+        if (isSupervisor(user.getId())) {
+            logger.warn("操作员 {} 尝试修改超级管理员用户.", this.getCurrentUserName());
             throw new ServiceException("不能修改超级管理员用户.");
         }
 
@@ -188,34 +185,28 @@ public class UserManagerImpl implements UserManager {
     @Override
     @Transactional(readOnly = false)
     public long update(Long id, String column) {
+        // 判断用户是否为超级管理员
+        if (isSupervisor(id)) {
+            logger.warn("操作员 {} 尝试修改超级管理员用户.", this.getCurrentUserName());
+            throw new ServiceException("不能修改超级管理员用户.");
+        }
+
         logger.info("更新用户 #{} 的 {} 属性.", id, column);
         return userMapper.updateBool(id, column);
-    }
-
-    /**
-     * 判断是否超级管理员
-     *
-     * @param user
-     * @return
-     */
-    private boolean isSupervisor(User user) {
-        return (user.getId() != null && user.getId() == 1L);
     }
 
     @Override
     @Transactional(readOnly = false)
     public long repass(Long id) {
-        User user = this.get(id);
-        if (null == user) return 1;
-
-        user.setPlainPassword(RandomString.get(8));
-
-        //设定安全的密码，使用passwordService提供的salt并经过1024次 sha-1 hash
-        if (StringUtils.isNotBlank(user.getPlainPassword()) && shiroRealm != null) {
-            ShiroDbRealm.HashPassword hashPassword = shiroRealm.encrypt(user.getPlainPassword());
-            user.setSalt(hashPassword.getSalt());
-            user.setPassword(hashPassword.getPassword());
+        // 判断用户是否为超级管理员
+        if (isSupervisor(id)) {
+            logger.warn("操作员 {} 尝试修改超级管理员用户.", this.getCurrentUserName());
+            throw new ServiceException("不能修改超级管理员用户.");
         }
+
+        User user = this.get(id);
+        user.setPlainPassword(RandomString.get(8));// 设定随机密码
+        entryptPassword(user);// 加密
 
         logger.info("重置用户密码 #{}, user.email={}.", id, user.getEmail());
         return this.update(user);
@@ -254,6 +245,35 @@ public class UserManagerImpl implements UserManager {
     }
 
     /**
+     * 取出Shiro中的当前用户LoginName.
+     */
+    private String getCurrentUserName() {
+        ShiroDbRealm.ShiroUser user = (ShiroDbRealm.ShiroUser) SecurityUtils.getSubject().getPrincipal();
+        return user.getLoginName();
+    }
+
+    /**
+     * 判断是否超级管理员
+     *
+     * @param userId
+     * @return
+     */
+    private boolean isSupervisor(Long userId) {
+        return userId == 1L;
+    }
+
+    /**
+     * 设定安全的密码，生成随机的salt并经过1024次 sha-1 hash
+     */
+    private void entryptPassword(User user) {
+        byte[] salt = Digests.generateSalt(SALT_SIZE);
+        user.setSalt(Encodes.encodeHex(salt));
+
+        byte[] hashPassword = Digests.sha1(user.getPlainPassword().getBytes(), salt, HASH_INTERATIONS);
+        user.setPassword(Encodes.encodeHex(hashPassword));
+    }
+
+    /**
      * 发送用户变更消息.
      * <p/>
      * 发送只有一个消费者的Queue消息
@@ -284,11 +304,6 @@ public class UserManagerImpl implements UserManager {
     @Autowired(required = false)
     public void setNotifyProducer(NotifyMessageProducer notifyProducer) {
         this.notifyProducer = notifyProducer;
-    }
-
-    @Autowired(required = false)
-    public void setShiroRealm(ShiroDbRealm shiroRealm) {
-        this.shiroRealm = shiroRealm;
     }
 
 }

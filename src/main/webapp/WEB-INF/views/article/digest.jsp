@@ -33,14 +33,16 @@
         <div>
             <ul id="article_load" class="nav">
                 <c:forEach items="${articles}" var="article" begin="0" step="1" varStatus="stat">
-                <div class="thumbnail" style="margin-bottom:5px">
-                    <img src="${ctx}/static/uploads/article/digest-thumb/${article.imageName}" alt="" class="imgleft" width="134px" height="134px"/>
-                    <div class="caption">
-                        <h5 style="margin:0"><a href="${ctx}/article/content/${article.id}" title="${article.subject}"><c:if test="${article.top}"><img src="${ctx}/static/images/top.gif" /></c:if>${fn:substring(article.subject,0,23)}<c:if test="${fn:length(article.subject)>23}">...</c:if></a></h5>
-                        <div>作者: ${article.user.username}&nbsp;|&nbsp;发表时间:<joda:format value="${article.createdDate}" pattern="yyyy年MM月dd日"/>&nbsp;|&nbsp;浏览次数: ${article.views}</div>
-                        <p>${article.digest}</p>
+                    <div class="thumbnail media">
+                        <a class="pull-left" href="${ctx}/article/${article.id}">
+                            <img class="media-object img-rounded" src="${ctx}/static/uploads/image-thumb/${article.imageName}" alt="" width="134px" height="134px">
+                        </a>
+                        <div class="media-body">
+                            <h4 class="media-heading"><a href="${ctx}/article/${article.id}" title="${article.subject}"><c:if test="${article.top}"><img src="${ctx}/static/images/top.gif" /></c:if>${fn:substring(article.subject,0,23)}<c:if test="${fn:length(article.subject)>23}">...</c:if></a></h4>
+                            <div>作者: ${article.user.username}&nbsp;|&nbsp;发表时间:<joda:format value="${article.createdDate}" pattern="yyyy年MM月dd日"/>&nbsp;|&nbsp;浏览次数: ${article.views}</div>
+                            <p>${article.digest}</p>
+                        </div>
                     </div>
-                </div>
                 </c:forEach>
             </ul>
         </div>
@@ -68,16 +70,13 @@
             var limit = 6;//每页显示文章数量
 
             $.ajax({
-                url:"${ctx}/article/digest/ajax/${category.id}?offset=" + (intPageIndex - 1) * limit + "&limit=" + limit,
+                url:"${ctx}/article/digest.json?id=${category.id}&offset=" + (intPageIndex - 1) * limit + "&limit=" + limit,
                 timeout:3000
                 }).done(function (data) {
                     //加载文章
                     articles.html("");
                     $.each(data, function (index, content) {
-                        if (content.top)
-                            articles.append($("<div class='thumbnail' style='margin-bottom:5px'><img src='${ctx}/static/uploads/article/digest-thumb/"+content.imageName+"' alt='' class='imgleft' width='134px' height='134px'/><div class='caption'><h5 style='margin:0'><a href='${ctx}/article/content/" + content.id + "' title='" + content.subject + "'><img src='${ctx}/static/images/top.gif' />" + content.subject.substr(0,23) + "</a></h5><div>作者: " + content.user.username + " &nbsp; | &nbsp; 发表时间: " + ChangeDateTimeFormat(content.createdDate) + " &nbsp; | &nbsp; 浏览次数: " + content.views + "</div><p>" + content.digest + "</p></div></div>"));
-                        else
-                            articles.append($("<div class='thumbnail' style='margin-bottom:5px'><img src='${ctx}/static/uploads/article/digest-thumb/"+content.imageName+"' alt='' class='imgleft' width='134px' height='134px'/><div class='caption'><h5 style='margin:0'><a href='${ctx}/article/content/" + content.id + "' title='" + content.subject + "'>" + content.subject.substr(0,23) + "</a></h5><div>作者: " + content.user.username + " &nbsp; | &nbsp; 发表时间: " + ChangeDateTimeFormat(content.createdDate) + " &nbsp; | &nbsp; 浏览次数: " + content.views + "</div><p>" + content.digest + "</p></div></div>"));
+                        articles.append($("<div class='thumbnail media'><a class='pull-left' href='${ctx}/article/" + content.id + "'><img class='media-object img-rounded' src='${ctx}/static/uploads/image-thumb/"+content.imageName+"' alt='' width='134px' height='134px'></a><div class='media-body'><h4 class='media-heading'><a href='${ctx}/article/" + content.id + "' title='" + content.subject + "'>" + content.subject.substr(0,23) + "</a></h4><p>" + content.digest + "</p></div></div>"));
                     });
 
                     //将总记录数结果 得到 总页码数

@@ -64,8 +64,6 @@ public class FreemakerHelper {
             // html 压缩
             htmlStr = compressor.compress(htmlStr);
             out.write(htmlStr);
-            out.flush();
-            out.close();
         } catch (IOException e) {
             logger.error("FreeMarker 处理失败. 模板不存在！", e);
             throw new Exception("FreeMarker 处理失败. 模板不存在！", e);
@@ -76,6 +74,7 @@ public class FreemakerHelper {
             logger.error("FreeMarker 处理失败. 空指针异常！", e);
             throw new Exception("FreeMarker 处理失败. 空指针异常！", e);
         } finally {
+            out.flush();
             out.close();
         }
     }

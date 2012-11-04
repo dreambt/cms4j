@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @RequiresPermissions("article:list")
-    @RequestMapping(value = "listAll/ajax")
+    @RequestMapping(value = "listAll.json")
     @ResponseBody
     public List<User> ajaxAllUser(@RequestParam("offset") int offset, @RequestParam("limit") int limit, @RequestParam(value = "sort", defaultValue = "id") String sort, @RequestParam(value = "direction", defaultValue = "DESC") String direction) {
         return userManager.getAll(offset, limit, sort, direction);
@@ -95,7 +95,7 @@ public class UserController {
             return "redirect:/account/user/list";
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "重置密码失败.");
-            return "redirect:/account/user/edit/" + id;
+            return "redirect:/account/user/list";
         }
     }
 

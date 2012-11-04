@@ -3,11 +3,11 @@ package cn.im47.cms.common.service.article.impl;
 import cn.im47.cms.common.dao.article.ArticleMapper;
 import cn.im47.cms.common.entity.account.User;
 import cn.im47.cms.common.entity.article.Article;
+import cn.im47.cms.common.service.account.ShiroDbRealm;
 import cn.im47.cms.common.service.article.ArchiveManager;
 import cn.im47.cms.common.service.article.ArticleManager;
 import cn.im47.cms.jms.NotifyMessageProducer;
 import cn.im47.cms.memcached.MemcachedObjectType;
-import cn.im47.cms.security.ShiroDbRealm;
 import cn.im47.cms.utilities.freemarker.FreemakerHelper;
 import cn.im47.commons.utilities.analyzer.ArticleKeyword;
 import com.google.common.collect.Lists;
@@ -16,6 +16,7 @@ import com.google.common.collect.Sets;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.apache.shiro.SecurityUtils;
+import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.jsoup.Jsoup;
@@ -275,6 +276,21 @@ public class ArticleManagerImpl implements ArticleManager {
     }
 
     @Override
+    public List<Article> getByCategoryIdAndStatus(Long categoryId, int offset, int limit, boolean status) {
+        return articleMapper.getByCategoryIdAndStatus(categoryId, offset, limit, status);
+    }
+
+    @Override
+    public List<Article> getByCategoryIdAndDeleted(Long categoryId, int offset, int limit, boolean deleted) {
+        return articleMapper.getByCategoryIdAndDeleted(categoryId, offset, limit, deleted);
+    }
+
+    @Override
+    public List<Article> getByCategoryIdAndStatusAndDeleted(Long categoryId, int offset, int limit, boolean status, boolean deleted) {
+        return articleMapper.getByCategoryIdAndStatusAndDeleted(categoryId, offset, limit, status, deleted);
+    }
+
+    @Override
     public List<Article> getByCategoryIds(Long[] ids, int offset, int limit) {
         List<Article> articleList = Lists.newArrayList();
         long start = System.currentTimeMillis();
@@ -316,9 +332,13 @@ public class ArticleManagerImpl implements ArticleManager {
 
             //文章中的首个图片
             String firstImage = this.getImageFromMessage(article.getMessage());
-            article.setImageName(firstImage);
+            if (StringUtils.isNotBlank(firstImage)) {
+                article.setImageName(firstImage);
+            } else {
+                article.setImageName("404.jpg");
+            }
 
-            // 任务删除文章图片
+            // 任务生成文章图片
             if (StringUtils.isNotBlank(firstImage)) {
                 notifyProducer.sendQueueGenArticleImage(article.getImageName());
             }
@@ -328,8 +348,12 @@ public class ArticleManagerImpl implements ArticleManager {
             article.setUser(new User(shiroUser.getId()));
 
             // 进行HTML编码, 否则前台可能破页
-            article.setMessage(Encodes.escapeHtml(article.getMessage()));
-            article.setDigest(Encodes.escapeHtml(article.getDigest()));
+            if (StringUtils.isNotBlank(article.getMessage())) {
+                article.setMessage(Encodes.escapeHtml(article.getMessage()));
+                article.setDigest(Encodes.escapeHtml(article.getDigest()));
+            } else {
+                article.setMessage("无内容");
+            }
 
             // 关键词由任务生成
             article.setKeyword(this.genKeywords(article, 10));
@@ -448,12 +472,27 @@ public class ArticleManagerImpl implements ArticleManager {
                 article.setDigest(str);
             }
 
-            // 任务删除文章图片
-            notifyProducer.sendQueueGenArticleImage(article.getImageName());
+            //文章中的首个图片
+            String firstImage = this.getImageFromMessage(article.getMessage());
+            if (StringUtils.isNotBlank(firstImage)) {
+                article.setImageName(firstImage);
+            } else {
+                article.setImageName("404.jpg");
+            }
+
+
+            // 任务生成文章图片
+            if (StringUtils.isNotBlank(firstImage)) {
+                notifyProducer.sendQueueGenArticleImage(article.getImageName());
+            }
 
             // 进行HTML编码, 否则前台可能破页
-            article.setMessage(Encodes.escapeHtml(article.getMessage()));
-            article.setDigest(Encodes.escapeHtml(article.getDigest()));
+            if (StringUtils.isNotBlank(article.getMessage())) {
+                article.setMessage(Encodes.escapeHtml(article.getMessage()));
+                article.setDigest(Encodes.escapeHtml(article.getDigest()));
+            } else {
+                article.setMessage("无内容");
+            }
 
             // 关键词由任务生成
             article.setKeyword(this.genKeywords(article, 10));
@@ -463,7 +502,7 @@ public class ArticleManagerImpl implements ArticleManager {
             BeanValidators.validateWithException(validator, article);
 
             long num = articleMapper.update(article);
-            generateContent(article);
+            //generateContent(article);
             return num;
         } catch (ConstraintViolationException cve) {
             logger.warn("操作员{}尝试发表文章, 缺少相关字段.", cve.getConstraintViolations().toString());
@@ -519,8 +558,9 @@ public class ArticleManagerImpl implements ArticleManager {
      */
     private void generateContent(Article article) {
         Map context = Maps.newHashMap();
-        int year = article.getCreatedDate().getYear();
-        int month = article.getCreatedDate().getMonthOfYear();
+        DateTime now = new DateTime();
+        int year = now.getYear();
+        int month = now.getMonthOfYear();
         try {
             Markdown md = new Markdown();
             StringReader in = new StringReader(article.getMessage());

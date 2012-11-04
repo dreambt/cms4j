@@ -7,66 +7,85 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <title>后台登录</title>
-    <link href="${ctx}/static/js/validation/validate.min.css" rel="stylesheet" type="text/css" />
+    <meta charset='utf-8'>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta http-equiv="Cache-Control" content="max-age=604800"/>
+    <meta http-equiv="Last-Modified" content="Fri, 12 May 2012 18:53:33 GMT"/>
+    <meta name="robots" content="index, follow"/>
+    <meta name="keywords" content=""/>
+    <meta name="title" content=""/>
+    <meta name="description" content=""/>
+    <title>后台登录 - 后台管理</title>
+    <link rel="shortcut icon" href="${ctx}/static/favicon.ico" type="image/x-icon" />
+    <link href="${ctx}/min?t=css&f=/style/bootstrap.css,/style/bootstrap-responsive.css,/style/datepicker.css,/js/msgUI/msgGrowl.css,/js/validation/validate.css,/style/admin.css" rel="stylesheet" type="text/css" />
+    <script src="${ctx}/min?t=js&f=/js/jquery.js,/js/bootstrap.js,/js/bootstrap-datepicker.js,/js/easing.js,/js/msgUI/msgGrowl.js,/js/main.js" type="text/javascript"></script>
     <script src="${ctx}/static/js/validation/jquery.validate.js" type="text/javascript"></script>
     <script src="${ctx}/static/js/validation/messages_bs_cn.js" type="text/javascript"></script>
+    <style type="text/css">
+        body {
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-color: #f5f5f5;
+        }
+        .form-signin {
+            max-width: 300px;
+            padding: 19px 29px 29px;
+            margin: 0 auto 20px;
+            background-color: #fff;
+            border: 1px solid #e5e5e5;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+            -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+            box-shadow: 0 1px 2px rgba(0,0,0,.05);
+        }
+        .form-signin .form-signin-heading, form-signin .checkbox {
+            margin-bottom: 10px;
+        }
+        .form-signin input[type="text"], .form-signin input[type="password"] {
+            font-size: 16px;
+            height: auto;
+            margin-bottom: 15px;
+            padding: 7px 9px;
+        }
+    </style>
 </head>
 <body>
-<div class="row">
-    <div class="span6 offset3">
-        <div id="login">
-            <h2>用户登录</h2>
-            <hr class="small" />
-            <%
-                String error = (String) request.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);
-                if(error != null){
-                    if(error.contains("DisabledAccountException")){
-            %>
-            <div id="message" class="alert alert_red">
-                用户已被屏蔽,请登录其他用户.
-            </div>
-            <%
-            }else{
-            %>
-            <div id="message" class="alert alert_red">
-                登录失败，请重试.
-            </div>
-            <%
-                    }
-                }
-            %>
-            <form:form id="loginForm" action="${ctx}/login" method="post" cssClass="form-horizontal">
-                <input type='hidden' name='csrfmiddlewaretoken' value='c1b1696edcea586856677cc78ad76833' />
-                <div class="control-group">
-                    <label class="control-label" for="inputEmail">邮箱</label>
-                    <div class="controls">
-                        <input type="text" id="inputEmail" name="username" maxlength="75" value="${username}" class="required email input-large" placeholder="Email">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="inputPassword">密码</label>
-                    <div class="controls">
-                        <input type="password" id="inputPassword" name="password" maxlength="75" class="required input-large" placeholder="Password">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <div class="controls">
-                        <label class="checkbox">
-                            <input type="checkbox" id="rememberMe" name="rememberMe"> 记住密码
-                        </label>
-                        <button type="submit" class="btn btn-primary">登录</button>
-                        <button type="submit" class="btn">找回密码</button>
-                    </div>
-                </div>
-            </form:form>
+<div class="container">
+    <form:form id="form-signin" action="${ctx}/login" method="post" cssClass="form-signin">
+        <input type='hidden' name='csrfmiddlewaretoken' value='c1b1696edcea586856677cc78ad76833' />
+        <h2 class="form-signin-heading">后台登录</h2>
+        <%
+            String error = (String) request.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME);
+            if(error != null){
+        %>
+        <div id="message" class="alert alert-block alert-error">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Warning!</strong> ${error}.
         </div>
-    </div>
+        <%
+            }
+        %>
+        <input type="text" name="username" value="${username}" class="input-block-level email" placeholder="Email"/>
+        <input type="password" name="password" class="input-block-level" placeholder="Password"/>
+        <div id="imgid" style="display:block;margin:1px 0 0 180px;position:absolute;z-index:9999;"></div>
+        <input type="text" id="captcha" name="captcha" class="input-block-level" autocomplete="off" placeholder="Captcha"/>
+        <label class="checkbox">
+            <input type="checkbox" id="rememberMe" name="rememberMe"> 记住密码
+        </label>
+        <button type="submit" class="btn btn-large btn-primary">登 录</button>
+        <button type="button" class="btn btn-large" onclick="history.go(-1)">返 回</button>
+    </form:form>
 </div>
 <script>
     $(function() {
-        $("#loginForm").validate();
+        $("#form-signin").validate();
         $(".alert").delay(1500).fadeOut("slow");
+
+        //验证码点击时显示
+        var img="<img id='checkNum' src='${ctx}/captcha.png' alt='验证码' style='cursor:pointer;vertical-align:text-bottom;position:absolute;height:34px'>";
+        $('#captcha').focus(function(){$('#imgid').append(img)}).blur(function(){$('#imgid').html("");});
     });
 </script>
 </body>

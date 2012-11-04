@@ -8,7 +8,7 @@
 
 <html>
 <head>
-    <title>山东省金融信息技术研究中心后台管理</title>
+    <title>后台管理</title>
 </head>
 <body>
 <div class="row">

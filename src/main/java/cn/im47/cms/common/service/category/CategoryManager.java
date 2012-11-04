@@ -23,6 +23,14 @@ public interface CategoryManager extends GenericManager<Category, Long> {
     List<Category> getSubCategory(Long id);
 
     /**
+     * 获得编号为id的兄弟分类
+     *
+     * @param id
+     * @return
+     */
+    List<Category> getSiblingCategory(Long id);
+
+    /**
      * 获得导航栏显示的分类
      *
      * @return

@@ -1,13 +1,13 @@
 package cn.im47.cms.common.web.article;
 
 import cn.im47.cms.common.entity.article.Article;
+import cn.im47.cms.common.entity.category.Category;
+import cn.im47.cms.common.service.account.ShiroDbRealm;
 import cn.im47.cms.common.service.account.UserManager;
 import cn.im47.cms.common.service.article.ArchiveManager;
-import cn.im47.cms.common.service.article.impl.ArchiveManagerImpl;
-import cn.im47.cms.common.service.article.impl.ArticleManagerImpl;
+import cn.im47.cms.common.service.article.ArticleManager;
 import cn.im47.cms.common.service.category.CategoryManager;
 import cn.im47.cms.common.vo.ResponseMessage;
-import cn.im47.cms.security.ShiroDbRealm;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -31,12 +31,31 @@ import java.util.List;
 @RequestMapping(value = "/article")
 public class ArticleController {
 
-    private ArticleManagerImpl articleManager;
+    @Autowired
+    private ArticleManager articleManager;
+
+    @Autowired
     private CategoryManager categoryManager;
+
+    @Autowired
     private UserManager userManager;
+
+    @Autowired
     private ArchiveManager archiveManager;
 
-    @RequestMapping(value = "content/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = {"index/{id}"}, method = RequestMethod.GET)
+    public String index(@PathVariable("id") Long id, Model model) {
+        List<Category> categoryList = categoryManager.getSubCategory(id);
+        for (Category category : categoryList) {
+            category.getArticleList().addAll(articleManager.getByCategoryIdAndStatusAndDeleted(category.getId(), 0, 5, true, false));
+        }
+        model.addAttribute("category", categoryManager.get(id));
+        model.addAttribute("categories", categoryList);
+        model.addAttribute("newArticles", articleManager.getNewTop(8));
+        return "article/index";
+    }
+
+    @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public String contextOfArticle(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
         Article article = articleManager.getForView(id);
         if (null == article || null == SecurityUtils.getSubject().getPrincipal() && (!article.isStatus() || article.isDeleted())) {
@@ -47,12 +66,17 @@ public class ArticleController {
         //article.setMessage(Encodes.unescapeHtml(article.getMessage()));
 
         model.addAttribute("article", article);
+        if (1 == article.getCategory().getFatherCategoryId()) {
+            model.addAttribute("categories", categoryManager.getSubCategory(article.getCategory().getId()));
+        } else {
+            model.addAttribute("categories", categoryManager.getSiblingCategory(article.getCategory().getId()));
+        }
         model.addAttribute("archives", archiveManager.getTop(8));
         model.addAttribute("newArticles", articleManager.getNewTop(8));
         return "article/content";
     }
 
-    @RequestMapping(value = "content/full/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "full/{id}", method = RequestMethod.GET)
     public String fullOfArticle(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
         Article article = articleManager.getForView(id);
         if (null == article) {
@@ -75,7 +99,7 @@ public class ArticleController {
     }
 
     @RequiresPermissions("article:list")
-    @RequestMapping(value = "listAll/ajax")
+    @RequestMapping(value = "listAll.json")
     @ResponseBody
     public List<Article> ajaxAllArticle(@RequestParam("offset") int offset, @RequestParam("limit") int limit, String sort, String direction) {
         if (StringUtils.isNotBlank(sort) && StringUtils.isNotBlank(direction)) {
@@ -88,39 +112,42 @@ public class ArticleController {
     @RequestMapping(value = "listByCategory/{id}", method = RequestMethod.GET)
     public String listArticleByCategory(@PathVariable("id") Long id, Model model) {
         model.addAttribute("articles", articleManager.getByCategoryId(id, 0, 110));
+        model.addAttribute("total", articleManager.count(id));
         return "dashboard/article/listAll";
     }
 
     @RequestMapping(value = "list/{id}", method = RequestMethod.GET)
     public String listOfArticle(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("articles", articleManager.getByCategoryId(id, 0, 12));//文章列表(首页显示)
+        model.addAttribute("articles", articleManager.getByCategoryIdAndStatusAndDeleted(id, 0, 12, true, false));//文章列表(首页显示)
         model.addAttribute("category", categoryManager.get(id));//获取分类信息
+        model.addAttribute("categories", categoryManager.getSubCategory(categoryManager.get(id).getFatherCategoryId()));
         model.addAttribute("archives", archiveManager.getTop(8));//边栏归档日志
         model.addAttribute("newArticles", articleManager.getNewTop(8));//边栏最新文章
         model.addAttribute("total", articleManager.count(id));
         return "article/list";
     }
 
-    @RequestMapping(value = "list/ajax/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "list.json", method = RequestMethod.GET)
     @ResponseBody
-    public List<Article> ajaxListOfArticle(@PathVariable("id") Long id, @RequestParam("offset") int offset, @RequestParam("limit") int limit) {
-        return articleManager.getByCategoryId(id, offset, limit);
+    public List<Article> ajaxListOfArticle(@RequestParam("id") Long id, @RequestParam("offset") int offset, @RequestParam("limit") int limit) {
+        return articleManager.getByCategoryIdAndStatusAndDeleted(id, offset, limit, true, false);
     }
 
     @RequestMapping(value = "digest/{id}", method = RequestMethod.GET)
     public String digestOfArticle(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("articles", articleManager.getByCategoryId(id, 0, 6));
+        model.addAttribute("articles", articleManager.getByCategoryIdAndStatusAndDeleted(id, 0, 6, true, false));
         model.addAttribute("category", categoryManager.get(id));//获取分类信息
+        model.addAttribute("categories", categoryManager.getSubCategory(categoryManager.get(id).getFatherCategoryId()));
         model.addAttribute("archives", archiveManager.getTop(8));
         model.addAttribute("newArticles", articleManager.getNewTop(8));
         model.addAttribute("total", articleManager.count(id));
         return "article/digest";
     }
 
-    @RequestMapping(value = "digest/ajax/{id}")
+    @RequestMapping(value = "digest.json")
     @ResponseBody
-    public List<Article> ajaxDigestOfArticle(@PathVariable("id") Long id, @RequestParam("offset") int offset, @RequestParam("limit") int limit) {
-        return articleManager.getByCategoryId(id, offset, limit);
+    public List<Article> ajaxDigestOfArticle(@RequestParam("id") Long id, @RequestParam("offset") int offset, @RequestParam("limit") int limit) {
+        return articleManager.getByCategoryIdAndStatusAndDeleted(id, offset, limit, true, false);
     }
 
     @RequestMapping(value = "listPost")
@@ -141,7 +168,7 @@ public class ArticleController {
         return "article/list";
     }
 
-    @RequestMapping(value = "listInfo/ajax")
+    @RequestMapping(value = "listInfo.json")
     @ResponseBody
     public List<Article> ajaxListInfo(@RequestParam("offset") int offset, @RequestParam("limit") int limit) {
         Long[] ids = {19L, 20L, 21L, 22L, 32L, 33L};
@@ -153,6 +180,7 @@ public class ArticleController {
     public String createForm(Model model) {
         // 不用报错，Neither BindingResult nor plain target object for bean name 'article' available as request attribute
         model.addAttribute("article", new Article());
+        model.addAttribute("categories", categoryManager.getAllowPublishCategory());
         model.addAttribute("action", "create");
         return "dashboard/article/edit";
     }
@@ -281,26 +309,6 @@ public class ArticleController {
         } else {
             return new ResponseMessage("删除文章 " + id + " 失败.");
         }
-    }
-
-    @Autowired
-    public void setArticleManager(ArticleManagerImpl articleManager) {
-        this.articleManager = articleManager;
-    }
-
-    @Autowired
-    public void setCategoryManager(CategoryManager categoryManager) {
-        this.categoryManager = categoryManager;
-    }
-
-    @Autowired
-    public void setUserManager(UserManager userManager) {
-        this.userManager = userManager;
-    }
-
-    @Autowired
-    public void setArchiveManager(ArchiveManagerImpl archiveManager) {
-        this.archiveManager = archiveManager;
     }
 
 }

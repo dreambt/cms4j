@@ -26,6 +26,7 @@ import java.util.List;
 @RequestMapping(value = "/category")
 public class CategoryController {
 
+    @Autowired
     private CategoryManager categoryManager;
 
     @RequestMapping(value = {"", "listAll"}, method = RequestMethod.GET)
@@ -94,11 +95,6 @@ public class CategoryController {
     @ResponseBody
     public List<Category> nav() {
         return categoryManager.getNavCategory();
-    }
-
-    @Autowired
-    public void setCategoryManager(CategoryManager categoryManager) {
-        this.categoryManager = categoryManager;
     }
 
 }

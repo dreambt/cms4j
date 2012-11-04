@@ -35,7 +35,7 @@
             <h3>${article.subject}</h3>
             <div class="blog-posted-inner">
                 作者: ${article.user.username} &nbsp; | &nbsp; 发表时间: <joda:format value="${article.createdDate}" pattern="yyyy年MM月dd日 kk:mm:ss"/> &nbsp; | &nbsp;
-                浏览次数: ${article.views} <c:if test="${article.allowComment}">&nbsp; | &nbsp; 评论数: ${fn:length(article.commentList)}</c:if>
+                浏览次数: ${article.views} <c:if test="${article.allowComment}"></c:if>
             </div>
             ${article.message}
         </div>
@@ -78,11 +78,8 @@
 </div>
 <script>
     $(function() {
-        //totop
-        $().UItoTop({ easingType:'easeOutQuart' });
-
         //设置图片宽度最大为676px
-        $('img').each(function(i){
+        $('.blog-post img').each(function(i){
             //alert($(this).width());
             if($(this).width()>676){
                 var b=676/($(this).width());

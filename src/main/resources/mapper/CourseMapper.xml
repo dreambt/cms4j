@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.im47.cms.common.dao.course.CourseMapper">
+
+    <resultMap id="courseDetailMap" type="Course">
+        <id property="id" column="id"/>
+        <result property="courseName" column="class_name"/>
+        <result property="courseType" column="class_type"/>
+        <result property="courseDate" column="class_date"/>
+        <result property="courseDays" column="class_days"/>
+        <result property="courseTime" column="class_time"/>
+        <result property="coursePrice" column="class_price"/>
+        <result property="allowApply" column="allow_apply"/>
+        <result property="top" column="top"/>
+        <result property="description1" column="description1"/>
+        <result property="description2" column="description2"/>
+        <result property="description3" column="description3"/>
+        <result property="description4" column="description4"/>
+        <result property="description5" column="description5"/>
+        <result property="description6" column="description6"/>
+        <result property="description7" column="description7"/>
+        <result property="description8" column="description8"/>
+        <result property="description9" column="description9"/>
+        <result property="lastModifiedDate" column="last_modified_date" typeHandler="org.apache.ibatis.type.LocalDateTimeTypeHandler"/>
+        <result property="createdDate" column="created_date" typeHandler="org.apache.ibatis.type.LocalDateTimeTypeHandler"/>
+        <result property="deleted" column="deleted"/>
+    </resultMap>
+
+    <!-- 获取课程数量 -->
+    <select id="count" resultType="Long">
+        SELECT COUNT( id )
+        FROM cms_course
+        WHERE deleted =0
+        LIMIT 1
+	</select>
+
+    <select id="countAll" resultType="Long">
+        SELECT COUNT( id )
+        FROM cms_course
+        LIMIT 1
+	</select>
+
+    <!-- 获取课程 -->
+    <select id="get" parameterType="Long" resultMap="courseDetailMap">
+        SELECT *
+        FROM cms_course
+        WHERE id =#{id}
+    </select>
+
+    <!-- 获取所有课程 -->
+    <select id="getAll" parameterType="map" resultMap="courseDetailMap">
+        SELECT *
+        FROM cms_course
+        <if test="deleted != null and deleted > 0">
+            WHERE deleted=0
+        </if>
+        ORDER BY ${sort} ${direction}
+        LIMIT #{offset},#{limit}
+    </select>
+
+    <!-- 新增课程 -->
+    <insert id="save" parameterType="Course" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO cms_course (class_name, class_type, class_date, class_days, class_time, class_price, allow_apply, top,
+            description1, description2, description3, description4, description5, description6, description7, description8, description9, created_date, deleted)
+        VALUES (#{courseName}, #{courseType}, #{courseDate}, #{courseDays}, #{courseTime}, #{coursePrice}, #{allowApply}, #{top},
+            #{description1}, #{description2}, #{description3}, #{description4}, #{description5}, #{description6}, #{description7}, #{description8}, #{description9}, null, 0)
+    </insert>
+
+    <!-- 删除课程 -->
+    <delete id="deleteByTask">
+        DELETE FROM cms_course
+        WHERE deleted =1
+	</delete>
+
+    <!-- 更新课程 -->
+    <update id="update" parameterType="Course">
+        UPDATE cms_course
+        <set>
+            <if test="courseName != null and courseName !=''">
+                class_name=#{courseName},
+            </if>
+            <if test="courseType != null and courseType !=''">
+                class_type=#{courseType},
+            </if>
+            <if test="courseDate != null and courseDate !=''">
+                class_date=#{courseDate},
+            </if>
+            <if test="courseDays != null and courseDays !=''">
+                class_days=#{courseDays},
+            </if>
+            <if test="courseTime != null and courseTime !=''">
+                class_time=#{courseTime},
+            </if>
+            <if test="coursePrice != null and coursePrice > 0">
+                class_price=#{coursePrice},
+            </if>
+            <if test="allowApply != null and allowApply >= 0">
+                allow_apply=#{allowApply},
+            </if>
+            <if test="top != null and top >= 0">
+                top=#{top},
+            </if>
+            <if test="description1 != null and description1 !=''">
+                description1=#{description1},
+            </if>
+            <if test="description2 != null and description2 !=''">
+                description2=#{description2},
+            </if>
+            <if test="description3 != null and description3 !=''">
+                description3=#{description3},
+            </if>
+            <if test="description4 != null and description4 !=''">
+                description4=#{description4},
+            </if>
+            <if test="description5 != null and description5 !=''">
+                description5=#{description5},
+            </if>
+            <if test="description6 != null and description6 !=''">
+                description6=#{description6},
+            </if>
+            <if test="description7 != null and description7 !=''">
+                description7=#{description7},
+            </if>
+            <if test="description8 != null and description8 !=''">
+                description8=#{description8},
+            </if>
+            <if test="description9 != null and description9 !=''">
+                description9=#{description9},
+            </if>
+            <if test="deleted != null and deleted !=''">
+                deleted=#{deleted},
+            </if>
+            last_modified_date=null
+        </set>
+        WHERE id=#{id}
+    </update>
+
+    <!-- 更新文章bool字段 -->
+    <update id="updateBool" parameterType="map">
+        UPDATE cms_course
+        SET ${column}=1-${column}
+        WHERE id=#{id}
+    </update>
+
+    <!-- 查询文章 -->
+    <select id="search" parameterType="map" resultMap="courseDetailMap">
+        SELECT *
+        FROM cms_course
+        WHERE deleted=0
+        <where>
+            <if test="id > 0">
+                and id=#{id}
+            </if>
+            <if test="courseType != null and courseType != ''">
+                and class_type=#{courseType}
+            </if>
+        </where>
+        <if test="Direction != null and Direction != ''">
+            ORDER BY ${Sort} ${Direction}
+        </if>
+        <if test="limit != null and limit > 0">
+            LIMIT ${offset},${limit}
+        </if>
+    </select>
+</mapper>

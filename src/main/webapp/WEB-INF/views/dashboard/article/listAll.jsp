@@ -41,9 +41,9 @@
                 <c:forEach items="${articles}" var="article" begin="0" step="1" varStatus="stat">
                     <tr>
                         <td><input type="checkbox" name="isSelected" value="${article.id}"></td>
-                        <td><a href="${ctx}/article/content/${article.id}" target="_blank">${article.subject}</a></td>
+                        <td><a href="${ctx}/article/${article.id}" target="_blank">${article.subject}</a></td>
                         <td>${article.user.username}</td>
-                        <td>${article.category.categoryName}</td>
+                        <td><a href="${ctx}/article/listByCategory/${article.category.id}" target="_blank">${article.category.categoryName}</a></td>
                         <td>${article.rate}</td>
                         <td>${article.views}</td>
                         <td><joda:format value="${article.createdDate}" pattern="yyyy年MM月dd日"/></td>
@@ -99,13 +99,13 @@
             var limit = 10;//每页显示文章数量
 
             $.ajax({
-                url:"${ctx}/article/listAll/ajax?offset=" + (intPageIndex - 1) * limit + "&limit=" + limit,// TODO sort & direction
+                url:"${ctx}/article/listAll.json?offset=" + (intPageIndex - 1) * limit + "&limit=" + limit,// TODO sort & direction
                 timeout:3000
             }).done(function (data) {
                 //加载文章
                 articles.html("");
                 $.each(data, function (index, content) {
-                    var htmlStr="<tr><td><input type='checkbox' name='isSelected' value='" + content.id + "'></td><td><a href='${ctx}/article/content/" + content.id + "' target='_blank'>" + content.subject + "</a></td><td>" + content.user.username + "</td><td>" + content.category.categoryName + "</td><td>" + content.rate + "</td><td>" + content.views + "</td><td>" + ChangeDateFormat(content.createdDate) + "</td><td>" + ChangeDateTimeFormat(content.lastModifiedDate) + "</td>";
+                    var htmlStr="<tr><td><input type='checkbox' name='isSelected' value='" + content.id + "'></td><td><a href='${ctx}/article/" + content.id + "' target='_blank'>" + content.subject + "</a></td><td>" + content.user.username + "</td><td><a href='${ctx}/article/listByCategory/" + content.category.id + "' target='_blank'>" + content.category.categoryName + "</a></td><td>" + content.rate + "</td><td>" + content.views + "</td><td>" + ChangeDateFormat(content.createdDate) + "</td><td>" + ChangeDateTimeFormat(content.lastModifiedDate) + "</td>";
                     if (content.status)
                         htmlStr+="<td><span id='" + content.id + "' class='label label-success audit'>已审核</span></td>";
                     else

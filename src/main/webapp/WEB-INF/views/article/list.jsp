@@ -33,7 +33,7 @@
         <div>
             <ul id="article_load" class="nav nav-tabs nav-stacked">
                 <c:forEach items="${articles}" var="article" begin="0" step="1" varStatus="stat">
-                    <li><a href="${ctx}/article/content/${article.id}"><c:if test="${article.top}"><img src="${ctx}/static/images/top.gif" /> </c:if>${article.subject} (浏览: ${article.views})</a></li>
+                <li><a href="${ctx}/article/${article.id}"><c:if test="${article.top}"><img src="${ctx}/static/images/top.gif" /> </c:if>${article.subject} (浏览: ${article.views})</a></li>
                 </c:forEach>
             </ul>
         </div>
@@ -49,15 +49,6 @@
     <!-- 边栏 -->
     <%@include file="/WEB-INF/layouts/sidebar.jsp" %>
 </div>
-<script id="t-list" type="template">
-    {each list}
-    {if $value.top === 'true'}
-    <li><a href='${ctx}/article/content/{$value.id}'><img src='${ctx}/static/images/top.gif' /> {$value.subject} (浏览: {$value.views})</a></li>
-    {else}
-    <li><a href='${ctx}/article/content/{$value.id}'>{$value.subject} (浏览: {$value.views})</a></li>
-    {/if}
-    {/each}
-</script>
 <script type="text/javascript">
     $(function () {
         var loadList = $("#article_load");
@@ -71,22 +62,20 @@
 
             $.ajax({
                 <c:choose>
-                    <c:when test="${archive ne null}">url:"${ctx}/archive/list/ajax/${archive.id}?offset=" + (intPageIndex - 1) * limit + "&limit=" + limit,</c:when>
-                    <c:when test="${url ne null}">url:"${ctx}/article/${url}/ajax?offset=" + (intPageIndex - 1) * limit + "&limit=" + limit,</c:when>
-                    <c:otherwise>url:"${ctx}/article/list/ajax/${category.id}?offset=" + (intPageIndex - 1) * limit + "&limit=" + limit,</c:otherwise>
+                <c:when test="${archive ne null}">url:"${ctx}/archive/list.json?id=${archive.id}&offset=" + (intPageIndex - 1) * limit + "&limit=" + limit,</c:when>
+                <c:when test="${url ne null}">url:"${ctx}/article/${url}.json?offset=" + (intPageIndex - 1) * limit + "&limit=" + limit,</c:when>
+                <c:otherwise>url:"${ctx}/article/list.json?id=${category.id}&offset=" + (intPageIndex - 1) * limit + "&limit=" + limit,</c:otherwise>
                 </c:choose>
                 timeout:3000
             }).done(function (data) {
                     //加载文章
-                    loadList.html("123");
-                    loadList.append(template('t-list', {title: '标签', list: data}));
-                        alert(template('t-list', {title: '标签',list: data}));
-                    <%--$.each(data, function (index, content) {--%>
-                        <%--if(content.top)--%>
-                            <%--loadList.append($("<li><a href='${ctx}/article/content/" + content.id + "'><img src='${ctx}/static/images/top.gif' /> " + content.subject + " (浏览: " + content.views + ")</a></li>"));--%>
-                        <%--else--%>
-                            <%--loadList.append($("<li><a href='${ctx}/article/content/" + content.id + "'>" + content.subject + " (浏览: " + content.views + ")</a></li>"));--%>
-                    <%--});--%>
+                    loadList.html("");
+                    $.each(data, function (index, content) {
+                        if(content.top)
+                            loadList.append($("<li><a href='${ctx}/article/" + content.id + "'><img src='${ctx}/static/images/top.gif' /> " + content.subject + " (浏览: " + content.views + ")</a></li>"));
+                        else
+                            loadList.append($("<li><a href='${ctx}/article/" + content.id + "'>" + content.subject + " (浏览: " + content.views + ")</a></li>"));
+                    });
 
                     //将总记录数结果 得到 总页码数
                     var pageS = total;
@@ -114,7 +103,7 @@
                         } else {
                             var a = $("<li><a href='#'>" + j + "</a></li>").click(function () {
                                 PageClick($(this).text(), total, spanInterval);
-								return false;
+                                return false;
                             });
                             pager.append(a);
                         } //else
@@ -123,7 +112,7 @@
         };
         $("#pagination li").click(function () {
             PageClick($(this).text(), ${total}, 5);
-			return false;
+            return false;
         });
     });
 </script>

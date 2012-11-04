@@ -36,26 +36,12 @@ public class ImageController {
     }
 
     @RequiresPermissions("gallery:list")
-    @RequestMapping(value = "listAll/ajax", method = RequestMethod.GET)
+    @RequestMapping(value = "listAll.json", method = RequestMethod.GET)
     @ResponseBody
     public List<Image> ajaxListAll(@RequestParam("offset") int offset, @RequestParam("limit") int limit,
                                    @RequestParam(value = "sort", defaultValue = "id") String sort,
                                    @RequestParam(value = "direction", defaultValue = "DESC") String direction) {
         return imageManager.getAll(offset, limit, sort, direction);
-    }
-
-    @RequestMapping(value = "album", method = RequestMethod.GET)
-    public String album(Model model) {
-        model.addAttribute("images", imageManager.getAll(0, 6, "id", "DESC"));
-        model.addAttribute("total", imageManager.count());
-        return "album";
-    }
-
-    @RequestMapping(value = "album/ajax", method = RequestMethod.GET)
-    @ResponseBody
-    public List<Image> ajaxAlbumPaged(@RequestParam("offset") int offset, @RequestParam("limit") int limit) {
-        List<Image> images = imageManager.getAll(offset, limit, "id", "DESC");
-        return images;
     }
 
     @RequestMapping(value = "photo", method = RequestMethod.GET)
@@ -66,7 +52,7 @@ public class ImageController {
         return "photo";
     }
 
-    @RequestMapping(value = "photo/ajax", method = RequestMethod.GET)
+    @RequestMapping(value = "photo.json", method = RequestMethod.GET)
     @ResponseBody
     public List<Image> ajaxPhotoPaged(@RequestParam("offset") int offset, @RequestParam("limit") int limit) {
         List<Image> images = imageManager.getAll(offset, limit, "id", "DESC");

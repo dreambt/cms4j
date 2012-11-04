@@ -14,9 +14,8 @@ public enum MemcachedObjectType {
     GROUP("group:", 60 * 60 * 1),
     ARTICLE("article:", 60 * 60 * 24),
     ARCHIVE("archive:", 60 * 60 * 24),
-    COMMENT("comment:", 60 * 60 * 24),
     CATEGORY("category:", 60 * 60 * 24),
-    LINK("link:", 60 * 60 * 24),
+    LINK("link:", 60 * 1 * 1),
     IMAGE("image:", 60 * 60 * 24);
 
     private String prefix;

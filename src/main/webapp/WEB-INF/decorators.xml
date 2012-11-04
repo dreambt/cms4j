@@ -6,34 +6,42 @@
         <pattern>/rs/*</pattern>
         <pattern>/**/*.html</pattern>
         <pattern>/error/*</pattern>
-        <pattern>/**/ajax/*</pattern>
+        <pattern>/**/*.json</pattern>
         <pattern>/**/delete/*</pattern>
         <pattern>/**/audit/*</pattern>
         <pattern>/**/top/*</pattern>
         <pattern>/**/allow/*</pattern>
+        <pattern>/login</pattern>
     </excludes>
 
     <decorator name="default" page="default.jsp">
         <pattern>/*</pattern>
         <pattern>/index</pattern>
-        <pattern>/gallery/album*</pattern>
-        <pattern>/gallery/photo*</pattern>
+        <pattern>/gallery/photo/*</pattern>
         <pattern>/agency/show/*</pattern>
     </decorator>
 
     <decorator name="article" page="article.jsp">
+        <pattern>/article/index/*</pattern>
         <pattern>/article/list/*</pattern>
-        <pattern>/article/content/*</pattern>
+        <pattern>/article/*</pattern>
         <pattern>/article/digest/*</pattern>
         <pattern>/article/listInfo</pattern>
-        <pattern>/archive/list*</pattern>
-        <pattern>/article/content*</pattern>
+        <pattern>/course/list/*</pattern>
+        <pattern>/course/*</pattern>
+        <pattern>/archive/list/*</pattern>
         <pattern>/teacher/content/*</pattern>
     </decorator>
 
     <decorator name="dashboard" page="admin.jsp">
         <pattern>/dashboard*</pattern>
-        <pattern>/article*</pattern>
+        <pattern>/article/listAll</pattern>
+        <pattern>/article/create</pattern>
+        <pattern>/article/update/*</pattern>
+        <pattern>/article/listByCategory/*</pattern>
+        <pattern>/course/listAll</pattern>
+        <pattern>/course/create</pattern>
+        <pattern>/course/update/*</pattern>
         <pattern>/category*</pattern>
         <pattern>/attachment*</pattern>
         <pattern>/account*</pattern>

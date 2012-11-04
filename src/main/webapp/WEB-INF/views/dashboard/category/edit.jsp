@@ -15,9 +15,9 @@
     <title>菜单管理 - 添加菜单</title>
 </head>
 <body>
-<form:form id="categoryForm" modelAttribute="category" action="${ctx}/category/${action}" method="post" cssClass="form-horizontal">
 <div class="row">
-    <div class="span6">
+    <form:form id="categoryForm" modelAttribute="category" action="${ctx}/category/${action}" method="post" cssClass="form-horizontal">
+    <div class="span4">
         <div class="control-group">
             <label class="control-label" for="fatherCategoryId">父级菜单</label>
             <div class="controls">
@@ -57,19 +57,22 @@
             </div>
         </div>
     </div>
-    <div class="span6">
+    <div class="span8">
         <div class="control-group">
             <label class="control-label" for="allowComment">可选项</label>
             <div class="controls">
                 作为导航 <input type="checkbox" id="showNav" name="showNav" <c:if test="${category.showNav==true}">checked="checked"</c:if>>
                 允许评论 <input type="checkbox" id="allowComment" name="allowComment" <c:if test="${category.allowComment==true}">checked="checked"</c:if>>
                 允许发表 <input type="checkbox" id="allowPublish" name="allowPublish" <c:if test="${category.allowPublish==true}">checked="checked"</c:if>>
+                <input type="hidden" name="_showNav"/>
+                <input type="hidden" name="_allowComment"/>
+                <input type="hidden" name="_allowPublish"/>
             </div>
         </div>
         <div class="control-group">
-            <label class="control-label" for="description">描述信息</label>
+            <label class="control-label" for="editor_id">描述信息</label>
             <div class="controls">
-                <textarea id="description" name="description" style="width:750px" rows="8">${category.description}</textarea>
+                <textarea id="editor_id" name="description" style="width:700px;height:450px;">${category.description}</textarea>
             </div>
         </div>
         <div class="control-group">
@@ -78,8 +81,19 @@
                 <button class="btn" type="reset"><i class="icon-refresh"></i> 重 置</button>
             </div>
         </div>
+    </form:form>
     </div>
-</form:form>
 </div>
+<script charset="utf-8" src="${ctx}/static/kindeditor/kindeditor-min.js"></script>
+<script charset="utf-8" src="${ctx}/static/kindeditor/lang/zh_CN.js"></script>
+<script>
+    KindEditor.ready(function(K) {
+        K.create('#editor_id', {
+            uploadJson : '/jsp/upload_json.jsp',
+            fileManagerJson : '/jsp/file_manager_json.jsp',
+            allowFileManager : true
+        });
+    });
+</script>
 </body>
 </html>

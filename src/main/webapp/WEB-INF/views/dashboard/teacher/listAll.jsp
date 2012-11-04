@@ -40,7 +40,7 @@
                     <tr>
                         <td><input type="checkbox" name="isSelected"  value="${teacher.id}"></td>
                         <td><a href="${ctx}/static/uploads/teacher/${teacher.imageUrl}" rel="fancybox-thumb" class="fancy_box"><img src="${ctx}/static/uploads/teacher/${teacher.imageUrl}" width="50px"/></a></td>
-                        <td><a href="${ctx}/article/content/${teacher.article.id}" target="_blank">${teacher.teacherName}</a></td>
+                        <td><a href="${ctx}/article/${teacher.article.id}" target="_blank">${teacher.teacherName}</a></td>
                         <td><a href="${ctx}/agency/show/${teacher.agency.id}" target="_blank">${teacher.agency.title}</a> </td>
                         <td><a href="${ctx}/static/uploads/teacher/${teacher.imageUrl}">${teacher.imageUrl}</a></td>
                         <td><joda:format value="${teacher.createdDate}" pattern="yyyy年MM月dd日"/></td>

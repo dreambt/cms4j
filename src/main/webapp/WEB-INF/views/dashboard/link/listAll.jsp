@@ -41,7 +41,7 @@
                         <td><joda:format value="${link.createdDate}" pattern="yyyy年MM月dd日"/></td>
                         <td><joda:format value="${link.lastModifiedDate}" pattern="yyyy年MM月dd日 kk:mm:ss"/></td>
                         <td><c:choose><c:when test="${link.status}"><span id="${link.id}" class="label label-success audit">已审核</span></c:when><c:otherwise><span id="${link.id}" class="label label-important audit">未审核</span></c:otherwise></c:choose></td>
-                        <td><a href="${ctx}/link/update/${link.id}"><span class='label label-info'>修改</span></a> <span id="${link.id}" class='label label-warning delete'>删除</span></td>
+                        <td><a href="${ctx}/link/update/${link.id}"><span class='label label-info'>修改</span></a> <a href="${ctx}/link/delete/${link.id}"><span id="${link.id}" class='label label-warning delete'>删除</span></a></td>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -75,7 +75,7 @@
             var limit = 10;//每页显示文章数量
 
             $.ajax({
-                url:"${ctx}/link/listAll/ajax?offset=" + (intPageIndex - 1) * limit + "&limit=" + limit,// TODO sort & direction
+                url:"${ctx}/link/listAll.json?offset=" + (intPageIndex - 1) * limit + "&limit=" + limit,// TODO sort & direction
                 timeout:3000,
                 success:function (data) {
                     //加载文章
@@ -86,7 +86,7 @@
                             htmlStr+="<td><span id='" + content.id + "' class='label label-success audit'>已审核</span></td>";
                         else
                             htmlStr+="<td><span id='" + content.id + "' class='label label-important audit'>未审核</span></td>";
-                        htmlStr+="<td><a href='${ctx}/link/update/" + content.id + "'><span class='label label-info'>修改</span></a> <span id='" + content.id + "' class='label label-warning delete'>删除</span></td></tr>";
+                        htmlStr+="<td><a href='${ctx}/link/update/" + content.id + "'><span class='label label-info'>修改</span></a> <a href='${ctx}/link/delete/" + content.id + "'><span id='" + content.id + "' class='label label-warning delete'>删除</span></a></td></tr>";
                         articles.append($(htmlStr));
                     });
 

@@ -12,8 +12,6 @@
 <html>
 <head>
     <title>编辑文章</title>
-    <link rel="stylesheet" type="text/css" href="${ctx}/static/js/validation/validate.min.css">
-    <link rel="stylesheet" type="text/css" href="${ctx}/static/js/markitup/style.min.css">
 </head>
 <body>
 <div class="row">
@@ -25,14 +23,16 @@
             <option value="${categorie.id}" <c:if test="${categorie.id eq article.category.id}">selected="selected"</c:if>>${categorie.categoryName}</option>
         </c:forEach>
         </form:select>
-        <input type="text" id="text" name="subject" class="medium required" size="206" original-title="请输入文章标题" value="${article.subject}" placeholder="文章标题" />
+        <input type="text" id="text" name="subject" class="input-xxlarge required" size="206" original-title="请输入文章标题" value="${article.subject}" placeholder="文章标题" />
         <label class="checkbox">
             <input type="checkbox" name="top" value="${article.top}" <c:if test="${article.top}">checked="checked"</c:if> /> 置顶
+            <input type="hidden" name="_top">
         </label>
         <label class="checkbox">
             <input type="checkbox" name="allowComment" value="true" <c:if test="${article.allowComment}">checked="checked"</c:if> /> 允许评论
+            <input type="hidden" name="_allowComment">
         </label>
-        <textarea id="markdown" name="message" style="width:750px" rows="8">${article.message}</textarea>
+        <textarea id="editor_id" name="message" style="width:960px;height:540px;visibility:hidden;">${article.message}</textarea>
         <div class="control-group">
             <div class="controls">
                 <button class="btn btn-primary" id="publish" type="submit"><i class="icon-ok icon-white"></i> 发 布</button>
@@ -42,14 +42,14 @@
     </form:form>
     </div>
 </div>
-<script type="text/javascript" src="${ctx}/min?t=js&f=/js/jquery.loading.js,/js/jquery.json-2.3.js,/js/markitup/jquery.markitup.js,/js/validation/jquery.validate.js,/js/validation/messages_cn.js" charset="utf-8"></script>
-<script type="text/javascript">
-    $(function () {
-        $('#markdown').markItUp(myMarkdownSettings);
-
-        $("#articleForm").validate({
-            event:'submit',
-            rules:{subject:{required:true, maxlength:26}}
+<script charset="utf-8" src="${ctx}/static/kindeditor/kindeditor-min.js"></script>
+<script charset="utf-8" src="${ctx}/static/kindeditor/lang/zh_CN.js"></script>
+<script>
+    KindEditor.ready(function(K) {
+        K.create('#editor_id', {
+            uploadJson : '/jsp/upload_json.jsp',
+            fileManagerJson : '/jsp/file_manager_json.jsp',
+            allowFileManager : true
         });
     });
 </script>

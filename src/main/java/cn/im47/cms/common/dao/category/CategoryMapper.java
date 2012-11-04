@@ -30,6 +30,14 @@ public interface CategoryMapper extends GenericDao<Category, Long> {
     List<Category> getSubCategory(Long id);
 
     /**
+     * 获取编号为id的兄弟分类
+     *
+     * @param id
+     * @return
+     */
+    List<Category> getSiblingCategory(Long id);
+
+    /**
      * 获取导航分类
      *
      * @return

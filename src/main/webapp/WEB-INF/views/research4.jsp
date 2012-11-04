@@ -28,7 +28,7 @@
             <!-- 左左栏 -->
             <div class="span4">
                 <!-- 关于我们 -->
-                <div class="popover top" style="display:block;position:relative;width:100%;z-index:999">
+                <div class="popover bottom" style="display:block;position:relative;width:100%;z-index:999">
                     <h3 class="popover-title">关于我们</h3>
                     <div class="popover-content">
                        <p>金融信息安全研究所致力于金融行业信息化建设中的网络与信息安全理论与应用研究，重点在网络信息安全系统建设、信息系统风险管理、信息系统安全审计、信息系统安全等级保护等领域，为银行、证券、保险、财政、税务等金融机构提供网络信息安全解决方案、专业培训、业务规划和咨询服务。研究所依托山东财经大学的学科优势，与相关企业、科研单位在金融网络与信息安全领域开展产学研合作，促进科技成果的转化与应用。</p>
@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <!-- 产学研合作 -->
-                <div class="popover top" style="display:block;position:relative;width:100%;z-index:999">
+                <div class="popover bottom" style="display:block;position:relative;width:100%;z-index:999">
                     <h3 class="popover-title">产学研合作</h3>
                     <div class="popover-content">
             本研究所与山东中孚、山东华软金盾和北京时代新威等多家企业建立了长期的紧密合作关系。承担国家自然基金项目3项、山东省博士后基金项目2项、山东省自然基金2项，参与973项目子课题和国家十一五密码发展计划基金项目各1项。独立研究及与合作伙伴共同研发的成果已取得软件著作权4项，实用新型1项，申报国家发明专利2项，“统一内网安全综合解决方案”和“电子税务安全终端Key”等多项成果已成功应用于山东省银监局、浙江金融办、郯城财政局、汕尾财政局、昌平财政局和北京燕山税务局等多家银行及财税管理机构。
@@ -46,7 +46,7 @@
             <!-- 左中栏 -->
             <div class="span6">
                 <!-- 学术研究 -->
-                <div class="popover top" style="display:block;position:relative;width:100%;z-index:999">
+                <div class="popover bottom" style="display:block;position:relative;width:100%;z-index:999">
                     <h3 class="popover-title">学术研究</h3>
                     <div class="popover-content">
                         <p>依托省部共建的移动商务与物联网实验室和学校自建的物联网与信息安全实验室，开展内网信息安全可信管控平台、网上银行安全体系、移动支付安全体系、信息安全风险评估、信息安全审计、面向信息安全等级保护的测试与评估等领域的研究工作。主要研究内容包括：</p>
@@ -61,21 +61,21 @@
                 	</div>
 		        </div>
                 <!-- 咨询服务 -->
-                <div class="popover top" style="display:block;position:relative;width:100%;z-index:999">
+                <div class="popover bottom" style="display:block;position:relative;width:100%;z-index:999">
                     <h3 class="popover-title">咨询服务</h3>
                     <div class="popover-content">
                         <div class="row">
                             <div class="span3">
                                 <ul class="unstyled" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
                                     <c:forEach items="${infos}" var="info" begin="0" step="1" end="2">
-                                        <li class="counseling"><c:if test="${info.message!=''}"><a href="${ctx}/article/content/${info.id}" title="${info.subject}">${info.subject}</a></c:if></li>
+                                        <li class="counseling"><c:if test="${info.message!=''}"><a href="${ctx}/article/${info.id}" title="${info.subject}">${info.subject}</a></c:if></li>
                                     </c:forEach>
                                 </ul>
                             </div>
                             <div class="span3">
                                 <ul class="unstyled" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
                                     <c:forEach items="${infos}" var="info" begin="3" step="1" end="5">
-                                        <li class="counseling"><c:if test="${info.message!=''}"><a href="${ctx}/article/content/${info.id}" title="${info.subject}">${info.subject}</a></c:if></li>
+                                        <li class="counseling"><c:if test="${info.message!=''}"><a href="${ctx}/article/${info.id}" title="${info.subject}">${info.subject}</a></c:if></li>
                                     </c:forEach>
                                 </ul>
                             </div>
@@ -87,7 +87,7 @@
         <!-- 专家团队 -->
         <div class="row">
             <div class="span10">
-                <div class="popover top" style="display:block;position:relative;width:100%;z-index:999">
+                <div class="popover bottom" style="display:block;position:relative;width:100%;z-index:999">
                     <h3 class="popover-title">专家团队</h3>
                     <div class="popover-content">
                         <div class="scrolllist" id="teacher">
@@ -95,19 +95,19 @@
                             <div class="imglist_w">
                                 <ul class="imglist">
                                     <li>
-                                        <a target="_blank" href="${ctx}/article/content/64" title="聂秀山博士， 副教授，毕业于山东大学信息科学与工程学院。近年来主持国家自然基金一项，省两化融合研究课题一项，参与国家973项目和国家自然基金项目多项。主要研究方向为金融信息安全、信息内容安全认证等。"><img width="120" height="166" alt="聂秀山" src="${ctx}/static/uploads/teacher/pic_niexiushan.jpg"></a>
+                                        <a target="_blank" href="${ctx}/article/64" title="聂秀山博士， 副教授，毕业于山东大学信息科学与工程学院。近年来主持国家自然基金一项，省两化融合研究课题一项，参与国家973项目和国家自然基金项目多项。主要研究方向为金融信息安全、信息内容安全认证等。"><img width="120" height="166" alt="聂秀山" src="${ctx}/static/uploads/teacher/pic_niexiushan.jpg"></a>
                                         <p>聂秀山</p>
                                     </li>
                                     <li>
-                                        <a target="_blank" href="${ctx}/article/content/62" title="赵华伟"><img width="120" height="166" alt="赵华伟" src="${ctx}/static/uploads/teacher/pic_zhaohuawei.jpg"></a>
+                                        <a target="_blank" href="${ctx}/article/62" title="赵华伟"><img width="120" height="166" alt="赵华伟" src="${ctx}/static/uploads/teacher/pic_zhaohuawei.jpg"></a>
                                         <p>赵华伟</p>
                                     </li>
                                     <li>
-                                        <a target="_blank" href="${ctx}/article/content/61" title="万海山"><img width="120" height="166" alt="万海山" src="${ctx}/static/uploads/teacher/pic_wanhaishan.jpg"></a>
+                                        <a target="_blank" href="${ctx}/article/61" title="万海山"><img width="120" height="166" alt="万海山" src="${ctx}/static/uploads/teacher/pic_wanhaishan.jpg"></a>
                                         <p>万海山</p>
                                     </li>
                                     <li>
-                                        <a target="_blank" href="${ctx}/article/content/65" title="王倩"><img width="120" height="166" alt="王倩" src="${ctx}/static/uploads/teacher/pic_wangqian.jpg"></a>
+                                        <a target="_blank" href="${ctx}/article/65" title="王倩"><img width="120" height="166" alt="王倩" src="${ctx}/static/uploads/teacher/pic_wangqian.jpg"></a>
                                         <p>王倩</p>
                                     </li>
                                 </ul>
@@ -122,7 +122,7 @@
     <!-- 右栏 -->
     <div class="span2">
         <!-- 教育培训 -->
-        <div class="popover top" style="display:block;position:relative;width:100%;z-index:999">
+        <div class="popover bottom" style="display:block;position:relative;width:100%;z-index:999">
             <h3 class="popover-title">教育培训</h3>
             <div class="popover-content">
                 <h6>认证类课程</h6>
@@ -138,7 +138,7 @@
             </div>
         </div>
         <!-- 服务对象 -->
-        <div class="popover top" style="display:block;position:relative;width:100%;z-index:999">
+        <div class="popover bottom" style="display:block;position:relative;width:100%;z-index:999">
             <h3 class="popover-title">服务对象</h3>
             <div class="popover-content">
                 <ul class="unstyled">

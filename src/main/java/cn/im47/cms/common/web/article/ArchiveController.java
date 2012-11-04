@@ -47,9 +47,9 @@ public class ArchiveController {
         return "article/list";
     }
 
-    @RequestMapping(value = "list/ajax/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "list.json", method = RequestMethod.GET)
     @ResponseBody
-    public List<Article> ajaxListOfArticleByArchive(@PathVariable("id") Long id, @RequestParam("offset") int offset, @RequestParam("limit") int limit) {
+    public List<Article> ajaxListOfArticleByArchive(@RequestParam("id") Long id, @RequestParam("offset") int offset, @RequestParam("limit") int limit) {
         return articleManager.getByArchiveId(id, offset, limit);
     }
 

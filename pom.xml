@@ -16,16 +16,16 @@
     <groupId>cn.im47.cms</groupId>
     <artifactId>cms4j</artifactId>
     <name>Content Management System</name>
-    <version>0.2.5</version>
+    <version>0.2.6</version>
     <packaging>war</packaging>
 
     <description>im47.cn :: cms4j</description>
 
     <properties>
-
         <!-- Plugin的属性定义 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jdk.version>1.6</jdk.version>
+        <h2.version>1.3.168</h2.version>
 
         <!-- 项目属性 -->
         <jdbc.driver.groupId>com.h2database</jdbc.driver.groupId>
@@ -41,7 +41,7 @@
         <!--
         <jdbc.driver.groupId>mysql</jdbc.driver.groupId>
         <jdbc.driver.artifactId>mysql-connector-java</jdbc.driver.artifactId>
-        <jdbc.driver.version>5.1.13</jdbc.driver.version>
+        <jdbc.driver.version>5.1.21</jdbc.driver.version>
 	-->
     </properties>
 
@@ -53,7 +53,35 @@
         <maven>3.0</maven>
     </prerequisites>
 
+    <repositories>
+        <repository>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+                <checksumPolicy>warn</checksumPolicy>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>public</id>
+            <name>Public Repositories</name>
+            <url>http://localhost:8081/nexus/content/groups/public</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
 
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <name>Release Repository</name>
+            <url>http://localhost:8081/nexus/content/repositories/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>Snapshot Repository</name>
+            <url>http://localhost:8081/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <!-- =========================================================== -->
     <!-- Dependencies                                                -->
@@ -64,7 +92,7 @@
         <dependency>
             <groupId>cn.im47.commons</groupId>
             <artifactId>commons</artifactId>
-            <version>0.1.0</version>
+            <version>0.1.2</version>
         </dependency>
 
         <!-- SPRINGSIDE begin -->
@@ -77,12 +105,6 @@
             <artifactId>springside-extension</artifactId>
         </dependency>
         <!-- SPRINGSIDE end -->
-
-		<!-- email/scheduler/freemarker -->
-        <dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context-support</artifactId>
-		</dependency>
 
         <!-- AOP begin -->
         <dependency>
@@ -125,13 +147,21 @@
             <artifactId>spring-jdbc</artifactId>
         </dependency>
 
-        <!-- druid connection pool -->
+        <!-- dbcp connection pool -->
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>0.2.5</version>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>${commons-dbcp.version}</version>
             <scope>runtime</scope>
         </dependency>
+
+        <!-- druid connection pool
+       <dependency>
+           <groupId>com.alibaba</groupId>
+           <artifactId>druid</artifactId>
+           <version>0.2.8</version>
+           <scope>runtime</scope>
+       </dependency> -->
 
         <!-- jdbc driver -->
         <dependency>
@@ -170,23 +200,18 @@
         <!-- SECURITY begin -->
         <dependency>
             <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-core</artifactId>
-            <version>1.2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-spring</artifactId>
-            <version>1.2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-web</artifactId>
-            <version>1.2.1</version>
+            <version>${shiro.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-ehcache</artifactId>
-            <version>1.2.1</version>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.7</version>
         </dependency>
         <!-- SECURITY end -->
 
@@ -196,7 +221,7 @@
             <artifactId>hibernate-validator</artifactId>
         </dependency>
 
-        <!-- JSON -->
+        <!-- JSON begin -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -216,6 +241,7 @@
             <artifactId>jackson-datatype-joda</artifactId>
             <version>2.0.4</version>
         </dependency>
+        <!-- JSON end -->
 
         <!-- LOGGING begin -->
         <dependency>
@@ -302,7 +328,7 @@
             <artifactId>spring-test</artifactId>
             <scope>test</scope>
         </dependency>
-	<!-- TEST end -->
+        <!-- TEST end -->
 
         <!-- OTHER UTILS begin-->
         <dependency>
@@ -310,10 +336,10 @@
             <artifactId>freemarker</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-        </dependency>
+        <!--<dependency>-->
+        <!--<groupId>org.apache.httpcomponents</groupId>-->
+        <!--<artifactId>httpclient</artifactId>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>net.sf.dozer</groupId>
@@ -463,6 +489,7 @@
             </exclusions>
         </dependency>
 
+        <!-- h2 -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -491,7 +518,8 @@
         <dependency>
             <groupId>com.icegreen</groupId>
             <artifactId>greenmail</artifactId>
-        </dependency>        
+        </dependency>
+        <!-- TEST end -->
     </dependencies>
 
     <dependencyManagement>
@@ -573,7 +601,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.2</version>
+                <version>2.3</version>
                 <configuration>
                     <warSourceExcludes>static/uploads/**/*.*</warSourceExcludes>
                     <warName>cms4j##${maven.build.timestamp}</warName>
@@ -584,7 +612,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.12</version>
+                <version>2.12.4</version>
                 <configuration>
                     <includes>
                         <include>**/*Test.java</include>
@@ -595,11 +623,11 @@
                     <dependency>
                         <groupId>org.apache.maven.surefire</groupId>
                         <artifactId>surefire-junit47</artifactId>
-                        <version>2.12</version>
+                        <version>2.12.4</version>
                     </dependency>
                 </dependencies>
             </plugin>
-	    
+
             <!-- 增加functional test的Source目录 -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -723,7 +751,7 @@
                 </configuration>
             </plugin>
 
-			<!-- Tomcat -->
+            <!-- Tomcat -->
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat6-maven-plugin</artifactId>
@@ -741,7 +769,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>2.5</version>
+                <version>2.6</version>
             </plugin>
 
             <!-- clean插件 -->

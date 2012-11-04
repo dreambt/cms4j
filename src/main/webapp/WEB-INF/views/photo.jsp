@@ -61,7 +61,7 @@
             var limit = 12;//每页显示文章数量
 
             $.ajax({
-                url:"${ctx}/gallery/photo/ajax?offset=" + (intPageIndex - 1) * limit + "&limit=" + limit,
+                url:"${ctx}/gallery/photo.json?offset=" + (intPageIndex - 1) * limit + "&limit=" + limit,
                 timeout:3000,
                 success:function (data) {
                     //加载
