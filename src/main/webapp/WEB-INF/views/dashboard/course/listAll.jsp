@@ -87,6 +87,7 @@
         });
     }
     $(function () {
+        $("#course_page").addClass("active");
         var courses = $("#course_load");
         var pager = $("#pagination");
         pager.find("li:first").addClass('active');

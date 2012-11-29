@@ -29,8 +29,12 @@ public class Group extends IdEntity implements Serializable {
     public Group() {
     }
 
+    public Group(Long id) {
+        this.id = id;
+    }
+
     public Group(Long id, String groupName) {
-        super.setId(id);
+        this.id = id;
         this.groupName = groupName;
     }
 

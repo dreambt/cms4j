@@ -65,6 +65,7 @@
 </div>
 <script type="text/javascript">
     $(function () {
+        $("#link_page").addClass("active");
         var articles = $("#link_load");
         var pager = $("#pagination");
         pager.find("li:first").addClass('active');

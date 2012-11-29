@@ -17,8 +17,10 @@
     <meta name="description" content=""/>
     <title>后台登录 - 后台管理</title>
     <link rel="shortcut icon" href="${ctx}/static/favicon.ico" type="image/x-icon" />
-    <link href="${ctx}/min?t=css&f=/style/bootstrap.css,/style/bootstrap-responsive.css,/style/datepicker.css,/js/msgUI/msgGrowl.css,/js/validation/validate.css,/style/admin.css" rel="stylesheet" type="text/css" />
-    <script src="${ctx}/min?t=js&f=/js/jquery.js,/js/bootstrap.js,/js/bootstrap-datepicker.js,/js/easing.js,/js/msgUI/msgGrowl.js,/js/main.js" type="text/javascript"></script>
+    <%--<link href="${ctx}/min?t=css&f=/style/bootstrap.css,/style/bootstrap-responsive.css,/style/datepicker.css,/js/msgUI/msgGrowl.css,/js/validation/validate.css,/style/admin.css" rel="stylesheet" type="text/css" />--%>
+    <%--<script src="${ctx}/min?t=js&f=/js/jquery.js,/js/bootstrap.js,/js/bootstrap-datepicker.js,/js/easing.js,/js/msgUI/msgGrowl.js,/js/main.js" type="text/javascript"></script>--%>
+    <link href="${ctx}/static/admin.min.css" rel="stylesheet" type="text/css" />
+    <script src="${ctx}/static/admin.min.js" type="text/javascript"></script>
     <script src="${ctx}/static/js/validation/jquery.validate.js" type="text/javascript"></script>
     <script src="${ctx}/static/js/validation/messages_bs_cn.js" type="text/javascript"></script>
     <style type="text/css">

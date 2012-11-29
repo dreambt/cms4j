@@ -77,6 +77,7 @@
         });
     }
     $(function () {
+        $("#gallery_page").addClass("active");
         var articles = $("#image_load");
         var pager = $("#pagination");
         pager.find("li:first").addClass('active');

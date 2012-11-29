@@ -66,6 +66,9 @@ public class ShiroDbRealm extends AuthorizingRealm {
                 throw new DisabledAccountException("未经审核的账户不允许登录.");
             }
 
+            // 更新用户登录时间
+            userManager.updateLastTime(user.getId());
+
             byte[] salt = Encodes.decodeHex(user.getSalt());
             return new SimpleAuthenticationInfo(new ShiroUser(user.getId(), user.getEmail(), user.getUsername(), user.getGroupList().get(0).getGroupName()), user.getPassword(),
                     ByteSource.Util.bytes(salt), getName());

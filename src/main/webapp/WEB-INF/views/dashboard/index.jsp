@@ -21,5 +21,10 @@
         </div>
     </div>
 </div>
+<script>
+    $(function () {
+        $("#admin_page").addClass("active");
+    });
+</script>
 </body>
 </html>

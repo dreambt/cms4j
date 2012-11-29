@@ -12,7 +12,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-    <title>课程管理 - 添加课程</title>
+    <title>添加课程</title>
 </head>
 <body>
 <div class="row">
@@ -131,10 +131,11 @@
         </div>
     </form:form>
 </div>
-<script charset="utf-8" src="${ctx}/static/kindeditor/kindeditor-min.js"></script>
+<script charset="utf-8" src="${ctx}/static/kindeditor/kindeditor-all-min.js"></script>
 <script charset="utf-8" src="${ctx}/static/kindeditor/lang/zh_CN.js"></script>
 <script type="text/javascript">
 $(function () {
+    $("#course_page").addClass("active");
     // 时间选择
     $("#courseDate").datepicker({
         format:'yyyy-mm-dd',

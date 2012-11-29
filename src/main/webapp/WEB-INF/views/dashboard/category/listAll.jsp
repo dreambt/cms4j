@@ -65,6 +65,7 @@
 </div>
 <script type="text/javascript">
     $(function () {
+        $("#category_page").addClass("active");
         $('.delete').click(function(){
             if(confirm("确定要删除吗？")){
                 return true;

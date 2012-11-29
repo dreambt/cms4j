@@ -12,7 +12,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-    <title>菜单管理 - 添加菜单</title>
+    <title>添加菜单</title>
 </head>
 <body>
 <div class="row">
@@ -84,9 +84,12 @@
     </form:form>
     </div>
 </div>
-<script charset="utf-8" src="${ctx}/static/kindeditor/kindeditor-min.js"></script>
+<script charset="utf-8" src="${ctx}/static/kindeditor/kindeditor-all-min.js"></script>
 <script charset="utf-8" src="${ctx}/static/kindeditor/lang/zh_CN.js"></script>
 <script>
+    $(function () {
+        $("#category_page").addClass("active");
+    });
     KindEditor.ready(function(K) {
         K.create('#editor_id', {
             uploadJson : '/jsp/upload_json.jsp',

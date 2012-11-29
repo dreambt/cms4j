@@ -56,6 +56,7 @@
 <script type="text/javascript" src="${ctx}/min?t=js&f=/js/validation/jquery.validate.js,/js/validation/messages_cn.js" charset="utf-8"></script>
 <script type="text/javascript">
     $(function () {
+        $("#gallery_page").addClass("active");
         //上传时选择文件校验
         $('#upload').live('change', function () {
             $(this).attr('alt',$(this).val());

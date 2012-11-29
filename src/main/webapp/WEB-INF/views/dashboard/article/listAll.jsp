@@ -89,6 +89,7 @@
         });
     }
     $(function () {
+        $("#article_page").addClass("active");
         var articles = $("#article_load");
         var pager = $("#pagination");
         pager.find("li:first").addClass('active');

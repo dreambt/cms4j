@@ -1,5 +1,6 @@
 package cn.im47.cms.common.web.account;
 
+import cn.im47.cms.common.entity.account.Group;
 import cn.im47.cms.common.entity.account.User;
 import cn.im47.cms.common.service.account.GroupManager;
 import cn.im47.cms.common.service.account.UserManager;
@@ -8,11 +9,12 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -53,9 +55,13 @@ public class UserController {
 
     @RequiresPermissions("user:create")
     @RequestMapping(value = "create", method = RequestMethod.POST)
-    public String create(User user, RedirectAttributes redirectAttributes, BindingResult bindingResult, Model model, HttpServletRequest request) {
-        if (bindingResult.hasErrors()) {
-            return createForm(model);
+    public String create(User user, @RequestParam(value = "groupList") List<Long> checkedGroupList,
+                         RedirectAttributes redirectAttributes, Model model, HttpServletRequest request) {
+        // bind groupList
+        user.getGroupList().clear();
+        for (Long groupId : checkedGroupList) {
+            Group group = new Group(groupId);
+            user.getGroupList().add(group);
         }
         try {
             user.setLastLoginIP(request.getRemoteAddr());   //TODO 获得ip
@@ -70,15 +76,28 @@ public class UserController {
 
     @RequiresPermissions("user:update")
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
-    public String updateForm(@ModelAttribute("user") User user, Model model) {
-        if (null == user) {
-            model.addAttribute("info", "该用户不存在，请刷新重试");
-            return "redirect:/account/user/list";
-        }
-        model.addAttribute("user", user);
+    public String updateForm(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("user", userManager.get(id));
         model.addAttribute("action", "update");
         model.addAttribute("allGroups", groupManager.getAllGroup());
         return "dashboard/account/user/edit";
+    }
+
+    @RequiresPermissions("user:update")
+    @RequestMapping(value = "update", method = RequestMethod.POST)
+    public String update(@Valid @ModelAttribute("preloadUser") User user,
+                         @RequestParam(value = "groupList") List<Long> checkedGroupList,
+                         RedirectAttributes redirectAttributes) {
+        // bind groupList
+        user.getGroupList().clear();
+        for (Long groupId : checkedGroupList) {
+            Group group = new Group(groupId);
+            user.getGroupList().add(group);
+        }
+
+        userManager.update(user);
+        redirectAttributes.addFlashAttribute("info", "保存用户成功");
+        return "redirect:/account/user/list";
     }
 
     // TODO 找回密码时发送确认邮件，点击邮件再修改密码！
@@ -149,6 +168,7 @@ public class UserController {
         }
     }
 
+    @RequiresPermissions("user:create")
     @RequestMapping(value = "checkEmail")
     @ResponseBody
     public String checkEmail(@RequestParam("oldEmail") String oldEmail, @RequestParam("email") String email) {
@@ -157,7 +177,23 @@ public class UserController {
         } else if (userManager.findUserByEmail(email) == null) {
             return "true";
         }
-        return "false";
+        return "该邮箱已存在";
+    }
+
+    /**
+     * 不自动绑定对象中的roleList属性，另行处理。
+     */
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.setDisallowedFields("groupList");
+    }
+
+    @ModelAttribute("preloadUser")
+    public User getAccount(@RequestParam(value = "id", required = false) Long id) {
+        if (id != null) {
+            return userManager.get(id);
+        }
+        return null;
     }
 
     @Autowired

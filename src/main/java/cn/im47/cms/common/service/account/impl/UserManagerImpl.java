@@ -10,6 +10,7 @@ import cn.im47.cms.memcached.MemcachedObjectType;
 import cn.im47.commons.utilities.RandomString;
 import com.google.common.collect.Lists;
 import org.apache.shiro.SecurityUtils;
+import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -133,13 +134,18 @@ public class UserManagerImpl implements UserManager {
 
     @Transactional(readOnly = false)
     public long save(User user) {
-        user.setPlainPassword(RandomString.get(8));// 设定随机密码
+        //如果邮箱被注册，将直接返回
+        if (userMapper.isUsedEmail(user.getEmail()) > 0) {
+            return 0;
+        }
+
+        user.setPlainPassword(RandomString.get(12));// 设定随机密码
         entryptPassword(user);// 加密
 
         user.setPhotoURL("default.jpg");
         user.setLastIP(134744072L);
         user.setTimeOffset("0800");
-        LocalDateTime now = new LocalDateTime();
+        DateTime now = new DateTime();
         user.setLastTime(now);
         user.setLastActTime(now);
 
@@ -149,7 +155,6 @@ public class UserManagerImpl implements UserManager {
         logger.info("保存用户 user={}.", user.toString());
         return userMapper.save(user);
     }
-
 
     @Override
     @Transactional(readOnly = false)
@@ -197,6 +202,22 @@ public class UserManagerImpl implements UserManager {
 
     @Override
     @Transactional(readOnly = false)
+    public void updateLastTime(Long id) {
+        this.updateTimeToNow(id, "last_time");
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public void updateLastActTime(Long id) {
+        this.updateTimeToNow(id, "last_act_time");
+    }
+
+    private void updateTimeToNow(Long id, String column) {
+        userMapper.updateTimeToNow(id, column, new DateTime());
+    }
+
+    @Override
+    @Transactional(readOnly = false)
     public long repass(Long id) {
         // 判断用户是否为超级管理员
         if (isSupervisor(id)) {
@@ -205,7 +226,7 @@ public class UserManagerImpl implements UserManager {
         }
 
         User user = this.get(id);
-        user.setPlainPassword(RandomString.get(8));// 设定随机密码
+        user.setPlainPassword(RandomString.get(12));// 设定随机密码
         entryptPassword(user);// 加密
 
         logger.info("重置用户密码 #{}, user.email={}.", id, user.getEmail());

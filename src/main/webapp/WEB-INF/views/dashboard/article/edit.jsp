@@ -23,7 +23,7 @@
             <option value="${categorie.id}" <c:if test="${categorie.id eq article.category.id}">selected="selected"</c:if>>${categorie.categoryName}</option>
         </c:forEach>
         </form:select>
-        <input type="text" id="text" name="subject" class="input-xxlarge required" size="206" original-title="请输入文章标题" value="${article.subject}" placeholder="文章标题" />
+        <input type="text" id="text" name="subject" class="medium required" size="206" original-title="请输入文章标题" value="${article.subject}" placeholder="文章标题" />
         <label class="checkbox">
             <input type="checkbox" name="top" value="${article.top}" <c:if test="${article.top}">checked="checked"</c:if> /> 置顶
             <input type="hidden" name="_top">
@@ -42,9 +42,12 @@
     </form:form>
     </div>
 </div>
-<script charset="utf-8" src="${ctx}/static/kindeditor/kindeditor-min.js"></script>
+<script charset="utf-8" src="${ctx}/static/kindeditor/kindeditor-all-min.js"></script>
 <script charset="utf-8" src="${ctx}/static/kindeditor/lang/zh_CN.js"></script>
 <script>
+    $(function () {
+        $("#article_page").addClass("active");
+    });
     KindEditor.ready(function(K) {
         K.create('#editor_id', {
             uploadJson : '/jsp/upload_json.jsp',

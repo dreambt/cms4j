@@ -10,7 +10,7 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-    <title>添加友情链接</title>
+    <title>友情链接</title>
     <link rel="stylesheet" type="text/css" href="${ctx}/static/js/validation/validate.min.css">
 </head>
 <body>
@@ -42,6 +42,7 @@
 <script type="text/javascript" src="${ctx}/min?t=js&f=/js/validation/jquery.validate.js,/js/validation/messages_cn.js" charset="utf-8"></script>
 <script>
     $(function () {
+        $("#link_page").addClass("active");
         $("#lnkName").focus();
         $("#LnkAdd").validate({
             rules:{lnkName:{required:true},

@@ -57,6 +57,10 @@ public interface UserManager extends GenericManager<User, Long> {
      */
     long update(Long id, String column);
 
+    void updateLastTime(Long id);
+
+    void updateLastActTime(Long id);
+
     /**
      * 重置密码
      *
