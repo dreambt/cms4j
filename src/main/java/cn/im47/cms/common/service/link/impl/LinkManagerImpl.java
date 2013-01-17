@@ -111,34 +111,34 @@ public class LinkManagerImpl implements LinkManager {
     }
 
     @Transactional(readOnly = false)
-    public long save(Link link) {
+    public int save(Link link) {
         logger.info("保存友情链接 link={}.", link.toString());
-        long num = linkMapper.save(link);
+        int num = linkMapper.save(link);
         generateContent();
         return num;
     }
 
     @Transactional(readOnly = false)
-    public long update(Link link) {
+    public int update(Link link) {
         logger.info("保存友情链接 link={}.", link.toString());
-        long num = linkMapper.update(link);
+        int num = linkMapper.update(link);
         generateContent();
         return num;
     }
 
     @Override
     @Transactional(readOnly = false)
-    public long updateBool(Long id, String column) {
+    public int updateBool(Long id, String column) {
         logger.info("保存友情链接 #{} 的属性 {}.", id, column);
-        long num = linkMapper.updateBool(id, column);
+        int num = linkMapper.updateBool(id, column);
         generateContent();
         return num;
     }
 
     @Transactional(readOnly = false)
-    public long delete(Long id) {
+    public int delete(Long id) {
         logger.info("删除友情链接 #{}.", id);
-        long num = linkMapper.delete(id);
+        int num = linkMapper.delete(id);
         generateContent();
         return num;
     }

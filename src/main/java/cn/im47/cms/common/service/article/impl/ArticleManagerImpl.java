@@ -1,8 +1,12 @@
 package cn.im47.cms.common.service.article.impl;
 
 import cn.im47.cms.common.dao.article.ArticleMapper;
+import cn.im47.cms.common.dao.category.CategoryMapper;
+import cn.im47.cms.common.dao.link.LinkMapper;
 import cn.im47.cms.common.entity.account.User;
 import cn.im47.cms.common.entity.article.Article;
+import cn.im47.cms.common.entity.category.Category;
+import cn.im47.cms.common.entity.link.Link;
 import cn.im47.cms.common.service.account.ShiroDbRealm;
 import cn.im47.cms.common.service.article.ArchiveManager;
 import cn.im47.cms.common.service.article.ArticleManager;
@@ -34,12 +38,9 @@ import org.springside.modules.beanvalidator.BeanValidators;
 import org.springside.modules.cache.memcached.SpyMemcachedClient;
 import org.springside.modules.mapper.JsonMapper;
 import org.springside.modules.utils.Encodes;
-import org.tautua.markdownpapers.Markdown;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -61,6 +62,8 @@ public class ArticleManagerImpl implements ArticleManager {
 
     private ArticleMapper articleMapper;
     private ArchiveManager archiveManager;
+    private CategoryMapper categoryMapper;
+    private LinkMapper linkMapper;
     private Validator validator = null;
 
     /**
@@ -114,12 +117,10 @@ public class ArticleManagerImpl implements ArticleManager {
         }
 
         // 记录文章访问次数
-        long start = System.currentTimeMillis();
         articleMapper.updateViews(id);
         article.setViews(article.getViews() + 1);
         article.setMessage(Encodes.unescapeHtml(article.getMessage()));
-        long end = System.currentTimeMillis();
-        logger.info("更新文章 #{} 的访问次数 用时：{}ms.", id, end - start);
+        logger.info("更新文章 #{} 的访问次数.", id);
         return article;
     }
 
@@ -319,56 +320,81 @@ public class ArticleManagerImpl implements ArticleManager {
 
     @Override
     @Transactional(readOnly = false)
-    public long save(Article article) {
+    public int save(Article article) {
         logger.info("保存文章 article={}.", article.toString());
         try {
-            // 生成默认摘要
-            String str = Jsoup.parse(article.getMessage()).text();
-            if (str.length() > 150) {
-                article.setDigest(str.substring(0, 150));
-            } else {
-                article.setDigest(str);
-            }
-
-            //文章中的首个图片
-            String firstImage = this.getImageFromMessage(article.getMessage());
-            if (StringUtils.isNotBlank(firstImage)) {
-                article.setImageName(firstImage);
-            } else {
-                article.setImageName("404.jpg");
-            }
-
-            // 任务生成文章图片
-            if (StringUtils.isNotBlank(firstImage)) {
-                notifyProducer.sendQueueGenArticleImage(article.getImageName());
-            }
-
             // 文章作者
             ShiroDbRealm.ShiroUser shiroUser = (ShiroDbRealm.ShiroUser) SecurityUtils.getSubject().getPrincipal();
             article.setUser(new User(shiroUser.getId()));
 
-            // 进行HTML编码, 否则前台可能破页
-            if (StringUtils.isNotBlank(article.getMessage())) {
-                article.setMessage(Encodes.escapeHtml(article.getMessage()));
-                article.setDigest(Encodes.escapeHtml(article.getDigest()));
-            } else {
-                article.setMessage("无内容");
-            }
+            article = this.checkArticle(article);
 
-            // 关键词由任务生成
-            article.setKeyword(this.genKeywords(article, 10));
-
-            //使用Hibernate Validator校验请求参数
-            Validate.notNull(article, "文章参数为空");
-            BeanValidators.validateWithException(validator, article);
-
-            long num = articleMapper.save(article);
+            int num = articleMapper.save(article);
             generateContent(article);
             return num;
         } catch (ConstraintViolationException cve) {
             logger.warn("操作员 {} 尝试发表文章, 缺少相关字段.", cve.getConstraintViolations().toString());
             return 0;
         }
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public int update(Article article) {
+        logger.info("更新文章 #{}.", article.toString());
+        try {
+            article = this.checkArticle(article);
+
+            int num = articleMapper.update(article);
+            generateContent(article);
+            return num;
+        } catch (ConstraintViolationException cve) {
+            logger.warn("操作员{}尝试发表文章, 缺少相关字段.", cve.getConstraintViolations().toString());
+            return 0;
+        }
+    }
+
+    private Article checkArticle(Article article) {
+        // 生成默认摘要
+        String str = Jsoup.parse(article.getMessage()).text();
+        if (str.length() > 150) {
+            article.setDigest(str.substring(0, 150));
+        } else {
+            article.setDigest(str);
+        }
+
+        // 文章中的首个图片
+        String firstImage = this.getImageFromMessage(article.getMessage());
+        if (StringUtils.isNotBlank(firstImage)) {
+            article.setImageName(firstImage);
+        } else {
+            article.setImageName("404.jpg");
+        }
+
+        if (StringUtils.isBlank(article.getUrl())) {
+            article.setUrl("0");
+        }
+
+        // 任务生成文章图片
+        if (StringUtils.isNotBlank(firstImage)) {
+            notifyProducer.sendQueueGenArticleImage(article.getImageName());
+        }
+
+        // 进行HTML编码, 否则前台可能破页
+        if (StringUtils.isNotBlank(article.getMessage())) {
+            article.setMessage(Encodes.escapeHtml(article.getMessage()));
+            article.setDigest(Encodes.escapeHtml(article.getDigest()));
+        } else {
+            article.setMessage("无内容");
+        }
+
+        // 关键词由任务生成
+        article.setKeyword(this.genKeywords(article, 10));
+
+        //使用Hibernate Validator校验请求参数
+        Validate.notNull(article, "文章参数为空");
+        BeanValidators.validateWithException(validator, article);
+        return article;
     }
 
     /**
@@ -461,58 +487,7 @@ public class ArticleManagerImpl implements ArticleManager {
 
     @Override
     @Transactional(readOnly = false)
-    public long update(Article article) {
-        logger.info("更新文章 #{}.", article.toString());
-        try {
-            // 生成默认摘要
-            String str = Jsoup.parse(article.getMessage()).text();
-            if (str.length() > 150) {
-                article.setDigest(str.substring(0, 150));
-            } else {
-                article.setDigest(str);
-            }
-
-            //文章中的首个图片
-            String firstImage = this.getImageFromMessage(article.getMessage());
-            if (StringUtils.isNotBlank(firstImage)) {
-                article.setImageName(firstImage);
-            } else {
-                article.setImageName("404.jpg");
-            }
-
-
-            // 任务生成文章图片
-            if (StringUtils.isNotBlank(firstImage)) {
-                notifyProducer.sendQueueGenArticleImage(article.getImageName());
-            }
-
-            // 进行HTML编码, 否则前台可能破页
-            if (StringUtils.isNotBlank(article.getMessage())) {
-                article.setMessage(Encodes.escapeHtml(article.getMessage()));
-                article.setDigest(Encodes.escapeHtml(article.getDigest()));
-            } else {
-                article.setMessage("无内容");
-            }
-
-            // 关键词由任务生成
-            article.setKeyword(this.genKeywords(article, 10));
-
-            //使用Hibernate Validator校验请求参数
-            Validate.notNull(article, "文章参数为空");
-            BeanValidators.validateWithException(validator, article);
-
-            long num = articleMapper.update(article);
-            //generateContent(article);
-            return num;
-        } catch (ConstraintViolationException cve) {
-            logger.warn("操作员{}尝试发表文章, 缺少相关字段.", cve.getConstraintViolations().toString());
-            return 0;
-        }
-    }
-
-    @Override
-    @Transactional(readOnly = false)
-    public long delete(Long id) {
+    public int delete(Long id) {
         logger.info("删除文章 #{}.", id);
         return articleMapper.updateBool(id, "deleted");
     }
@@ -562,13 +537,16 @@ public class ArticleManagerImpl implements ArticleManager {
         int year = now.getYear();
         int month = now.getMonthOfYear();
         try {
-            Markdown md = new Markdown();
-            StringReader in = new StringReader(article.getMessage());
-            StringWriter out = new StringWriter();
-            md.transform(in, out);
-            article.setMessage(out.toString());
+            String fileNmae = article.getUrl();
+            if ("0".equals(fileNmae)) {
+                fileNmae = article.getId().toString();
+            }
+            List<Category> categories = categoryMapper.getNavCategory();
+            List<Link> links = linkMapper.getAll(0, Integer.MAX_VALUE, "id", "DESC");
+            context.put("categories", categories);
             context.put("article", article);
-            freemakerHelper.generateContent(context, "article.ftl", "/posts/" + year + "/" + month + "/" + article.getUrl() + ".html");
+            context.put("links", links);
+            freemakerHelper.generateContent(context, "article.ftl", "../posts/" + year + "/" + month + "/" + fileNmae + ".html");
         } catch (Exception e) {
             logger.error("异常: ", e.getMessage());
         }
@@ -587,6 +565,16 @@ public class ArticleManagerImpl implements ArticleManager {
     @Autowired
     public void setArchiveManager(ArchiveManager archiveManager) {
         this.archiveManager = archiveManager;
+    }
+
+    @Autowired
+    public void setCategoryMapper(CategoryMapper categoryMapper) {
+        this.categoryMapper = categoryMapper;
+    }
+
+    @Autowired
+    public void setLinkMapper(LinkMapper linkMapper) {
+        this.linkMapper = linkMapper;
     }
 
     @Autowired

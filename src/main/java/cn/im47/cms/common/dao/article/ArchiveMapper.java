@@ -4,6 +4,7 @@ package cn.im47.cms.common.dao.article;
 import cn.im47.cms.common.dao.GenericDao;
 import cn.im47.cms.common.entity.article.Archive;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import java.util.Map;
  * Date: 12-4-1
  * Time: 下午6:53
  */
+@Repository
 public interface ArchiveMapper extends GenericDao<Archive, Long> {
 
     /**

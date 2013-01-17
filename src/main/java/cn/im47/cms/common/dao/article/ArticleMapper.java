@@ -3,6 +3,7 @@ package cn.im47.cms.common.dao.article;
 import cn.im47.cms.common.dao.GenericDao;
 import cn.im47.cms.common.entity.article.Article;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
  * Date: 12-3-20
  * Time: 下午18:34
  */
+@Repository
 public interface ArticleMapper extends GenericDao<Article, Long> {
 
     /**

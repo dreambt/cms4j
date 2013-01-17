@@ -69,7 +69,7 @@ public class ImageManagerImpl implements ImageManager {
 
     @Override
     @Deprecated
-    public long save(Image object) {
+    public int save(Image object) {
         return 0;
     }
 
@@ -135,7 +135,7 @@ public class ImageManagerImpl implements ImageManager {
 
     @Override
     @Transactional(readOnly = false)
-    public long save(MultipartFile file, Image image) {
+    public int save(MultipartFile file, Image image) {
         logger.info("保存相册 image={}.", image.toString());
         if (file.getOriginalFilename() != null && !file.getOriginalFilename().equals("")) {
             UploadFile uploadFile = new UploadFile();
@@ -160,7 +160,7 @@ public class ImageManagerImpl implements ImageManager {
 
     @Override
     @Transactional(readOnly = false)
-    public long update(MultipartFile file, HttpServletRequest request, Image image) {
+    public int update(MultipartFile file, HttpServletRequest request, Image image) {
         logger.info("更新相册 image={}.", image.toString());
         //首页显示
         if (null == request.getParameter("showIndex")) {
@@ -197,25 +197,25 @@ public class ImageManagerImpl implements ImageManager {
     }
 
     @Transactional(readOnly = false)
-    public long update(Image image) {
+    public int update(Image image) {
         logger.info("更新相册 image={}.", image.toString());
         return imageMapper.update(image);
     }
 
     @Override
     @Transactional(readOnly = false)
-    public long update(Long id, String column) {
+    public int update(Long id, String column) {
         logger.info("更新相册 #{} 的 {} 属性.", id, column);
         return imageMapper.updateBool(id, column);
     }
 
     @Override
     @Transactional(readOnly = false)
-    public long delete(Long id) {
+    public int delete(Long id) {
         logger.info("删除相册 #{}.", id);
         String fileName = imageMapper.get(id).getImageUrl();
 
-        long num = imageMapper.delete(id);
+        int num = imageMapper.delete(id);
         // 成功删除数据库记录时，异步删除所有缩略图
         if (num > 0) {
             // 删除时只删除数据库，硬盘文件起任务轮询删除

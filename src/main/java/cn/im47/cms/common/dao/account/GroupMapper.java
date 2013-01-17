@@ -2,6 +2,7 @@ package cn.im47.cms.common.dao.account;
 
 import cn.im47.cms.common.dao.GenericDao;
 import cn.im47.cms.common.entity.account.Group;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * Date: 12-3-29
  * Time: 下午5:06
  */
+@Repository
 public interface GroupMapper extends GenericDao<Group, Long> {
 
     /**

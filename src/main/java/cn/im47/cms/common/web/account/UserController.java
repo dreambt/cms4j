@@ -3,8 +3,10 @@ package cn.im47.cms.common.web.account;
 import cn.im47.cms.common.entity.account.Group;
 import cn.im47.cms.common.entity.account.User;
 import cn.im47.cms.common.service.account.GroupManager;
+import cn.im47.cms.common.service.account.ShiroDbRealm;
 import cn.im47.cms.common.service.account.UserManager;
 import cn.im47.cms.common.vo.ResponseMessage;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springside.modules.security.utils.Digests;
+import org.springside.modules.utils.Encodes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -100,12 +104,50 @@ public class UserController {
         return "redirect:/account/user/list";
     }
 
+    @RequiresPermissions("user:update")
+    @RequestMapping(value = "profile", method = RequestMethod.GET)
+    public String updateProfileForm(Model model) {
+        ShiroDbRealm.ShiroUser user = (ShiroDbRealm.ShiroUser) SecurityUtils.getSubject().getPrincipal();
+        model.addAttribute("user", userManager.get(user.getId()));
+        return "dashboard/account/user/profile";
+    }
+
+    @RequiresPermissions("user:update")
+    @RequestMapping(value = "profile", method = RequestMethod.POST)
+    public String updateProfile(@Valid @ModelAttribute("preloadUser") User user,
+                                @RequestParam(value = "oldPassword") String oldPassword,
+                                @RequestParam(value = "newPassword") String newPassword,
+                                @RequestParam(value = "confirmPassword") String confirmPassword,
+                                RedirectAttributes redirectAttributes) {
+        if (!"".equals(oldPassword)) {
+            if ("".equals(newPassword) || !newPassword.equals(confirmPassword)) {
+                redirectAttributes.addFlashAttribute("error", "新密码和确认密码不相同，且不能为空");
+                return "redirect:/account/user/profile";
+            }
+
+            // 加密用户输入的原密码
+            byte[] salt = Encodes.decodeHex(user.getSalt());
+            byte[] hashPassword = Digests.sha1(oldPassword.getBytes(), salt, UserManager.HASH_INTERATIONS);
+            oldPassword = Encodes.encodeHex(hashPassword);
+            if (!user.getPassword().equals(oldPassword)) {
+                redirectAttributes.addFlashAttribute("error", "原密码不正确");
+                return "redirect:/account/user/profile";
+            }
+            user.setPlainPassword(newPassword);
+            userManager.entryptPassword(user);
+        }
+        user.setPlainPassword("");
+        userManager.update(user);
+        redirectAttributes.addFlashAttribute("info", "保存用户成功");
+        return "redirect:/account/user/profile";
+    }
+
     // TODO 找回密码时发送确认邮件，点击邮件再修改密码！
     @RequiresPermissions("user:save")
     @RequestMapping(value = "repass/{id}")
     public String repass(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         try {
-            long num = userManager.repass(id);
+            int num = userManager.repass(id);
             if (1 == num) {
                 redirectAttributes.addFlashAttribute("error", "您选择的用户不存在，请刷新重试");
                 return "redirect:/account/user/list";

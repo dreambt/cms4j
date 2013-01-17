@@ -16,6 +16,10 @@ import java.util.Map;
  */
 public interface UserManager extends GenericManager<User, Long> {
 
+    public static final String HASH_ALGORITHM = "SHA-1";
+    public static final int HASH_INTERATIONS = 1024;
+    public static final int SALT_SIZE = 8;
+
     /**
      * 按指定的排序方式指定偏移的所有用户
      *
@@ -47,7 +51,7 @@ public interface UserManager extends GenericManager<User, Long> {
      *
      * @return
      */
-    long deleteByTask() throws InterruptedException;
+    int deleteByTask() throws InterruptedException;
 
     /**
      * 更新用户
@@ -55,11 +59,11 @@ public interface UserManager extends GenericManager<User, Long> {
      * @param id
      * @param column
      */
-    long update(Long id, String column);
+    int update(Long id, String column);
 
-    void updateLastTime(Long id);
+    int updateLastTime(Long id);
 
-    void updateLastActTime(Long id);
+    int updateLastActTime(Long id);
 
     /**
      * 重置密码
@@ -67,7 +71,7 @@ public interface UserManager extends GenericManager<User, Long> {
      * @param id
      * @return 错误码 1 用户不存在
      */
-    long repass(Long id);
+    int repass(Long id);
 
     /**
      * 批量审核用户
@@ -90,6 +94,8 @@ public interface UserManager extends GenericManager<User, Long> {
      * @return
      */
     List<User> search(Map<String, Object> parameters, int offset, int limit);
+
+    void entryptPassword(User user);
 
     void setUserMapper(UserMapper userMapper);
 

@@ -15,10 +15,6 @@ dreambt@gmail.com
 
 董鹏飞、邓小兰、何梦、宋丽荣、王可竣
 
-# Support me
-
-[https://www.gittip.com/dreambt/](https://www.gittip.com/dreambt/)
-
 # How to use the Content Management System website
 
 1. Deploy the Webservice archive file cms4j-VERSION.war of the website.

@@ -10,7 +10,6 @@ import cn.im47.cms.memcached.MemcachedObjectType;
 import cn.im47.commons.utilities.RandomString;
 import com.google.common.collect.Lists;
 import org.apache.shiro.SecurityUtils;
-import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -133,7 +132,7 @@ public class UserManagerImpl implements UserManager {
     }
 
     @Transactional(readOnly = false)
-    public long save(User user) {
+    public int save(User user) {
         //如果邮箱被注册，将直接返回
         if (userMapper.isUsedEmail(user.getEmail()) > 0) {
             return 0;
@@ -145,7 +144,7 @@ public class UserManagerImpl implements UserManager {
         user.setPhotoURL("default.jpg");
         user.setLastIP(134744072L);
         user.setTimeOffset("0800");
-        DateTime now = new DateTime();
+        LocalDateTime now = new LocalDateTime();
         user.setLastTime(now);
         user.setLastActTime(now);
 
@@ -158,13 +157,13 @@ public class UserManagerImpl implements UserManager {
 
     @Override
     @Transactional(readOnly = false)
-    public long deleteByTask() throws InterruptedException {
+    public int deleteByTask() throws InterruptedException {
         logger.info("任务删除用户.");
         return userMapper.deleteByTask();
     }
 
     @Transactional(readOnly = false)
-    public long delete(Long id) {
+    public int delete(Long id) {
         // 判断用户是否为超级管理员
         if (isSupervisor(id)) {
             logger.warn("操作员 {} 尝试删除超级管理员用户.", this.getCurrentUserName());
@@ -174,23 +173,23 @@ public class UserManagerImpl implements UserManager {
     }
 
     @Transactional(readOnly = false)
-    public long update(User user) {
+    public int update(User user) {
         // 判断用户是否为超级管理员
-        if (isSupervisor(user.getId())) {
-            logger.warn("操作员 {} 尝试修改超级管理员用户.", this.getCurrentUserName());
-            throw new ServiceException("不能修改超级管理员用户.");
-        }
+//        if (isSupervisor(user.getId())) {
+//            logger.warn("操作员 {} 尝试修改超级管理员用户.", this.getCurrentUserName());
+//            throw new ServiceException("不能修改超级管理员用户.");
+//        }
 
         logger.info("更新用户 user={}.", user.toString());
-        long num = userMapper.update(user);
+        int num = userMapper.update(user);
         sendNotifyMessage(user);
         return num;
     }
 
     @Override
     @Transactional(readOnly = false)
-    public long update(Long id, String column) {
-        // 判断用户是否为超级管理员
+    public int update(Long id, String column) {
+        // 判断用户是否为超级管理员, 禁止反审核、标记删除超级管理员
         if (isSupervisor(id)) {
             logger.warn("操作员 {} 尝试修改超级管理员用户.", this.getCurrentUserName());
             throw new ServiceException("不能修改超级管理员用户.");
@@ -202,23 +201,23 @@ public class UserManagerImpl implements UserManager {
 
     @Override
     @Transactional(readOnly = false)
-    public void updateLastTime(Long id) {
-        this.updateTimeToNow(id, "last_time");
+    public int updateLastTime(Long id) {
+        return this.updateTimeToNow(id, "last_time");
     }
 
     @Override
     @Transactional(readOnly = false)
-    public void updateLastActTime(Long id) {
-        this.updateTimeToNow(id, "last_act_time");
+    public int updateLastActTime(Long id) {
+        return this.updateTimeToNow(id, "last_act_time");
     }
 
-    private void updateTimeToNow(Long id, String column) {
-        userMapper.updateTimeToNow(id, column, new DateTime());
+    private int updateTimeToNow(Long id, String column) {
+        return userMapper.updateTimeToNow(id, column, new LocalDateTime());
     }
 
     @Override
     @Transactional(readOnly = false)
-    public long repass(Long id) {
+    public int repass(Long id) {
         // 判断用户是否为超级管理员
         if (isSupervisor(id)) {
             logger.warn("操作员 {} 尝试修改超级管理员用户.", this.getCurrentUserName());
@@ -286,7 +285,7 @@ public class UserManagerImpl implements UserManager {
     /**
      * 设定安全的密码，生成随机的salt并经过1024次 sha-1 hash
      */
-    private void entryptPassword(User user) {
+    public void entryptPassword(User user) {
         byte[] salt = Digests.generateSalt(SALT_SIZE);
         user.setSalt(Encodes.encodeHex(salt));
 

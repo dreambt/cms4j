@@ -23,7 +23,7 @@
     <title><sitemesh:title/> - 山东省金融信息工程技术研究中心</title>
     <link rel="shortcut icon" href="${ctx}/static/favicon.ico" type="image/x-icon" />
     <%--<link href="${ctx}/min?t=css&f=/style/bootstrap.css,/style/bootstrap-responsive.css,/js/slides/responsiveslides.css,/totop/ui.totop.css,/style/main.css" rel="stylesheet" type="text/css" />--%>
-    <%--<script src="${ctx}/min?t=js&f=/js/jquery.js,/js/slides/responsiveslides.js,/js/slider.js,/js/easing.js,/totop/jquery.ui.totop.js,/js/jquery.MyQRCode.js,/js/main.js,/js/bootstrap.js,/js/template.js" type="text/javascript"></script>--%>
+    <%--<script src="${ctx}/min?t=js&f=/js/jquery.js,/js/slides/responsiveslides.js,/js/slider.js,/js/easing.js,/totop/jquery.ui.totop.js,/js/main.js,/js/bootstrap.js,/js/template.js" type="text/javascript"></script>--%>
     <link href="${ctx}/static/main.min.css" rel="stylesheet" type="text/css" />
     <script src="${ctx}/static/main.min.js" type="text/javascript"></script>
     <sitemesh:head/>

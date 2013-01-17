@@ -47,15 +47,4 @@
             <li><a href="${ctx}/archive/list">更多存档...</a></li>
         </ul>
     </div>
-    <div class="well sidebar-nav">
-        <ul class="nav nav-list">
-            <li class="nav-header">QR 码</li>
-            <li id="qrcode"></li>
-        </ul>
-    </div>
 </div>
-<script type="text/javascript">
-    $(function(){
-        $("#qrcode").MyQRCode();
-    });
-</script>

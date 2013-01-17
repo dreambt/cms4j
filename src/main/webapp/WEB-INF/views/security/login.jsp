@@ -64,15 +64,29 @@
         %>
         <div id="message" class="alert alert-block alert-error">
             <button type="button" class="close" data-dismiss="alert">×</button>
-            <strong>Warning!</strong> ${error}.
+            <strong>Warning!</strong>
+            <%
+                if(error.contains("AuthenticationException")){
+                    out.print("请检查您输入的账户、密码、验证码是否正确.");
+                }
+                else if(error.contains("UnknownAccountException")){
+                    out.print("请检查您输入的账户、密码、验证码是否正确.");
+                }
+                else if(error.contains("DisabledAccountException")){
+                    out.print("未经审核的账户不允许登录.");
+                }
+                else{
+                    out.print("登录失败，请重试.");
+                }
+            %>
         </div>
         <%
             }
         %>
-        <input type="text" name="username" value="${username}" class="input-block-level email" placeholder="Email"/>
-        <input type="password" name="password" class="input-block-level" placeholder="Password"/>
-        <div id="imgid" style="display:block;margin:1px 0 0 180px;position:absolute;z-index:9999;"></div>
-        <input type="text" id="captcha" name="captcha" class="input-block-level" autocomplete="off" placeholder="Captcha"/>
+        <input type="text" id="username" name="username" value="${username}" class="input-block-level enail required" placeholder="Email"/>
+        <input type="password" name="password" class="input-block-level required" placeholder="Password"/>
+        <div id="imgid" style="display:block;margin:1px 0 0 200px;position:absolute;z-index:999;"></div>
+        <input type="text" id="captcha" name="captcha" class="input-block-level required" autocomplete="off" placeholder="Captcha"/>
         <label class="checkbox">
             <input type="checkbox" id="rememberMe" name="rememberMe"> 记住密码
         </label>
@@ -82,12 +96,18 @@
 </div>
 <script>
     $(function() {
+        $("#username").focus();
         $("#form-signin").validate();
-        $(".alert").delay(1500).fadeOut("slow");
+        $(".alert").delay(5000).fadeOut("slow");
 
         //验证码点击时显示
-        var img="<img id='checkNum' src='${ctx}/captcha.png' alt='验证码' style='cursor:pointer;vertical-align:text-bottom;position:absolute;height:34px'>";
-        $('#captcha').focus(function(){$('#imgid').append(img)}).blur(function(){$('#imgid').html("");});
+        $('#captcha').focus(function(){
+            var img=$("<img id='checkNum' alt='验证码' style='cursor:pointer;vertical-align:text-bottom;height:33px'/>");
+            img.attr("src","${ctx}/captcha.png?seed="+Math.random());
+            $('#imgid').append(img);
+        }).blur(function(){
+            $('#imgid').contents().remove();
+        });
     });
 </script>
 </body>

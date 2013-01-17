@@ -44,13 +44,6 @@ public class CourseDetailController {
             course.setTop(true);
         }
 
-        //是否允许评论
-        if (null == request.getParameter("allowApply")) {
-            course.setAllowApply(false);
-        } else {
-            course.setAllowApply(true);
-        }
-
         if (bindingResult.hasErrors() || courseManager.update(course) <= 0) {
             redirectAttributes.addFlashAttribute("error", "保存课程失败.");
             return "redirect:/course/listAll";

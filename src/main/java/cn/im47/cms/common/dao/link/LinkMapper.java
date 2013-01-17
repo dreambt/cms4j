@@ -3,6 +3,7 @@ package cn.im47.cms.common.dao.link;
 import cn.im47.cms.common.dao.GenericDao;
 import cn.im47.cms.common.entity.link.Link;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * Date: 12-4-10
  * Time: 下午8:25
  */
+@Repository
 public interface LinkMapper extends GenericDao<Link, Long> {
 
     /**

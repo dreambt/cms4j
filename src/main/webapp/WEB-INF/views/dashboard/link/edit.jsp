@@ -39,7 +39,6 @@
     </form:form>
     </div>
 </div>
-<script type="text/javascript" src="${ctx}/min?t=js&f=/js/validation/jquery.validate.js,/js/validation/messages_cn.js" charset="utf-8"></script>
 <script>
     $(function () {
         $("#link_page").addClass("active");

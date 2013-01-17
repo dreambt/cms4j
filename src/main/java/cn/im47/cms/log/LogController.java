@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/log")
 public class LogController {
 
-    private List levels = Lists.newArrayList("", "ERROR", "WARN", "INFO");
+    private List<String> levels = Lists.newArrayList("", "ERROR", "WARN", "INFO");
 
     @Autowired
     private Log4jManager log4jManager;

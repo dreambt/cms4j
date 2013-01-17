@@ -1,7 +1,7 @@
 package cn.im47.cms.common.dao;
 
 import org.apache.ibatis.annotations.Param;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 
 import java.io.Serializable;
 import java.util.List;
@@ -46,7 +46,7 @@ public interface GenericDao<T, PK extends Serializable> {
      * @param object the object to save
      * @return the persisted object
      */
-    long save(T object);
+    int save(T object);
 
     /**
      * 更新实体
@@ -54,7 +54,7 @@ public interface GenericDao<T, PK extends Serializable> {
      * @param object the object to save
      * @return the persisted object
      */
-    long update(T object);
+    int update(T object);
 
     /**
      * 更新bool字段
@@ -63,16 +63,16 @@ public interface GenericDao<T, PK extends Serializable> {
      * @param column the object to save
      * @return the persisted object
      */
-    long updateBool(@Param("id") Long id, @Param("column") String column);
+    int updateBool(@Param("id") Long id, @Param("column") String column);
 
-    void updateTimeToNow(@Param("id") Long id, @Param("column") String column, @Param("now") DateTime now);
+    int updateTimeToNow(@Param("id") Long id, @Param("column") String column, @Param("now") LocalDateTime now);
 
     /**
      * Generic method to delete an object based on class and id
      *
      * @param id the identifier (primary key) of the object to remove
      */
-    long delete(PK id);
+    int delete(PK id);
 
     /**
      * Generic method used to get all objects of a particular type. This

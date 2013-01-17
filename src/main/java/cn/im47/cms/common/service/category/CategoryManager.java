@@ -60,6 +60,6 @@ public interface CategoryManager extends GenericManager<Category, Long> {
      * @param category
      * @return 0 删除成功；1 该分类有文章，不能删除；2 该分类的子分类有文章，不能删除；3 指定菜单不存在
      */
-    long delete(Category category);
+    int delete(Category category);
 
 }

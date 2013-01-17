@@ -12,7 +12,7 @@
         <result property="courseDays" column="class_days"/>
         <result property="courseTime" column="class_time"/>
         <result property="coursePrice" column="class_price"/>
-        <result property="allowApply" column="allow_apply"/>
+        <result property="status" column="status"/>
         <result property="top" column="top"/>
         <result property="description1" column="description1"/>
         <result property="description2" column="description2"/>
@@ -32,13 +32,27 @@
     <select id="count" resultType="Long">
         SELECT COUNT( id )
         FROM cms_course
-        WHERE deleted =0
+        WHERE deleted=0 AND class_price=0
         LIMIT 1
 	</select>
 
     <select id="countAll" resultType="Long">
         SELECT COUNT( id )
         FROM cms_course
+        WHERE class_price>0 AND deleted=0
+        LIMIT 1
+	</select>
+
+    <select id="countAll2" resultType="Long">
+        SELECT COUNT( id )
+        FROM cms_course
+        LIMIT 1
+	</select>
+
+    <select id="countFree" resultType="Long">
+        SELECT COUNT( id )
+        FROM cms_course
+        WHERE class_price=0 AND deleted=0
         LIMIT 1
 	</select>
 
@@ -49,22 +63,37 @@
         WHERE id =#{id}
     </select>
 
-    <!-- 获取所有课程 -->
+    <!-- 获取所有收费课程 -->
     <select id="getAll" parameterType="map" resultMap="courseDetailMap">
         SELECT *
         FROM cms_course
-        <if test="deleted != null and deleted > 0">
-            WHERE deleted=0
-        </if>
+        WHERE class_price>=0 AND deleted=0 AND status != 'NONE'
+        ORDER BY ${sort} ${direction}
+        LIMIT #{offset},#{limit}
+    </select>
+
+    <!-- 获取所有课程 -->
+    <select id="getAll2" parameterType="map" resultMap="courseDetailMap">
+        SELECT *
+        FROM cms_course
+        ORDER BY ${sort} ${direction}
+        LIMIT #{offset},#{limit}
+    </select>
+
+    <!-- 获取所有免费课程 -->
+    <select id="getFree" parameterType="map" resultMap="courseDetailMap">
+        SELECT *
+        FROM cms_course
+        WHERE class_price=0 AND deleted=0
         ORDER BY ${sort} ${direction}
         LIMIT #{offset},#{limit}
     </select>
 
     <!-- 新增课程 -->
     <insert id="save" parameterType="Course" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO cms_course (class_name, class_type, class_date, class_days, class_time, class_price, allow_apply, top,
+        INSERT INTO cms_course (class_name, class_type, class_date, class_days, class_time, class_price, status, top,
             description1, description2, description3, description4, description5, description6, description7, description8, description9, created_date, deleted)
-        VALUES (#{courseName}, #{courseType}, #{courseDate}, #{courseDays}, #{courseTime}, #{coursePrice}, #{allowApply}, #{top},
+        VALUES (#{courseName}, #{courseType}, #{courseDate}, #{courseDays}, #{courseTime}, #{coursePrice}, #{status}, #{top},
             #{description1}, #{description2}, #{description3}, #{description4}, #{description5}, #{description6}, #{description7}, #{description8}, #{description9}, null, 0)
     </insert>
 
@@ -93,11 +122,11 @@
             <if test="courseTime != null and courseTime !=''">
                 class_time=#{courseTime},
             </if>
-            <if test="coursePrice != null and coursePrice > 0">
+            <if test="coursePrice != null and coursePrice >= 0">
                 class_price=#{coursePrice},
             </if>
-            <if test="allowApply != null and allowApply >= 0">
-                allow_apply=#{allowApply},
+            <if test="status != null and status !=''">
+                status=#{status},
             </if>
             <if test="top != null and top >= 0">
                 top=#{top},

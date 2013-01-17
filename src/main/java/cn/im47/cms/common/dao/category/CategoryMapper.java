@@ -2,6 +2,7 @@ package cn.im47.cms.common.dao.category;
 
 import cn.im47.cms.common.dao.GenericDao;
 import cn.im47.cms.common.entity.category.Category;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * Date: 12-3-20
  * Time: 下午20:40
  */
+@Repository
 public interface CategoryMapper extends GenericDao<Category, Long> {
 
     /**

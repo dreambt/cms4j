@@ -84,7 +84,7 @@
     </form:form>
     </div>
 </div>
-<script charset="utf-8" src="${ctx}/static/kindeditor/kindeditor-all-min.js"></script>
+<script charset="utf-8" src="${ctx}/static/kindeditor/kindeditor-min.js"></script>
 <script charset="utf-8" src="${ctx}/static/kindeditor/lang/zh_CN.js"></script>
 <script>
     $(function () {

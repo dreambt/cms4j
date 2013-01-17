@@ -439,7 +439,7 @@
 	display: block;
 }
 .ke-toolbar-icon-url {
-	background-image: url(../images/default.png);
+	background-image: url(default.png);
 }
 .ke-toolbar .ke-outline {
 	border: 1px solid #F0F0EE;
@@ -517,7 +517,7 @@
 	background-position: -0px -754px;
 	width: 15px;
 	height: 11px;
-	background-image: url(../images/default.png);
+	background-image: url(default.png);
 }
 .ke-statusbar-right-icon {
 	position: absolute;
@@ -527,7 +527,7 @@
 	background-position: -5px -741px;
 	width: 11px;
 	height: 11px;
-	background-image: url(../images/default.png);
+	background-image: url(default.png);
 }
 /* menu */
 .ke-menu {
@@ -676,7 +676,7 @@
 	border:0;
 	margin:0;
 	padding: 0 10px;
-	background: url(../images/background.png) repeat scroll 0 0 #F0F0EE;
+	background: url(background.png) repeat scroll 0 0 #F0F0EE;
 	border-bottom: 1px solid #CFCFCF;
 	height: 24px;
 	font: 12px/24px "sans serif",tahoma,verdana,helvetica;
@@ -686,7 +686,7 @@
 }
 .ke-dialog-icon-close {
 	display: block;
-	background: url(../images/default.png) no-repeat scroll 0px -688px;
+	background: url(default.png) no-repeat scroll 0px -688px;
 	width: 16px;
 	height: 16px;
 	position: absolute;
@@ -788,7 +788,7 @@
 	opacity:0.5;
 }
 .ke-button-common {
-	background: url(../images/background.png) no-repeat scroll 0 -25px transparent;
+	background: url(background.png) no-repeat scroll 0 -25px transparent;
 	cursor: pointer;
 	height: 23px;
 	line-height: 23px;
@@ -980,7 +980,7 @@
 }
 .ke-swfupload-body .ke-delete {
 	display: block;
-	background: url(../images/default.png) no-repeat scroll 0px -688px;
+	background: url(default.png) no-repeat scroll 0px -688px;
 	width: 16px;
 	height: 16px;
 	position: absolute;

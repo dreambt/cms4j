@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" isErrorPage="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="org.slf4j.Logger,org.slf4j.LoggerFactory" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <%response.setStatus(200);%>
 <%
 	Throwable ex = null;
@@ -13,9 +14,6 @@
 	Logger logger = LoggerFactory.getLogger("500.jsp");
 	logger.error(ex.getMessage(), ex);
 %>
-<c:set var="ctx" value="${pageContext.request.contextPath}"/>
-<%response.setStatus(200);%>
-
 <!doctype html>
 <!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
 <!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
@@ -56,8 +54,9 @@
         <p>Sorry, it appears the page you were looking for doesn't exist anymore or might have been moved. If the problem persists, please contact our support at <a href="#">dreambt@gmail.com</a> or try searching:</p>
         <form>
             <input type="text" name="search" value="">
-            <button type="submit">Search</button></a>
+            <button type="submit">Search</button>
         </form>
+        <p><%=ex.getMessage()%></p>
     </div>
 </article>
 </body>

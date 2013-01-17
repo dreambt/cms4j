@@ -159,24 +159,24 @@ public class CategoryManagerImpl implements CategoryManager {
     }
 
     @Transactional(readOnly = false)
-    public long save(Category category) {
+    public int save(Category category) {
         logger.info("保存分类 category={}.", category.toString());
-        long num = categoryMapper.save(category);
+        int num = categoryMapper.save(category);
         generateContent();
         return num;
     }
 
     @Transactional(readOnly = false)
-    public long update(Category category) {
+    public int update(Category category) {
         logger.info("更新分类 category={}.", category.toString());
         // 更新数据，先更新数据避免生成旧数据缓存
-        long num = categoryMapper.update(category);
+        int num = categoryMapper.update(category);
         generateContent();
         return num;
     }
 
     @Transactional(readOnly = false)
-    public long delete(Long id) {
+    public int delete(Long id) {
         logger.info("删除分类 category.id={}.", id);
         Category category = this.get(id);
         return this.delete(category);
@@ -184,7 +184,7 @@ public class CategoryManagerImpl implements CategoryManager {
 
     @Override
     @Transactional(readOnly = false)
-    public long delete(Category category) {
+    public int delete(Category category) {
         // 指定的分类不存在
         if (null == category) {
             logger.warn("删除分类失败：分类为空.");
@@ -220,7 +220,7 @@ public class CategoryManagerImpl implements CategoryManager {
      * 生成 category 静态页面
      */
     private void generateContent() {
-        Map context = Maps.newHashMap();
+        Map<String, Object> context = Maps.newHashMap();
         List<Category> categories = categoryMapper.getNavCategory();
         try {
             context.put("categories", categories);

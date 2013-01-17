@@ -34,7 +34,7 @@ public interface GenericManager<T, PK extends Serializable> {
      * @param object the object to save
      * @return the persisted object
      */
-    long save(T object);
+    int save(T object);
 
     /**
      * Generic method to update an object - handles update.  will set modified_time to
@@ -43,13 +43,13 @@ public interface GenericManager<T, PK extends Serializable> {
      * @param object the object to save
      * @return the persisted object
      */
-    long update(T object);
+    int update(T object);
 
     /**
      * Generic method to delete an object based on class and id
      *
      * @param id the identifier (primary key) of the object to remove
      */
-    long delete(PK id);
+    int delete(PK id);
 
 }

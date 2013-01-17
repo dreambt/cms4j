@@ -5,6 +5,9 @@
 
     <display-name>CMS4j</display-name>
 
+    <!-- 分布式Session -->
+    <distributable/>
+
     <!-- Spring ApplicationContext配置文件的路径,可使用通配符，用于后面的Spring Context Loader -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
@@ -23,6 +26,16 @@
     <!--Spring的ApplicationContext 载入 -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <!-- http://blog.csdn.net/fooe84/archive/2006/04/28/695150.aspx 防止内存泄漏-->
+    <listener>
+        <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+    </listener>
+
+    <!-- sae需要的监听器 -->
+    <listener>
+        <listener-class>cn.im47.cms.utilities.SaeInitListener</listener-class>
     </listener>
 
     <!-- Spring MVC Servlet -->
@@ -135,10 +148,6 @@
     <filter>
         <filter-name>cacheControlHeaderFilter</filter-name>
         <filter-class>cn.im47.commons.web.CacheControlHeaderFilter</filter-class>
-        <init-param>
-            <param-name>expiresSeconds</param-name>
-            <param-value>31536000</param-value>
-        </init-param>
     </filter>
     <filter-mapping>
         <filter-name>cacheControlHeaderFilter</filter-name>
@@ -216,6 +225,10 @@
         <taglib>
             <taglib-uri>http://java.sun.com/jsp/jstl/functions</taglib-uri>
             <taglib-location>/WEB-INF/taglib/fn.tld</taglib-location>
+        </taglib>
+        <taglib>
+            <taglib-uri>http://www.springside.org.cn/tags/form</taglib-uri>
+            <taglib-location>/WEB-INF/taglib/springside-form.tld</taglib-location>
         </taglib>
     </jsp-config>
 </web-app>

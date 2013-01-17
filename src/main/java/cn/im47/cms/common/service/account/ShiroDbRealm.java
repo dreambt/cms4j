@@ -52,22 +52,22 @@ public class ShiroDbRealm extends AuthorizingRealm {
         }
 
         if (captcha == null || failed_count > 2 || !captcha.equalsIgnoreCase(token.getCaptcha())) {
+            session.setAttribute("LOGIN_FAILED_COUNT", ++failed_count);
             throw new AuthenticationException("请检查您输入的账户、密码、验证码是否正确.");
         }
 
         if (null != user) {
             // 已标记为删除的账户
             if (user.isDeleted()) {
+                session.setAttribute("LOGIN_FAILED_COUNT", ++failed_count);
                 throw new UnknownAccountException("请检查您输入的账户、密码、验证码是否正确.");
             }
 
             // 未审核的账户
             if (!user.isStatus()) {
+                session.setAttribute("LOGIN_FAILED_COUNT", ++failed_count);
                 throw new DisabledAccountException("未经审核的账户不允许登录.");
             }
-
-            // 更新用户登录时间
-            userManager.updateLastTime(user.getId());
 
             byte[] salt = Encodes.decodeHex(user.getSalt());
             return new SimpleAuthenticationInfo(new ShiroUser(user.getId(), user.getEmail(), user.getUsername(), user.getGroupList().get(0).getGroupName()), user.getPassword(),
@@ -93,6 +93,13 @@ public class ShiroDbRealm extends AuthorizingRealm {
                 //基于Permission的权限信息
                 info.addStringPermissions(group.getPermissionList());
             }
+
+            // 更新用户登录时间
+            userManager.updateLastTime(user.getId());
+
+            // 清空登录失败计数
+            Session session = SecurityUtils.getSubject().getSession();
+            session.setAttribute("LOGIN_FAILED_COUNT", 0);
             return info;
         } else {
             return null;

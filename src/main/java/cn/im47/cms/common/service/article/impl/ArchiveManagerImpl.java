@@ -87,14 +87,14 @@ public class ArchiveManagerImpl implements ArchiveManager {
 
     @Override
     @Transactional(readOnly = false)
-    public long save(Archive object) {
+    public int save(Archive object) {
         logger.info("保存 archive={}.", object.toString());
         return archiveMapper.save(object);
     }
 
     @Override
     @Transactional(readOnly = false)
-    public long updateLastMonth() {
+    public int updateLastMonth() {
         DateTime dateTime = new DateTime().plusMonths(-1);
         logger.info("更新归档 archive.dateTime={}.", dateTime.toString());
         return this.updateByMonth(dateTime);
@@ -102,7 +102,7 @@ public class ArchiveManagerImpl implements ArchiveManager {
 
     @Override
     @Transactional(readOnly = false)
-    public long updateByMonth(DateTime dateTime) {
+    public int updateByMonth(DateTime dateTime) {
         int year = dateTime.getYear();
         int month = dateTime.getMonthOfYear();
 
@@ -159,7 +159,7 @@ public class ArchiveManagerImpl implements ArchiveManager {
 
     @Override
     @Transactional(readOnly = false)
-    public long update(Archive archive) {
+    public int update(Archive archive) {
         logger.info("更新归档 archive={}.", archive.toString());
         if (0 == archive.getArticleList().size()) {
             return this.delete(archive.getId());
@@ -170,7 +170,7 @@ public class ArchiveManagerImpl implements ArchiveManager {
 
     @Override
     @Transactional(readOnly = false)
-    public long delete(Long id) {
+    public int delete(Long id) {
         logger.info("删除归档 archive.id={}.", id);
         archiveMapper.delete(id);
         archiveMapper.deleteArticle(id);

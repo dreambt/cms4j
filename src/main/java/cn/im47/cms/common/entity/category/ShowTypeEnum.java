@@ -19,7 +19,9 @@ public enum ShowTypeEnum {
 
     CONTENT("CONTENT", "内容"), GALLERY("GALLERY", "相册"),
 
-    COURSE("COURSE", "课程");
+    CINDEX("CINDEX", "课程索引"), AINDEX("AINDEX", "文章索引"),
+
+    COURSE("COURSE", "收费课程"), FREE("FREE", "免费课程");
 
     private static Map<String, ShowTypeEnum> valueMap = Maps.newHashMap();
 

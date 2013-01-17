@@ -37,48 +37,63 @@ public class CourseManagerImpl implements CourseManager {
     }
 
     @Override
+    public long countAll2() {
+        return courseMapper.countAll2();
+    }
+
+    @Override
+    public long countFree() {
+        return courseMapper.countFree();
+    }
+
+    @Override
     public List<Course> getAll() {
-        return this.getAll(0, 10, "id", "DESC");
+        return this.getAll(0, 10, "class_date", "DESC");
     }
 
     @Override
     public List<Course> getAll(int offset, int limit) {
-        return this.getAll(offset, limit, "id", "DESC");
+        return this.getAll(offset, limit, "class_date", "DESC");
     }
 
     @Override
     public List<Course> getAll(int offset, int limit, String sort, String direction) {
-        return courseMapper.getAll(offset, limit, sort, direction, 0);// 不包含标记删除的文章
+        return courseMapper.getAll(offset, limit, sort, direction);// 不包含标记删除的文章，前台用
     }
 
     @Override
     public List<Course> getAll2() {
-        return this.getAll2(0, 10, "id", "DESC");
+        return this.getAll2(0, 10, "class_date", "DESC");
     }
 
     @Override
     public List<Course> getAll2(int offset, int limit) {
-        return this.getAll2(offset, limit, "id", "DESC");
+        return this.getAll2(offset, limit, "class_date", "DESC");
     }
 
     @Override
     public List<Course> getAll2(int offset, int limit, String sort, String direction) {
-        return courseMapper.getAll(offset, limit, sort, direction, 1);// 包含标记删除的文章
+        return courseMapper.getAll2(offset, limit, sort, direction);// 包含标记删除的文章，后台用
+    }
+
+    @Override
+    public List<Course> getFree() {
+        return this.getFree(0, 10, "class_date", "DESC");
+    }
+
+    @Override
+    public List<Course> getFree(int offset, int limit) {
+        return this.getFree(offset, limit, "class_date", "DESC");
+    }
+
+    @Override
+    public List<Course> getFree(int offset, int limit, String sort, String direction) {
+        return courseMapper.getFree(offset, limit, sort, direction);// 不包含标记删除的文章，前台用
     }
 
     @Override
     public boolean top(Long id) {
         return courseMapper.updateBool(id, "top") > 0;
-    }
-
-    @Override
-    public boolean open(Long id) {
-        return courseMapper.updateBool(id, "opened") > 0;
-    }
-
-    @Override
-    public boolean allowApply(Long id) {
-        return courseMapper.updateBool(id, "allow_apply") > 0;
     }
 
     @Override
@@ -98,18 +113,18 @@ public class CourseManagerImpl implements CourseManager {
     }
 
     @Override
-    public long save(Course object) {
+    public int save(Course object) {
         object.setCourseTime("-");
         return courseMapper.save(object);
     }
 
     @Override
-    public long update(Course object) {
+    public int update(Course object) {
         return courseMapper.update(object);
     }
 
     @Override
-    public long delete(Long id) {
+    public int delete(Long id) {
         return courseMapper.delete(id);
     }
 

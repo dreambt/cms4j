@@ -51,7 +51,6 @@
                 /course/create = perms["course:create"]
                 /course/update/** = perms["course:update"]
                 /course/delete/** = perms["course:save"]
-                /course/allow/** = perms["course:save"]
                 /course/top/** = perms["course:save"]
                 /course/batchDelete/** = perms["course:save"]
                 /course/listAll = perms["course:list"]

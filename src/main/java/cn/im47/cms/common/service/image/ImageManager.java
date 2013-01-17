@@ -48,7 +48,7 @@ public interface ImageManager extends GenericManager<Image, Long> {
      * @param image
      * @return
      */
-    long save(MultipartFile file, Image image);
+    int save(MultipartFile file, Image image);
 
     /**
      * 修改image
@@ -58,7 +58,7 @@ public interface ImageManager extends GenericManager<Image, Long> {
      * @param image
      * @return
      */
-    long update(MultipartFile file, HttpServletRequest request, Image image);
+    int update(MultipartFile file, HttpServletRequest request, Image image);
 
     /**
      * 修改 Image 的 boolean 字段
@@ -66,7 +66,7 @@ public interface ImageManager extends GenericManager<Image, Long> {
      * @param column
      * @return
      */
-    long update(Long id, String column);
+    int update(Long id, String column);
 
     /**
      * 批量改变评论的删除标志

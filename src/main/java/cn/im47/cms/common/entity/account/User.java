@@ -5,14 +5,14 @@ import cn.im47.commons.utilities.encoder.IPEncodes;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.joda.deser.DateTimeDeserializer;
-import com.fasterxml.jackson.datatype.joda.ser.DateTimeSerializer;
+import com.fasterxml.jackson.datatype.joda.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.joda.ser.LocalDateTimeSerializer;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 import org.springside.modules.utils.Collections3;
 
 import java.io.Serializable;
@@ -42,15 +42,16 @@ public class User extends PersistableEntity implements Serializable {
     private String timeOffset;
     private List<Group> groupList = Lists.newArrayList();
     private Long lastIP;
-    private String lastLoginIP;
+    @SuppressWarnings("unused")
+	private String lastLoginIP;
 
-    @JsonSerialize(using = DateTimeSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer.class)
-    private DateTime lastTime;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime lastTime;
 
-    @JsonSerialize(using = DateTimeSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer.class)
-    private DateTime lastActTime;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime lastActTime;
 
     public User() {
     }
@@ -167,19 +168,19 @@ public class User extends PersistableEntity implements Serializable {
         this.lastIP = IPEncodes.ipToLong(lastLoginIP);
     }
 
-    public DateTime getLastTime() {
+    public LocalDateTime getLastTime() {
         return lastTime;
     }
 
-    public void setLastTime(DateTime lastTime) {
+    public void setLastTime(LocalDateTime lastTime) {
         this.lastTime = lastTime;
     }
 
-    public DateTime getLastActTime() {
+    public LocalDateTime getLastActTime() {
         return lastActTime;
     }
 
-    public void setLastActTime(DateTime lastActTime) {
+    public void setLastActTime(LocalDateTime lastActTime) {
         this.lastActTime = lastActTime;
     }
 

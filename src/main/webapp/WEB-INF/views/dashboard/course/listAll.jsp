@@ -28,9 +28,9 @@
                     <th>类型</th>
                     <th>开课日期</th>
                     <th>课时</th>
+                    <th>价格</th>
                     <th>创建时间</th>
                     <th>最后修改</th>
-                    <th>申请状态</th>
                     <th>开课状态</th>
                     <th>置顶状态</th>
                     <th>可用操作</th>
@@ -44,10 +44,10 @@
                         <td>${course.courseType}</td>
                         <td>${course.courseDate}</td>
                         <td>${course.courseDays}</td>
+                        <td>${course.coursePrice}</td>
                         <td><joda:format value="${course.createdDate}" pattern="yyyy年MM月dd日"/></td>
                         <td><joda:format value="${course.lastModifiedDate}" pattern="yyyy年MM月dd日 kk:mm:ss"/></td>
-                        <td><c:choose><c:when test="${course.allowApply}"><span id="${course.id}" class="label label-success allow">允许</span></c:when><c:otherwise><span id="${course.id}" class="label label-important allow">不允许</span></c:otherwise></c:choose></td>
-                        <td><c:choose><c:when test="${course.opened}"><span id="${course.id}" class="label label-success opened">允许</span></c:when><c:otherwise><span id="${course.id}" class="label label-important opened">不允许</span></c:otherwise></c:choose></td>
+                        <td>${course.status}</td>
                         <td><c:choose><c:when test="${course.top}"><span id="${course.id}" class="label label-success top">已置顶</span></c:when><c:otherwise><span id="${course.id}" class="label label-important top">未置顶</span></c:otherwise></c:choose></td>
                         <td><a href="${ctx}/course/update/${course.id}"><span class='label label-info'>编辑</span></a> <c:choose><c:when test="${course.deleted}"><span id="${course.id}" class='label label-inverse delete'>恢复</span></c:when><c:otherwise><span id="${course.id}" class='label label-warning delete'>删除</span></c:otherwise></c:choose></td>
                     </tr>
@@ -73,9 +73,6 @@
 </div>
 <script type="text/javascript">
     function buttonClick(){
-        $(".opened").click(function(){
-            PostByAjax("${ctx}/course/open/"+$(this).attr("id"));
-        });
         $(".delete").click(function(){
             PostByAjax("${ctx}/course/delete/"+$(this).attr("id"));
         });
@@ -104,15 +101,7 @@
                 //加载课程
                 courses.html("");
                 $.each(data, function (index, content) {
-                    var htmlStr="<tr><td><input type='checkbox' name='isSelected' value='" + content.id + "'></td><td><a href='${ctx}/course/" + content.id + "' target='_blank'>" + content.courseName + "</a></td><td>" + content.courseType + "</td><td>" + content.courseDate + "</td><td>" + content.courseDays + "</td><td>" + ChangeDateFormat(content.createdDate) + "</td><td>" + ChangeDateTimeFormat(content.lastModifiedDate) + "</td>";
-                    if (content.allowApply)
-                        htmlStr+="<td><span id='" + content.id + "' class='label label-success allow'>允许</span></td>";
-                    else
-                        htmlStr+="<td><span id='" + content.id + "' class='label label-important allow'>不允许</span></td>";
-                    if (content.opened)
-                        htmlStr+="<td><span id='" + content.id + "' class='label label-success opened'>允许</span></td>";
-                    else
-                        htmlStr+="<td><span id='" + content.id + "' class='label label-important opened'>不允许</span></td>";
+                    var htmlStr="<tr><td><input type='checkbox' name='isSelected' value='" + content.id + "'></td><td><a href='${ctx}/course/" + content.id + "' target='_blank'>" + content.courseName + "</a></td><td>" + content.courseType + "</td><td>" + content.courseDate + "</td><td>" + content.courseDays + "</td><td>" + content.coursePrice + "</td><td>" + ChangeDateFormat(content.createdDate) + "</td><td>" + ChangeDateTimeFormat(content.lastModifiedDate) + "</td>";
                     if (content.top)
                         htmlStr+="<td><span id='" + content.id + "' class='label label-success top'>已置顶</span></td>";
                     else

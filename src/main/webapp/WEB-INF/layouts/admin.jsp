@@ -38,7 +38,6 @@
         <div class="container">
             <div class="nav-collapse collapse">
                 <ul class="nav">
-                    <li><a href="${ctx}/index">网站首页</a></li>
                     <li id="admin_page"><a href="${ctx}/dashboard">后台首页</a></li>
                     <shiro:hasPermission name="article:list">
                         <li id="article_page" class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">文章管理 <b class="caret"></b></a>
@@ -73,14 +72,16 @@
                             </ul>
                         </li>
                     </shiro:hasPermission>
-                    <shiro:hasPermission name="user:list">
                         <li id="user_page" class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">用户管理 <b class="caret"></b></a>
                             <ul class="dropdown-menu">
+                                <shiro:hasPermission name="user:list">
                                 <li><a href="${ctx}/account/user/create">添加用户</a></li>
                                 <li><a href="${ctx}/account/user/list">用户列表</a></li>
+                                <li class="divider"></li>
+				</shiro:hasPermission>
+                                <li><a href="${ctx}/account/user/profile">个人资料</a></li>
                             </ul>
                         </li>
-                    </shiro:hasPermission>
                     <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">机构管理 <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="${ctx}/agency/create">添加机构</a></li>
@@ -101,6 +102,7 @@
                             </ul>
                         </li>
                     </shiro:hasPermission>
+                    <li><a href="${ctx}/index">网站首页</a></li>
                     <li><a href="${ctx}/logout">退出登录</a></li>
                 </ul>
             </div>

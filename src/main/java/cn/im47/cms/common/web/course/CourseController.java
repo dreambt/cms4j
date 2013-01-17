@@ -1,19 +1,28 @@
 package cn.im47.cms.common.web.course;
 
-import cn.im47.cms.common.entity.course.Course;
-import cn.im47.cms.common.service.article.ArticleManager;
-import cn.im47.cms.common.service.course.CourseManager;
-import cn.im47.cms.common.vo.ResponseMessage;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+import cn.im47.cms.common.entity.category.Category;
+import cn.im47.cms.common.entity.course.Course;
+import cn.im47.cms.common.entity.course.CourseTypeEnum;
+import cn.im47.cms.common.service.article.ArticleManager;
+import cn.im47.cms.common.service.category.CategoryManager;
+import cn.im47.cms.common.service.course.CourseManager;
+import cn.im47.cms.common.vo.ResponseMessage;
 
 /**
  * 文章控制器
@@ -29,7 +38,24 @@ public class CourseController {
     private CourseManager courseManager;
 
     @Autowired
+    private CategoryManager categoryManager;
+
+    @Autowired
     private ArticleManager articleManager;
+
+    @RequestMapping(value = {"index/{id}"}, method = RequestMethod.GET)
+    public String index(@PathVariable("id") Long id, Model model) {
+        List<Category> categoryList = categoryManager.getSubCategory(id);
+        for (Category category : categoryList) {
+            category.getArticleList().addAll(articleManager.getByCategoryIdAndStatusAndDeleted(category.getId(), 0, 5, true, false));
+        }
+        model.addAttribute("category", categoryManager.get(id));
+        model.addAttribute("categories", categoryList);
+        model.addAttribute("courses", courseManager.getAll());
+        model.addAttribute("freeCourses", courseManager.getFree());
+        model.addAttribute("newArticles", articleManager.getNewTop(8));
+        return "course/index";
+    }
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public String get(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
@@ -48,23 +74,41 @@ public class CourseController {
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public String list(Model model) {
+        model.addAttribute("categories", categoryManager.getSubCategory(6L));
+        model.addAttribute("courseName", "课程列表");
         model.addAttribute("courses", courseManager.getAll());//边栏最新文章
-        model.addAttribute("total", courseManager.count());
+        model.addAttribute("total", courseManager.countAll());
         model.addAttribute("newArticles", articleManager.getNewTop(8));
         return "course/list";
     }
 
     @RequestMapping(value = "list.json", method = RequestMethod.GET)
     @ResponseBody
-    public List<Course> ajax(@RequestParam("offset") int offset, @RequestParam("limit") int limit) {
+    public List<Course> ajaxList(@RequestParam("offset") int offset, @RequestParam("limit") int limit) {
         return courseManager.getAll(offset, limit);
+    }
+
+    @RequestMapping(value = "free", method = RequestMethod.GET)
+    public String free(Model model) {
+        model.addAttribute("categories", categoryManager.getSubCategory(6L));
+        model.addAttribute("courseName", "免费课程");
+        model.addAttribute("courses", courseManager.getFree());//边栏最新文章
+        model.addAttribute("total", courseManager.countFree());
+        model.addAttribute("newArticles", articleManager.getNewTop(8));
+        return "course/list";
+    }
+
+    @RequestMapping(value = "free.json", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Course> ajaxFree(@RequestParam("offset") int offset, @RequestParam("limit") int limit) {
+        return courseManager.getFree(offset, limit);
     }
 
     @RequiresPermissions("course:list")
     @RequestMapping(value = "listAll", method = RequestMethod.GET)
     public String listAll(Model model) {
         model.addAttribute("courses", courseManager.getAll2());
-        model.addAttribute("total", courseManager.countAll());
+        model.addAttribute("total", courseManager.countAll2());
         return "dashboard/course/listAll";
     }
 
@@ -83,6 +127,7 @@ public class CourseController {
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public String createForm(Model model) {
         model.addAttribute("course", new Course());
+        model.addAttribute("allStatus", CourseTypeEnum.getAll());
         model.addAttribute("action", "create");
         return "dashboard/course/edit";
     }
@@ -95,13 +140,6 @@ public class CourseController {
             course.setTop(false);
         } else {
             course.setTop(true);
-        }
-
-        //是否允许评论
-        if (null == request.getParameter("allowApply")) {
-            course.setAllowApply(false);
-        } else {
-            course.setAllowApply(true);
         }
 
         // 保存
@@ -118,8 +156,6 @@ public class CourseController {
     @RequestMapping(value = {"update/{id}"}, method = RequestMethod.GET)
     public String updateForm(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
         Course course = courseManager.get(id);
-
-        // 编辑不存在的文章，给出提示
         if (null == course) {
             redirectAttributes.addFlashAttribute("error", "课程不存在.");
             return "redirect:/course/listAll";
@@ -129,6 +165,7 @@ public class CourseController {
         //course.setMessage(Encodes.unescapeHtml(course.getMessage()));
 
         model.addAttribute("course", course);
+        model.addAttribute("allStatus", CourseTypeEnum.getAll());
         model.addAttribute("action", "update");
         return "dashboard/course/edit";
     }
@@ -141,28 +178,6 @@ public class CourseController {
             return new ResponseMessage();
         } else {
             return new ResponseMessage("课程 " + id + " 置顶失败.");
-        }
-    }
-
-    @RequiresPermissions("course:save")
-    @RequestMapping(value = "open/{id}", method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseMessage open(@PathVariable("id") Long id) {
-        if (courseManager.open(id)) {
-            return new ResponseMessage();
-        } else {
-            return new ResponseMessage("课程 " + id + " 开课开关失败.");
-        }
-    }
-
-    @RequiresPermissions("course:save")
-    @RequestMapping(value = "allow/{id}", method = RequestMethod.POST)
-    @ResponseBody
-    public ResponseMessage allow(@PathVariable("id") Long id) {
-        if (courseManager.allowApply(id)) {
-            return new ResponseMessage();
-        } else {
-            return new ResponseMessage("课程 " + id + " 报名开关失败.");
         }
     }
 

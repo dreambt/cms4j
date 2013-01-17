@@ -3,6 +3,7 @@ package cn.im47.cms.common.dao.image;
 import cn.im47.cms.common.dao.GenericDao;
 import cn.im47.cms.common.entity.image.Image;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * Date: 12-4-4
  * Time: 下午7:49
  */
+@Repository
 public interface ImageMapper extends GenericDao<Image, Long> {
 
     /**

@@ -7,7 +7,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="form" uri="http://www.springside.org.cn/tags/form" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 <html>
@@ -37,7 +37,7 @@
         <div class="control-group">
             <label class="control-label" for="courseDate">开课日期</label>
             <div class="controls date">
-                <input type="text" id="courseDate" name="courseDate" value="${course.courseDate}" placeholder="${course.courseDate}" readonly>
+                <input type="text" id="courseDate" name="courseDate" value="${course.courseDate}" placeholder="${course.courseDate}">
             </div>
         </div>
         <%--<div class="control-group">--%>
@@ -59,14 +59,16 @@
             </div>
         </div>
         <div class="control-group">
-            <label class="control-label" for="allowApply">允许申请</label>
+            <label class="control-label" for="top">置顶显示</label>
             <div class="controls">
-                <input type="checkbox" id="allowApply" name="allowApply" <c:if test="${course.allowApply==true}">checked="checked"</c:if>> 允许申请
-                <input type="hidden" name="_allowApply"/>
-                <input type="checkbox" id="opened" name="opened" <c:if test="${course.opened==true}">checked="checked"</c:if>> 已开课
-                <input type="hidden" name="_opened"/>
                 <input type="checkbox" id="top" name="top" <c:if test="${course.top==true}">checked="checked"</c:if>> 置顶
                 <input type="hidden" name="_top"/>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">开课情况</label>
+            <div class="controls">
+                <form:bsradiobuttons path="status" items="${allStatus}" labelCssClass="inline"/>
             </div>
         </div>
         <div class="control-group">
@@ -131,7 +133,7 @@
         </div>
     </form:form>
 </div>
-<script charset="utf-8" src="${ctx}/static/kindeditor/kindeditor-all-min.js"></script>
+<script charset="utf-8" src="${ctx}/static/kindeditor/kindeditor-min.js"></script>
 <script charset="utf-8" src="${ctx}/static/kindeditor/lang/zh_CN.js"></script>
 <script type="text/javascript">
 $(function () {

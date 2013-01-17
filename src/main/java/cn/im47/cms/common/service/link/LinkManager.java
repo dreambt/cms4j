@@ -48,7 +48,7 @@ public interface LinkManager extends GenericManager<Link, Long> {
      */
     List<Link> getAll(int offset, int limit, String sort, String direction);
 
-    long updateBool(Long id, String column);
+    int updateBool(Long id, String column);
 
     /**
      * 批量审核 link

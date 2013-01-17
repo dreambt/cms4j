@@ -16,7 +16,7 @@
     <groupId>cn.im47.cms</groupId>
     <artifactId>cms4j</artifactId>
     <name>Content Management System</name>
-    <version>0.2.6</version>
+    <version>0.2.8</version>
     <packaging>war</packaging>
 
     <description>im47.cn :: cms4j</description>
@@ -28,9 +28,9 @@
         <h2.version>1.3.168</h2.version>
 
         <!-- 项目属性 -->
-        <jdbc.driver.groupId>com.h2database</jdbc.driver.groupId>
-        <jdbc.driver.artifactId>h2</jdbc.driver.artifactId>
-        <jdbc.driver.version>${h2.version}</jdbc.driver.version>
+        <jdbc.driver.groupId>mysql</jdbc.driver.groupId>
+        <jdbc.driver.artifactId>mysql-connector-java</jdbc.driver.artifactId>
+        <jdbc.driver.version>5.1.21</jdbc.driver.version>
 
         <!--
             <jdbc.driver.groupId>com.oracle</jdbc.driver.groupId>
@@ -39,10 +39,10 @@
         -->
 
         <!--
-        <jdbc.driver.groupId>mysql</jdbc.driver.groupId>
-        <jdbc.driver.artifactId>mysql-connector-java</jdbc.driver.artifactId>
-        <jdbc.driver.version>5.1.21</jdbc.driver.version>
-	-->
+            <jdbc.driver.groupId>com.h2database</jdbc.driver.groupId>
+            <jdbc.driver.artifactId>h2</jdbc.driver.artifactId>
+            <jdbc.driver.version>${h2.version}</jdbc.driver.version>
+	    -->
     </properties>
 
     <!-- =========================================================== -->
@@ -65,7 +65,7 @@
             </snapshots>
             <id>public</id>
             <name>Public Repositories</name>
-            <url>http://localhost:8081/nexus/content/groups/public</url>
+            <url>http://192.168.1.224:8081/nexus/content/groups/public</url>
             <layout>default</layout>
         </repository>
     </repositories>
@@ -74,12 +74,12 @@
         <repository>
             <id>releases</id>
             <name>Release Repository</name>
-            <url>http://localhost:8081/nexus/content/repositories/releases</url>
+            <url>http://192.168.1.224:8081/nexus/content/repositories/releases</url>
         </repository>
         <snapshotRepository>
             <id>snapshots</id>
             <name>Snapshot Repository</name>
-            <url>http://localhost:8081/nexus/content/repositories/snapshots</url>
+            <url>http://192.168.1.224:8081/nexus/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
 
@@ -92,7 +92,7 @@
         <dependency>
             <groupId>cn.im47.commons</groupId>
             <artifactId>commons</artifactId>
-            <version>0.1.3</version>
+            <version>0.1.4</version>
         </dependency>
 
         <!-- SPRINGSIDE begin -->
@@ -157,7 +157,6 @@
         <dependency>
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
-            <version>${commons-dbcp.version}</version>
             <scope>runtime</scope>
         </dependency>
 
@@ -211,8 +210,7 @@
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
-            <version>1.7</version>
-        </dependency>
+            </dependency>
         <!-- SECURITY end -->
 
         <!-- JSR303  BeanValidator -->
@@ -233,14 +231,12 @@
         <dependency>
             <groupId>com.fasterxml.jackson.jaxrs</groupId>
             <artifactId>jackson-jaxrs-json-provider</artifactId>
-            <version>2.0.5</version>
-        </dependency>
+            </dependency>
         <!--for joda-->
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-joda</artifactId>
-            <version>2.0.4</version>
-        </dependency>
+            </dependency>
         <!-- JSON end -->
 
         <!-- LOGGING begin -->
@@ -272,7 +268,6 @@
         <dependency>
             <groupId>org.lazyluke</groupId>
             <artifactId>log4jdbc-remix</artifactId>
-            <version>0.2.7</version>
             <scope>runtime</scope>
         </dependency>
         <!-- LOGGING end -->
@@ -295,13 +290,11 @@
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time-jsptags</artifactId>
-            <version>1.1.1</version>
-        </dependency>
+            </dependency>
         <dependency>
             <groupId>org.jadira.usertype</groupId>
             <artifactId>usertype.core</artifactId>
-            <version>3.0.0.CR3</version>
-        </dependency>
+            </dependency>
         <!-- GENERAL UTILS end -->
 
         <!-- OTHER UTILS begin-->
@@ -412,13 +405,6 @@
             <version>0.5.0</version>
         </dependency>
 
-        <!-- markdown support -->
-        <dependency>
-            <groupId>org.tautua.markdownpapers</groupId>
-            <artifactId>markdownpapers-core</artifactId>
-            <version>1.2.7</version>
-        </dependency>
-
         <!-- HTML 压缩 -->
         <dependency>
             <groupId>com.googlecode.htmlcompressor</groupId>
@@ -449,7 +435,8 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <scope>test</scope>
+            <!-- for xxxDemo class -->
+            <scope>compile</scope>
         </dependency>
         <!-- TEST end -->
 
@@ -791,22 +778,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <version>2.4</version>
-            </plugin>
-
-            <!-- jrebel -->
-            <plugin>
-                <groupId>org.zeroturnaround</groupId>
-                <artifactId>jrebel-maven-plugin</artifactId>
-                <version>1.1.1</version>
-                <executions>
-                    <execution>
-                        <id>generate-rebel-xml</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

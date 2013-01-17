@@ -21,8 +21,7 @@ public class Course extends PersistableEntity implements Serializable {
     private String courseDays;
     private String courseTime;
     private int coursePrice;
-    private boolean allowApply;
-    private boolean opened;
+    private String status;
     private boolean top;
     private String description1;
     private String description2;
@@ -83,20 +82,12 @@ public class Course extends PersistableEntity implements Serializable {
         this.coursePrice = coursePrice;
     }
 
-    public boolean isAllowApply() {
-        return allowApply;
+    public String getStatus() {
+        return status;
     }
 
-    public void setAllowApply(boolean allowApply) {
-        this.allowApply = allowApply;
-    }
-
-    public boolean isOpened() {
-        return opened;
-    }
-
-    public void setOpened(boolean opened) {
-        this.opened = opened;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public boolean isTop() {

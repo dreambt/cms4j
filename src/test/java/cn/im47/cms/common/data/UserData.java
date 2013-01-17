@@ -4,7 +4,7 @@ import cn.im47.cms.common.entity.account.Group;
 import cn.im47.cms.common.entity.account.Permission;
 import cn.im47.cms.common.entity.account.User;
 import com.google.common.collect.Lists;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 import org.springside.modules.test.data.RandomData;
 
 import java.util.List;
@@ -38,7 +38,7 @@ public class UserData {
         user.setPhotoURL("1.jpg");
         user.setTimeOffset("0800");
         user.setLastIP(134744072L);
-        DateTime now = new DateTime();
+        LocalDateTime now = new LocalDateTime();
         user.setLastTime(now);
         user.setLastActTime(now);
         return user;

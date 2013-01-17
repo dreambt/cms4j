@@ -2,8 +2,8 @@ package cn.im47.cms.common.dao.account;
 
 import cn.im47.cms.common.dao.GenericDao;
 import cn.im47.cms.common.entity.account.User;
-import cn.im47.commons.dao.MyBatisRepository;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import java.util.List;
  * Date: 12-3-20
  * Time: 下午20:34
  */
-@MyBatisRepository
+@Repository
 public interface UserMapper extends GenericDao<User, Long> {
 
     List<User> getAll(@Param("offset") int offset, @Param("limit") int limit, @Param("sort") String sort, @Param("direction") String direction);

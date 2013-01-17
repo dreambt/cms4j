@@ -2,7 +2,7 @@ package cn.im47.cms.common.data;
 
 import cn.im47.cms.common.entity.article.Article;
 import cn.im47.cms.common.entity.category.Category;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 import org.springside.modules.test.data.RandomData;
 
 /**
@@ -31,7 +31,7 @@ public class ArticleData {
         article.setKeyword("");
         article.setUrl("jbt");
         article.setStatus(true);
-        DateTime now = new DateTime();
+        LocalDateTime now = new LocalDateTime();
         article.setCreatedDate(now);
         article.setLastModifiedDate(now);
         return article;

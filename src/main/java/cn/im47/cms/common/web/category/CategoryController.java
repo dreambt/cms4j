@@ -78,7 +78,7 @@ public class CategoryController {
         if (null == categoryManager.get(id)) {
             redirectAttributes.addFlashAttribute("error", "该菜单已经删除，请刷新查看");
         }
-        long result = categoryManager.delete(id);
+        int result = categoryManager.delete(id);
         if (result == 0) {
             redirectAttributes.addFlashAttribute("info", "删除菜单成功！");
         } else if (result == 1) {

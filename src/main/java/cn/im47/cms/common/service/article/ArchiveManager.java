@@ -25,13 +25,13 @@ public interface ArchiveManager extends GenericManager<Archive, Long> {
     /**
      * 保存上个月的归类
      */
-    long updateLastMonth();
+    int updateLastMonth();
 
     /**
      * 更新指定月份
      *
      * @param dateTime
      */
-    long updateByMonth(DateTime dateTime);
+    int updateByMonth(DateTime dateTime);
 
 }
