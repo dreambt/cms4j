@@ -18,7 +18,7 @@ dreambt@gmail.com
 # How to use the Content Management System website
 
 1. Deploy the Webservice archive file cms4j-VERSION.war of the website.
-   E.g. for an Apache Tomcat installation, copy the file to the the directory
+   E.g. for an Apache Tomcat installation, copy the file to the directory
    TOMCATDIR\webapps.
 
 2. Start the server (e.g. Tomcat).
