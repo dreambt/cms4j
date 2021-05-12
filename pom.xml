@@ -387,7 +387,7 @@
         <dependency>
             <groupId>org.apache.solr</groupId>
             <artifactId>solr-core</artifactId>
-            <version>3.5.0</version>
+            <version>8.8.2</version>
         </dependency>
 
         <!-- HTML解析 -->
